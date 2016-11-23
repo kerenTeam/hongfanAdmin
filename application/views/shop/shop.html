@@ -1,0 +1,456 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css" media="screen">
+	.am-selected{
+		width: 100%!important;
+	}
+	.table-check{
+		width: 30px;
+	}
+	.hf-dropdown{
+		font-size: 12px!important;
+	    padding: 5px 6px!important;
+	}
+</style>
+ <!-- 菜单 -->
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-link">
+                    <a href="<?php echo base_url().'admin';?>">
+                        <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title active">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'shop/shop';?>" class="sub-active">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="table-list-img.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="table-list-img.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="calendar.html">
+                        <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日历
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="form.html">
+                        <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 表单
+
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="chart.html">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 数据列表
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="table-list.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 文字列表
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="table-list-img.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 图文列表
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="sign-up.html">
+                        <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
+                        <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="login.html">
+                        <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="404.html">
+                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+ <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+            <div class="row-content am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                         	<div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">店铺查询</div>
+
+                            </div>
+                            <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                              <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                              <label for="yetai" class="am-u-sm-2 am-form-label">分类业态</label>
+                              <div class="am-u-sm-10">
+								<select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+								<option value=>输入查找/选择</option>
+								  <option value="百货">百货</option>
+								 <option value="配套服务">配套服务</option>
+								 <option value="超市/便利">超市/便利</option>
+								  <option value="百货">百货</option>
+								 <option value="配套服务">配套服务</option>
+								 <option value="超市/便利">超市/便利</option>
+								  <option value="百货">百货</option>
+								 <option value="配套服务">配套服务</option>
+								 <option value="超市/便利">超市/便利</option>
+								  <option value="百货">百货</option>
+								 <option value="配套服务">配套服务</option>
+								 <option value="超市/便利">超市/便利</option>
+								</select>
+							</div>
+                              </div>
+
+							  <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+							    <label for="shop_state" class="am-u-sm-2 am-form-label">状态</label>
+							    <div class="am-u-sm-10">
+							       <select id="shop_state">
+							       <option value>请选择</option>
+							        <option value="0">正常</option>
+							        <option value="1">冻结</option>
+							      </select>
+							    </div>
+							  </div>
+
+							  <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+							    <label for="source_state" class="am-u-sm-2 am-form-label">资料状况</label>
+							    <div class="am-u-sm-10">
+							       <select id="source_state">
+							       	<option value>请选择</option>
+							        <option value="0">缺logo</option>
+							        <option value="1">缺评价</option>
+							        <option value="2">缺实景图</option>
+							        <option value="3">缺文字简介</option>
+							      </select>
+							    </div>
+							  </div>
+
+							  <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+							    <label for="shop_block" class="am-u-sm-2 am-form-label">街区</label>
+							    <div class="am-u-sm-10">
+							       <select id="shop_block">
+							       <option value>请选择</option>
+							        <option value="0">邻水街道</option>
+							        <option value="1">邻水街道</option>
+							      </select>
+							    </div>
+							  </div>
+
+							  <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+							    <label for="source_state" class="am-u-sm-2 am-form-label">楼层</label>
+							    <div class="am-u-sm-10">
+							       <select id="source_state">
+							       	<option value>请选择</option>
+							        <option value="0">F1</option>
+							        <option value="1">F2</option>
+							        <option value="2">F3</option>
+							        <option value="3">F4</option>
+							      </select>
+							    </div>
+							  </div>
+
+							  <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+							    <label for="source_state" class="am-u-sm-2 am-form-label">铺号</label>
+							    <div class="am-u-sm-10">
+							      <input type="text" placeholder="">
+							    </div>
+							  </div>
+
+							  <div class="am-form-group am-text-center">
+							      <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+							  </div>
+							</form>
+
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">商家列表</div>
+
+                            </div>
+                            <div class="widget-body  am-fr">
+
+                                <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <div class="am-form-group">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button>
+                                                <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="am-u-sm-12">
+                                    <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black ">
+                                        <thead>
+                                            <tr>
+                                              	<th class="table-check"><input type="checkbox"></th>
+                                              	<th class="moll_name">商场名称 <i class="am-icon-sort"></i></th>
+                                              	<th class="shop_id">商家编号 <i class="am-icon-sort"></i></th>
+                                              	<th class="shop_name">商家名称 <i class="am-icon-sort"></i></th>
+                                              	<th class="shop_type">商家类型 <i class="am-icon-sort"></i></th>
+                                              	<th class="shop_yetai">分类业态 <i class="am-icon-sort"></i></th>
+                                              	<th class="brand">品牌 <i class="am-icon-sort"></i></th>
+                                              	<th class="shop_block">街区 <i class="am-icon-sort"></i></th>
+                                              	<th class="floor_shopId">楼层/铺位号 <i class="am-icon-sort"></i></th>
+                                                <th>资料状况</th>
+                                                <th>商户模式</th>
+                                                <th>创建人</th>
+                                                <th>创建时间</th>
+                                                <th>状态</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="gradeX">
+                                            	<td><input type="checkbox"></td>
+                                                <td>宏帆广场</td>
+                                                <td class="am-text-middle">F1003</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">普通</td>
+                                                <td class="am-text-middle">餐饮</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">暂无</td>
+                                                <td class="am-text-middle">F1/007</td>
+                                                <td class="am-text-middle">缺评价,缺logo</td>
+                                                <td class="am-text-middle">实体商户</td>
+                                                <td class="am-text-middle">【5597】mc_xyc</td>
+                                                <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                                <td class="am-text-middle">
+                                                	<div class="am-dropdown" data-am-dropdown>
+													  <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
+													  <ul class="am-dropdown-content">
+													    <li><a href="#">正常</a></li>
+													    <li><a href="#">冻结</a></li>
+													    <li><a href="#">删除</a></li>
+													  </ul>
+													</div>
+                                                </td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                    	<a href="<?php echo base_url().'shop/shop/shop_admin';?>"class="tpl-table-black-operation-set">
+                                                            <i class="am-icon-gear" ></i> 管理
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox"></td>
+                                                <td>宏帆广场</td>
+                                                <td class="am-text-middle">F1003</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">普通</td>
+                                                <td class="am-text-middle">餐饮</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">暂无</td>
+                                                <td class="am-text-middle">F1/007</td>
+                                                <td class="am-text-middle">缺评价,缺logo</td>
+                                                <td class="am-text-middle">实体商户</td>
+                                                <td class="am-text-middle">【5597】mc_xyc</td>
+                                                <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                                <td class="am-text-middle">
+                                                    <div class="am-dropdown" data-am-dropdown>
+                                                      <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
+                                                      <ul class="am-dropdown-content">
+                                                        <li><a href="#">正常</a></li>
+                                                        <li><a href="#">冻结</a></li>
+                                                        <li><a href="#">删除</a></li>
+                                                      </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"class="tpl-table-black-operation-set">
+                                                            <i class="am-icon-gear" ></i> 管理
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox"></td>
+                                                <td>宏帆广场</td>
+                                                <td class="am-text-middle">F1003</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">普通</td>
+                                                <td class="am-text-middle">餐饮</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">暂无</td>
+                                                <td class="am-text-middle">F1/007</td>
+                                                <td class="am-text-middle">缺评价,缺logo</td>
+                                                <td class="am-text-middle">实体商户</td>
+                                                <td class="am-text-middle">【5597】mc_xyc</td>
+                                                <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                                <td class="am-text-middle">
+                                                    <div class="am-dropdown" data-am-dropdown>
+                                                      <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
+                                                      <ul class="am-dropdown-content">
+                                                        <li><a href="#">正常</a></li>
+                                                        <li><a href="#">冻结</a></li>
+                                                        <li><a href="#">删除</a></li>
+                                                      </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"class="tpl-table-black-operation-set">
+                                                            <i class="am-icon-gear" ></i> 管理
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox"></td>
+                                                <td>宏帆广场</td>
+                                                <td class="am-text-middle">F1003</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">普通</td>
+                                                <td class="am-text-middle">餐饮</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">暂无</td>
+                                                <td class="am-text-middle">F1/007</td>
+                                                <td class="am-text-middle">缺评价,缺logo</td>
+                                                <td class="am-text-middle">实体商户</td>
+                                                <td class="am-text-middle">【5597】mc_xyc</td>
+                                                <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                                <td class="am-text-middle">
+                                                    <div class="am-dropdown" data-am-dropdown>
+                                                      <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
+                                                      <ul class="am-dropdown-content">
+                                                        <li><a href="#">正常</a></li>
+                                                        <li><a href="#">冻结</a></li>
+                                                        <li><a href="#">删除</a></li>
+                                                      </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"class="tpl-table-black-operation-set">
+                                                            <i class="am-icon-gear" ></i> 管理
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="gradeX">
+                                                <td><input type="checkbox"></td>
+                                                <td>宏帆广场</td>
+                                                <td class="am-text-middle">F1003</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">普通</td>
+                                                <td class="am-text-middle">餐饮</td>
+                                                <td class="am-text-middle">满记甜品</td>
+                                                <td class="am-text-middle">暂无</td>
+                                                <td class="am-text-middle">F1/007</td>
+                                                <td class="am-text-middle">缺评价,缺logo</td>
+                                                <td class="am-text-middle">实体商户</td>
+                                                <td class="am-text-middle">【5597】mc_xyc</td>
+                                                <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                                <td class="am-text-middle">
+                                                    <div class="am-dropdown" data-am-dropdown>
+                                                      <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
+                                                      <ul class="am-dropdown-content">
+                                                        <li><a href="#">正常</a></li>
+                                                        <li><a href="#">冻结</a></li>
+                                                        <li><a href="#">删除</a></li>
+                                                      </ul>
+                                                    </div>
+                                                </td>
+                                                <td class="am-text-middle">
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;"class="tpl-table-black-operation-set">
+                                                            <i class="am-icon-gear" ></i> 管理
+                                                        </a>
+                                                        <a href="javascript:;">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="am-u-lg-12 am-cf">
+
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            <li class="am-disabled"><a href="#">«</a></li>
+                                            <li class="am-active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="assets/js/amazeui.min.js"></script>
+    <!-- <script src="assets/js/dataTables.responsive.min.js"></script> -->
+    <script src="assets/js/app.js"></script>
+
+</body>
+
+</html>
