@@ -23,6 +23,10 @@ class shop extends CI_Controller {
 
     	 $this->load->view('shop/shopInfo.html');
     }
+    //新增商家
+    function addShop(){
+        $this->load->view('shop/addShop.html');
+    }
 
 
 
