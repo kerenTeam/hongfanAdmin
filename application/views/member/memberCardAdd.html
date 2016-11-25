@@ -135,122 +135,78 @@
 <div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理 <small>会员卡列表</small>
-
-                        </div>
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理 <small>新增会员卡</small></div>
                     </div>
                 </div>
             </div>
 <div class="row-content am-cf">
     <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12"> 
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">所有会员卡列表
-                        <div class="tpl-table-black-operation am-fr">
-                            <a href="<?php echo base_url().'member/member/memberCardAdd';?>" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-plus"></span> 新增</a>
-                        </div>
-                        </div>
+                        <div class="widget-title  am-cf">会员卡信息</div>
                     </div>
                     <div class="widget-body  am-fr">
-                        <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-  am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered">
-                          <li>
-                            <div class="am-gallery-item">
-                              <a href="<?php echo base_url().'member/member/memberCardDetail';?>" class="am-gallery-item-link" title="普通会员"><img src="assets/img/huiyuanka1.png" alt="普通会员"/>
-                              <div class="am-backdrop">
-                                  
-                                </div>
-                                </a>
-                                <div class="am-fl">
-                                <h3 class="am-gallery-title">宏帆普通会员卡</h3>
-                                <h3 class="am-gallery-desc">积分倍数：1倍积分</h3>
-                                </div>
-                                <div class="tpl-table-black-operation am-fr am-padding">
-                                    <a href="javascript:;" data-am-modal="{target: '#edit1'}">
-                                        <i class="am-icon-pencil"></i> 编辑
-                                    </a>
-                                    <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
-                                        <i class="am-icon-trash"></i> 删除
-                                    </a>
-                                </div>
-                            </div>
-
-                          </li>
-                          <li>
-                            <div class="am-gallery-item">
-                             <a href="<?php echo base_url().'member/member/memberCardDetail';?>" class="am-gallery-item-link" title="黄金一级会员"><img src="assets/img/huiyuanka2.png" alt="黄金一级会员"/>
-                              <div class="am-backdrop"></div>
-                              </a>
-                              <div class="am-fl">
-                                <h3 class="am-gallery-title">宏帆黄金一级会员</h3>
-                                <h3 class="am-gallery-desc">积分倍数：1.5倍积分</h3>
-                                </div>
-                                <div class="tpl-table-black-operation am-fr am-padding">
-                                    <a href="javascript:;" data-am-modal="{target: '#edit1'}">
-                                        <i class="am-icon-pencil"></i> 编辑
-                                    </a>
-                                    <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
-                                        <i class="am-icon-trash"></i> 删除
-                                    </a>
-                                </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="am-gallery-item">
-                              <a href="<?php echo base_url().'member/member/memberCardDetail';?>" class="am-gallery-item-link" title="黄金二级会员"><img src="assets/img/huiyuanka3.png" alt="黄金二级会员"/>
-                              <div class="am-backdrop"></div>
-                              </a>
-                              <div class="am-fl">
-                                <h3 class="am-gallery-title">宏帆黄金二级会员</h3>
-                                <h3 class="am-gallery-desc">积分倍数：2倍积分</h3>
-                              </div>
-                                <div class="tpl-table-black-operation am-fr am-padding">
-                                    <a href="javascript:;" data-am-modal="{target: '#edit1'}">
-                                        <i class="am-icon-pencil"></i> 编辑
-                                    </a>
-                                    <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
-                                        <i class="am-icon-trash"></i> 删除
-                                    </a>
-                                </div>
-                            </div>
-                          </li>
-                          <li>
-                            <div class="am-gallery-item">
-                               <a href="<?php echo base_url().'member/member/memberCardDetail';?>" class="am-gallery-item-link" title="黄金二级会员"><img src="assets/img/huiyuanka1.png" alt="黄金二级会员"/>
-                              <div class="am-backdrop"></div>
-                              </a>
-                                <div class="am-fl">
-                                    <h3 class="am-gallery-title">宏帆黄金二级会员</h3>
-                                    <h3 class="am-gallery-desc">积分倍数：2倍积分</h3>
-                                </div>
-                                <div class="tpl-table-black-operation am-fr am-padding">
-                                    <a href="javascript:;" data-am-modal="{target: '#edit1'}">
-                                        <i class="am-icon-pencil"></i> 编辑
-                                    </a>
-                                    <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
-                                        <i class="am-icon-trash"></i> 删除
-                                    </a>
-                                </div>
-                            </div>
-                          </li>
-                        </ul>
+                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
+                    <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="doc-vld-name-1">会员卡名称 <span class="red">*</span>：</label>
+                        <input type="text" id="doc-vld-name-1" minlength="2" required/>
                     </div>
-
-                </div> 
+                    <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="doc-vld-name-2">会员卡编号 <span class="red">*</span>：</label>
+                        <input type="text" id="doc-vld-name-2" minlength="2"  required/>
+                    </div>
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <label for="doc-select-3">会员卡类型 <span class="red">*</span>：</label>
+                            <select id="doc-select-3" required>
+                                <option value="">-=请选择一项=-</option>
+                                <option value="option1">普通会员卡</option>
+                                <option value="option2">一级VIP卡</option>
+                                <option value="option3">二级VIP卡</option>
+                                <option value="option3">三级VIP卡</option>
+                                <option value="option3">超级黄金VIP卡</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                         <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            <label for="doc-vld-name-4">会员卡背景色：</label>
+                            <input type="text" id="doc-vld-name-4" minlength="2" required/>
+                        </div>
+                        <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            <label for="doc-vld-name-5">会员卡字体颜色：</label>
+                            <input type="number" id="doc-vld-name-5" required/>
+                        </div>
+                        <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-6 am-u-lg-6 am-backdrop-on-box am-pull-left">
+                            <label for="doc-vld-name-6">会员卡卡样 <span class="red">*</span>：</label>
+                            <img id="doc-vld-name-6" src="assets/img/nullImg.jpg" class="am-img-responsive" alt=""/>
+                            <div class="am-backdrop-on">
+                               <div class="tpl-table-black">
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-plus"></span> 上传</button>
+                                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash"></span> 删除</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                     <div class="am-form-group am-text-center">
+                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 新增</button>
+                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-refresh"></span> 取消</button>
+                        </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 </div>
 </div>
 </div>
-<link rel="stylesheet" type="text/css" href="assets/css/memberCard.css">
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
-<script type="text/javascript">
-    
-</script>
+<link rel="stylesheet" type="text/css" href="assets/css/memberCard.css">
 </body>
 </html>

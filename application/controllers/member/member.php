@@ -42,7 +42,14 @@ class member extends default_Controller {
     function memberCard(){
         $this->load->view('member/memberCard.html');
     }
-
+    //会员卡管理-会员卡详情
+    function memberCardDetail(){
+        $this->load->view('member/memberCardDetail.html');
+    }
+    //会员卡管理-添加会员卡
+    function memberCardAdd(){
+        $this->load->view('member/memberCardAdd.html');
+    }
 
 }
 
