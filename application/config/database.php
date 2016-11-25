@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'macrosail',
+	'hostname' => '211.149.195.183',
+	'username' => 'hongfan',
+	'password' => 'hongfan',
+	'database' => 'hongfan',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'hf_',
 	'pconnect' => FALSE,

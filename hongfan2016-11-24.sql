@@ -10,7 +10,6 @@
 # Generation Time: 2016-11-23 08:54:40 +0000
 # ************************************************************
 
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -30,7 +29,7 @@ CREATE TABLE `hf_banners` (
   `reports_banner` varchar(450) DEFAULT NULL COMMENT '地方报道banner',
   `other_banner` varchar(450) DEFAULT NULL COMMENT '其他banner',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -42,15 +41,15 @@ DROP TABLE IF EXISTS `hf_local_express`;
 CREATE TABLE `hf_local_express` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '快递上门',
   `x_y` int(11) DEFAULT NULL COMMENT '当前地址',
-  `sender_address` int(11) DEFAULT NULL COMMENT '发送人',
-  `recipient_address` int(11) DEFAULT NULL COMMENT '收件人',
-  `phone` int(11) DEFAULT NULL COMMENT '电话',
-  `link_man` int(11) DEFAULT NULL COMMENT '联系人',
-  `create_time` int(11) DEFAULT NULL,
+  `sender_address` varchar(200) DEFAULT NULL COMMENT '发送人',
+  `recipient_address` varchar(200) DEFAULT NULL COMMENT '收件人',
+  `phone` varchar(21) DEFAULT NULL COMMENT '电话',
+  `link_man` varchar(32) DEFAULT NULL COMMENT '联系人',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-
+  
 
 # Dump of table hf_local_game
 # ------------------------------------------------------------
@@ -59,11 +58,11 @@ DROP TABLE IF EXISTS `hf_local_game`;
 
 CREATE TABLE `hf_local_game` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '游戏娱乐',
-  `pic` int(11) DEFAULT NULL,
-  `title` int(11) DEFAULT NULL,
-  `url` int(11) DEFAULT NULL,
+  `pic` varchar(350) DEFAULT NULL,
+  `title` varchar(100) DEFAULT NULL,
+  `url` varchar(450) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -81,9 +80,9 @@ CREATE TABLE `hf_local_help` (
   `xy` varchar(32) DEFAULT '' COMMENT '提问地址',
   `content` text COMMENT '提问内容',
   `replay_content` text COMMENT '回复内容',
-  `state` int(11) DEFAULT NULL COMMENT '是否解决',
+  `state` int(2) DEFAULT NULL COMMENT '是否解决',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -103,7 +102,7 @@ CREATE TABLE `hf_local_hometown_reports` (
   `state` int(11) DEFAULT NULL COMMENT '审核',
   `recommend` int(11) DEFAULT NULL COMMENT '推荐',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -121,7 +120,7 @@ CREATE TABLE `hf_local_hometown_reports_comment` (
   `create_time` timestamp NULL DEFAULT NULL,
   `red_heart` int(11) DEFAULT NULL COMMENT '点赞',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -137,7 +136,7 @@ CREATE TABLE `hf_local_house` (
   `area_address` varchar(350) DEFAULT NULL COMMENT '小区地址',
   `avg_price` float DEFAULT NULL COMMENT '平均售价',
   `intermediary_name` varchar(85) DEFAULT NULL COMMENT '中介名称',
-  `intermediary_logo` varchar(11) DEFAULT NULL COMMENT '中介logo',
+  `intermediary_logo` varchar(250) DEFAULT NULL COMMENT '中介logo',
   `phone` varchar(45) DEFAULT NULL COMMENT '联系电话',
   `house_layout` varchar(85) DEFAULT NULL COMMENT '户型',
   `address` varchar(250) DEFAULT NULL COMMENT '地址',
@@ -147,7 +146,7 @@ CREATE TABLE `hf_local_house` (
   `pic` varchar(350) DEFAULT NULL COMMENT '图片',
   `content` text COMMENT '简介',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -158,12 +157,12 @@ DROP TABLE IF EXISTS `hf_local_market_data`;
 
 CREATE TABLE `hf_local_market_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '超市比价',
-  `market_name` int(11) DEFAULT NULL COMMENT '超市名',
-  `goods_name` int(11) DEFAULT NULL COMMENT '商品名',
+  `market_name` varchar(200) DEFAULT NULL COMMENT '超市名',
+  `goods_name` varchar(200) DEFAULT NULL COMMENT '商品名',
   `date_price` int(11) DEFAULT NULL COMMENT '单价',
-  `date` int(11) DEFAULT NULL COMMENT '时间',
+  `date` varchar(100) DEFAULT NULL COMMENT '时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -183,7 +182,7 @@ CREATE TABLE `hf_local_marriage` (
   `persons_limit` int(11) DEFAULT NULL COMMENT '人数限制',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -196,11 +195,11 @@ CREATE TABLE `hf_local_marriage_join` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '一见钟情参与表',
   `marriage_id` int(11) DEFAULT NULL,
   `userid` int(11) DEFAULT NULL,
-  `name` int(11) DEFAULT NULL,
-  `phone` int(11) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -223,7 +222,7 @@ CREATE TABLE `hf_local_service` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `other` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -247,7 +246,7 @@ CREATE TABLE `hf_local_used_market` (
   `state` int(11) DEFAULT NULL COMMENT '状态',
   `other` text COMMENT '其他',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -260,7 +259,7 @@ CREATE TABLE `hf_local_used_market_type` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `tag` varchar(45) DEFAULT NULL COMMENT '分类名',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -275,9 +274,9 @@ CREATE TABLE `hf_local_living_payment` (
   `utilities` int(11) DEFAULT NULL COMMENT '水电费',
   `charge_phone` int(11) DEFAULT NULL COMMENT '话费',
   `tickets` int(11) DEFAULT NULL COMMENT '机票火车票',
-  `create_time` int(11) DEFAULT NULL,
+ `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -307,7 +306,7 @@ CREATE TABLE `hf_shop_coupon` (
   `qrcode` varchar(125) DEFAULT NULL,
   `other` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_shop_coupon` WRITE;
 /*!40000 ALTER TABLE `hf_shop_coupon` DISABLE KEYS */;
@@ -334,7 +333,7 @@ CREATE TABLE `hf_shop_coupon_type` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `other` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_shop_coupon_type` WRITE;
 /*!40000 ALTER TABLE `hf_shop_coupon_type` DISABLE KEYS */;
@@ -354,19 +353,19 @@ UNLOCK TABLES;
 # Dump of table hf_shop_membership_card ⚠️
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `hf_shop_membership_card ⚠️`;
+DROP TABLE IF EXISTS `hf_shop_membership_card`;
 
-CREATE TABLE `hf_shop_membership_card ⚠️` (
+CREATE TABLE `hf_shop_membership_card` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `gid` int(11) DEFAULT NULL,
   `name` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-LOCK TABLES `hf_shop_membership_card ⚠️` WRITE;
+LOCK TABLES `hf_shop_membership_card` WRITE;
 /*!40000 ALTER TABLE `hf_shop_membership_card ⚠️` DISABLE KEYS */;
 
-INSERT INTO `hf_shop_membership_card ⚠️` (`id`, `gid`, `name`)
+INSERT INTO `hf_shop_membership_card` (`id`, `gid`, `name`)
 VALUES
 	(1,NULL,NULL);
 
@@ -384,7 +383,7 @@ CREATE TABLE `hf_shop_membership_card_type` (
   `name` varchar(45) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_shop_membership_card_type` WRITE;
 /*!40000 ALTER TABLE `hf_shop_membership_card_type` DISABLE KEYS */;
@@ -432,9 +431,9 @@ CREATE TABLE `hf_shop_store` (
   `logo` varchar(250) DEFAULT NULL COMMENT 'Logo',
   `pic` varchar(450) DEFAULT NULL COMMENT '商家照片',
   `qr_code` varchar(250) DEFAULT NULL COMMENT '商家二维码',
-  `op_status` enum('营业中','停止营业','装修中','即将开业') NOT NULL,
+  `op_status` enum('营业中','暂停营业','装修中','即将开业') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -449,7 +448,7 @@ CREATE TABLE `hf_shop_store_type` (
   `type_name` varchar(11) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_shop_store_type` WRITE;
 /*!40000 ALTER TABLE `hf_shop_store_type` DISABLE KEYS */;
@@ -488,7 +487,7 @@ CREATE TABLE `hf_shop_store_type_group` (
   `name` varchar(55) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_shop_store_type_group` WRITE;
 /*!40000 ALTER TABLE `hf_shop_store_type_group` DISABLE KEYS */;
@@ -520,12 +519,12 @@ DROP TABLE IF EXISTS `hf_system`;
 CREATE TABLE `hf_system` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统json',
   `system_name` varchar(85) DEFAULT NULL,
-  `wechatPay` int(11) DEFAULT NULL,
-  `aliPay` int(11) DEFAULT NULL,
-  `sinaWeibo` int(11) DEFAULT NULL,
-  `tcWeibo` int(11) DEFAULT NULL,
+  `wechatPay` varchar(220) DEFAULT NULL,
+  `aliPay` varchar(200) DEFAULT NULL,
+  `sinaWeibo` varchar(200) DEFAULT NULL,
+  `tcWeibo` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -546,7 +545,7 @@ CREATE TABLE `hf_user_address` (
   `x_y` varchar(32) DEFAULT NULL COMMENT '经纬度',
   `state` int(11) DEFAULT NULL COMMENT '状态 0 & 1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -560,7 +559,7 @@ CREATE TABLE `hf_user_coupon` (
   `userid` int(11) DEFAULT NULL COMMENT '用户主键',
   `coupon_id` int(11) DEFAULT NULL COMMENT '优惠劵主键',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_user_coupon` WRITE;
 /*!40000 ALTER TABLE `hf_user_coupon` DISABLE KEYS */;
@@ -585,7 +584,7 @@ CREATE TABLE `hf_user_intergral ⚠️` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '产生时间',
   `notice` varchar(350) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_user_intergral ⚠️` WRITE;
 /*!40000 ALTER TABLE `hf_user_intergral ⚠️` DISABLE KEYS */;
@@ -626,7 +625,7 @@ CREATE TABLE `hf_user_member` (
   `map` varchar(32) DEFAULT NULL COMMENT '用户当前位置',
   `intergral` int(20) DEFAULT NULL COMMENT '积分',
   PRIMARY KEY (`userid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -642,7 +641,7 @@ CREATE TABLE `hf_user_member_group` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
   `other` text COMMENT '其他',
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_user_member_group` WRITE;
 /*!40000 ALTER TABLE `hf_user_member_group` DISABLE KEYS */;
@@ -668,7 +667,7 @@ CREATE TABLE `hf_user_message` (
   `conent` varchar(450) DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 LOCK TABLES `hf_user_message` WRITE;
 /*!40000 ALTER TABLE `hf_user_message` DISABLE KEYS */;
@@ -689,7 +688,7 @@ DROP TABLE IF EXISTS `hf_user_order`;
 CREATE TABLE `hf_user_order` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户订单表',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
