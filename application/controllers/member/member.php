@@ -28,28 +28,28 @@ class member extends default_Controller {
        	//配置
         $config['base_url'] = base_url('member/member/memberList');
         $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-		$config['full_tag_close'] = '</ul>';  
-        $config['first_tag_open'] = '<li>';  
-        $config['first_tag_close'] = '</li>';  
-        $config['prev_tag_open'] = '<li>';  
-        $config['prev_tag_close'] = '</li>';  
-        $config['next_tag_open'] = '<li>';  
-        $config['next_tag_close'] = '</li>';  
-        $config['cur_tag_open'] = '<li class="am-active"><a>';  
-        $config['cur_tag_close'] = '</a></li>';  
-        $config['last_tag_open'] = '<li>';  
-        $config['last_tag_close'] = '</li>';  
-        $config['num_tag_open'] = '<li>';  
-        $config['num_tag_close'] = '</li>';  
+		$config['full_tag_close'] = '</ul>';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
 
-        $config['first_link']= '首页';  
-        $config['next_link']= '下一页';  
-        $config['prev_link']= '上一页';  
-        $config['last_link']= '末页';  
+        $config['first_link']= '首页';
+        $config['next_link']= '下一页';
+        $config['prev_link']= '上一页';
+        $config['last_link']= '末页';
         //总共多少
         $num = $this->user_model->get_users();
         $config['total_rows'] = count($num);//总条数
-      
+
         $this->load->library('pagination');//加载ci pagination类
         $this->pagination->initialize($config);
         $data = array(
@@ -81,7 +81,7 @@ class member extends default_Controller {
          $data['group'] = $this->user_model->get_user_group();
     	 $this->load->view('member/addMember.html',$data);
     }
-    
+
 
 
     //编辑会员
@@ -93,11 +93,10 @@ class member extends default_Controller {
     function memberCard(){
         $this->load->view('member/memberCard.html');
     }
-<<<<<<< HEAD
     //会员详情管理
     function memberInfo(){
         $this->load->view('member/memberInfo.html');
-=======
+}
     //会员卡管理-会员卡详情
     function memberCardDetail(){
         $this->load->view('member/memberCardDetail.html');
@@ -139,8 +138,6 @@ class member extends default_Controller {
     	}else{
     		$this->load->view('404.html');
     	}
-    	
->>>>>>> c8054631773e786639b0d870e018bb244b5d0167
     }
 
 

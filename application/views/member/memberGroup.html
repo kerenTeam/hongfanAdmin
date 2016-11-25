@@ -161,12 +161,22 @@
                             </div>
                            <form class="am-form tpl-form-line-form">
                                 <div class="am-form-group">
-                                    <label for="user-name" class="am-u-sm-3 am-form-label">会员组名</label>
+                                    <label for="user-name" class="am-u-sm-3 am-form-label black">会员组名</label>
                                     <div class="am-u-sm-9">
                                         <input type="text" class="tpl-form-input" id="user-name" placeholder="请输入会员组名" minlength="2" required>
-                                        <small>请填写标题文字至少2字。</small>
+                                        <small class="black">请填写标题文字至少2字。</small>
                                     </div>
                                 </div>
+                                <div class="am-form-group">
+                                    <label for="user-phone" class="am-u-sm-3 am-form-label black">权限</label>
+                                    <div class="am-u-sm-9 black">
+                                        <select data-am-selected="{searchBox: 1}" style="display: none;">
+                                              <option value="a">-The.CC</option>
+                                              <option value="b">夕风色</option>
+                                              <option value="o">Orange</option>
+                                            </select>
+                                   </div>
+                                 </div>
                                 <div class="am-form-group am-btn-group-xs">
                                     <button type="reset" class="am-btn am-btn-default">重置</button>
                                     <button type="submit" class="am-btn am-btn-danger">提交</button>
@@ -187,6 +197,7 @@
                                             <tr>
                                                 <th>编号</th>
                                                 <th>会员组名</th>
+                                                <th>权限</th>
                                                 <th>创建时间</th>
                                                 <th>操作</th>
                                             </tr>
@@ -195,6 +206,7 @@
                                             <tr class="gradeX">
                                                 <td>01</td>
                                                 <td>0级</td>
+                                                <td>XXXX</td>
                                                 <td>2016-09-26</td>
                                                 <td>
                                                     <div class="tpl-table-black-operation">
@@ -216,10 +228,20 @@
                                                 <div class="am-modal-bd">
                                                     <form action="" class="am-form tpl-form-line-form">
                                                         <div class="am-form-group">
-                                                          <label for="group-name">用户名：</label>
+                                                          <label for="group-name" class="am-u-sm-3 am-form-label">用户名：</label>
                                                           <input type="text" id="group-name" value="张鹏飞" minlength="2" required/>
                                                           <small>请填写标题文字至少2字。</small>
                                                         </div>
+                                                        <div class="am-form-group">
+                                                            <label for="user-phone" class="am-u-sm-3 am-form-label" required>权限</label>
+                                                            <div class="am-u-sm-9">
+                                                                <select data-am-selected="{searchBox: 1}" style="display: none;">
+                                                                      <option value="a">-The.CC</option>
+                                                                      <option value="b">夕风色</option>
+                                                                      <option value="o">Orange</option>
+                                                                    </select>
+                                                           </div>
+                                                         </div>
                                                         <div class="am-form-group am-btn-group-xs">
                                                             <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                                                             <button type="submit" class="am-btn am-btn-danger">提交</button>
@@ -247,6 +269,7 @@
                                         <tr class="gradeX">
                                                 <td>02</td>
                                                 <td>张飞</td>
+                                                <td>XXXX</td>
                                                 <td>2016-09-26</td>
                                                 <td>
                                                     <div class="tpl-table-black-operation">
@@ -268,10 +291,21 @@
                                                 <div class="am-modal-bd">
                                                     <form action="" class="am-form tpl-form-line-form">
                                                         <div class="am-form-group">
-                                                          <label for="group-name">用户名：</label>
+                                                          <label for="group-name" class="am-u-sm-3 am-form-label">用户名：</label>
                                                           <input type="text" id="group-name" value="张飞" minlength="2" required/>
                                                           <small>请填写标题文字至少2字。</small>
                                                         </div>
+                                                        <div class="am-form-group">
+                                                            <label for="user-phone" class="am-u-sm-3 am-form-label">权限</label>
+                                                            <div class="am-u-sm-9">
+                                                                <select data-am-selected="{searchBox: 1}" style="display: none;" required>
+                                                                      <option value="a">-The.CC</option>
+                                                                      <option value="b">夕风色</option>
+                                                                      <option value="o">Orange</option>
+                                                                    </select>
+                                                           </div>
+                                                         </div>
+
                                                         <div class="am-form-group am-btn-group-xs">
                                                             <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                                                             <button type="submit" class="am-btn am-btn-danger">提交</button>
