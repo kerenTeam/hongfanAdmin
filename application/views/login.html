@@ -54,6 +54,9 @@
                     <div class="am-form-group" id="error">
                        <span style="color:red;"><?php echo $error;?></span>
                     </div>
+                    <script>  setTimeout(function(){//5秒后隐藏
+                        $("#error").fadeOut();
+                    }, 5000);</script>
                     <?php }?>
                     <div class="am-form-group tpl-login-remember-me">
                         <input id="remember-me" type="checkbox">

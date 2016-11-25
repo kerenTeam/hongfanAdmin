@@ -139,62 +139,62 @@
                     <div class="widget-title  am-cf">会员查询</div>
                 </div>
                 <form action=" " method=" " class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="yetai" class="am-u-sm-2 am-form-label">商场</label>
-                        <div class="am-u-sm-10">
-                            <select id="shop_state">
-                                <option value>请选择</option>
-                                <option value="0">宏帆</option>
-                                <option value="1">宏帆</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--<div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">-->
+                        <!--<label for="yetai" class="am-u-sm-2 am-form-label">商场</label>-->
+                        <!--<div class="am-u-sm-10">-->
+                            <!--<select id="shop_state">-->
+                                <!--<option value>请选择</option>-->
+                                <!--<option value="0">宏帆</option>-->
+                                <!--<option value="1">宏帆</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="shop_state" class="am-u-sm-2 am-form-label">会员卡型</label>
                         <div class="am-u-sm-10">
-                            <select id="shop_state">
-                                <option value>请选择</option>
-                                <option value="0">1</option>
-                                <option value="1">2</option>
+                            <select id="shop_state" name="card">
+                                <option value="">请选择</option>
+                                <?php foreach($cards as $val){?>
+                                <option value="<?php echo $val['id'];?>"><?php echo $val['name']?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-2 am-form-label">性别</label>
                         <div class="am-u-sm-10">
-                            <select id="source_state">
+                            <select id="source_state" name="gender">
                                 <option value>请选择</option>
-                                <option value="0">男</option>
-                                <option value="1">女</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="shop_block" class="am-u-sm-2 am-form-label">会员状态</label>
                         <div class="am-u-sm-10">
-                            <select id="shop_block">
+                            <select id="shop_block" name="state">
                                 <option value>请选择</option>
-                                <option value="0">冻结</option>
-                                <option value="1">正常</option>
+                                <option value="0">正常</option>
+                                <option value="1">已屏蔽</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-2 am-form-label">会员分组</label>
                         <div class="am-u-sm-10">
-                            <select id="source_state">
-                                <option value>请选择</option>
-                                <option value="0">F1</option>
-                                <option value="1">F2</option>
-                                <option value="2">F3</option>
-                                <option value="3">F4</option>
+                            <select id="source_state" name="gid">
+                                <option value=''>请选择</option>
+                                <?php foreach($group as $v){?>
+                                <option value="<?php echo $v['gid'];?>"><?php echo $v['group_name']?></option>
+                                <?php }?>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-2 am-form-label">关键字</label>
                         <div class="am-u-sm-10">
-                            <input type="text" placeholder="性别 年龄 手机号">
+                            <input type="text" placeholder="姓名 昵称 手机号" name="q">
                         </div>
                     </div>
                     <div class="am-form-group am-text-center">
@@ -210,7 +210,7 @@
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                    <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> <a href="<?php echo base_url().'member/member/addMember';?>">新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 批量放入分组</button>
+                                    <!--<button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 批量放入分组</button>-->
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
@@ -224,47 +224,50 @@
                                     <th class="table-check"><input type="checkbox"></th>
                                     <th class="member_name">姓名</th>
                                     <th class="member_id">昵称</th>
-                                    <th>年龄</th>
-                                    <th class="member_name">卡号</th>
-                                    <th class="member_type">会员卡类型</th>
-                                    <th class="member_type">手机号</th>
-                                    <th class="member_yetai">所在商场</th>
-                                    <th class="member_group">组别</th>
+                                    <th>电话</th>
+                                    <th class="member_name">QQ</th>
+                                    <th class="member_type">邮箱</th>
+                                    <th class="member_group">会员组</th>
                                     <th class="member_sex">性别</th>
                                     <th class="member_jifen">会员积分</th>
-                                    <th>开卡方式</th>
-                                    <th>开卡时间</th>
-                                    <th>创建时间</th>
+                                    <th>注册时间</th>
                                     <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                            <?php if(!empty($users)){?>
+                                <?php foreach($users as $value):?>
                                 <tr class="gradeX">
-                                    <td><input type="checkbox"></td>
-                                    <td>xxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td><input type="checkbox" name='id[]' value="<?php echo $value['userid']?>"></td>
+                                    <td><?php echo $value['username']?></td>
+                                    <td class="am-text-middle"><?php echo $value['nickname']?></td>
+                                    <td class="am-text-middle"><?php echo $value['phone']?></td>
+                                    <td class="am-text-middle"><?php echo $value['qq']?></td>
+                                    <td class="am-text-middle"><?php echo $value['email']?></td>
+                                    <td class="am-text-middle"><?php echo group_name($value['gid']);?></td>
+                                    <td class="am-text-middle"><?php echo $value['gender']?></td>
+                                    <td class="am-text-middle"><?php echo $value['intergral']?></td>
+                                    <td class="am-text-middle"><?php echo $value['create_time']?></td>
                                     <td class="am-text-middle">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success am-btn-xs">正常</button>
+                                    	<?php if($value['state'] == 1):?>
+                                   		<span style="color:red;">被冻结</span>
+	                                    <?php else:?>
+  										<span style="color:#5eb95e;">正常</span>
+	                                    <?php endif;?>
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="javascript:;" class="tpl-table-black-operation-set">
+                                        <?php if($value['state'] == 1):?>
+                                            <a href="<?php echo base_url('member/member/up_user_state/2/'.$value['userid']);?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-gear" ></i> 解除冻结
+                                            </a>
+                                              <?php else:?>
+  										  	<a href="<?php echo base_url('member/member/up_user_state/1/'.$value['userid']);?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-gear" ></i> 冻结
                                             </a>
-                                            <a href="<?php echo base_url().'member/member/editMember';?>">
+	                                    	<?php endif;?>
+                                            <a href="<?php echo base_url().'member/member/editMember/'.$value['userid'];?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
@@ -272,7 +275,8 @@
                                             </a>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr><?php endforeach;?>
+                              
                                 <!-- 删除弹框 -->
                                             <div class="am-modal am-modal-confirm" tabindex="-1" id="delete1">
                                               <div class="am-modal-dialog">
@@ -287,20 +291,15 @@
                                               </div>
                                             </div>
                                 <!-- more data -->
+                            <?php }else{?>
+                                <th colspan="16" style="text-align:center;">暂无用户</th>
+                            <?php }?>
                             </tbody>
                         </table>
                     </div>
                     <div class="am-u-lg-12 am-cf">
                         <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
+                        	<?php echo $page;?>
                         </div>
                     </div>
                 </div>
