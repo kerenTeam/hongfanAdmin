@@ -133,102 +133,75 @@
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
-                <div class="row">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>新增商家</small></div>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>新增商家</small></div>
+        </div>
+    </div>
+</div>
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商家信息</div>
+                        <div class="widget-title  am-cf">商家基础信息</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-
                             <div class="am-form-group">
-                                <label for="doc-vld-name-2">用户名 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-name-2" minlength="2" placeholder="输入用户名（至少 2 个字符）" required/>
+                                <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
+                                <input type="text" id="doc-vld-name-1" minlength="2" value="宏帆广场" readonly required />
                             </div>
                             <div class="am-form-group">
-                                <label for="doc-vld-528">手机号 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-528" class="js-pattern-mobile" placeholder="输入手机号" required/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-email-2">邮箱：</label>
-                                <input type="email" id="doc-vld-email-2" placeholder="输入邮箱"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-age-2">年龄：</label>
-                                <input type="number" class=""  id="doc-vld-age-2" placeholder="输入年龄  18-120" min="18" max="120"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label>性别： </label>
-                                <label class="am-radio-inline">
-                                    <input type="radio"  value="" name="docVlGender"> 男
-                                </label>
-                                <label class="am-radio-inline">
-                                    <input type="radio" name="docVlGender"> 女
-                                </label>
-                                <label class="am-radio-inline">
-                                    <input type="radio" name="docVlGender"> 其他
-                                </label>
-                            </div>
-
-                        </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                             <div class="am-form-group">
-                                <label for="doc-select-1">会员组 <span class="red">*</span>：</label>
-                                <select id="doc-select-1" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
-                                </select>
-                                <span class="am-form-caret"></span>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-ta-2">学历：</label>
+                                <label>经营品牌：</label>
                                 <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value=>输入查找/选择</option>
-                                    <option value="0">本科</option>
-                                    <option value="1">研究生以上</option>
-                                    <option value="2">本科以下</option>
+                                    <option value="0">xxxx</option>
+                                    <option value="1">xxxx</option>
+                                    <option value="2">xxxx</option>
                                 </select>
                             </div>
                             <div class="am-form-group">
-                                <label class="am-form-label">爱好：</label>
-                                <label class="am-checkbox-inline">
-                                    <input type="checkbox" value="电影" name="docVlCb" minchecked="2" maxchecked="4"> 电影
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="checkbox" value="交友" name="docVlCb"> 交友
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="checkbox" value="美食" name="docVlCb"> 美食
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="checkbox" value="逛街" name="docVlCb"> 逛街
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="checkbox" value="运动" name="docVlCb"> 运动
-                                </label>
+                                <label for="Name">商家名称 ：</label>
+                                <input type="text" id="Name" value=""/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">英文名称 ：</label>
+                                <input type="text" id="englishName" value=""/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-528">开业时间 ：</label>
+                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                  <input type="text" class="am-form-field" placeholder="日历组件" readonly>
+                                  <span class="am-input-group-btn am-datepicker-add-on">
+                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                                  </span>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="oneType">一级业态：</label>
+                                <select id="oneType">
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">选项一...</option>
+                                    <option value="option2">选项二.....</option>
+                                    <option value="option3">选项三........</option>
+                                </select>
+                            </div>
+                             <div class="am-form-group">
+                                <label for="oneType">二级业态：</label>
+                                <select id="oneType">
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">选项一...</option>
+                                    <option value="option2">选项二.....</option>
+                                    <option value="option3">选项三........</option>
+                                </select>
                             </div>
                         </div>
-
-                    </div>
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">会员卡信息</div>
-                    </div>
-                    <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                        <div class="am-form-group">
-                                <label for="doc-select-1">会员卡类型 <span class="red">*</span>：</label>
-                                <select id="doc-select-1" required>
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                            <div class="am-form-group">
+                                <label for="shopType">商家类型 <span class="red">*</span>：</label>
+                                <select id="shopType" required>
                                     <option value="">-=请选择一项=-</option>
                                     <option value="option1">选项一...</option>
                                     <option value="option2">选项二.....</option>
@@ -236,36 +209,63 @@
                                 </select>
                                 <span class="am-form-caret"></span>
                             </div>
-                             <div class="am-form-group">
-                                <label for="doc-vld-name-2">会员卡号 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-name-2" minlength="2" required/>
+                            <div class="am-form-group">
+                                <label for="shopState">营业状态 </label>
+                                <select id="shopState">
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">营业中</option>
+                                    <option value="option2">装修中</option>
+                                    <option value="option3">停止营业</option>
+                                    <option value="option3">即将营业</option>
+                                </select>
                             </div>
                             <div class="am-form-group">
-                                <label for="doc-vld-name-2">会员积分：</label>
-                                <input type="number" id="doc-vld-name-2" required/>
-                            </div>
-                        </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                        <div class="am-form-group">
-                                <label for="doc-select-1">证件类型：</label>
-                                <select id="doc-select-1">
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">身份证</option>
-                                    <option value="option2">军官证</option>
-                                    <option value="option3">护照</option>
-                                    <option value="option3">其他</option>
+                                <label for="shopFloor">所在楼层：</label>
+                                <select id="shopFloor">
+                                    <option value="0">F1</option>
+                                    <option value="1">F2</option>
+                                    <option value="2">F3</option>
+                                    <option value="3">F4</option>
+                                    <option value="4">F5</option>
                                 </select>
-                                <span class="am-form-caret"></span>
                             </div>
-                             <div class="am-form-group">
-                                <label for="doc-vld-name-2">证件号：</label>
-                                <input type="text" id="doc-vld-name-2"/>
+                            <div class="am-form-group">
+                                    <label for="shopFloor">营业时间：</label>
+                                    <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
+                                      <p>开始日期应小于结束日期！</p>
+                                    </div>
+                                    <div class="am-g">
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                                      </div>
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                                      </div>
+                                    </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="area">面积/平方米</label>
+                                <input type="number" class=""  id="area" min="0"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="comments">当前评价</label>
+                                <input type="number" class=""  id="comments" placeholder="0" min="0"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令</label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="1" name="docVlCb"> 是
+                                </label>
+                                <label class="am-checkbox-inline">
+                                    <input type="radio" value="0" name="docVlCb"> 否
+                                </label>
                             </div>
                         </div>
                     </div>
-                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
-                        </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -275,8 +275,6 @@
 </div>
 </div>
 <script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
-<script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
