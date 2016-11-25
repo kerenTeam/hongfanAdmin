@@ -1,0 +1,458 @@
+<?php $this->load->view('common.html');?>
+<script src="assets/js/echarts.min.js"></script>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo base_url().'admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'moll/moll';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础配置
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'moll/moll/baseInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础信息
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'moll/moll/mollBrief';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'moll/moll/floorInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'moll/moll/yetai';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>" class="active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
+                </a>
+            </li>
+        </ul>
+    </li> -->
+    <li class="sidebar-nav-link">
+        <a href="calendar.html">
+            <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="form.html">
+            <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="sign-up.html">
+            <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员列表 <small>会员详情</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
+            <div class="widget am-cf" style="min-height: 500px;">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">会员简介</div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog"></a>
+                    </div>
+                </div>
+                <div class="widget-body  widget-body-lg am-text-center">
+                    <img class="achievement-image" src="assets/img/user02.png" alt="">
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">昵称： <span class="black">xxxxx</span></label>
+                        <label class="am-u-sm-6 am-form-label">性别： <span class="black">女</span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">用户名称： <span class="black">xxxx</span></label>
+                        <label class="am-u-sm-6 am-form-label">用户密码： <span class="black">xxxx</span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">电话号码： <span class="black">xxxx</span></label>
+                        <label class="am-u-sm-6 am-form-label">邮箱/QQ: <span class="black">xxxx</span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-4 am-form-label">通信口令： <span class="black">xxxx</span></label>
+                        <label class="am-u-sm-4 am-form-label">优惠券：<span class="black">3张</span></label>
+                        <label class="am-u-sm-4 am-form-label">积分： <span class="black">200分</span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-12 am-form-label">支付宝账号： <span class="black">1425302858@qq.com</span></label>
+                        <label class="am-u-sm-12 am-form-label">微信号：<span class="black">xccadfadasd</span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-12 am-form-label">银联：
+                            <span class="black" style="display: inline-block;width: 80%;vertical-align: top;">
+                                建设银行 15588888888888888
+                                <br>
+                            建设银行 45878455558888888</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
+        <div class="widget am-cf" style="min-height: 500px;">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">积分记录</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>说明</th>
+                            <th>时间</th>
+                            <th>积分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>用于xxxxxx兑换商品</td>
+                            <td>2016-09-26 10:00:00</td>
+                            <td>
+                                -300
+                            </td>
+                        </tr>
+                        <!-- more data -->
+                    </tbody>
+                </table>
+                <!-- 分页 -->
+                <div class="am-u-lg-12 am-cf">
+                    <div class="am-fr">
+                        <ul class="am-pagination tpl-pagination">
+                            <li class="am-disabled"><a href="#">«</a></li>
+                            <li class="am-active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">»</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content">
+<div class="row">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+        <div class="widget am-cf">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">用户地址</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact am-table-bordered tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>联系人</th>
+                            <th>手机号</th>
+                            <th>邮编</th>
+                            <th>地址</th>
+                            <th>时间</th>
+                            <th>是否默认</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>省份 城市 区县 详细地址</td>
+                            <td>xxxxxx</td>
+                            <td>否</td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>否</td>
+                        </tr>
+                        <tr class="gradeX">
+                            <td>1</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>xxxxxx</td>
+                            <td>否</td>
+                        </tr>
+                        <!-- more data -->
+                    </tbody>
+                </table>
+                        <!-- 分页 -->
+                                <div class="am-u-lg-12 am-cf">
+                                    <div class="am-fr">
+                                        <ul class="am-pagination tpl-pagination">
+                                            <li class="am-disabled"><a href="#">«</a></li>
+                                            <li class="am-active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">5</a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+        <div class="widget am-cf">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">会员消息</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>作者</th>
+                            <th>文章标题</th>
+                            <th>内容</th>
+                            <th>发布时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="gradeX">
+                            <td>111</td>
+                            <td>张鹏飞</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>2016-09-26</td>
+                        </tr>
+                         <tr class="gradeX">
+                            <td>111</td>
+                            <td>张鹏飞</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>2016-09-26</td>
+                        </tr>
+                         <tr class="gradeX">
+                            <td>111</td>
+                            <td>张鹏飞</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>2016-09-26</td>
+                        </tr>
+                         <tr class="gradeX">
+                            <td>111</td>
+                            <td>张鹏飞</td>
+                            <td>xxxxxx</td>
+                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
+                            <td>2016-09-26</td>
+                        </tr>
+                        <!-- more data -->
+                    </tbody>
+                </table>
+                 <div class="am-u-lg-12 am-cf">
+                        <div class="am-fr">
+                            <ul class="am-pagination tpl-pagination">
+                                <li class="am-disabled"><a href="#">«</a></li>
+                                <li class="am-active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -19,7 +19,9 @@ class singleShop extends CI_Controller {
     	 $this->load->view('shop/shopAdmin.html');
     }
     //商铺基础信息
-    function shop
+    function shopBaseInfo(){
+    	$this->load->view('shop/shopBaseInfo.html');
+    }
 
 
 }

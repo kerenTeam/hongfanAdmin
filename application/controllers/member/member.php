@@ -42,6 +42,10 @@ class member extends default_Controller {
     function memberCard(){
         $this->load->view('member/memberCard.html');
     }
+    //会员详情管理
+    function memberInfo(){
+        $this->load->view('member/memberInfo.html');
+    }
 
 
 }
