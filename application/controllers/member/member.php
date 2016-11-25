@@ -28,6 +28,11 @@ class member extends CI_Controller {
 
     	 $this->load->view('member/addMember.html');
     }
+    //编辑会员
+    function editMember(){
+
+         $this->load->view('member/editMember.html');
+    }
     //会员卡管理
     function memberCard(){
         $this->load->view('member/memberCard.html');

@@ -11,14 +11,14 @@
             <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+        <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo base_url().'shop/shop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/shop/addShop';?>" class="sub-active">
+                <a href="<?php echo base_url().'shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
                 </a>
             </li>
@@ -29,14 +29,14 @@
             <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
                 <a href="<?php echo base_url().'member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/addMember';?>">
+                <a href="<?php echo base_url().'member/member/addMember';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
@@ -135,7 +135,7 @@
 <div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>新增商家</small></div>
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>编辑会员</small></div>
                     </div>
                 </div>
             </div>
@@ -145,11 +145,10 @@
             <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商家信息</div>
+                        <div class="widget-title  am-cf">会员信息</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-
                             <div class="am-form-group">
                                 <label for="doc-vld-name-2">用户名 <span class="red">*</span>：</label>
                                 <input type="text" id="doc-vld-name-2" minlength="2" placeholder="输入用户名（至少 2 个字符）" required/>

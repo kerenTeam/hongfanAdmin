@@ -1,0 +1,319 @@
+<?php $this->load->view('common.html');?>
+
+
+ <!-- 菜单 -->
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-link">
+                    <a href="<?php echo base_url().'admin';?>">
+                        <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'shop/shop';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title active">
+                        <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/memberGroup';?>" class="sub-active">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/addMember';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/memberList';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/memberCard';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/addMember';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/memberList';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-link">
+                            <a href="<?php echo base_url().'member/member/memberList';?>">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
+                            </a>
+                        </li>
+                    </ul>
+                </li> -->
+                <li class="sidebar-nav-link">
+                    <a href="calendar.html">
+                        <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="form.html">
+                        <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
+
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="chart.html">
+                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="javascript:;" class="sidebar-nav-sub-title">
+                        <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                    </a>
+                    <ul class="sidebar-nav sidebar-nav-sub">
+                        <li class="sidebar-nav-link">
+                            <a href="table-list.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                            </a>
+                        </li>
+
+                        <li class="sidebar-nav-link">
+                            <a href="table-list-img.html">
+                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="sign-up.html">
+                        <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="login.html">
+                        <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="login.html">
+                        <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+                    </a>
+                </li>
+                <li class="sidebar-nav-link">
+                    <a href="404.html">
+                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+
+            <div class="container-fluid am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>会员组</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-content am-cf">
+
+                <div class="row am-cf">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
+                        <div class="tpl-user-card am-text-center widget-body-lg">
+                            <div class="tpl-user-card-title">
+                                新增会员组
+                            </div>
+                           <form class="am-form tpl-form-line-form">
+                                <div class="am-form-group">
+                                    <label for="user-name" class="am-u-sm-3 am-form-label">会员组名</label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" class="tpl-form-input" id="user-name" placeholder="请输入会员组名" minlength="2" required>
+                                        <small>请填写标题文字至少2字。</small>
+                                    </div>
+                                </div>
+                                <div class="am-form-group am-btn-group-xs">
+                                    <button type="reset" class="am-btn am-btn-default">重置</button>
+                                    <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 widget-margin-bottom-lg">
+
+                        <div class="widget am-cf widget-body-lg">
+
+                            <div class="widget-body  am-fr">
+                                <div class="am-scrollable-horizontal ">
+                                    <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
+                                        <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>会员组名</th>
+                                                <th>创建时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="gradeX">
+                                                <td>01</td>
+                                                <td>0级</td>
+                                                <td>2016-09-26</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;" data-am-modal="{target: '#edit1'}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- 编辑模态框 -->
+                                            <div class="am-modal am-modal-no-btn" tabindex="-1" id="edit1">
+                                              <div class="am-modal-dialog">
+                                                <div class="am-modal-hd">编辑会员组名称
+                                                  <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                                                </div>
+                                                <div class="am-modal-bd">
+                                                    <form action="" class="am-form tpl-form-line-form">
+                                                        <div class="am-form-group">
+                                                          <label for="group-name">用户名：</label>
+                                                          <input type="text" id="group-name" value="张鹏飞" minlength="2" required/>
+                                                          <small>请填写标题文字至少2字。</small>
+                                                        </div>
+                                                        <div class="am-form-group am-btn-group-xs">
+                                                            <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                                                            <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <!-- 删除弹框 -->
+                                            <div class="am-modal am-modal-confirm" tabindex="-1" id="delete1">
+                                              <div class="am-modal-dialog">
+                                                <div class="am-modal-hd">删除提示</div>
+                                                <div class="am-modal-bd">
+                                                  <p class="black">你，确定要删除这条记录吗？</p>
+                                                </div>
+                                                <div class="am-modal-footer">
+                                                  <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                                  <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                        <tr class="gradeX">
+                                                <td>02</td>
+                                                <td>张飞</td>
+                                                <td>2016-09-26</td>
+                                                <td>
+                                                    <div class="tpl-table-black-operation">
+                                                        <a href="javascript:;" data-am-modal="{target: '#edit2'}">
+                                                            <i class="am-icon-pencil"></i> 编辑
+                                                        </a>
+                                                        <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete2'}">
+                                                            <i class="am-icon-trash"></i> 删除
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <!-- 编辑模态框 -->
+                                            <div class="am-modal am-modal-no-btn" tabindex="-1" id="edit2">
+                                              <div class="am-modal-dialog">
+                                                <div class="am-modal-hd">编辑会员组名称
+                                                  <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+                                                </div>
+                                                <div class="am-modal-bd">
+                                                    <form action="" class="am-form tpl-form-line-form">
+                                                        <div class="am-form-group">
+                                                          <label for="group-name">用户名：</label>
+                                                          <input type="text" id="group-name" value="张飞" minlength="2" required/>
+                                                          <small>请填写标题文字至少2字。</small>
+                                                        </div>
+                                                        <div class="am-form-group am-btn-group-xs">
+                                                            <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                                                            <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <!-- 删除弹框 -->
+                                            <div class="am-modal am-modal-confirm" tabindex="-1" id="delete2">
+                                              <div class="am-modal-dialog">
+                                                <div class="am-modal-hd">删除提示</div>
+                                                <div class="am-modal-bd">
+                                                  <p class="black">你，确定要删除这条记录吗？</p>
+                                                </div>
+                                                <div class="am-modal-footer">
+                                                  <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                                  <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+                                                </div>
+                                              </div>
+                                            </div>
+
+
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="assets/js/amazeui.min.js"></script>
+    <script src="assets/js/amazeui.datatables.min.js"></script>
+    <script src="assets/js/dataTables.responsive.min.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+
+</html>

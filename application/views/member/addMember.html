@@ -1,371 +1,281 @@
 <?php $this->load->view('common.html');?>
-
-
- <!-- 菜单 -->
-            <ul class="sidebar-nav">
-                <li class="sidebar-nav-link">
-                    <a href="<?php echo base_url().'admin';?>" class="active">
-                        <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title">
-                        <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-                    </a>
-                    <ul class="sidebar-nav sidebar-nav-sub">
-                        <li class="sidebar-nav-link">
-                            <a href="<?php echo base_url().'shop/shop';?>">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
-                            </a>
-                        </li>
-
-                        <li class="sidebar-nav-link">
-                            <a href="table-list-img.html">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-link">
-                            <a href="table-list-img.html">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title">
-                        <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-                    </a>
-                    <ul class="sidebar-nav sidebar-nav-sub">
-                        <li class="sidebar-nav-link">
-                            <a href="<?php echo base_url().'member/addMember';?>">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
-                            </a>
-                        </li>
-
-                        <li class="sidebar-nav-link">
-                            <a href="<?php echo base_url().'member/memberList';?>">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-link">
-                            <a href="<?php echo base_url().'member/memberCard';?>">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="calendar.html">
-                        <i class="am-icon-calendar sidebar-nav-link-logo"></i> 日历
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="form.html">
-                        <i class="am-icon-wpforms sidebar-nav-link-logo"></i> 表单
-
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="chart.html">
-                        <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="javascript:;" class="sidebar-nav-sub-title">
-                        <i class="am-icon-table sidebar-nav-link-logo"></i> 数据列表
-                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-                    </a>
-                    <ul class="sidebar-nav sidebar-nav-sub">
-                        <li class="sidebar-nav-link">
-                            <a href="table-list.html">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 文字列表
-                            </a>
-                        </li>
-
-                        <li class="sidebar-nav-link">
-                            <a href="table-list-img.html">
-                                <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 图文列表
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="sign-up.html">
-                        <i class="am-icon-clone sidebar-nav-link-logo"></i> 注册
-                        <span class="am-badge am-badge-secondary sidebar-nav-link-logo-ico am-round am-fr am-margin-right-sm">6</span>
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="login.html">
-                        <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
-                    </a>
-                </li>
-                <li class="sidebar-nav-link">
-                    <a href="404.html">
-                        <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
-        <!-- 内容区域 -->
-        <div class="tpl-content-wrapper">
-
-            <div class="container-fluid am-cf">
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo base_url().'admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
+                </a>
+            </li>
+        </ul>
+    </li> -->
+    <li class="sidebar-nav-link">
+        <a href="calendar.html">
+            <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="form.html">
+            <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="sign-up.html">
+            <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 管理中心 <small>宏帆广场</small></div>
-                    </div>
-                    <div class="am-u-lg-3 tpl-index-settings-button">
-                        <button type="button" class="page-header-button"><span class="am-icon-paint-brush"></span> 设置</button>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row-content am-cf">
-                <div class="row  am-cf">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">月度财务收支计划</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body am-fr">
-                                <div class="am-fl">
-                                    <div class="widget-fluctuation-period-text">
-                                        ￥61746.45
-                                        <button class="widget-fluctuation-tpl-btn">
-                        <i class="am-icon-calendar"></i>
-                        更多月份
-                      </button>
-                                    </div>
-                                </div>
-                                <div class="am-fr am-cf">
-                                    <div class="widget-fluctuation-description-amount text-success" am-cf>
-                                        +￥30420.56
-
-                                    </div>
-                                    <div class="widget-fluctuation-description-text am-text-right">
-                                        8月份收入
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                        <div class="widget widget-primary am-cf">
-                            <div class="widget-statistic-header">
-                                本季度利润
-                            </div>
-                            <div class="widget-statistic-body">
-                                <div class="widget-statistic-value">
-                                    ￥27,294
-                                </div>
-                                <div class="widget-statistic-description">
-                                    本季度比去年多收入 <strong>2593元</strong> 人民币
-                                </div>
-                                <span class="widget-statistic-icon am-icon-credit-card-alt"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
-                        <div class="widget widget-purple am-cf">
-                            <div class="widget-statistic-header">
-                                本季度利润
-                            </div>
-                            <div class="widget-statistic-body">
-                                <div class="widget-statistic-value">
-                                    ￥27,294
-                                </div>
-                                <div class="widget-statistic-description">
-                                    本季度比去年多收入 <strong>2593元</strong> 人民币
-                                </div>
-                                <span class="widget-statistic-icon am-icon-support"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row am-cf">
-                    <div class="am-u-sm-12 am-u-md-8">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">月度财务收支计划</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body-md widget-body tpl-amendment-echarts am-fr" id="tpl-echarts">
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-4">
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">专用服务器负载</div>
-                                <div class="widget-function am-fr">
-                                    <a href="javascript:;" class="am-icon-cog"></a>
-                                </div>
-                            </div>
-                            <div class="widget-body widget-body-md am-fr">
-
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar" style="width: 15%"></div>
-                                </div>
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar  am-progress-bar-warning" style="width: 75%"></div>
-                                </div>
-                                <div class="am-progress-title">CPU Load <span class="am-fr am-progress-title-more">28% / 100%</span></div>
-                                <div class="am-progress">
-                                    <div class="am-progress-bar am-progress-bar-danger" style="width: 35%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row am-cf">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
-                        <div class="tpl-user-card am-text-center widget-body-lg">
-                            <div class="tpl-user-card-title">
-                                禁言小张
-                            </div>
-                            <div class="achievement-subheading">
-                                月度最佳员工
-                            </div>
-                            <img class="achievement-image" src="assets/img/user07.png" alt="">
-                            <div class="achievement-description">
-                                禁言小张在
-                                <strong>30天内</strong> 禁言了
-                                <strong>200多</strong>人。
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 widget-margin-bottom-lg">
-
-                        <div class="widget am-cf widget-body-lg">
-
-                            <div class="widget-body  am-fr">
-                                <div class="am-scrollable-horizontal ">
-                                    <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
-                                        <thead>
-                                            <tr>
-                                                <th>文章标题</th>
-                                                <th>作者</th>
-                                                <th>时间</th>
-                                                <th>操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr class="gradeX">
-                                                <td>新加坡大数据初创公司 Latize 获 150 万美元风险融资</td>
-                                                <td>张鹏飞</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>自拍的“政治角色”：观众背对希拉里自拍合影表示“支持”</td>
-                                                <td>天纵之人</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="gradeX">
-                                                <td>关于创新管理，我想和你当面聊聊。</td>
-                                                <td>王宽师</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>究竟是趋势带动投资，还是投资引领趋势？</td>
-                                                <td>着迷</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="even gradeC">
-                                                <td>Docker领域再添一员，网易云发布“蜂巢”，加入云计算之争</td>
-                                                <td>醉里挑灯看键</td>
-                                                <td>2016-09-26</td>
-                                                <td>
-                                                    <div class="tpl-table-black-operation">
-                                                        <a href="javascript:;">
-                                                            <i class="am-icon-pencil"></i> 编辑
-                                                        </a>
-                                                        <a href="javascript:;" class="tpl-table-black-operation-del">
-                                                            <i class="am-icon-trash"></i> 删除
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <!-- more data -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>新增会员</small></div>
                     </div>
                 </div>
             </div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">会员信息</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                            <div class="am-form-group">
+                                <label for="doc-vld-name-2">用户名 <span class="red">*</span>：</label>
+                                <input type="text" id="doc-vld-name-2" minlength="2" placeholder="输入用户名（至少 2 个字符）" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-528">手机号 <span class="red">*</span>：</label>
+                                <input type="text" id="doc-vld-528" class="js-pattern-mobile" placeholder="输入手机号" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-email-2">邮箱：</label>
+                                <input type="email" id="doc-vld-email-2" placeholder="输入邮箱"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-age-2">年龄：</label>
+                                <input type="number" class=""  id="doc-vld-age-2" placeholder="输入年龄  18-120" min="18" max="120"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label>性别： </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio"  value="" name="docVlGender"> 男
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="docVlGender"> 女
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="docVlGender"> 其他
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                             <div class="am-form-group">
+                                <label for="doc-select-1">会员组 <span class="red">*</span>：</label>
+                                <select id="doc-select-1" required>
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">选项一...</option>
+                                    <option value="option2">选项二.....</option>
+                                    <option value="option3">选项三........</option>
+                                </select>
+                                <span class="am-form-caret"></span>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-ta-2">学历：</label>
+                                <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                    <option value=>输入查找/选择</option>
+                                    <option value="0">本科</option>
+                                    <option value="1">研究生以上</option>
+                                    <option value="2">本科以下</option>
+                                </select>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-form-label">爱好：</label>
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" value="电影" name="docVlCb" minchecked="2" maxchecked="4"> 电影
+                                </label>
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" value="交友" name="docVlCb"> 交友
+                                </label>
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" value="美食" name="docVlCb"> 美食
+                                </label>
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" value="逛街" name="docVlCb"> 逛街
+                                </label>
+                                <label class="am-checkbox-inline">
+                                    <input type="checkbox" value="运动" name="docVlCb"> 运动
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">会员卡信息</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                        <div class="am-form-group">
+                                <label for="doc-select-1">会员卡类型 <span class="red">*</span>：</label>
+                                <select id="doc-select-1" required>
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">选项一...</option>
+                                    <option value="option2">选项二.....</option>
+                                    <option value="option3">选项三........</option>
+                                </select>
+                                <span class="am-form-caret"></span>
+                            </div>
+                             <div class="am-form-group">
+                                <label for="doc-vld-name-2">会员卡号 <span class="red">*</span>：</label>
+                                <input type="text" id="doc-vld-name-2" minlength="2" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-name-2">会员积分：</label>
+                                <input type="number" id="doc-vld-name-2" required/>
+                            </div>
+                        </div>
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                        <div class="am-form-group">
+                                <label for="doc-select-1">证件类型：</label>
+                                <select id="doc-select-1">
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">身份证</option>
+                                    <option value="option2">军官证</option>
+                                    <option value="option3">护照</option>
+                                    <option value="option3">其他</option>
+                                </select>
+                                <span class="am-form-caret"></span>
+                            </div>
+                             <div class="am-form-group">
+                                <label for="doc-vld-name-2">证件号：</label>
+                                <input type="text" id="doc-vld-name-2"/>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        </div>
+                </div>
+            </form>
         </div>
     </div>
-    </div>
-    <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/amazeui.datatables.min.js"></script>
-    <script src="assets/js/dataTables.responsive.min.js"></script>
-    <script src="assets/js/app.js"></script>
-
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
-
 </html>
