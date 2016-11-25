@@ -16,7 +16,7 @@ class shop extends CI_Controller {
     //商家 列表主页
     function index()
     {
-    	 $this->load->view('shop/shop.html');
+    	 $this->load->view('shop/shopList.html');
     }
     //商家管理
     function shop_admin(){
