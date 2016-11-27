@@ -142,7 +142,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo base_url('member/member/addMember');?>" method="post" data-am-validator>
+            <form class="am-form" action="<?php echo base_url('member/member/add_user');?>" method="post" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">会员信息</div>
@@ -179,7 +179,7 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
                                 <label for="doc-vld-email-2">会员等级<span class="red">*</span>：</label>
-                                <input type="email" id="doc-vld-email-2" name="level" placeholder="输入会员等级" required/>
+                                <input type="text" name="level" placeholder="输入会员等级" required/>
                             </div>
                              <div class="am-form-group">
                                 <label for="doc-select-1">会员组 <span class="red">*</span>：</label>
@@ -195,6 +195,7 @@
                             <div class="am-form-group">
                                 <label for="doc-vld-email-2">积分：</label>
                                 <input type="number" id="doc-vld-email-2" name="intergral" placeholder="输入积分"/>
+
                             </div>
                             <div class="am-form-group">
                                 <label>性别： </label>
