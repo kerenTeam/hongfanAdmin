@@ -184,34 +184,36 @@
                     </div>
                 </div>
                 <div class="widget-body  widget-body-lg am-text-center">
+                    <?php if(empty($userinfo['avatar'])){?>
                     <img class="achievement-image" src="assets/img/user02.png" alt="">
+                    <?php }else{?>
+                    <img class="achievement-image" src="<?php echo $userinfo['avatar']?>" alt="">
+                    <?php }?>
                     <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">昵称： <span class="black">xxxxx</span></label>
-                        <label class="am-u-sm-6 am-form-label">性别： <span class="black">女</span></label>
+                        <label class="am-u-sm-6 am-form-label">昵称： <span class="black"><?php echo $userinfo['nickname']?></span></label>
+                        <label class="am-u-sm-6 am-form-label">性别： <span class="black"><?php echo $userinfo['gender']?></span></label>
                     </div>
                     <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">用户名称： <span class="black">xxxx</span></label>
-                        <label class="am-u-sm-6 am-form-label">用户密码： <span class="black">xxxx</span></label>
+                        <label class="am-u-sm-6 am-form-label">用户名称： <span class="black"><?php echo $userinfo['username']?></span></label>
+                        <label class="am-u-sm-6 am-form-label">用户密码： <span class="black"><?php echo $userinfo['password']?></span></label>
                     </div>
                     <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">电话号码： <span class="black">xxxx</span></label>
-                        <label class="am-u-sm-6 am-form-label">邮箱/QQ: <span class="black">xxxx</span></label>
+                        <label class="am-u-sm-6 am-form-label">电话号码： <span class="black"><?php echo $userinfo['phone']?></span></label>
+                        <label class="am-u-sm-6 am-form-label">邮箱/QQ: <span class="black"> <?php echo $userinfo['qq'].' / '.$userinfo['email']?></span></label>
                     </div>
                     <div class="am-cf memberBrief">
-                        <label class="am-u-sm-4 am-form-label">通信口令： <span class="black">xxxx</span></label>
-                        <label class="am-u-sm-4 am-form-label">优惠券：<span class="black">3张</span></label>
-                        <label class="am-u-sm-4 am-form-label">积分： <span class="black">200分</span></label>
+                        <label class="am-u-sm-4 am-form-label">通信口令： <span class="black"><?php echo $userinfo['passport']?></span></label>
+                        <!--<label class="am-u-sm-4 am-form-label">优惠券：<span class="black"><?php echo $userinfo['nickname']?></span></label>-->
+                        <label class="am-u-sm-4 am-form-label">积分： <span class="black"><?php echo $userinfo['intergral']?></span></label>
                     </div>
                     <div class="am-cf memberBrief">
-                        <label class="am-u-sm-12 am-form-label">支付宝账号： <span class="black">1425302858@qq.com</span></label>
-                        <label class="am-u-sm-12 am-form-label">微信号：<span class="black">xccadfadasd</span></label>
+                        <label class="am-u-sm-12 am-form-label">支付宝账号： <span class="black"><?php echo $userinfo['alipay']?></span></label>
+                        <label class="am-u-sm-12 am-form-label">微信号：<span class="black"><?php echo $userinfo['wechat']?></span></label>
                     </div>
                     <div class="am-cf memberBrief">
                         <label class="am-u-sm-12 am-form-label">银联：
                             <span class="black" style="display: inline-block;width: 80%;vertical-align: top;">
-                                建设银行 15588888888888888
-                                <br>
-                            建设银行 45878455558888888</span>
+                               <?php echo $userinfo['bank']?>
                         </label>
                     </div>
                 </div>
@@ -237,54 +239,20 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php if(!empty($inter)){?>
+                        <?php foreach($inter as $key=>$v):?>
                         <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
+                            <td><?php echo $key+1;?></td>
+                            <td><?php echo $v['notice']?></td>
+                            <td><?php echo $v['create_time'];?></td>
                             <td>
-                                -300
+                                <?php echo $v['intergral'];?>
                             </td>
                         </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
-                            <td>
-                                -300
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
-                            <td>
-                                -300
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
-                            <td>
-                                -300
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
-                            <td>
-                                -300
-                            </td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>用于xxxxxx兑换商品</td>
-                            <td>2016-09-26 10:00:00</td>
-                            <td>
-                                -300
-                            </td>
-                        </tr>
+                        <?php endforeach;?>
+                    <?php }else{?>
+                        <th colspan="5" style="text-align:center;">暂时没有记录</th>
+                       <?php }?>
                         <!-- more data -->
                     </tbody>
                 </table>
@@ -330,34 +298,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                    <?php if(!empty($address)){?>
+                        <?php foreach($address as $k=>$v):?>
                         <tr class="gradeX">
-                            <td>1</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>省份 城市 区县 详细地址</td>
-                            <td>xxxxxx</td>
-                            <td>否</td>
+                            <td><?php echo $k+1;?></td>
+                            <td><?php echo $v['person']?></td>
+                            <td><?php echo $v['phone'];?></td>
+                            <td><?php echo $v['postcode'];?></td>
+                            <td><?php echo $v['province'];echo $v['city'];echo $v['area'];echo $v['address'];?></td>
+                            <td><?php echo $v['create_time'];?></td>
+                            <td><?php if($v['state'] == 1){echo "是";}else{echo "否";}?></td>
                         </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>否</td>
-                        </tr>
-                        <tr class="gradeX">
-                            <td>1</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>xxxxxx</td>
-                            <td>否</td>
-                        </tr>
-                        <!-- more data -->
+                    <?php endforeach;?>
+                    <?php }else{?>
+                        <th colspan="7" style="text-align:center;">暂无地址记录</th>
+                    <?php }?>
                     </tbody>
                 </table>
                         <!-- 分页 -->
@@ -390,41 +345,27 @@
                     <thead>
                         <tr>
                             <th>编号</th>
-                            <th>作者</th>
+                            <!--<th>发送人</th>-->
                             <th>文章标题</th>
                             <th>内容</th>
                             <th>发布时间</th>
                         </tr>
                     </thead>
                     <tbody>
+                    <?php if(!empty($message)){?>
+                        <?php foreach($message as $k=>$v):?>
                         <tr class="gradeX">
-                            <td>111</td>
-                            <td>张鹏飞</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>2016-09-26</td>
+                            <td><?php echo $k+1;?></td>
+                            <!--<td><?php echo user_name($v['sender']);?></td>-->
+                            <td><?php echo $v['title'];?></td>
+                            <td><?php echo $v['content'];?></td>
+                            <td><?php echo $v['create_time'];?></td>
                         </tr>
-                         <tr class="gradeX">
-                            <td>111</td>
-                            <td>张鹏飞</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>2016-09-26</td>
-                        </tr>
-                         <tr class="gradeX">
-                            <td>111</td>
-                            <td>张鹏飞</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>2016-09-26</td>
-                        </tr>
-                         <tr class="gradeX">
-                            <td>111</td>
-                            <td>张鹏飞</td>
-                            <td>xxxxxx</td>
-                            <td>xxxxxxxxxxxxxxxxxxxxxxxxx</td>
-                            <td>2016-09-26</td>
-                        </tr>
+                        <?php endforeach;?>
+                    <?php }else{?>
+                        <th colspan="5" style="text-align:center;">暂无消息记录</th>
+                    <?php }?>
+
                         <!-- more data -->
                     </tbody>
                 </table>

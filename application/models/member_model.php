@@ -8,11 +8,8 @@ class member_model extends CI_Model{
     //用户分类表
     public $group = 'hf_user_member_group';
 
-
-
     function __construct()
     {
-        // Call the Model constructor
         parent::__construct();
     }
 
@@ -23,14 +20,21 @@ class member_model extends CI_Model{
         return $query->row_array();
     }
 
-    //获取用户列表
+    //根据用户id返回用户信息
+    function get_user_info($id){
+        $where['userid'] = $id;
+        $query = $this->db->where($where)->get($this->member);
+        return $query->row_array();
+    }
+
+    //获取所有用户数
     function get_users(){
         $query = $this->db->get($this->member);
         return $query->result_array();
     }
     //返回用户分页
     function get_user_page($off,$page){
-        $query = $this->db->limit($page,$off)->get($this->member);
+        $query = $this->db->limit($page,$off)->order_by('create_time','desc')->get($this->member);
         return $query->result_array();
     }
 
@@ -46,16 +50,32 @@ class member_model extends CI_Model{
         return $query->result_array();
     }
 
-
-    //根据查询内容返回用户
-
-
-
     //修改用户状态
     function edit_state($id,$arr){
     	$where['userid'] = $id;
     	$query = $this->db->where($where)->update($this->member,$arr);
     	return $query;
+    }
+
+    //新增用户操作
+    function add_user_member($data){
+        return $this->db->insert($this->member,$data);
+    }
+    //返回用户地址、积分记录、消息记录
+    function get_user_address($db,$id){
+        $where['userid'] = $id;
+        $query = $this->db->where($where)->order_by('create_time','desc')->get($db);
+        return $query->result_array();
+    }
+    //修改用资料
+    function edit_userinfo($userid,$data){
+        $where['userid'] = $userid;
+        return $this->db->where($where)->update($this->member,$data);
+    }
+
+    function del_member($id){
+        $where['userid'] = $id;
+        return $this->db->where($where)->delete($this->member);
     }
 
 
