@@ -73,6 +73,10 @@ class member extends default_Controller {
     {
          $this->load->view('member/memberGroup.html');
     }
+    //权限管理
+    function memberLimit(){
+        $this->load->view('member/memberLimit.html');
+    }
     //新增会员
     function addMember(){
          //获取会员卡类型
