@@ -234,7 +234,7 @@
                                     <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
                                       <p>开始日期应小于结束日期！</p>
                                     </div>
-                                    <div class="am-g">
+                                    <div class="am-g am-padding-xs">
                                       <div class="am-u-sm-6">
                                         <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
                                       </div>
@@ -277,4 +277,34 @@
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+</script>
 </html>
