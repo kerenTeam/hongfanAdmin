@@ -41,7 +41,7 @@ class login extends CI_Controller {
                     // 判断用户分组
 //                    switch ($user['group_Id']){
 //                        case 1:
-                           redirect( base_url('admin/index') );
+                           redirect( site_url('admin/index') );
 //                            break;
 //                        case 2:
 //                            break;

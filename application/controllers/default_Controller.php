@@ -12,7 +12,7 @@ class default_Controller extends CI_Controller
 		$this->load->helper('default_helper');
         //验证是否登陆
 		if(!isset($_SESSION['users'])){
-			echo "<script>alert('您还没有登陆！');window.location.href='".base_url('login/index')."';</script>";
+			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/login/index')."';</script>";
 			exit;
 		}
 

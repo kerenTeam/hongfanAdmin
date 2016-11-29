@@ -722,8 +722,150 @@ CREATE TABLE `hf_user_order` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+# Dump of table hf_mall_goods
+# ------------------------------------------------------------
+
+CREATE TABLE `hf_mall_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商城产品',
+  `catid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '栏目ID',
+  `sid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '所属商家',
+  `recommend` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '是否推荐 1是 0否',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '标题',
+  `introduce` varchar(255) NOT NULL DEFAULT '' COMMENT '简介',
+  `brand` varchar(100) NOT NULL DEFAULT '' COMMENT '品牌',
+  `price` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00' COMMENT '价格',
+  `step` mediumtext NOT NULL COMMENT '阶梯价格',
+  `amount` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '供货总量',
+  `unit` varchar(20) NOT NULL COMMENT '记录单位',
+  `tag` varchar(100) NOT NULL DEFAULT '' COMMENT '标签', 
+  `keyword` varchar(255) NOT NULL DEFAULT '' COMMENT '关键词',
+  `pptword` varchar(255) NOT NULL DEFAULT '' COMMENT '属性关键词',
+  `hits` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '点击次数',
+  `orders` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '订单数量',
+  `sales` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '销售数量',
+  `comments` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '评论数量',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '标题图1',
+  `thumb1` varchar(255) NOT NULL DEFAULT '' COMMENT '标题图2',
+  `thumb2` varchar(255) NOT NULL DEFAULT '' COMMENT '标题图3',
+  `n1` varchar(100) NOT NULL COMMENT '购买属性名1',
+  `n2` varchar(100) NOT NULL COMMENT '购买属性名2',
+  `n3` varchar(100) NOT NULL COMMENT '购买属性名3',
+  `v1` varchar(255) NOT NULL COMMENT '购买属性值1',
+  `v2` varchar(255) NOT NULL COMMENT '购买属性值2',
+  `v3` varchar(255) NOT NULL COMMENT '购买属性值3',
+  `express_1` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '快递ID1',
+  `express_name_1` varchar(100) NOT NULL COMMENT '快递名称1',
+  `fee_start_1` decimal(10,2) UNSIGNED NOT NULL COMMENT '快递起价1',
+  `fee_step_1` decimal(10,2) UNSIGNED NOT NULL COMMENT '快递价格递增1',
+  `cod` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '货到付款',
+  `truename` varchar(30) NOT NULL DEFAULT '' COMMENT '姓名/联系人',
+  `telephone` varchar(50) NOT NULL DEFAULT '' COMMENT '电话',
+  `mobile` varchar(50) NOT NULL DEFAULT '' COMMENT '手机',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '地址',
+  `email` varchar(50) NOT NULL DEFAULT '' COMMENT 'E-mail',
+  `qq` varchar(20) NOT NULL DEFAULT '' COMMENT 'QQ',
+  `ali` varchar(30) NOT NULL DEFAULT '' COMMENT '阿里旺旺',
+  `skype` varchar(30) NOT NULL DEFAULT '' COMMENT 'Skype',
+  `content` text NOT NULL COMMENT '图文详情',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+   PRIMARY KEY (`id`)
+)ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+# Dump of table hf_category
+# ------------------------------------------------------------
+
+CREATE TABLE `hf_category` (
+  `catid` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类栏目',
+  `moduleid` smallint(6) UNSIGNED NOT NULL DEFAULT '0' COMMENT '模块ID',
+  `catname` varchar(50) NOT NULL DEFAULT '' COMMENT '栏目名称',
+  `style` varchar(50) NOT NULL DEFAULT '' COMMENT '颜色',
+  `letter` varchar(4) NOT NULL DEFAULT '' COMMENT '字母索引',
+  `level` tinyint(1) UNSIGNED NOT NULL DEFAULT '1' COMMENT '级别',
+  `item` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT ' ',
+  `property` smallint(6) UNSIGNED NOT NULL DEFAULT '0' COMMENT '属性数量',
+  `parentid` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '上级ID',
+  `arrparentid` varchar(255) NOT NULL DEFAULT '' COMMENT '上级所有ID',
+  `child` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有子分类',
+  `arrchildid` text NOT NULL COMMENT '子分类所有ID',
+  `listorder` smallint(4) UNSIGNED NOT NULL DEFAULT '0' COMMENT '排序',
+  `seo_title` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO标题',
+  `seo_keywords` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO关键词',
+  `seo_description` varchar(255) NOT NULL DEFAULT '' COMMENT 'SEO描述',
+  `group_list` varchar(255) NOT NULL DEFAULT '' COMMENT '允许浏览栏目的会员组',
+  `group_show` varchar(255) NOT NULL DEFAULT '' COMMENT '允许浏览栏目信息内容的会员组',
+  `group_add` varchar(255) NOT NULL DEFAULT '' COMMENT '允许在栏目发布信息的会员组',
+  PRIMARY KEY (`catid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='栏目分类';
+
+
+# Dump of table hf_mall_order
+# ------------------------------------------------------------
+
+
+
+
+CREATE TABLE `hf_mall_order` (
+  `itemid` bigint(20) UNSIGNED NOT NULL COMMENT '订单ID',
+  `mid` smallint(6) UNSIGNED NOT NULL DEFAULT '16' COMMENT '模块ID',
+  `mallid` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `buyer` varchar(30) NOT NULL DEFAULT '' COMMENT '买家',
+  `seller` varchar(30) NOT NULL DEFAULT '' COMMENT '卖家',
+  `title` varchar(100) NOT NULL DEFAULT '' COMMENT '商品名称',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '标题图',
+  `price` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00' COMMENT '商品价格',
+  `number` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '购买数量',
+  `amount` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00' COMMENT '订单总额',
+  `fee` decimal(10,2) NOT NULL DEFAULT '0.00' COMMENT '附加费用',
+  `fee_name` varchar(30) NOT NULL DEFAULT '' COMMENT '费用名称',
+  `buyer_name` varchar(30) NOT NULL DEFAULT '' COMMENT '买家姓名',
+  `buyer_address` varchar(255) NOT NULL DEFAULT '' COMMENT '买家地址',
+  `buyer_postcode` varchar(10) NOT NULL DEFAULT '' COMMENT '买家邮编',
+  `buyer_phone` varchar(30) NOT NULL DEFAULT '' COMMENT '买家电话',
+  `buyer_mobile` varchar(30) NOT NULL DEFAULT '' COMMENT '买家手机',
+  `buyer_star` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '卖家对买家的评分 1差评2中评3好评',
+  `seller_star` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '买家对卖家的评分 1差评2中评3好评',
+  `send_type` varchar(50) NOT NULL DEFAULT '' COMMENT '发货方式',
+  `send_no` varchar(50) NOT NULL DEFAULT '' COMMENT '物流单号',
+  `send_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '物流状态',
+  `send_time` varchar(20) NOT NULL DEFAULT '' COMMENT '发货时间',
+  `send_days` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '发货天数限制',
+  `cod` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '活动付款',
+  `trade_no` varchar(50) NOT NULL DEFAULT '' COMMENT '支付宝交易编号',
+  `add_time` smallint(6) NOT NULL DEFAULT '0' COMMENT '延长收货时间(小时)',
+  `addtime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `updatetime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
+  `editor` varchar(30) NOT NULL DEFAULT '' COMMENT '购买数量',
+  `buyer_reason` mediumtext NOT NULL COMMENT '买家退款理由',
+  `refund_reason` mediumtext NOT NULL COMMENT '处理依据',
+  `note` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '状态'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商城订单';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `hf_mall_order`
+--
+ALTER TABLE `hf_mall_order`
+  ADD PRIMARY KEY (`itemid`),
+  ADD KEY `buyer` (`buyer`),
+  ADD KEY `seller` (`seller`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `hf_mall_order`
+--
+ALTER TABLE `hf_mall_order`
+  MODIFY `itemid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
