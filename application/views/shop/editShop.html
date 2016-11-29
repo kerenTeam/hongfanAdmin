@@ -1,44 +1,132 @@
 <?php $this->load->view('common.html');?>
-<script src="assets/js/echarts.min.js"></script>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
         <a href="<?php echo base_url().'admin';?>">
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo" class="sub-active"></span> 商家列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
+                </a>
+            </li>
+        </ul>
+    </li> -->
+    <li class="sidebar-nav-link">
+        <a href="calendar.html">
+            <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="form.html">
+            <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
         </a>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+        <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopBaseInfo';?>"  class="active">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/goodsList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopComment';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
                 </a>
             </li>
         </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="sign-up.html">
+            <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
     </li>
 </ul>
 </div>
@@ -47,7 +135,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 管理商家 <small>基础信息管理</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>编辑商家信息</small></div>
         </div>
     </div>
 </div>
@@ -57,7 +145,7 @@
             <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商家基础信息</div>
+                        <div class="widget-title  am-cf">编辑商家信息</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
@@ -69,18 +157,18 @@
                                 <label>经营品牌：</label>
                                 <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value=>输入查找/选择</option>
-                                    <option value="0">xxxx</option>
+                                    <option value="0" selected="selected">xxxx</option>
                                     <option value="1">xxxx</option>
                                     <option value="2">xxxx</option>
                                 </select>
                             </div>
                             <div class="am-form-group">
                                 <label for="Name">商家名称 ：</label>
-                                <input type="text" id="Name" value=""/>
+                                <input type="text" id="Name" value="满记甜品"/>
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">英文名称 ：</label>
-                                <input type="text" id="englishName" value=""/>
+                                <input type="text" id="englishName" value="manjitianpin"/>
                             </div>
                             <div class="am-form-group">
                                 <label for="doc-vld-528">开业时间 ：</label>
@@ -95,7 +183,7 @@
                                 <label for="oneType">一级业态：</label>
                                 <select id="oneType">
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">选项一...</option>
+                                    <option value="option1" selected="selected">选项一...</option>
                                     <option value="option2">选项二.....</option>
                                     <option value="option3">选项三........</option>
                                 </select>
@@ -105,7 +193,7 @@
                                 <select id="oneType">
                                     <option value="">-=请选择一项=-</option>
                                     <option value="option1">选项一...</option>
-                                    <option value="option2">选项二.....</option>
+                                    <option value="option2" selected="selected">选项二.....</option>
                                     <option value="option3">选项三........</option>
                                 </select>
                             </div>
@@ -117,7 +205,7 @@
                                     <option value="">-=请选择一项=-</option>
                                     <option value="option1">选项一...</option>
                                     <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
+                                    <option value="option3" selected="selected">选项三........</option>
                                 </select>
                                 <span class="am-form-caret"></span>
                             </div>
@@ -125,7 +213,7 @@
                                 <label for="shopState">营业状态 </label>
                                 <select id="shopState">
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">营业中</option>
+                                    <option value="option1" selected="selected">营业中</option>
                                     <option value="option2">装修中</option>
                                     <option value="option3">停止营业</option>
                                     <option value="option3">即将营业</option>
@@ -138,7 +226,7 @@
                                     <option value="1">F2</option>
                                     <option value="2">F3</option>
                                     <option value="3">F4</option>
-                                    <option value="4">F5</option>
+                                    <option value="4" selected="selected">F5</option>
                                 </select>
                             </div>
                             <div class="am-form-group">
@@ -146,7 +234,7 @@
                                     <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
                                       <p>开始日期应小于结束日期！</p>
                                     </div>
-                                    <div class="am-g">
+                                    <div class="am-g am-padding-xs">
                                       <div class="am-u-sm-6">
                                         <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
                                       </div>
@@ -157,16 +245,16 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="area">面积/平方米</label>
-                                <input type="number" class=""  id="area" min="0"/>
+                                <input type="number" class="" value="300"  id="area" min="0"/>
                             </div>
                             <div class="am-form-group">
                                 <label for="comments">当前评价</label>
-                                <input type="number" class=""  id="comments" placeholder="0" min="0"/>
+                                <input type="number" class="" value="5"  id="comments" placeholder="0" min="0"/>
                             </div>
                             <div class="am-form-group">
                                 <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令</label>
                                 <label class="am-radio-inline">
-                                    <input type="radio" value="1" name="docVlCb"> 是
+                                    <input type="radio" checked="checked" value="1" name="docVlCb"> 是
                                 </label>
                                 <label class="am-checkbox-inline">
                                     <input type="radio" value="0" name="docVlCb"> 否
@@ -176,7 +264,7 @@
                     </div>
 
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">保存</button>
                     </div>
                 </div>
             </form>
@@ -187,8 +275,36 @@
 </div>
 </div>
 <script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
-<script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+</script>
 </html>
