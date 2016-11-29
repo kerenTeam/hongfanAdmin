@@ -112,7 +112,11 @@ class member extends default_Controller {
             $this->load->view('member/editMember.html',$data);
         }
     }
+//权限管理
+    function memberLimit(){
 
+$this->load->view('member/memberLimit.html');
+    }
     //编辑处理
     function edit_userinfo(){
         if($_POST){

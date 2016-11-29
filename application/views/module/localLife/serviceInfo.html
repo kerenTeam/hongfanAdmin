@@ -159,11 +159,11 @@ width:50%;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">维修服务详情</div>
+                    <div class="widget-title  am-cf">本地生活类别名 <small>列表名</small></div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-9">
-                        <!-- 本地生活 信息展示类 -->
+                        <!-- 本地生活 服务类 -->
                         <form class="am-form tpl-form-line-form" data-am-validator>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
@@ -255,31 +255,246 @@ width:50%;
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务简介 <span class="red">*</span></label>
-                                <!--  <div class="am-u-sm-9">
-                                    <textarea class="am-validate" name="myue" id="myue" required></textarea>
-                                </div> -->
-                                <div class="am-u-sm-8 am-u-md8 am-u-end">
+                                 <div class="am-u-sm-9">
                                     <textarea class="am-validate" name="myue" id="myue" required></textarea>
                                 </div>
                             </div>
-                            <div class="am-form-group am-btn-group-xs">
+                            <div class="am-form-group am-text-center am-btn-group-xs">
                                 <button type="reset" class="am-btn am-btn-default">重置</button>
                                 <button type="submit" class="am-btn am-btn-danger">提交</button>
                             </div>
                         </form>
-                    </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div>
+
+
+                        <!-- 本地生活 房产资讯类类 -->
+                                <form class="am-form tpl-form-line-form" data-am-validator>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" placeholder="请输入标题" minlength="4" required="">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">户型 </label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">标签说明 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">房屋地址 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">房屋类型<span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <select required>
+                                                <option value="">-=请选择一项=-</option>
+                                                <option value="option1">二手房</option>
+                                                <option value="option2">新房</option>
+                                                <option value="option3">商铺</option>
+                                                <option value="option3">写字楼</option>
+                                                <option value="option3">学区房</option>
+                                                <option value="option3">其他</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">中介名称 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">公司地址 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" placeholder="如：邻水xxxx街道" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">中介 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">面积(平米) <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" min="0" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">售价(元/平米) <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" min="0" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner1</div>
+                                            </div>
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner2</div>
+                                            </div>
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner3</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">点击选择图片</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">房屋简介 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <textarea class="am-validate" name="myue" id="myue" rows="5" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-text-center am-btn-group-xs">
+                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                    </div>
+                                </form>
+
+
+                        <!-- 跳蚤市场 -->
+                        <form class="am-form tpl-form-line-form" data-am-validator>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" placeholder="请输入标题" minlength="4" required="">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">售价范围 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">标签说明 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">新旧 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" placeholder="如：9成新" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <select required>
+                                                <option value="">-=请选择一项=-</option>
+                                                <option value="option1">数码</option>
+                                                <option value="option2">文具</option>
+                                                <option value="option3">服装</option>
+                                                <option value="option3">美妆</option>
+                                                <option value="option3">家用电器</option>
+                                                <option value="option3">其他</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">联系地址 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" placeholder="如：邻水xxxx街道" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner1</div>
+                                            </div>
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner2</div>
+                                            </div>
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">banner3</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <div class="wx_type_img">
+                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="am-text-xs">点击选择图片</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">简介 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <textarea class="am-validate" name="myue" id="myue" rows="5" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-text-center am-btn-group-xs">
+                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                    </div>
+                                </form>
+
+
+
                     </div>
                 </div>
             </div>

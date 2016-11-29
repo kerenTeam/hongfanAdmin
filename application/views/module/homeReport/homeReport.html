@@ -1,0 +1,35 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+/*
+ *  家乡报道
+ *
+ * */
+
+class homeReport extends CI_Controller {
+
+    function __construct()
+    {
+        parent::__construct();
+
+    }
+
+    //家乡报道主页
+    function index()
+    {
+         $this->load->view('module/homeReport/homeReport.html');
+    }
+	//家乡报道 列表主页
+    function reportList()
+    {
+         $this->load->view('module/homeReport/reportList.html');
+    }
+    //家乡报道 评论列表
+    function commentList()
+    {
+         $this->load->view('module/homeReport/commentList.html');
+    }
+
+
+
+
+}

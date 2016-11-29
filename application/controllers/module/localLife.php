@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * */
 
-class module extends CI_Controller {
+class localLife extends CI_Controller {
 
     function __construct()
     {
@@ -91,6 +91,7 @@ class module extends CI_Controller {
     {
          $this->load->view('module/localLife/serviceInfo.html');
     }
+
 
 
 
