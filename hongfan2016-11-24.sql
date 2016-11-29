@@ -49,7 +49,7 @@ CREATE TABLE `hf_local_express` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-  
+
 
 # Dump of table hf_local_game
 # ------------------------------------------------------------
@@ -261,6 +261,37 @@ CREATE TABLE `hf_local_used_market_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `hf_cates`;
+CREATE TABLE `hf_cates` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类管理表',
+  `c_id` int(11) DEFAULT NULL COMMENT '所属分类id',
+  `name` varchar(50) DEFAULT NULL COMMENT '分类名',
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
+  `typeid` int(5) DEFAULT NULL COMMENT '类别',
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `icon_color` varchar(255) DEFAULT NULL COMMENT 'icon 背景色',
+  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+# Dump of table hf_cates
+# ------------------------------------------------------------
+
+
+DROP TABLE IF EXISTS `hf_cates`;
+CREATE TABLE `hf_cates` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类管理表',
+  `c_id` int(11) DEFAULT NULL COMMENT '所属分类id',
+  `name` varchar(50) DEFAULT NULL COMMENT '分类名',
+  `sort` int(5) DEFAULT NULL COMMENT '排序',
+  `typeid` int(5) DEFAULT NULL COMMENT '类别',
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `icon_color` varchar(255) DEFAULT NULL COMMENT 'icon 背景色',
+  `create_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # Dump of table hf_local_living_payment

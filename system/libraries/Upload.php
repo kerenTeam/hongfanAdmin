@@ -409,7 +409,7 @@ class CI_Upload {
 		}
 
 		// Was the file able to be uploaded? If not, determine the reason why.
-		if ( ! is_uploaded_file($_file['tmp_name']))
+		if ( ! @is_uploaded_file($_file['tmp_name']))
 		{
 			$error = isset($_file['error']) ? $_file['error'] : 4;
 

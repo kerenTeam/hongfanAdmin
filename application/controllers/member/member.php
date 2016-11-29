@@ -12,9 +12,6 @@ class member extends default_Controller {
     {
         parent::__construct();
         $this->load->model('member_model','user_model');
-
-
-
     }
 
     //会员 列表
@@ -189,22 +186,108 @@ $this->load->view('member/memberLimit.html');
     //会员卡管理
     function memberCard(){
         //获取所有会员卡
-//        $cards = $this->user_model->get_card_type();
-//        var_dumP($cards);
-//        exit;
-
-
-
-        $this->load->view('member/memberCard.html');
+        $data['cards'] = $this->user_model->get_card_type();
+        $this->load->view('member/memberCard.html',$data);
     }
 
     //会员卡管理-会员卡详情
     function memberCardDetail(){
-        $this->load->view('member/memberCardDetail.html');
+        $id=intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取会员卡详情
+            $data['card'] = $this->user_model->get_cardinfo($id);
+            $data['id'] = $id;
+            $this->load->view('member/memberCardDetail.html',$data);
+        }
     }
+    //会员卡编辑处理
+    function edit_card(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                //配置
+                $config['upload_path']      = 'upload/cards';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('member/member/memberCardDetail/').$data['id']."'</script>";
+                    exit;
+                } else{
+                    $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
+                }
+            }
+            //操作数据库
+            if($this->user_model->edit_cards($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCardDetail/').$data['id']."'</script>";
+                exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //删除会员卡
+    function del_card(){
+        $id=intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            if($this->user_model->del_cards($id)){
+                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                exit;
+            }
+        }
+
+    }
+
     //会员卡管理-添加会员卡
     function memberCardAdd(){
         $this->load->view('member/memberCardAdd.html');
+    }
+
+    //会员卡新增操作
+    function add_cards(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'upload/cards';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('img'))
+                {
+                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('member/member/memberCardAdd')."'</script>";
+                    exit;
+                }
+                else
+                {
+                    $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
+                }
+            }
+            if($this->user_model->add_cards($data)){
+                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCardAdd')."'</script>";
+                exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
     }
 
     //屏蔽会员/解除会员屏蔽

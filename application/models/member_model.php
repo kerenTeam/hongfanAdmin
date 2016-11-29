@@ -38,11 +38,6 @@ class member_model extends CI_Model{
         return $query->result_array();
     }
 
-    //返回会员卡类型
-    function get_card_type(){
-        $query = $this->db->get($this->card);
-        return $query->result_array();
-    }
 
     //返回用户分组
     function get_user_group(){
@@ -72,13 +67,39 @@ class member_model extends CI_Model{
         $where['userid'] = $userid;
         return $this->db->where($where)->update($this->member,$data);
     }
-
+    //删除用户
     function del_member($id){
         $where['userid'] = $id;
         return $this->db->where($where)->delete($this->member);
     }
 
+    //返回会员卡类型
+    function get_card_type(){
+        $query = $this->db->get($this->card);
+        return $query->result_array();
+    }
 
+    //新增会员卡
+    function add_cards($data){
+        return $this->db->insert($this->card,$data);
+    }
 
+    //返回会员卡详情
+    function get_cardinfo($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->card);
+        return $query->row_array();
+    }
+    //修改会员卡信息
+    function edit_cards($id,$data){
+        $where['id'] =$id;
+        return $this->db->where($where)->update($this->card,$data);
+    }
+
+    //删除会员卡
+    function del_cards($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->card);
+    }
 
 }
