@@ -6,7 +6,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class module_model extends CI_Model{
     //分类表
-    public $cate = 'hf_cates';
+    public $cate = 'hf_local_service_cates';
     //保姆、维修、开锁信息表
     public $service = 'hf_local_service';
     //房产中介表
@@ -53,7 +53,7 @@ class module_model extends CI_Model{
     }
 
     //二手市场
-    function
+    //function
 
 
 }
