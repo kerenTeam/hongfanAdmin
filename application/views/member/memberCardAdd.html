@@ -142,7 +142,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" data-am-validator>
+            <form class="am-form" action="<?php echo base_url('member/member/add_cards')?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">会员卡信息</div>
@@ -151,47 +151,48 @@
                     <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
                     <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
                         <label for="doc-vld-name-1">会员卡名称 <span class="red">*</span>：</label>
-                        <input type="text" id="doc-vld-name-1" minlength="2" required/>
+                        <input type="text" id="doc-vld-name-1" minlength="2" name="name" required/>
                     </div>
                     <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="doc-vld-name-2">会员卡编号 <span class="red">*</span>：</label>
-                        <input type="text" id="doc-vld-name-2" minlength="2"  required/>
+                        <label for="doc-vld-name-2">会员卡等级 <span class="red">*</span>：</label>
+                        <input type="text" id="doc-vld-name-2" minlength="2" name="level" required/>
                     </div>
-                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="doc-select-3">会员卡类型 <span class="red">*</span>：</label>
-                            <select id="doc-select-3" required>
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">普通会员卡</option>
-                                <option value="option2">一级VIP卡</option>
-                                <option value="option3">二级VIP卡</option>
-                                <option value="option3">三级VIP卡</option>
-                                <option value="option3">超级黄金VIP卡</option>
-                            </select>
-                            <span class="am-form-caret"></span>
-                        </div>
-                         <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
+                    <!--<div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">-->
+                            <!--<label for="doc-select-3">会员卡类型 <span class="red">*</span>：</label>-->
+                            <!--<select id="doc-select-3" required>-->
+                                <!--<option value="">-=请选择一项=-</option>-->
+                                <!--<option value="option1">普通会员卡</option>-->
+                                <!--<option value="option2">一级VIP卡</option>-->
+                                <!--<option value="option3">二级VIP卡</option>-->
+                                <!--<option value="option3">三级VIP卡</option>-->
+                                <!--<option value="option3">超级黄金VIP卡</option>-->
+                            <!--</select>-->
+                            <!--<span class="am-form-caret"></span>-->
+                        <!--</div>-->
+                        <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
                             <label for="doc-vld-name-4">会员卡背景色：</label>
-                            <input type="text" id="doc-vld-name-4" minlength="2" required/>
+                            <input type="color" id="doc-vld-name-4" name="bg_color" required/>
                         </div>
                         <div class="am-form-group am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6">
                             <label for="doc-vld-name-5">会员卡字体颜色：</label>
-                            <input type="number" id="doc-vld-name-5" required/>
+                            <input type="color" id="doc-vld-name-5" name="font_color" required/>
                         </div>
                          <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-6 am-u-lg-6 am-backdrop-on-box am-pull-left">
                                 <label for="doc-vld-name-6">会员卡卡样 <span class="red">*</span>：</label>
                                 <div class="wx_type_img">
-                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
                                   <!-- 图片实时预览 -->
                                   <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                   <button class="am-btn am-btn-secondary am-btn-xs">选择图片</button>
                                 </div>
-                            </div>
+                         </div>
+
                         </div>
                         </div>
 
                     </div>
                      <div class="am-form-group am-text-center">
-                        <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 新增</button>
+                        <button type="submit" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 新增</button>
                         <button type="button" class="am-btn am-btn-default"><span class="am-icon-refresh"></span> 取消</button>
                         </div>
                 </div>
