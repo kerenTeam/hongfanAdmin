@@ -1,0 +1,135 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css" media="screen">
+    .am-selected{
+        width: 100%!important;
+    }
+    .table-check{
+        width: 30px;
+    }
+    .hf-dropdown{
+        font-size: 12px!important;
+    padding: 5px 6px!important;
+    }
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo base_url().'admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商铺管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopBaseInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺基础信息
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>" class="active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺楼层关系
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/goodsList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopComment';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商铺管理 <small>商铺楼层关系</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">商铺楼层关系基础信息</div>
+                </div>
+                <div class="widget-body am-fr">
+                    <form class="am-form tpl-form-line-form">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
+                            <div class="am-u-sm-9">
+                                <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                    <option value=>输入查找/选择</option>
+                                    <option value="B3">B3</option>
+                                    <option value="B2">B2</option>
+                                    <option value="B1">B1</option>
+                                    <option value="F1">F1</option>
+                                    <option value="F2">F2</option>
+                                    <option value="F3">F3</option>
+                                    <option value="F4">F4</option>
+                                    <option value="F5">F5</option>
+                                    <option value="F6">F6</option>
+                                </select>
+                            </div>
+                        </div>
+                       <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="user-name" class="am-u-sm-2 am-form-label">铺位号：</label>
+                            <div class="am-u-sm-7">
+                                <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                    <option value=>输入查找/选择</option>
+                                    <option value="01A0">01A0</option>
+                                    <option value="037B">037B</option>
+                                    <option value="037A">037A</option>
+                                    <option value="042B">042B</option>
+                                    <option value="038A">038A</option>
+                                    <option value="045B">045B</option>
+                                    <option value="002">002</option>
+                                    <option value="003">003</option>
+                                    <option value="005">005</option>
+                                </select>
+                                
+                            </div>
+                           <div class="am-u-sm-3">
+                               <button type="button" class="am-btn am-btn-success am-btn-xs">
+                                    <i class="am-icon-plus"></i> 添加</button>
+                           </div>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">保存</button><button class="am-btn am-btn-default" type="reset">重置</button> 
+
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

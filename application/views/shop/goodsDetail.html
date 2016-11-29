@@ -1,0 +1,133 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css">
+   
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo base_url().'admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商铺管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopBaseInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺基础信息
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺楼层关系
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/goodsList';?>" class="active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo base_url().'shop/singleShop/shopComment';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>商品列表 </small> <small>编辑商品信息</small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">编辑商品信息</div>
+                    </div>
+                    <div class="widget-body am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                        <div class="am-form-group am-backdrop-on-box am-pull-left">
+                                <label for="doc-vld-name-6">商品图片： <span class="red">*</span>：</label>
+                                <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                  <!-- 图片实时预览 -->
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                  <button class="am-btn am-btn-secondary am-btn-xs">上传图片</button>
+            
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-name-1">商品名称： <span class="red">*</span>：</label>
+                                <input type="text" id="doc-vld-name-1" minlength="2" value="女仔装" readonly required />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">商品说明 ：</label>
+                                <input type="text" id="englishName" value="这是一款很畅销的产品"/>
+                            </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
+                    </div>
+                </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+</script>
+</html>
