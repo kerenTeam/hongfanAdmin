@@ -31,7 +31,7 @@ class localLife extends CI_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
@@ -39,10 +39,10 @@ class localLife extends CI_Controller {
             }
             $data['c_id'] = '本地生活';
             if($this->module_model->add_cates($data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                 exit;
             }
         }else{
@@ -61,17 +61,17 @@ class localLife extends CI_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->module_model->edit_cates($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
                 exit;
             }
         }else{
@@ -84,7 +84,36 @@ class localLife extends CI_Controller {
 	//本地生活 本地服务 列表主页
     function serviceList()
     {
-         $this->load->view('module/localLife/serviceList.html');
+        $id=intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取分类信息
+            $cate = $this->module_model->get_cateinfo($id);
+            //根据分类查询列表
+            switch($cate['typeid']){
+                //普通信息  保姆、保洁、维修、咨询、开锁
+                case '1':
+                    $list = $this->module_model->get_serviceList($cate['id']);
+                    break;
+                //房产信息
+                case '2':
+                    $list = $this->module_model->get_houst();
+                    break;
+                //二手市场
+                case '3':
+                    $list = $this->module_model->get_mark();
+                    break;
+                // 快递上门
+                case '4':
+                    break;
+                //超市比价
+                case '5':
+                    break;
+            }
+            $data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name']);
+            $this->load->view('module/localLife/serviceList.html',$data);
+        }
     }
     //本地生活 本地服务 列表详情
     function serviceInfo()

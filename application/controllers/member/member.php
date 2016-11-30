@@ -25,7 +25,7 @@ class member extends default_Controller {
         //分页数据
         $result = $this->user_model->get_user_page($current_page,$config['per_page']);
        	//配置
-        $config['base_url'] = base_url('member/member/memberList');
+        $config['base_url'] = site_url('/member/member/memberList');
         //分页配置
         $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
         $config['full_tag_close'] = '</ul>';
@@ -81,15 +81,15 @@ class member extends default_Controller {
             //是否被注册
             $user = $this->user_model->get_login_user($data['phone']);
             if($user){
-                echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".base_url('member/member/addMember')."'</script>";
+                echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".site_url('/member/member/addMember')."'</script>";
                 exit;
             }
             //插入
             if($this->user_model->add_user_member($data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/addMember')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/addMember')."'</script>";
                 exit;
             }
         }else{
@@ -123,10 +123,10 @@ $this->load->view('member/memberLimit.html');
             $data = $this->input->post();
             $data['password'] = md5($this->input->post('password'));
             if($this->user_model->edit_userinfo($data['userid'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/editMember/').$data['userid']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/editMember/').$data['userid']."'</script>";
                 exit;
             }
         }else{
@@ -140,19 +140,19 @@ $this->load->view('member/memberLimit.html');
             $this->load->view('404.html');
         }else{
             if($id == 1){
-                echo "<script>alert('网站创建者不能删除！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('网站创建者不能删除！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }
             //自己不能删除
             if($id == $this->session->users['userid']){
-                echo "<script>alert('不能删除自己！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }
             if($this->user_model->del_member($id)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }
         }
@@ -215,7 +215,7 @@ $this->load->view('member/memberLimit.html');
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('member/member/memberCardDetail/').$data['id']."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/member/memberCardDetail/').$data['id']."'</script>";
                     exit;
                 } else{
                     $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
@@ -223,10 +223,10 @@ $this->load->view('member/memberLimit.html');
             }
             //操作数据库
             if($this->user_model->edit_cards($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCardDetail/').$data['id']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCardDetail/').$data['id']."'</script>";
                 exit;
             }
         }else{
@@ -241,10 +241,10 @@ $this->load->view('member/memberLimit.html');
             $this->load->view('404.html');
         }else{
             if($this->user_model->del_cards($id)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
                 exit;
             }
         }
@@ -270,7 +270,7 @@ $this->load->view('member/memberLimit.html');
 
                 if ( ! $this->upload->do_upload('img'))
                 {
-                    echo "<script>alert('图片上传失败！');window.location.href='".base_url('member/member/memberCardAdd')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/member/memberCardAdd')."'</script>";
                     exit;
                 }
                 else
@@ -279,10 +279,10 @@ $this->load->view('member/memberLimit.html');
                 }
             }
             if($this->user_model->add_cards($data)){
-                echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".base_url('member/member/memberCardAdd')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCardAdd')."'</script>";
                 exit;
             }
         }else{
@@ -300,12 +300,12 @@ $this->load->view('member/memberLimit.html');
     	}else if($state == 1 || $state ==2){
     	    //网站建立者不能屏蔽
     		if($id == 1){
-    			echo "<script>alert('网站创建者不能冻结！');window.location.href='".base_url('member/member/memberList')."'</script>";
+    			echo "<script>alert('网站创建者不能冻结！');window.location.href='".site_url('/member/member/memberList')."'</script>";
     			exit;
     		}
     		//自己不能屏蔽
     		if($id == $this->session->users['userid']){
-    			echo "<script>alert('不能冻结自己！');window.location.href='".base_url('member/member/memberList')."'</script>";
+    			echo "<script>alert('不能冻结自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
     			exit;
     		}
     		if($state == 2){
@@ -313,10 +313,10 @@ $this->load->view('member/memberLimit.html');
     		}
     		$arr = array('state'=>$state);
     		if($this->user_model->edit_state($id,$arr)){
-				echo "<script>alert('操作成功！');window.location.href='".base_url('member/member/memberList')."'</script>";
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
 				exit;
     		}else{
-    			echo "<script>alert('失败，请重新操作！');window.location.href='".base_url('member/member/memberList')."'</script>";
+    			echo "<script>alert('失败，请重新操作！');window.location.href='".site_url('/member/member/memberList')."'</script>";
 				exit;
     		}
     	}else{

@@ -2,7 +2,7 @@
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo base_url().'admin';?>">
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
@@ -13,12 +13,12 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/shop';?>">
+                <a href="<?php echo site_url().'/shop/shop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
                 </a>
             </li>
@@ -31,22 +31,22 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberGroup';?>">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/addMember';?>">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/member/member/memberList';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberCard';?>">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
                 </a>
             </li>
@@ -59,17 +59,17 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/addMember';?>">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
                 </a>
             </li>
@@ -216,7 +216,7 @@
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                   <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> <a href="<?php echo base_url().'member/member/addMember';?>">新增</a></button>
+                                   <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> <a href="<?php echo site_url().'/member/member/addMember';?>">新增</a></button>
                                     <!--<button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 批量放入分组</button>-->
 
                                     <!--<button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button>-->
@@ -271,22 +271,22 @@
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'member/member/memberInfo/'.$value['userid'];?>" class="tpl-table-black-operation-look">
+                                            <a href="<?php echo site_url().'/member/member/memberInfo/'.$value['userid'];?>" class="tpl-table-black-operation-look">
                                                 <i class="am-icon-eye" ></i> 查看详情
                                             </a>
                                         <?php if($value['state'] == 1):?>
-                                            <a href="<?php echo base_url('member/member/up_user_state/2/'.$value['userid']);?>" class="tpl-table-black-operation-set">
+                                            <a href="<?php echo site_url('/member/member/up_user_state/2/'.$value['userid']);?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-gear" ></i> 解除冻结
                                             </a>
                                               <?php else:?>
-  										  	<a href="<?php echo base_url('member/member/up_user_state/1/'.$value['userid']);?>" class="tpl-table-black-operation-set">
+  										  	<a href="<?php echo site_url('/member/member/up_user_state/1/'.$value['userid']);?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-gear" ></i> 冻结
                                             </a>
 	                                    	<?php endif;?>
-                                            <a href="<?php echo base_url().'member/member/editMember/'.$value['userid'];?>">
+                                            <a href="<?php echo site_url().'/member/member/editMember/'.$value['userid'];?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a onClick="return confirm('确定删除?');" href="<?php echo base_url().'member/member/delMember/'.$value['userid'];?>" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<?php echo $value['userid'];?>'}">
+                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url().'/member/member/delMember/'.$value['userid'];?>" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<?php echo $value['userid'];?>'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>

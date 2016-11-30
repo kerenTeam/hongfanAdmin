@@ -2,7 +2,7 @@
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo base_url().'admin';?>">
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
@@ -13,12 +13,12 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/shop';?>">
+                <a href="<?php echo site_url().'/shop/shop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/shop/addShop';?>">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
                 </a>
             </li>
@@ -31,22 +31,22 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberGroup';?>">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/addMember';?>">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberCard';?>" class="sub-active">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
                 </a>
             </li>
@@ -59,17 +59,17 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/addMember';?>">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
                 </a>
             </li>
@@ -148,7 +148,7 @@
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">所有会员卡列表
                         <div class="tpl-table-black-operation am-fr">
-                            <a href="<?php echo base_url().'member/member/memberCardAdd';?>" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-plus"></span> 新增</a>
+                            <a href="<?php echo site_url().'/member/member/memberCardAdd';?>" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-plus"></span> 新增</a>
                         </div>
                         </div>
                     </div>
@@ -158,16 +158,16 @@
                             <?php foreach($cards as $v):?>
                           <li>
                             <div class="am-gallery-item">
-                              <a href="<?php echo base_url().'member/member/memberCardDetail/'.$v['id'];?>" class="am-gallery-item-link" title="普通会员"><img src="<?php echo $v['pic'];?>" alt="<?php echo $v['name'];?>"/></a>
+                              <a href="<?php echo site_url().'/member/member/memberCardDetail/'.$v['id'];?>" class="am-gallery-item-link" title="普通会员"><img src="<?php echo $v['pic'];?>" alt="<?php echo $v['name'];?>"/></a>
                                 <div class="am-fl">
                                 <h3 class="am-gallery-title"><?php echo $v['name'];?></h3>
                                 <!--<h3 class="am-gallery-desc">积分倍数：1倍积分</h3>-->
                                 </div>
                                 <div class="tpl-table-black-operation am-fr am-padding">
-                                    <a href="<?php echo base_url().'member/member/memberCardDetail/'.$v['id'];?>">
+                                    <a href="<?php echo site_url().'/member/member/memberCardDetail/'.$v['id'];?>">
                                         <i class="am-icon-pencil"></i> 编辑
                                     </a>
-                                    <a href="<?php echo base_url('member/member/del_card/').$v['id'];?>" onClick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+                                    <a href="<?php echo site_url('/member/member/del_card/').$v['id'];?>" onClick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
                                         <i class="am-icon-trash"></i> 删除
                                     </a>
                                 </div>
