@@ -863,6 +863,41 @@ ALTER TABLE `hf_mall_order`
 --
 ALTER TABLE `hf_mall_order`
   MODIFY `itemid` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+
+# Dump of table hf_mall_comment
+# ------------------------------------------------------------
+
+
+
+  CREATE TABLE `hf_mall_comment` (
+  `itemid` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `mallid` bigint(20) UNSIGNED NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `buyerid` varchar(30) NOT NULL DEFAULT '' COMMENT '买家id',
+  `sellerid` varchar(30) NOT NULL DEFAULT '' COMMENT '卖家ID',
+  `buyer_star` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '卖家对买家的评分',
+  `buyer_comment` text NOT NULL COMMENT '卖家对买家的评论',
+  `buyer_ctime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '卖家对买家的评论时间',
+  `buyer_reply` text NOT NULL COMMENT '卖家对买家评论的解释',
+  `buyer_rtime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '卖家对买家评论的解释时间',
+  `seller_star` tinyint(1) UNSIGNED NOT NULL DEFAULT '0' COMMENT '买家对卖家的评分',
+  `seller_comment` text NOT NULL COMMENT '买家对卖家的评论',
+  `seller_ctime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '买家对卖家的评论时间',
+  `seller_reply` text NOT NULL COMMENT '买家对卖家评论的解释',
+  `seller_rtime` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '买家对卖家评论的解释时间'
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='订单评论';
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `hf_mall_comment`
+--
+ALTER TABLE `hf_mall_comment`
+  ADD UNIQUE KEY `itemid` (`itemid`),
+  ADD KEY `buyer` (`buyer`),
+  ADD KEY `seller` (`seller`);
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
