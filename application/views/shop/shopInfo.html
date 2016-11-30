@@ -10,6 +10,27 @@
         font-size: 12px!important;
     padding: 5px 6px!important;
     }
+    #preview{
+        width:200px;
+    }
+    #preview #imghead,#preview img{
+        width:100%;
+        height:100%;
+    }
+    .am-form-group{
+        position: relative;
+    }
+    .am-form-group .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:25px;
+        text-align: center;
+        position: absolute;
+        left:130px;
+        top:155px;
+        color:#ffffff;
+    }
 </style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
@@ -35,7 +56,7 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>">
+                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
                 </a>
             </li>
@@ -71,83 +92,80 @@
                 </div>
                 <div class="widget-body am-fr">
                     <form class="am-form tpl-form-line-form">
-                        <!-- <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-pull-left">
-                            <label for="user-name" class="am-u-sm-3 am-form-label">所在商场：</label>
-                            <div class="am-u-sm-9">
-                                <span>宏帆广场</span>
-                            </div>
-                        </div> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-weibo" class="am-u-sm-3 am-form-label">LOGO：</label>
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">LOGO<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                             <div class="wx_type_img">
-                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
-                                  <!-- 图片实时预览 -->
-                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                  <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 添加商家LOGO</button>                           
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                 </div>
+                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                             </div>
                         </div>
                         <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo" class="am-u-sm-3 am-form-label">商家图片<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                                 <div class="wx_type_img">
-                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
-                                  <!-- 图片实时预览 -->
-                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                  <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 添加商家的介绍图片</button>                           
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                 </div>
+                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                 <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
                                     <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
                             </div> 
                         </div>
-                        </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">客单价：</label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">客单价<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" class="am-form-field tpl-form-no-bg" placeholder="" value="0" data-am-datepicker="" readonly="">
+                                <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="" value="0" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">营业时间：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" class="am-form-field tpl-form-no-bg" placeholder="9:00-22:00" data-am-datepicker="" readonly="">
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="9:00-22:00" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">联系电话：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="tel" class="am-form-field tpl-form-no-bg" placeholder="请输入11位的手机号码" data-am-datepicker="" readonly="">
+                                <input type="tel" name="" class="am-form-field tpl-form-no-bg" placeholder="请输入11位的手机号码" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
                             <div class="am-u-sm-9">
-                               <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请不要输入@" data-am-datepicker="" readonly="">
+                               <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
                             <div class="am-u-sm-9">
-                               <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请不要输入@" data-am-datepicker="" readonly="">
+                               <input type="text" class="am-form-field tpl-form-no-bg" placeholder="">
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-phone" class="am-u-sm-3 am-form-label">微信账号： </label>
                             <div class="am-u-sm-9">
-                               <input type="text" class="am-form-field tpl-form-no-bg" placeholder="请不要输入@" data-am-datepicker="" readonly="">
+                               <input type="text" class="am-form-field tpl-form-no-bg" placeholder="">
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">文字简介：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" placeholder="输入SEO关键字" value="VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。" />
+                                <textarea name="" rows="5" cols="40">
+                                    VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
+                                </textarea>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
-                                <button type="button" class="am-btn am-btn-primary">重置</button>
+                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                                <button type="button" class="am-btn am-btn-default am-btn-sm">重置</button>
                             </div>
                         </div>
                     </form>
@@ -164,5 +182,13 @@
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+</script>
 </body>
 </html>
