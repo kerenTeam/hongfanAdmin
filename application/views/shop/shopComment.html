@@ -22,42 +22,62 @@ padding: 5px 6px!important;
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo base_url().'admin';?>">
+        <a href="<?php echo site_url().'/shop/singleShop/shopAdmin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
         </a>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopBaseInfo';?>">
+                <a href="<?php echo site_url().'/shop/singleShop/shopBaseInfo';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopInfo';?>">
+                <a href="<?php echo site_url().'/shop/singleShop/shopInfo';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopFloorRelation';?>" >
+                <a href="<?php echo site_url().'/shop/singleShop/shopFloorRelation';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/goodsList';?>">
+                <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo base_url().'shop/singleShop/shopComment';?>" class="active">
+                <a href="<?php echo site_url().'/shop/singleShop/shopComment';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
                 </a>
             </li>
         </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 促销管理
+        </a>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+        </a>
     </li>
 </ul>
 </div>
@@ -74,17 +94,35 @@ padding: 5px 6px!important;
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-            <div class="widget-head am-cf">
+                <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">评论搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-2 am-form-label">模糊搜索:</label>
-                        <div class="am-u-sm-10">
-                            <input type="text" placeholder="请输入要搜索的关键字">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsType" class="am-form-label am-u-sm-4">商品分类:</label>
+                        <div class="am-u-sm-8">
+                            <select id="goodsType" name="goodsType">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="option1">上衣</option>
+                                <option value="option2">夏装</option>
+                                <option value="option2">裙装</option>
+                                <option value="option2">秋冬款</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-8 am-u-md-8 am-u-lg-8 am-text-left">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-4">货物批次:</label>
+                        <div class="am-u-sm-8">
+                        <select id="goodsBatch" name="goodsBatch">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1">2016年秋冬</option>
+                            <option value="option2">2015年秋冬</option>
+                            <option value="option2">2016年上半季</option>
+                            <option value="option2">2016年冬新款</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
@@ -107,11 +145,12 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th class="table-check"><input type="checkbox"></th>
-                                    <th class="shop_id">编号 <i class="am-icon-sort"></i></th>
-                                    <th class="shop_name">用户 <i class="am-icon-sort"></i></th>
-                                    <th class="shop_name">提交时间 <i class="am-icon-sort"></i></th>
-                                    <th class="shop_type">评论内容 <i class="am-icon-sort"></i></th>
-                                    <th class="shop_type">回复内容 <i class="am-icon-sort"></i></th>
+                                    <th class="shop_id">编号 </th>
+                                    <th class="shop_name">用户 </th>
+                                    <th class="shop_name">提交时间 </th>
+                                    <th class="shop_name">评论商品详情</th>
+                                    <th class="shop_type">评论内容 </th>
+                                    <th class="shop_type">回复内容 </th>
                                     <th>创建时间</th>
                                     <th>回复状态</th>
                                     <th>状态</th>
@@ -124,6 +163,11 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">用户family</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td class="am-text-middle">
+                                        <a href="#" >
+                                            商品详情
+                                        </a>
+                                    </td>
                                     <td class="am-text-middle">这个产品非常好，我很喜欢</td>
                                     <td class="am-text-middle">感谢，我们会再接再厉</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
@@ -150,6 +194,11 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">用户family</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td class="am-text-middle">
+                                        <a href="#" >
+                                            商品详情
+                                        </a>
+                                    </td>
                                     <td class="am-text-middle">这个产品非常好，我很喜欢</td>
                                     <td class="am-text-middle">感谢，我们会再接再厉</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
@@ -176,6 +225,11 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">用户family</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td class="am-text-middle">
+                                        <a href="#" >
+                                            商品详情
+                                        </a>
+                                    </td>
                                     <td class="am-text-middle">这个产品非常好，我很喜欢</td>
                                     <td class="am-text-middle">感谢，我们会再接再厉</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
@@ -202,6 +256,11 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">用户family</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td class="am-text-middle">
+                                        <a href="#" >
+                                            商品详情
+                                        </a>
+                                    </td>
                                     <td class="am-text-middle">这个产品非常好，我很喜欢</td>
                                     <td class="am-text-middle">感谢，我们会再接再厉</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
