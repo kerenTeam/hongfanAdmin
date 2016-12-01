@@ -34,5 +34,18 @@ class store extends CI_Controller {
         $this->load->view('store/storeEditGoods.html');
     }
 
+    //添加分类
+    function storeAddSort(){
+        $this->load->view('store/storeAddSort.html');
+    }
+    //编辑分类
+    function storeEditSort(){
+        $this->load->view('store/storeEditSort.html');
+    }
+    //订单管理
+    function storeOrderList(){
+        $this->load->view('store/storeOrderList.html');
+    }
+
 }
 

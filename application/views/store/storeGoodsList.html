@@ -14,7 +14,7 @@ td.am-text-middle img{
     width:80px;
 }
 .am-u-sm6{
-    width:60px !important;
+    width:50px !important;
     margin:0;
 }
 .am-form-group div{
@@ -102,8 +102,8 @@ td.am-text-middle img{
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeModuleSet';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 模块设置
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
         </ul>
@@ -285,16 +285,20 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="goodsPrice" class="am-form-label am-u-sm-4">商品单价:</label>
                         <div class="am-u-sm-8">
-                        <input type="number" class="am-u-sm6" id="startPrice" name="startPrice" min="0" />至<input type="number" class="am-u-sm6" id="endPrice" name="endPrice" min="1" />
+                        <div class="am-u-sm-4"><input type="number" class="am-u-sm-4" id="startPrice" name="startPrice" min="0" /></div>
+                        <div class="am-u-sm-4 am-text-center">至</div>
+                        <div class="am-u-sm-4 am-fl"><input type="number" class="am-u-sm-4" id="endPrice" name="endPrice" min="1" /></div>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-2 am-u-md-2 am-u-lg-2">
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="goodsPrice" class="am-form-label am-u-sm-4">库存:</label>
-                        <div class="am-u-sm-8 am-text-left">
-                        <input type="number" class="am-u-sm6" id="startPrice" name="startPrice" min="0" />至<input type="number" class="am-u-sm6" id="endPrice" name="endPrice" min="1" />
+                        <div class="am-u-sm-8">
+                        <div class="am-u-sm-4"><input type="number" class="am-u-sm-4" id="startPrice" name="startPrice" min="0" /></div>
+                        <div class="am-u-sm-4 am-text-center">至</div>
+                        <div class="am-u-sm-4 am-fl"><input type="number" class="am-u-sm-4" id="endPrice" name="endPrice" min="1" /></div>
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
@@ -325,7 +329,7 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo base_url().'store/store/storeAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
@@ -384,7 +388,7 @@ td.am-text-middle img{
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
+                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -422,7 +426,7 @@ td.am-text-middle img{
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
+                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -460,7 +464,7 @@ td.am-text-middle img{
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
+                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -498,7 +502,7 @@ td.am-text-middle img{
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
+                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -536,7 +540,7 @@ td.am-text-middle img{
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
+                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">

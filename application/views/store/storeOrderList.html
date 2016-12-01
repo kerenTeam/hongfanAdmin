@@ -90,7 +90,7 @@ td.am-text-middle img{
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
                     商品列表
                 </a>
@@ -102,8 +102,8 @@ td.am-text-middle img{
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeModuleSet';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 模块设置
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
         </ul>
@@ -298,7 +298,7 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-2 am-u-md-2 am-u-lg-2">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">模糊搜索:</label>
+                        <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入搜素的关键字">
                         </div>
@@ -328,19 +328,14 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="table-check"><input type="checkbox"></th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="moll_name">分类 </th>
-                                    <th class="shop_id">图片 </th>
-                                    <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">会员 </th>
-                                    <th class="shop_yetai">价格 </th>
-                                    <th class="brand">订单 </th>
-                                    <th class="shop_block">销量 </th>
-                                    <th class="shop_block">库存 </th>
-                                    <th class="shop_block">评论 </th>
-                                    <th class="shop_block">人气 </th>
-                                    <th class="shop_block">货物批次 </th>
-                                    <th class="shop_block">商品状态</th>
+                                    <th class="shop_id">缩略图 </th>
+                                    <th class="moll_name">商品或服务 </th>
+                                    <th class="shop_id">交易总额 </th>
+                                    <th class="shop_name">卖家 </th>
+                                    <th class="shop_type">买家 </th>
+                                    <th class="shop_yetai">下单时间 </th>
+                                    <th class="brand">更新时间 </th>
+                                    <th class="shop_block">状态 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -349,29 +344,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
                                     <td class="am-text-middle">destoon</td>
                                     <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">5</td>  
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
@@ -387,29 +365,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
                                     <td class="am-text-middle">destoon</td>
                                     <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年春秋</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">5</td>  
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
@@ -425,20 +386,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
                                     <td class="am-text-middle">destoon</td>
                                     <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年春</td>
+                                    <td class="am-text-middle">5</td>  
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
@@ -454,20 +407,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
                                     <td class="am-text-middle">destoon</td>
                                     <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年上半季</td>
+                                    <td class="am-text-middle">5</td>  
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo base_url().'store/store/storeEditGoods';?>">
@@ -483,20 +428,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
                                     <td class="am-text-middle">destoon</td>
                                     <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年下半季</td>
+                                    <td class="am-text-middle">5</td>  
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo base_url().'store/store/storeEditGoods';?>">

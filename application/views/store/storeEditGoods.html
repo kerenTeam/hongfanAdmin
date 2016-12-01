@@ -95,8 +95,8 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeModuleSet';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 模块设置
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
         </ul>
@@ -264,22 +264,22 @@
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                         <div class="am-form-group">
                             <label for="doc-vld-name-1">商品编号 <span class="red">*</span>：</label>
-                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商品编号" readonly required />
+                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商品编号" required="required" />
                         </div>
                         
                         <div class="am-form-group">
                             <label for="Name">商品名称<span class="red">*</span>：</label>
-                            <input type="text" id="Name" value=""/>
+                            <input type="text" id="Name" value="" required="required" />
                         </div>
                         
                         <div class="am-form-group">
                             <label for="englishName">商品价格<span class="red">*</span>：</label>
-                            <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value=""/>
+                            <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" />
                         </div>
                          
                         <div class="am-form-group">
                             <label for="englishName">商品品牌<span class="red">*</span>：</label>
-                            <input type="number" id="englishName" value=""/>
+                            <input type="number" id="englishName" value="" required="required" />
                         </div>
                         
                         <div class="am-form-group">
@@ -355,7 +355,7 @@
                         </div>
                          <div class="am-form-group">
                             <label for="oneType">货到付款：</label>
-                            <select id="oneType">
+                            <select id="oneType" required="required">
                                 <option value="">-=请选择一项=-</option>
                                 <option value="option1">支持货到付款</option>
                                 <option value="option2">不支持货到付款</option>
@@ -369,19 +369,19 @@
                         
                         <div class="am-form-group">
                             <label for="englishName">添加时间：<span class="red">*</span>：</label>
-                             <input type="text" name="" />
+                             <input type="text" name="" required="required" />
                         </div>
                         
                         <div class="am-form-group">
                             <label for="englishName">内容收费：<span class="red">*</span>：</label>
-                             <input type="text" name="" />
+                             <input type="text" name="" required="required" />
                         </div>
                         
                     </div>
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                     <div class="am-form-group">
                             <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value=>输入查找/选择</option>
                                 <option value="0">上装</option>
                                 <option value="1">下装</option>
@@ -390,7 +390,7 @@
                         </div>
                         <div class="am-form-group">
                             <label for="oneType">商品级别<span class="red">*</span>：</label>
-                            <select id="oneType">
+                            <select id="oneType" required="required">
                                 <option value="">-=请选择一项=-</option>
                                 <option value="option1">一级 推荐商品</option>
                                 <option value="option2">二级</option>
@@ -401,7 +401,7 @@
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
-                            <input type="number"  id="respority" value=""/>
+                            <input type="number"  id="respority" value="" required="required" />
                         </div>
                         <div class="am-form-group">
                                 <label for="englishName">商品信息详情<span class="red">*</span>：</label>
@@ -412,7 +412,7 @@
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">会员名<span class="red">*</span>：</label>
-                            <input type="number" id="englishName" value=""/>
+                            <input type="number" id="englishName" value="" required="required" />
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">信息状态：<span class="red">*</span>：</label>
@@ -428,7 +428,7 @@
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">内容模版：<span class="red">*</span>：</label>
-                             <select id="oneType">
+                             <select id="contentModal" required="required">
                                 <option value="">-=请选择一项=-</option>
                                 <option value="option1">模板一</option>
                                 <option value="option2">模板二</option>

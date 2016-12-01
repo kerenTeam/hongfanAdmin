@@ -76,14 +76,14 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
                     商品列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">
+                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
                 </a>
             </li>
@@ -235,7 +235,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsList';?>">商品列表</a><small>/新增商品</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">商品分类</a><small>/添加分类</small></div>
         </div>
     </div>
 </div>
@@ -245,189 +245,106 @@
             <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商品基础信息</div>
+                        <div class="widget-title  am-cf">商品分类添加</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
-                                <label for="doc-vld-name-1">商品编号 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商品编号" readonly required />
+                                <label for="oneType">上级分类</label>
+                                <select id="oneType" required name="" >
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">上衣</option>
+                                    <option value="option2">下衣</option>
+                                    <option value="option2">半身裙</option>
+                                </select>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-name-1">分类名称 <span class="red">*</span>：</label>
+                                <input type="text" name="" id="doc-vld-name-1" minlength="2" placeholder="请输入商品分类名称" required />
                             </div>
                             
                             <div class="am-form-group">
-                                <label for="Name">商品名称<span class="red">*</span>：</label>
-                                <input type="text" id="Name" required value=""/>
+                                <label for="record">分类目录[英文名]<span class="red">*</span>：</label>
+                                <input type="text" id="record" name="" required value=""/>
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default" id="checkRe"  value="目录检测" />
                             </div>
                             
                             <div class="am-form-group">
-                                <label for="englishName">商品价格<span class="red">*</span>：</label>
-                                <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" required min="0" value=""/>
+                                <label for="goodsprice">字母索引<span class="red">*</span>：</label>
+                                <input type="number" name="" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodsprice" required min="0" value=""/>
                             </div>
                              
                             <div class="am-form-group">
-                                <label for="englishName">商品品牌<span class="red">*</span>：</label>
-                                <input type="number" id="englishName" value="" required />
-                            </div>
-                            
-                            <div class="am-form-group">
-                                <label for="englishName">可选属性：</label>
-                                <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-check">属性名</th>
-                                            <th class="shop_id">属性值</th>
-                                           
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                        </tr>
-                                        <!-- more data -->
-                                    </tbody>
-                                </table>
+                                <label for="grade">级别<span class="red">*</span>：</label>
+                                <input type="number" name="" id="grade" value="" required />
                             </div>
                             <div class="am-form-group">
-                                <label for="englishName">运费设置：</label>
-                                <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-check">快递</th>
-                                            <th class="shop_id">默认运费</th>
-                                           <th class="shop_id">增加一件商品增加</th>
-                                           <th class="shop_id">选择模版</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><select id="oneType">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="option1">模板一</option>
-                                            <option value="option2">模板二</option>
-                                            <option value="option3">模板三</option></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><select id="oneType">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="option1">模板一</option>
-                                            <option value="option2">模板二</option>
-                                            <option value="option3">模板三</option></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><input type="input"></td>
-                                            <td class="am-text-middle"><select id="oneType">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="option1">模板一</option>
-                                            <option value="option2">模板二</option>
-                                            <option value="option3">模板三</option>
-                                        </select><td>
-                                        </tr>
-                                        <!-- more data -->
-                                    </tbody>
-                                </table>
-                            </div>
-                             <div class="am-form-group">
-                                <label for="oneType" >货到付款：</label>
-                                <select id="oneType" required>
+                                <label for="englishName">分类模版：<span class="red">*</span>：</label>
+                                 <select id="content" name="" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">支持货到付款</option>
-                                    <option value="option2">不支持货到付款</option>
+                                    <option value="option1">默认模版</option>
+                                    <option value="option2">模板二</option>
+                                    <option value="option3">模板三</option>
                                 </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">会员推荐产品<span class="red">*</span>：</label>
-                                <input type="radio" name="yes" value=""/>是
-                                <input type="radio" name="yes" value=""/>否
-                            </div>
-                            
-                            <div class="am-form-group">
-                                <label for="englishName">添加时间：<span class="red">*</span>：</label>
-                                 <input type="text" name="" required />
-                            </div>
-                            
-                            <div class="am-form-group">
-                                <label for="englishName">内容收费：<span class="red">*</span>：</label>
-                                 <input type="text" name="" required />
-                            </div>
-                            
-                        </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                        <div class="am-form-group">
-                                <label>商品分类<span class="red">*</span>：</label>
-                                <select id="goodsSort" name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value=>输入查找/选择</option>
-                                    <option value="0">上装</option>
-                                    <option value="1">下装</option>
-                                    <option value="2">裙装</option>
-                                </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="oneType">商品级别<span class="red">*</span>：</label>
-                                <select id="oneType" name="" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">一级 推荐商品</option>
-                                    <option value="option2">二级</option>
-                                    <option value="option3">三级</option>
-                                    <option value="option2">四级</option>
-                                    <option value="option3">五级</option>
-                                </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
-                                <input type="number"  id="respority" value="" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                                <div>
-                                    <script id="editor" type="text/plain"></script>
-                                </div>
-                                                     
-                            </div>
-                            <div class="am-form-group">
-                                <label for="vipName">会员名<span class="red">*</span>：</label>
-                                <input type="number" id="vipName" value="" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="messState">信息状态：<span class="red">*</span>：</label>
-                                <input type="radio" name="yes" value=""/>通过
-                                <input type="radio" name="yes" value=""/>待审
-                                <input type="radio" name="yes" value=""/>拒绝
-                                <input type="radio" name="yes" value=""/>下架
-                                <input type="radio" name="yes" value=""/>删除
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">浏览次数：<span class="red">*</span>：</label>
-                                 <input type="number" name="" required />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"  value="修改" />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"   value="创建" />
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">内容模版：<span class="red">*</span>：</label>
                                  <select id="content" name="" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">模板一</option>
+                                    <option value="option1">默认模版</option>
                                     <option value="option2">模板二</option>
                                     <option value="option3">模板三</option>
                                 </select>
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default" id="checkRe"  value="修改" />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default" id="checkRe"  value="创建" />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">Title(SEO标题)<span class="red">*</span>：</label>
+                                 <input type="text" name="" required />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName"> Meta Keywords(网页关键词)<span class="red">*</span>：</label>
+                                 <textarea name="" rows="3" required></textarea>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName"> Meta Description(网页描述)<span class="red">*</span>：</label>
+                                 <textarea name="" rows="3" required></textarea>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="messState">允许浏览分类<span class="red">*</span>：</label>
+                                <input type="checkbox" name="yes" value=""/>游客
+                                <input type="checkbox" name="yes" value=""/>个人会员
+                                <input type="checkbox" name="yes" value=""/>企业会员
+                                <input type="checkbox" name="yes" value=""/>VIP会员
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"  value="全选" />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"   value="全不选" />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="messState">允许浏览分类信息内容<span class="red">*</span>：</label>
+                                <input type="checkbox" name="yes" value=""/>游客
+                                <input type="checkbox" name="yes" value=""/>个人会员
+                                <input type="checkbox" name="yes" value=""/>企业会员
+                                <input type="checkbox" name="yes" value=""/>VIP会员
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"  value="全选" />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"   value="全不选" />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="sendMessage">发布信息<span class="red">*</span>：</label>
+                                <input type="checkbox" name="yes" value=""/>游客
+                                <input type="checkbox" name="yes" value=""/>个人会员
+                                <input type="checkbox" name="yes" value=""/>企业会员
+                                <input type="checkbox" name="yes" value=""/>VIP会员
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"  value="全选" />
+                                <input type="button" name="" class="am-btn am-btn-xs am-btn-default"   value="全不选" />
                             </div>
                         </div>
                     </div>
 
                     <div class="am-form-group am-text-center">
                         <button class="am-btn am-btn-secondary" type="submit">添加</button>
-                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
                 </div>
             </form>
