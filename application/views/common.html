@@ -18,6 +18,24 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/app.css">
+    <style type="text/css">
+  .tpl-user-panel-slide-toggleable{
+    padding:5% !important;
+  }
+    .tpl-user-panel-profile-picture{
+        width:100% !important;
+        height:100% !important;
+        text-align: center;
+        margin:0;
+        padding:0;
+        border-radius: 0px;
+        border-radius: 50%;
+    }
+        .tpl-user-panel-profile-picture img{
+            
+
+        }
+    </style>
     <script src="assets/js/jquery.min.js"></script>
 
 <script src="assets/js/imgup.js"></script>
@@ -187,12 +205,12 @@
         <div class="left-sidebar">
             <!-- 用户信息 -->
             <div class="tpl-sidebar-user-panel">
-                <div class="tpl-user-panel-slide-toggleable">
+                <div class="tpl-user-panel-slide-toggleable am-text-center">
                     <div class="tpl-user-panel-profile-picture">
                         <?php if(empty($this->session->users['avatar'])){ ?>
-                        <img src="assets/img/user04.png" alt="">
+                        <img class="am-text-center" src="assets/img/user04.png" alt="">
                         <?php }else{ ?>
-                        <img src="<?php echo $this->session->users['avatar'];?>" alt="">
+                        <img class="am-text-center" src="<?php echo $this->session->users['avatar'];?>" alt="">
                         <?php }?>
                     </div>
                     <span class="user-panel-logged-in-text">

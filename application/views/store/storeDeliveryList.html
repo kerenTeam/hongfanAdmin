@@ -102,12 +102,12 @@ td.am-text-middle img{
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeOrderList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
+                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
                 </a>
             </li>
@@ -254,7 +254,7 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>订单列表</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>快递管理</small></div>
         </div>
     </div>
 </div>
@@ -263,7 +263,7 @@ td.am-text-middle img{
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">订单搜索</div>
+                    <div class="widget-title  am-cf">快递搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
@@ -293,73 +293,24 @@ td.am-text-middle img{
                         <div class="am-u-sm-8">
                         <select id="goodsBatch" name="goodsBatch">
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1">待确认</option>
-                            <option value="option2">待付款</option>
-                            <option value="option2">待发货</option>
-                            <option value="option2">已发货</option>
-                            <option value="option2">交易成功</option>
-                            <option value="option2">申请退款</option>
-                            <option value="option2">已退款</option>
-                            <option value="option2">货到付款</option>
-                            <option value="option2">买家关闭</option>
-                            <option value="option2">卖家关闭</option>
-
+                            <option value="option1">未知</option>
+                            <option value="option2">在途</option>
+                            <option value="option2">派送中</option>
+                            <option value="option2">已签收</option>
+                            <option value="option2">退回</option>
+                            <option value="option2">其他</option>
+                            <option value="option2">无记录</option>
                         </select>
                         </div>
-                    </div>
-                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-4">排序方式:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsBatch" name="goodsBatch">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="option1">下单时间降序</option>
-                            <option value="option2">下单时间升序</option>
-                            <option value="option2">更新时间降序</option>
-                            <option value="option2">更新时间升序</option>
-                            <option value="option2">商品单价降序</option>
-                            <option value="option2">商品单价生序</option>
-                            <option value="option2">购买数量降序</option>
-                            <option value="option2">购买数量升序</option>
-                            <option value="option2">订单金额降序</option>
-                            <option value="option2">订单金额升序</option>
-                            <option value="option2">附加金额降序</option>
-                            <option value="option2">附加金额升序</option>
-                        </select>
-                        </div>
-                    </div>
+                    </div>                 
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">交易总额:</label>
-                        <div class="am-u-sm-8">
-                            <div class="am-u-sm-4"><input type="number" class="am-u-sm-4" id="startPrice" name="startPrice" min="0" /></div>
-                            <div class="am-u-sm-4 am-text-center">至</div>
-                            <div class="am-u-sm-4 am-fl"><input type="number" class="am-u-sm-4" id="endPrice" name="endPrice" min="1" /></div>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="businessTime" class="am-form-label am-u-sm-2">下单时间：</label>
-                        <div class="am-u-sm-10">
-                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                              <p>开始日期应小于结束日期！</p>
-                            </div>
-                            <div class="am-g">
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">订单单号:</label>
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">快递单号:</label>
                         <div class="am-u-sm-8">
                             <input type="text" id="startPrice" name="startPrice" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">商品单号:</label>
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">订单单号:</label>
                         <div class="am-u-sm-8">
                             <input type="text" id="startPrice" name="startPrice" />
                         </div>
@@ -377,9 +328,9 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-fl">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入搜素的关键字">
+                        <label for="source_state" class="am-u-sm-5 am-form-label">关键词搜索:</label>
+                        <div class="am-u-sm-7">
+                            <input type="text" placeholder="请输入关键字">
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-text-center">
@@ -387,7 +338,7 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">订单列表</div>
+                    <div class="widget-title  am-cf">快递列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -404,107 +355,71 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="table-check"><input type="checkbox"></th>
-                                    <th class="shop_id">缩略图 </th>
-                                    <th class="moll_name">商品或服务 </th>
-                                    <th class="shop_id">交易总额 </th>
-                                    <th class="shop_name">卖家 </th>
-                                    <th class="shop_type">买家 </th>
-                                    <th class="shop_yetai">下单时间 </th>
-                                    <th class="brand">更新时间 </th>
-                                    <th class="shop_block">状态 </th>
-                                    <th>操作</th>
+                                    <th class="shop_id">订单单号 </th>
+                                    <th class="moll_name">快递公司 </th>
+                                    <th class="shop_id">快递单号 </th>
+                                    <th class="shop_name">快递状态 </th>
+                                    <th class="shop_type">卖家 </th>
+                                    <th class="shop_yetai">买家 </th>
+                                    <th class="brand">下单时间 </th>
+                                    <th class="shop_block">更新时间 </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
                                 </tr>
                                 <tr>
                                     <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
                                 </tr>
                                 <tr>
                                     <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
                                 </tr>
                                 <tr>
                                     <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
                                 </tr>
                                 <tr>
                                     <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
                                 </tr>
                                 <!-- more data -->
                             </tbody>

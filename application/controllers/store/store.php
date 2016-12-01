@@ -46,6 +46,10 @@ class store extends CI_Controller {
     function storeOrderList(){
         $this->load->view('store/storeOrderList.html');
     }
+    //快递管理
+    function storeDeliveryList(){
+        $this->load->view('store/storeDeliveryList.html');
+    }
 
 }
 
