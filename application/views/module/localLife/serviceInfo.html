@@ -163,60 +163,55 @@ width:50%;
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-9">
+					<?php if($type_id == 1){?>
                         <!-- 本地生活 服务类 -->
-                        <form class="am-form tpl-form-line-form" data-am-validator>
+                        <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/localLife/edit_service');?>' method='post' enctype='multipart/form-data' >
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" placeholder="请输入标题" minlength="4" required="">
+                                    <input type="text" placeholder="请输入标题" name='name' value='<?php echo $info['name'];?>' minlength="4" required="">
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">星级 </label>
                                 <div class="am-u-sm-9">
-                                    <input type="number" min="0">
+                                    <input type="number" name='star' value='<?php echo $info['star'];?>' min="0">
                                 </div>
                             </div>
-                            <div class="am-form-group am-cf">
-                                <label class="am-u-sm-3 am-form-label">标签说明 <span class="red">*</span></label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" required>
-                                </div>
-                            </div>
-                            <div class="am-form-group am-cf">
-                                <label class="am-u-sm-3 am-form-label">公司名称 <span class="red">*</span></label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" required>
-                                </div>
-                            </div>
-                            <div class="am-form-group am-cf">
+							 <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" placeholder="如:空调·热水器·洗衣机类维修" required>
+                                 <div class="am-u-sm-9">
+                                    <textarea class="am-validate" name="myue" rows='4' name='content' placeholder="如:空调·热水器·洗衣机类维修" id="myue" required><?php echo $info['content'];?></textarea>
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务范围 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" placeholder="如：邻水xxxx街道" required>
+                                    <input type="text" placeholder="如：邻水xxxx街道" name='service_cope' value='<?php echo $info['service_cope'];?>' required>
+                                </div>
+                            </div>  
+							<div class="am-form-group am-cf">
+                                <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" placeholder="8:00-18:00" name='open_time' value='<?php echo $info['open_time'];?>' required>
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" required>
+                                    <input type="text" name='link_man' value='<?php echo $info['link_man'];?>' required>
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                    <input type="text" name='phone' value='<?php echo $info['phone'];?>' class="js-pattern-mobile" placeholder="输入手机号" required>
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" required>
+                                    <input type="text" name='address' value='<?php echo $info['address'];?>' required>
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
@@ -253,19 +248,14 @@ width:50%;
                                     </div>
                                 </div>
                             </div>
-                            <div class="am-form-group am-cf">
-                                <label class="am-u-sm-3 am-form-label">服务简介 <span class="red">*</span></label>
-                                 <div class="am-u-sm-9">
-                                    <textarea class="am-validate" name="myue" id="myue" required></textarea>
-                                </div>
-                            </div>
+                     
                             <div class="am-form-group am-text-center am-btn-group-xs">
                                 <button type="reset" class="am-btn am-btn-default">重置</button>
                                 <button type="submit" class="am-btn am-btn-danger">提交</button>
                             </div>
                         </form>
 
-
+						<?php }else if($type_id == 2){?>
                         <!-- 本地生活 房产资讯类类 -->
                                 <form class="am-form tpl-form-line-form" data-am-validator>
                                     <div class="am-form-group am-cf">
@@ -388,7 +378,7 @@ width:50%;
                                     </div>
                                 </form>
 
-
+						<?php }else if($type_id == 3){?>
                         <!-- 跳蚤市场 -->
                         <form class="am-form tpl-form-line-form" data-am-validator>
                                     <div class="am-form-group am-cf">
@@ -492,6 +482,7 @@ width:50%;
                                         <button type="submit" class="am-btn am-btn-danger">提交</button>
                                     </div>
                                 </form>
+								<?php }?>
 
 
 
