@@ -315,13 +315,12 @@ width:50%;
                                             <a href="<?php echo site_url().'/module/localLife/serviceInfo/'.$val['id'].'/'.$typeid;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+                                            <a href="<?php echo site_url('/module/localLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-								
                                 <!-- 删除弹框 -->
                                 <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="delete1"> -->
                                     <!-- <div class="am-modal-dialog"> -->
@@ -518,25 +517,29 @@ width:50%;
                                     <td class="am-text-middle">标题名</td>
                                     <td class="am-text-middle">户型</td>
                                     <td class="am-text-middle">房屋类型</td>
+                                    <td class="am-text-middle">所在小区</td>
                                     <td class="am-text-middle">房屋地址</td>
                                     <td class="am-text-middle">平均售价(元/平米)</td>
-                                    <td class="am-text-middle">联系人</td>
+                                    <td class="am-text-middle">中介名称</td>
                                     <td class="am-text-middle">联系号码</td>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
+							<?php if(!empty($lists)):?>
+								<?php foreach($lists as $val):?>
                                 <tr>
-                                    <td class="am-text-middle">01</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
-                                    <td class="am-text-middle">xxxx</td>
+                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['name'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['house_layout'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['type'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['quarters'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['area_address'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['avg_price'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['intermediary_name'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['phone'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a href="<?php echo site_url().'/module/localLife/serviceInfo';?>" class="tpl-table-black-operation-set">
@@ -561,21 +564,17 @@ width:50%;
                                         </div>
                                     </div>
                                 </div>
+								<?php endforeach;?>
+								<?php else:?>
+								<th colspan='10' style="text-align:center;">暂无内容！</th>
+								<?php endif;?>
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
                     <div class="am-u-lg-12 am-cf">
                         <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
+								<?php echo $page;?>
                         </div>
                     </div>
                 </div>

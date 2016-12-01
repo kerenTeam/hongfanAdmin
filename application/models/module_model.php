@@ -64,6 +64,22 @@ class module_model extends CI_Model{
 		$query = $this->db->where($where)->get($this->service);
 		return $query->row_array();
 	}
+	
+	//新增普通信息
+	function add_service($data){
+		return $this->db->insert($this->service,$data);
+	}
+	
+	//编辑普通信息
+	function edit_service($id,$data){
+		$where['id'] = $id;
+		return $this->db->where($where)->update($this->service,$data);
+	}
+	//删除普通信息
+	function del_service($id){
+		$where['id'] = $id;
+		return $this->db->where($where)->delete($this->service);
+	}
 
     //房产信息
     function get_houst(){
@@ -72,7 +88,7 @@ class module_model extends CI_Model{
     }
 	//房产信息 分页
 	function get_houst_page($off,$page){
-		$query = $this->db->order_by('create_time','desc')->limit($page,$off)->get($this->house);
+		$query = $this->db->order_by('create_time','desc')->limit($off,$page)->get($this->house);
 		return $query->result_array();
 	}
 	
@@ -81,6 +97,12 @@ class module_model extends CI_Model{
 		$where['id'] = $id;
 		$query = $this->db->where($where)->get($this->house);
 		return $query->result_array();
+	}
+	
+	//删除房产信息
+	function del_houst($id){
+		$where['id'] = $id;
+		return $this->db->id($where)->delete($this->house);
 	}
 	
     //二手市场
@@ -98,6 +120,11 @@ class module_model extends CI_Model{
 		$where['id'] = $id;
 		$query = $this->db->where($where)->get($this->mark);
 		return $query->row_array();
+	}
+		//删除二手市场
+	function del_mark($id){
+		$where['id'] = $id;
+		return $this->db->where($where)->delete($this->mark);
 	}
 	
 	//快递上门
@@ -127,6 +154,11 @@ class module_model extends CI_Model{
 		$where['id'] = $id;
 		$query = $this->db->where($where)->get($this->market_data);
 		return $query->row_array();
+	}
+	//删除超市比价
+	function del_market_data($id){
+		$where['id'] = $id;
+		return $this->db->where($where)->delete($this->market_data);
 	}
 
 
