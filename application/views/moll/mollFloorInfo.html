@@ -1,0 +1,449 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+}
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+td.am-text-middle img{
+    width:80px;
+}
+.am-u-sm6{
+    width:50px !important;
+    margin:0;
+}
+.am-form-group div{
+    line-height: 37px;
+}
+
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo site_url().'/admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
+                </a>
+            </li>
+             <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub" >
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商城管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" >
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
+                    商品列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 主页模块
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 本地生活
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/module/charge';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 充值缴费
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一键钟情
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/homeReport/index';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 家乡报道
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 为民服务
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> HI.团购
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 购物中心
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 在线金融
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 游戏娱乐
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优品汇
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商场管理 <small>楼层信息</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">楼层信息False <span class="am-icon-info-circle"></span></div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="shop_id">楼层ID </th>
+                                    <th class="moll_name">楼层名称 </th>
+                                    <th class="shop_id">楼层主题 </th>
+                                    <th class="shop_name">是否有停车场</th>
+                                    <th class="shop_type">是否有商户 </th>
+                                    <th class="shop_yetai">是否为入口楼层 </th>
+                                    <th class="shop_block">已上传平面图</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="am-text-middle"><input type="number" min="-4" name="" value="-3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="B3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="停车场" required /></td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" >是</option>
+                                            <option value="option1" selected>否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="是" required /></td>
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle"><input type="number" min="-4" name="" value="-3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="B3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="停车场" required /></td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" >是</option>
+                                            <option value="option1" selected>否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="是" required /></td>
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle"><input type="number" min="-4" name="" value="-3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="B3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="停车场" required /></td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" >是</option>
+                                            <option value="option1" selected>否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="是" required /></td>
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle"><input type="number" min="-4" name="" value="-3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="B3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="停车场" required /></td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" >是</option>
+                                            <option value="option1" selected>否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="是" required /></td>
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle"><input type="number" min="-4" name="" value="-3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="B3" required /></td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="停车场" required /></td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" selected>是</option>
+                                            <option value="option1">否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <select id="" name="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="option1" >是</option>
+                                            <option value="option1" selected>否</option>
+                                        </select>
+                                    </td>
+                                    <td class="am-text-middle"><input type="text"  name="" value="是" required /></td>
+                                </tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="am-u-lg-12 am-cf">
+                        <div class="am-fl">
+                            <p>楼层编号，一楼为零，地下用负数，因楼层ID和楼层名称与App地图、导航相关，请不要随意修改</p>
+                            <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                                <button type="button" class="am-btn am-btn-default am-btn-sm">重置</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

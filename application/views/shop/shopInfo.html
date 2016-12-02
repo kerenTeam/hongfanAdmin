@@ -10,25 +10,25 @@
         font-size: 12px!important;
     padding: 5px 6px!important;
     }
-    #preview{
+#preview{
         width:200px;
+        height:200px !important;
     }
     #preview #imghead,#preview img{
-        width:100%;
-        height:100%;
+         width:200px;
+        height:200px;
     }
-    .am-form-group{
-        position: relative;
-    }
+
     .am-form-group .deleteImg{
         display: inline-block;
         background: #ff0000;
         width:60px;
         height:25px;
+        line-height: 25px;
         text-align: center;
         position: absolute;
         left:130px;
-        top:155px;
+        top:202px;
         color:#ffffff;
     }
 </style>
@@ -121,7 +121,9 @@
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                       <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                 </div>
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
+                                    <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
                             </div>
                         </div>
                         <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">

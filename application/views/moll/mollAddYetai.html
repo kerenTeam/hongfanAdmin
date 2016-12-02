@@ -1,0 +1,421 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css">
+#preview{
+        width:200px;
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+         width:200px;
+        height:200px;
+    }
+
+    .am-form-group .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        position: absolute;
+        left:130px;
+        top:202px;
+        color:#ffffff;
+    }
+    .relative{
+        position:relative;
+    }
+    .absolute{
+        width:130px;
+        border:1px solid #d84c29;
+        color:#d84c29;
+        position:absolute;
+        top:35%;
+        left:10%;
+        z-index: 5;
+        font-size:12px;
+        display:none;
+    }
+    .am-icon-info-circle{
+        color:#1fb5ac;
+    }
+
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo site_url().'/admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
+                </a>
+            </li>
+
+             <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>" >
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>" class="sub-active">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商城管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" >
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
+                    商品列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 主页模块
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 本地生活
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/module/charge';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 充值缴费
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一键钟情
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/homeReport/index';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 家乡报道
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 为民服务
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> HI.团购
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 购物中心
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 在线金融
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 游戏娱乐
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优品汇
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">业态配置</a><small>/新增业态</small>
+            
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">新增业态</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                             <div class="am-form-group relative">
+                                <label for="oneType" >父业态 <span class="am-icon-info-circle"></span><span class="red">*</span>：</label>
+                                <select id="oneType" required>
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">--</option>
+                                    <option value="option2">百货</option>
+                                    <option value="option2">配套服务</option>
+                                    <option value="option2">超市/便利店</option>
+                                    <option value="option2">数码音像</option>
+                                    <option value="option2">家居生活</option>
+                                    <option value="option2">儿童</option>
+                                    <option value="option2">休闲娱乐</option>
+                                    <option value="option2">餐饮</option>
+                                    <option value="option2">饰品</option>
+                                    <option value="option2">药品/护理/保健</option>
+                                    <option value="option2">鞋包</option>
+                                    <option value="option2">服装</option>
+                                    <option value="option2">运动男装</option>
+
+                                </select>
+                                <span class="absolute">父业态新增后不能修改</span>
+                            </div>
+                             <div class="am-form-group relative">
+                                <label for="oneType" >所属品类：</label>
+                                <select id="oneType" required>
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="option1">购物</option>
+                                    <option value="option2">餐饮</option>
+                                    <option value="option2">休闲娱乐</option>
+                                    <option value="option2">儿童</option>
+                                    <option value="option2">配套服务</option>
+
+                                </select>
+                            </div>
+                            
+                            <div class="am-form-group">
+                                <label for="englishName">业态名称：<span class="red">*</span>：</label>
+                                 <input type="text" name="" required />
+                            </div>
+                            <div class="am-form-group ">
+                                <label for="user-weibo" class="am-form-label">商家图片<span class="red">*</span>：</label>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <div class="wx_type_img">
+                                         <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                          <!-- 图片实时预览 -->
+                                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
+                                        <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                </div> 
+                            </div>
+                            
+                            <div class="am-form-group">
+                                <label for="englishName">颜色：<span class="red">*</span>：</label>
+                                 <input type="color" name="" required />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">显示顺序<span class="red">*</span>：</label>
+                                 <input type="number" name="" required />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">积分比例：<span class="red">*</span>：</label>
+                                 <input type="number" name="" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">添加</button>
+                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+    //显示提示信息
+    $(".am-form-group label span.am-icon-info-circle").hover(function(){
+        $(".absolute").fadeIn('1000');
+    },function(){
+        $(".absolute").fadeOut('1000');
+    });
+       //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');});
+        
+    });
+
+</script>
+</html>
