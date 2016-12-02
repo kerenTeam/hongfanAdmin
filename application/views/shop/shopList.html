@@ -25,31 +25,33 @@ padding: 5px 6px!important;
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础配置
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/baseInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础信息
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/floorInfo';?>">
+                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
                 </a>
             </li>
-
              <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/yetai';?>">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                 </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>" >
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>

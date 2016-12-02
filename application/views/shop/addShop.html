@@ -13,31 +13,33 @@
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础配置
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/baseInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 基础信息
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/floorInfo';?>">
+                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
                 </a>
             </li>
-
              <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/yetai';?>">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                 </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>" >
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </li>
@@ -280,18 +282,26 @@
                                 <label for="oneType">一级业态<span class="red">*</span>：</label>
                                 <select id="oneType" name="oneType" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
+                                    <option value="option1">百货</option>
+                                    <option value="option2">配套服务</option>
+                                    <option value="option3">超市/便利店</option>
+                                    <option value="option3">数码音像</option>
+                                    <option value="option3">家居生活</option>
+                                    <option value="option3">儿童</option>
+                                    <option value="option3">休闲娱乐</option>
+                                    <option value="option3">餐饮</option>
+                                    <option value="option3">饰品</option>
+                                    <option value="option3">药品/护理/保健</option>
+                                    <option value="option3">鞋包</option>
+                                    <option value="option3">服装</option>
                                 </select>
                             </div>
                              <div class="am-form-group">
                                 <label for="twoType">二级业态<span class="red">*</span>：</label>
                                 <select id="twoType" name="twoType" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
+                                    <option value="option1">OUTLETS</option>
+                                    <option value="option2">百货</option>
                                 </select>
                             </div>
                         </div>
@@ -300,9 +310,11 @@
                                 <label for="shopType">商家类型 <span class="red">*</span>：</label>
                                 <select id="shopType" name="shopType" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
+                                    <option value="option1">普通</option>
+                                    <option value="option2">餐饮</option>
+                                    <option value="option3">影院</option>
+                                    <option value="option3">KTV</option>
+                                    <option value="option3">冰场</option>
                                 </select>
                                 <span class="am-form-caret"></span>
                             </div>
@@ -328,17 +340,8 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="businessTime">营业时间<span class="red">*</span>：</label>
-                                <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                                  <p>开始日期应小于结束日期！</p>
-                                </div>
-                                <div class="am-g">
-                                  <div class="am-u-sm-6">
-                                    <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                                  </div>
-                                  <div class="am-u-sm-6">
-                                    <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
-                                  </div>
-                                </div>
+                                <input type="text" placeholder="9:20-22:00" class="" name="comments"  id="comments"  min="0" required />
+                                
                             </div>
                             <div class="am-form-group">
                                 <label for="area">面积/平方米<span class="red">*</span>：</label>
