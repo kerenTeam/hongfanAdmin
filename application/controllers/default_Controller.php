@@ -9,6 +9,7 @@ class default_Controller extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set("Asia/Shanghai");
 		$this->load->helper('default_helper');
         //验证是否登陆
 		if(!isset($_SESSION['users'])){
