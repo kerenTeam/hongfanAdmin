@@ -22,7 +22,7 @@ class member_model extends CI_Model{
 
     //根据用户id返回用户信息
     function get_user_info($id){
-        $where['userid'] = $id;
+        $where['user_id'] = $id;
         $query = $this->db->where($where)->get($this->member);
         return $query->row_array();
     }
@@ -47,7 +47,7 @@ class member_model extends CI_Model{
 
     //修改用户状态
     function edit_state($id,$arr){
-    	$where['userid'] = $id;
+    	$where['user_id'] = $id;
     	$query = $this->db->where($where)->update($this->member,$arr);
     	return $query;
     }
@@ -64,12 +64,12 @@ class member_model extends CI_Model{
     }
     //修改用资料
     function edit_userinfo($userid,$data){
-        $where['userid'] = $userid;
+        $where['user_id'] = $userid;
         return $this->db->where($where)->update($this->member,$data);
     }
     //删除用户
     function del_member($id){
-        $where['userid'] = $id;
+        $where['user_id'] = $id;
         return $this->db->where($where)->delete($this->member);
     }
 

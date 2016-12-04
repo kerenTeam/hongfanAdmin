@@ -132,6 +132,7 @@ class localLife extends default_Controller {
                     break;
                 //房产信息
                 case '2':
+				//	$userid = $this->session->users['user_id'];
                     $list = $this->module_model->get_houst();
 					$config['total_rows'] = count($list);
 					//分页数据
@@ -198,7 +199,7 @@ class localLife extends default_Controller {
 			$this->load->view('module/localLife/serviceInfo.html',$data);
 		}
     }
-	//删除信息
+	//删除本地服务信息
 	function del_service(){
 
 		$id=intval($this->uri->segment(4));
@@ -231,7 +232,7 @@ class localLife extends default_Controller {
 		}
 	}
 	
-	//新增信息
+	//新增普通信息
 	function add_service(){
 		
 		if($_POST){
@@ -271,7 +272,7 @@ class localLife extends default_Controller {
 		}
 	}
 	
-	//编辑信息
+	//编辑普通信息
 	function edit_service(){
 		if($_POST){
 			$data = $this->input->post();
@@ -314,6 +315,15 @@ class localLife extends default_Controller {
 			 }else{
 				 echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
 			 }
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+	
+	//新增房产信息
+	function add_houst(){
+		if($_POST){
+			
 		}else{
 			$this->load->view('404.html');
 		}

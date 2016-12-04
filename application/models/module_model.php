@@ -112,7 +112,7 @@ class module_model extends CI_Model{
 	}
 	//二手市场 分页
 	function get_mark_page($off,$page){
-		$query = $this->db->order_by('create_time','desc')->limit($page,$off)->get($this->mark);
+		$query = $this->db->order_by('create_time','desc')->limit($off,$page)->get($this->mark);
 		return $query->result_array();
 	}
 	//获取二手市场详情
@@ -134,7 +134,7 @@ class module_model extends CI_Model{
 	}
 	//快递上门 分页
 	function get_express_page($off,$page){
-		$query = $this->db->order_by('create_time','desc')->limit($page,$off)->get($this->express);
+		$query = $this->db->order_by('create_time','desc')->limit($off,$page)->get($this->express);
 		return $query->result_array();
 	}
 	
@@ -145,7 +145,7 @@ class module_model extends CI_Model{
 	}
 	//超市比价 分页
 	function get_market_data_page($off,$page){
-		$query = $this->db->order_by('date','desc')->limit($page,$off)->get($this->market_data);
+		$query = $this->db->order_by('date','desc')->limit($off,$page)->get($this->market_data);
 		return $query->result_array();
 	}
 	

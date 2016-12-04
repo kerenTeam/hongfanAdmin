@@ -17,7 +17,7 @@ function group_name($gid){
 //获取用户名
 function user_name($user_id){
     $CI = &get_instance();
-    $sql = "SELECT nickname FROM hf_user_member where userid = '$user_id'";
+    $sql = "SELECT nickname FROM hf_user_member where user_id = '$user_id'";
     $query = $CI->db->query($sql);
     $name = $query->row_array();
     return $name['nickname'];
