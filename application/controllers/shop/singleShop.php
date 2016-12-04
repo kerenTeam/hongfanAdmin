@@ -47,5 +47,33 @@ class singleShop extends CI_Controller {
         $this->load->view('shop/shopComment.html');
     }
 
+    //商家促销管理 促销列表
+    function shopSalesList(){
+        $this->load->view('shop/shopSalesList.html');
+    }
+    //商家促销管理 新增促销
+    function shopAddSales(){
+        $this->load->view('shop/shopAddSales.html');
+    }
+     //商家促销管理 促销验证
+    function shopCheckSales(){
+        $this->load->view('shop/shopCheckSales.html');
+    }
+     //商家促销管理 编辑促销
+    function shopEditSales(){
+        $this->load->view('shop/shopEditSales.html');
+    }
+    //商家活动管理 活动列表
+    function shopActivityList(){
+        $this->load->view('shop/shopActivityList.html');
+    }
+     //商家活动管理 添加活动
+    function shopAddActivity(){
+        $this->load->view('shop/shopAddActivity.html');
+    }
+     //商家活动管理 编辑活动
+    function shopEditActivity(){
+        $this->load->view('shop/shopEditActivity.html');
+    }
 }
 
