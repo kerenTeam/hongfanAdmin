@@ -252,7 +252,7 @@
                             <?php if(!empty($users)){?>
                                 <?php foreach($users as $value):?>
                                 <tr class="gradeX">
-                                    <td><input type="checkbox" name='id[]' value="<?php echo $value['userid']?>"></td>
+                                    <td><input type="checkbox" name='id[]' value="<?php echo $value['user_id']?>"></td>
                                     <td><?php echo $value['username']?></td>
                                     <td class="am-text-middle"><?php echo $value['nickname']?></td>
                                     <td class="am-text-middle"><?php echo $value['phone']?></td>
@@ -271,22 +271,22 @@
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/member/member/memberInfo/'.$value['userid'];?>" class="tpl-table-black-operation-look">
+                                            <a href="<?php echo site_url().'/member/member/memberInfo/'.$value['user_id'];?>" class="tpl-table-black-operation-look">
                                                 <i class="am-icon-eye" ></i> 查看详情
                                             </a>
                                         <?php if($value['state'] == 1):?>
-                                            <a href="<?php echo site_url('/member/member/up_user_state/2/'.$value['userid']);?>" class="tpl-table-black-operation-set">
+                                            <a href="<?php echo site_url('/member/member/up_user_state/2/'.$value['user_id']);?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-gear" ></i> 解除冻结
                                             </a>
                                               <?php else:?>
-  										  	<a href="<?php echo site_url('/member/member/up_user_state/1/'.$value['userid']);?>" class="tpl-table-black-operation-set">
+  										  	<a href="<?php echo site_url('/member/member/up_user_state/1/'.$value['user_id']);?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-gear" ></i> 冻结
                                             </a>
 	                                    	<?php endif;?>
-                                            <a href="<?php echo site_url().'/member/member/editMember/'.$value['userid'];?>">
+                                            <a href="<?php echo site_url().'/member/member/editMember/'.$value['user_id'];?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url().'/member/member/delMember/'.$value['userid'];?>" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<?php echo $value['userid'];?>'}">
+                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url().'/member/member/delMember/'.$value['user_id'];?>" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<?php echo $value['user_id'];?>'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>

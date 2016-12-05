@@ -119,52 +119,59 @@ class localLife extends default_Controller {
 			
             //获取分类信息
             $cate = $this->module_model->get_cateinfo($id);
-            //根据分类查询列表
-            switch($cate['typeid']){
-                //普通信息  保姆、保洁、维修、咨询、开锁
-                case '1':
-					//总条数
-                    $list = $this->module_model->get_serviceList($cate['id']);
-					 $config['total_rows'] = count($list);
-					//分页数据
-					$listpage = $this->module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
-				
-                    break;
-                //房产信息
-                case '2':
-                    $list = $this->module_model->get_houst();
-					$config['total_rows'] = count($list);
-					//分页数据
-					$listpage = $this->module_model->get_houst_page($config['per_page'],$current_page);
-                    break;
-                //二手市场
-                case '3':
-                    $list = $this->module_model->get_mark();
-					$config['total_rows'] = count($list);
-					//分页数据
-					$listpage = $this->module_model->get_mark_page($config['per_page'],$current_page);
-                    break;
-                // 快递上门
-                case '4':
-					$list = $this->module_model->get_express();
-					$config['total_rows'] = count($list);
-					//分页数据
-					$listpage = $this->module_model->get_express_page($config['per_page'],$current_page);
-                    break;
-                //超市比价
-                case '5':
-					$list = $this->module_model->get_market_data();
-					$config['total_rows'] = count($list);
-					//分页数据
-					$listpage = $this->module_model->get_market_data_page($config['per_page'],$current_page);
-                    break;
-            }
+			if(empty($cate)){
+				$this->load->view('404.html');
+			}else{
+				$type = '';
+				//根据分类查询列表
+				switch($cate['typeid']){
+					//普通信息  保姆、保洁、维修、咨询、开锁
+					case '1':
+						//总条数
+						$list = $this->module_model->get_serviceList($cate['id']);
+						 $config['total_rows'] = count($list);
+						//分页数据
+						$listpage = $this->module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
+					
+						break;
+					//房产信息
+					case '2':
+					//	$userid = $this->session->users['user_id'];
+						$list = $this->module_model->get_houst();
+						$config['total_rows'] = count($list);
+						//分页数据
+						$listpage = $this->module_model->get_houst_page($config['per_page'],$current_page);
+						break;
+					//二手市场
+					case '3':
+						$list = $this->module_model->get_mark();
+						$config['total_rows'] = count($list);
+						//分页数据
+						$listpage = $this->module_model->get_mark_page($config['per_page'],$current_page);
+						//分类信息
+						$type = $this->module_model->get_mark_type();
+						break;
+					// 快递上门
+					case '4':
+						$list = $this->module_model->get_express();
+						$config['total_rows'] = count($list);
+						//分页数据
+						$listpage = $this->module_model->get_express_page($config['per_page'],$current_page);
+						break;
+					//超市比价
+					case '5':
+						$list = $this->module_model->get_market_data();
+						$config['total_rows'] = count($list);
+						//分页数据
+						$listpage = $this->module_model->get_market_data_page($config['per_page'],$current_page);
+						break;
+				}
 
-			$this->load->library('pagination');//加载ci pagination类
-			$this->pagination->initialize($config);
-            $data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'page' => $this->pagination->create_links());
-	
-            $this->load->view('module/localLife/serviceList.html',$data);
+				$this->load->library('pagination');//加载ci pagination类
+				$this->pagination->initialize($config);
+				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'page' => $this->pagination->create_links(),'type'=>$type);
+				$this->load->view('module/localLife/serviceList.html',$data);
+			}
         }
     }
     //本地生活 本地服务 列表详情
@@ -184,6 +191,7 @@ class localLife extends default_Controller {
 				case '2':
 					$title = '房产信息';
 					$info = $this->module_model->get_houstinfo($id);
+					
 					break;
 				case '3':
 					$title = '二手市场';
@@ -198,7 +206,7 @@ class localLife extends default_Controller {
 			$this->load->view('module/localLife/serviceInfo.html',$data);
 		}
     }
-	//删除信息
+	//删除本地服务信息
 	function del_service(){
 
 		$id=intval($this->uri->segment(4));
@@ -231,7 +239,7 @@ class localLife extends default_Controller {
 		}
 	}
 	
-	//新增信息
+	//新增普通信息
 	function add_service(){
 		
 		if($_POST){
@@ -271,7 +279,7 @@ class localLife extends default_Controller {
 		}
 	}
 	
-	//编辑信息
+	//编辑普通信息
 	function edit_service(){
 		if($_POST){
 			$data = $this->input->post();
@@ -279,7 +287,7 @@ class localLife extends default_Controller {
 			$i =1;
 			foreach($_FILES as $file=>$val){
 				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service';
+					$config['upload_path']      = 'upload/service/ordinary';
 					$config['allowed_types']    = 'gif|jpg|png|jpeg';
 					$config['max_size']     = 2048;
 					$config['file_name'] = date('Y-m-d_His');
@@ -290,15 +298,15 @@ class localLife extends default_Controller {
 					}else{
 						if($i != 4){
 							unset($data['img'.$i]);
-						$pic[]['banner'.$i] = 'upload/service/'.$this->upload->data('file_name');
+						$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'upload/service/'.$this->upload->data('file_name');
+							$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
 						}
 					}
 				}else{
 					if($i != 4){
 						if(!empty($data['img'.$i])){
-							$pic[]['banner'.$i] = $data['img'.$i];
+							$pic[]['banner'] = $data['img'.$i];
 							unset($data['img'.$i]);
 						}
 					}else{
@@ -314,6 +322,140 @@ class localLife extends default_Controller {
 			 }else{
 				 echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
 			 }
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+	
+	//新增房产信息
+	function add_houst(){
+		if($_POST){
+			$data = $this->input->post();
+			$pic = array();
+			$i =1;
+			foreach($_FILES as $file=>$val){
+				if(!empty($_FILES['img'.$i]['name'])){
+					$config['upload_path']      = 'upload/service/houst';
+					$config['allowed_types']    = 'gif|jpg|png|jpeg';
+					$config['max_size']     = 2048;
+					$config['file_name'] = date('Y-m-d_His');
+					$this->load->library('upload', $config);
+					//上传
+					if(!$this->upload->do_upload('img'.$i)) {
+					   echo $this->upload->display_errors();
+					}else{
+						if($i != 4){
+							$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
+						}else{
+							$logo = 'upload/service/houst/'.$this->upload->data('file_name');
+						}
+					}
+				}
+				$i++;
+			 }
+			 $data['pic'] =json_encode($pic);
+			 $data['list_pic'] = $logo;
+			 $data['userid'] = $this->session->users['user_id'];
+			 $id = $data['type_id'];
+			 unset($data['type_id']);
+			 if($this->module_model->add_houst($data)){
+				  echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			 }else{
+				  echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			 }
+			
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+	
+	//编辑房产信息
+	function edit_houst(){
+		if($_POST){
+			$data = $this->input->post();
+			$pic = array();
+			$i =1;
+			foreach($_FILES as $file=>$val){
+				if(!empty($_FILES['img'.$i]['name'])){
+					$config['upload_path']      = 'upload/service/houst';
+					$config['allowed_types']    = 'gif|jpg|png|jpeg';
+					$config['max_size']     = 2048;
+					$config['file_name'] = date('Y-m-d_His');
+					$this->load->library('upload', $config);
+					//上传
+					if(!$this->upload->do_upload('img'.$i)) {
+					   echo $this->upload->display_errors();
+					}else{
+						if($i != 4){
+							unset($data['img'.$i]);
+						$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
+						}else{
+							$logo = 'upload/service/houst/'.$this->upload->data('file_name');
+						}
+					}
+				}else{
+					if($i != 4){
+						if(!empty($data['img'.$i])){
+							$pic[]['picImg'] = $data['img'.$i];
+							unset($data['img'.$i]);
+						}
+					}else{
+						$logo = $data['logo'];
+					}
+				}
+				$i++;
+			 }
+			 $data['pic'] = json_encode($pic);
+			 $data['list_pic'] = $logo;
+			 $type = $data['type_id'];
+			 unset($data['type_id']);
+			 if($this->module_model->edit_houst($data['id'],$data)){
+				   echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+			 }else{
+				   echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+			 }
+			
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+	
+	//新增二手产品
+	function add_market(){
+		if($_POST){
+			$data = $this->input->post();
+			$pic = array();
+			$i =1;
+			foreach($_FILES as $file=>$val){
+				if(!empty($_FILES['img'.$i]['name'])){
+					$config['upload_path']      = 'upload/service/mark';
+					$config['allowed_types']    = 'gif|jpg|png|jpeg';
+					$config['max_size']     = 2048;
+					$config['file_name'] = date('Y-m-d_His');
+					$this->load->library('upload', $config);
+					//上传
+					if(!$this->upload->do_upload('img'.$i)) {
+					   echo $this->upload->display_errors();
+					}else{
+						if($i != 4){
+							$pic[]['picImg'] = 'upload/service/mark/'.$this->upload->data('file_name');
+						}else{
+							$logo = 'upload/service/mark/'.$this->upload->data('file_name');
+						}
+					}
+				}
+				$i++;
+			}
+			$data['pic'] = json_encode($pic);
+			$data['list_pic'] = $logo;
+			$data['userid'] = $this->session->users['user_id'];
+			$type= $data['id'];
+			unset($data['id']);
+			if($this->module_model->add_market($data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$type."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$type."'</script>";exit;
+			}
 		}else{
 			$this->load->view('404.html');
 		}
