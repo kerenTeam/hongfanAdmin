@@ -4,25 +4,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  商家管理
  *
  * */
+require_once(APPPATH.'controllers/default_Controller.php');
 
-class moll extends CI_Controller {
+class moll extends default_Controller {
 
     function __construct()
     {
         parent::__construct();
+        $this->load->model('moll_model');
 
     }
-
-    // //商场 基础配置
-    // function index()
-    // {
-    // 	 $this->load->view('moll/mollBaseSet.html');
-    // }
-    // //商场 基础信息
-    // function baseInfo()
-    // {
-    //      $this->load->view('moll/mollBaseInfo.html');
-    // }
+    
     //业态列表
     function mollyetaiList(){
 
@@ -44,7 +36,8 @@ class moll extends CI_Controller {
     }
     //商场简介
     function mollBrief(){
-         $this->load->view('moll/mollBrief.html');
+        $data['market'] = $this->moll_model->get_marketinfo();
+         $this->load->view('moll/mollBrief.html',$data);
     }
 
 
