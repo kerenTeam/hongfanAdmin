@@ -483,6 +483,18 @@ class localLife extends default_Controller {
 					unset($data['type_id']);
 					$isOk = $this->module_model->edit_markinfo($data['id'],$data);
 					break;
+					//超市比价
+				case '5':
+						$type = $data['type_id'];
+						$cate = $data['cate'];
+						$data['date'] = date('Y-m-d H:i:s');
+						unset($data['type_id'],$data['cate']);
+						if($this->module_model->edit_market_info($data['id'],$data)){
+							echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+						}else{
+							echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+						}
+					break;
 			}
 			if($isOk){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
@@ -494,4 +506,32 @@ class localLife extends default_Controller {
 			$this->load->view('404.html');
 		}
 	}
+	//新增超市比价
+	function add_market_data(){
+		if($_POST){
+			$data = $this->input->post();
+			$id = $data['id'];
+			unset($data['id']);
+			$data['date'] = date('Y-m-d H:i:s');
+			// var_dumP($data);
+			// exit;
+			if($this->module_model->add_market_data($data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			}
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//导入超市比价
+	function send_market_data(){
+		$json = json_encode($_FILES);
+		file_put_contents('text.log',$json);
+	}
+
+
+
+
 }

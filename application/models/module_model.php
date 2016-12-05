@@ -184,6 +184,19 @@ class module_model extends CI_Model{
 		$query = $this->db->where($where)->get($this->market_data);
 		return $query->row_array();
 	}
+    //新增超市比价
+    function add_market_data($data){
+        return $this->db->insert($this->market_data,$data);
+    }
+    //修改超市比价
+    function edit_market_info($id,$data)
+    {
+       $where['id'] = $id;
+       return $this->db->where($where)->update($this->market_data,$data);
+    }
+
+
+
 	//删除超市比价
 	function del_market_data($id){
 		$where['id'] = $id;
