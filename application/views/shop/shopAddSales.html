@@ -19,7 +19,7 @@
         height:200px;
     }
 
-    .am-form-group .deleteImg{
+  .deleteImg{
         display: inline-block;
         background: #ff0000;
         width:60px;
@@ -130,7 +130,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>新增促销活动</small></div>
+            <div class="page-header-heading">商家管理<span class="am-icon-home page-header-heading-icon">促销管理</span>  <small>新增促销活动</small></div>
         </div>
     </div>
 </div>
@@ -146,7 +146,7 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">活动分类<span class="red">*</span></label>
                             <div class="am-u-sm-9">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
                                     <option value="全部">全部</option>
                                     <option value="商家促销">商家促销</option>
@@ -157,7 +157,7 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">自定义活动分类<span class="red">*</span></label>
                             <div class="am-u-sm-9">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" class="am-form-field tpl-form-no-bg" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
                                     <option value="全部">精选优惠</option>
                                     <option value="商家促销">衣服优惠</option>
@@ -168,13 +168,13 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" value="0" required>
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">自定义活动编号：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="用于与第三方活动关联" value="0" required>
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="用于与第三方活动关联" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -230,35 +230,35 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">验证方式<span class="red">*</span></label>
                             <div class="am-u-sm-9">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
-                                    <option value="">无需验证</option>
-                                    <option value="">会员卡</option>
-                                    <option value="">电子券</option>
+                                    <option value="无需验证">无需验证</option>
+                                    <option value="会员卡">会员卡</option>
+                                    <option value="电子券">电子券</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">参与人数限制<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="tel" name="" class="am-form-field tpl-form-no-bg" placeholder="参加该活动的总人数限制" required>
+                                <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="参加该活动的总人数限制" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">参与对象<span class="red">*</span></label>
                             <div class="am-u-sm-9">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
-                                    <option value="">不限制</option>
-                                    <option value="">商场会员</option>
-                                    <option value="">鞋子特惠</option>
+                                    <option value="不限制">不限制</option>
+                                    <option value="商场会员">商场会员</option>
+                                    <option value="鞋子特惠">鞋子特惠</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="tel" name="" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -292,37 +292,37 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">详情跳转至<span class="red">*</span></label>
                             <div class="am-u-sm-9">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
-                                    <option value="">活动详情页</option>
-                                    <option value="">外部页面</option>
+                                    <option value="活动详情页">活动详情页</option>
+                                    <option value="外部页面">外部页面</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-6 am-form-label">是否可以使用核销口令<span class="red">*</span></label>
                             <div class="am-u-sm-6">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name="" class="am-form-field tpl-form-no-bg" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
-                                    <option value="">是</option>
-                                    <option value="">否</option>
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-6 am-form-label">是否可以一键领取所有券<span class="red">*</span></label>
                             <div class="am-u-sm-6">
-                                <select id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <select name class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
-                                    <option value="">是</option>
-                                    <option value="">否</option>
+                                    <option value="是">是</option>
+                                    <option value="否">否</option>
                                 </select>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">活动详情(纯文本)：</label>
                             <div class="am-u-sm-9">
-                                <textarea name="" rows="5" cols="40">
+                                <textarea name="" rows="5" cols="40" required class="am-form-field tpl-form-no-bg">
                                     VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
                                 </textarea>
                             </div>
@@ -330,7 +330,7 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">使用说明：</label>
                             <div class="am-u-sm-9">
-                                <textarea name="" rows="5" cols="40">
+                                <textarea name="" class="am-form-field tpl-form-no-bg" required rows="5" cols="40">
                                     VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
                                 </textarea>
                             </div>

@@ -1,0 +1,566 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+}
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+.widget-title{
+    font-size:18px;
+    color:#000;
+}
+h4.am-panel-title{
+    color:#1fb5ac;
+    font-size:16px;
+}
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo site_url().'/admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
+                </a>
+            </li>
+             <li class="sidebar-nav-link">
+                <a href="javascript:;" class="sidebar-nav-sub-title">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
+                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                </a>
+                <ul class="sidebar-nav sidebar-nav-sub">
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>" >
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-link">
+                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">
+                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" >
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商城管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" >
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
+                    商品列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/banner/banner';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 主页模块
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 本地生活
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/module/charge';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 充值缴费
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一键钟情
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/module/homeReport/index';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 家乡报道
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 为民服务
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> HI.团购
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 购物中心
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 在线金融
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 游戏娱乐
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优品汇
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading">Banner管理<span class="am-icon-home page-header-heading-icon"></span>  <small>Banner列表</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">Banner列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        
+                    </div>
+                    <div class="am-u-sm-12">
+                        <div class="am-panel-group" id="accordion">
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
+                                        首页的banner
+                                    </h4>
+                                </div>
+                                <div id="homepage" class="am-panel-collapse am-collapse am-in">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/banner/banner/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">编号 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">名称 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">图片 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">跳转地址 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
+                                        超市比价的banner
+                                    </h4>
+                                </div>
+                                <div id="market" class="am-panel-collapse am-collapse">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/banner/banner/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">编号 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">名称 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">图片 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">跳转地址 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
+                                        购物中心的banner
+                                    </h4>
+                                </div>
+                                <div id="shopCenter" class="am-panel-collapse am-collapse">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/banner/banner/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">编号 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">名称 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">图片 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">跳转地址 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
+                                        为民服务的banner
+                                    </h4>
+                                </div>
+                                <div id="shopCenter" class="am-panel-collapse am-collapse">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/banner/banner/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">编号 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">名称 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">图片 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">跳转地址 <i class="am-icon-sort"></i></th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="">
+                                                    <td class="am-text-middle">F1003</td>
+                                                    <td class="am-text-middle">满记甜品</td>
+                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
+                                                                <i class="am-icon-pencil"></i> 编辑
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
