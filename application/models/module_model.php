@@ -138,6 +138,12 @@ class module_model extends CI_Model{
 	function add_market($data){
 		return $this->db->insert($this->mark,$data);
 	}
+	//编辑二手市场详情
+	function edit_markinfo($id,$data){
+		$where['id'] = $id;
+		return $this->db->where($where)->update($this->mark,$data);
+
+	}
 	//获取二手市场详情
 	function get_markinfo($id){
 		$where['id'] = $id;
@@ -178,6 +184,19 @@ class module_model extends CI_Model{
 		$query = $this->db->where($where)->get($this->market_data);
 		return $query->row_array();
 	}
+    //新增超市比价
+    function add_market_data($data){
+        return $this->db->insert($this->market_data,$data);
+    }
+    //修改超市比价
+    function edit_market_info($id,$data)
+    {
+       $where['id'] = $id;
+       return $this->db->where($where)->update($this->market_data,$data);
+    }
+
+
+
 	//删除超市比价
 	function del_market_data($id){
 		$where['id'] = $id;

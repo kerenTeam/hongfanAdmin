@@ -169,6 +169,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
+                                	<input type='hidden' name='type_id' value="<?php echo $type_id?>"/>
 									<input type='hidden' name='type_name' value='<?php echo $info['type_name'];?>'/>
                                     <input type="text" placeholder="请输入标题" name='name' value='<?php echo $info['name'];?>' minlength="4" required="">
                                 </div>
@@ -230,7 +231,7 @@ width:50%;
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
 											<!-- 图片实时预览 -->
-											<input type='hidden' name='img2' value='<?php echo $banner[1]['banner2'];?>' />
+											<input type='hidden' name='img2' value='<?php echo $banner[1]['banner'];?>' />
 
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['banner'];?>" class="am-img-responsive cardView"> </div>
 											<div class="am-text-xs">banner2</div>
@@ -249,7 +250,7 @@ width:50%;
 											<!-- 图片实时预览 -->
 											<input type='hidden' name='img3' value='<?php echo $banner[2]['banner'];?>' />
 
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['banner3'];?>" class="am-img-responsive cardView"> </div>
+											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['banner'];?>" class="am-img-responsive cardView"> </div>
 											<div class="am-text-xs">banner3</div>
 										</div>
 										<?php else:?>
@@ -293,7 +294,7 @@ width:50%;
 
 						<?php }else if($type_id == 2){?>
                         <!-- 本地生活 房产资讯类类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/localLife/edit_houst');?>' method='post' enctype='multipart/form-data'  >
+                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/localLife/edit_service');?>' method='post' enctype='multipart/form-data'  >
                                       <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -451,130 +452,120 @@ width:50%;
                                     </div>
                                      <div class="am-form-group am-text-center am-btn-group-xs">
                                         <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-											 <input type='hidden' name='id' value='<?php echo $info['id'];?>'/>
+										<input type='hidden' name='id' value='<?php echo $info['id'];?>'/>
                                         <button type="submit" class="am-btn am-btn-danger">提交</button>
                                     </div>
                                 </form>
 
 						<?php }else if($type_id == 3){?>
                         <!-- 跳蚤市场 -->
-                        <form class="am-form tpl-form-line-form" data-am-validator>
-                                    <div class="am-form-group am-cf">
+                        <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/localLife/edit_service');?>" method='post' enctype='multipart/form-data' >
+                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" placeholder="请输入标题" minlength="4" required="">
+                                            <input type="text" placeholder="请输入标题" name='title' value="<?php echo $info['title']?>" minlength="4" required="">
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">售价范围 <span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">售价 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" required>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">标签说明 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" required>
+                                            <input type="text" value="<?php echo $info['price']?>" name='price' required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">新旧 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" placeholder="如：9成新" required>
+                                            <input type="text" value="<?php echo $info['brand_new']?>" name='brand_new' placeholder="如：9成新" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <select required>
+                                            <select name='type' required>
                                                 <option value="">-=请选择一项=-</option>
-                                                <option value="option1">数码</option>
-                                                <option value="option2">文具</option>
-                                                <option value="option3">服装</option>
-                                                <option value="option3">美妆</option>
-                                                <option value="option3">家用电器</option>
-                                                <option value="option3">其他</option>
+												<?php foreach($type as $v):?>
+                                                <option value="<?php echo $v['tagid'];?>" <?php if($info['type'] == $v['tagid']){echo "selected";}?>><?php echo $v['tag'];?></option>
+												<?php endforeach;?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系地址 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" placeholder="如：邻水xxxx街道" required>
+                                            <input type="text" name='address' value="<?php echo $info['address']?>" placeholder="如：邻水xxxx街道" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" required>
-                                        </div>
-                                    </div>
+                  
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                            <input type="text" name="phone" value="<?php echo $info['phone']?>" class="js-pattern-mobile" placeholder="输入手机号" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+                                        <?php $banner = json_decode($info['pic'],true);?>
                                         <div class="am-u-sm-9">
-											<?php $banner = json_decode($info['pic'],true);?>
-											<?php if(isset($banner[0]['picImg'])):?>
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" >
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
-                                            </div>
-											<?php else:?>
-											<div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
+                                                <?php if(isset($banner[0]['picImg'])):?>
                                                 <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <input type='hidden' name='img1' value="<?php echo $banner[0]['picImg'];?>" />
+	                                            <?php else:?>
+	                                           	<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <?php endif;?>
                                                 <div class="am-text-xs">banner1</div>
                                             </div>
-											<?php endif;?>
-											<?php if(isset($banner[1]['picImg'])):?>
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                 <?php if(isset($banner[1]['picImg'])):?>
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <input type='hidden' name='img2' value="<?php echo $banner[1]['picImg'];?>" />
+	                                            <?php else:?>
+	                                            	  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <?php endif;?>
                                                 <div class="am-text-xs">banner2</div>
                                             </div>
-											<?php else:?>
-											
-											<?php endif;?>
-											<?php if(isset($banner[2]['picImg'])):?>
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add">
+                                                <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                  <?php if(isset($banner[2]['picImg'])):?>
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                        <input type='hidden' name='img3' value="<?php echo $banner[2]['picImg'];?>" />
+	                                            <?php else:?>
+	                                            	  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <?php endif;?>
                                                 <div class="am-text-xs">banner3</div>
                                             </div>
-											<?php else:?>
-											
-											<?php endif;?>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" required>
+                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">点击选择图片</div>
+                                               <?php if(!empty($info['list_pic'])):?>
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
+                                                 <input type='hidden' name='list_pic' value="<?php echo $info['list_pic'];?>" />
+	                                            <?php else:?>
+	                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <?php endif;?>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">简介 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <textarea class="am-validate" name="myue" id="myue" rows="5" required></textarea>
+                                            <textarea class="am-validate" name="content" id="myue" rows="5" required><?php echo $info['content'];?></textarea>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-text-center am-btn-group-xs">
                                         <button type="reset" class="am-btn am-btn-default">重置</button>
+                                        <input type='hidden' name='id' value="<?php echo $info['id']?>"/>
+                                        <input type='hidden' name='type_id' value="<?php echo $type_id;?>"/>
                                         <button type="submit" class="am-btn am-btn-danger">提交</button>
                                     </div>
                                 </form>
