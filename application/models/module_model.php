@@ -138,6 +138,12 @@ class module_model extends CI_Model{
 	function add_market($data){
 		return $this->db->insert($this->mark,$data);
 	}
+	//编辑二手市场详情
+	function edit_markinfo($id,$data){
+		$where['id'] = $id;
+		return $this->db->where($where)->update($this->mark,$data);
+
+	}
 	//获取二手市场详情
 	function get_markinfo($id){
 		$where['id'] = $id;

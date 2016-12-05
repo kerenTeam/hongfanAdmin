@@ -183,6 +183,7 @@ class localLife extends default_Controller {
 		if($id == 0 || $type == 0){
 			$this->load->view('404.html');
 		}else{
+				$tag = '';
 			switch($type){
 				case '1':
 					$title = '普通信息';
@@ -191,18 +192,18 @@ class localLife extends default_Controller {
 				case '2':
 					$title = '房产信息';
 					$info = $this->module_model->get_houstinfo($id);
-					
 					break;
 				case '3':
 					$title = '二手市场';
 					$info = $this->module_model->get_markinfo($id);
+					$tag = $this->module_model->get_mark_type();
 					break;
 				case '5':
 					$title = '超市比价';
 					$info = $this->module_model->get_market_data_info($id);
 					break;
 			}
-			$data = array('type_id'=>$type,'info'=>$info,'title'=>$title);
+			$data = array('type_id'=>$type,'info'=>$info,'title'=>$title,'type'=>$tag);
 			$this->load->view('module/localLife/serviceInfo.html',$data);
 		}
     }
@@ -215,13 +216,12 @@ class localLife extends default_Controller {
 		if($id == 0 || $type == 0){
 			$this->load->view('404.html');
 		}else{
-			
+		
 			switch($type){
 				case '1':
 					$info = $this->module_model->del_service($id);
 					break;
 				case '2':
-				
 					$info = $this->module_model->del_houst($id);
 					break;
 				case '3':
@@ -278,55 +278,7 @@ class localLife extends default_Controller {
 			$this->load->view('404.html');
 		}
 	}
-	
-	//编辑普通信息
-	function edit_service(){
-		if($_POST){
-			$data = $this->input->post();
-			$pic = array();
-			$i =1;
-			foreach($_FILES as $file=>$val){
-				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service/ordinary';
-					$config['allowed_types']    = 'gif|jpg|png|jpeg';
-					$config['max_size']     = 2048;
-					$config['file_name'] = date('Y-m-d_His');
-					$this->load->library('upload', $config);
-					//上传
-					if(!$this->upload->do_upload('img'.$i)) {
-					   echo $this->upload->display_errors();
-					}else{
-						if($i != 4){
-							unset($data['img'.$i]);
-						$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
-						}else{
-							$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
-						}
-					}
-				}else{
-					if($i != 4){
-						if(!empty($data['img'.$i])){
-							$pic[]['banner'] = $data['img'.$i];
-							unset($data['img'.$i]);
-						}
-					}else{
-						$logo = $data['logo'];
-					}
-				}
-				$i++;
-			 }
-			 $data['pic'] = json_encode($pic);
-			 $data['logo'] = $logo;
-			 if($this->module_model->edit_service($data['id'],$data)){
-				 echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
-			 }else{
-				 echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
-			 }
-		}else{
-			$this->load->view('404.html');
-		}
-	}
-	
+
 	//新增房产信息
 	function add_houst(){
 		if($_POST){
@@ -368,58 +320,7 @@ class localLife extends default_Controller {
 			$this->load->view('404.html');
 		}
 	}
-	
-	//编辑房产信息
-	function edit_houst(){
-		if($_POST){
-			$data = $this->input->post();
-			$pic = array();
-			$i =1;
-			foreach($_FILES as $file=>$val){
-				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service/houst';
-					$config['allowed_types']    = 'gif|jpg|png|jpeg';
-					$config['max_size']     = 2048;
-					$config['file_name'] = date('Y-m-d_His');
-					$this->load->library('upload', $config);
-					//上传
-					if(!$this->upload->do_upload('img'.$i)) {
-					   echo $this->upload->display_errors();
-					}else{
-						if($i != 4){
-							unset($data['img'.$i]);
-						$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
-						}else{
-							$logo = 'upload/service/houst/'.$this->upload->data('file_name');
-						}
-					}
-				}else{
-					if($i != 4){
-						if(!empty($data['img'.$i])){
-							$pic[]['picImg'] = $data['img'.$i];
-							unset($data['img'.$i]);
-						}
-					}else{
-						$logo = $data['logo'];
-					}
-				}
-				$i++;
-			 }
-			 $data['pic'] = json_encode($pic);
-			 $data['list_pic'] = $logo;
-			 $type = $data['type_id'];
-			 unset($data['type_id']);
-			 if($this->module_model->edit_houst($data['id'],$data)){
-				   echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
-			 }else{
-				   echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
-			 }
-			
-		}else{
-			$this->load->view('404.html');
-		}
-	}
-	
+
 	//新增二手产品
 	function add_market(){
 		if($_POST){
@@ -460,8 +361,137 @@ class localLife extends default_Controller {
 			$this->load->view('404.html');
 		}
 	}
-	
-	
+	//编辑
+	function edit_service(){
+		if($_POST){
+			$data = $this->input->post();
+			$pic = array();
+			switch($data['type_id']){
+				case '1':
+					$i =1;
+					foreach($_FILES as $file=>$val){
+						if(!empty($_FILES['img'.$i]['name'])){
+							$config['upload_path']      = 'upload/service/ordinary';
+							$config['allowed_types']    = 'gif|jpg|png|jpeg';
+							$config['max_size']     = 2048;
+							$config['file_name'] = date('Y-m-d_His');
+							$this->load->library('upload', $config);
+							//上传
+							if(!$this->upload->do_upload('img'.$i)) {
+							   echo $this->upload->display_errors();
+							}else{
+								unset($data['img'.$i]);
+								if($i != 4){
+									$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
+								}else{
+									$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
+								}
+							}
+						}else{
+							unset($data['img'.$i]);
+							if($i != 4){
+								if(!empty($data['img'.$i])){
+									$pic[]['banner'] = $data['img'.$i];
+								}
+							}else{
+								$logo = $data['logo'];
+							}
+						}
+						$i++;
+					 }
+					 $data['pic'] = json_encode($pic);
+					 $data['logo'] = $logo;
+					 $type = $data['type_id'];
+					 unset($data['type_id']);
+					 $isOk = $this->module_model->edit_service($data['id'],$data);
+					break;
+					//房产
+				case '2':
+					$i =1;
+					foreach($_FILES as $file=>$val){
+						if(!empty($_FILES['img'.$i]['name'])){
+							$config['upload_path']      = 'upload/service/houst';
+							$config['allowed_types']    = 'gif|jpg|png|jpeg';
+							$config['max_size']     = 2048;
+							$config['file_name'] = date('Y-m-d_His');
+							$this->load->library('upload', $config);
+							//上传
+							if(!$this->upload->do_upload('img'.$i)) {
+							   echo $this->upload->display_errors();
+							}else{
+								if($i != 4){
+									unset($data['img'.$i]);
+								$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
+								}else{
+									$logo = 'upload/service/houst/'.$this->upload->data('file_name');
+								}
+							}
+						}else{
+							if($i != 4){
+								if(!empty($data['img'.$i])){
+									$pic[]['picImg'] = $data['img'.$i];
+									unset($data['img'.$i]);
+								}
+							}else{
+								$logo = $data['logo'];
+							}
+						}
+						$i++;
+					 }
+					 $data['pic'] = json_encode($pic);
+					 $data['list_pic'] = $logo;
+					 $type = $data['type_id'];
+					 unset($data['type_id']);
+			 		$isOk = $this->module_model->edit_houst($data['id'],$data);
+					break;
+					//二手市场
+				case '3':
+					$i = '1';
+					foreach($_FILES as $file=>$val){
+						if(!empty($_FILES['img'.$i]['name'])){
+							$config['upload_path']      = 'upload/service/mark';
+							$config['allowed_types']    = 'gif|jpg|png|jpeg';
+							$config['max_size']     = 2048;
+							$config['file_name'] = date('Y-m-d_His');
+							$this->load->library('upload', $config);
+							//上传
+							if(!$this->upload->do_upload('img'.$i)) {
+							   echo $this->upload->display_errors();
+							}else{
+								unset($data['img'.$i]);
+								if($i != 4){
+									$pic[]['picImg'] = 'upload/service/mark/'.$this->upload->data('file_name');
+								}else{
+									$logo = 'upload/service/mark/'.$this->upload->data('file_name');
+								}
+							}
+						}else{
+							if($i != 4){
+								if(!empty($data['img'.$i])){
+									$pic[]['picImg'] = $data['img'.$i];
+								}
+							}else{
+								$logo = $data['list_pic'];
+							}
+							unset($data['img'.$i]);
+						}
+						$i++;
+					}
+					$data['pic'] = json_encode($pic);
+					$data['list_pic'] = $logo;
+					$type = $data['type_id'];
+					unset($data['type_id']);
+					$isOk = $this->module_model->edit_markinfo($data['id'],$data);
+					break;
+			}
+			if($isOk){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+			}
 
-
+		}else{
+			$this->load->view('404.html');
+		}
+	}
 }
