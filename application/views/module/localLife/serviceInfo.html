@@ -150,7 +150,7 @@ width:50%;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活 <small><?php echo $title;?></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/localLife/localLifeList');?>">本地生活</a> <small> > <a href="<?php echo site_url('/module/localLife/serviceList/').$cateid;?>"><?php echo $title;?></a></small></div>
         </div>
     </div>
 </div>
@@ -223,8 +223,12 @@ width:50%;
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
 											<!-- 图片实时预览 -->
+                                            <?php if(isset($banner[0]['banner'])):?>
 											<input type='hidden' name='img1' value='<?php echo $banner[0]['banner'];?>' />
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['banner'];?>" class="am-img-responsive cardView"> </div>
+                                            <?php else:?>
+                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                            <?php endif;?>
 											<div class="am-text-xs">banner1</div>
 										</div>
 										<?php if(isset($banner[1]['banner'])):?>
@@ -232,7 +236,6 @@ width:50%;
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
 											<!-- 图片实时预览 -->
 											<input type='hidden' name='img2' value='<?php echo $banner[1]['banner'];?>' />
-
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['banner'];?>" class="am-img-responsive cardView"> </div>
 											<div class="am-text-xs">banner2</div>
 										</div>
