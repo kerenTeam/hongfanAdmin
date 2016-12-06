@@ -59,6 +59,19 @@ class module_model extends CI_Model{
         $query = $this->db->where($where)->order_by('create_time','desc')->limit($off,$page)->get($this->service);
         return $query->result_array();
 	}
+
+    //搜索所有数据
+    function search_service($sear,$type_id){
+        $sql = "SELECT * FROM $this->service where type_name = $type_id and name like '%$sear%' or link_man like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    //搜索分页数据
+    function search_service_page($sear,$type_id,$off,$page){
+        $sql = "SELECT * FROM $this->service where type_name = $type_id and name like '%$sear%' or link_man like '%$sear%' or phone like '%$sear%' order by create_time desc limit $page,$off";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
 	
 	//获取普通信息详情
 	function get_serviceinfo($id){
@@ -105,7 +118,19 @@ class module_model extends CI_Model{
 		$query = $this->db->where($where)->get($this->house);
 		return $query->row_array();
 	}
-	
+	//搜索房产信息
+    function search_houst($sear){
+        $sql = "SELECT * FROM $this->house where name like '%$sear%' or house_layout like '%$sear%' or quarters like '%$sear%' or area_address like '%$sear%' order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    //搜索房产信息分页
+    function search_houst_page($sear,$off,$page){
+        $sql = "SELECT * FROM $this->house where name like '%$sear%' or house_layout like '%$sear%' or quarters like '%$sear%' or area_address like '%$sear%' order by create_time desc limit $page,$off";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
 	//编辑房产信息
 	function edit_houst($id,$data){
 		$where['id'] = $id;
@@ -134,6 +159,18 @@ class module_model extends CI_Model{
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+    //二手市场 搜索
+    function search_mark($sear){
+        $sql = "SELECT a.id,a.userid,a.title,a.phone,a.type,a.price,a.address,a.brand_new,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid and a.title like '%$sear%' or a.brand_new like '%$sear%' order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    function search_mark_page($sear,$off,$page){
+        $sql = "SELECT a.id,a.userid,a.title,a.phone,a.type,a.price,a.address,a.brand_new,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid and a.title like '%$sear%' or a.brand_new like '%$sear%' order by create_time desc limit $page,$off";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
 	//新增二手市场信息
 	function add_market($data){
 		return $this->db->insert($this->mark,$data);
@@ -166,7 +203,21 @@ class module_model extends CI_Model{
 		$query = $this->db->order_by('create_time','desc')->limit($off,$page)->get($this->express);
 		return $query->result_array();
 	}
-	
+	//快递上门搜索
+    function search_express($sear){
+         $sql = "SELECT * FROM $this->express where sender_address like '%$sear%' or link_man like '%$sear%' or phone like '%$sear%' order by create_time desc";
+         $query = $this->db->query($sql);
+         return $query->result_array();
+    }
+     function search_express_page($sear,$off,$page){
+             $sql = "SELECT * FROM $this->express where sender_address like '%$sear%' or link_man like '%$sear%' or phone like '%$sear%' order by create_time desc limit $page,$off";
+             $query = $this->db->query($sql);
+             return $query->result_array();
+        }
+
+
+
+
 	//超市比价
 	function get_market_data(){
 		$query = $this->db->order_by('date','desc')->get($this->market_data);
@@ -174,9 +225,23 @@ class module_model extends CI_Model{
 	}
 	//超市比价 分页
 	function get_market_data_page($off,$page){
-		$query = $this->db->order_by('date','desc')->limit($off,$page)->get($this->market_data);
+        $sql = "select * FROM hf_local_market_data ORDER BY date desc limit $page,$off";
+		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
+    //超市比价搜索
+    function search_market_data($sear){
+        $sql = "SELECT * FROM $this->market_data where market_name like '%$sear%' or goods_name like '%$sear%' order by date desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+     function search_market_data_page($sear,$off,$page){
+            $sql = "SELECT * FROM $this->market_data where market_name like '%$sear%' or goods_name like '%$sear%' order by date desc limit $page,$off";
+            $query = $this->db->query($sql);
+            return $query->result_array();
+        }
+
+
 	
 	//获取超市比价详情
 	function get_market_data_info($id){
@@ -194,9 +259,6 @@ class module_model extends CI_Model{
        $where['id'] = $id;
        return $this->db->where($where)->update($this->market_data,$data);
     }
-
-
-
 	//删除超市比价
 	function del_market_data($id){
 		$where['id'] = $id;

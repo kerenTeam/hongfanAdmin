@@ -89,10 +89,10 @@ class localLife extends default_Controller {
             $this->load->view('404.html');
         }else{
 			//条数
-			$config['per_page'] = 5;
+			$config['per_page'] = 10;
 			//获取页码
 			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
-			
+			//var_dump($current_page);
 				//配置
 			$config['base_url'] = site_url('/module/localLife/serviceList/').$id;
 			//分页配置
@@ -170,40 +170,130 @@ class localLife extends default_Controller {
 				$this->load->library('pagination');//加载ci pagination类
 				$this->pagination->initialize($config);
 				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'page' => $this->pagination->create_links(),'type'=>$type);
+				
 				$this->load->view('module/localLife/serviceList.html',$data);
 			}
         }
     }
+
+    //搜索
+    function search(){
+    	if($_POST){
+    		$typeid = $this->input->post('typeid');
+    		$sear = trim($this->input->post('sear'));
+    		$cate = trim($this->input->post('cate'));
+
+    		//条数
+			$config['per_page'] = 10;
+			//获取页码
+			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
+			//var_dump($current_page);
+				//配置
+			$config['base_url'] = site_url('/module/localLife/serviceList/').$cate;
+			//分页配置
+			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+			$config['full_tag_close'] = '</ul>';
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="am-active"><a>';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+
+			$config['first_link']= '首页';
+			$config['next_link']= '下一页';
+			$config['prev_link']= '上一页';
+			$config['last_link']= '末页';
+
+			$type = '';
+              $cates = $this->module_model->get_cateinfo($cate);
+    		switch ($typeid) {
+    			//普通信息
+    			case '1':
+    				//总数据
+    				$list = $this->module_model->search_service($sear,$cate);
+					$config['total_rows'] = count($list);
+					// //分页数据
+				    $listpage = $this->module_model->search_service_page($sear,$cate,$config['per_page'],$current_page);
+    				break;
+    				//房产
+    			case '2':
+    				//总数据
+    				$list = $this->module_model->search_houst($sear);
+					$config['total_rows'] = count($list);
+					// //分页数据
+				    $listpage = $this->module_model->search_houst_page($sear,$config['per_page'],$current_page);
+    				break;
+    			// 二手市场
+	    		case '3':
+	    			$list = $this->module_model->search_mark($sear);
+					$config['total_rows'] = count($list);
+					// //分页数据
+				    $listpage = $this->module_model->search_mark_page($sear,$config['per_page'],$current_page);
+	    			break;
+                    //快递上门
+                case '4':
+                    $list = $this->module_model->search_express($sear);
+                    $config['total_rows'] = count($list);
+                    // //分页数据
+                    $listpage = $this->module_model->search_express_page($sear,$config['per_page'],$current_page);
+                    break;
+                    //超市比价
+                case '5':
+                    $list = $this->module_model->search_market_data($sear);
+                    $config['total_rows'] = count($list);
+                    // //分页数据
+                    $listpage = $this->module_model->search_market_data_page($sear,$config['per_page'],$current_page);
+                    break;
+    		}
+			$this->load->library('pagination');//加载ci pagination类
+			$this->pagination->initialize($config);
+    		$data = array('id'=>$cate,'typeid'=>$typeid,'name'=>'搜索结果','lists'=>$listpage,'page' => $this->pagination->create_links(),'type'=>$type,'catename'=>$cates['name']);
+    		$this->load->view('module/localLife/serviceList.html',$data);
+
+    	}else{
+    		$this->load->view('404.html');
+    	}
+    }
+    
     //本地生活 本地服务 列表详情
     function serviceInfo()
     {
 		$id=intval($this->uri->segment(4));
-		$type=intval($this->uri->segment(5));
-	
+        $type=intval($this->uri->segment(5));
+		$cateid=intval($this->uri->segment(6));
+	   
 		if($id == 0 || $type == 0){
 			$this->load->view('404.html');
 		}else{
 				$tag = '';
+            $cate = $this->module_model->get_cateinfo($cateid);
 			switch($type){
 				case '1':
-					$title = '普通信息';
+					//$title = '普通信息';
 					$info = $this->module_model->get_serviceinfo($id);
 					break;
 				case '2':
-					$title = '房产信息';
+					//$title = '房产信息';
 					$info = $this->module_model->get_houstinfo($id);
 					break;
 				case '3':
-					$title = '二手市场';
+					//$title = '二手市场';
 					$info = $this->module_model->get_markinfo($id);
 					$tag = $this->module_model->get_mark_type();
 					break;
 				case '5':
-					$title = '超市比价';
+					//$title = '超市比价';
 					$info = $this->module_model->get_market_data_info($id);
 					break;
 			}
-			$data = array('type_id'=>$type,'info'=>$info,'title'=>$title,'type'=>$tag);
+			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
 			$this->load->view('module/localLife/serviceInfo.html',$data);
 		}
     }
@@ -246,9 +336,9 @@ class localLife extends default_Controller {
 			$data = $this->input->post();
 			$pic = array();
 			$i =1;
-			 foreach($_FILES as $file=>$val){
+			foreach($_FILES as $file=>$val){
 				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service';
+					$config['upload_path']      = 'upload/service/ordinary';
 					$config['allowed_types']    = 'gif|jpg|png|jpeg';
 					$config['max_size']     = 2048;
 					$config['file_name'] = date('Y-m-d_His');
@@ -258,15 +348,16 @@ class localLife extends default_Controller {
 					   echo $this->upload->display_errors();
 					}else{
 						if($i != 4){
-						$pic[]['banner'.$i] = 'upload/service/'.$this->upload->data('file_name');
+						$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'upload/service/'.$this->upload->data('file_name');
+							$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
 						}
 					}
 				}
 				$i++;
 			 }
-			$data['pic'] = json_encode($pic);
+
+			 $data['pic'] = json_encode($pic);
 			 $data['logo'] = $logo;
 			 if($this->module_model->add_service($data)){
 				 echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
@@ -527,10 +618,97 @@ class localLife extends default_Controller {
 
 	//导入超市比价
 	function send_market_data(){
-		$json = json_encode($_FILES);
-		file_put_contents('text.log',$json);
+		  $name = date('Y-m-d');
+		  $inputFileName = "./upload/xls/" .$name .'.xls';
+	      move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+	        //引入类库
+	      $this->load->library('excel');
+	        if(!file_exists($inputFileName)){
+	                echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
+	                exit;
+	        }
+	        //导入excel文件类型 excel2007 or excel5
+	        $PHPReader = new PHPExcel_Reader_Excel2007();
+	        if(!$PHPReader->canRead($inputFileName)){
+	          $PHPReader = new PHPExcel_Reader_Excel5();
+	          if(!$PHPReader->canRead($inputFileName)){
+	            echo 'no Excel';
+	            return;
+	          }
+	        }
+	          
+	          $PHPExcel = $PHPReader->load($inputFileName);
+	          $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+	          $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+	          $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+	          $erp_orders_id = array();  //声明数组
+	          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+	            $data['market_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+	            $data['goods_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+	            $data['date_price'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+	            $data['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
+	            $data['date'] = date('Y-m-d H:i:s');
+	            $data['import_user'] = $this->session->users['user_id'];
+	            if($data['market_name'] == NULL){
+	                exit;
+	            }
+	            //插入数据库
+	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
+	            $import =  $this->db->insert('hf_local_market_data',$data); 
+	         }
+	     //删除临时文件
+	    unlink($inputFileName);
 	}
+	//导出超市比价
+	function dowload_market_data(){
+			$id = intval($this->uri->segment(4));
+			if($id == 0){
+				$this->load->view('404.html');
+			}else{
+				  $this->load->library('excel');
+	        //activate worksheet number 1
+	        $this->excel->setActiveSheetIndex(0);
+	        //name the worksheet
+	        $this->excel->getActiveSheet()->setTitle('Bookings');
+	        $arr_title = array(
+	            'A' => '超市名称',
+	            'B' => '商品名称',
+	            'C' => '价格',
+	            'D' => '单位',
+	            'E' => '时间'
+	        );
+	       //设置excel 表头
+	        foreach ($arr_title as $key => $value) {
+	            $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+	            $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+	            $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+	            $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+	        }
 
+	        $i = 1;
+	    	//查询数据库得到要导出的内容
+	        $market = $this->module_model->get_market_data();
+	        if(count($market) > 0)
+	        {
+	            foreach ($market as $booking) {
+	                $i++;
+	                $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['market_name']);
+	                $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['goods_name']);
+	                $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['date_price']);
+	                $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['unit']);
+	                $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['date']);
+	            }
+	        }
+	        $name = date('Y-m-d');
+	        $filename = $name.'.xls'; //save our workbook as this file name
+	        header('Content-Type: application/vnd.ms-excel'); //mime type
+	        header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+	        header('Cache-Control: max-age=0'); //no cache
+
+	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+	        $objWriter->save('php://output');
+		}
+	}
 
 
 

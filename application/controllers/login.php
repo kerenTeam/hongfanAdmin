@@ -12,13 +12,14 @@ class login extends CI_Controller {
         parent::__construct();
         $this->load->model('member_model','m_model');
     }
-    //登陆界面
+    //管理员登陆界面
     function index(){
-        //json geshi 
-        // $json = '[{"bannerPic":"upload/banner/1.png","url":"http://www.baidu.com"},{"bannerPic":"upload/banner/2.png","url":"http://www.baidu.com"},{"bannerPic":"upload/banner/3.png","url":"http://www.baidu.com"}]';
-        // $a = json_decode($json,true);
+      
         $this->load->view('login.html');
     }
+    
+
+
     //登陆操作
     function login_user(){
         if($_POST){
