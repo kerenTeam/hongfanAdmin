@@ -28,7 +28,35 @@ h4.am-panel-title{
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -65,19 +93,19 @@ h4.am-panel-title{
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <i class="am-icon-graduation-cap sidebar-nav-link-logo"></i> 商铺管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub" >
+        <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                <a href="<?php echo site_url().'/shop/shop';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop/addShop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商铺
                 </a>
             </li>
         </ul>
@@ -87,7 +115,7 @@ h4.am-panel-title{
             <i class="am-icon-table sidebar-nav-link-logo"></i> 商城管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub" >
+        <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/store/store/storeGoodsList';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
@@ -111,10 +139,10 @@ h4.am-panel-title{
                 </a>
             </li>
         </ul>
-    </li>
+    </li> 
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
+            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
@@ -125,7 +153,7 @@ h4.am-panel-title{
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
+                <a href="<?php echo site_url().'/banner/banner/addBanner';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
                 </a>
             </li>
@@ -137,11 +165,11 @@ h4.am-panel-title{
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
+           <!--  <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
-            </li>
+            </li> -->
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberLimit';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
@@ -161,6 +189,25 @@ h4.am-panel-title{
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberCard';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增电子券
+                </a>
+            </li>
+
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/electronic/electronic';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券列表
                 </a>
             </li>
         </ul>
@@ -224,13 +271,7 @@ h4.am-panel-title{
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="chart.html">
-            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
+    <!-- <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -249,22 +290,7 @@ h4.am-panel-title{
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="404.html">
-            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-        </a>
-    </li>
-
+ -->
 </ul>
 </div>
 <!-- 内容区域 -->
