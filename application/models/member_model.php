@@ -28,15 +28,40 @@ class member_model extends CI_Model{
     }
 
     //获取所有用户数
-    function get_users(){
-        $query = $this->db->get($this->member);
+    function get_users($gid){
+        $where['gid'] = $gid;
+        $query = $this->db->where($where)->get($this->member);
         return $query->result_array();
     }
     //返回用户分页
-    function get_user_page($off,$page){
-        $query = $this->db->limit($page,$off)->order_by('create_time','desc')->get($this->member);
+    function get_user_page($gid,$off,$page){
+        $where['gid'] = $gid;
+        $query = $this->db->where($where)->limit($page,$off)->order_by('create_time','desc')->get($this->member);
         return $query->result_array();
     }
+    //搜索会员总数
+    function search_users($gid,$card,$gender,$state,$sear){
+        if(empty($sear) && !empty($card) && !empty($gender) && !empty($state)){
+            echo "1";
+            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and state = '$state' order by create_time desc";
+        }else if(empty($card) && !empty($sear) && !empty($gender) && !empty($state)){
+            echo "2";
+            $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        }else if(empty($gender) && !empty($card) && !empty($sear) && !empty($state)){
+            echo "3";
+            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        }else if(empty($state) && !empty($card) && !empty($gender) && !empty($sear)){
+            echo "4";
+             $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        }else{
+            echo "5";
+            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        }
+        // $query = $this->db->query($sql);
+        // return $query->result_array();
+    }
+
+
 
 
     //返回用户分组

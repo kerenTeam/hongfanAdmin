@@ -23,7 +23,7 @@ class member extends default_Controller {
     	//页码
         $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
         //分页数据
-        $result = $this->user_model->get_user_page($current_page,$config['per_page']);
+        $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
        	//配置
         $config['base_url'] = site_url('/member/member/memberList');
         //分页配置
@@ -47,7 +47,7 @@ class member extends default_Controller {
         $config['prev_link']= '上一页';
         $config['last_link']= '末页';
         //总共多少
-        $num = $this->user_model->get_users();
+        $num = $this->user_model->get_users('5');
         $config['total_rows'] = count($num);//总条数
 
         $this->load->library('pagination');//加载ci pagination类
@@ -57,7 +57,7 @@ class member extends default_Controller {
             'page' => $this->pagination->create_links(),
         );
         //获取会员卡类型
-        $data['cards'] = $this->user_model->get_card_type();
+        $data['cards'] = $this->user_model->get_card_type( );
         //获取会员分组
         $data['group'] = $this->user_model->get_user_group();
     	$this->load->view('member/memberList.html',$data);
@@ -68,8 +68,10 @@ class member extends default_Controller {
     function addMember(){
          //获取会员卡类型
        //  $data['cards'] = $this->user_model->get_card_type();
+          //获取会员卡类型
+        $data['cards'] = $this->user_model->get_card_type( );
          //获取会员分组
-         $data['group'] = $this->user_model->get_user_group();
+         //$data['group'] = $this->user_model->get_user_group();
     	 $this->load->view('member/addMember.html',$data);
     }
 
@@ -78,6 +80,7 @@ class member extends default_Controller {
         if($_POST){
             $data = $this->input->post();
             $data['password'] = md5($this->input->post('password'));
+            $data['gid'] = '5';
             //是否被注册
             $user = $this->user_model->get_login_user($data['phone']);
             if($user){
@@ -106,23 +109,24 @@ class member extends default_Controller {
             //获取会员信息
             $data['userinfo'] = $this->user_model->get_user_info($id);
             //获取分组信息
-            $data['group'] = $this->user_model->get_user_group();
+           // $data['group'] = $this->user_model->get_user_group();
+             $data['cards'] = $this->user_model->get_card_type( );
             $data['userid'] = $id;
 
             $this->load->view('member/editMember.html',$data);
         }
     }
-//权限管理
+    //权限管理
     function memberLimit(){
 
-$this->load->view('member/memberLimit.html');
+        $this->load->view('member/memberLimit.html');
     }
     //编辑处理
     function edit_userinfo(){
         if($_POST){
             $data = $this->input->post();
             $data['password'] = md5($this->input->post('password'));
-            if($this->user_model->edit_userinfo($data['userid'],$data)){
+            if($this->user_model->edit_userinfo($data['user_id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }else{
@@ -175,6 +179,57 @@ $this->load->view('member/memberLimit.html');
         }
 
     }
+
+    //会员搜索
+    function search(){
+        if($_POST){
+            $card_type = $this->input->post('card');
+            $gender = $this->input->post('gender');
+            $state = $this->input->post('state');
+            $sear = trim($this->input->post('sear'));
+
+             //获取会员列表
+            $config['per_page'] = 10; //每页显示的数据数
+            //页码
+            $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+            //分页数据
+            $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
+            //配置
+            $config['base_url'] = site_url('/member/member/memberList');
+            //分页配置
+            $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+            $config['full_tag_close'] = '</ul>';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '<li class="am-active"><a>';
+            $config['cur_tag_close'] = '</a></li>';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+
+            $config['first_link']= '首页';
+            $config['next_link']= '下一页';
+            $config['prev_link']= '上一页';
+            $config['last_link']= '末页';
+            //总共多少
+            $num = $this->user_model->search_users('5',$card_type,$gender,$state,$sear);
+            var_dump($num);
+           // $config['total_rows'] = count($num);//总条数
+
+
+
+          
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
 
     //会员组
     function memberGroup()
@@ -304,7 +359,7 @@ $this->load->view('member/memberLimit.html');
     			exit;
     		}
     		//自己不能屏蔽
-    		if($id == $this->session->users['userid']){
+    		if($id == $this->session->users['user_id']){
     			echo "<script>alert('不能冻结自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
     			exit;
     		}
