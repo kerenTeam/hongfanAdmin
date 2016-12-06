@@ -148,7 +148,7 @@ class member extends default_Controller {
                 exit;
             }
             //自己不能删除
-            if($id == $this->session->users['userid']){
+            if($id == $this->session->users['user_id']){
                 echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }
