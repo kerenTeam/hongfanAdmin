@@ -510,18 +510,20 @@ class localLife extends default_Controller {
 							if(!$this->upload->do_upload('img'.$i)) {
 							   echo $this->upload->display_errors();
 							}else{
+                                unset($data['img'.$i]);
 								if($i != 4){
-									unset($data['img'.$i]);
+									
 								$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
 								}else{
 									$logo = 'upload/service/houst/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
+                            unset($data['img'.$i]);
 							if($i != 4){
 								if(!empty($data['img'.$i])){
 									$pic[]['picImg'] = $data['img'.$i];
-									unset($data['img'.$i]);
+									// /unset($data['img'.$i]);
 								}
 							}else{
 								$logo = $data['logo'];
