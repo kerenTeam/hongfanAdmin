@@ -1,0 +1,308 @@
+<?php $this->load->view('common.html');?>
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+}
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+</style>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo site_url().'/shop/singleShop/shopAdmin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopBaseInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopFloorRelation';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopComment';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
+                </a>
+            </li>
+        </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 促销管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" >
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopAddSales';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增促销
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopSalesList';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopCheckSales';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销验证
+                </a>
+            </li>
+        </ul>
+    </li>
+     <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增活动
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动列表
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading">商家管理<span class="am-icon-home page-header-heading-icon">活动管理</span>  <small>活动列表</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">活动查询</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="openTime" class="am-u-sm-2 am-form-label">报名时间：</label>
+                        <div class="am-u-sm-10">
+                            <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="openTime" class="am-u-sm-2 am-form-label">活动时间：</label>
+                        <div class="am-u-sm-10">
+                            <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">审核状态</label>
+                        <div class="am-u-sm-9">
+                            <select id="source_state">
+                                <option value="请选择">请选择</option>
+                                <option value="0">待审核</option>
+                                <option value="1">通过审核</option>
+                                <option value="2">驳回</option>
+                                <option value="3">删除</option>
+                                <option value="3">过期</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-8 am-u-md-8 am-u-lg-8">
+                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">活动列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="moll_name">编号</th>
+                                    <th class="shop_id">名称</th>
+                                    <th class="shop_name">活动时间 </th>
+                                    <th class="shop_type">报名时间 </th>
+                                     <th class="shop_type">参与等级</th>
+                                    <th class="shop_yetai">参与人数</th>
+                                    <th class="brand">活动地点</th>
+                                    <th class="floor_shopId">审核状态</th>
+                                    <th>审核意见</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>S10022></td>
+                                    <td>满记甜品促销</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">普通会员</td>
+                                    <td class="am-text-middle">10</td>
+                                    <td class="am-text-middle">宏帆广场一楼会客大厅</td>
+                                    <td class="am-text-middle">通过审核</td>
+                                    <td class="am-text-middle">非常好</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>S10022></td>
+                                    <td>满记甜品促销</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">普通会员</td>
+                                    <td class="am-text-middle">10</td>
+                                    <td class="am-text-middle">宏帆广场一楼会客大厅</td>
+                                    <td class="am-text-middle">通过审核</td>
+                                    <td class="am-text-middle">非常好</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>S10022></td>
+                                    <td>满记甜品促销</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">普通会员</td>
+                                    <td class="am-text-middle">10</td>
+                                    <td class="am-text-middle">宏帆广场一楼会客大厅</td>
+                                    <td class="am-text-middle">通过审核</td>
+                                    <td class="am-text-middle">非常好</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>S10022></td>
+                                    <td>满记甜品促销</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
+                                    <td class="am-text-middle">普通会员</td>
+                                    <td class="am-text-middle">10</td>
+                                    <td class="am-text-middle">宏帆广场一楼会客大厅</td>
+                                    <td class="am-text-middle">通过审核</td>
+                                    <td class="am-text-middle">非常好</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf">
+                        <div class="am-fr">
+                            <ul class="am-pagination tpl-pagination">
+                                <li class="am-disabled"><a href="#">«</a></li>
+                                <li class="am-active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

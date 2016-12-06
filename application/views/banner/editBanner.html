@@ -1,4 +1,34 @@
 <?php $this->load->view('common.html');?>
+<style type="text/css">
+    #preview{
+        width:200px;
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+         width:200px;
+        height:190px;
+    }
+
+    .am-form-group .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        position: absolute;
+        left:160px;
+        top:318px;
+        color:#ffffff;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .widget-title{
+    font-size:18px;
+    color:#000;
+}
+</style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
@@ -44,19 +74,19 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title active">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub"  style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop';?>" class="sub-active">
+                <a href="<?php echo site_url().'/shop/shop';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop/addShop';?>" >
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
                 </a>
             </li>
@@ -93,19 +123,19 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
             <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>" >
+                <a href="<?php echo site_url().'/banner/banner';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
+                <a href="<?php echo site_url().'/banner/banner/addBanner';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
                 </a>
             </li>
@@ -252,8 +282,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 
-            <a href="<?php echo site_url().'/shop/shop';?>">商家列表</a><small>/编辑商家信息</small></div>
+            <div class="page-header-heading">Banner管理  <span class="am-icon-home page-header-heading-icon"> 
+            <a href="<?php echo site_url().'/banner/banner';?>">Banner列表</a></span><small>/编辑Banner</small></div>
         </div>
     </div>
 </div>
@@ -263,126 +293,36 @@
             <form class="am-form" action="" method="" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">编辑商家信息</div>
+                        <div class="widget-title  am-cf">编辑Banner</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
-                                <label for="marketNmae">商场名 <span class="red">*</span>：</label>
-                                <input type="text" name="marketNmae" id="marketNmae" minlength="2" value="宏帆广场" readonly required />
+                                <label for="shopName">Banner名称 ：</label>
+                                <input type="text" id="shopName" name="shopName" value="Banner名称" required />
                             </div>
                             <div class="am-form-group">
-                                <label for="manageBrand">经营品牌<span class="red">*</span>：</label>
-                                <select id="manageBrand" name="manageBrand" data-am-selected="{searchBox: 1,maxHeight: 200}" required>
-                                    <option value=>输入查找/选择</option>
-                                    <option value="0" selected="selected">xxxx</option>
-                                    <option value="1">xxxx</option>
-                                    <option value="2">xxxx</option>
-                                </select>
+                                <label for="user-weibo">图片：</label>
+                                <div class="wx_type_img">
+                                         <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                          <!-- 图片实时预览 -->
+                                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/user01.png" class="am-img-responsive cardView"> </div>
+                                          <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                    </div>
+                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
+                                        <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
                             </div>
                             <div class="am-form-group">
-                                <label for="shopName">商家名称<span class="red">*</span>：</label>
-                                <input type="text" id="shopName" name="shopName" value="满记甜品" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">英文名称 ：</label>
-                                <input type="text" id="englishName" value="manjitianpin"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="openTime">开业时间<span class="red">*</span>：</label>
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="openTime" id="openTime" class="am-form-field" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="oneType">一级业态<span class="red">*</span>：</label>
-                                <select id="oneType" name="oneType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">百货</option>
-                                    <option value="option2">配套服务</option>
-                                    <option value="option3">超市/便利店</option>
-                                    <option value="option3">数码音像</option>
-                                    <option value="option3">家居生活</option>
-                                    <option value="option3">儿童</option>
-                                    <option value="option3">休闲娱乐</option>
-                                    <option value="option3">餐饮</option>
-                                    <option value="option3">饰品</option>
-                                    <option value="option3">药品/护理/保健</option>
-                                    <option value="option3">鞋包</option>
-                                    <option value="option3">服装</option>
-                                </select>
-                            </div>
-                             <div class="am-form-group">
-                                <label for="twoType">二级业态<span class="red">*</span>：</label>
-                                <select id="twoType" name="twoType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">OUTLETS</option>
-                                    <option value="option2">百货</option>
-                                </select>
+                                <label for="englishName">跳转地址 ：</label>
+                                <input type="url" id="" name="englishName" value="http://www.baidu.com"/>
                             </div>
                         </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
-                                <label for="shopType">商家类型 <span class="red">*</span>：</label>
-                                <select id="shopType" name="shopType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">普通</option>
-                                    <option value="option2">餐饮</option>
-                                    <option value="option3">影院</option>
-                                    <option value="option3">KTV</option>
-                                    <option value="option3">冰场</option>
-                                </select>
-                                <span class="am-form-caret"></span>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="shopState">营业状态<span class="red">*</span>：</label>
-                                <select id="shopState" name="shopState" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1" selected="selected">营业中</option>
-                                    <option value="option2">装修中</option>
-                                    <option value="option3">停止营业</option>
-                                    <option value="option3">即将营业</option>
-                                </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="shopFloor">所在楼层<span class="red">*</span>：</label>
-                                <select id="shopFloor" name="shopFloor" required>
-                                    <option value="0">F1</option>
-                                    <option value="1">F2</option>
-                                    <option value="2">F3</option>
-                                    <option value="3">F4</option>
-                                    <option value="4" selected="selected">F5</option>
-                                </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="businessTime">营业时间<span class="red">*</span>：</label>
-                                <input type="text" placeholder="9:20-22:00" class="" name="comments"  id="comments"  min="0" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="area">面积/平方米<span class="red">*</span>：</label>
-                                <input type="number" class="" name="area" value="300"  id="area" required min="0"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="comments">当前评价<span class="red">*</span>：</label>
-                                <input type="number" class="" value="5" name="comments" required  id="comments" placeholder="0" min="0"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
-                                <label class="am-radio-inline">
-                                    <input type="radio" checked="checked" value="1" name="docVlCb"> 是
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="radio" value="0" name="docVlCb"> 否
-                                </label>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                    <div class="am-form-group addpadding">
+                        <button class="am-btn am-btn-secondary" type="submit">保存</button><button class="am-btn am-btn-default" type="reset">重置</button> 
                     </div>
                 </div>
             </form>
