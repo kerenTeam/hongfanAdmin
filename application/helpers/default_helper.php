@@ -23,5 +23,14 @@ function user_name($user_id){
     return $name['nickname'];
 }
 
+//返回会员卡名称
+function get_card_name($cardid){
+    $CI = &get_instance();
+    $sql = "SELECT name FROM hf_shop_membership_card_type where id = '$cardid'";
+    $query = $CI->db->query($sql);
+    $name = $query->row_array();
+    return $name['name'];
+}
+
 
  ?>

@@ -8,6 +8,7 @@ class member_model extends CI_Model{
     //用户分类表
     public $group = 'hf_user_member_group';
 
+
     function __construct()
     {
         parent::__construct();
@@ -15,7 +16,7 @@ class member_model extends CI_Model{
 
     //获取登陆用户信息
     function get_login_user($phone){
-        $sql = "select * FROM ".$this->member." where gid != '5' and phone='".$phone."' or email = '".$phone."' or username='".$phone."'";
+        $sql = "select * FROM ".$this->member." where username='".$phone."'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
@@ -41,32 +42,64 @@ class member_model extends CI_Model{
     }
     //搜索会员总数
     function search_users($gid,$card,$gender,$state,$sear){
-        if(empty($sear) && !empty($card) && !empty($gender) && !empty($state)){
-            echo "1";
-            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and state = '$state' order by create_time desc";
-        }else if(empty($card) && !empty($sear) && !empty($gender) && !empty($state)){
-            echo "2";
-            $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
-        }else if(empty($gender) && !empty($card) && !empty($sear) && !empty($state)){
-            echo "3";
-            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
-        }else if(empty($state) && !empty($card) && !empty($gender) && !empty($sear)){
-            echo "4";
-             $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
-        }else{
-            echo "5";
-            $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' and gender ='$gender' and state = '$state' and username like '%$sear%' or nickanme like '%$sear%' or phone like '%$sear%' order by create_time desc";
+        //会员卡
+        $cardsql ='';
+        $gendersql ='';
+        $statesql ='';
+        $searsql ='';
+        if(!empty($card)){
+            $cardsql = " and card_id = '$card'";
+           // $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' order by create_time desc";
+        //性别不为空
         }
-        // $query = $this->db->query($sql);
-        // return $query->result_array();
+        if(!empty($gender)){
+            $gendersql = " and gender = '$gender'";
+           // $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' order by create_time desc";
+       //状态不为空
+        }
+        if($state == 0 || $state == 1){
+           // $sql = "SELECT * FROM $this->member where gid='$gid'  and state = '$state' order by create_time desc";
+            $statesql = " and state = '$state'";
+        //关键字不为空
+        }
+        if(!empty($sear)){
+          // $sql = "SELECT * FROM $this->member where gid='$gid' and username like '%$sear%' or nickname like '%$sear%' or phone like '%$sear%' order by create_time desc";
+            $searsql = " and username like '%$sear%' or nickname like '%$sear%' or phone like '%$sear%'";
+           //全部不为空
+        }
+        $sql = "SELECT * FROM $this->member where gid='$gid' $cardsql $gendersql $statesql $searsql order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
-
-
-
-
-    //返回用户分组
-    function get_user_group(){
-        $query = $this->db->get($this->group);
+    //搜索会员分页
+       function search_users_page($gid,$card,$gender,$state,$sear,$off,$page){
+        //会员卡
+        $cardsql ='';
+        $gendersql ='';
+        $statesql ='';
+        $searsql ='';
+        if(!empty($card)){
+            $cardsql = " and card_id = '$card'";
+           // $sql = "SELECT * FROM $this->member where gid='$gid' and card_id = '$card' order by create_time desc";
+        //性别不为空
+        }
+        if(!empty($gender)){
+            $gendersql = " and gender = '$gender'";
+           // $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' order by create_time desc";
+       //状态不为空
+        }
+        if($state == 0 || $state == 1){
+           // $sql = "SELECT * FROM $this->member where gid='$gid'  and state = '$state' order by create_time desc";
+            $statesql = " and state = '$state'";
+        //关键字不为空
+        }
+        if(!empty($sear)){
+          // $sql = "SELECT * FROM $this->member where gid='$gid' and username like '%$sear%' or nickname like '%$sear%' or phone like '%$sear%' order by create_time desc";
+            $searsql = " and username like '%$sear%' or nickname like '%$sear%' or phone like '%$sear%'";
+           //全部不为空
+        }
+        $sql = "SELECT * FROM $this->member where gid='$gid' $cardsql $gendersql $statesql $searsql order by create_time desc limit $off,$page";
+        $query = $this->db->query($sql);
         return $query->result_array();
     }
 
@@ -125,6 +158,24 @@ class member_model extends CI_Model{
     function del_cards($id){
         $where['id'] = $id;
         return $this->db->where($where)->delete($this->card);
+    }
+
+
+    //返回用户权限分组
+    function get_user_group(){
+        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    //新增用户权限分组
+    function add_group($data){
+        return $this->db->insert($this->group,$data);
+    }
+    //编辑权限管理
+    function edit_group($id,$data){
+        $where['gid'] = $id;
+        return $this->db->where($where)->update($this->group,$data);
     }
 
 }

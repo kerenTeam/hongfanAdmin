@@ -116,11 +116,7 @@ class member extends default_Controller {
             $this->load->view('member/editMember.html',$data);
         }
     }
-    //权限管理
-    function memberLimit(){
 
-        $this->load->view('member/memberLimit.html');
-    }
     //编辑处理
     function edit_userinfo(){
         if($_POST){
@@ -148,7 +144,7 @@ class member extends default_Controller {
                 exit;
             }
             //自己不能删除
-            if($id == $this->session->users['userid']){
+            if($id == $this->session->users['user_id']){
                 echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
                 exit;
             }
@@ -188,12 +184,11 @@ class member extends default_Controller {
             $state = $this->input->post('state');
             $sear = trim($this->input->post('sear'));
 
-             //获取会员列表
             $config['per_page'] = 10; //每页显示的数据数
             //页码
             $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
             //分页数据
-            $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
+            $result = $this->user_model->search_users_page('5',$card_type,$gender,$state,$sear,$current_page,$config['per_page']);
             //配置
             $config['base_url'] = site_url('/member/member/memberList');
             //分页配置
@@ -218,18 +213,24 @@ class member extends default_Controller {
             $config['last_link']= '末页';
             //总共多少
             $num = $this->user_model->search_users('5',$card_type,$gender,$state,$sear);
-            var_dump($num);
-           // $config['total_rows'] = count($num);//总条数
 
-
-
-          
-        }else{
-            $this->load->view('404.html');
-        }
+            $this->load->library('pagination');//加载ci pagination类
+            $this->pagination->initialize($config);
+            $data = array(
+                'users' => $result,
+                'page' => $this->pagination->create_links(),
+            );
+            //获取会员卡类型
+            $data['cards'] = $this->user_model->get_card_type( );
+            //获取会员分组
+            $data['group'] = $this->user_model->get_user_group();
+            $data['title'] = '搜索结果';
+            $this->load->view('member/memberList.html',$data);
+              
+            }else{
+                $this->load->view('404.html');
+            }
     }
-
-
 
     //会员组
     function memberGroup()
@@ -378,5 +379,58 @@ class member extends default_Controller {
     		$this->load->view('404.html');
     	}
     }
+
+    //权限管理
+    function memberLimit(){
+        //返回所有权限  
+        $data['group'] = $this->user_model->get_user_group();
+        //所有模块 
+        $data['plate'] = array(
+                '0'=>array('id'=>'0','name'=>'所有模块'),
+                '1'=>array('id'=>'1','name'=>'系统设置'),
+                '2'=>array('id'=>'2','name'=>'商场设置'),
+                '3'=>array('id'=>'3','name'=>'店铺管理'),
+                '4'=>array('id'=>'4','name'=>'电商管理'),
+                '5'=>array('id'=>'5','name'=>'电子劵'),
+                '6'=>array('id'=>'6','name'=>'主页模块'),
+                '7'=>array('id'=>'7','name'=>'卡卷管理'),
+                '8'=>array('id'=>'8','name'=>'会员管理'),
+            );
+        $this->load->view('member/memberLimit.html',$data);
+    }
+
+    //新增权限
+    function add_member_group(){
+        if($_POST){
+            $data['group_name'] = $this->input->post('group_name');
+            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+            if($this->user_model->add_group($data)){
+                echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    
+    //编辑权限
+    function edit_member_group(){
+        if($_POST){
+            $id = $this->input->post('gid');
+            $data['group_name'] = $this->input->post('group_name');
+            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+            if($this->user_model->edit_group($id,$data)){
+                 echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+             }else{
+                 echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+             }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
 }
 
