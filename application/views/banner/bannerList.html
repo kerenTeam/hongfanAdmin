@@ -15,8 +15,8 @@ padding: 5px 6px!important;
     color:#000;
 }
 h4.am-panel-title{
-    color:#1fb5ac;
-    font-size:16px;
+    color:#666 !important;
+    font-size:16px !important;
 }
 </style>
 <!-- 菜单 -->
@@ -35,6 +35,11 @@ h4.am-panel-title{
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
@@ -170,11 +175,7 @@ h4.am-panel-title{
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
+            
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
@@ -298,7 +299,9 @@ h4.am-panel-title{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading">Banner管理<span class="am-icon-home page-header-heading-icon"></span>  <small>Banner列表</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> Banner管理 
+            <a href="<?php echo site_url().'/banner/banner';?>" style="font-size:16px;">Banner列表</a>
+            <small></small></div>
         </div>
     </div>
 </div>

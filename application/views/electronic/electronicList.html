@@ -12,15 +12,48 @@ padding: 5px 6px!important;
 }
 </style>
 <!-- 菜单 -->
-<ul class="sidebar-nav">
+</ul><ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>" class="active">
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -57,19 +90,19 @@ padding: 5px 6px!important;
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <i class="am-icon-graduation-cap sidebar-nav-link-logo"></i> 商铺管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop';?>" >
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop/addShop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商铺
                 </a>
             </li>
         </ul>
@@ -106,7 +139,7 @@ padding: 5px 6px!important;
     </li> 
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
+            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -134,11 +167,7 @@ padding: 5px 6px!important;
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
+            
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
@@ -158,13 +187,13 @@ padding: 5px 6px!important;
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 电子券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
+            <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>">
+                <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增电子券
                 </a>
             </li>
@@ -235,13 +264,7 @@ padding: 5px 6px!important;
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="chart.html">
-            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
+    <!-- <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -249,33 +272,18 @@ padding: 5px 6px!important;
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券管理
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分管理
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
                 </a>
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="404.html">
-            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-        </a>
-    </li>
-
+ -->
 </ul>
 </div>
 <!-- 内容区域 -->
@@ -283,7 +291,9 @@ padding: 5px 6px!important;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading">电子券管理<span class="am-icon-home page-header-heading-icon">电子券列表</span></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
+            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:16px;">电子券列表</a>
+            <small></small></div>
         </div>
     </div>
 </div>
@@ -295,7 +305,7 @@ padding: 5px 6px!important;
                     <div class="widget-title  am-cf">电子券查询</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
                         <div class="am-u-sm-9">
                             <select id="source_state">
@@ -306,18 +316,18 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="openTime" class="am-u-sm-2 am-form-label">有效期：</label>
-                        <div class="am-u-sm-10">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
+                        <div class="am-u-sm-9">
                             <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
                               </div>
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary am-margin-right" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
                               </div>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
                         <label for="" class="am-u-sm-3 am-form-label">领取等级：</label>
                         <div class="am-u-sm-9">
                             <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
@@ -328,8 +338,8 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">审核状态：</label>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">审核状态：</label>
                         <div class="am-u-sm-9">
                             <select id="source_state">
                                 <option value="请选择">请选择</option>
@@ -341,12 +351,12 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-8 am-u-md-8 am-u-lg-8">
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">电子券列表</div>
+                    <div class="widget-title  am-cf" style="clear:both;">电子券列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -388,13 +398,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">2016-09-26至2016-11-20</td>
                                     <td class="am-text-middle">普通会员</td>
                                     <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a50png"></td>
+                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">免费领取</td>
                                     <td class="am-text-middle">到店核销</td>
                                     <td class="am-text-middle">通过审核</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronicy';?>">
+                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -412,13 +422,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">2016-09-26至2016-11-20</td>
                                     <td class="am-text-middle">普通会员</td>
                                     <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a50png"></td>
+                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">免费领取</td>
                                     <td class="am-text-middle">到店核销</td>
                                     <td class="am-text-middle">通过审核</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronicy';?>">
+                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -436,13 +446,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">2016-09-26至2016-11-20</td>
                                     <td class="am-text-middle">普通会员</td>
                                     <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a50png"></td>
+                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">免费领取</td>
                                     <td class="am-text-middle">到店核销</td>
                                     <td class="am-text-middle">通过审核</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronicy';?>">
+                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
@@ -460,7 +470,7 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">2016-09-26至2016-11-20</td>
                                     <td class="am-text-middle">普通会员</td>
                                     <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a50png"></td>
+                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">免费领取</td>
                                     <td class="am-text-middle">到店核销</td>
                                     <td class="am-text-middle">通过审核</td>
