@@ -2,13 +2,51 @@
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>" >
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/banner/banner';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -46,19 +84,20 @@
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 店铺管理
-
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 店铺列表
+
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增店铺
+
                 </a>
             </li>
         </ul>
@@ -94,53 +133,29 @@
         </ul>
     </li> 
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
             <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
-       <!--      <li class="sidebar-nav-link">
+          <!--   <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>" >
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberCard';?>" class="sub-active">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>" class='sub-active'>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
                 </a>
             </li>
@@ -148,7 +163,7 @@
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 电子券管理
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -225,6 +240,7 @@
         </ul>
     </li>
 
+
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
@@ -244,30 +260,6 @@
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 系统设置
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员用户管理
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
-                </a>
-            </li> 
-            <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息
-                </a>
-            </li>
-        </ul>
-    </li>
 </ul>
 </div>
 <!-- 内容区域 -->
@@ -275,7 +267,12 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理 <small>编辑会员卡详情</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理
+             <a href="<?php echo site_url().'/member/member/memberCard';?>" style="font-size: 16px;">会员卡列表</a>
+             <small><a href="<?php echo site_url().'/member/member/memberCardDetail';?>" >编辑会员卡信息</a>
+            </small>
+
+            </div>
         </div>
     </div>
 </div>
@@ -344,7 +341,7 @@
                 <div class="am-form-group am-text-center">
                     <input type="hidden" value="<?php echo $card['id'];?>" name="id" />
                     <button type="submit" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 保存</button>
-                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-refresh"></span> 重置</button>
+                    <button type="button" class="am-btn am-btn-default" id="cancle"><span class="am-icon-refresh"></span> 取消</button>
                 </div>
             </div>
         </form>
@@ -359,5 +356,11 @@
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
 <link rel="stylesheet" type="text/css" href="assets/css/memberCard.css">
+<script type="text/javascript">
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+</script>
 </body>
 </html>
