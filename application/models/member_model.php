@@ -8,6 +8,7 @@ class member_model extends CI_Model{
     //用户分类表
     public $group = 'hf_user_member_group';
 
+
     function __construct()
     {
         parent::__construct();
@@ -15,7 +16,7 @@ class member_model extends CI_Model{
 
     //获取登陆用户信息
     function get_login_user($phone){
-        $sql = "select * FROM ".$this->member." where gid != '5' and phone='".$phone."' or email = '".$phone."' or username='".$phone."'";
+        $sql = "select * FROM ".$this->member." where username='".$phone."'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
@@ -102,15 +103,6 @@ class member_model extends CI_Model{
         return $query->result_array();
     }
 
-
-
-
-    //返回用户分组
-    function get_user_group(){
-        $query = $this->db->get($this->group);
-        return $query->result_array();
-    }
-
     //修改用户状态
     function edit_state($id,$arr){
     	$where['user_id'] = $id;
@@ -166,6 +158,24 @@ class member_model extends CI_Model{
     function del_cards($id){
         $where['id'] = $id;
         return $this->db->where($where)->delete($this->card);
+    }
+
+
+    //返回用户权限分组
+    function get_user_group(){
+        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    //新增用户权限分组
+    function add_group($data){
+        return $this->db->insert($this->group,$data);
+    }
+    //编辑权限管理
+    function edit_group($id,$data){
+        $where['gid'] = $id;
+        return $this->db->where($where)->update($this->group,$data);
     }
 
 }

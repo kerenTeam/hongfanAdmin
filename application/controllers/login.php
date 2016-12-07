@@ -25,8 +25,7 @@ class login extends CI_Controller {
         if($_POST){
 
             $data = $this->input->post();
-            $user = $this->m_model->get_login_user($data['user_phone']);
-
+            $user = $this->m_model->get_login_user(trim($data['user_phone']));
             //是否存在用户
             if(empty($user)){
                 $a['error'] = '用户不存在！';

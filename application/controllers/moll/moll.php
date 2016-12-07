@@ -36,7 +36,9 @@ class moll extends default_Controller {
     }
     //商场简介
     function mollBrief(){
-        $data['market'] = $this->moll_model->get_marketinfo();
+         $data['market'] = $this->moll_model->get_marketinfo();
+         // var_dump($data);
+         // exit;
          $this->load->view('moll/mollBrief.html',$data);
     }
 

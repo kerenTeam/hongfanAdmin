@@ -116,11 +116,7 @@ class member extends default_Controller {
             $this->load->view('member/editMember.html',$data);
         }
     }
-    //权限管理
-    function memberLimit(){
 
-        $this->load->view('member/memberLimit.html');
-    }
     //编辑处理
     function edit_userinfo(){
         if($_POST){
@@ -383,5 +379,58 @@ class member extends default_Controller {
     		$this->load->view('404.html');
     	}
     }
+
+    //权限管理
+    function memberLimit(){
+        //返回所有权限  
+        $data['group'] = $this->user_model->get_user_group();
+        //所有模块 
+        $data['plate'] = array(
+                '0'=>array('id'=>'0','name'=>'所有模块'),
+                '1'=>array('id'=>'1','name'=>'系统设置'),
+                '2'=>array('id'=>'2','name'=>'商场设置'),
+                '3'=>array('id'=>'3','name'=>'店铺管理'),
+                '4'=>array('id'=>'4','name'=>'电商管理'),
+                '5'=>array('id'=>'5','name'=>'电子劵'),
+                '6'=>array('id'=>'6','name'=>'主页模块'),
+                '7'=>array('id'=>'7','name'=>'卡卷管理'),
+                '8'=>array('id'=>'8','name'=>'会员管理'),
+            );
+        $this->load->view('member/memberLimit.html',$data);
+    }
+
+    //新增权限
+    function add_member_group(){
+        if($_POST){
+            $data['group_name'] = $this->input->post('group_name');
+            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+            if($this->user_model->add_group($data)){
+                echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    
+    //编辑权限
+    function edit_member_group(){
+        if($_POST){
+            $id = $this->input->post('gid');
+            $data['group_name'] = $this->input->post('group_name');
+            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+            if($this->user_model->edit_group($id,$data)){
+                 echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+             }else{
+                 echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+             }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
 }
 

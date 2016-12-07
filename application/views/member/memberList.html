@@ -2,13 +2,46 @@
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>" >
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -46,19 +79,20 @@
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 店铺管理
-
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop';?>" >
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 店铺列表
+
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop/addShop';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增店铺
+
                 </a>
             </li>
         </ul>
@@ -95,7 +129,7 @@
     </li> 
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
+            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -118,24 +152,19 @@
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
-           <!--  <li class="sidebar-nav-link">
+          <!--   <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>" >
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/member/member/memberList';?>" class='sub-active'>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
                 </a>
             </li>
@@ -148,7 +177,7 @@
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 电子券管理
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -225,6 +254,7 @@
         </ul>
     </li>
 
+
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
@@ -244,32 +274,6 @@
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 系统设置
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员用户管理
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
-                </a>
-            </li> 
-            <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息
-                </a>
-            </li>
-        </ul>
-    </li>
-
-
 </ul>
 </div><!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -363,7 +367,7 @@
                                     <th>电话</th>
                                     <th class="member_name">QQ</th>
                                     <th class="member_type">邮箱</th>
-                                    <th class="member_group">会员组</th>
+                                    <th class="member_group">会员卡类型</th>
                                     <th class="member_sex">性别</th>
                                     <th class="member_jifen">会员积分</th>
                                     <th>注册时间</th>
@@ -381,7 +385,7 @@
                                     <td class="am-text-middle"><?php echo $value['phone']?></td>
                                     <td class="am-text-middle"><?php echo $value['qq']?></td>
                                     <td class="am-text-middle"><?php echo $value['email']?></td>
-                                    <td class="am-text-middle"><?php echo group_name($value['gid']);?></td>
+                                    <td class="am-text-middle"><?php echo get_card_name($value['card_id']);?></td>
                                     <td class="am-text-middle"><?php echo $value['gender']?></td>
                                     <td class="am-text-middle"><?php echo $value['intergral']?></td>
                                     <td class="am-text-middle"><?php echo $value['create_time']?></td>
