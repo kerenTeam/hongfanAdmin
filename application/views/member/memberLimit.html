@@ -348,7 +348,7 @@ color: black;
                                             <a href="javascript:;" data-am-modal="{target: '#edit<?php echo $v['gid'];?>'}">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+                                            <a href="<?php echo site_url('/member/member/del_group/').$v['gid'];?>" class="tpl-table-black-operation-del" onClick="return confirm('删除后，权限下的所有用户权限会清零。确定删除?');" >
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>

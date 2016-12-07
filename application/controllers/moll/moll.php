@@ -12,7 +12,11 @@ class moll extends default_Controller {
     {
         parent::__construct();
         $this->load->model('moll_model');
-
+        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        $plateid = json_decode($plateid,true);
+        if(!in_array('0',$plateid) && !in_array('1',$plateid)){
+            echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+        }
     }
     
     //业态列表
