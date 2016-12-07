@@ -120,7 +120,7 @@ class member_model extends CI_Model{
         $query = $this->db->where($where)->order_by('create_time','desc')->get($db);
         return $query->result_array();
     }
-    //修改用资料
+    //修改用户资料
     function edit_userinfo($userid,$data){
         $where['user_id'] = $userid;
         return $this->db->where($where)->update($this->member,$data);
@@ -162,8 +162,8 @@ class member_model extends CI_Model{
 
 
     //返回用户权限分组
-    function get_user_group(){
-        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 order by create_time desc";
+    function get_user_group($usergid){
+        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 and gid != $usergid order by create_time desc";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -177,5 +177,24 @@ class member_model extends CI_Model{
         $where['gid'] = $id;
         return $this->db->where($where)->update($this->group,$data);
     }
+    //根据权限ID 返回权限
+    function group_permiss($id){
+        $where['gid'] = $id;
+        $query = $this->db->where($where)->get($this->group);
+        $row = $query->row_array();
+        return $row['group_permission'];
+    }
+    //删除权限
+    function del_group($id){
+        $where['gid'] = $id;
+        return $this->db->where($where)->delete($this->group);
+    }
+    //根据权限更改用户资料
+    function edit_admin_user($gid,$data){
+        $where['gid'] = $gid;
+        return $this->db->where($where)->update($this->member,$data);
+    }
+
+
 
 }

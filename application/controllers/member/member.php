@@ -11,7 +11,16 @@ class member extends default_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model('member_model','user_model');
+       
+        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        $plateid = json_decode($plateid,true);
+        if(!empty($plateid)){
+            if(!in_array('0',$plateid) && !in_array('8',$plateid)){
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+            }
+        }else{
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+        }
     }
 
     //会员 列表
@@ -139,10 +148,7 @@ class member extends default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            if($id == 1){
-                echo "<script>alert('网站创建者不能删除！');window.location.href='".site_url('/member/member/memberList')."'</script>";
-                exit;
-            }
+           
             //自己不能删除
             if($id == $this->session->users['user_id']){
                 echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
@@ -383,19 +389,9 @@ class member extends default_Controller {
     //权限管理
     function memberLimit(){
         //返回所有权限  
-        $data['group'] = $this->user_model->get_user_group();
+        $data['group'] = $this->user_model->get_user_group($this->session->users['gid']);
         //所有模块 
-        $data['plate'] = array(
-                '0'=>array('id'=>'0','name'=>'所有模块'),
-                '1'=>array('id'=>'1','name'=>'系统设置'),
-                '2'=>array('id'=>'2','name'=>'商场设置'),
-                '3'=>array('id'=>'3','name'=>'店铺管理'),
-                '4'=>array('id'=>'4','name'=>'电商管理'),
-                '5'=>array('id'=>'5','name'=>'电子劵'),
-                '6'=>array('id'=>'6','name'=>'主页模块'),
-                '7'=>array('id'=>'7','name'=>'卡卷管理'),
-                '8'=>array('id'=>'8','name'=>'会员管理'),
-            );
+        $data['plate'] = $this->mokuai;
         $this->load->view('member/memberLimit.html',$data);
     }
 
@@ -427,6 +423,24 @@ class member extends default_Controller {
              }
         }else{
             $this->load->view('404.html');
+        }
+    }
+    //删除权限
+    function del_group(){
+        $id=intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['gid'] = '0';
+            if($this->user_model->edit_admin_user($id,$data)){
+                if($this->user_model->del_group($id)){
+                     echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+                }else{
+                      echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+                }
+            }else{
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
+            }
         }
     }
 
