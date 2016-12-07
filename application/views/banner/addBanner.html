@@ -1,15 +1,14 @@
 <?php $this->load->view('common.html');?>
 <style type="text/css">
     #preview{
-        width:200px;
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
+        
         height:190px;
     }
 
-    .am-form-group .deleteImg{
+    .deleteImg{
         display: inline-block;
         background: #ff0000;
         width:60px;
@@ -18,16 +17,19 @@
         text-align: center;
         position: absolute;
         left:160px;
-        top:318px;
+        top:343px;
         color:#ffffff;
     }
     .addpadding{
         padding-left:10%;
     }
+    .addpadding button{
+        margin-left: 40px;
+    }
     .widget-title{
-    font-size:18px;
-    color:#000;
-}
+        font-size:18px;
+        color:#000;
+    }
 </style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
@@ -45,6 +47,11 @@
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
@@ -153,7 +160,7 @@
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
             <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
@@ -180,11 +187,7 @@
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
+            
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
@@ -309,7 +312,8 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> Banner管理 
-            <a href="<?php echo site_url().'/banner/banner';?>">Banner列表</a><small>/新增Banner</small></div>
+            <a href="<?php echo site_url().'/banner/banner';?>" style="font-size:16px;">Banner列表</a>
+            <small><a href="<?php echo site_url().'/banner/addBanner';?>" style="font-size:16px;">新增Banner</a></small></div>
         </div>
     </div>
 </div>
@@ -325,7 +329,7 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
                                 <label for="shopName">Banner名称 ：</label>
-                                <input type="text" id="shopName" name="shopName" value="" required />
+                                <input type="text" id="shopName" name="shopName" max-length="15" placeholder="建议不超过十四个字符" value="" required />
                             </div>
                             <div class="am-form-group">
                                 <label for="user-weibo">图片：</label>
@@ -333,23 +337,25 @@
                                          <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                           <!-- 图片实时预览 -->
                                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <br />
                                           <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                     </div>
                                      <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                        <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                     <br />
+                                    <span>注意!</span><small class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</small> 
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">跳转地址 ：</label>
-                                <input type="url" id="" name="englishName" value=""/>
+                                <input type="url" id="" name="englishName" placeholder="请输入合法的跳转地址" value="" required />
                             </div>
                         </div>
                         </div>
+                        <div class="am-form-group addpadding">
+                            <button class="am-btn am-btn-secondary" type="submit">添加Banner</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
+                        </div>
                     </div>
 
-                    <div class="am-form-group addpadding">
-                        <button class="am-btn am-btn-secondary" type="submit">添加Banner</button><button class="am-btn am-btn-default" type="reset">重置</button> 
-                    </div>
+                    
                 </div>
             </form>
         </div>
@@ -390,5 +396,16 @@
         $(this).datepicker('close');
       });
   });
+
+  //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+  //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
 </script>
 </html>

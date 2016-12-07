@@ -1,5 +1,31 @@
 <?php $this->load->view('common.html');?>
 <style type="text/css" media="screen">
+#preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        position: absolute;
+        left:160px;
+        top:223px;
+        color:#ffffff;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .addpadding button{
+        margin-left: 40px;
+    }
 .am-selected{
 width: 100%!important;
 }
@@ -12,15 +38,48 @@ padding: 5px 6px!important;
 }
 </style>
 <!-- 菜单 -->
-<ul class="sidebar-nav">
+</ul><ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>" >
+        <a href="<?php echo site_url().'/admin';?>">
             <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
         </a>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-building sidebar-nav-link-logo"></i> 商场管理
+            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -57,19 +116,19 @@ padding: 5px 6px!important;
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <i class="am-icon-graduation-cap sidebar-nav-link-logo"></i> 商铺管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop';?>" >
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/shop/addShop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商铺
                 </a>
             </li>
         </ul>
@@ -106,7 +165,7 @@ padding: 5px 6px!important;
     </li> 
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> Banner管理
+            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
@@ -134,11 +193,7 @@ padding: 5px 6px!important;
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
+            
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/addMember';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
@@ -159,7 +214,7 @@ padding: 5px 6px!important;
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 电子券管理
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
             <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
@@ -170,7 +225,7 @@ padding: 5px 6px!important;
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic';?>" >
+                <a href="<?php echo site_url().'/electronic/electronic';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券列表
                 </a>
             </li>
@@ -235,13 +290,7 @@ padding: 5px 6px!important;
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="chart.html">
-            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
+    <!-- <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -260,22 +309,7 @@ padding: 5px 6px!important;
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="404.html">
-            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-        </a>
-    </li>
-
+ -->
 </ul>
 </div>
 <!-- 内容区域 -->
@@ -283,7 +317,9 @@ padding: 5px 6px!important;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading">电子券管理<span class="am-icon-home page-header-heading-icon">新增电子券</span></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
+            <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>" style="font-size:16px;">新增电子券</a>
+            <small></small></div>
         </div>
     </div>
 </div>
@@ -294,21 +330,21 @@ padding: 5px 6px!important;
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">活动查询</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" data-am-validator>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">电子券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过8个字符"  required>
+                            <input type="text" name="" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">标题<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">电子券类型<span class="red">*</span></label>
+                        <label for="" class="am-u-sm-3 am-form-label">电子券类型<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
@@ -319,7 +355,7 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取等级限制<span class="red">*</span></label>
+                        <label for="" class="am-u-sm-3 am-form-label">领取等级限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
@@ -331,7 +367,7 @@ padding: 5px 6px!important;
                     </div>
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span></label>
+                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
@@ -341,41 +377,28 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">核销方式<span class="red">*</span></label>
+                        <label for="" class="am-u-sm-3 am-form-label">核销方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
                                 <option value="到店核销">到店核销</option>
                                 <option value="扫码">扫码</option>
-                                <option value="在线核销">在线核销</option>
+                                <option value="在线核销">在线抵用</option>
                                 <option value="不限">不限</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">库存数<span class="red">*</span>：</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">库存数<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="number" name="" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">二维码：</label>
+                    
+                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券发放方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                        <div class="wx_type_img">
-                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                  <!-- 图片实时预览 -->
-                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                  <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
-                            </div>
-                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                            <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券发放方式：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
+                            <select id="source_state" required>
                                 <option value="请选择">请选择</option>
                                 <option value="免费">免费</option>
                                 <option value="购买">购买</option>
@@ -385,10 +408,10 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券使用方式：</label>
+                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券使用方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select id="source_state">
+                            <select id="source_state" required>
                                 <option value="请选择">请选择</option>
                                 <option value="免费">免费</option>
                                 <option value="购买">购买</option>
@@ -398,16 +421,31 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">电子券内容<span class="red">*</span>：</label>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">电子券内容<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <textarea rows="5" required class="am-form-field tpl-form-no-bg" name="">
+                            <textarea rows="5" required class="" name="">
                                 
                             </textarea>
                         </div>
                     </div>
-                    <div class="am-form-group addpadding">
-                        <button class="am-btn am-btn-secondary" type="submit">添加电子券</button><button class="am-btn am-btn-default" type="reset">取消</button> 
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-weibo" class="am-u-sm-3 am-form-label">二维码：</label>
+                        <div class="am-u-sm-9 ">
+                            <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                  <!-- 图片实时预览 -->
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                  <br />
+                                  <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                            </div>
+                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                             <br />
+                            <span>注意!</span><small class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</small> 
+                        </div>                        
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 addpadding am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">添加电子券</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
                     </div>
                 </form>
             </div>
@@ -421,5 +459,17 @@ padding: 5px 6px!important;
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
+<script type="text/javascript">
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+  //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+</script>
 </body>
 </html>
