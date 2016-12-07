@@ -10,6 +10,10 @@ width: 30px;
 font-size: 12px!important;
 padding: 5px 6px!important;
 }
+td img{
+    width: 150px;
+    height: 150px;
+}
 </style>
 <!-- 菜单 -->
 </ul><ul class="sidebar-nav">
@@ -47,6 +51,11 @@ padding: 5px 6px!important;
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/banner/banner';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner管理
                 </a>
             </li>
         </ul>
@@ -137,25 +146,6 @@ padding: 5px 6px!important;
             </li>
         </ul>
     </li> 
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
-                </a>
-            </li>
-        </ul>
-    </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理

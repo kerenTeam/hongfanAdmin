@@ -25,266 +25,99 @@ td.am-text-middle img{
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>">
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        <a href="<?php echo site_url().'/shop/singleShop/shopAdmin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
         </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-cogs sidebar-nav-link-logo"></i> 系统设置
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/systemSet/systemSet';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/systemSet/systemSet/other';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 其他管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner管理
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-fax sidebar-nav-link-logo"></i> 商场管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/mollBrief';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商场简介
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/moll/moll/mollFloorInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 楼层信息
-                </a>
-            </li>
-             <li class="sidebar-nav-link">
-                <a href="javascript:;" class="sidebar-nav-sub-title">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态配置
-                    <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-                </a>
-                <ul class="sidebar-nav sidebar-nav-sub">
-                    <li class="sidebar-nav-link">
-                        <a href="<?php echo site_url().'/moll/moll/mollyetaiList';?>" >
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 业态列表
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-link">
-                        <a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">
-                            <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增业态
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-graduation-cap sidebar-nav-link-logo"></i> 商铺管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop';?>" >
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商铺列表
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商铺
-                </a>
-            </li>
-        </ul>
     </li>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商城管理
-            <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" ">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
-                    商品列表
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" >
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
+                <a href="<?php echo site_url().'/shop/singleShop/shopBaseInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeOrderList';?>" class="sub-active">
+                <a href="<?php echo site_url().'/shop/singleShop/shopInfo';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopFloorRelation';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
-                </a>
-            </li>
-        </ul>
-    </li> 
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <!-- <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
-                </a>
-            </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberCard';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增电子券
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券列表
+                <a href="<?php echo site_url().'/shop/singleShop/shopComment';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
                 </a>
             </li>
         </ul>
     </li>
      <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 主页模块
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 促销管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 本地生活
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/module/charge';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 充值缴费
+                <a href="<?php echo site_url().'/shop/singleShop/shopAddSales';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增促销
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一键钟情
+                <a href="<?php echo site_url().'/shop/singleShop/shopSalesList';?>" >
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/homeReport/index';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 家乡报道
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 为民服务
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> HI.团购
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 购物中心
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 在线金融
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 游戏娱乐
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优品汇
+                <a href="<?php echo site_url().'/shop/singleShop/shopCheckSales';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销验证
                 </a>
             </li>
         </ul>
     </li>
-    <!-- <li class="sidebar-nav-link">
+     <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub">
             <li class="sidebar-nav-link">
-                <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                <a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增活动
                 </a>
             </li>
-
             <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动列表
                 </a>
             </li>
         </ul>
     </li>
- -->
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
 </ul>
 </div>
 <!-- 内容区域 -->
@@ -292,7 +125,7 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>订单列表</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理 <small>订单管理</small></div>
         </div>
     </div>
 </div>
@@ -420,7 +253,7 @@ td.am-text-middle img{
                             <input type="text" placeholder="请输入搜素的关键字">
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-text-center">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>

@@ -46,6 +46,11 @@ class singleShop extends CI_Controller {
     function shopComment(){
         $this->load->view('shop/shopComment.html');
     }
+     //商铺订单管理
+    function shopOrder(){
+        $this->load->view('shop/shopOrder.html');
+    }
+
 
     //商家促销管理 促销列表
     function shopSalesList(){

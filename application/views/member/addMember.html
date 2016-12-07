@@ -18,6 +18,11 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet/apliyManage';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 支付账号管理
                 </a>
@@ -30,6 +35,11 @@
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet/webMessage';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 网站信息管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/banner/banner';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner管理
                 </a>
             </li>
         </ul>
@@ -123,25 +133,6 @@
         </ul>
     </li> 
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title active">
             <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
@@ -152,11 +143,7 @@
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberLimit';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 权限管理
-                </a>
-            </li>
+            
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/addMember';?>" class="sub-active">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
@@ -280,12 +267,12 @@
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
-                <div class="row">
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>新增会员</small></div>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small><a href="<?php echo site_url().'/member/member/addMember';?>">新增会员</a></small></div>
+        </div>
+    </div>
+</div>
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -298,23 +285,23 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
                                 <label for="">用户名 <span class="red">*</span>：</label>
-                                <input type="text" id="" minlength="2" name="username" placeholder="输入用户名（至少 2 个字符）" required/>
+                                <input type="text" id="" minlength="2" maxlength="15" name="username" placeholder="输入用户名（至少 2 个字符,至多15个字符）" required/>
                             </div>
                             <div class="am-form-group">
                                 <label for="">密码 <span class="red">*</span>：</label>
-                                <input type="text" id="" minlength="6" name="password" placeholder="输入密码（至少 6 个字符）" required/>
+                                <input type="text" id=""  name="password" placeholder="输入密码（至少 6 个字符,至多16个字符）" required/>
                             </div>
                             <div class="am-form-group">
                                 <label for="">昵称：</label>
-                                <input type="text" id="doc-vld-email-2" name="nickname" placeholder="输入昵称（至少 2 个字符）"/>
+                                <input type="text" id="doc-vld-email-2" minlength="2" maxlength="15" name="nickname" placeholder="输入昵称（至少 2 个字符,至多15个字符）"/>
                             </div>
                             <div class="am-form-group">
                                 <label for="doc-vld-528">手机号 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-528" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required/>
+                                <input type="tel" id="doc-vld-528" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required/>
                             </div>
                             <div class="am-form-group">
-                                <label for="">QQ <span class="red">*</span>：</label>
-                                <input type="text" id="" name="qq"  placeholder="请输入QQ" required/>
+                                <label for="">QQ ：</label>
+                                <input type="text" minlength="6" maxlength="12" id="" name="qq"  placeholder="请输入QQ" required/>
                             </div>
                             <div class="am-form-group">
                                 <label for="doc-vld-email-2">邮箱：</label>
@@ -338,7 +325,7 @@
 
                             <div class="am-form-group">
                                 <label for="doc-vld-email-2">默认积分：</label>
-                                <input type="number" id="doc-vld-email-2" name="intergral" placeholder="输入积分"/>
+                                <input type="number" id="doc-vld-email-2" required name="intergral" placeholder="输入积分"/>
 
                             </div>
                             <div class="am-form-group">
