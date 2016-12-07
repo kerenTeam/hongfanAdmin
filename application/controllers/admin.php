@@ -14,8 +14,8 @@ class admin extends default_Controller
 	}
 
 	function index(){
-
-		$this->load->view('index.html');
+        $data['page'] = "index.html";
+		$this->load->view('template.html',$data);
 	}
 
 
