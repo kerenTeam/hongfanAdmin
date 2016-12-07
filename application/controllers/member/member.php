@@ -188,12 +188,11 @@ class member extends default_Controller {
             $state = $this->input->post('state');
             $sear = trim($this->input->post('sear'));
 
-             //获取会员列表
             $config['per_page'] = 10; //每页显示的数据数
             //页码
             $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
             //分页数据
-            $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
+            $result = $this->user_model->search_users_page('5',$card_type,$gender,$state,$sear,$current_page,$config['per_page']);
             //配置
             $config['base_url'] = site_url('/member/member/memberList');
             //分页配置
@@ -218,18 +217,24 @@ class member extends default_Controller {
             $config['last_link']= '末页';
             //总共多少
             $num = $this->user_model->search_users('5',$card_type,$gender,$state,$sear);
-            var_dump($num);
-           // $config['total_rows'] = count($num);//总条数
 
-
-
-          
-        }else{
-            $this->load->view('404.html');
-        }
+            $this->load->library('pagination');//加载ci pagination类
+            $this->pagination->initialize($config);
+            $data = array(
+                'users' => $result,
+                'page' => $this->pagination->create_links(),
+            );
+            //获取会员卡类型
+            $data['cards'] = $this->user_model->get_card_type( );
+            //获取会员分组
+            $data['group'] = $this->user_model->get_user_group();
+            $data['title'] = '搜索结果';
+            $this->load->view('member/memberList.html',$data);
+              
+            }else{
+                $this->load->view('404.html');
+            }
     }
-
-
 
     //会员组
     function memberGroup()

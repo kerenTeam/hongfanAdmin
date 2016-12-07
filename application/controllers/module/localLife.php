@@ -236,6 +236,8 @@ class localLife extends default_Controller {
 					$config['total_rows'] = count($list);
 					// //分页数据
 				    $listpage = $this->module_model->search_mark_page($sear,$config['per_page'],$current_page);
+                    //分类信息
+                    $type = $this->module_model->get_mark_type();
 	    			break;
                     //快递上门
                 case '4':
@@ -479,7 +481,6 @@ class localLife extends default_Controller {
 								}
 							}
 						}else{
-							unset($data['img'.$i]);
 							if($i != 4){
 								if(!empty($data['img'.$i])){
 									$pic[]['banner'] = $data['img'.$i];
@@ -487,6 +488,7 @@ class localLife extends default_Controller {
 							}else{
 								$logo = $data['logo'];
 							}
+                            unset($data['img'.$i]);
 						}
 						$i++;
 					 }
@@ -512,14 +514,13 @@ class localLife extends default_Controller {
 							}else{
                                 unset($data['img'.$i]);
 								if($i != 4){
-									
 								$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
 								}else{
 									$logo = 'upload/service/houst/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
-                            unset($data['img'.$i]);
+                            
 							if($i != 4){
 								if(!empty($data['img'.$i])){
 									$pic[]['picImg'] = $data['img'.$i];
@@ -528,6 +529,7 @@ class localLife extends default_Controller {
 							}else{
 								$logo = $data['logo'];
 							}
+                            unset($data['img'.$i]);
 						}
 						$i++;
 					 }
