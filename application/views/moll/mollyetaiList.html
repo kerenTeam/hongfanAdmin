@@ -40,22 +40,22 @@ td.am-text-middle img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">业态查询</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                <form action="<?php echo site_url('/moll/moll/search_store');?>" method="get" class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="goodsType" class="am-form-label am-u-sm-4">状态:</label>
                         <div class="am-u-sm-8">
-                            <select id="goodsType" name="goodsType">
+                            <select id="goodsType" name="state">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="option1">全部</option>
-                                <option value="option2">正常</option>
-                                <option value="option2">冻结</option>
+                                <option value="2">全部</option>
+                                <option value="1">正常</option>
+                                <option value="0">冻结</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="goodsPrice" class="am-form-label am-u-sm-4">业态名称:</label>
                         <div class="am-u-sm-8">
-                            <input type="text" id="startPrice" name="startPrice" min="0" />
+                            <input type="text" id="startPrice"  min="0" name='type_name'/>
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">

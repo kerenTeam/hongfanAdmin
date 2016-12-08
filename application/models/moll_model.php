@@ -55,6 +55,88 @@ class moll_model extends CI_Model
 		$where['id'] = $id;
 		return $this->db->where($where)->delete($this->stote_type);
 	}
+	//搜索业态
+	function search($state,$type_name,$gid){
+		if(!empty($state) && empty($type_name) && empty($gid)){
+			if($state == 2){
+				$query = $this->db->order_by('sort','asc')->get($this->stote_type);
+			}else{
+				$where['state'] = $state;
+				$query = $this->db->where($where)->order_by('sort','asc')->get($this->stote_type);
+			}
+		}else
+		if(!empty($type_name) && empty($state) && empty($gid)){
+			$query = $this->db->like('type_name',$type_name)->order_by('sort','asc')->get($this->stote_type);
+		}else
+		if(empty($type_name) && empty($state) && !empty($gid)){
+			$where['gid'] = $gid;
+			$query = $this->db->where($where)->order_by('sort','asc')->get($this->stote_type);
+		}else
+		if(!empty($state) && !empty($type_name) && empty($gid)){
+			if($state == 2){
+				$query = $this->db->like('type_name',$type_name)->order_by('sort','asc')->get($this->stote_type);
+			}else{
+				$where['state'] = $state;
+				$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->get($this->stote_type);
+			}
+		}else
+		if(!empty($state) && empty($type_name) && !empty($gid)){
+			
+			if($state == 2){
+				$where['gid'] = $gid;
+				$query = $this->db->where($where)->order_by('sort','asc')->get($this->stote_type);
+			}else{
+				$where = array('state'=>$state,'gid'=>$gid);
+				$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->get($this->stote_type);
+			}
+		}else
+		if(empty($state) && !empty($type_name) && !empty($gid)){
+			$where['gid'] = $gid;
+			$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->get($this->stote_type);
+		}
+		return $query->result_array();
+	}
+	//搜索分页
+	function search_page($state,$type_name,$gid,$off,$page){
+		if(!empty($state) && empty($type_name) && empty($gid)){
+			if($state == 2){
+				$query = $this->db->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}else{
+				$where['state'] = $state;
+				$query = $this->db->where($where)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}
+		}
+		if(!empty($type_name) && empty($state) && empty($gid)){
+			$query = $this->db->like('type_name',$type_name)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+		}
+		if(empty($type_name) && empty($state) && !empty($gid)){
+			$where['gid'] = $gid;
+			$query = $this->db->where($where)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+		}
+		if(!empty($state) && !empty($type_name) && empty($gid)){
+			if($state == 2){
+				$query = $this->db->like('type_name',$type_name)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}else{
+				$where['state'] = $state;
+				$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}
+		}
+		if(!empty($state) && empty($type_name) && !empty($gid)){
+			
+			if($state == 2){
+				$where['gid'] = $gid;
+				$query = $this->db->where($where)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}else{
+				$where = array('state'=>$state,'gid'=>$gid);
+				$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+			}
+		}
+		if(empty($state) && !empty($type_name) && !empty($gid)){
+			$where['gid'] = $gid;
+			$query = $this->db->where($where)->like('type_name',$type_name)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+		}
+		return $query->result_array();
+	}
 
 	//商场详情
 	function get_marketinfo(){
