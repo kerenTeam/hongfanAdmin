@@ -39,7 +39,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">支付宝账号管理</a>
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">支付账号管理</a>
             <small></small></div>
         </div>
     </div>
@@ -112,6 +112,7 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
                                         支付宝账号
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                                     </h4>
                                 </div>
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
@@ -131,7 +132,6 @@
                                                     <th class="am-text-middle">应用私钥 </th>
                                                     <th class="am-text-middle">客户端SDK </th>
                                                     <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">ICON</th>
                                                     <th class="am-text-middle">平台公钥 </th>
                                                     <th class="am-text-middle">操作</th>
                                                 </tr>
@@ -142,13 +142,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -166,13 +159,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -195,9 +181,10 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
                                         微信账号列表
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                                     </h4>
                                 </div>
-                                <div id="market" class="am-panel-collapse am-collapse am-in">
+                                <div id="market" class="am-panel-collapse am-collapse">
                                     <div class="am-panel-bd">
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
@@ -214,7 +201,6 @@
                                                     <th class="am-text-middle">应用私钥 </th>
                                                     <th class="am-text-middle">客户端SDK </th>
                                                     <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">ICON</th>
                                                     <th class="am-text-middle">平台公钥 </th>
                                                     <th class="am-text-middle">操作</th>
                                                 </tr>
@@ -225,13 +211,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -249,13 +228,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -278,9 +250,10 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
                                         银联帐号列表
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                                     </h4>
                                 </div>
-                                <div id="shopCenter" class="am-panel-collapse am-collapse am-in">
+                                <div id="shopCenter" class="am-panel-collapse am-collapse">
                                     <div class="am-panel-bd">
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
@@ -297,7 +270,6 @@
                                                     <th class="am-text-middle">应用私钥 </th>
                                                     <th class="am-text-middle">客户端SDK </th>
                                                     <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">ICON</th>
                                                     <th class="am-text-middle">平台公钥 </th>
                                                     <th class="am-text-middle">操作</th>
                                                 </tr>
@@ -308,13 +280,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -332,13 +297,6 @@
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle">
-                                                    	<div class="wx_type_img">
-						                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-						                                      <!-- 图片实时预览 -->
-						                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>						         
-						                                </div>
-                                                    </td>
                                                     <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
@@ -395,18 +353,6 @@
                         <input type="url" placeholder="请输入接口地址" name='name' minlength="2" minlength="10" required>
                     </div>
                 </div>
-                <div class="am-form-group am-cf">
-                    <label for="" class="am-u-sm-3 am-form-label">ICON <span class="red">*</span></label>
-                     <div class="am-u-sm-9">
-                        <div class="wx_type_img">
-                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                          <!-- 图片实时预览 -->
-                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                        </div>
-                        <span class="deleteImg am-text-center"><i class="am-icon-trash"></i> 删除</span> 
-                    </div>
-                </div>
-            
                 <div class="am-form-group am-btn-group-xs">
                     <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                     <button type="submit" class="am-btn am-btn-secondary">新增</button>

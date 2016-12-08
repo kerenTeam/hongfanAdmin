@@ -9,22 +9,27 @@
 
     .deleteImg{
         display: inline-block;
-        background: #ff0000;
         width:60px;
         height:28px;
         line-height: 28px;
         text-align: center;
         position: absolute;
         left:330px;
-        top:342px;
-        color:#ffffff;
+        top:315px;
+        color:#666;
         font-size: 1.2rem;
     }
     .addpadding{
-        padding-left:10%;
+        margin-left:10%;
     }
     .clickUp{
         margin-left: 150px;
+        width:100px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
     }
     .widget-title{
     font-size:18px;
@@ -62,8 +67,7 @@
                                          <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                           <!-- 图片实时预览 -->
                                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/user01.png" class="am-img-responsive cardView"> </div>
-                                          <br />
-                                          <button class="am-btn am-btn-secondary am-btn-xs clickUp"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                          <span class="clickUp"><i class="am-icon-cloud-upload"></i> 点击上传</span>
                                     </div>
                                      <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                      <br />
@@ -75,11 +79,12 @@
                             </div>
                         </div>
                         </div>
+                        <div class="am-form-group addpadding">
+                          <button class="am-btn am-btn-secondary" type="submit">保存</button><button class="am-btn am-btn-default addpadding" id="cancle" type="reset">取消</button> 
+                      </div>
                     </div>
 
-                    <div class="am-form-group addpadding">
-                        <button class="am-btn am-btn-secondary" type="submit">保存</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
-                    </div>
+                    
                 </div>
             </form>
         </div>
