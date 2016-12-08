@@ -386,63 +386,7 @@ class member extends default_Controller {
     	}
     }
 
-    //权限管理
-    function memberLimit(){
-        //返回所有权限  
-        $data['group'] = $this->user_model->get_user_group($this->session->users['gid']);
-        //所有模块 
-        $data['plate'] = $this->mokuai;
-        $this->load->view('member/memberLimit.html',$data);
-    }
-
-    //新增权限
-    function add_member_group(){
-        if($_POST){
-            $data['group_name'] = $this->input->post('group_name');
-            $data['group_permission'] = json_encode($this->input->post('group_permission'));
-            if($this->user_model->add_group($data)){
-                echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-            }
-        }else{
-            $this->load->view('404.html');
-        }
-    }
-    
-    //编辑权限
-    function edit_member_group(){
-        if($_POST){
-            $id = $this->input->post('gid');
-            $data['group_name'] = $this->input->post('group_name');
-            $data['group_permission'] = json_encode($this->input->post('group_permission'));
-            if($this->user_model->edit_group($id,$data)){
-                 echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-             }else{
-                 echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-             }
-        }else{
-            $this->load->view('404.html');
-        }
-    }
-    //删除权限
-    function del_group(){
-        $id=intval($this->uri->segment(4));
-        if($id == 0){
-            $this->load->view('404.html');
-        }else{
-            $data['gid'] = '0';
-            if($this->user_model->edit_admin_user($id,$data)){
-                if($this->user_model->del_group($id)){
-                     echo "<script>alert('操作成功!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-                }else{
-                      echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-                }
-            }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/member/member/memberLimit')."'</script>";exit;
-            }
-        }
-    }
+  
 
 
 
