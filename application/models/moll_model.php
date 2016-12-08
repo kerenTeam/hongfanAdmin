@@ -45,7 +45,16 @@ class moll_model extends CI_Model
 		$query = $this->db->where($where)->get($this->stote_type);
 		return $query->row_array();
 	}
-
+	//编辑业态
+	function edit_storeYetai($id,$data){
+		$where['id'] = $id;
+		return $this->db->where($where)->update($this->stote_type,$data);
+	}
+	//删除业态
+	function del_storeType($id){
+		$where['id'] = $id;
+		return $this->db->where($where)->delete($this->stote_type);
+	}
 
 	//商场详情
 	function get_marketinfo(){
