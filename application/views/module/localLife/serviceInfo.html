@@ -13,6 +13,16 @@ padding: 5px 6px!important;
 .am-imgContainer{
 width:50%;
 }
+.deleteImg{
+        display: inline-block;
+        background: #de5145;
+        width:60px;
+        height:20px;
+        line-height: 20px;
+        text-align: center;
+        color:#ffffff;
+        font-size: 1.2rem;
+    }
 </style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
@@ -96,6 +106,7 @@ width:50%;
             </li>
         </ul>
     </li>
+
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title">
             <i class="am-icon-graduation-cap sidebar-nav-link-logo"></i> 商铺管理
@@ -363,23 +374,26 @@ width:50%;
                                             <?php else:?>
                                             <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                             <?php endif;?>
-											<div class="am-text-xs">banner1</div>
-										</div>
+											
+										</div><span>banner1</span>
+                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
 										<?php if(isset($banner[1]['banner'])):?>
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
 											<!-- 图片实时预览 -->
 											<input type='hidden' name='img2' value='<?php echo $banner[1]['banner'];?>' />
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['banner'];?>" class="am-img-responsive cardView"> </div>
-											<div class="am-text-xs">banner2</div>
-										</div>
+
+										</div><span>banner2</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
 										<?php else:?>
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" >
 											<!-- 图片实时预览 -->
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-											<div class="am-text-xs">banner2</div>
-										</div>
+
+										</div><span>banner2</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
 										<?php endif;?>
 										<?php if(isset($banner[2]['banner'])):?>
 										<div class="wx_type_img">
@@ -388,15 +402,17 @@ width:50%;
 											<input type='hidden' name='img3' value='<?php echo $banner[2]['banner'];?>' />
 
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['banner'];?>" class="am-img-responsive cardView"> </div>
-											<div class="am-text-xs">banner3</div>
-										</div>
+
+										</div><span>banner3</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
 										<?php else:?>
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
 											<!-- 图片实时预览 -->
 											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-											<div class="am-text-xs">banner3</div>
-										</div>
+											 
+										</div><span>banner3</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
 										<?php endif;?>
                                 </div>
                             </div>
@@ -409,14 +425,14 @@ width:50%;
                                         <!-- 图片实时预览 -->
 										<input hidden='type' name='logo' value='<?php echo $info['logo'];?>'/>	
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['logo'];?>" class="am-img-responsive cardView"> </div>
-                                        <div class="am-text-xs">点击选择图片</div>
+                                        <span class="am-text-xs">点击选择图片</span>
                                     </div>
 									<?php else:?>
 									<div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                        <div class="am-text-xs">点击选择图片</div>
+                                        <span class="am-text-xs">点击选择图片</span>
                                     </div>
 									<?php endif;?>
 									</div>
@@ -518,15 +534,15 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img1' value='<?php echo $banner[0]['picImg'];?>'/>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <span class="am-text-xs">banner1</span>
                                             </div>
 											<?php else:?>
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <span class="am-text-xs">banner1</span>
                                             </div>
 											<?php endif;?>
 											<?php if(isset($banner[1]['picImg'])):?>
@@ -534,14 +550,14 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img2' value='<?php echo $banner[1]['picImg'];?>'/>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner2</div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <span class="am-text-xs">banner2</span>
                                             </div>
 											<?php else:?>
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 <div class="am-text-xs">banner2</div>
                                             </div>
 											<?php endif;?>
@@ -550,14 +566,14 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img3' value='<?php echo $banner[2]['picImg'];?>'/>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner3</div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <span class="am-text-xs">banner3</span>
                                             </div>
 											<?php else:?>
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 <div class="am-text-xs">banner3</div>
                                             </div>
 											<?php endif;?>
@@ -571,9 +587,9 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<?php if(empty($info['list_pic'])):?>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 <?php else:?>
-											    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
+											    <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
 												<input type='hidden' name='img4' value='<?php echo $info['list_pic'];?>'/>
 												<?php endif;?>
 												<div class="am-text-xs">点击选择图片</div>
@@ -647,35 +663,38 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" >
                                                 <!-- 图片实时预览 -->
                                                 <?php if(isset($banner[0]['picImg'])):?>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                 <input type='hidden' name='img1' value="<?php echo $banner[0]['picImg'];?>" />
 	                                            <?php else:?>
-	                                           	<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                           	<div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
-                                                <div class="am-text-xs">banner1</div>
-                                            </div>
+
+                                            </div><sapn class="am-text-xs">banner1</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                  <?php if(isset($banner[1]['picImg'])):?>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                 <input type='hidden' name='img2' value="<?php echo $banner[1]['picImg'];?>" />
 	                                            <?php else:?>
-	                                            	  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            	  <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
-                                                <div class="am-text-xs">banner2</div>
-                                            </div>
+
+                                            </div><span class="am-text-xs">banner2</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                   <?php if(isset($banner[2]['picImg'])):?>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                         <input type='hidden' name='img3' value="<?php echo $banner[2]['picImg'];?>" />
 	                                            <?php else:?>
-	                                            	  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            	  <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
-                                                <div class="am-text-xs">banner3</div>
-                                            </div>
+
+                                            </div><span class="am-text-xs">banner3</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -685,12 +704,13 @@ width:50%;
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                <?php if(!empty($info['list_pic'])):?>
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
                                                  <input type='hidden' name='list_pic' value="<?php echo $info['list_pic'];?>" />
 	                                            <?php else:?>
-	                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
                                             </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -723,5 +743,13 @@ width:50%;
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
 <script src="assets/js/app.js"></script>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+</script>
 </body>
 </html>

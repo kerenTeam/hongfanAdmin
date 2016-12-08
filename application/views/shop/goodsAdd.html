@@ -104,7 +104,7 @@
     </li>
     <li class="sidebar-nav-link">
         <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 注销
         </a>
     </li>
 </ul>
@@ -176,7 +176,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="am-form-group">
+                            <!-- <div class="am-form-group">
                                 <label for="englishName">运费设置：</label>
                                 <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                     <thead>
@@ -216,10 +216,10 @@
                                             <option value="option3">模板三</option>
                                         </select><td>
                                         </tr>
-                                        <!-- more data -->
+                                        
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> -->
                              <div class="am-form-group">
                                 <label for="oneType">货到付款：</label>
                                 <select id="oneType">
@@ -271,13 +271,6 @@
                                 <input type="number"  id="respority" value="" required />
                             </div>
                             <div class="am-form-group">
-                                <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                                <div>
-                                    <script id="editor" type="text/plain"></script>
-                                </div>
-                                                     
-                            </div>
-                            <div class="am-form-group">
                                 <label for="vipName">会员名<span class="red">*</span>：</label>
                                 <input type="number" id="vipName" value="" required="" />
                             </div>
@@ -302,12 +295,19 @@
                                     <option value="option3">模板三</option>
                                 </select>
                             </div>
+                            <div class="am-form-group">
+                                <label for="englishName">商品信息详情<span class="red">*</span>：</label>
+                                <div>
+                                    <script id="editor" type="text/plain"></script>
+                                </div>
+                                                     
+                            </div>
                         </div>
                     </div>
 
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加</button>
-                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                        <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
 
                 </div>
@@ -355,7 +355,10 @@
         $(this).datepicker('close');
       });
   });
-
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
 
 
      //实例化编辑器

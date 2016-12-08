@@ -12,26 +12,32 @@
         font-size: 12px!important;
     padding: 5px 6px!important;
     }
-#preview{
-        width:200px;
+ #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
-        height:200px;
+        
+        height:190px;
     }
 
-  .deleteImg{
+    .deleteImg{
         display: inline-block;
         background: #ff0000;
         width:60px;
-        height:25px;
-        line-height: 25px;
+        height:28px;
+        line-height: 28px;
         text-align: center;
         position: absolute;
-        left:130px;
-        top:202px;
+        left:330px;
+        top:342px;
         color:#ffffff;
+        font-size: 1.2rem;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
     }
 </style>
 <!-- 菜单 -->
@@ -127,7 +133,7 @@
     </li>
     <li class="sidebar-nav-link">
         <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 注销
         </a>
     </li>
 </ul>
@@ -249,18 +255,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                <label for="englishName">活动详情(富文本)：</label>
-                                <div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="englishName" class="am-u-sm-2 am-form-label">活动详情(富文本)：</label>
+                                <div class="am-u-sm-10">
                                     <script id="editor" type="text/plain"></script>
                                 </div>
                                                      
-                            </div>
-                        <div class="am-form-group">
-                            <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">添加</button>
-                                <button type="button" class="am-btn am-btn-default am-btn-sm">取消</button>
-                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                            <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">添加</button>
+                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                         </div>
                     </form>
                 </div>
@@ -289,7 +293,10 @@
         
     });
 
-
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
 
      //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例

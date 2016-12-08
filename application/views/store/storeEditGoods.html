@@ -355,7 +355,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="am-form-group">
+                        <!-- <div class="am-form-group">
                             <label for="englishName">运费设置：</label>
                             <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                 <thead>
@@ -395,10 +395,10 @@
                                         <option value="option3">模板三</option>
                                     </select><td>
                                     </tr>
-                                    <!-- more data -->
+                            
                                 </tbody>
                             </table>
-                        </div>
+                        </div> -->
                          <div class="am-form-group">
                             <label for="oneType">货到付款：</label>
                             <select id="oneType" required="required">
@@ -449,13 +449,7 @@
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
                             <input type="number"  id="respority" value="" required="required" />
                         </div>
-                        <div class="am-form-group">
-                                <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                                <div>
-                                    <script id="editor" type="text/plain"></script>
-                                </div>
-                                                     
-                        </div>
+                        
                         <div class="am-form-group">
                             <label for="englishName">会员名<span class="red">*</span>：</label>
                             <input type="number" id="englishName" value="" required="required" />
@@ -481,12 +475,19 @@
                                 <option value="option3">模板三</option>
                             </select>
                         </div>
+                        <div class="am-form-group">
+                            <label for="englishName">商品信息详情<span class="red">*</span>：</label>
+                            <div>
+                                <script id="editor" type="text/plain"></script>
+                            </div>
+                                                     
+                        </div>
                     </div>
                 </div>
 
                 <div class="am-form-group am-text-center">
                     <button class="am-btn am-btn-secondary" type="submit">添加</button>
-                    <button class="am-btn am-btn-default" type="reset">重置</button> 
+                    <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                 </div>
             </div>
         </form>
@@ -689,7 +690,10 @@ $('#my-end').datepicker().
   });
 
 });
-
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
  //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     var ue = UE.getEditor('editor');

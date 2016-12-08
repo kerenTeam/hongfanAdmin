@@ -10,26 +10,32 @@
         font-size: 12px!important;
     padding: 5px 6px!important;
     }
-#preview{
-        width:200px;
+    #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
-        height:200px;
+        
+        height:190px;
     }
 
-  .deleteImg{
+    .deleteImg{
         display: inline-block;
         background: #ff0000;
         width:60px;
-        height:25px;
-        line-height: 25px;
+        height:28px;
+        line-height: 28px;
         text-align: center;
         position: absolute;
-        left:130px;
-        top:202px;
+        left:330px;
+        top: 226px;
         color:#ffffff;
+        font-size: 1.2rem;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 120px;
     }
 </style>
 <!-- 菜单 -->
@@ -125,7 +131,7 @@
     </li>
     <li class="sidebar-nav-link">
         <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 登录
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 注销
         </a>
     </li>
 </ul>
@@ -171,47 +177,49 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span>：</label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">自定义活动编号：</label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">自定义活动编号</label>
                             <div class="am-u-sm-9">
                                 <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="用于与第三方活动关联" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-weibo" class="am-u-sm-4 am-form-label am-fl">活动图片(详情)<span class="red">*</span>：</label>
-                            <div class="am-u-sm-8">
-                            <div class="wx_type_img">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">活动图片(详情)<span class="red">*</span></label>
+                            <div class="am-u-sm-9">
+                             <div class="wx_type_img">
                                      <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                      <br />
+                                      <button class="am-btn am-btn-secondary am-btn-xs clickUp"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                 </div>
                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                    <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                 <br />
+                                <span>注意!</span><small class="tpl-form-line-small-title">图片尺寸限制不小于720*360，长宽比为21或者不小于1280*960，长宽比为43，视前端效果来定；图片格式支持PNG、JPG、JPEG；最大支持4M</small> 
                             </div>
                         </div>
                         <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-weibo" class="am-u-sm-4 am-form-label">活动图片(列表)<span class="red">*</span>：</label>
-                            <div class="am-u-sm-8">
-                                <div class="wx_type_img">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">活动图片<span class="red">*</span></label>
+                            <div class="am-u-sm-9">
+                                 <div class="wx_type_img">
                                      <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                      <br />
+                                      <button class="am-btn am-btn-secondary am-btn-xs clickUp"><i class="am-icon-cloud-upload"></i> 点击上传</button>
                                 </div>
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                    <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                 <br />
+                                <span>注意!</span><small class="tpl-form-line-small-title">图片尺寸限制不小于720*360，长宽比为21或者不小于1280*960，长宽比为43，视前端效果来定；图片格式支持PNG、JPG、JPEG；最大支持4M</small> 
                             </div> 
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动开始时间<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">活动开始时间<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
                                   <input type="text" name="openTime" id="openTime" class="am-form-field" placeholder="日历组件" readonly>
@@ -222,7 +230,7 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动结束时间<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">活动结束时间<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
                                   <input type="text" name="openTime" id="openTime" class="am-form-field" placeholder="日历组件" readonly>
@@ -244,7 +252,7 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">参与人数限制<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">参与人数限制<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="参加该活动的总人数限制" required>
                             </div>
@@ -261,19 +269,19 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <input type="tel" name="" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">上线时间<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">上线时间<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
                                   <input type="text" name="openTime" id="openTime" class="am-form-field" placeholder="日历组件" readonly>
@@ -284,7 +292,7 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">下线时间<span class="red">*</span>：</label>
+                            <label for="" class="am-u-sm-3 am-form-label">下线时间<span class="red">*</span></label>
                             <div class="am-u-sm-9">
                                 <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
                                   <input type="text" name="openTime" id="openTime" class="am-form-field" placeholder="日历组件" readonly>
@@ -305,8 +313,8 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-6 am-form-label">是否可以使用核销口令<span class="red">*</span></label>
-                            <div class="am-u-sm-6">
+                            <label for="" class="am-u-sm-3 am-form-label">使用核销口令<span class="red">*</span></label>
+                            <div class="am-u-sm-9">
                                 <select name="" class="am-form-field tpl-form-no-bg" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
                                     <option value="是">是</option>
@@ -315,8 +323,8 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-6 am-form-label">是否可以一键领取所有券<span class="red">*</span></label>
-                            <div class="am-u-sm-6">
+                            <label for="" class="am-u-sm-3 am-form-label">一键领取<span class="red">*</span></label>
+                            <div class="am-u-sm-9">
                                 <select name class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option value="">输入查找/选择</option>
                                     <option value="是">是</option>
@@ -325,7 +333,7 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label class="am-u-sm-3 am-form-label">活动详情(纯文本)：</label>
+                            <label class="am-u-sm-3 am-form-label">活动详情(纯文本)</label>
                             <div class="am-u-sm-9">
                                 <textarea name="" rows="5" cols="40" required class="am-form-field tpl-form-no-bg">
                                     VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
@@ -333,25 +341,23 @@
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label class="am-u-sm-3 am-form-label">使用说明：</label>
+                            <label class="am-u-sm-3 am-form-label">使用说明</label>
                             <div class="am-u-sm-9">
                                 <textarea name="" class="am-form-field tpl-form-no-bg" required rows="5" cols="40">
                                     VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
                                 </textarea>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="englishName">活动详情(富文本)：</label>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <label for="englishName">活动详情(富文本)</label>
                             <div>
                                 <script id="editor" type="text/plain"></script>
                             </div>
                                                  
                         </div>
-                        <div class="am-form-group">
-                            <div class="am-u-sm-9 am-u-sm-push-3">
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                                 <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">添加</button>
-                                <button type="button" class="am-btn am-btn-default am-btn-sm">取消</button>
-                            </div>
+                                <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                         </div>
                     </form>
                 </div>
@@ -379,7 +385,10 @@
         $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
         
     });
-
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
 
 
      //实例化编辑器
@@ -409,14 +418,14 @@
     function getContent() {
         var arr = [];
         arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-        arr.push("内容为：");
+        arr.push("内容为");
         arr.push(UE.getEditor('editor').getContent());
         alert(arr.join("\n"));
     }
     function getPlainTxt() {
         var arr = [];
         arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-        arr.push("内容为：");
+        arr.push("内容为");
         arr.push(UE.getEditor('editor').getPlainTxt());
         alert(arr.join('\n'))
     }
@@ -447,14 +456,14 @@
     function getContentTxt() {
         var arr = [];
         arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-        arr.push("编辑器的纯文本内容为：");
+        arr.push("编辑器的纯文本内容为");
         arr.push(UE.getEditor('editor').getContentTxt());
         alert(arr.join("\n"));
     }
     function hasContent() {
         var arr = [];
         arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-        arr.push("判断结果为：");
+        arr.push("判断结果为");
         arr.push(UE.getEditor('editor').hasContents());
         alert(arr.join("\n"));
     }
