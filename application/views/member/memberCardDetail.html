@@ -1,4 +1,32 @@
 <?php $this->load->view('common.html');?>
+<style type="text/css">
+    #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+    .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:28px;
+        line-height: 28px;
+        text-align: center;
+        position: absolute;
+        left:400px;
+        top:255px;
+        color:#ffffff;
+        font-size: 1.2rem;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+</style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
@@ -329,11 +357,11 @@
                                     <input type="hidden" name="pic" value="<?php echo $card['pic'];?>" />
                                     <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $card['pic'];?>" class="am-img-responsive cardView"> </div>
                                     <?php endif;?>
-                                    <button class="am-btn am-btn-secondary am-btn-xs">选择图片</button>
-                                </div>
+                                    <br /><button class="am-btn am-btn-secondary am-btn-xs clickUp"><i class="am-icon-cloud-upload"></i>选择图片</button>
+                                    </div>
+                                    <br />
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                             </div>
-
-                        </div>
 
                     </div>
                 </div>
@@ -361,6 +389,12 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
+  //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
 </script>
 </body>
 </html>
