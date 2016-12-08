@@ -386,3 +386,10 @@ $('.sidebar-nav-sub-title').on('click', function() {
         .end()
         .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 })
+
+         //删除图片
+        $(".deleteImg").click(function(){
+            $(this).parent('div.father').siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+            
+        });
+        

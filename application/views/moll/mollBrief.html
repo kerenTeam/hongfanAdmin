@@ -11,25 +11,27 @@
     padding: 5px 6px!important;
     }
 #preview{
-        width:200px;
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
-        height:200px;
+        height:190px;
     }
 
-    .am-form-group .deleteImg{
+    .deleteImg{
         display: inline-block;
-        background: #ff0000;
         width:60px;
         height:25px;
         line-height: 25px;
         text-align: center;
-        position: absolute;
-        left:130px;
-        top:202px;
-        color:#ffffff;
+        color:#666;
+        font-size:1.2rem;
+        font-size: 1.2rem;border:1px solid #ddd;
+    }
+     .deleteImg:hover{
+        cursor: pointer;
+     }
+    small{
+font-size: 1.2rem;
     }
 </style>
 
@@ -56,19 +58,19 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">商场名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg am-field-valid "  value="宏帆广场" required>
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid "  value="宏帆广场" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">英文名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" required value="Mallcoo" >
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" required value="Mallcoo" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">城市<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="成都市" required>
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="成都市" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -101,13 +103,13 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">所在商圈<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" value="商场所在商圈" >
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" value="商场所在商圈" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">地址<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="number" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" value="灵石路658号" >
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" value="灵石路658号" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -117,11 +119,12 @@
                                      <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                      <br />
                                 </div>
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                    <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span>
+                                <div class="am-text-center father">
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                </div>
                             </div>
                         </div>
                         <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -131,11 +134,12 @@
                                      <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                      <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                      <br />
                                 </div>
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                    <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                <div class="am-text-center father">
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                </div>
                             </div> 
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -204,8 +208,7 @@
 <script type="text/javascript">
     //删除图片
     $(".deleteImg").click(function(){
-        
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).parent('div.father').siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
         
     });
 </script>

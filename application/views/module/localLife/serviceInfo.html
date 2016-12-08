@@ -14,13 +14,14 @@ width:50%;
 }
 .deleteImg{
         display: inline-block;
-        background: #de5145;
+        border:1px solid #ddd;
         width:60px;
         height:20px;
         line-height: 20px;
         text-align: center;
-        color:#ffffff;
+        color:#666;
         font-size: 1.2rem;
+        margin-left: 50px;
     }
 </style>
 <!-- 内容区域 -->
@@ -110,6 +111,7 @@ width:50%;
 											
 										</div><span>banner1</span>
                                         <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
 										<?php if(isset($banner[1]['banner'])):?>
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
@@ -119,6 +121,7 @@ width:50%;
 
 										</div><span>banner2</span>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
 										<?php else:?>
 										<div class="wx_type_img">
 											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" >
@@ -127,6 +130,7 @@ width:50%;
 
 										</div><span>banner2</span>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
 										<?php endif;?>
 										<?php if(isset($banner[2]['banner'])):?>
 										<div class="wx_type_img">
@@ -146,6 +150,7 @@ width:50%;
 											 
 										</div><span>banner3</span>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
 										<?php endif;?>
                                 </div>
                             </div>
@@ -159,6 +164,8 @@ width:50%;
 										<input hidden='type' name='logo' value='<?php echo $info['logo'];?>'/>	
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['logo'];?>" class="am-img-responsive cardView"> </div>
                                         <span class="am-text-xs">点击选择图片</span>
+                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
                                     </div>
 									<?php else:?>
 									<div class="wx_type_img">
@@ -166,6 +173,8 @@ width:50%;
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <span class="am-text-xs">点击选择图片</span>
+                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
                                     </div>
 									<?php endif;?>
 									</div>
@@ -470,7 +479,6 @@ width:50%;
     </div>
 </div>
 </div>
-<<<<<<< HEAD
 </div>
 </div>
 <script src="assets/js/amazeui.min.js"></script>
@@ -487,5 +495,4 @@ width:50%;
 </script>
 </body>
 </html>
-=======
->>>>>>> 416144706264f7e007527d160c526308f8910d28
+

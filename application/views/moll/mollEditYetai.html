@@ -1,26 +1,29 @@
 
 <style type="text/css">
 #preview{
-        width:200px;
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
-        height:200px;
+        height:190px;
     }
 
-    .am-form-group .deleteImg{
+   .deleteImg{
         display: inline-block;
-        background: #ff0000;
         width:60px;
         height:25px;
         line-height: 25px;
         text-align: center;
-        position: absolute;
-        left:130px;
-        top:202px;
-        color:#ffffff;
+        color: #666;
+        font-size: 1.2rem;
+        border:1px solid #ddd;
     }
+     .deleteImg:hover{
+        cursor: pointer;
+     }
+    small{
+        font-size: 1.2rem;
+    }
+
     .relative{
         position:relative;
     }
@@ -92,10 +95,12 @@
                                             <input type="hidden" name="icon" value="<?php echo $storeInfo['icon'];?>">
                                             <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $storeInfo['icon'];?>" class="am-img-responsive cardView"> </div>
                                           <?php endif;?>
+                                          <br />
                                     </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                               
-                                        <span class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</span> 
+                                    <div class="am-text-center father">
+                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                    </div>
                                 </div> 
                             </div>
                             

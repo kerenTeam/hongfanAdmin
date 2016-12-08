@@ -8,23 +8,21 @@
     }
     .deleteImg{
         display: inline-block;
-        background: #ff0000;
         width:60px;
-        height:28px;
-        line-height: 28px;
+        height:25px;
+        line-height: 25px;
         text-align: center;
-        position: absolute;
-        left:400px;
-        top:255px;
-        color:#ffffff;
+        color: #666;
         font-size: 1.2rem;
+        border:1px solid #ddd;
     }
+     .deleteImg:hover{
+        cursor: pointer;
+     }
     .addpadding{
         padding-left:10%;
     }
-    .clickUp{
-        margin-left: 150px;
-    }
+
 </style>
 
 <!-- 内容区域 -->
@@ -94,10 +92,12 @@
                                     <input type="hidden" name="pic" value="<?php echo $card['pic'];?>" />
                                     <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $card['pic'];?>" class="am-img-responsive cardView"> </div>
                                     <?php endif;?>
-                                    <br /><button class="am-btn am-btn-secondary am-btn-xs clickUp"><i class="am-icon-cloud-upload"></i>选择图片</button>
-                                    </div>
                                     <br />
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    </div>
+                                   <div class="am-text-center father">
+                                      <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                      <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                  </div>  
                             </div>
 
                     </div>
@@ -120,11 +120,5 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
-  //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        
-    });
 </script>
 
