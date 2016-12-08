@@ -156,14 +156,55 @@ class moll extends default_Controller {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
-            var_dump($data);
-            
+            if($this->moll_model->edit_storeYetai($data['id'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/moll/moll/mollyetaiList')."'</script>";exit;
+            }else{
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/moll/mollEditYetai/').$data['id']."'</script>";
+            }
         }else{
             $this->load->view('404.html');
         }
     }
 
+    //ajax 更改业态状态
+    function storeType_state(){
+        if($_POST){
+            $id = $_POST['id'];
+            $action = $_POST['action'];
+            switch ($action) {
+                //正常
+                case '1':
+                    $data['state'] = '1';
+                    if($this->moll_model->edit_storeYetai($id,$data)){
+                        echo "1";
+                    }else{
+                        echo "2";
+                    }
+                    break;
+                //冻结
+                case '2':
+                    $data['state'] = '0';
+                    if($this->moll_model->edit_storeYetai($id,$data)){
+                        echo "1";
+                    }else{
+                        echo "2";
+                    }
+                    break;
+            }
+        }
+    }
 
+    //ajax 删除 业态
+    function del_storeType(){
+        if($_POST){
+            $id = $_POST['id'];
+            if($this->moll_model->del_storeType($id)){
+                echo "1";
+            }else{
+                echo '2';
+            }
+        }
+    }
 
     //楼层信息
     function mollFloorInfo(){
