@@ -7,15 +7,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once(APPPATH.'controllers/default_Controller.php');
 
 class member extends default_Controller {
+    //会员列表
+    public $view_memberList = 'member/memberList.html';
+    //新增会员
+    public $view_addMember = 'member/addMember.html';  
+    //编辑会员
+    public $view_editMember = 'member/editMember.html'; 
+    //会员详情管理
+    public $view_memberInfo = 'member/memberInfo.html';
+    //会员卡列表
+    public $view_memberCard = "member/memberCard.html";
+    //新增会员卡
+    public $view_memberCardAdd = "member/memberCardAdd.html";
+    //编辑会员卡
+    public $view_memberCardDetail = 'member/memberCardDetail.html';
 
     function __construct()
     {
         parent::__construct();
-       
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
-            if(!in_array('0',$plateid) && !in_array('8',$plateid)){
+            if(!in_array('0',$plateid) && !in_array('7',$plateid)){
                 echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
             }
         }else{
@@ -63,13 +76,14 @@ class member extends default_Controller {
         $this->pagination->initialize($config);
         $data = array(
             'users' => $result,
-            'page' => $this->pagination->create_links(),
+            'pages' => $this->pagination->create_links(),
         );
         //获取会员卡类型
         $data['cards'] = $this->user_model->get_card_type( );
-        //获取会员分组
-        $data['group'] = $this->user_model->get_user_group();
-    	$this->load->view('member/memberList.html',$data);
+        //视图界面
+        $data['page'] = $this->view_memberList;
+        $data['menu'] = array('member','memberList');
+    	$this->load->view('template.html',$data);
     }
 
 
@@ -79,9 +93,10 @@ class member extends default_Controller {
        //  $data['cards'] = $this->user_model->get_card_type();
           //获取会员卡类型
         $data['cards'] = $this->user_model->get_card_type( );
-         //获取会员分组
-         //$data['group'] = $this->user_model->get_user_group();
-    	 $this->load->view('member/addMember.html',$data);
+          //视图界面
+        $data['page'] = $this->view_addMember;
+        $data['menu'] = array('member','addMember');
+        $this->load->view('template.html',$data);
     }
 
     //新增会员操作
@@ -121,8 +136,10 @@ class member extends default_Controller {
            // $data['group'] = $this->user_model->get_user_group();
              $data['cards'] = $this->user_model->get_card_type( );
             $data['userid'] = $id;
-
-            $this->load->view('member/editMember.html',$data);
+            //视图界面
+            $data['page'] = $this->view_editMember;
+            $data['menu'] = array('member','memberList');
+            $this->load->view('template.html',$data);
         }
     }
 
@@ -177,7 +194,10 @@ class member extends default_Controller {
             $data['inter'] = $this->user_model->get_user_address('hf_user_intergral',$id);
             //消息记录
             $data['message'] = $this->user_model->get_user_address('hf_user_message',$id);
-            $this->load->view('member/memberInfo.html',$data);
+             //视图界面
+            $data['page'] = $this->view_memberInfo;
+            $data['menu'] = array('member','memberList');
+            $this->load->view('template.html',$data);
         }
 
     }
@@ -224,14 +244,16 @@ class member extends default_Controller {
             $this->pagination->initialize($config);
             $data = array(
                 'users' => $result,
-                'page' => $this->pagination->create_links(),
+                'pages' => $this->pagination->create_links(),
             );
             //获取会员卡类型
             $data['cards'] = $this->user_model->get_card_type( );
-            //获取会员分组
-            $data['group'] = $this->user_model->get_user_group();
+
             $data['title'] = '搜索结果';
-            $this->load->view('member/memberList.html',$data);
+             //视图界面
+            $data['page'] = $this->view_memberList;
+            $data['menu'] = array('member','memberList');
+            $this->load->view('template.html',$data);
               
             }else{
                 $this->load->view('404.html');
@@ -249,7 +271,10 @@ class member extends default_Controller {
     function memberCard(){
         //获取所有会员卡
         $data['cards'] = $this->user_model->get_card_type();
-        $this->load->view('member/memberCard.html',$data);
+          //视图界面
+            $data['page'] = $this->view_memberCard;
+            $data['menu'] = array('member','memberCard');
+            $this->load->view('template.html',$data);
     }
 
     //会员卡管理-会员卡详情
@@ -261,7 +286,10 @@ class member extends default_Controller {
             //获取会员卡详情
             $data['card'] = $this->user_model->get_cardinfo($id);
             $data['id'] = $id;
-            $this->load->view('member/memberCardDetail.html',$data);
+            //视图界面
+            $data['page'] = $this->view_memberCardDetail;
+            $data['menu'] = array('member','memberCard');
+            $this->load->view('template.html',$data);
         }
     }
     //会员卡编辑处理
@@ -315,7 +343,10 @@ class member extends default_Controller {
 
     //会员卡管理-添加会员卡
     function memberCardAdd(){
-        $this->load->view('member/memberCardAdd.html');
+ 
+            $data['page'] = $this->view_memberCardAdd;
+            $data['menu'] = array('member','memberCard');
+            $this->load->view('template.html',$data);
     }
 
     //会员卡新增操作

@@ -11,10 +11,9 @@ class default_Controller extends CI_Controller
                 '2'=>array('id'=>'2','name'=>'商场设置'),
                 '3'=>array('id'=>'3','name'=>'店铺管理'),
                 '4'=>array('id'=>'4','name'=>'电商管理'),
-                '5'=>array('id'=>'5','name'=>'电子劵'),
+                '5'=>array('id'=>'5','name'=>'卡卷管理'),
                 '6'=>array('id'=>'6','name'=>'主页模块'),
-                '7'=>array('id'=>'7','name'=>'卡卷管理'),
-                '8'=>array('id'=>'8','name'=>'会员管理'),
+                '7'=>array('id'=>'7','name'=>'会员管理'),
     );
 	function __construct()
 	{
