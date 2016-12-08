@@ -28,8 +28,8 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理
-            <a style="font-size:16px" href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">业态管理</a> </div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理 <small> > 
+            <a style="font-size:16px" href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">业态管理</a></small> </div>
         </div>
     </div>
 </div>
@@ -61,11 +61,11 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="goodsBatch" class="am-form-label am-u-sm-4">一级业态:</label>
                         <div class="am-u-sm-8">
-                        <select id="goodsBatch" name="goodsBatch">
+                        <select id="goodsBatch" name="gid">
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1">全部</option>
-                            <option value="option2">运动男装</option>
-                            <option value="option2">运动女装</option>
+                            <?php foreach($level as $v):?>
+                            <option value="<?php echo $v['id'];?>"><?php echo $v['type_name'];?></option>
+                             <?php endforeach;?>
                         </select>
                         </div>
                     </div>
@@ -74,16 +74,16 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">业态列表(注意：仅允许对一级业态设置颜色) 复制猫酷业态</div>
+                    <!-- <div class="widget-title  am-cf">业态列表(注意：仅允许对一级业态设置颜色) 复制猫酷业态</div> -->
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary"><a href="java
+                      <!--           <button type="button" class="am-btn am-btn-default am-btn-secondary"><a href="java
                                 :;"><span class="am-icon-tags"></span> 复制宏帆业态</a></button>
-                                <button type="button" class="am-btn am-btn-default am-btn-warning"><a href="javascript:;"><span class="am-icon-gear"></span> 配置[全部]ICON</a></button>
+                                <button type="button" class="am-btn am-btn-default am-btn-warning"><a href="javascript:;"><span class="am-icon-gear"></span> 配置[全部]ICON</a></button> -->
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
@@ -94,10 +94,10 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
+                                    <!-- <th class="table-check"><input type="checkbox"></th> -->
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">父代码 </th>
-                                    <th class="shop_id">[业态代码]名称 </th>
+                                    <th class="shop_id">名称 </th>
                                     <th class="shop_name">图标 </th>
                                     <th class="shop_type">排序 </th>
                                     <th class="shop_yetai">创建时间 </th>
@@ -106,165 +106,57 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php if(!empty($store)):?>
+                                <?php foreach($store as $val):?>
                                 <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">3182</td>
-                                    <td class="am-text-middle">--</td>
-                                    <td class="am-text-middle">[100]运动男装</td>
+                                    <!-- <td class="am-text-middle"><input type="checkbox"></td> -->
+                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
+                                    <td class="am-text-middle"><?php if($val['gid'] == '0'){echo "--";}else{echo $val['gid'];}?></td>
+                                    <td class="am-text-middle"><?php echo $val['type_name'];?></td>
                                     <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
+                                    <?php if(!empty($val['icon'])):?>
+                                        <img src="<?php echo $val['icon'];?>" class="am-img-responsive" alt="<?php echo $val['type_name'];?>"/>
+                                    <?php else:?>
+                                    <?php endif;?>
                                     </td>
-                                    <td class="am-text-middle">0</td>
-                                    <td class="am-text-middle">2015-09-08 11:18:16</td>
+                                    <td class="am-text-middle"><?php echo $val['sort'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="am-dropdown" data-am-dropdown>
                                             <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
                                             <ul class="am-dropdown-content">
                                                 <li><a href="#">正常</a></li>
                                                 <li><a href="#">冻结</a></li>
-                                                 <li><a href="#">删除</a></li>
+                                                <li><a href="#">删除</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">
+                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai/'.$val['id'];?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">3182</td>
-                                    <td class="am-text-middle">--</td>
-                                    <td class="am-text-middle">[100]运动男装</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                    </td>
-                                    <td class="am-text-middle">0</td>
-                                    <td class="am-text-middle">2015-09-08 11:18:16</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">正常</a></li>
-                                                <li><a href="#">冻结</a></li>
-                                                 <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">3182</td>
-                                    <td class="am-text-middle">--</td>
-                                    <td class="am-text-middle">[100]运动男装</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                    </td>
-                                    <td class="am-text-middle">0</td>
-                                    <td class="am-text-middle">2015-09-08 11:18:16</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">正常</a></li>
-                                                <li><a href="#">冻结</a></li>
-                                                 <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">3182</td>
-                                    <td class="am-text-middle">--</td>
-                                    <td class="am-text-middle">[100]运动男装</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                    </td>
-                                    <td class="am-text-middle">0</td>
-                                    <td class="am-text-middle">2015-09-08 11:18:16</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">正常</a></li>
-                                                <li><a href="#">冻结</a></li>
-                                                 <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">3182</td>
-                                    <td class="am-text-middle">--</td>
-                                    <td class="am-text-middle">[100]运动男装</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                    </td>
-                                    <td class="am-text-middle">0</td>
-                                    <td class="am-text-middle">2015-09-08 11:18:16</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">正常</a></li>
-                                                <li><a href="#">冻结</a></li>
-                                                 <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <?php endforeach;?>
+                            <?php else:?>
+                                <th colspan="9" style="text-align: center;"> 暂无内容！</th>
+                            <?php endif;?>
+         
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
                     <div class="am-u-lg-12 am-cf">
                         <div class="am-fl">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
+                          <?php echo $pages;?>
                         </div>
+                        <?php if(!empty($pages)):?>
                         <div class="am-fl">
-                            <p>共112条数据，共12页</p>
+                            <p>共 <?php echo $total_rows;?>条数据，共<?php echo ceil($total_rows/$per_page);?>页</p>
                         </div>
+                        <?php endif;?>
                     </div>
                 </div>
             </div>

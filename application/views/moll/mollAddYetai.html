@@ -46,8 +46,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理 &nbsp;&nbsp;<a style="font-size:16px;" href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">业态配置</a>
-            <small><a href="<?php echo site_url().'/moll/moll/mollAddYetai';?>">新增业态</a></small>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理 <small> > <a style="font-size:18px;" href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">业态管理</a> >
+           新增业态</small>
             
             </div>
             
@@ -57,7 +57,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/moll/moll/add_mollYetai');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">新增业态</div>
@@ -66,69 +66,40 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                              <div class="am-form-group relative">
                                 <label for="oneType" >父业态 <span class="am-icon-info-circle"></span><span class="red">*</span>：</label>
-                                <select id="oneType" required>
+                                <select id="oneType" name='gid' required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">--</option>
-                                    <option value="option2">百货</option>
-                                    <option value="option2">配套服务</option>
-                                    <option value="option2">超市/便利店</option>
-                                    <option value="option2">数码音像</option>
-                                    <option value="option2">家居生活</option>
-                                    <option value="option2">儿童</option>
-                                    <option value="option2">休闲娱乐</option>
-                                    <option value="option2">餐饮</option>
-                                    <option value="option2">饰品</option>
-                                    <option value="option2">药品/护理/保健</option>
-                                    <option value="option2">鞋包</option>
-                                    <option value="option2">服装</option>
-                                    <option value="option2">运动男装</option>
-
+                                    <option value="0">--</option>
+                                    <?php foreach($store as $val):?>
+                                    <option value="<?php echo $val['id'];?>"><?php echo $val['type_name'];?></option>
+                                    <?php endforeach;?>
                                 </select>
-                                <span class="absolute">父业态新增后不能修改</span>
+                                <!-- <span class="absolute">父业态新增后不能修改</span> -->
                             </div>
-                             <div class="am-form-group relative">
-                                <label for="oneType" >所属品类：</label>
-                                <select id="oneType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1">购物</option>
-                                    <option value="option2">餐饮</option>
-                                    <option value="option2">休闲娱乐</option>
-                                    <option value="option2">儿童</option>
-                                    <option value="option2">配套服务</option>
-
-                                </select>
-                            </div>
-                            
+                      
                             <div class="am-form-group">
                                 <label for="englishName">业态名称：<span class="red">*</span>：</label>
-                                 <input type="text" name="" required />
+                                 <input type="text" name="type_name" required />
                             </div>
                             <div class="am-form-group ">
-                                <label for="user-weibo" class="am-form-label">商家图片<span class="red">*</span>：</label>
+                                <label for="user-weibo" class="am-form-label">ICON<span class="red">*</span>：</label>
                                 <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                                     <div class="wx_type_img">
-                                         <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                         <input type="file" id="imgUpload" name="icon" onchange="previewImage(this)" class="upload-add" multiple="multiple" >
                                           <!-- 图片实时预览 -->
                                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                          <button class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-cloud-upload"></i> 点击上传</button>
+                                        
                                     </div>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <button type="button" class="am-btn am-btn-warning am-btn-xs">注意!</button>
-                                        <span class="tpl-form-line-small-title">图片尺寸限制：不小于720*360，长宽比为2：1或者不小于1280*960，长宽比为4：3，视前端效果来定；图片格式支持：PNG、JPG、JPEG；最大支持4M</span> 
+                                    <span class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</span> 
                                 </div> 
                             </div>
-                            
                             <div class="am-form-group">
                                 <label for="englishName">颜色：<span class="red">*</span>：</label>
-                                 <input type="color" name="" required />
+                                 <input type="color" name="icon_color" required />
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">显示顺序<span class="red">*</span>：</label>
-                                 <input type="number" name="" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">积分比例：<span class="red">*</span>：</label>
-                                 <input type="number" name="" required />
+                                 <input type="number" name="sort" value='0' required />
                             </div>
                         </div>
                     </div>
