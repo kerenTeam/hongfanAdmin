@@ -22,7 +22,7 @@ color: black;
                 <div class="tpl-user-card-title">
                     新增权限
                 </div>
-                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' >
+                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
                     <div class="am-form-group am-cf">
                         <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
                         <div class="am-u-sm-9">
@@ -33,7 +33,7 @@ color: black;
                     <div class="am-form-group am-cf">
                         <label for="user-phone" class="am-u-sm-3 am-form-label black" required>权限勾选:</label>
                         <div class="am-u-sm-9">
-                            <select multiple class="firstLimit black" data-am-selected="{maxHeight:200}" style="display: none;" name="group_permission[]">
+                            <select multiple class="firstLimit black" required data-am-selected="{maxHeight:200}" style="display: none;" name="group_permission[]">
                                 <optgroup label="通用">
                                     <?php foreach($plate as $val):?>
                                     <option value="<?php echo $val['id']?>"><?php echo $val['name']?></option>
@@ -87,11 +87,11 @@ color: black;
                                             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
                                         </div>
                                         <div class="am-modal-bd">
-                                            <form action="<?php echo site_url('/systemSet/systemSet/edit_member_group');?>" method="post" class="am-form tpl-form-line-form" enctype="multipart/form-data" >
+                                            <form action="<?php echo site_url('/systemSet/systemSet/edit_member_group');?>"  method="post" class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
                                                <div class="am-form-group am-cf">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">权限名</label>
                                                     <div class="am-u-sm-9">
-                                                        <input type="text" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" name='group_name' value="<?php echo $v['group_name'];?>" required>
+                                                        <input type="text" class="tpl-form-input" id="controlname" placeholder="请输入权限名" minlength="2" name='group_name' value="<?php echo $v['group_name'];?>" required>
                                                         <small class="black">请填写文字至少2字。</small>
                                                     </div>
                                                 </div>
@@ -100,7 +100,7 @@ color: black;
                                                 <div class="am-form-group am-cf">
                                                     <label for="user-phone" class="am-u-sm-3 am-form-label" required>权限勾选:</label>
                                                     <div class="am-u-sm-9">
-                                                        <select multiple class="firstLimit" data-am-selected="{maxHeight:200}" style="display: none;" name='group_permission[]'>
+                                                        <select multiple class="firstLimit" data-am-selected="{maxHeight:200}" style="display: none;" name='group_permission[]' required>
                                                             <optgroup label="通用">
                                                                 <?php foreach($plate as $val):?>
                                                                    <option value="<?php echo $val['id']?>" 
@@ -119,7 +119,7 @@ color: black;
                                                 <div class="am-form-group am-btn-group-xs am-block">
                                                     <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                                                     <input type="hidden" name="gid" value='<?php echo $v['gid'];?>'>
-                                                    <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                    <button type="submit" class="am-btn am-btn-danger" id="submit">提交</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -152,5 +152,14 @@ $('#'+firstLimit).css("display","block");
 }
 })
 })
+})
+
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
 })
 </script>
