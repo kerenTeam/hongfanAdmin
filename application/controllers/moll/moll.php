@@ -207,12 +207,62 @@ class moll extends default_Controller {
     }
     //业态搜索
     function search_store(){
-        if($_POST){
-            $state = $this->input->post('state');
-            $sear = $this->input->post('type_name');
-            $gid = $this->input->post('gid');
+        if($_GET){
+            $state = $_GET['state'];
+            $sear = $_GET['type_name'];
+            $gid = $_GET['gid'];
             $store = $this->moll_model->search($state,$sear,$gid);
-            var_dump($store);
+
+            $config['per_page'] = 10;
+            //获取页码
+            if(isset($_GET['per_page'])){  
+                $current_page = $_GET['per_page'];  
+            }else{
+                  $current_page = '0';  
+            }  
+            //配置
+            $config['base_url'] = site_url('/moll/moll/search_store?state='.$state.'&type_name='.$sear.'&gid='.$gid);
+            //分页配置
+            $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+            $config['full_tag_close'] = '</ul>';
+            $config['first_tag_open'] = '<li>';
+            $config['first_tag_close'] = '</li>';
+            $config['prev_tag_open'] = '<li>';
+            $config['prev_tag_close'] = '</li>';
+            $config['next_tag_open'] = '<li>';
+            $config['next_tag_close'] = '</li>';
+            $config['cur_tag_open'] = '<li class="am-active"><a>';
+            $config['cur_tag_close'] = '</a></li>';
+            $config['last_tag_open'] = '<li>';
+            $config['last_tag_close'] = '</li>';
+            $config['num_tag_open'] = '<li>';
+            $config['num_tag_close'] = '</li>';
+
+            $config['first_link']= '首页';
+            $config['next_link']= '下一页';
+            $config['prev_link']= '上一页';
+            $config['last_link']= '末页';
+            $config['num_links'] = 2;
+            $config['total_rows'] = count($store);
+            $config['page_query_string'] = TRUE;  
+
+             //分页数据
+            $listpage = $this->moll_model->search_page($state,$sear,$gid,$config['per_page'],$current_page);
+          
+
+            $this->load->library('pagination');//加载ci pagination类
+            $this->pagination->initialize($config);
+            
+            $data['pages'] = $this->pagination->create_links();
+            $data['total_rows'] = $config['total_rows'];
+            $data['per_page'] = $config['per_page'];
+            $data['store'] = $listpage;
+             //返回顶级业态
+             $data['level'] = $this->moll_model->get_store('0');
+             // 视图
+             $data['page'] = $this->view_mollyetaiList;
+             $data['menu'] = array('moll','mollyetaiList');
+             $this->load->view('template.html',$data);
         }else{
             $this->load->view('404.html');
         }
