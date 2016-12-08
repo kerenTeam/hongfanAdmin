@@ -55,6 +55,24 @@ class moll_model extends CI_Model
 		$where['id'] = $id;
 		return $this->db->where($where)->delete($this->stote_type);
 	}
+	//搜索业态
+	function search($state,$type_name,$gid){
+		if(!empty($state) && empty($type_name) && empty($gid)){
+			if($state == 2){
+				$a = '2';
+			}else{
+				$a = "and state = '$state'";
+			}
+		}
+		return $a;
+		// if(!empty($type_name)){
+		// 	$type_name = "and type_name like '%$type_name%'";
+		// }
+		// if(!empty($gid)){
+		// 	$gid = "and gid = '$gid'";
+		// }
+		//$sql = "select * from $this->stote where "
+	}
 
 	//商场详情
 	function get_marketinfo(){

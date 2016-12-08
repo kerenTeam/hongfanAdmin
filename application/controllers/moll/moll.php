@@ -205,6 +205,18 @@ class moll extends default_Controller {
             }
         }
     }
+    //业态搜索
+    function search_store(){
+        if($_POST){
+            $state = $this->input->post('state');
+            $sear = $this->input->post('type_name');
+            $gid = $this->input->post('gid');
+            $store = $this->moll_model->search($state,$sear,$gid);
+            var_dump($store);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 
     //楼层信息
     function mollFloorInfo(){
