@@ -4,6 +4,7 @@
     <script src="assets/js/echarts.min.js"></script>
 
  <!-- 菜单 -->
+ <?php if(empty($menu)){$menu = array('index','index');}?>
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
         <a href="<?php echo site_url().'/admin';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
@@ -24,6 +25,11 @@
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/systemSet/systemSet';?>" <?php if($menu[1] == 'systemSet'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 管理员账号管理
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/systemSet/systemSet/bannerList';?>" <?php if($menu[1] == 'banner'){echo "class='sub-active'";}?>>
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> APP Banner管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
@@ -89,110 +95,74 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'store'){echo 'active';}?>">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 电商管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'store'){echo "style='display:block;'";}?>>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>">
+                <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" <?php if($menu[1] == 'storeGoodsList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 
                     商品列表
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>">
+                <a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" <?php if($menu[1] == 'storeGoodsSort'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品分类
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeOrderList';?>">
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>" <?php if($menu[1] == 'storeOrderList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>">
+                <a href="<?php echo site_url().'/store/store/storeDeliveryList';?>" <?php if($menu[1] == 'storeDeliveryList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 快递管理
                 </a>
             </li>
         </ul>
     </li> 
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-paper-plane sidebar-nav-link-logo"></i> Banner管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> Banner列表
-                </a>
-            </li>
 
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/banner/banner/addBanner';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增Banner
-                </a>
-            </li>
-        </ul>
-    </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'member'){echo 'active';}?>">
             <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'member'){echo 'style="display:block;"';}?>>
           <!--   <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/member/member/memberGroup';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
                 </a>
             </li> -->
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                <a href="<?php echo site_url().'/member/member/addMember';?>" <?php if($menu[1] == 'addMember'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
                 </a>
             </li>
 
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                <a href="<?php echo site_url().'/member/member/memberList';?>" <?php if($menu[1] == 'memberList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberCard';?>">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>" <?php if($menu[1] == 'memberCard'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
                 </a>
             </li>
         </ul>
     </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 电子券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增电子券
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/electronic/electronic';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券列表
-                </a>
-            </li>
-        </ul>
-    </li>
+   
      <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'localLife'){ echo 'active';}?>">
             <i class="am-icon-tag sidebar-nav-link-logo"></i> 主页模块
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'localLife'){ echo "style='display:block;'";}?>>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
+                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>" <?php if($menu[1] == 'service'){ echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 本地生活
                 </a>
             </li>
@@ -247,22 +217,22 @@
 
 
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'electronic'){ echo 'active';}?>">
+            <i class="am-icon-credit-card sidebar-nav-link-logo"></i> 卡券管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'electronic'){echo "style='display:block';";}?>>
             <li class="sidebar-nav-link">
-                <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                <a href="<?php echo site_url().'/electronic/electronic/electronicList';?>" <?php if($menu[1] == 'electronicList'){echo "class='sub-active'";}?>>
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券列表
                 </a>
             </li>
 
-            <li class="sidebar-nav-link">
+           <!--  <li class="sidebar-nav-link">
                 <a href="table-list-img.html">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
                 </a>
-            </li>
+            </li> -->
         </ul>
     </li>
 </ul>

@@ -6,6 +6,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * */
 require_once(APPPATH.'controllers/default_Controller.php');
 class localLife extends default_Controller {
+    //本地生活 分类列表
+    public $view_localLifeList = "module/localLife/localLifeList.html";
+    //本地服务 信息列表、
+    public $view_serviceList = "module/localLife/serviceList.html";
+    //本地服务 信息详情
+    public $view_serviceInfo = "module/localLife/serviceInfo.html";
+
 
     function __construct()
     {
@@ -27,7 +34,10 @@ class localLife extends default_Controller {
     {
         //获取本地列表
         $data['cates'] = $this->module_model->get_cates('本地生活');
-        $this->load->view('module/localLife/localLifeList.html',$data);
+        //视图界面
+        $data['page'] = $this->view_localLifeList;
+        $data['menu'] = array('localLife','service');
+        $this->load->view('template.html',$data);
     }
     //新增分类操作
     function add_cates(){
@@ -178,9 +188,11 @@ class localLife extends default_Controller {
 
 				$this->load->library('pagination');//加载ci pagination类
 				$this->pagination->initialize($config);
-				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'page' => $this->pagination->create_links(),'type'=>$type);
-				
-				$this->load->view('module/localLife/serviceList.html',$data);
+				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
+				//视图
+                $data['page'] = $this->view_serviceList;
+                $data['menu'] = array('localLife','service');
+                $this->load->view('template.html',$data);
 			}
         }
     }
@@ -265,8 +277,11 @@ class localLife extends default_Controller {
     		}
 			$this->load->library('pagination');//加载ci pagination类
 			$this->pagination->initialize($config);
-    		$data = array('id'=>$cate,'typeid'=>$typeid,'name'=>'搜索结果','lists'=>$listpage,'page' => $this->pagination->create_links(),'type'=>$type,'catename'=>$cates['name']);
-    		$this->load->view('module/localLife/serviceList.html',$data);
+    		$data = array('id'=>$cate,'typeid'=>$typeid,'name'=>'搜索结果','lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type,'catename'=>$cates['name']);
+    		  //视图
+                $data['page'] = $this->view_serviceList;
+                $data['menu'] = array('localLife','service');
+                $this->load->view('template.html',$data);
 
     	}else{
     		$this->load->view('404.html');
@@ -305,7 +320,10 @@ class localLife extends default_Controller {
 					break;
 			}
 			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
-			$this->load->view('module/localLife/serviceInfo.html',$data);
+			//视图
+            $data['page'] = $this->view_serviceInfo;
+            $data['menu'] = array('localLife','service');
+            $this->load->view('template.html',$data);
 		}
     }
 	//删除本地服务信息

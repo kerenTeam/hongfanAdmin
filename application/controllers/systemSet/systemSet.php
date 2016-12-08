@@ -17,6 +17,12 @@ class systemSet extends default_Controller {
     public $view_other = "systemSet/other.html";
     //网站信息
     public $view_web_config = 'systemSet/webMessage.html';
+    //app banner
+    public $view_bannerList = "banner/bannerList.html";    
+    // banner 新增
+    public $view_addBanner = "banner/addBanner.html";  
+    // banner 编辑
+    public $view_editBanner = "banner/editBanner.html";
 
 
     function __construct()
@@ -118,6 +124,27 @@ class systemSet extends default_Controller {
                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
             }
         }
+    }
+
+
+     //banner列表
+    function bannerList(){
+
+        $data['page'] = $this->view_bannerList;
+        $data['menu'] = array('systemSet','banner');
+        $this->load->view('template.html',$data);
+    }
+    //新增banner
+    function addBanner(){
+         $data['page'] = $this->view_addBanner;
+        $data['menu'] = array('systemSet','banner');
+        $this->load->view('template.html',$data);
+    }
+    //编辑banner
+    function editBanner(){
+         $data['page'] = $this->view_editBanner;
+        $data['menu'] = array('systemSet','banner');
+        $this->load->view('template.html',$data);
     }
 }
 
