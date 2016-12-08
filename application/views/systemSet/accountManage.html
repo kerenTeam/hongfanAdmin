@@ -1,22 +1,27 @@
 <style type="text/css">
     td img{
-        width: 150px;
-        height: 150px;
+        width: 100px;
+        height: 100px;
     }
     .deleteImg{
         display:inline-block;
-        background: #d15145;
         width:60px;
         height:25px;
         line-height: 25px;
         text-align: center;
-        color: #ffffff;
+        color: #666;
         font-size: 1.2rem;
     }
      .clickUp{
         display: inline-block;
         float: left;
-        margin-left: 100px;
+        margin-left: 80px;
+        width:100px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
     }
 
  .preview{
@@ -146,24 +151,13 @@
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员权限 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select id="manageBrand" name="manageBrand" multiple="multiple" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                            <option value="">输入查找/选择</option>
-                                            <option value="所有模块">所有模块</option>
-                                            <option value="系统设置">系统设置</option>
-                                            <option value="商场设置">商场设置</option>
-                                            <option value="店铺管理">店铺管理</option>
-                                            <option value="电商管理">电商管理</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">管理员头像 <span class="red">*</span></label>
                                          <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp"><i class="am-icon-cloud-upload"></i> 选择图片</span>
                                             </div>
                                             <span class="deleteImg am-text-center"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>
@@ -186,7 +180,6 @@
                                     <th class="shop_id">姓名</th>
                                     <th class="shop_name">管理员帐户名 </th>
                                     <th class="shop_type">管理员类型 </th>
-                                    <th class="shop_type">管理员权限 </th>
                                     <th class="shop_type">管理员头像 </th>
                                     <th>操作</th>
                                 </tr>
@@ -197,7 +190,6 @@
                                     <td class="am-text-middle">王东</td>
                                     <td class="am-text-middle">wangdongTest</td>
                                     <td class="am-text-middle">普通管理员</td>
-                                    <td class="am-text-middle">电商管理</td>
                                     <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -215,7 +207,6 @@
                                     <td class="am-text-middle">王东</td>
                                     <td class="am-text-middle">wangdongTest</td>
                                     <td class="am-text-middle">普通管理员</td>
-                                    <td class="am-text-middle">电商管理</td>
                                     <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -233,7 +224,6 @@
                                     <td class="am-text-middle">王东</td>
                                     <td class="am-text-middle">wangdongTest</td>
                                     <td class="am-text-middle">普通管理员</td>
-                                    <td class="am-text-middle">电商管理</td>
                                     <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -251,7 +241,6 @@
                                     <td class="am-text-middle">王东</td>
                                     <td class="am-text-middle">wangdongTest</td>
                                     <td class="am-text-middle">普通管理员</td>
-                                    <td class="am-text-middle">电商管理</td>
                                     <td class="am-text-middle"><img src="assets/img/a5.png"></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -271,7 +260,7 @@
                     <!--编辑账号模态框开始-->
                     <div class="am-modal am-modal-confirm" tabindex="-1" id="editAccount">
                         <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增管理员</div>
+                            <div class="am-modal-hd">编辑管理员</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
@@ -304,24 +293,13 @@
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员权限 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select id="manageBrand" name="manageBrand" multiple="multiple" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                            <option value="">输入查找/选择</option>
-                                            <option value="所有模块">所有模块</option>
-                                            <option value="系统设置">系统设置</option>
-                                            <option value="商场设置">商场设置</option>
-                                            <option value="店铺管理">店铺管理</option>
-                                            <option value="电商管理">电商管理</option>
-                                        </select>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">管理员头像 <span class="red">*</span></label>
                                          <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <span class="clickUp"><i class="am-icon-cloud-upload"></i> 选择图片</span>
                                             </div>
                                             <span class="deleteImg am-text-center"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>

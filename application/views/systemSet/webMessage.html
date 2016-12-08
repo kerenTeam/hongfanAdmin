@@ -39,7 +39,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">支付宝账号管理</a>
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">网站信息管理</a>
             <small></small></div>
         </div>
     </div>
@@ -103,7 +103,7 @@
                     </div>
                 </form> -->
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">支付账号列表</div>
+                    <div class="widget-title  am-cf" style="clear:both;">网站信息管理</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
@@ -178,14 +178,7 @@
                                 </div>
                                 <div id="market" class="am-panel-collapse am-collapse am-in">
                                     <div class="am-panel-bd">
-                                       <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action=''>
-		                                    <div class="am-form-group am-cf">
-		                                        <label class="am-u-sm-3 am-form-label"> <span class="red">*</span></label>
-		                                        <div class="am-u-sm-9">
-													<input type='hidden' name='type_name' value="" />	
-		                                            <input type="text" placeholder="请输入标题分隔符" name='name' value="_">
-		                                        </div>
-		                                    </div>		           
+                                       <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action=''>	           
 		                                    <div class="am-form-group am-cf">
 		                                        <label class="am-u-sm-3 am-form-label">Title(网站标题) <span class="red">*</span></label>
 		                                        <div class="am-u-sm-9">
@@ -206,32 +199,7 @@
 													<input type='hidden' name='type_name' value="" />	
 		                                            <input type="text" placeholder="请输入Meta Description(网页描述)" name='name' minlength="2" value="后台 管理">
 		                                        </div>
-		                                    </div>	
-		                                     <div class="am-form-group am-cf">
-		                                        <label class="am-u-sm-3 am-form-label">目录首页文件名</label>
-		                                        <div class="am-u-sm-9">
-													<input type='hidden' name='type_name' value="" />	
-		                                            <input type="text" placeholder="请输入目录首页文件名" name='name' minlength="2" value="index.php">
-		                                        </div>
-		                                    </div>
-		                                    <div class="am-form-group am-cf">
-		                                        <label class="am-u-sm-3 am-form-label">生成文件扩展名</label>
-		                                        <div class="am-u-sm-9">
-													<select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-						                                <option value="">输入查找/选择</option>
-						                                <option value="不限制">.htm</option>
-						                                <option value="商家促销">.html</option>
-						                                <option value="商家活动">.shtm</option>
-						                                <option value="商家活动">.shtml</option>
-						                            </select>
-		                                        </div>
-		                                    </div>	
-		                                    <div class="am-form-group am-cf">
-		                                        <label class="am-u-sm-3 am-form-label">404错误日志<span class="red">*</span></label>
-		                                        <div class="am-u-sm-9">
-		                                            <input type="radio" name='openlog' checked="checked">开启<input type="radio" name='openlog' >关闭
-		                                        </div>
-		                                    </div>		                
+		                                    </div>			                                           
 		                                    <div class="am-form-group am-btn-group-xs am-text-center">
 		                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 		                                        <button type="submit" class="am-btn am-btn-secondary">保存</button>
