@@ -60,10 +60,19 @@ class singleShop extends default_Controller {
     }
      //新增商品
     function goodsAdd(){
+        // var_dump($_SERVER['DOCUMENT_ROOT']);
+        // var_dump(dirname(__FILE__));
+        // var_dump(FCPATH);
+        // exit;
          $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       
         $this->load->view('template.html',$data);
     }
+    //新增商品操作
+
+
+
+
     //商家楼层关系
     function shopFloorRelation(){
          $data['page'] = $this->view_shopFloorRelation;

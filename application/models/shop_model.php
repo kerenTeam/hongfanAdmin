@@ -11,17 +11,17 @@ class shop_model extends CI_Model
     public $shop_store = "hf_shop_store";
     //业态表
     public $store_type = "hf_shop_store_type";
+    //商品表
+    public $goods = "hf_mall_goods";
     function __construct()
     {
         parent::__construct();
     }
 
-    //新增
-
-
-
-
-
+    //新增商品
+    function add_shop_goods($data){
+        return $this->db->insert($this->goods,$data);
+    }
 
     //获取所有店铺
     function shop_list(){
