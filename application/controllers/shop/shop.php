@@ -34,9 +34,19 @@ class shop extends default_Controller {
     //商家 列表主页
     function index()
     {  
+
          $data['page'] = $this->view_shopIndex;
          $data['menu'] = array('shop','shopList');
     	 $this->load->view('template.html',$data);
+    }
+    //返回列表信息
+    function return_shop_page(){
+        if($_POST){
+            $list = $this->shop_model->shop_list();
+            echo json_encode($list);
+        }else{
+            echo "2";
+        }
     }
 
     //商家状态修改

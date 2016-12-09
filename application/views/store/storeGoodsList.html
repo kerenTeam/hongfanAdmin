@@ -78,8 +78,19 @@ td.am-text-middle img{
                         <div class="am-u-sm-8">
                         <select id="goodsState" name="goodsState">
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1">上架</option>
-                            <option value="option2">下架</option>
+                            <option value="上架">上架</option>
+                            <option value="下架">下架</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsState" class="am-form-label am-u-sm-4">审核状态:</label>
+                        <div class="am-u-sm-8">
+                        <select id="goodsState" name="goodsState">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="待审核">待审核</option>
+                            <option value="通过审核">通过审核</option>
+                            <option value="未审核">未审核</option>
                         </select>
                         </div>
                     </div>
@@ -118,9 +129,9 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
@@ -130,229 +141,32 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">会员 </th>
+                                    <th class="shop_type">所属店铺 </th>
                                     <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
-                                    <th class="shop_block">销量 </th>
-                                    <th class="shop_block">库存 </th>
-                                    <th class="shop_block">评论 </th>
-                                    <th class="shop_block">人气 </th>
+                                    <th class="shop_block">月销量 </th>
+                                    <th class="shop_block">库存 </th> 
                                     <th class="shop_block">货物批次 </th>
+                                    <th class="shop_block">审核状态 </th>                                 
                                     <th class="shop_block">商品状态</th>
+                                    <th class="shop_block">变更时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年春秋</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年春</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年上半季</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年下半季</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tbody id="storeGoodsList">
+                                
+
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
                     <div class="am-u-lg-12 am-cf">
-                        <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
+                        <div class="am-fr" id="paging_list">
+                            
                         </div>
                     </div>
                 </div>
@@ -361,3 +175,94 @@ td.am-text-middle img{
     </div>
 </div>
 </div>
+<script type="text/javascript">
+    //异步刷新的ajax请求
+    //测试数据
+    var listData = {};
+    $.ajax({
+        type:'post',
+        url:"<?php echo site_url('/shop/shop/return_shop_page')?>",
+        data: '',
+        success: function(result){
+            var res = eval(result);
+            var nums = 10; //每页出现的数量
+            var pages = Math.ceil(res.length/nums); //得到总页数
+            var last = curr*nums - 1;
+            last = last >= res.length ? (res.length-1) : last;
+            if(es.length){
+                listData="对不起，没有更多数据了！";
+            }else{
+               listData=template('goodsListModal',result); 
+            }
+            
+
+            //调用分页
+            laypage({
+                cont: 'paging_list',
+                pages: pages,
+                jump: function(obj){
+                    document.getElementById('storeGoodsList').innerHTML = listData;
+                }
+            })
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+</script>
+<script type="text/html" id="goodsListModal">
+  <% for(var i=0;i<result.length;i++) {%>
+    <tr>
+        <td class="am-text-middle"><% = result[i].goodsId%></td>
+        <td class="am-text-middle"><% = result[i].goodsName%></td>
+        <td class="am-text-middle">
+            <img src="<% = result[i].goodsImg%>" class="am-img-responsive" alt=""/>
+        </td>
+        <td class="am-text-middle"><% = result[i].goodsTypeSort%></td>
+        <td class="am-text-middle"><% = result[i].goodsShop%></td>
+        <td class="am-text-middle"><% = result[i].goodsPrice%></td>
+        <td class="am-text-middle"><% = result[i].goodsOrderNum%></td>
+        <td class="am-text-middle"><% = result[i].goodsSales%></td>
+        <td class="am-text-middle"><% = result[i].goodsRespority%></td>
+        <td class="am-text-middle"><% = result[i].goodsPici%></td>
+        <td class="am-text-middle">
+            <%if(result[i].goodsState==1) {%>
+                <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>通过审核 <span class="am-icon-caret-down"></span></button>
+            <%}else if(result[i].goodsState==2) { %>
+                <button class="am-btn am-btn-warning am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>通过审核 <span class="am-icon-caret-down"></span></button>
+            <%}else { %>
+                <button class="am-btn am-btn-danger am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>未通过 <span class="am-icon-caret-down"></span></button>
+            <% } %>
+            <ul class="am-dropdown-content">
+                <li><a href="#">待审核</a></li>
+                <li><a href="#">通过审核</a></li>
+                <li><a href="#">未通过</a></li>
+            </ul>
+        </td>
+        
+        <td class="am-text-middle">
+            <div class="am-dropdown" data-am-dropdown>
+                <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
+                <ul class="am-dropdown-content">
+                    <li><a href="#">上架</a></li>
+                    <li><a href="#">下架</a></li>
+                </ul>
+            </div>
+        </td>
+        <td class="am-text-middle">
+            <span>更新：2016-11-29 09:53:41</span><br />
+            <span>添加：2016-11-29 09:52:19</span>
+        </td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a href="<?php echo site_url().'/store/store/storeEditGoods';?>">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+                <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+  <% } %>
+</script>
