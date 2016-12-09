@@ -111,6 +111,20 @@ class store extends default_Controller {
         $data['menu'] = array('store','storeGoodsSort');
          $this->load->view('template.html',$data);
     }
+
+    //删除分类
+    function del_store_cate(){
+        if($_POST){
+            $id = $_POST['id'];
+            if($this->mallShop_model->del_store_cate($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
     //订单管理
     function storeOrderList(){
         $data['page'] = $this->view_storeOrderList;

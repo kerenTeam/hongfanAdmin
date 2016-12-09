@@ -25,6 +25,11 @@ class mallShop_model extends CI_Model
         $query = $this->db->where($where)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
+    //删除分类
+    function del_store_cate($id){
+        $where['catid'] = $id;
+        return $this->db->where($where)->delete($this->shop_cates);
+    }
 
 }
 
