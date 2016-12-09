@@ -16,7 +16,7 @@ class member_model extends CI_Model{
 
     //获取登陆用户信息
     function get_login_user($phone){
-        $sql = "select * FROM ".$this->member." where username='".$phone."'";
+        $sql = "select * FROM ".$this->member." where gid != 5 and username='".$phone."'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
