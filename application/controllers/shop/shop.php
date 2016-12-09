@@ -29,8 +29,6 @@ class shop extends default_Controller {
         }
         //model
         $this->load->model('shop_model');
-
-
     }
 
     //商家 列表主页
@@ -51,6 +49,49 @@ class shop extends default_Controller {
         }
     }
 
+    //商家状态修改
+    function edit_shop_state(){
+        if($_POST){
+            $id = $_POST['id'];
+            $action = $_POST['state'];
+            switch ($action) {
+                case '1':
+                    $data['state'] = '1';
+                    if($this->shop_model->edit_shop_state($id,$data)){
+                        echo "1";
+                    }else{
+                        echo "2";
+                    }
+                    break;
+                case '2':
+                    $data['state'] = '0';
+                    if($this->shop_model->edit_shop_state($id,$data)){
+                        echo "1";
+                    }else{
+                        echo "2";
+                    }
+                    break;
+                default:
+                        echo "2";
+                        break;
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //删除商家
+    function del_shop_store(){
+        if($_POST){
+            $id = $_POST['id'];
+            if($this->shop_model->del_shop_store($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
     //商家管理
     function shop_admin(){
