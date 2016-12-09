@@ -29,8 +29,6 @@ class shop extends default_Controller {
         }
         //model
         $this->load->model('shop_model');
-
-
     }
 
     //商家 列表主页

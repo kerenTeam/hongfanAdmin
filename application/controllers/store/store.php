@@ -29,26 +29,43 @@ class store extends default_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model('moll_model');
-        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-        $plateid = json_decode($plateid,true);
-        if(!empty($plateid)){
-            if(!in_array('0',$plateid) && !in_array('4',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
-            }
-        }
+        $this->load->model('mallShop_model');
+        // $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        // $plateid = json_decode($plateid,true);
+        // if(!empty($plateid)){
+        //     if(!in_array('0',$plateid) && !in_array('4',$plateid)){
+        //         echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+        //     }
+        // }
     }
     //商品列表
     function storeGoodsList(){
-        $data['page'] = $this->view_storeGoodsList;
-        $data['menu'] = array('store','storeGoodsList');
+         $data['page'] = $this->view_storeGoodsList;
+         $data['menu'] = array('store','storeGoodsList');
     	 $this->load->view('template.html',$data);
+    }
+    //返回商品列表
+    function storeGoods_page(){
+        if($_POST){
+
+        }else{
+            echo "2";
+        }
     }
     //商品分类
     function storeGoodsSort(){
         $data['page'] = $this->view_storeGoodsSort;
         $data['menu'] = array('store','storeGoodsSort');
          $this->load->view('template.html',$data);
+    }
+    //返回商品分类列表
+    function goods_cates(){
+        if($_POST){
+            $catelist = $this->mallShop_model->get_goods_cates();
+            echo json_encode($catelist);
+        }else{
+            echo "2";
+        }
     }
     //商品的模块设置
     function storeModuleSet(){
@@ -71,9 +88,22 @@ class store extends default_Controller {
 
     //添加分类
     function storeAddSort(){
-        $data['page'] = $this->view_storeAddSort;
-        $data['menu'] = array('store','storeGoodsSort');
+        //获取顶级分类
+         $data['cates'] = $this->mallShop_model->get_cate_level();
+
+         $data['page'] = $this->view_storeAddSort;
+         $data['menu'] = array('store','storeGoodsSort');
          $this->load->view('template.html',$data);
+    }
+    //添加分类操作
+    function add_store_cate(){
+        if($_POST){
+            $data = $this->input->post();
+            var_dump($data);
+            var_dump($_FILES);
+        }else{
+            $this->load->view('404.html');
+        }
     }
     //编辑分类
     function storeEditSort(){
