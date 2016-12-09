@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
- *  商家管理
+ *  商城管理
  *
  * */
 require_once(APPPATH.'controllers/default_Controller.php');

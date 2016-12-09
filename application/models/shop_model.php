@@ -1,11 +1,13 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
-*     商家管理 
+*     商城管理 
 */
 class shop_model extends CI_Model
 {
-    //商家表
+    //商家用户表
+    public $member = "hf_user_member";
+    //店铺表
     public $shop_store = "hf_shop_store";
     //业态表
     public $store_type = "hf_shop_store_type";
@@ -14,17 +16,24 @@ class shop_model extends CI_Model
         parent::__construct();
     }
 
-    //获取所有商家
+    //新增
+
+
+
+
+
+
+    //获取所有店铺
     function shop_list(){
         $query = $this->db->order_by('create_time','desc')->get($this->shop_store);
         return $query->result_array();
     }
-    //修改商家状态
+    //修改店铺状态
     function edit_shop_state($id,$data){
         $where['store_id'] = $id;
         return $this->db->where($where)->update($this->shop_store,$data);
     }
-    //删除商家
+    //删除店铺
     function del_shop_store($id){
         $where['store_id'] = $id;
         return $this->db->where($where)->delete($this->shop_store);

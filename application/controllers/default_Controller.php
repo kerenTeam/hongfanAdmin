@@ -29,12 +29,7 @@ class default_Controller extends CI_Controller
 			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/login/index')."';</script>";
 			exit;
 		}
-
-
 	}
-
-
-
 }
 
 

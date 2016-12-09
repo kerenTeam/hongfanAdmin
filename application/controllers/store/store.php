@@ -47,7 +47,7 @@ class store extends default_Controller {
     //返回商品列表
     function storeGoods_page(){
         if($_POST){
-
+            
         }else{
             echo "2";
         }
