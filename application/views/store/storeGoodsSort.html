@@ -23,6 +23,9 @@ td.am-text-middle img{
     border: 1px solid #ff0000 !important;
     color: #ff0000 !important;
 }
+.refresh{
+    cursor: pointer;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -64,7 +67,7 @@ td.am-text-middle img{
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                   <!--   <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -189,7 +192,13 @@ td.am-text-middle img{
     });
 }
 $(document).ready(function(){
+    //加载列表数数据
     getList();
+    //刷新页面
+    $('.refresh').click(function(){
+        alert("1");
+        getList();
+    });
 })
 </script>
 <script type="text/html" id="storeSortModal">
