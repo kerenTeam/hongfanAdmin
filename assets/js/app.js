@@ -390,7 +390,8 @@ $('.sidebar-nav-sub-title').on('click', function() {
  //删除图片
 $(".deleteImg").click(function(){
     $(this).parent('div.father').siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    
+    $(this).parent('div.father').siblings('.wx_type_img').find('input').val("");
+    $(this).parent('div.father').siblings('.wx_type_img').find('input').files="";
 });
 
 //点击取消返回上一页

@@ -1,9 +1,5 @@
 <style type="text/css">
-#preview{
-        width:200px;
-    }
     #preview #imghead,#preview img{
-        width:100%;
         height:100%;
     }
         #preview{
@@ -86,7 +82,7 @@
                          
                                 <label for="user-weibo">ICON ：</label>
                                 <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="icon" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                     <input type="file" id="imgUpload" name="icon" onchange="previewImage(this)" class="upload-add">
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                        <br />
@@ -150,10 +146,5 @@
     history.go(-1);
   });
 
-  //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).siblings('.wx_type_img').find('img').remove();
-        
-    });
+  
 </script>

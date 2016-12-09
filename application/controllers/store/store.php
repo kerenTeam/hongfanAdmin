@@ -99,6 +99,7 @@ class store extends default_Controller {
     function add_store_cate(){
         if($_POST){
             $data = $this->input->post();
+
             if(!empty($_FILES['icon']['tmp_name'])){
                 $config['upload_path']      = 'upload/icon';
                 $config['allowed_types']    = 'jpg|png|jpeg';
