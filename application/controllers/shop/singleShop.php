@@ -1,52 +1,80 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /*
- *  商铺管理
+ *  商家管理
  *
  * */
+require_once(APPPATH.'controllers/default_Controller.php');
 
-class singleShop extends CI_Controller {
+class singleShop extends default_Controller {
+    //商家 列表主页
+    public $view_shopAdmin = "shop/shopAdmin.html";
+    //商家基础信息
+    public $view_shopBaseInfo = "shop/shopBaseInfo.html";
+    //商家简介
+    public $view_shopInfo = "shop/shopInfo.html";
+    //商品列表
+    public $view_goodsList = "shop/goodsList.html"; 
+    //商品详情
+    public $view_goodsDetail = "shop/goodsDetail.html"; 
+    //新增商品
+    public $view_goodsAdd = "shop/goodsAdd.html"; 
+    //商家楼层关系
+    public $view_shopFloorRelation = "shop/shopFloorRelation.html";
 
     function __construct()
     {
         parent::__construct();
-
     }
 
-    //商铺 列表主页
+    //商家 列表主页
     function shopAdmin()
-    {
-    	 $this->load->view('shop/shopAdmin.html');
+    {   //缓存商家id
+        $this->session->set_userdata('businessId',$this->session->users['user_id']);
+        $data['page'] = $this->view_shopAdmin;
+    	$this->load->view('template.html',$data);
     }
-    //商铺基础信息
+    //商家基础信息
     function shopBaseInfo(){
-    	$this->load->view('shop/shopBaseInfo.html');
+        $data['page'] = $this->view_shopBaseInfo;
+        $data['menu'] = array('shop','shopBaseInfo');       
+        $this->load->view('template.html',$data);
     }
-    //商铺简介
+    //商家简介
     function shopInfo(){
-        $this->load->view('shop/shopInfo.html');
+         $data['page'] = $this->view_shopInfo;
+        $data['menu'] = array('shop','shopInfo');       
+        $this->load->view('template.html',$data);
     }
      //商品列表
     function goodsList(){
-        $this->load->view('shop/goodsList.html');
+         $data['page'] = $this->view_goodsList;
+        $data['menu'] = array('shop','goodsList');       
+        $this->load->view('template.html',$data);
     }
      //商品详情
     function goodsDetail(){
-        $this->load->view('shop/goodsDetail.html');
+         $data['page'] = $this->view_goodsDetail;
+        $data['menu'] = array('shop','goodsList');       
+        $this->load->view('template.html',$data);
     }
      //新增商品
     function goodsAdd(){
-        $this->load->view('shop/goodsAdd.html');
+         $data['page'] = $this->view_goodsAdd;
+        $data['menu'] = array('shop','goodsList');       
+        $this->load->view('template.html',$data);
     }
-    //商铺楼层关系
+    //商家楼层关系
     function shopFloorRelation(){
-        $this->load->view('shop/shopFloorRelation.html');
+         $data['page'] = $this->view_shopFloorRelation;
+        $data['menu'] = array('shop','shopFloorRelation');       
+        $this->load->view('template.html',$data);
     }
-    //商铺评论管理
+    //商家评论管理
     function shopComment(){
         $this->load->view('shop/shopComment.html');
     }
-     //商铺订单管理
+     //商家订单管理
     function shopOrder(){
         $this->load->view('shop/shopOrder.html');
     }

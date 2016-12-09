@@ -39,15 +39,15 @@ class login extends CI_Controller {
                     //正确  缓存
                    $this->session->set_userdata('users',$user);
                     // 判断用户分组
-//                    switch ($user['group_Id']){
-//                        case 1:
+                   switch ($user['gid']){
+                       case 1:
                            redirect( site_url('admin/index') );
-//                            break;
-//                        case 2:
-//                            break;
-//                        case 3:
-//                            break;
-//                    }
+                           break;
+                       case 2:
+                           
+                           redirect( site_url('shop/singleShop/shopAdmin/') );
+                           break;
+                   }
                 }
             }
         }else{
