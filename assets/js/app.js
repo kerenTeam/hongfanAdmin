@@ -387,9 +387,14 @@ $('.sidebar-nav-sub-title').on('click', function() {
         .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 })
 
-         //删除图片
-        $(".deleteImg").click(function(){
-            $(this).parent('div.father').siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-            
-        });
-        
+ //删除图片
+$(".deleteImg").click(function(){
+    $(this).parent('div.father').siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    
+});
+
+//点击取消返回上一页
+$('#cancle').click(function(){
+    history.go(-1);
+});
+

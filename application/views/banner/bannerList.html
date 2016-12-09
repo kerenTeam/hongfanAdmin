@@ -40,11 +40,11 @@ h4.am-panel-title{
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
                         <div class="am-panel-group" id="accordion">
-                            <div class="am-panel am-panel-default">
+                            <div class="am-panel am-panel-default am-in">
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
                                         首页的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
                                     </h4>
                                 </div>
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
@@ -313,3 +313,14 @@ h4.am-panel-title{
 </div>
 </div>
 
+<script type="text/javascript">
+    //panel 面板的展开与收缩
+$('.am-panel-hd').click(function(){
+   if($('div.am-panel').hasClass('am-in')){
+        $(this).find('.am-panel-hd h4 span').className+='am-icon-chevron-up';
+    }else{
+        $(this).find('.am-panel-hd h4 span').removeClass('am-icon-chevron-up');
+    }
+})
+
+</script>
