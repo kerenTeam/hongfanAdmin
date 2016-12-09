@@ -19,11 +19,17 @@ class shop_model extends CI_Model
         $query = $this->db->order_by('create_time','desc')->get($this->shop_store);
         return $query->result_array();
     }
-    //分页
-    function shop_list_page($off,$page){
-        $query = $this->db->order_by('create_time','desc')->limit($off,$page)->get($this->shop_store);
-        return $query->result_array();
+    //修改商家状态
+    function edit_shop_state($id,$data){
+        $where['store_id'] = $id;
+        return $this->db->where($where)->update($this->shop_store,$data);
     }
+    //删除商家
+    function del_shop_store($id){
+        $where['store_id'] = $id;
+        return $this->db->where($where)->delete($this->shop_store);
+    }
+  
     //获取顶级业态
     function store_type_level(){
         $where['gid'] = '0';
