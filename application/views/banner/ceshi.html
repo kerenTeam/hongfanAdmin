@@ -1,18 +1,19 @@
 
 <div class="tpl-content-wrapper">
-<table id="biuuu_city_list"></table>
+<table id="biuuu_city_list">
+    
+</table>
 
 <div id="biuuu_city"></div>
 
 </div>
 <script src="assets/laypage/laypage.js"></script>
-<script src="assets/laypage/jquery-1.8.3.min.js"></script>
 <script>
 
 //测试数据
 $.ajax({
     type:'post',
-    url:"<?php echo site_url('/shop/shop/return_page')?>",
+    url:"<?php echo site_url('/shop/shop/return_shop_page')?>",
     data: '',
     success: function(result){
         var res = eval(result);

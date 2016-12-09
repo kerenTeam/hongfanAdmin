@@ -1,9 +1,9 @@
 <style type="text/css">
     #preview{
-        width:200px;
+        height:100px;
     }
     #preview #imghead,#preview img{
-        width:100%;
+
         height:100%;
     }
     #goodsComments .am-u-sm-12{
@@ -12,7 +12,7 @@
     .ampadding{
         margin-top:20px;
     } 
-    
+
 </style>
 
 <!-- 内容区域 -->
@@ -59,12 +59,12 @@
                         </div>
                          
                         <div class="am-form-group">
-                            <label for="englishName">商品品牌<span class="red">*</span>：</label>
-                            <input type="number" id="englishName" value="" required="required" />
+                            <label for="englishName">商品品牌：</label>
+                            <input type="number" id="englishName" value=""  />
                         </div>
                         
                         <div class="am-form-group">
-                            <label for="englishName">可选属性：</label>
+                            <label for="englishName">添加属性：</label>
                             <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                 <thead>
                                     <tr>
@@ -134,28 +134,18 @@
                                 </tbody>
                             </table>
                         </div> -->
-                         <div class="am-form-group">
+                        <div class="am-form-group">
+                            <label for="oneType">是否包邮：</label>
+                            <input type="radio" name="yes" value=""/>是
+                            <input type="radio" name="yes" value=""/>否
+                        </div>
+                        <div class="am-form-group">
                             <label for="oneType">货到付款：</label>
                             <select id="oneType" required="required">
                                 <option value="">-=请选择一项=-</option>
                                 <option value="option1">支持货到付款</option>
                                 <option value="option2">不支持货到付款</option>
                             </select>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">会员推荐产品<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>是
-                            <input type="radio" name="yes" value=""/>否
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">添加时间：<span class="red">*</span>：</label>
-                             <input type="text" name="" required="required" />
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">内容收费：<span class="red">*</span>：</label>
-                             <input type="text" name="" required="required" />
                         </div>
                         
                     </div>
@@ -164,51 +154,67 @@
                             <label>商品分类<span class="red">*</span>：</label>
                             <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value=>输入查找/选择</option>
-                                <option value="0">上装</option>
-                                <option value="1">下装</option>
-                                <option value="2">裙装</option>
+                                <option value="上装">上装</option>
+                                <option value="下装">下装</option>
+                                <option value="裙装">裙装</option>
                             </select>
                         </div>
                         <div class="am-form-group">
-                            <label for="oneType">商品级别<span class="red">*</span>：</label>
-                            <select id="oneType" required="required">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">一级 推荐商品</option>
-                                <option value="option2">二级</option>
-                                <option value="option3">三级</option>
-                                <option value="option2">四级</option>
-                                <option value="option3">五级</option>
-                            </select>
+                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
+                            <input type="radio" name="yes" value=""/>是
+                            <input type="radio" name="yes" value=""/>否
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
                             <input type="number"  id="respority" value="" required="required" />
                         </div>
-                        
                         <div class="am-form-group">
-                            <label for="englishName">会员名<span class="red">*</span>：</label>
-                            <input type="number" id="englishName" value="" required="required" />
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">信息状态：<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>通过
-                            <input type="radio" name="yes" value=""/>待审
-                            <input type="radio" name="yes" value=""/>拒绝
-                            <input type="radio" name="yes" value=""/>下架
-                            <input type="radio" name="yes" value=""/>删除
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">浏览次数：<span class="red">*</span>：</label>
-                             <input type="text" name="" />
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">内容模版：<span class="red">*</span>：</label>
-                             <select id="contentModal" required="required">
+                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
+                            <select id="oneType" required="required">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="option1">模板一</option>
-                                <option value="option2">模板二</option>
-                                <option value="option3">模板三</option>
+                                <option value="通过审核">通过审核</option>
+                                <option value="待审核">待审核</option>
+                                <option value="未通过">未通过</option>
                             </select>
+
+                        </div>
+                        <div class="am-form-group">
+                            <label for="englishName">商品状态：<span class="red">*</span>：</label>
+                            <input type="radio" name="yes" value=""/>上架
+                            <input type="radio" name="yes" value=""/>下架
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3">商品图片：</label>
+                            <div class="am-u-sm-9">
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                            </div>
+                            <div class="am-text-center father">
+                              
+                              <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
+                          </div> 
                         </div>
                         <div class="am-form-group">
                             <label for="englishName">商品信息详情<span class="red">*</span>：</label>
