@@ -30,7 +30,7 @@ $start = isset($_GET['start']) ? htmlspecialchars($_GET['start']) : 0;
 $end = $start + $size;
 
 /* 获取文件列表 */
-$path = $_SERVER['DOCUMENT_ROOT'] . (substr($path, 0, 1) == "/" ? "":"/") . $path;
+$path =   $_SERVER["SCRIPT_NAME"].$path;
 $files = getfiles($path, $allowFiles);
 if (!count($files)) {
     return json_encode(array(
