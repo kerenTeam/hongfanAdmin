@@ -441,9 +441,9 @@
   });
     //删除图片
     $(".deleteImg").click(function(){
-        
         $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        alert(1);
+        $(this).siblings('.wx_type_img').find('input').val("");
+        $(this).siblings('.wx_type_img').find('input').files="";
     });
     //点击取消返回上一页
   $('#cancle').click(function(){
