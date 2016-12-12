@@ -1,4 +1,3 @@
-<?php $this->load->view('common.html');?>
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
@@ -31,104 +30,7 @@ td.am-text-middle img{
     width:80px;
 }
 </style>
-<!-- 菜单 -->
-<ul class="sidebar-nav">
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/shop/singleShop/shopAdmin';?>">
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title active">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
-            <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopBaseInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopInfo';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopFloorRelation';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" class="sub-active">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopComment';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
-                </a>
-            </li>
-        </ul>
-    </li>
-     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 促销管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopAddSales';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增促销
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopSalesList';?>" >
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopCheckSales';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 促销验证
-                </a>
-            </li>
-        </ul>
-    </li>
-     <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增活动
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动列表
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 注销
-        </a>
-    </li>
-</ul>
-</div>
+
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -402,39 +304,9 @@ td.am-text-middle img{
     </div>
 </div>
 </div>
-</div>
-</div>
-<!--关闭交易的提示框-->
-<!--  <div class="am-modal am-modal-confirm" tabindex="-1" id="closeTrade">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">关闭交易</div>
-        <div class="am-modal-bd">
-            <p class="black">亲,确定要关闭交易吗？此操作不可撤销奥</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn" data-am-modal-confirm>确认</span>
-        </div>
-    </div>
-</div> -->
 
-<!--确认完成的提示框-->
- <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="sureComplish">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">确认完成</div>
-        <div class="am-modal-bd">
-            <p class="black">亲您确定已收到货，交易完成吗？此操作不可撤销</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn" data-am-modal-confirm>确认</span>
-        </div>
-    </div>
-</div> -->
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
-<script src="assets/js/app.js"></script>
+
 <script type="text/javascript">
   $(function() {
     var startDate = new Date(2014, 11, 20);
@@ -465,5 +337,3 @@ td.am-text-middle img{
       });
   });
 </script>
-</body>
-</html>

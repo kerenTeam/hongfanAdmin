@@ -14,6 +14,7 @@ class admin extends default_Controller
 	}
 
 	function index(){
+        unset($_SESSION['businessId']);
         $data['page'] = "index.html";
         $data['menu'] = array('index','index');
  		$this->load->view('template.html',$data);

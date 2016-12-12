@@ -58,20 +58,12 @@ class mallShop_model extends CI_Model
     function get_store_list($userid){
         $where['business_id'] = $userid;
         $query = $this->db->where($where)->get($this->shop_store);
-        return $query->result_array();
+        return $query->row_array();
     }
     //商家商品列表
     function get_goods_list($storeid){
-        $a='';
-        for ($i=0; $i < count($storeid); $i++) { 
-            if($i == 0){
-                $a .= 'storeid='.$storeid[$i];
-            }else{
-                $a .= ' or storeid='.$storeid[$i];
-            }
-        }
-        $sql = "SELECT * FROM $this->shop_goods where $a order by create_time desc";
-        $query = $this->db->query($sql);
+        $where['store_id'] = $storeid;
+        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->shop_goods);
         return $query->result_array(); 
     }
     //商品上下架
