@@ -106,7 +106,7 @@ class mallShop_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->result_array();
     }
-    //修改订单状态
+    //修改订单信息
     function edit_order_state($id,$data){
         $where['order_id'] = $id;
         return $this->db->where($where)->update($this->shop_order,$data);

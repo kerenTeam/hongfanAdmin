@@ -288,14 +288,26 @@ class singleShop extends default_Controller {
     //提交物流信息
     function send_express(){
         if($_POST){
-            
+            $data['send_no'] = $_POST['send_no'];
+            $data['send_type'] = $_POST['send_type'];
+            $orderid= $_POST['orderid'];
+            if($this->mallShop_model->edit_order_state($orderid,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
         }
     }
-
-
     //商家订单编辑
     function shopEditOrder(){
-        $this->load->view('shop/shopEditOrder.html');
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $this->load->view('shop/shopEditOrder.html');
+        }
     }
     //订单管理 确认订单
     function sureOrder(){
