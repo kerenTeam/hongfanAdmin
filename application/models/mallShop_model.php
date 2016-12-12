@@ -12,7 +12,9 @@ class mallShop_model extends CI_Model
     //店铺表
     public $shop_store = 'hf_shop_store';
     //商品评论表
-    public $shop_comment = 'hf_mall_comment';
+    public $shop_comment = 'hf_mall_comment'; 
+    //商家订单表
+    public $shop_order = 'hf_mall_order';
     function __construct()
     {
         parent::__construct();
@@ -97,6 +99,19 @@ class mallShop_model extends CI_Model
         $where['goods_id'] = $id;
         return $this->db->where($where)->delete($this->shop_goods);
     }
+
+    //返回商家订单列表
+    function get_store_orders($storeid){
+        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.seller,a.amount,a.addtime,a.order_status,b.user_id,b.username from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = $storeid";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    //修改订单状态
+    function edit_order_state($id,$data){
+        $where['order_id'] = $id;
+        return $this->db->where($where)->update($this->shop_order,$data);
+    }
+
 
 }
 

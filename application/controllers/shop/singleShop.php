@@ -252,17 +252,43 @@ class singleShop extends default_Controller {
         $data['storeid'] = $this->session->businessId;
 
         $data['page'] = $this->view_shopOrder;
-        $data['menu'] = array('shop','shopOrder');       
+        $data['menu'] = array('shop','shopOrder');
         $this->load->view('template.html',$data);
     }
 
     //获取商家订单列表
     function store_order(){
         if($_POST){
+            //获取卖家id
             $storeid = $_POST['storeid'];
-            
+
+            //h获取订单
+            $orders = $this->mallShop_model->get_store_orders($storeid);
+            var_dump($orders);
+
         }else{
 
+        }
+    }
+    //修改订单状态
+    function edit_goods_order(){
+        if($_POST){
+            $data['order_status'] = $_POST['state'];
+            $orderid = $_POST['orderid'];
+            if($this->mallShop_model->edit_order_state($orderid,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+    //提交物流信息
+    function send_express(){
+        if($_POST){
+            
         }
     }
 
