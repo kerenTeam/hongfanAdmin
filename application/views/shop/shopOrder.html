@@ -333,24 +333,15 @@ td.am-text-middle img{
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">快递类型<span class="red">*</span> </label>
                     <div class="am-u-sm-9">
-                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                            <option value=>输入查找/选择</option>
-                            <option value="不需要物流">不需要物流</option>
-                            <option value="平邮">平邮</option>
+                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
+                            <option value=''>输入查找/选择</option>
                             <option value="EMS">EMS</option>
-                            <option value="顺丰快递">顺丰快递</option>
-                            <option value="申通快递">申通快递</option>
-                            <option value="圆通速递">圆通速递</option>
-                            <option value="中同属第">中同属第</option>
-                            <option value="韵达快递">韵达快递</option>
-                            <option value="百世汇通">百世汇通</option>
-                            <option value="宅急送">宅急送</option>
-                            <option value="天天快递">天天快递</option>
-                            <option value="国通快递">国通快递</option>
-                            <option value="联邦快递">联邦快递</option>
-                            <option value="汇通快运">汇通快运</option>
-                            <option value="华强物流">华强物流</option>
-                            <option value="其他">其他</option>
+                            <option value="SF">顺丰快递</option>
+                            <option value="STO">申通快递</option>
+                            <option value="YTO">圆通速递</option>
+                            <option value="ZTO">中通速递</option>
+                            <option value="YD">韵达快递</option>
+                            <option value="HTKY">百世汇通</option>
                         </select>
                     </div>
                 </div>
@@ -358,20 +349,9 @@ td.am-text-middle img{
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                     <div class="am-u-sm-9">
-                        <input type="text" placeholder="如：邻水xxxx街道" name='service_cope' required>
-                        
+                        <input type="text" placeholder="请输入快递单号！" name='send_no' required>
                     </div>
                 </div>
-                <div class="am-form-group">
-                    <label for="businessTime" class="am-form-label am-u-sm-3">下单时间:</label>
-                    <div class="am-u-sm-9">
-                        <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                          <p>开始日期应小于结束日期！</p>
-                        </div>
-                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                    </div>
-                </div>
-            
                 <div class="am-form-group am-btn-group-xs">
                     <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                     <button type="submit" class="am-btn am-btn-danger">确定</button>
@@ -380,10 +360,6 @@ td.am-text-middle img{
         </div>
     </div>
 </div>
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
-
-<script src="assets/js/dataTables.responsive.min.js"></script>
 
 <script type="text/javascript">
   $(function() {
