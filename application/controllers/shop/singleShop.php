@@ -25,6 +25,7 @@ class singleShop extends default_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('mallShop_model');
     }
 
     //商家 列表主页
@@ -60,15 +61,23 @@ class singleShop extends default_Controller {
     }
      //新增商品
     function goodsAdd(){
-        // var_dump($_SERVER['DOCUMENT_ROOT']);
-        // var_dump(dirname(__FILE__));
-        // var_dump(FCPATH);
-        // exit;
-         $data['page'] = $this->view_goodsAdd;
+
+        //所有商品分类
+        $data['cates'] = $this->mallShop_model->get_goods_cates();
+
+        $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       
         $this->load->view('template.html',$data);
     }
     //新增商品操作
+    function add_goods(){
+        if($_POST){
+            echo "<pre>";
+            var_dump($_POST);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 
 
 
