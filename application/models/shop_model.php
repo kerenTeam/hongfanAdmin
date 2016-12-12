@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
-*     商城管理 
+*     管理员商城管理 
 */
 class shop_model extends CI_Model
 {
@@ -18,11 +18,7 @@ class shop_model extends CI_Model
         parent::__construct();
     }
 
-    //新增商品
-    function add_shop_goods($data){
-        return $this->db->insert($this->goods,$data);
-    }
-
+   
     //获取所有店铺
     function shop_list(){
         $query = $this->db->order_by('create_time','desc')->get($this->shop_store);
