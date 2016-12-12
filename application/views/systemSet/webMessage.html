@@ -26,6 +26,9 @@
 
     input.am-form-field{
     	border:1px solid #ccc !important;
+    } 
+    .am-icon-chevron-up,.am-icon-chevron-down{
+        color: #000;
     }
 </style>
 <!-- 内容区域 -->
@@ -107,6 +110,7 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
                                         基本设置
+                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-icon ulSign"  id="ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
@@ -299,4 +303,17 @@
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
         
     });
+
+
+ //点击展开与收起菜单栏
+$('.ulSign').click(function(){
+    if($(this).hasClass('am-icon-chevron-up')){
+        $(this).removeClass('am-icon-chevron-up');
+        $(this).addClass('am-icon-chevron-down');
+    }else{
+        $(this).removeClass('am-icon-chevron-down');
+        $(this).addClass('am-icon-chevron-up');
+    }
+   
+});
 </script>

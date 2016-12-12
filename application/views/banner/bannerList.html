@@ -44,7 +44,7 @@ h4.am-panel-title{
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
                                         首页的banner
-                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
@@ -110,7 +110,7 @@ h4.am-panel-title{
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
                                         超市比价的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="market" class="am-panel-collapse am-collapse">
@@ -176,7 +176,7 @@ h4.am-panel-title{
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
                                         购物中心的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="shopCenter" class="am-panel-collapse am-collapse">
@@ -240,12 +240,12 @@ h4.am-panel-title{
                             </div>
                             <div class="am-panel am-panel-default">
                                 <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#servePeople'}">
                                         为民服务的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
-                                <div id="shopCenter" class="am-panel-collapse am-collapse">
+                                <div id="servePeople" class="am-panel-collapse am-collapse">
                                     <div class="am-panel-bd">
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
@@ -314,13 +314,16 @@ h4.am-panel-title{
 </div>
 
 <script type="text/javascript">
-    //panel 面板的展开与收缩
-$('.am-panel-hd').click(function(){
-   if($('div.am-panel').hasClass('am-in')){
-        $(this).find('.am-panel-hd).find('h4').dspan').className+='am-icon-chevron-up';
-    }else{
-        $(this).find('.am-panel-hd h4 span').removeClass('am-icon-chevron-up');
-    }
-})
 
+//点击展开与收起菜单栏
+$('.ulSign').click(function(){
+    if($(this).hasClass('am-icon-chevron-up')){
+        $(this).removeClass('am-icon-chevron-up');
+        $(this).addClass('am-icon-chevron-down');
+    }else{
+        $(this).removeClass('am-icon-chevron-down');
+        $(this).addClass('am-icon-chevron-up');
+    }
+   
+});
 </script>

@@ -112,7 +112,7 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
                                         支付宝账号
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
@@ -181,7 +181,7 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
                                         微信账号列表
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="market" class="am-panel-collapse am-collapse">
@@ -250,7 +250,7 @@
                                 <div class="am-panel-hd">
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
                                         银联帐号列表
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                 <div id="shopCenter" class="am-panel-collapse am-collapse">
@@ -393,5 +393,16 @@
         
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
         
+    });
+    //点击展开与收起菜单栏
+    $('.ulSign').click(function(){
+        if($(this).hasClass('am-icon-chevron-up')){
+            $(this).removeClass('am-icon-chevron-up');
+            $(this).addClass('am-icon-chevron-down');
+        }else{
+            $(this).removeClass('am-icon-chevron-down');
+            $(this).addClass('am-icon-chevron-up');
+        }
+       
     });
 </script>
