@@ -1,6 +1,14 @@
 
 <script src="assets/js/echarts.min.js"></script>
-
+<style type="text/css">
+    #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+</style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -14,129 +22,248 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商家基础信息</div>
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">商家基础信息</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
+                        <input type="text" id="doc-vld-name-1" minlength="2" value="宏帆广场" readonly required />
                     </div>
-                    <div class="widget-body  am-fr">
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
-                                <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
-                                <input type="text" id="doc-vld-name-1" minlength="2" value="宏帆广场" readonly required />
-                            </div>
-                            <div class="am-form-group">
-                                <label>经营品牌：</label>
-                                <select id="brand" required name="" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value=>输入查找/选择</option>
-                                    <option value="0">xxxx</option>
-                                    <option value="1">xxxx</option>
-                                    <option value="2">xxxx</option>
-                                </select>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="Name">商家名称<span class="red">*</span>：</label>
-                                <input type="text" id="Name" value="" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="englishName">英文名称 ：</label>
-                                <input type="text" id="englishName" value=""/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-528">开业时间<span class="red">*</span>：</label>
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" class="am-form-field" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="oneType">一级业态<span class="red">*</span>：</label>
-                                <select id="oneType" name="oneType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1" selected="selected">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
-                                </select>
-                            </div>
-                             <div class="am-form-group">
-                                <label for="twoType">二级业态<span class="red">*</span>：</label>
-                                <select id="twoType" name="twoType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1" selected="selected">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
-                                </select>
-                            </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label>经营品牌：</label>
+                        <select id="brand" required name="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <option value=>输入查找/选择</option>
+                            <option value="0">xxxx</option>
+                            <option value="1">xxxx</option>
+                            <option value="2">xxxx</option>
+                        </select>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="Name">商家名称<span class="red">*</span>：</label>
+                        <input type="text" id="Name" value="" required />
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="englishName">英文名称 ：</label>
+                        <input type="text" id="englishName" value=""/>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="doc-vld-528">开业时间<span class="red">*</span>：</label>
+                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                          <input type="text" class="am-form-field" placeholder="日历组件" readonly>
+                          <span class="am-input-group-btn am-datepicker-add-on">
+                            <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
+                          </span>
                         </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
-                                <label for="shopType">商家类型 <span class="red">*</span>：</label>
-                                <select id="shopType" name="shopType" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1" selected="selected">选项一...</option>
-                                    <option value="option2">选项二.....</option>
-                                    <option value="option3">选项三........</option>
-                                </select>
-                                <span class="am-form-caret"></span>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="oneType">一级业态<span class="red">*</span>：</label>
+                        <select id="oneType" name="oneType" required>
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1" selected="selected">选项一...</option>
+                            <option value="option2">选项二.....</option>
+                            <option value="option3">选项三........</option>
+                        </select>
+                    </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
+                        <label for="twoType">二级业态<span class="red">*</span>：</label>
+                        <select id="twoType" name="twoType" required>
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1" selected="selected">选项一...</option>
+                            <option value="option2">选项二.....</option>
+                            <option value="option3">选项三........</option>
+                        </select>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="shopType">商家类型 <span class="red">*</span>：</label>
+                        <select id="shopType" name="shopType" required>
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1" selected="selected">选项一...</option>
+                            <option value="option2">选项二.....</option>
+                            <option value="option3">选项三........</option>
+                        </select>
+                        <span class="am-form-caret"></span>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="shopState">营业状态<span class="red">*</span>：</label>
+                        <select id="shopState" name="shopState" required>
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1" selected="selected">营业中</option>
+                            <option value="option2">装修中</option>
+                            <option value="option3">停止营业</option>
+                            <option value="option3">即将营业</option>
+                        </select>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="shopFloor">所在楼层<span class="red">*</span>：</label>
+                        <select id="shopFloor" name="shopFloor" required>
+                            <option value="0" selected="selected">F1</option>
+                            <option value="1">F2</option>
+                            <option value="2">F3</option>
+                            <option value="3">F4</option>
+                            <option value="4">F5</option>
+                        </select>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="businessTime">营业时间<span class="red">*</span>：</label>
+                            <div class="am-alert am-alert-danger" name="businessTime" id="businessTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
                             </div>
-                            <div class="am-form-group">
-                                <label for="shopState">营业状态<span class="red">*</span>：</label>
-                                <select id="shopState" name="shopState" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="option1" selected="selected">营业中</option>
-                                    <option value="option2">装修中</option>
-                                    <option value="option3">停止营业</option>
-                                    <option value="option3">即将营业</option>
-                                </select>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-secondary am-btn-xs" id="timestart">开始日期</button><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-secondary am-btn-xs" id="timeend">结束日期</button><span id="my-endDate">2014-12-25</span>
+                              </div>
                             </div>
-                            <div class="am-form-group">
-                                <label for="shopFloor">所在楼层<span class="red">*</span>：</label>
-                                <select id="shopFloor" name="shopFloor" required>
-                                    <option value="0" selected="selected">F1</option>
-                                    <option value="1">F2</option>
-                                    <option value="2">F3</option>
-                                    <option value="3">F4</option>
-                                    <option value="4">F5</option>
-                                </select>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="area">面积/平方米<span class="red">*</span>：</label>
+                        <input type="number" name="area" id="area" min="0" value="125" required />
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="comments">当前评价<span class="red">*</span>：</label>
+                        <input type="number" class="" name="comments" value="12"  id="comments"  min="0" required />
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
+                        <label class="am-radio-inline">
+                            <input type="radio" value="1" name="docVlCb" checked> 是
+                        </label>
+                        <label class="am-checkbox-inline">
+                            <input type="radio" value="0" name="docVlCb"> 否
+                        </label>
+                    </div>
+                </div>
+
+
+                <!--商家简介-->
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">商家简介</div>
+                </div>
+                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">LOGO<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                  <!-- 图片实时预览 -->
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                  <br />
                             </div>
-                            <div class="am-form-group">
-                                    <label for="businessTime">营业时间<span class="red">*</span>：</label>
-                                    <div class="am-alert am-alert-danger" name="businessTime" id="businessTime" style="display: none">
-                                      <p>开始日期应小于结束日期！</p>
-                                    </div>
-                                    <div class="am-g am-padding-xs">
-                                      <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-secondary am-margin-right" id="timestart">开始日期</button><span id="my-startDate">2014-12-20</span>
-                                      </div>
-                                      <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-secondary am-margin-right" id="timeend">结束日期</button><span id="my-endDate">2014-12-25</span>
-                                      </div>
-                                    </div>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="area">面积/平方米<span class="red">*</span>：</label>
-                                <input type="number" name="area" id="area" min="0" value="125" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label for="comments">当前评价<span class="red">*</span>：</label>
-                                <input type="number" class="" name="comments" value="12"  id="comments"  min="0" required />
-                            </div>
-                            <div class="am-form-group">
-                                <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
-                                <label class="am-radio-inline">
-                                    <input type="radio" value="1" name="docVlCb" checked> 是
-                                </label>
-                                <label class="am-checkbox-inline">
-                                    <input type="radio" value="0" name="docVlCb"> 否
-                                </label>
-                            </div>
+                             <div class="am-text-center father">
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                              </div>   
+                        </div>
+                    </div>
+                    <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-weibo" class="am-u-sm-3 am-form-label">商家图片<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                  <!-- 图片实时预览 -->
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                  <br />                                </div>
+                             <div class="am-text-center father">
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                              </div> 
+                        </div> 
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">客单价<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <input type="number" name="" class="am-form-field tpl-form-no-bg" placeholder="" value="0" required>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="9:00-22:00" required>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <input type="tel" name="" class="am-form-field tpl-form-no-bg" placeholder="请输入11位的手机号码" required>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
+                        <div class="am-u-sm-9">
+                           <input type="text" name="" class="am-form-field tpl-form-no-bg" placeholder="" >
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
+                        <div class="am-u-sm-9">
+                           <input type="text" class="am-form-field tpl-form-no-bg" placeholder="">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">微信账号： </label>
+                        <div class="am-u-sm-9">
+                           <input type="text" class="am-form-field tpl-form-no-bg" placeholder="">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label class="am-u-sm-3 am-form-label">文字简介：</label>
+                        <div class="am-u-sm-9">
+                            <textarea name="" rows="5" cols="40">
+                                VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
+                            </textarea>
                         </div>
                     </div>
 
+
+                    <!--商家楼层信息-->
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf" style="clear: both;">商家楼层信息</div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
+                        <div class="am-u-sm-9">
+                            <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value=>输入查找/选择</option>
+                                <option value="B3">B3</option>
+                                <option value="B2">B2</option>
+                                <option value="B1">B1</option>
+                                <option value="F1">F1</option>
+                                <option value="F2">F2</option>
+                                <option value="F3">F3</option>
+                                <option value="F4">F4</option>
+                                <option value="F5">F5</option>
+                                <option value="F6">F6</option>
+                            </select>
+                        </div>
+                    </div>
+                   <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-name" class="am-u-sm-2 am-form-label">铺位号：</label>
+                        <div class="am-u-sm-7">
+                            <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value=>输入查找/选择</option>
+                                <option value="01A0">01A0</option>
+                                <option value="037B">037B</option>
+                                <option value="037A">037A</option>
+                                <option value="042B">042B</option>
+                                <option value="038A">038A</option>
+                                <option value="045B">045B</option>
+                                <option value="002">002</option>
+                                <option value="003">003</option>
+                                <option value="005">005</option>
+                            </select>
+                            
+                        </div>
+                       <div class="am-u-sm-3">
+                           <button type="button" class="am-btn am-btn-success am-btn-xs">
+                                <i class="am-icon-plus"></i> 添加</button>
+                       </div>
+                    </div>
                     <div class="am-form-group am-text-center">
-                    <button class="am-btn am-btn-secondary" type="submit">保存</button>
-                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                        <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                     </div>
                 </div>
             </form>

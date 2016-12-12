@@ -46,9 +46,9 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">商品搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsType" class="am-form-label am-u-sm-4">商品分类:</label>
-                        <div class="am-u-sm-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsType" class="am-form-label am-u-sm-3">商品分类:</label>
+                        <div class="am-u-sm-9">
                             <select id="goodsType" name="goodsType">
                                 <option value="">-=请选择一项=-</option>
                                 <?php foreach($cates as $val):?>
@@ -57,9 +57,9 @@ td.am-text-middle img{
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-4">货物批次:</label>
-                        <div class="am-u-sm-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">货物批次:</label>
+                        <div class="am-u-sm-9">
                         <select id="goodsBatch" name="goodsBatch">
                             <option value="">-=请选择一项=-</option>
                             <option value="option1">2016年秋冬</option>
@@ -69,25 +69,25 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4 am-fl">商品单价:</label>
-                        <div class="am-u-sm-8 am-u-md-8 am-u-lg-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品单价:</label>
+                        <div class="am-u-sm-9">
                             <input type="number" class="stable" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
                             <input type="number" class="stable" name="endPrice" min="1"  />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">库存:</label>
-                        <div class="am-u-sm-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">库存:</label>
+                        <div class="am-u-sm-9">
                             <input type="number" class="stable" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
                             <input type="number" class="stable" name="endPrice" min="1"  />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsState" class="am-form-label am-u-sm-4">商品状态:</label>
-                        <div class="am-u-sm-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsState" class="am-form-label am-u-sm-3">商品状态:</label>
+                        <div class="am-u-sm-9">
                         <select id="goodsState" name="goodsState">
                             <option value="">-=请选择一项=-</option>
                             <option value="option1">上架</option>
@@ -95,9 +95,9 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
-                        <div class="am-u-sm-8">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">关键字搜索:</label>
+                        <div class="am-u-sm-9">
                             <input type="text" placeholder="请输入搜素的关键字">
                         </div>
                     </div>
@@ -125,42 +125,46 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">会员 </th>
+                                    <th class="shop_type">所属店铺 </th>
                                     <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
-                                    <th class="shop_block">销量 </th>
-                                    <th class="shop_block">库存 </th>
-                                    <th class="shop_block">评论 </th>
-                                    <th class="shop_block">人气 </th>
+                                    <th class="shop_block">月销量 </th>
+                                    <th class="shop_block">库存 </th> 
                                     <th class="shop_block">货物批次 </th>
-                                    <th class="shop_block">商品状态 </th>
+                                    <th class="shop_block">审核状态 </th>                                 
+                                    <th class="shop_block">商品状态</th>
+                                    <th class="shop_block">变更时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
                                     <td class="am-text-middle">
                                         <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
                                     </td>
-                                    <td class="am-text-middle">destoon</td>
+                                    <td class="am-text-middle">上衣</td>
+                                    <td class="am-text-middle">达芬妮</td>
                                     <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
+                                    <td class="am-text-middle">300</td>
+                                    <td class="am-text-middle">2016年上半季</td>
+                                    <td class="am-text-middle">
+                                        <div class="am-dropdown" data-am-dropdown>
+                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>通过审核 <span class="am-icon-caret-down"></span></button>
+                                            <ul class="am-dropdown-content">
+                                                <li data-id=""><a href="#">通过审核</a></li>
+                                                <li data-id=""><a href="#">待审核</a></li>
+                                                <li data-id=""><a href="#">未通过</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td class="am-text-middle">
                                         <div class="am-dropdown" data-am-dropdown>
                                             <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
@@ -169,6 +173,9 @@ td.am-text-middle img{
                                                 <li><a href="#">下架</a></li>
                                             </ul>
                                         </div>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <span>更新：2016-11-29 09:53:41</span>
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -182,23 +189,28 @@ td.am-text-middle img{
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">上衣</td>
                                     <td class="am-text-middle">
                                         <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
                                     </td>
-                                    <td class="am-text-middle">destoon</td>
+                                    <td class="am-text-middle">上衣</td>
+                                    <td class="am-text-middle">达芬妮</td>
                                     <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
                                     <td class="am-text-middle">10</td>
                                     <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
+                                    <td class="am-text-middle">300</td>
+                                    <td class="am-text-middle">2016年上半季</td>
+                                    <td class="am-text-middle">
+                                        <div class="am-dropdown" data-am-dropdown>
+                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>通过审核 <span class="am-icon-caret-down"></span></button>
+                                            <ul class="am-dropdown-content">
+                                                <li data-id=""><a href="#">通过审核</a></li>
+                                                <li data-id=""><a href="#">待审核</a></li>
+                                                <li data-id=""><a href="#">未通过</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
                                     <td class="am-text-middle">
                                         <div class="am-dropdown" data-am-dropdown>
                                             <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
@@ -209,122 +221,11 @@ td.am-text-middle img{
                                         </div>
                                     </td>
                                     <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/shop/singleShop/goodsDetail';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
+                                        <span>更新：2016-11-29 09:53:41</span>
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/shop/singleShop/goodsDetail';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/shop/singleShop/goodsDetail';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/user04.png" class="am-img-responsive" alt=""/>
-                                        <span>更新：2016-11-29 09:53:41</span><br />
-                                        <span>添加：2016-11-29 09:52:19</span>
-                                    </td>
-                                    <td class="am-text-middle">destoon</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">2</td>
-                                    <td class="am-text-middle">10</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">5</td>
-                                    <td class="am-text-middle">100</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016年秋冬</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>上架 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">上架</a></li>
-                                                <li><a href="#">下架</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/shop/singleShop/goodsDetail';?>">
+                                            <a href="<?php echo site_url().'/shop/singleShop/goodsDetail/1';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
