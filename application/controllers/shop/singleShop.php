@@ -21,6 +21,8 @@ class singleShop extends default_Controller {
     public $view_goodsAdd = "shop/goodsAdd.html"; 
     //商家楼层关系
     public $view_shopFloorRelation = "shop/shopFloorRelation.html";
+    //订单列表
+    public $view_shopOrder = "shop/shopOrder.html";
 
     function __construct()
     {
@@ -31,7 +33,15 @@ class singleShop extends default_Controller {
     //商家 列表主页
     function shopAdmin()
     {   //缓存商家id
-        $this->session->set_userdata('businessId',$this->session->users['user_id']);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            //商家登录
+            $storeid = $this->mallShop_model->get_store_list($this->session->users['user_id']);
+             $this->session->set_userdata('businessId',$storeid['store_id']);
+        }else{
+            $this->session->set_userdata('businessId',$id);
+        }
+
         $data['page'] = $this->view_shopAdmin;
     	$this->load->view('template.html',$data);
     }
@@ -62,11 +72,8 @@ class singleShop extends default_Controller {
         if($_POST){
             //查询出商家有几个店铺
            $store = $this->mallShop_model->get_store_list($this->session->businessId);
-           //循环店铺查出所有商品
-           foreach ($store as $key => $v) {
-              $store_id[] = $v['store_id'];
-           }
-           $arr = $this->mallShop_model->get_goods_list($store_id);
+           
+           $arr = $this->mallShop_model->get_goods_list($store_id['store_id']);
            if(empty($arr)){
                 echo "2";
            }else{
@@ -207,18 +214,7 @@ class singleShop extends default_Controller {
     function shopComment(){
         $this->load->view('shop/shopComment.html');
     }
-     //商家订单管理
-    function shopOrder(){
-        $this->load->view('shop/shopOrder.html');
-    }
-    //商家订单编辑
-    function shopEditOrder(){
-        $this->load->view('shop/shopEditOrder.html');
-    }
-    //订单管理 确认订单
-    function sureOrder(){
-        $this->load->view('shop/sureOrder.html');
-    }
+   
     //商家促销管理 促销列表
     function shopSalesList(){
         $this->load->view('shop/shopSalesList.html');
@@ -246,6 +242,38 @@ class singleShop extends default_Controller {
      //商家活动管理 编辑活动
     function shopEditActivity(){
         $this->load->view('shop/shopEditActivity.html');
+    }
+
+
+
+
+    //商家订单管理
+    function shopOrder(){
+        $data['storeid'] = $this->session->businessId;
+
+        $data['page'] = $this->view_shopOrder;
+        $data['menu'] = array('shop','shopOrder');       
+        $this->load->view('template.html',$data);
+    }
+
+    //获取商家订单列表
+    function store_order(){
+        if($_POST){
+            $storeid = $_POST['storeid'];
+            
+        }else{
+
+        }
+    }
+
+
+    //商家订单编辑
+    function shopEditOrder(){
+        $this->load->view('shop/shopEditOrder.html');
+    }
+    //订单管理 确认订单
+    function sureOrder(){
+        $this->load->view('shop/sureOrder.html');
     }
 }
 

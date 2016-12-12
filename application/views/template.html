@@ -5,7 +5,7 @@
 
  <!-- 菜单 -->
  <?php if(empty($menu)){$menu = array('index','index');}?>
- <?php if($this->session->users['gid'] == '2'):?>
+ <?php if($this->session->users['gid'] == '2' || isset($this->session->businessId)):?>
     <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
         <a href="<?php echo site_url().'/admin/index';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
