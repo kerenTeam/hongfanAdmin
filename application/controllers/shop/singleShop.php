@@ -211,8 +211,14 @@ class singleShop extends default_Controller {
     function shopOrder(){
         $this->load->view('shop/shopOrder.html');
     }
-
-
+    //商家订单编辑
+    function shopEditOrder(){
+        $this->load->view('shop/shopEditOrder.html');
+    }
+    //订单管理 确认订单
+    function sureOrder(){
+        $this->load->view('shop/sureOrder.html');
+    }
     //商家促销管理 促销列表
     function shopSalesList(){
         $this->load->view('shop/shopSalesList.html');

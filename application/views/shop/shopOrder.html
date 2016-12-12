@@ -27,7 +27,9 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
-
+.tableImg{
+    width:80px;
+}
 </style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
@@ -265,7 +267,7 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">订单列表</div>
+                    <div class="widget-title  am-cf">全部订单列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -281,102 +283,101 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id">缩略图 </th>
-                                    <th class="moll_name">商品或服务 </th>
-                                    <th class="shop_id">交易总额 </th>
-                                    <th class="shop_name">卖家 </th>
-                                    <th class="shop_type">买家 </th>
+                                    <th class="shop_id" colspan="2">商品信息 </th>
+                                    <th class="moll_name">数量 </th>
+                                    <th class="shop_id">订单金额 </th>
                                     <th class="shop_yetai">下单时间 </th>
-                                    <th class="brand">更新时间 </th>
-                                    <th class="shop_block">状态 </th>
+                                    <th class="brand">买家 </th>
+                                    <th class="shop_block">订单状态 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">3000</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
+                                    <td colspan="8" bgcolor="#f5f5f5">
+                                      <div class="tpl-table-black-operation am-fr">
+                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">
+                                                确认订单
                                             </a>
-                                        </div>
-                                    </td>
+                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">
+                                                修改订单
+                                            </a>
+                                            <a onClick="return confirm('确认关闭交易?');" href="#"  class="tpl-table-black-operation-del" data-am-modal="{target: '#closeTrade'}">
+                                                交易关闭
+                                            </a>
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
+                                                 订单详情
+                                            </a>
+                                        </div>  
+                                        订单编号：S12345678
+                                    </td>  
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">3000</td>
-                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
+                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
+                                    <td class="am-text-middle">1</td>
+                                    <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
+                                    <td class="am-text-middle">买家昵称</td>
+                                    <td class="am-text-middle">待确认
+                                    <br />
+                                    <button class="am-btn am-btn-secondary am-btn-xs">确认</button></td>
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">3000</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
+                                    <td colspan="8" bgcolor="#f5f5f5">
+                                      <div class="tpl-table-black-operation am-fr">
+                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">
+                                                修改订单
                                             </a>
-                                        </div>
-                                    </td>
+                                            <a onClick="return confirm('确认关闭交易?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#closeTrade'}">
+                                                交易关闭
+                                            </a>
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
+                                                 订单详情
+                                            </a>
+                                        </div>  
+                                        订单编号：S12345678
+                                    </td>  
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">3000</td>
-                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
+
+                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
+                                    <td class="am-text-middle">1</td>
+                                    <td class="am-text-middle">300.00</td>
                                     <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
+                                    <td class="am-text-middle">买家昵称</td>
+                                    <td class="am-text-middle">待付款
+                                    <br />
+                                    </td>  
                                 </tr>
                                 <tr>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">上衣</td>
-                                    <td class="am-text-middle">3000</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">2016-10-25 10:12:13</td>
-                                    <td class="am-text-middle">5</td>  
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
+                                    <td colspan="8" bgcolor="#f5f5f5">
+                                      <div class="tpl-table-black-operation am-fr">
+                                            <a onClick="return confirm('确定完成?');" href="#"  class="tpl-table-black-operation-del" data-am-modal="{target: '#sureComplish'}">
+                                                确认完成
                                             </a>
-                                        </div>
-                                    </td>
+                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
+                                                 订单详情
+                                            </a>
+                                        </div>  
+                                        订单编号：S12345678
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
+
+                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
+                                    <td class="am-text-middle">1</td>
+                                    <td class="am-text-middle">300.00</td>
+                                    <td class="am-text-middle">寒渊阁粉丝</td>
+                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
+                                    <td class="am-text-middle">买家昵称</td>
+                                    <td class="am-text-middle">货到付款
+                                    <br />
+                                    </td>  
                                 </tr>
                                 <!-- more data -->
                             </tbody>
@@ -403,6 +404,33 @@ td.am-text-middle img{
 </div>
 </div>
 </div>
+<!--关闭交易的提示框-->
+<!--  <div class="am-modal am-modal-confirm" tabindex="-1" id="closeTrade">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">关闭交易</div>
+        <div class="am-modal-bd">
+            <p class="black">亲,确定要关闭交易吗？此操作不可撤销奥</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确认</span>
+        </div>
+    </div>
+</div> -->
+
+<!--确认完成的提示框-->
+ <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="sureComplish">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">确认完成</div>
+        <div class="am-modal-bd">
+            <p class="black">亲您确定已收到货，交易完成吗？此操作不可撤销</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确认</span>
+        </div>
+    </div>
+</div> -->
 <script src="assets/js/amazeui.min.js"></script>
 <script src="assets/js/amazeui.datatables.min.js"></script>
 <script src="assets/js/dataTables.responsive.min.js"></script>
