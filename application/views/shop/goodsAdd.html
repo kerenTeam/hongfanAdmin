@@ -2,18 +2,24 @@
 <style type="text/css">
   #preview{
         width:150px !important;
-        height:150px !important;
     }
     #preview #imghead,#preview img{
      width:140px !important;
-        height:140px !important;
     }
     .widget{
-        font-color:#000 !important;
-    }
+        font-color:#000 !;
+    } 
 
     .postageNumber{
         display: none;
+    }
+   
+    .addStyle{
+        display: inline-block;
+        padding: 3px 5px;
+        border: 1px solid #1fb5ac;
+        color: #1fb5ac;
+        margin-left: 10px;
     }
 </style>
 
@@ -56,29 +62,29 @@
                         
                         <div class="am-form-group">
                             <label for="englishName">添加属性：</label>
-                            <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <table>
                                 <thead>
-                                    <tr>
-                                        <th class="table-check">属性名</th>
-                                        <th class="shop_id">属性值</th>
-                                    </tr>
+                                    <th>属性名称</th>
+                                    <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <!-- more data -->
+                                    <td><input type="text" name=""></td>
+                                    <td><i class="am-icon am-icon-plus addStyle"></i></td>
+                                    <table>
+                                        <thead>
+                                            <th>属性值</th>
+                                            <th>附加值</th>
+                                            <th>&nbsp;</th>
+                                        </thead>
+                                        <tbody>
+                                            <td><input type="text" name=""></td>
+                                            <td><input type="text" name=""></td>
+                                            <td><i class="am-icon am-icon-plus addStyle"></i></td>
+                                        </tbody>
+                                    </table>
                                 </tbody>
                             </table>
+                           
                         </div>
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
