@@ -51,10 +51,9 @@ td.am-text-middle img{
                         <div class="am-u-sm-8">
                             <select id="goodsType" name="goodsType">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="option1">上衣</option>
-                                <option value="option2">夏装</option>
-                                <option value="option2">裙装</option>
-                                <option value="option2">秋冬款</option>
+                                <?php foreach($cates as $val):?>
+                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>

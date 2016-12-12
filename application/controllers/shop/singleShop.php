@@ -49,6 +49,9 @@ class singleShop extends default_Controller {
     }
      //商品列表
     function goodsList(){
+        //分类
+        $data['cates'] = $this->mallShop_model->get_goods_cates();
+
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
