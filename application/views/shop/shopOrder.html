@@ -20,6 +20,13 @@ td.am-text-middle img{
 .am-form-group div{
     line-height: 37px;
 }
+.stable{
+    display: inline-block !important;
+    width: 45% !important;
+}
+.linkWord{
+    width: 10% !important;
+}
 
 </style>
 <!-- 菜单 -->
@@ -199,15 +206,15 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">交易总额:</label>
-                        <div class="am-u-sm-8">
-                            <div class="am-u-sm-4"><input type="number" class="am-u-sm-4" id="startPrice" name="startPrice" min="0" /></div>
-                            <div class="am-u-sm-4 am-text-center">至</div>
-                            <div class="am-u-sm-4 am-fl"><input type="number" class="am-u-sm-4" id="endPrice" name="endPrice" min="1" /></div>
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4 am-fl">交易总额:</label>
+                        <div class="am-u-sm-8 am-u-md-8 am-u-lg-8">
+                            <input type="number" class="stable" name="startPrice" min="1"  />
+                            <span class="linkWord">至</span>
+                            <input type="number" class="stable" name="endPrice" min="1"  />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="businessTime" class="am-form-label am-u-sm-2">下单时间：</label>
+                        <label for="businessTime" class="am-form-label am-u-sm-2">下单时间:</label>
                         <div class="am-u-sm-10">
                             <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
                               <p>开始日期应小于结束日期！</p>

@@ -61,7 +61,11 @@ class singleShop extends default_Controller {
     }
      //新增商品
     function goodsAdd(){
-
+        var_dump($_SERVER["QUERY_STRING"]);
+        var_dump($_SERVER["REQUEST_URI"]);
+        var_dump($_SERVER["SCRIPT_NAME"]);
+        var_dump($_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
+        exit;
         //所有商品分类
         $data['cates'] = $this->mallShop_model->get_goods_cates();
 

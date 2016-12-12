@@ -1,15 +1,19 @@
 <style type="text/css">
-#preview{
-        width:200px;
+  #preview{
+        width:150px !important;
+        height:150px !important;
     }
     #preview #imghead,#preview img{
-        width:100%;
-        height:100%;
+     width:140px !important;
+        height:140px !important;
     }
     div.am-u-sm-12{
     padding-left: 10%;
 
 }
+.postageNumber{
+        display: none;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -26,19 +30,11 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">编辑商品信息
-                        <nav class="scrollspy-nav am-fr" data-am-scrollspynav="{offsetTop:60}">
-                            <ul>
-                                <li><a href="#goodsComments">
-                            查看商品评论信息
-                        </a></li>
-                            </ul>
-                        </nav>  
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">商品基础信息</div>
                     </div>
-                </div>
-                <div class="widget-body  am-fr">
+                    <div class="widget-body  am-fr">
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                         <div class="am-form-group">
                             <label for="doc-vld-name-1">商品编号 <span class="red">*</span>：</label>
@@ -131,10 +127,14 @@
                                 </tbody>
                             </table>
                         </div> -->
-                        <div class="am-form-group">
+                        <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
-                            <input type="radio" name="yes" value=""/>是
-                            <input type="radio" name="yes" value=""/>否
+                            <input type="radio" name="yes" value="0" id="dispostage" />是
+                            <input type="radio" name="yes" id="postage" value="1"/>否
+                        </div>
+                        <div class="am-form-group postageNumber" >
+                            <label for="englishName">请输入运费<span class="red">*</span>：</label>
+                            <input type="number"  id="postageNum" value="" required="required" />
                         </div>
                         <div class="am-form-group">
                             <label for="oneType">货到付款：</label>
@@ -161,6 +161,7 @@
                             <input type="radio" name="yes" value=""/>是
                             <input type="radio" name="yes" value=""/>否
                         </div>
+                        
                         <div class="am-form-group">
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
                             <input type="number"  id="respority" value="" required="required" />
@@ -180,7 +181,7 @@
                             <input type="radio" name="yes" value=""/>上架
                             <input type="radio" name="yes" value=""/>下架
                         </div>
-                           <div class="am-form-group">
+                        <div class="am-form-group">
                             <label for="user-weibo" >商品图片：</label>
                             <div class="am-u-sm-12">
                                 <div class="am-u-sm-4">
@@ -213,20 +214,21 @@
                               <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
                           </div> 
                         </div>
-                            <div class="am-form-group">
-                                <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                                <div>
-                                    <script id="editor" type="text/plain"></script>
-                                </div>
-                                                     
+                        <div class="am-form-group">
+                            <label for="englishName">商品信息详情<span class="red">*</span>：</label>
+                            <div>
+                                <script id="editor" type="text/plain"></script>
                             </div>
+                                                     
                         </div>
                     </div>
+                </div>
 
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加</button>
-                        <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
+                        <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
+
                 </div>
             </form>
         </div>
@@ -274,114 +276,19 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
-     //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var ue = UE.getEditor('editor');
+ //点击进行运费设置
+$('#postage').click(function(){
+    $('.postageNumber').css('display','block');
 
-
-    function isFocus(e){
-        alert(UE.getEditor('editor').isFocus());
-        UE.dom.domUtils.preventDefault(e)
-    }
-    function setblur(e){
-        UE.getEditor('editor').blur();
-        UE.dom.domUtils.preventDefault(e)
-    }
-    function insertHtml() {
-        var value = prompt('插入html代码', '');
-        UE.getEditor('editor').execCommand('insertHtml', value)
-    }
-    function createEditor() {
-        enableBtn();
-        UE.getEditor('editor');
-    }
-    function getAllHtml() {
-        alert(UE.getEditor('editor').getAllHtml())
-    }
-    function getContent() {
-        var arr = [];
-        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getContent());
-        alert(arr.join("\n"));
-    }
-    function getPlainTxt() {
-        var arr = [];
-        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getPlainTxt());
-        alert(arr.join('\n'))
-    }
-    function setContent(isAppendTo) {
-        var arr = [];
-        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
-        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
-        alert(arr.join("\n"));
-    }
-    function setDisabled() {
-        UE.getEditor('editor').setDisabled('fullscreen');
-        disableBtn("enable");
-    }
-
-    function setEnabled() {
-        UE.getEditor('editor').setEnabled();
-        enableBtn();
-    }
-
-    function getText() {
-        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
-        var range = UE.getEditor('editor').selection.getRange();
-        range.select();
-        var txt = UE.getEditor('editor').selection.getText();
-        alert(txt)
-    }
-
-    function getContentTxt() {
-        var arr = [];
-        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-        arr.push("编辑器的纯文本内容为：");
-        arr.push(UE.getEditor('editor').getContentTxt());
-        alert(arr.join("\n"));
-    }
-    function hasContent() {
-        var arr = [];
-        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-        arr.push("判断结果为：");
-        arr.push(UE.getEditor('editor').hasContents());
-        alert(arr.join("\n"));
-    }
-    function setFocus() {
-        UE.getEditor('editor').focus();
-    }
-    function deleteEditor() {
-        disableBtn();
-        UE.getEditor('editor').destroy();
-    }
-    function disableBtn(str) {
-        var div = document.getElementById('btns');
-        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-        for (var i = 0, btn; btn = btns[i++];) {
-            if (btn.id == str) {
-                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-            } else {
-                btn.setAttribute("disabled", "true");
-            }
-        }
-    }
-    function enableBtn() {
-        var div = document.getElementById('btns');
-        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-        for (var i = 0, btn; btn = btns[i++];) {
-            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-        }
-    }
-
-    function getLocalData () {
-        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
-    }
-
-    function clearLocalData () {
-        UE.getEditor('editor').execCommand( "clearlocaldata" );
-        alert("已清空草稿箱")
-    }
+});
+//点击取消运费设置
+$('#dispostage').click(function(){
+    $('.postageNumber').css('display','none');
+});
+ //删除图片
+$(".deleteImg").click(function(){
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).siblings('.wx_type_img').find('input').val("");
+    $(this).siblings('.wx_type_img').find('input').files="";
+});
 </script>
