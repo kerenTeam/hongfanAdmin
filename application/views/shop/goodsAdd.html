@@ -54,9 +54,7 @@
                         <div class="widget-title  am-cf">商品基础信息</div>
                     </div>
                     <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    
-                        
+                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">                                        
                         <div class="am-form-group">
                             <label for="Name">商品名称<span class="red">*</span>：</label>
                             <input type="text" id="Name" name='title' required="required" />
@@ -282,9 +280,8 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').files="";
 });
 //添加属性名称的设置
-$('.createMoreName').click(function(){
-    
-$('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name=""></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+$('.createMoreName').click(function(){   
+    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name=""></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
     $('.createMore').click(function(){
    $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
 })

@@ -12,7 +12,7 @@
 .postageNumber{
         display: none;
     } 
-</style>
+</style> 
 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -55,31 +55,34 @@
                         </div>
                         
                         <div class="am-form-group">
-                            <label for="englishName">添加属性：<span></span></label>
-                            <table width="" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <label for="englishName">添加属性：</label>
+                            <div class="tableContainer">
+                                <table class="addProperty">
                                 <thead>
-                                    <tr>
-                                        <th class="table-check">属性名</th>
-                                        <th class="shop_id">属性值</th>
-                                       
-                                    </tr>
+                                    <th>属性名称</th>
+                                    <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                        <td class="am-text-middle"><input type="input"></td>
-                                    </tr>
-                                    <!-- more data -->
+                                    <td><input type="text" name=""></td>
+                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
+                                    <table class="addPropertyContent">
+                                        <thead>
+                                            <th>属性值</th>
+                                            <th>附加值</th>
+                                            <th>&nbsp;</th>
+                                        </thead>
+                                        <tbody class="addPropertyTr">
+                                            <tr>
+                                                <td><input type="text" name=""></td>
+                                                <td><input type="text" name=""></td>
+                                                <td><i class="am-icon am-icon-plus addStyle createMore"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </tbody>
                             </table>
+                           
+                            </div>
                         </div>
                         <!-- <div class="am-form-group">
                             <label for="englishName">运费设置：</label>
@@ -289,4 +292,16 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
+
+//添加属性名称的设置
+$('.createMoreName').click(function(){   
+    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name=""></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+    $('.createMore').click(function(){
+   $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+})
+})
+//添加属性值的设置
+$('.createMore').click(function(){
+   $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+})
 </script>
