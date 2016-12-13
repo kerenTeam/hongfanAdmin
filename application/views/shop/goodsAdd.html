@@ -284,14 +284,12 @@ $(".deleteImg").click(function(){
 //添加属性名称的设置
 $('.createMoreName').click(function(){   
     $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name="parameter_name"></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+    //添加属性值的设置
     $('.createMore').click(function(){
        $('<tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
     });
 })
-//添加属性值的设置
-$('.createMore').click(function(){
-   $('<tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-})
+
 //实例化编辑器
   var ue = UE.getEditor('editor');
 </script>

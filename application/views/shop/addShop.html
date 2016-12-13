@@ -51,7 +51,7 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="oneType">一级业态<span class="red">*</span>：</label>
-                                <select id="oneType" name="commercial_type_name" required>
+                                <select id="firstYetai" name="commercial_type_name" required>
                                     <option value="">-=请选择一项=-</option>
                                     <?php foreach($yetai as $val):?>
                                     <option value="<?php echo $val['id'];?>"><?php echo $val['type_name'];?></option>
@@ -59,12 +59,10 @@
                                   
                                 </select>
                             </div>
-                             <div class="am-form-group">
-                                <label for="twoType">二级业态<span class="red">*</span>：</label>
-                                <select id="twoType" name="subcommercial_type_name" required>
+                            <div class="am-form-group" id="secondYetai" style="clear: both;display: none;">
+                                <label for="subcommercial_type_name">二级业态<span class="red">*</span>：</label>
+                                <select name="subcommercial_type_name" id="secondYetaiSelect" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">OUTLETS</option>
-                                    <option value="option2">百货</option>
                                 </select>
                             </div>
                         </div>
@@ -130,6 +128,7 @@
                                     <input type="radio" value="0" name="verification"> 否
                                 </label>
                             </div>
+
                         </div>
                     </div>
 
