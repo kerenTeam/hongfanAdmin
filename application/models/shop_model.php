@@ -17,8 +17,6 @@ class shop_model extends CI_Model
     {
         parent::__construct();
     }
-
-   
     //获取所有店铺
     function shop_list(){
         $query = $this->db->order_by('create_time','desc')->get($this->shop_store);
@@ -56,7 +54,7 @@ class shop_model extends CI_Model
     }    
     //获取商户登录用户
     function get_login_store($userid){
-        $sql = "SELECT username,password FROM $this->member where user_id = $userid";
+        $sql = "SELECT * FROM $this->member where user_id = '$userid'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
@@ -65,9 +63,30 @@ class shop_model extends CI_Model
         $where['store_id'] = $id;
         return $this->db->where($where)->update($this->shop_store,$data);
     }
+    //新增商家登录账号
+    function add_store_member($data){
+        $this->db->insert($this->member,$data);
+        return $this->db->insert_id();
+    }
     //新增商家
     function add_store_info($data){
         return $this->db->insert($this->shop_store,$data);
+    }
+    //根据username返回数据
+    function get_user_info($name){
+        $where['username'] = $name;
+        $query = $this->db->where($where)->get($this->member);
+        return $query->row_array();
+    }
+    //修改商家登录账号
+    function edit_store_member($userid,$data){
+        $where['user_id'] = $userid;
+        return $this->db->where($where)->update($this->member,$data);
+    }
+    function get_member_info($userid,$username){
+        $sql = "SELECT * From $this->member where user_id != '$userid' and username = '$username'";
+        $query = $this->db->query($sql);
+        return $query->row_array();
     }
 
 }

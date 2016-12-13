@@ -106,7 +106,7 @@ class shop extends default_Controller {
     function addShop(){
         //获取所有业态
         $data['yetai'] = $this->shop_model->store_type_level(); 
-           
+
         $data['page'] = $this->view_addShop;
         $data['menu'] = array('store','shopList');
         $this->load->view('template.html',$data);
@@ -116,11 +116,22 @@ class shop extends default_Controller {
     function add_shop_store(){
         if($_POST){
             $data = $this->input->post();
-            $username = $this->input->post('username');
-            $password = $this->input->post('password');
-            unset($data['password'],$data['username']);
-            if($this->shop_model->add_store_info($data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+            $arr['username'] = trim($this->input->post('username'));
+            $arr['gid'] = '2';
+            $arr['password'] = md5(trim($this->input->post('password')));
+            if(!empty($this->shop_model->get_user_info($arr['username']))){
+                echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            }
+            //新增商家用户账号
+           $userid = $this->shop_model->add_store_member($arr);
+           if(!empty($userid)){
+                $data['business_id'] = $userid;
+                unset($data['password'],$data['username']);
+                if($this->shop_model->add_store_info($data)){
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+                }else{
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+                }
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
             }
@@ -152,12 +163,18 @@ class shop extends default_Controller {
             $data = $this->input->post();
             $arr['username'] = $this->input->post('username');
             $arr['password'] = $this->input->post('password');
-            unset($data['username'],$data['password']);
-          
-            if($this->shop_model->edit_store_info($data['store_id'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/editShop/').$data['store_id']."'</script>";exit;
+            $arr['user_id'] = $this->input->post('user_id');
+            unset($data['username'],$data['password'],$data['user_id']);
+            if($this->shop_model->get_member_info($arr['user_id'],$arr['username'])){
+                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            }
+            //修改登录账户
+            if($this->shop_model->edit_store_member($arr['user_id'],$arr)){
+                if($this->shop_model->edit_store_info($data['store_id'],$data)){
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+                }else{
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/editShop/').$data['store_id']."'</script>";exit;
+                }
             }
 
         }else{

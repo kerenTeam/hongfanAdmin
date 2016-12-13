@@ -25,6 +25,7 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="username">账户 <span class="red">*</span>：</label>
+                                <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
                                 <input type="text" minlength="2" name="username" value="<?php echo $user['username'];?>" required />
                             </div> 
                             <div class="am-form-group">
@@ -109,6 +110,11 @@
                                     <option value="F4" <?php if($store['floor_name'] == 'F4'){echo "selected";}?>>F4</option>
                                     <option value="F5" <?php if($store['floor_name'] == 'F5'){echo "selected";}?>>F5</option>
                                 </select>
+                            </div>
+                             <div class="am-form-group">
+                                <label for="businessTime">店铺编号<span class="red">*</span>：</label>
+                                <input type="text" placeholder="1001" value="<?php echo $store['door_no'];?>" name="door_no"  id="comments"  min="0" required />
+                                
                             </div>
                             <div class="am-form-group">
                                 <label for="businessTime">营业时间<span class="red">*</span>：</label>
