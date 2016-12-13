@@ -37,16 +37,6 @@
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopInfo';?>" <?php if($menu[1] == 'shopInfo'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家简介
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/singleShop/shopFloorRelation';?>" <?php if($menu[1] == 'shopFloorRelation'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家楼层关系
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>" <?php if($menu[1] == 'goodsList'){ echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
                 </a>
@@ -110,8 +100,8 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 注销
+        <a href="<?php echo site_url('login/loginOut');?>">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 退出登录
         </a>
     </li>
 </ul>
@@ -186,31 +176,16 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'shop'){echo "active";}?>">
-            <i class="am-icon-table sidebar-nav-link-logo"></i>商家管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'shop'){echo "style='display:block;'";}?>>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop';?>" <?php if($menu[1] == 'shopList'){echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
-
-                </a>
-            </li>
-
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop/addShop';?>" <?php if($menu[1] == 'addShop'){echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'store'){echo 'active';}?>">
             <i class="am-icon-table sidebar-nav-link-logo"></i> 电商管理
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
         <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'store'){echo "style='display:block;'";}?>>
+             <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop';?>" <?php if($menu[1] == 'shopList'){echo "class='sub-active'";}?>>
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
             <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/store/store/storeGoodsList';?>" <?php if($menu[1] == 'storeGoodsList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 

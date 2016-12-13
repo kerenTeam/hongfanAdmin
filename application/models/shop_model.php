@@ -41,7 +41,25 @@ class shop_model extends CI_Model
         $query = $this->db->where($where)->get($this->store_type);
         return $query->result_array();
     }
+    //返回二级业态
+    function store_type_tow($gid){
+        $where['gid'] = $gid;
+        $query = $this->db->where($where)->get($this->store_type);
+        return $query->result_array();
+    }
     
+    //获取商家信息
+    function get_store_Info($id){
+        $where['store_id'] = $id;
+        $query = $this->db->where($where)->get($this->shop_store);
+        return $query->row_array();
+    }    
+    //获取商户登录用户
+    function get_login_store($userid){
+        $sql = "SELECT username,password FROM $this->member where user_id = $userid";
+        $query = $this->db->query($sql);
+        return $query->row_array();
+    }
 
 }
 

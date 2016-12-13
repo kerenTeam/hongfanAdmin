@@ -28,6 +28,7 @@ class singleShop extends default_Controller {
     {
         parent::__construct();
         $this->load->model('mallShop_model');
+        $this->load->model('shop_model');
     }
 
     //商家 列表主页
@@ -47,17 +48,86 @@ class singleShop extends default_Controller {
     }
     //商家基础信息
     function shopBaseInfo(){
+
+        //获取商家信息
+        $data['busin'] = $this->mallShop_model->get_basess_info($this->session->businessId);
+        //返回所有一级业态
+        $data['yetai'] = $this->shop_model->store_type_level();
+
         $data['page'] = $this->view_shopBaseInfo;
         $data['menu'] = array('shop','shopBaseInfo');       
         $this->load->view('template.html',$data);
     }
-    //商家简介
-    function shopInfo(){
-         $data['page'] = $this->view_shopInfo;
-        $data['menu'] = array('shop','shopInfo');
-        $this->load->view('template.html',$data);
+    //根据顶级业态返回
+    function shop_store_type(){
+        if($_POST){
+            $gid = $_POST['gid'];
+            //根据gid返回
+            $type = $this->shop_model->store_type_tow($gid);
+            if(empty($type)){
+                echo "2";
+            }else{
+                echo json_encode($type);
+            }
+        }else{
+            echo "2";
+        }
     }
-     //商品列表
+
+    //商家基础信息操作
+    function edit_busin_info(){
+        if($_POST){
+            $data = $this->input->post();
+            $pic = array();
+            $i =1;
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                       echo $this->upload->display_errors();
+                    }else{
+                        if($i == 1){
+                            $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
+                        }else{
+                            $data['pic'] = 'upload/logo/'.$this->upload->data('file_name');
+                        }
+                       
+                        unset($data['img'.$i]);
+                    }
+                }else{
+                    if($i == 1){
+                        $data['logo'] = $data['img'.$i];
+                    }else{
+                        $data['pic'] = $data['img'.$i];
+                    }
+                     
+                     unset($data['img'.$i]);
+                }
+                $i++;
+             }
+             if($this->mallShop_model->edit_store_info($data['store_id'],$data)){
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+               // echo "23";
+             }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+             }
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    // //商家简介
+    // function shopInfo(){
+    //      $data['page'] = $this->view_shopInfo;
+    //     $data['menu'] = array('shop','shopInfo');
+    //     $this->load->view('template.html',$data);
+    // }
+    //  //商品列表
     function goodsList(){
         //分类
         $data['cates'] = $this->mallShop_model->get_goods_cates();
@@ -163,29 +233,31 @@ class singleShop extends default_Controller {
             $data= $this->input->post();
             $pic = array();
             $i =1;
-            foreach($_FILES as $file=>$val){
-                if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'upload/goods/';
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-                    $config['max_size']     = 2048;
-                    $config['file_name'] = date('Y-m-d_His');
-                    $this->load->library('upload', $config);
-                    // 上传
-                    if(!$this->upload->do_upload('img'.$i)) {
-                       echo $this->upload->display_errors();
-                    }else{
-                        $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
-                        }
-                }
-                $i++;
-             }
-             $data['good_pic'] = json_encode($pic);
-             $data['storeid'] = '2';
-             if($this->mallShop_model->add_shop_goods($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
-             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsAdd')."'</script>";exit;
-             }
+            echo "<pre>";
+            var_dump($data);
+            // foreach($_FILES as $file=>$val){
+            //     if(!empty($_FILES['img'.$i]['name'])){
+            //         $config['upload_path']      = 'upload/goods/';
+            //         $config['allowed_types']    = 'gif|jpg|png|jpeg';
+            //         $config['max_size']     = 2048;
+            //         $config['file_name'] = date('Y-m-d_His');
+            //         $this->load->library('upload', $config);
+            //         // 上传
+            //         if(!$this->upload->do_upload('img'.$i)) {
+            //            echo $this->upload->display_errors();
+            //         }else{
+            //             $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
+            //             }
+            //     }
+            //     $i++;
+            //  }
+            //  $data['good_pic'] = json_encode($pic);
+            //  $data['storeid'] = '2';
+            //  if($this->mallShop_model->add_shop_goods($data)){
+            //     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
+            //  }else{
+            //     echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsAdd')."'</script>";exit;
+            //  }
         }else{
             $this->load->view('404.html');
         }

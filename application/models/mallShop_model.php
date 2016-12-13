@@ -14,7 +14,7 @@ class mallShop_model extends CI_Model
     //商品评论表
     public $shop_comment = 'hf_mall_comment'; 
     //商家订单表
-    public $shop_order = 'hf_mall_order';
+    public $shop_order = 'hf_mall_order';  
     function __construct()
     {
         parent::__construct();
@@ -112,6 +112,17 @@ class mallShop_model extends CI_Model
         return $this->db->where($where)->update($this->shop_order,$data);
     }
 
+    //返回店铺详情
+    function get_basess_info($storeid){
+        $where['store_id'] = $storeid;
+        $query = $this->db->where($where)->get($this->shop_store);
+        return $query->row_array();
+    }
+    //修改店铺详情
+    function edit_store_info($id,$data){
+        $where['store_id'] = $id;
+        return $this->db->where($where)->update($this->shop_store,$data);
+    }
 
 }
 

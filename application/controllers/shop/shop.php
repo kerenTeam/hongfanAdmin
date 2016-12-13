@@ -36,17 +36,21 @@ class shop extends default_Controller {
     {  
 
          $data['page'] = $this->view_shopIndex;
-         $data['menu'] = array('shop','shopList');
+         $data['menu'] = array('store','shopList');
     	 $this->load->view('template.html',$data);
     }
     //返回列表信息
     function return_shop_page(){
-        if($_POST){
+         if($_POST){
             $list = $this->shop_model->shop_list();
-            echo json_encode($list);
-        }else{
-            echo "2";
-        }
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+         }else{
+             echo "2";
+         }
     }
 
     //商家状态修改
@@ -100,16 +104,70 @@ class shop extends default_Controller {
     }
     //新增商家
     function addShop(){
+        //获取所有业态    
         $data['page'] = $this->view_addShop;
-        $data['menu'] = array('shop','addShop');
+        $data['menu'] = array('store','shopList');
         $this->load->view('template.html',$data);
        
     }
+    //新增商家操作
+    function add_shop_store(){
+        if($_POST){
+            $data = $this->input->post();
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            unset($data['password'],$data['username']);
+
+            var_dump($data);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
     //编辑商家信息
     function editShop(){
-        $data['page'] = $this->view_EditShop;
-        $data['menu'] = array('shop','shopList');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取一级业态
+            $data['yetai'] = $this->shop_model->store_type_level();
+            //获取商家信息
+            $store = $this->shop_model->get_store_Info($id);
+            //获取账户
+            $data['user'] = $this->shop_model->get_login_store($store['business_id']);
+            $data['store'] = $store;
+            $data['page'] = $this->view_EditShop;
+            $data['menu'] = array('store','shopList');
+            $this->load->view('template.html',$data);
+        }
+    }
+    //编辑商家操作
+    function edit_shop_store(){
+        if($_POST){
+            $data = $this->input->post();
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    //返回二级业态
+    function return_store_type(){
+        if($_POST){
+            $gid = $_POST['gid'];
+            //根据gid返回
+            $type = $this->shop_model->store_type_tow($gid);
+            if(empty($type)){
+                echo "2";
+            }else{
+                echo json_encode($type);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //导入商家信息
+    function impolt_store(){
+
     }
 
 
