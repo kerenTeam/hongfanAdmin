@@ -18,6 +18,13 @@ padding: 5px 6px!important;
     border:1px solid #75a5ca;
     color:#75a5ca;
 }*/
+
+.am-modal-bd textarea{
+    margin:0 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+}
 </style>
 <!-- 菜单 -->
 <ul class="sidebar-nav">
@@ -171,6 +178,7 @@ padding: 5px 6px!important;
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-trash "></span> 批量删除</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
@@ -184,21 +192,23 @@ padding: 5px 6px!important;
                                     <th class="shop_id">编号 </th>
                                     <th class="shop_name">用户 </th>
                                     <th class="shop_name">提交时间 </th>
+                                    <th class="shop_name">评论商品名</th>
                                     <th class="shop_name">评论商品详情</th>
                                     <th class="shop_type">评论内容 </th>
                                     <th class="shop_type">回复内容 </th>
                                     <th>创建时间</th>
                                     <th>回复状态</th>
-                                    <th>状态</th>
+                                    <th>评论状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="commentList">
                                 <tr>
                                     <td  class="am-text-middle"><input type="checkbox"></td>
                                     <td class="am-text-middle">F1003</td>
                                     <td class="am-text-middle">用户family</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
+                                    <td class="am-text-middle">华为手机</td>
                                     <td class="am-text-middle">
                                         <a href="#" >
                                             商品详情
@@ -207,7 +217,7 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">这个产品非常好，我很喜欢</td>
                                     <td class="am-text-middle">感谢，我们会再接再厉</td>
                                     <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">已回复</td>
+                                    <td class="am-text-middle">未回复</td>
                                     <td class="am-text-middle">
                                         <div class="am-dropdown" data-am-dropdown>
                                             <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>显示 <span class="am-icon-caret-down"></span></button>
@@ -219,99 +229,9 @@ padding: 5px 6px!important;
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
+                                            <a class="tpl-table" data-am-modal="{target: '#responseComment'}">
+                                                <i class="am-icon-toggle-on"></i> 回复
                                             </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td  class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">用户family</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">
-                                        <a href="#" >
-                                            商品详情
-                                        </a>
-                                    </td>
-                                    <td class="am-text-middle">这个产品非常好，我很喜欢</td>
-                                    <td class="am-text-middle">感谢，我们会再接再厉</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">已回复</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>显示 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">显示</a></li>
-                                                <li><a href="#">隐藏</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td  class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">用户family</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">
-                                        <a href="#" >
-                                            商品详情
-                                        </a>
-                                    </td>
-                                    <td class="am-text-middle">这个产品非常好，我很喜欢</td>
-                                    <td class="am-text-middle">感谢，我们会再接再厉</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">已回复</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>显示 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">显示</a></li>
-                                                <li><a href="#">隐藏</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td  class="am-text-middle"><input type="checkbox"></td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">用户family</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">
-                                        <a href="#" >
-                                            商品详情
-                                        </a>
-                                    </td>
-                                    <td class="am-text-middle">这个产品非常好，我很喜欢</td>
-                                    <td class="am-text-middle">感谢，我们会再接再厉</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">已回复</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>显示 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">显示</a></li>
-                                                <li><a href="#">隐藏</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
                                             <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
@@ -322,19 +242,10 @@ padding: 5px 6px!important;
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                            <p>共5条数据，共4页</p>
+                    <div class="am-u-lg-12 am-cf am-text-center">
+                        <div class="" id="paging_list">
                         </div>
+                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
                     </div>
                 </div>
             </div>
@@ -344,9 +255,254 @@ padding: 5px 6px!important;
 </div>
 </div>
 </div>
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
-<script src="assets/js/dataTables.responsive.min.js"></script>
-<script src="assets/js/app.js"></script>
+<!--回复评论的弹窗-->
+
+
 </body>
 </html>
+<script src="assets/js/artTemplate-native.js"></script>
+<script src="assets/laypage/laypage.js"></script>
+<script type="text/javascript">
+    //异步刷新的ajax请求   
+    function getList(dataurl,data){
+        $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){
+            
+            var res = eval(result);
+            console.log(res);
+            if(res!=2){
+                var nums = 2; //每页出现的数量
+                var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
+                var thisDate = function(curr){
+                    var listData = '' , last = curr*nums - 1;
+                    last = last >= res.length ? (res.length-1) : last;
+                     for(var i = (curr*nums - nums); i <= last; i++){
+                        res[i].title=res[i].title.split(' ')[0];
+                        listData+= template('commentListModal',res[i]);
+                     }
+                    
+                    return listData;
+                };
+                //调用分页
+                laypage({
+                    cont: 'paging_list',
+                    pages: pages,
+                    jump: function(obj){
+                        document.getElementById('commentList').innerHTML = thisDate(obj.curr);
+                        $('.editGoods').click(function(){//编辑商品信息
+                            var commentId=$(this).attr('data-id');
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + commentId + "');?>");
+                        });
+                        for(var i=0;i<$('.tpl-del').length;i++){
+                            var commentId=$('.tpl-del').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ commentId +"'}");
+                            if($('.commentState option:selected').eq(i).val()=="下架"){
+                                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+                            }
+                            var recommentId=$('.tpl-del').eq(i).attr('data-id');
+                            $('.unresponse').eq(i).attr("data-am-modal","{target: '#re"+ recommentId +"'}");                        
+                        }
+                        //更改商品的状态
+                        $('.commentState').change(function(){
+                            var commentId=$(this).attr('data-id');
+                            if($(this).find('option:selected').val()=="上架"){
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ commentId+'&state=1',
+                                    success: function(data){
+                                        if(data==1){
+    
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                            }else{
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ commentId+'&state=0',
+                                    success: function(data){
+                                        if(data==1){
+
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                            }
+                            
+                            
+                        });
+
+                        //删除商品的AJAX请求
+                        $('.sureDelete').click(function(){
+                            var commentId=$(this).attr('data-id');
+                            for(var i=0;i<$('.trClass').length;i++){
+                                if($('table tbody tr').eq(i).attr('data-id')==commentId){
+                                    $.ajax({
+                                        type:'post',
+                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                                        data: 'goodsid='+commentId,
+                                        success: function(data){
+                                            if(data==1){                                           
+                                                for(var i=0;i<$('.trClass').length;i++){
+                                                    if($('.trClass').eq(i).attr('data-id')==commentId){
+                                                        $('.trClass').eq(i).remove();
+                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                                    }
+                                                }
+                                            }else{
+                                                alert("操作失败！");
+                                            }
+                                            
+                                        },
+                                        error:function(xhr,type,errorThrown){
+                                            alert("操作失败，请检查网络设置！");
+                                        }
+                                    });
+                                }
+                            }
+                            
+                        });
+                        //回复评论的AJAX请求
+                        $('.sureComment').click(function(){
+                            var commentId=$(this).attr('data-id');
+                            for(var i=0;i<$('.trClass').length;i++){
+                                if($('table tbody tr').eq(i).attr('data-id')==commentId){
+                                    var contentText=$('#contentText').val();
+                                    $.ajax({
+                                        type:'post',
+                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                                        data: 'goodsid='+contentText,
+                                        success: function(data){
+                                            if(data==1){                                           
+                                                $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
+                                            }else{
+                                                alert("操作失败！");
+                                            }
+                                            
+                                        },
+                                        error:function(xhr,type,errorThrown){
+                                            alert("操作失败，请检查网络设置！");
+                                        }
+                                    });
+                                }
+                            }
+                            
+                        });
+                        
+                    }
+                })
+            }else{
+                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#commentList");
+            }
+
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+}
+$(document).ready(function(){
+    //加载列表数数据
+    // getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+    //刷新页面
+    $('.refresh').click(function(){
+        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+    });
+    //点击搜索
+    $('.searchGoods').click(function(){
+        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
+        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
+        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
+        commentState=$('#commentState option:selected').val(),checkState=$('#checkState option:selected').val();
+        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+    });
+})
+</script>
+<script type="text/html" id="commentListModal">
+    <tr class="trClass" data-id="<%= comment_id%>">
+        <td class="am-text-middle"><%= comment_id%></td>
+        <td class="am-text-middle"><%= userName%></td>
+        <td class="am-text-middle"><%= comment_time%></td>
+        <td class="am-text-middle"><%= goods_name%></td>
+        <td class="am-text-middle"><a href="<%= ggods_id%>"></a></td>
+        <td class="am-text-middle"><%= commendContent%></td>
+        <td class="am-text-middle commendResponse"><%= commendResponse%></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle"><%= responseState%></td>
+        <td class="am-text-middle">
+        <%if(comment_state=="1"){%>
+            <select id="" class="commentState" name="commentState" data-id="<%= comment_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="显示" selected="selected">显示</option>
+                <option value="隐藏">隐藏</option>
+            </select>
+        <%}else{%>
+            <select id="" class="commentState" name="commentState" data-id="<%= comment_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="显示">显示</option>
+                <option value="隐藏" selected="selected">隐藏</option>
+            </select>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <%if(comment_state=="1"){%>
+                <a class="tpl-table unresponse">
+                    <i class="am-icon-toggle-on"></i> 回复
+                </a>
+                 <%}else{%>
+                 <a class="tpl-table">
+                    <i class="am-icon-toggle-on"></i> 已回复
+                </a>
+                 <%}%>
+                
+                <a data-id="<%= comment_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= comment_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= comment_id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= comment_id%>">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">回复评论</div>
+        <div class="am-modal-bd am-text-center">
+            <textarea class="am-u-sm-10" rows="2" type="text" name="comment" id="contentText" placeholder="请输入回复评论的内容" ></textarea> 
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn sureComment" data-id="<%= comment_id%>" data-am-modal-confirm>评论</span>
+        </div>
+    </div>
+</div>
+</script>

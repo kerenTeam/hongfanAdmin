@@ -72,8 +72,8 @@ class singleShop extends default_Controller {
         if($_POST){
             //查询出商家有几个店铺
            $store = $this->mallShop_model->get_store_list($this->session->businessId);
-           
-           $arr = $this->mallShop_model->get_goods_list($store_id['store_id']);
+           $arr = $this->mallShop_model->get_goods_list($store['store_id']);
+
            if(empty($arr)){
                 echo "2";
            }else{

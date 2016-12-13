@@ -2,7 +2,20 @@
 <?php $this->load->view('common.html');?>
 
     <script src="assets/js/echarts.min.js"></script>
-
+<style type="text/css">
+    #paging_list div a{
+    border: 1px solid #19a7f0;
+    color: #19a7f0;
+    }
+    #paging_list div a:hover{
+        background: #19a7f0;
+        color: #fff;
+    }
+    #paging_list div .laypage_curr{
+        background: #19a7f0;
+        color: #fff;
+    }
+</style>
  <!-- 菜单 -->
  <?php if(empty($menu)){$menu = array('index','index');}?>
  <?php if($this->session->users['gid'] == '2' || isset($this->session->businessId)):?>

@@ -995,10 +995,10 @@ padding: 5px 6px!important;
     }
 
     //删除图片
-    $(".deleteImg").click(function(){
-        
+    $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        
+        $(this).prevUntil('.preview').find('input').val(" ");
+        $(this).prevUntil('.preview').find('input').files="";
     });
 </script>
 </body>

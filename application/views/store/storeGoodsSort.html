@@ -26,6 +26,7 @@ td.am-text-middle img{
 .refresh{
     cursor: pointer;
 }
+
 </style>
 
 <!-- 内容区域 -->
@@ -93,9 +94,10 @@ td.am-text-middle img{
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center">
+                        <div class="" id="paging_list">
                         </div>
+                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
                     </div>
                 </div>
             </div>
@@ -116,12 +118,14 @@ td.am-text-middle img{
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){
-            //alert(result + '<br />');
+        success: function(result){         
             var res = eval(result);
+            //console.log(res);
             if(res.length){
                 var nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
                 var thisDate = function(curr){
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
@@ -149,7 +153,6 @@ td.am-text-middle img{
                             var dataId=$(this).attr('data-id');
                             for(var i=0;i<$('.trClass').length;i++){
                                 if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                                    $('table tbody tr').eq(i).remove();
                                     $.ajax({
                                         type:'post',
                                         url:'<?php echo site_url('/store/store/del_store_cate');?>',
@@ -181,7 +184,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('#storeGoodsList').html("对不起，没有更多数据了！");
+                $('#storeGoodsList').html("暂无相关分类信息！");
             }
 
             

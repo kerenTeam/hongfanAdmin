@@ -85,7 +85,12 @@ class store extends default_Controller {
         $data['menu'] = array('store','storeGoodsList');
          $this->load->view('template.html',$data);
     }
-
+    //审核商品
+    function storeGoodsCheck(){
+        $data['page'] = $this->view_storeGoodsCheck;
+        $data['menu'] = array('store','storeGoodsCheck');
+         $this->load->view('template.html',$data);
+    }
     //添加分类
     function storeAddSort(){
         //获取顶级分类

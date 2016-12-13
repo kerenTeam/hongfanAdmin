@@ -64,7 +64,7 @@ class mallShop_model extends CI_Model
     }
     //商家商品列表
     function get_goods_list($storeid){
-        $where['store_id'] = $storeid;
+        $where['storeid'] = $storeid;
         $query = $this->db->where($where)->order_by('create_time','desc')->get($this->shop_goods);
         return $query->result_array(); 
     }
