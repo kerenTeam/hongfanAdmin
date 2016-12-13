@@ -12,7 +12,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/shop/');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/shop/shop/add_shop_store');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title am-cf">商家基础信息</div>
@@ -21,7 +21,7 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group">
                                 <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
-                                <input type="text" name="doc-vld-name-1" id="marketName" minlength="2" value="宏帆广场" readonly required />
+                                <input type="text" id="marketName" minlength="2" value="宏帆广场" readonly required />
                             </div>
                             <div class="am-form-group">
                                 <label for="username">账户 <span class="red">*</span>：</label>
@@ -53,18 +53,10 @@
                                 <label for="oneType">一级业态<span class="red">*</span>：</label>
                                 <select id="oneType" name="commercial_type_name" required>
                                     <option value="">-=请选择一项=-</option>
-                                    <option value="option1">百货</option>
-                                    <option value="option2">配套服务</option>
-                                    <option value="option3">超市/便利店</option>
-                                    <option value="option3">数码音像</option>
-                                    <option value="option3">家居生活</option>
-                                    <option value="option3">儿童</option>
-                                    <option value="option3">休闲娱乐</option>
-                                    <option value="option3">餐饮</option>
-                                    <option value="option3">饰品</option>
-                                    <option value="option3">药品/护理/保健</option>
-                                    <option value="option3">鞋包</option>
-                                    <option value="option3">服装</option>
+                                    <?php foreach($yetai as $val):?>
+                                    <option value="<?php echo $val['id'];?>"><?php echo $val['type_name'];?></option>
+                                <?php endforeach;?>
+                                  
                                 </select>
                             </div>
                              <div class="am-form-group">

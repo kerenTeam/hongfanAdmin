@@ -60,6 +60,15 @@ class shop_model extends CI_Model
         $query = $this->db->query($sql);
         return $query->row_array();
     }
+    //修改商家信息
+    function edit_store_info($id,$data){
+        $where['store_id'] = $id;
+        return $this->db->where($where)->update($this->shop_store,$data);
+    }
+    //新增商家
+    function add_store_info($data){
+        return $this->db->insert($this->shop_store,$data);
+    }
 
 }
 
