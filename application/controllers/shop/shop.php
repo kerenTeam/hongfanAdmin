@@ -104,7 +104,9 @@ class shop extends default_Controller {
     }
     //新增商家
     function addShop(){
-        //获取所有业态    
+        //获取所有业态
+        $data['yetai'] = $this->shop_model->store_type_level(); 
+           
         $data['page'] = $this->view_addShop;
         $data['menu'] = array('store','shopList');
         $this->load->view('template.html',$data);
@@ -117,8 +119,11 @@ class shop extends default_Controller {
             $username = $this->input->post('username');
             $password = $this->input->post('password');
             unset($data['password'],$data['username']);
-
-            var_dump($data);
+            if($this->shop_model->add_store_info($data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            }
         }else{
             $this->load->view('404.html');
         }
@@ -145,6 +150,16 @@ class shop extends default_Controller {
     function edit_shop_store(){
         if($_POST){
             $data = $this->input->post();
+            $arr['username'] = $this->input->post('username');
+            $arr['password'] = $this->input->post('password');
+            unset($data['username'],$data['password']);
+          
+            if($this->shop_model->edit_store_info($data['store_id'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/editShop/').$data['store_id']."'</script>";exit;
+            }
+
         }else{
             $this->load->view('404.html');
         }
