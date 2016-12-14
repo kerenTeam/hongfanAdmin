@@ -29,7 +29,16 @@ td.am-text-middle img{
 .tableImg{
     width:80px;
 }
-
+.deliverOrder{
+    border:1px solid #1fb5ac;
+    padding:2px 5px;
+    color: #15b5ac;
+}
+.modifyOrder{
+    border:1px solid #e0690c;
+    padding:2px 5px;
+    color: #e0690c;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -50,31 +59,9 @@ td.am-text-middle img{
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsType" class="am-form-label am-u-sm-3">条件搜索:</label>
-                        <div class="am-u-sm-9">
-                            <select id="goodsType" name="goodsType">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">商品名称</option>
-                                <option value="option2">卖家</option>
-                                <option value="option2">买家</option>
-                                <option value="option2">订单金额</option>
-                                <option value="option2">附加金额</option>
-                                <option value="option2">附加名称</option>
-                                <option value="option2">买家名称</option>
-                                <option value="option2">买家地址</option>
-                                <option value="option2">买家邮编</option>
-                                <option value="option2">买家电话</option>
-                                <option value="option2">买家手机</option>
-                                <option value="option2">发货快递</option>
-                                <option value="option2">发货单号</option>
-                                <option value="option2">备注</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsBatch" class="am-form-label am-u-sm-3">状态:</label>
                         <div class="am-u-sm-9">
-                        <select id="goodsBatch" name="goodsBatch">
+                        <select id="orderState" name="goodsBatch">
                             <option value="">-=请选择一项=-</option>
                             <option value="option1">待确认</option>
                             <option value="option2">待付款</option>
@@ -93,7 +80,7 @@ td.am-text-middle img{
                      <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsBatch" class="am-form-label am-u-sm-3">排序方式:</label>
                         <div class="am-u-sm-9">
-                        <select id="goodsBatch" name="goodsBatch">
+                        <select id="orderType" name="goodsBatch">
                             <option value="">-=请选择一项=-</option>
                             <option value="option1">下单时间降序</option>
                             <option value="option2">下单时间升序</option>
@@ -113,24 +100,18 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">交易总额:</label>
                         <div class="am-u-sm-9">
-                            <input type="number" class="stable" name="startPrice" min="1"  />
+                            <input type="number" class="stable" id="startMoney" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
-                            <input type="number" class="stable" name="endPrice" min="1"  />
+                            <input type="number" class="stable" id="endMoney" name="endPrice" min="1"  />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="businessTime" class="am-form-label am-u-sm-3">下单时间:</label>
                         <div class="am-u-sm-9">
                             <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                              <p>开始日期应小于结束日期！</p>
                             </div>
                             <div class="am-g">
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
-                              </div>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="startTime"></button><span id="my-startDate">2014-12-20</span>
                             </div>
                         </div>
                     </div>
@@ -138,23 +119,23 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">订单单号:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="startPrice" name="startPrice" />
+                            <input type="text" id="orderid" name="startPrice" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4" style="clear: both;">
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">买家:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="startPrice" name="startPrice" />
+                            <input type="text" id="buyer" name="startPrice" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl">
                         <label for="source_state" class="am-u-sm-3 am-form-label">关键词搜索:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入搜素的关键字">
+                            <input type="text" id="keywords" placeholder="请输入搜素的关键字">
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                        <button type="submit" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
@@ -165,7 +146,7 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh refresh"></span> 刷新</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh refresh"></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -174,128 +155,17 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id" colspan="2">商品信息 </th>
-                                    <th class="moll_name">数量 </th>
+                                    <th class="shop_id">订单编号 </th>
+                                    <th class="moll_name">商品数量 </th>
                                     <th class="shop_id">订单金额 </th>
+                                    <th class="shop_yetai">买家 </th>
                                     <th class="shop_yetai">下单时间 </th>
-                                    <th class="brand">买家 </th>
+                                    <th class="brand">更新时间</th>
                                     <th class="shop_block">订单状态 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="shopOrderList">
-                                <tr>
-                                    <td colspan="8" bgcolor="#f5f5f5">
-                                      <div class="tpl-table-black-operation am-fr">
-                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">
-                                                确认订单
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder/1';?>">
-                                                修改订单
-                                            </a>
-                                            <a onClick="return confirm('确认关闭交易?');" href="#"  class="tpl-table-black-operation-del" data-am-modal="{target: '#closeTrade'}">
-                                                交易关闭
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder/1';?>" class="">
-                                                 订单详情
-                                            </a>
-                                        </div>  
-                                        订单编号：S12345678
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
-                                    <td class="am-text-middle">买家昵称</td>
-                                    <td class="am-text-middle">待确认
-                                    <br />
-                                    <button class="am-btn am-btn-secondary am-btn-xs">确认</button></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="8" bgcolor="#f5f5f5">
-                                      <div class="tpl-table-black-operation am-fr">
-                                            <a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">
-                                                修改订单
-                                            </a>
-                                            <a onClick="return confirm('确认关闭交易?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#closeTrade'}">
-                                                交易关闭
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
-                                                 订单详情
-                                            </a>
-                                        </div>  
-                                        订单编号：S12345678
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
-
-                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
-                                    <td class="am-text-middle">买家昵称</td>
-                                    <td class="am-text-middle">待付款
-                                    <br />
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td colspan="8" bgcolor="#f5f5f5">
-                                      <div class="tpl-table-black-operation am-fr">
-                                            <a class="" data-am-modal="{target: '#sureDeliverGoods'}">
-                                                确认发货
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
-                                                 订单详情
-                                            </a>
-                                        </div>  
-                                        订单编号：S12345678
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
-
-                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
-                                    <td class="am-text-middle">买家昵称</td>
-                                    <td class="am-text-middle">已付款
-                                    <br />
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td colspan="8" bgcolor="#f5f5f5">
-                                      <div class="tpl-table-black-operation am-fr">
-                                            <a onClick="return confirm('确定完成?');" href="#"  class="tpl-table-black-operation-del" data-am-modal="{target: '#sureComplish'}">
-                                                确认完成
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>" class="">
-                                                 订单详情
-                                            </a>
-                                        </div>  
-                                        订单编号：S12345678
-                                    </td>  
-                                </tr>
-                                <tr>
-                                    <td width="70"><img class="tableImg" src="assets/img/a5.png"></td>
-
-                                    <td class="am-text-middle"><a href="javascript:;">韩版上装</a></td>
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle">300.00</td>
-                                    <td class="am-text-middle">寒渊阁粉丝</td>
-                                    <td class="am-text-middle">2016-10-25<br />10:12:13</td>
-                                    <td class="am-text-middle">买家昵称</td>
-                                    <td class="am-text-middle">已付款
-                                    <br />
-                                    </td>  
-                                </tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -313,48 +183,42 @@ td.am-text-middle img{
 </div>
 
 <!--确认发货的提示框-->
-
-
 <script type="text/javascript">
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
+    //导入数据
+    function uploadFiles(){
+        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
+       // console.log(fileObj.name.split('.')[1]);
+        var FileController="<?php echo site_url('/shop/shop/impolt_store');?>";//上传文件的后台地址
+        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
+           var form=new FormData();
+            form.append('file',fileObj); //文件对象
+            //实例化XMLHttpRequest对象
+            var xhr=new XMLHttpRequest();
+            xhr.open('post',FileController,true);
+            xhr.onload=function(){
+                alert("导入成功！");
+                location.reload();
+            
+            };
+            xhr.send(form); 
+            return true;
+        }else{
+            alert("上传文件的格式错误！");
+            return false;
         }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-
-
+        
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){
-            
+        success: function(result){         
             var res = eval(result);
+            for(var i=0;i<res.length;i++){
+                res[i].goods_data=eval(res[i].goods_data);
+            }
             console.log(res);
             if(res!=2){
                 var nums = 2; //每页出现的数量
@@ -365,8 +229,7 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
-                        listData+= template('shopOrderList',res[i]);
+                        listData+= template('shopOrderModal',res[i]);
                      }
                     
                     return listData;
@@ -377,94 +240,52 @@ td.am-text-middle img{
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('shopOrderList').innerHTML = thisDate(obj.curr);
-                        $('.editSort').click(function(){//编辑商品信息
+                        $('.editOrder').click(function(){//查看订单信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/sureOrder/" + dataId + "');?>");
                         });
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="下架"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-                            }                          
-                        }
-                        //更改商品的状态
-                        $('.goodsState').change(function(){
+                         $('.modifyOrder').click(function(){//修改订单信息
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopEditOrder/" + dataId + "');?>");
+                        });
+                        
+                        for(var i=0;i<$('.deliverOrder').length;i++){
+                            var dataId=$('.deliverOrder').eq(i).attr('data-id');
+                            $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                      
+                        }
+                        //确认发货的AJAX请求
+                        $('.sureDeliver').click(function(){
+                            var dataId=$(this).attr('data-id');
+                            var send_type=$('.send_type').val();
+                            var send_no=$('.send_no').val();
+                            if(send_type && send_no){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=1',
+                                    url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
+                                    data: 'send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId,
                                     success: function(data){
-                                        if(data==1){
-    
+                                        if(data==1){ 
+                                            getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
+                                            alert("操作成功！");
+
                                         }else{
                                             alert("操作失败！");
                                         }
-                                        
                                     },
                                     error:function(xhr,type,errorThrown){
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
                             }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }
-                            $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
-                            
-                        });
-
-                        //删除商品的AJAX请求
-                        $('.sureDelete').click(function(){
-                            var dataId=$(this).attr('data-id');
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+dataId,
-                                        success: function(data){
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==dataId){
-                                                        $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
-                                                    }
-                                                }
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
-                                }
+                                alert("请正确填写发货信息！");
+                                return false;
                             }
                             
                         });
-                        
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopGoodsList");
+                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopOrderList");
             }
 
             
@@ -476,76 +297,90 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+    getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
     });
     //点击搜索
     $('.searchOrder').click(function(){
-        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
-        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
+        var orderState=$('#orderState option:selected').val(),orderType=$('#orderType option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),orderid=$('#orderid').val(),buyer=$('#buyer').val(),keywords=$('#keywords').val();
+        
         getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
     });
 })
 </script>
-<script type="text/html" id="shopGoodsModal">
-    <tr>
-        <td width="70"><img class="tableImg" src="<%= thumb%>"></td>
-        <td class="am-text-middle"><a href="javascript:;"><%= thumb%></a></td>
-        <td class="am-text-middle"><%= number%></td>
-        <td class="am-text-middle"><%= price%></td>
+<script type="text/html" id="shopOrderModal">   
+    <tr class="trClass" data-id="<%= order_id%>">
+        <td class="am-text-middle"><%= order_id%></td>
+        <td class="am-text-middle"><%= goods_data[0].totalNum%></td>
+        <td class="am-text-middle"><%= amount%></td>
+        <td class="am-text-middle"><%= user_name%></td>
         <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle"><%= buyer%></td>
-        <td class="am-text-middle"><%= order_state%>
-        <br />
-        <button class="am-btn am-btn-secondary am-btn-xs">确认</button></td>
-    </tr>
-    <tr>
-        <td colspan="8" bgcolor="#f5f5f5">
-          <div class="tpl-table-black-operation am-fr">
-                <a data-id="<%= order_id%>" class="modifyOrder">
-                    修改订单
+        <td class="am-text-middle"><%= create_time%></td>
+        <%if(order_status==1) {%>
+            <td class="am-text-middle">
+                未支付&nbsp;&nbsp;
+                <a data-id="<%= order_id%>" class="modifyOrder"><i class="am-icon-pencil"></i>修改订单</a>
+            </td>
+        <%}else if(order_status==2){%>
+            <td class="am-text-middle">
+                已支付&nbsp;&nbsp;
+                <a data-id="<%= order_id%>" class="deliverOrder"><i class="am-icon-paper-plane"></i>发货</a>
+            </td>
+        <%}else if(order_status==3){%>
+            <td class="am-text-middle">
+                已发货
+            </td>
+        <%}else if(order_status==4){%>
+            <td class="am-text-middle">
+                已收货
+            </td>
+        <%}else if(order_status==5){%>
+            <td class="am-text-middle">
+                已评价
+            </td>
+        <%}else if(order_status==6){%>
+            <td class="am-text-middle">
+                求退货
+            </td>
+        <%}else if(order_status==7){%>
+            <td class="am-text-middle">
+                退货中
+            </td>
+        <%}else if(order_status==8){%>
+            <td class="am-text-middle">
+                退款
+            </td>
+        <%}else if(order_status==9){%>
+            <td class="am-text-middle">
+                其他
+            </td>
+        <%}%>
+        
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= order_id%>" class="editOrder">
+                    <i class="am-icon-eye"></i> 查看详情
                 </a>
-                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
-                    交易关闭
-                </a>
-                <a data-id="<%= order_id%>" class="editSort">
-                     订单详情
-                </a>
-            </div>  
-            订单编号：<%= order_id%>
-        </td>  
-    </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= order_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
             </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= goods_id%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= order_id%>">
+        </td>
+    </tr>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= order_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">确认发货</div>
             <div class="am-modal-bd">
                 <!-- 本地生活 信息展示类 -->
-                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+                <form class="am-form tpl-form-line-form">
                     <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">当前操作 </label>
-                        <p class="am-u-sm-9 am-form-label am-text-danger am-text-left">确认发货</p>  
+                        <label class="am-u-sm-3 am-form-label" style="line-height: 37px">当前操作 </label>
+                        <div class="am-u-sm-9 am-form-label am-text-danger am-text-left">确认发货</div>  
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">快递类型<span class="red">*</span> </label>
-                        <div class="am-u-sm-9">
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
-                                <option value=''>输入查找/选择</option>
+                        <div class="am-u-sm-9 am-text-left">
+                            <select class="send_type am-input" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
+                                <option value="">输入查找/选择</option>
                                 <option value="EMS">EMS</option>
                                 <option value="SF">顺丰快递</option>
                                 <option value="STO">申通快递</option>
@@ -560,12 +395,12 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入快递单号！" name='send_no' required>
+                            <input type="text" placeholder="请输入快递单号！" class="send_no" name='send_no' required>
                         </div>
                     </div>
                     <div class="am-form-group am-btn-group-xs">
-                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                        <button type="submit" class="am-btn am-btn-danger" data-id="<%= goods_id%>">确定</button>
+                        <span type="button" class="am-btn am-btn-default" data-am-modal-close>取消</span>
+                        <span  class="am-btn am-btn-danger sureDeliver" data-id="<%= order_id%>" data-am-modal-confirm>发货</span>
                     </div>
                 </form>
             </div>

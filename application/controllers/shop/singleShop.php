@@ -373,7 +373,8 @@ class singleShop extends default_Controller {
             $storeid = $_POST['storeid'];
             //h获取订单
             $orders = $this->mallShop_model->get_store_orders($storeid);
-            if(empty($order)){
+          
+            if(empty($orders)){
                 echo "2";
             }else{
                 echo json_encode($orders);
