@@ -122,44 +122,44 @@
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-form-icon am-form-feedback am-cf ">
                                         <label class="am-u-sm-3 am-form-label">管理员姓名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入姓名" name='name' minlength="2" minlength="10" required>
+                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员用户名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入用户名" name='name' minlength="2" minlength="10" required>
+                                            <input type="text" placeholder="请输入用户名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员密码 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="password" placeholder="请输入账号密码" name='name' minlength="2" minlength="10" required>
+                                            <input type="password" placeholder="请输入6-16位的账号密码" name='name' minlength="2" maxlength="16" required onchange="confirm(this)">
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select id="manageBrand" name="manageBrand" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <div class="am-u-sm-9"> <select onchange="confirmSelect()" id="manageBrand" name="manageBrand" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                             <option value="">输入查找/选择</option>
-                                            <option value="普通管理员">普通管理员</option>
+                                            <option value="普通管理员" selected="selected">普通管理员</option>
                                             <option value="超级管理员">超级管理员</option>
                                             <option value="其他">其他</option>
                                         </select>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="" class="am-u-sm-3 am-form-label">管理员头像 <span class="red">*</span></label>
                                          <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp"><i class="am-icon-cloud-upload"></i> 选择图片</span>
+                                              <span class="clickUp"> 选择图片</span>
                                             </div>
-                                            <span class="deleteImg am-text-center"><i class="am-icon-trash"></i> 删除</span> 
+                                            <span class="deleteImg am-text-center">删除</span> 
                                         </div>
                                     </div>
                                 
@@ -264,43 +264,44 @@
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-form-icon am-form-feedback am-cf ">
                                         <label class="am-u-sm-3 am-form-label">管理员姓名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入姓名" name='name' minlength="2" minlength="10" required>
+                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员用户名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入用户名" name='name' minlength="2" minlength="10" required>
+                                            <input type="text" placeholder="请输入用户名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员密码 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="password" placeholder="请输入账号密码" name='name' minlength="2" minlength="10" required>
+                                            <input type="password" placeholder="请输入6-16位的账号密码" name='name' minlength="2" maxlength="16" required onchange="confirm()">
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select id="manageBrand" name="manageBrand" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <div class="am-u-sm-9"> <select onchange="confirmSelect()" id="manageBrand" name="manageBrand" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                             <option value="">输入查找/选择</option>
-                                            <option value="普通管理员">普通管理员</option>
+                                            <option value="普通管理员" selected="selected">普通管理员</option>
                                             <option value="超级管理员">超级管理员</option>
                                             <option value="其他">其他</option>
                                         </select>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="" class="am-u-sm-3 am-form-label">管理员头像 <span class="red">*</span></label>
                                          <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp"> 选择图片</span>
                                             </div>
-                                            <span class="deleteImg am-text-center"><i class="am-icon-trash"></i> 删除</span> 
+                                            <span class="deleteImg am-text-center">删除</span> 
                                         </div>
                                     </div>
                                 
@@ -358,9 +359,8 @@
     }
 
     //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        
+    $(".deleteImg").click(function(){  
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');  
     });
+    
 </script>

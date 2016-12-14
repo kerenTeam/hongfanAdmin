@@ -78,7 +78,7 @@
                                     <th>属性名称</th>
                                     <th>&nbsp;</th>
                                 </thead>
-                                <tbody>
+                                <tbody class="addPropertyBody">
                                     <td class="propertyName"><input type="text" name="parameter_name[]"></td>
                                     <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
                                     <table class="addPropertyContent">
@@ -89,11 +89,11 @@
                                             <th>&nbsp;</th>
                                         </thead>
                                         <tbody class="addPropertyTr">
-                                            <tr>
+                                            <tr class="addPropertytr">
                                                 <td class="propertyValue"><input type="text" name="child_parameter_name"></td>
                                                 <td class="propertyValue"><input type="text" name="equivalence"></td>
                                                 <td class="propertyValue"><input type="text" name="Inventory"></td>
-                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore"></i></td>
+                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -101,7 +101,7 @@
                             </table>
                            
                             </div>
-                            <button type="button" class="am-btn-secondary am-text-center">添加</button>
+                            <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button>
                         </div>
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
@@ -260,6 +260,8 @@
         }
         $(this).datepicker('close');
       });
+
+      
   });
 //点击取消返回上一页
   $('#cancle').click(function(){
@@ -282,15 +284,64 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
+var i=1;
 //添加属性名称的设置
 $('.createMoreName').click(function(){   
-    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td class="propertyName"><input type="text" name="parameter_name"></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td class="propertyValue"><input type="text" name="child_parameter_name"></td><td class="propertyValue"><input type="text" name="equivalence"></td><td class="propertyValue"><input type="text" name="Inventory"></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+    i++;
+    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody class="addPropertyBody"><td class="propertyName"><input type="text" name="parameter_name"></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr class="addPropertytr"><td class="propertyValue"><input type="text" name="child_parameter_name"></td><td class="propertyValue"><input type="text" name="equivalence"></td><td class="propertyValue"><input type="text" name="Inventory"></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore'+ i +'"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
     //添加属性值的设置
-    $('.createMore').click(function(){
-       $('<tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-    });
-})
 
+    $('.createMore'+i).click(function(){
+       $('<tr class="addPropertytr"><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+    });    
+})
+// control();
+//添加属性值的设置
+    $('.createMore1').click(function(){
+       $('<tr class="addPropertytr"><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+    });  
 //实例化编辑器
   var ue = UE.getEditor('editor');
+
+// var orderSubmitData=[]
+// for(var i= 0;i<shopID.length;i++){ 
+//     var orderList={};
+//         orderList.storeid=shopID[i];
+//         orderList.postFee = arrpostFee[i];
+//         orderList.totalNum = arrNum[i];
+//         orderList.totalMoney = arrMoney[i];
+//         orderList.goodsData =[]; 
+//     for(var j = 0;j<orderStorage.length;j++){
+//      if(orderStorage[j].shopId == shopID[i]){
+//         orderList.goodsData.push(orderStorage[j])
+//      }
+     
+//     }
+//      orderSubmitData.push(orderList);
+// }
+
+//添加属性
+$('#addProperty').click(function(){
+    var propertyArray=[],propertyName=[];
+    for(var i=0;i<$('.addPropertyBody').length;i++){
+        var arrayPropertyName={},addPropertyBody={};
+        arrayPropertyName.property=$('.addPropertyBody').eq(i).find('input').val();    
+        arrayPropertyName.data=[];
+        var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
+        for(var j=0;j<addPropertytr.length;j++){
+            var td=addPropertytr.eq(j).find('td');
+            var addPropertytd={};
+            addPropertytd.value=td.eq('0').find('input').val();
+            addPropertytd.addvalue=td.eq('1').find('input').val();
+            addPropertytd.restory=td.eq('2').find('input').val();
+            arrayPropertyName.data.push(addPropertytd);
+
+
+        }
+        propertyArray.push(arrayPropertyName);
+    }
+    
+    console.log(JSON.stringify(propertyArray));
+});
+
 </script>

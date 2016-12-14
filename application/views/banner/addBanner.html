@@ -51,14 +51,14 @@
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="shopName">Banner名称 ：</label>
-                                <input type="text" id="shopName" name="shopName" max-length="15" placeholder="建议不超过十四个字符" value="" required />
+                                <input type="text" id="shopName" name="shopName" maxlength="10" minlength="2" class="am-form-field" placeholder="建议输入2-10位字符" value="" required />
                             </div> 
                             <div class="am-form-group">
                                 <label for="user-weibo">图片：</label>
                                 <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add"  required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                        <br />

@@ -91,13 +91,13 @@ padding: 5px 6px!important;
                                         <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
 											<input type='hidden' name='type_name' value="<?php echo $id;?>" />	
-                                            <input type="text" placeholder="请输入标题" name='name' minlength="4" required>
+                                            <input type="text" placeholder="请输入标题,不超过十四个字符" name='name' minlength="2" maxlength="14" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">星级 </label>
                                         <div class="am-u-sm-9">
-                                            <input type="number" name='star' min="0" max="5">
+                                            <input type="number" name='star' min="1" max="5">
                                         </div>
                                     </div>
                                
@@ -122,13 +122,13 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name='link_man' required>
+                                            <input type="text" maxlength="15" minlength="2" name='link_man' required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                            <input type="tel" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -150,7 +150,7 @@ padding: 5px 6px!important;
                                         </div>
                                         <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                               <span class="clickUp">banner2</span>
@@ -159,7 +159,7 @@ padding: 5px 6px!important;
                                         </div>
                                         <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                               <span class="clickUp">banner3</span>
@@ -536,7 +536,7 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" placeholder="请输入标题" name='title' minlength="4" required="">
+                                            <input type="text" placeholder="请输入标题,不超过十四个字符" name='title' minlength="4" maxlength="14" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -577,7 +577,7 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                            <input type="tel" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
