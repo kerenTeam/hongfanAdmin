@@ -30,7 +30,7 @@
                             </div> 
                             <div class="am-form-group">
                                 <label for="password">密码 <span class="red">*</span>：</label>
-                                <input type="password" name="password" minlength="6" value="<?php echo substr($user['password'],26);?>" required/>
+                                <input type="password" name="password" minlength="6" value="<?php echo $user['password'];?>" required/>
                             </div>
                          
                             <div class="am-form-group">
@@ -55,7 +55,7 @@
                                 <select id="oneType" name="commercial_type_name" required>
                                     <option value="">-=请选择一项=-</option>
                                     <?php foreach($yetai as $val):?>
-                                    <option value="<?php echo $val['id'];?>"><?php echo $val['type_name'];?></option>
+                                    <option value="<?php echo $val['id'];?>" <?php if($val['id'] == $store['commercial_type_name']){echo "selected";}?>><?php echo $val['type_name'];?></option>
                                      <?php endforeach;?>
                                 </select>
                             </div>
