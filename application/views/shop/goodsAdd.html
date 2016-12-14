@@ -1,4 +1,4 @@
-
+ 
 <style type="text/css">
   #preview{
         width:150px !important;
@@ -79,7 +79,7 @@
                                     <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
-                                    <td><input type="text" name="parameter_name[]"></td>
+                                    <td class="propertyName"><input type="text" name="parameter_name[]"></td>
                                     <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
                                     <table class="addPropertyContent">
                                         <thead>
@@ -90,10 +90,10 @@
                                         </thead>
                                         <tbody class="addPropertyTr">
                                             <tr>
-                                                <td><input type="text" name="child_parameter_name"></td>
-                                                <td><input type="text" name="equivalence"></td>
-                                                <td><input type="text" name="Inventory"></td>
-                                                <td><i class="am-icon am-icon-plus addStyle createMore"></i></td>
+                                                <td class="propertyValue"><input type="text" name="child_parameter_name"></td>
+                                                <td class="propertyValue"><input type="text" name="equivalence"></td>
+                                                <td class="propertyValue"><input type="text" name="Inventory"></td>
+                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore"></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -101,6 +101,7 @@
                             </table>
                            
                             </div>
+                            <button type="button" class="am-btn-secondary am-text-center">添加</button>
                         </div>
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
@@ -283,7 +284,7 @@ $(".deleteImg").click(function(){
 });
 //添加属性名称的设置
 $('.createMoreName').click(function(){   
-    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name="parameter_name"></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+    $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td class="propertyName"><input type="text" name="parameter_name"></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td class="propertyValue"><input type="text" name="child_parameter_name"></td><td class="propertyValue"><input type="text" name="equivalence"></td><td class="propertyValue"><input type="text" name="Inventory"></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
     //添加属性值的设置
     $('.createMore').click(function(){
        $('<tr><td><input type="text" name="child_parameter_name"></td><td><input type="text" name="equivalence"></td><td><input type="text" name="Inventory"></td></tr>').appendTo(this.parentNode.parentNode.parentNode);

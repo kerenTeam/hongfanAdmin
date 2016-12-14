@@ -1,4 +1,4 @@
-
+ 
 <style type="text/css" media="screen">
     .am-selected{
         width: 100%!important;
@@ -41,26 +41,25 @@
     width:80px;
 }
 label.am-u-sm-8{
-        font-weight: normal;
-        margin: 0 !important;
-    font-size: 16px !important;
-    padding-top: 5px;
-    }
-    .background{
-        background: #eaeaea;
-        clear: both;
-        margin-left: -20px;
-    }
+    font-weight: normal;
+    margin: 0 !important;
+font-size: 16px !important;
+padding-top: 5px;
+}
+.background{
+    background: #eaeaea;
+    clear: both;
+    margin-left: -20px;
+}
 </style>
-
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" style="font-size:16px;">订单管理</a>
-                <small><a href="<?php echo site_url().'/shop/singleShop/shopEditOrder';?>">订单修改</a></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电商管理
+                <a href="<?php echo site_url().'/store/store/storeOrderList';?>" style="font-size:16px;">订单管理</a>
+                <small><a href="<?php echo site_url().'/store/store/storeOrderDetail';?>">订单详情</a></small></div>
         </div>
     </div>
 </div>
@@ -213,3 +212,19 @@ label.am-u-sm-8{
 
 </div>
 </div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+
+
+</script>
+

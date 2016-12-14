@@ -25,6 +25,8 @@ class store extends default_Controller {
     public $view_storeOrderList = "store/storeOrderList.html";
     //快递管理
     public $view_storeDeliveryList = 'store/storeDeliveryList.html';
+    //订单详情
+    public $view_storeOrderDetail = "store/storeOrderDetail.html";
 
     function __construct()
     {
@@ -197,6 +199,12 @@ class store extends default_Controller {
     //订单管理
     function storeOrderList(){
         $data['page'] = $this->view_storeOrderList;
+        $data['menu'] = array('store','storeOrderList');
+         $this->load->view('template.html',$data);
+    }
+    //订单管理 订单详情
+    function storeOrderDetail(){
+        $data['page'] = $this->view_storeOrderDetail;
         $data['menu'] = array('store','storeOrderList');
          $this->load->view('template.html',$data);
     }
