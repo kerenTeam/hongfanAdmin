@@ -25,6 +25,8 @@ class singleShop extends default_Controller {
     public $view_shopOrder = "shop/shopOrder.html";
     //修改订单
     public $view_sureOrder = "shop/sureOrder.html";
+    //促销劵列表
+    public $view_shopSalesList = 'shop/shopSalesList.html';
 
     function __construct()
     {
@@ -312,7 +314,7 @@ class singleShop extends default_Controller {
 
     //商家楼层关系
     function shopFloorRelation(){
-         $data['page'] = $this->view_shopFloorRelation;
+         $data['page'] = $this->view_shopFloorRelation;  
         $data['menu'] = array('shop','shopFloorRelation');       
         $this->load->view('template.html',$data);
     }
@@ -323,7 +325,10 @@ class singleShop extends default_Controller {
    
     //商家促销管理 促销列表
     function shopSalesList(){
-        $this->load->view('shop/shopSalesList.html');
+
+        $data['page'] = $this->view_shopSalesList;
+        $data['menu'] = array('sales','shopSalesList');
+        $this->load->view('template.html',$data);
     }
     //商家促销管理 新增促销
     function shopAddSales(){
