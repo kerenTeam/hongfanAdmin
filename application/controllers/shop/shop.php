@@ -161,8 +161,11 @@ class shop extends default_Controller {
     function edit_shop_store(){
         if($_POST){
             $data = $this->input->post();
-            $arr['username'] = $this->input->post('username');
-            $arr['password'] = $this->input->post('password');
+            $arr['username'] = trim($this->input->post('username'));
+            $arr['password'] =trim($this->input->post('password'));
+            if(strlen($arr['password']) != 32){
+                $arr['password'] = md5($arr['password']);
+            }
             $arr['user_id'] = $this->input->post('user_id');
             unset($data['username'],$data['password'],$data['user_id']);
             if($this->shop_model->get_member_info($arr['user_id'],$arr['username'])){
@@ -199,6 +202,47 @@ class shop extends default_Controller {
 
     //导入商家信息
     function impolt_store(){
+          $name = date('Y-m-d');
+          $inputFileName = "./upload/xls/" .$name .'.xls';
+          move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+
+             //引入类库
+          $this->load->library('excel');
+            if(!file_exists($inputFileName)){
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/shop/shop/index')."'</script>";
+                    exit;
+            }
+            //导入excel文件类型 excel2007 or excel5
+            $PHPReader = new PHPExcel_Reader_Excel2007();
+            if(!$PHPReader->canRead($inputFileName)){
+              $PHPReader = new PHPExcel_Reader_Excel5();
+              if(!$PHPReader->canRead($inputFileName)){
+                echo 'no Excel';
+                return;
+              }
+            }
+              
+              $PHPExcel = $PHPReader->load($inputFileName);
+              $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+              $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+              $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+              $erp_orders_id = array();  //声明数组
+              // for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+              //   $data['market_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+              //   $data['goods_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+              //   $data['date_price'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+              //   $data['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
+              //   $data['date'] = date('Y-m-d H:i:s');
+              //   $data['import_user'] = $this->session->users['user_id'];
+              //   if($data['market_name'] == NULL){
+              //       exit;
+              //   }
+              //   //插入数据库
+              //   // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
+              //   $import =  $this->db->insert('hf_local_market_data',$data); 
+             }
+         //删除临时文件
+        unlink($inputFileName);
 
     }
 
