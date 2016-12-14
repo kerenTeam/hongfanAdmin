@@ -23,6 +23,8 @@ class singleShop extends default_Controller {
     public $view_shopFloorRelation = "shop/shopFloorRelation.html";
     //订单列表
     public $view_shopOrder = "shop/shopOrder.html";
+    //修改订单
+    public $view_sureOrder = "shop/sureOrder.html";
 
     function __construct()
     {
@@ -50,7 +52,11 @@ class singleShop extends default_Controller {
     function shopBaseInfo(){
 
         //获取商家信息
-        $data['busin'] = $this->mallShop_model->get_basess_info($this->session->businessId);
+       $store = $this->mallShop_model->get_basess_info($this->session->businessId);
+        //获取商家登录账户
+         $data['user'] = $this->shop_model->get_login_store($store['business_id']);
+       
+          $data['busin'] = $store; 
         //返回所有一级业态
         $data['yetai'] = $this->shop_model->store_type_level();
 
@@ -78,6 +84,16 @@ class singleShop extends default_Controller {
     function edit_busin_info(){
         if($_POST){
             $data = $this->input->post();
+            $arr['username'] = trim($this->input->post('username'));
+            $arr['password'] =trim($this->input->post('password'));
+            if(strlen($arr['password']) != 32){
+                $arr['password'] = md5($arr['password']);
+            }
+            $arr['user_id'] = $this->input->post('user_id');
+            unset($data['username'],$data['password'],$data['user_id']);
+            if($this->shop_model->get_member_info($arr['user_id'],$arr['username'])){
+                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            }
             $pic = array();
             $i =1;
             foreach($_FILES as $file=>$val){
@@ -110,28 +126,23 @@ class singleShop extends default_Controller {
                 }
                 $i++;
              }
-             if($this->mallShop_model->edit_store_info($data['store_id'],$data)){
-               echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
-               // echo "23";
-             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
-             }
-
+            if($this->shop_model->edit_store_member($arr['user_id'],$arr)){
+                 if($this->mallShop_model->edit_store_info($data['store_id'],$data)){
+                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+                   // echo "23";
+                 }else{
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+                 }
+            }
         }else{
             $this->load->view('404.html');
         }
     }
-    // //商家简介
-    // function shopInfo(){
-    //      $data['page'] = $this->view_shopInfo;
-    //     $data['menu'] = array('shop','shopInfo');
-    //     $this->load->view('template.html',$data);
-    // }
     //  //商品列表
     function goodsList(){
         //分类
         $data['cates'] = $this->mallShop_model->get_goods_cates();
-
+       // var_dump($this->session->businessId);exit;
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
@@ -140,10 +151,9 @@ class singleShop extends default_Controller {
     //返回商家商品列表
     function store_goods_list(){
         if($_POST){
-            //查询出商家有几个店铺
+            //查询出商家店铺
            $store = $this->mallShop_model->get_store_list($this->session->businessId);
            $arr = $this->mallShop_model->get_goods_list($store['store_id']);
-
            if(empty($arr)){
                 echo "2";
            }else{
@@ -276,6 +286,31 @@ class singleShop extends default_Controller {
         }
     }
 
+    //商品搜索
+    function search_goods(){
+        if($_POST){
+            $cate = $_POST['cateid'];
+            //单价起价格
+            $startPrice = $_POST['startPrice'];
+            //单价结束价格
+            $endPrice = $_POST['endPrice'];
+            //kucun
+            $startRepertory = $_POST['startRepertory'];
+            $endRepertory = $_POST['endRepertory'];
+            //关键字
+            $sear = $_POST['sear'];
+            if(empty($startPrice) && !empty($endPrice)){
+                echo "2";
+            }
+            if(!empty($startPrice) && empty($endPrice)){
+                echo "2"; 
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //商家楼层关系
     function shopFloorRelation(){
          $data['page'] = $this->view_shopFloorRelation;
@@ -317,12 +352,9 @@ class singleShop extends default_Controller {
     }
 
 
-
-
     //商家订单管理
     function shopOrder(){
         $data['storeid'] = $this->session->businessId;
-
         $data['page'] = $this->view_shopOrder;
         $data['menu'] = array('shop','shopOrder');
         $this->load->view('template.html',$data);
@@ -333,13 +365,15 @@ class singleShop extends default_Controller {
         if($_POST){
             //获取卖家id
             $storeid = $_POST['storeid'];
-
             //h获取订单
             $orders = $this->mallShop_model->get_store_orders($storeid);
-            var_dump($orders);
-
+            if(empty($order)){
+                echo "2";
+            }else{
+                echo json_encode($orders);
+            }
         }else{
-
+            echo "2";
         }
     }
     //修改订单状态
@@ -378,12 +412,16 @@ class singleShop extends default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $this->load->view('shop/shopEditOrder.html');
+            $data['order'] = $this->mallShop_model->get_order_info($id);
+
+            $data['page'] = $this->view_sureOrder;
+            $data['menu'] = array('shop','sureOrder');
+            $this->load->view('template.html',$data);
         }
     }
     //订单管理 确认订单
     function sureOrder(){
-        $this->load->view('shop/sureOrder.html');
+        $this->load->view('shop/shopOrder.html');
     }
 }
 

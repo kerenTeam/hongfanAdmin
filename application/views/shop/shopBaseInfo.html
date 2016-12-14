@@ -35,9 +35,18 @@
                         <label>经营品牌：</label>
                        <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" required>
                     </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="Name">登录账户:<span class="red">*</span>：</label>
+                        <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
+                        <input type="text" id="Name" name="username" value="<?php echo $user['username']?>" required />
+                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">商家名称<span class="red">*</span>：</label>
                         <input type="text" id="Name" name="store_name" value="<?php echo $busin['store_name']?>" required />
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="Name">登录密码:<span class="red">*</span>：</label>
+                        <input type="password" id="Name" name="password" value="<?php echo $user['password']?>" required />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="englishName">英文名称 ：</label>
@@ -67,16 +76,18 @@
                             <option value="">-=请选择一项=-</option>
                         </select>
                     </div>
-                 <!--    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="shopType">商家类型 <span class="red">*</span>：</label>
-                        <select id="shopType" name="shopType" required>
+                        <select id="shopType" name="store_type" required>
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1" selected="selected">选项一...</option>
-                            <option value="option2">选项二.....</option>
-                            <option value="option3">选项三........</option>
+                            <option value="普通" <?php if($busin['store_type'] == "普通"){echo "selected";}?>>普通</option>
+                            <option value="餐饮" <?php if($busin['store_type'] == "餐饮"){echo "selected";}?>>餐饮</option>
+                            <option value="影院" <?php if($busin['store_type'] == "影院"){echo "selected";}?>>影院</option>
+                            <option value="KTV" <?php if($busin['store_type'] == "KTV"){echo "selected";}?>>KTV</option>
+                            <option value="冰场" <?php if($busin['store_type'] == "冰场"){echo "selected";}?>>冰场</option>
                         </select>
                         <span class="am-form-caret"></span>
-                    </div> -->
+                    </div> 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="shopState">营业状态<span class="red">*</span>：</label>
                         <select id="shopState" name="op_status" required>

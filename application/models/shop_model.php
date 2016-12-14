@@ -84,11 +84,31 @@ class shop_model extends CI_Model
         return $this->db->where($where)->update($this->member,$data);
     }
     function get_member_info($userid,$username){
-        $sql = "SELECT * From $this->member where user_id != '$userid' and username = '$username'";
+        $sql = "SELECT * From $this->member where gid='2' and user_id != '$userid' and username = '$username'";
         $query = $this->db->query($sql);
         return $query->row_array();
     }
+    //根据一级业态名返回id
+    function get_store_type_id($name,$gid){
+        $where['type_name'] = $name;
+        $or_where['gid'] = $gid;
+        $query = $this->db->where($or_where)->where($where)->get($this->store_type);
+        $type = $query->row_array();
+         return $type['id'];
+    }
 
+    //新增顶级业态
+    function add_store_type($data){
+        $this->db->insert($this->store_type,$data);
+        return $this->db->insert_id();
+    } 
+    //根据业态id返回业态名
+    function get_store_type_name($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->store_type);
+        $res = $query->row_array();
+        return $res['type_name'];
+    }
 }
 
 

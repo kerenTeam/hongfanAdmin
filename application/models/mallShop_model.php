@@ -56,9 +56,9 @@ class mallShop_model extends CI_Model
         $query = $this->db->like('catname',$sear,'both')->get($this->shop_cates);
         return $query->result_array();
     }
-    //返会商家店铺列表
+    //返会商家店铺
     function get_store_list($userid){
-        $where['business_id'] = $userid;
+        $where['store_id'] = $userid;
         $query = $this->db->where($where)->get($this->shop_store);
         return $query->row_array();
     }
@@ -102,7 +102,7 @@ class mallShop_model extends CI_Model
 
     //返回商家订单列表
     function get_store_orders($storeid){
-        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.seller,a.amount,a.addtime,a.order_status,b.user_id,b.username from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = $storeid";
+        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.addtime,a.order_status,b.user_id,b.username from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = $storeid";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -111,6 +111,14 @@ class mallShop_model extends CI_Model
         $where['order_id'] = $id;
         return $this->db->where($where)->update($this->shop_order,$data);
     }
+    //根据订单id返回订单数据
+    function get_order_info($id){
+        $where['order_id'] = $id;
+        $query = $this->db->where($where)->get($this->shop_order);
+        return $query->row_array();
+    }
+
+
 
     //返回店铺详情
     function get_basess_info($storeid){
