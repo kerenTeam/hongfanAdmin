@@ -24,7 +24,9 @@ class singleShop extends default_Controller {
     //订单列表
     public $view_shopOrder = "shop/shopOrder.html";
     //修改订单
-    public $view_sureOrder = "shop/sureOrder.html";
+    public $view_sureOrder = "shop/sureOrder.html";  
+    //订单详情
+    public $view_shopEditOrder = "shop/shopEditOrder.html";
     //促销劵列表
     public $view_shopSalesList = 'shop/shopSalesList.html';
 
@@ -400,6 +402,7 @@ class singleShop extends default_Controller {
         if($_POST){
             $data['logistic_code'] = $_POST['send_no'];
             $data['shipper_code'] = $_POST['send_type'];
+            $data['order_status'] = '3';
             $orderid= $_POST['orderid'];
             if($this->mallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
@@ -419,13 +422,22 @@ class singleShop extends default_Controller {
             $data['order'] = $this->mallShop_model->get_order_info($id);
 
             $data['page'] = $this->view_sureOrder;
-            $data['menu'] = array('shop','sureOrder');
+            $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);
         }
     }
-    //订单管理 确认订单
+    //订单管理 详情
     function sureOrder(){
-        $this->load->view('shop/shopOrder.html');
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['order'] = $this->mallShop_model->get_order_info($id);
+            $data['page'] = $this->view_shopEditOrder;
+            $data['menu'] = array('shop','shopOrder');
+            $this->load->view('template.html',$data);
+        }
+      
     }
 }
 
