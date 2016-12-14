@@ -25,6 +25,8 @@ class singleShop extends default_Controller {
     public $view_shopOrder = "shop/shopOrder.html";
     //修改订单
     public $view_sureOrder = "shop/sureOrder.html";
+    //促销劵列表
+    public $view_shopSalesList = 'shop/shopSalesList.html';
 
     function __construct()
     {
@@ -152,8 +154,7 @@ class singleShop extends default_Controller {
     function store_goods_list(){
         if($_POST){
             //查询出商家店铺
-           $store = $this->mallShop_model->get_store_list($this->session->businessId);
-           $arr = $this->mallShop_model->get_goods_list($store['store_id']);
+           $arr = $this->mallShop_model->get_goods_list($this->session->businessId);
            if(empty($arr)){
                 echo "2";
            }else{
@@ -313,7 +314,7 @@ class singleShop extends default_Controller {
 
     //商家楼层关系
     function shopFloorRelation(){
-         $data['page'] = $this->view_shopFloorRelation;
+         $data['page'] = $this->view_shopFloorRelation;  
         $data['menu'] = array('shop','shopFloorRelation');       
         $this->load->view('template.html',$data);
     }
@@ -324,7 +325,10 @@ class singleShop extends default_Controller {
    
     //商家促销管理 促销列表
     function shopSalesList(){
-        $this->load->view('shop/shopSalesList.html');
+
+        $data['page'] = $this->view_shopSalesList;
+        $data['menu'] = array('sales','shopSalesList');
+        $this->load->view('template.html',$data);
     }
     //商家促销管理 新增促销
     function shopAddSales(){
@@ -394,8 +398,8 @@ class singleShop extends default_Controller {
     //提交物流信息
     function send_express(){
         if($_POST){
-            $data['send_no'] = $_POST['send_no'];
-            $data['send_type'] = $_POST['send_type'];
+            $data['logistic_code'] = $_POST['send_no'];
+            $data['shipper_code'] = $_POST['send_type'];
             $orderid= $_POST['orderid'];
             if($this->mallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
