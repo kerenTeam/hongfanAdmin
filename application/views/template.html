@@ -341,7 +341,37 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
-
+    //密码验证
+    function confirm(obj){
+        var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;//密码验证的正则表达式
+        if(reg.test(obj.value)){
+            return true;
+        }else{
+            alert("请输入合法的密码");
+            obj.focus();
+            return false;
+        }
+    }
+    //下拉选框的必须验证
+    function confirmSelect(){
+        if($('select option:selected').val()==""){
+            alert("请至少选择一项");
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //手机号验证
+    function confirmPhone(obj){
+        var regA = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;
+        if(regA.test(obj.value)){
+            return true;
+        }else{
+            alert("请输入合法的手机号");
+            obj.focus();
+            return false;
+        }
+    }
  </script>
 
 </body>

@@ -23,14 +23,14 @@ color: black;
                     新增权限
                 </div>
                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
-                    <div class="am-form-group am-cf">
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" required>
-                            <small class="black">请填写文字至少2字。</small>
+                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" required>
+                            <small class="black">建议在2-10字以内</small>
                         </div>
                     </div>
-                    <div class="am-form-group am-cf">
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-phone" class="am-u-sm-3 am-form-label black" required>权限勾选:</label>
                         <div class="am-u-sm-9">
                             <select multiple class="firstLimit black" required data-am-selected="{maxHeight:200}" style="display: none;" name="group_permission[]">
@@ -88,11 +88,11 @@ color: black;
                                         </div>
                                         <div class="am-modal-bd">
                                             <form action="<?php echo site_url('/systemSet/systemSet/edit_member_group');?>"  method="post" class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
-                                               <div class="am-form-group am-cf">
+                                               <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                                     <label for="user-name" class="am-u-sm-3 am-form-label">权限名</label>
                                                     <div class="am-u-sm-9">
-                                                        <input type="text" class="tpl-form-input" id="controlname" placeholder="请输入权限名" minlength="2" name='group_name' value="<?php echo $v['group_name'];?>" required>
-                                                        <small class="black">请填写文字至少2字。</small>
+                                                        <input type="text" class="tpl-form-input" id="controlname" placeholder="请输入权限名" minlength="2" maxlength="10" name='group_name' value="<?php echo $v['group_name'];?>" required>
+                                                        <small class="black">建议在2-10字以内</small>
                                                     </div>
                                                 </div>
                                                 <?php $permiss = json_decode($v['group_permission'],true);?>

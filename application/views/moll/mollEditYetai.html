@@ -69,7 +69,7 @@
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                              <div class="am-form-group relative">
                                 <label for="oneType" >父业态 <span class="red">*</span>：</label>
-                                <select id="oneType" name='gid'>
+                                <select id="oneType" required onchange="confirmSelect()" name='gid'>
                                     <option value="">-=请选择一项=-</option>
                                     <option value="0" <?php if($storeInfo['gid'] == "0"){echo "selected";}?>>--</option>
                                     <?php foreach($store as $val):?>
@@ -81,7 +81,7 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">业态名称：<span class="red">*</span>：</label>
-                                 <input type="text" name="type_name" value="<?php echo $storeInfo['type_name'];?>" required />
+                                 <input type="text" name="type_name" maxlength="15" value="<?php echo $storeInfo['type_name'];?>" required />
                             </div>
                             <div class="am-form-group ">
                                 <label for="user-weibo" class="am-form-label">商家图片<span class="red">*</span>：</label>
@@ -119,7 +119,7 @@
                     <div class="am-form-group am-text-center">
                         <button class="am-btn am-btn-secondary" type="submit">保存</button>
                         <input type="hidden" name="id" value="<?php echo $storeInfo['id'];?>">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                        <button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
                     </div>
                 </div>
             </form>
