@@ -227,25 +227,129 @@ class shop extends default_Controller {
               $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
               $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
               $erp_orders_id = array();  //声明数组
-              // for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-              //   $data['market_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
-              //   $data['goods_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
-              //   $data['date_price'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
-              //   $data['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
-              //   $data['date'] = date('Y-m-d H:i:s');
-              //   $data['import_user'] = $this->session->users['user_id'];
-              //   if($data['market_name'] == NULL){
-              //       exit;
-              //   }
-              //   //插入数据库
-              //   // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
-              //   $import =  $this->db->insert('hf_local_market_data',$data); 
-             }
-         //删除临时文件
-        unlink($inputFileName);
+              for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+               
+                $data['barnd_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取c列的值
+                $data['store_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取d列的值
+                $data['en_name'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取d列的值
+                $data['open_busin'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取d列的值
+                $data['store_type'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取d列的值
+                $data['op_status'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取d列的值
+                $data['floor_name'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取d列的值
+                $data['door_no'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取d列的值
+                $data['business_hours'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取d列的值
+                $data['area'] = trim($PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue());//获取d列的值
+                $type_name = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取d列的值
+                $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
+                $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue());//获取d列的值
+                $data['create_time'] = date('Y-m-d H:i:s');
+                $data['send_userid'] = $this->session->users['user_id'];
+                if($data['barnd_name'] == NULL){
+                     //删除临时文件
+                     unlink($inputFileName);
+                    exit;
+                }
+                
+                //判断一级业态是否存在
+                $commercial_type_name = $this->shop_model->get_store_type_id(trim($type_name),'0');
+                if($commercial_type_name == NULL){
+                    $type = array('type_name'=>$type_name);
+                    $commercial_type_name = $this->shop_model->add_store_type($type);
+                }
+                //判断二级业态是否存在
+                $subcommercial_type_name = $this->shop_model->get_store_type_id(trim($type_tow_name),$commercial_type_name);
+                if($subcommercial_type_name == NULL){
+                    $comm = array('type_name'=>$type_tow_name,'gid'=>$commercial_type_name);
+                    $subcommercial_type_name = $this->shop_model->add_store_type($comm);
+                }
+                //新增商家用户账号
+                $arr['username'] = trim($data['phone']).trim($data['floor_name']);
+                $arr['password'] = md5('123456');
+                $arr['gid'] = '2';
+                //获取用户id
+                if(empty($this->shop_model->get_user_info($arr['username']))){
+                    $userid = $this->shop_model->add_store_member($arr);
+                     //插入数据库
+                    $data['business_id'] = $userid;
+                    $data['subcommercial_type_name'] = $subcommercial_type_name;
+                    $data['commercial_type_name'] = $commercial_type_name;
+                    $import =  $this->db->insert('hf_shop_store',$data); 
+                }
 
+             }
     }
 
+    //导出商家
+    function dowload_store(){
+        $id = intval($this->uri->segment(4));
+        if($id == 1){
+        $this->load->library('excel');
+        //activate worksheet number 1
+        $this->excel->setActiveSheetIndex(0);
+        //name the worksheet
+        $this->excel->getActiveSheet()->setTitle('Stores');
+        $arr_title = array(
+            'A' => '品牌名称',
+            'B' => '商家名称',
+            'C' => '英文名称',
+            'D' => '开业时间',
+            'E' => '商家类型',
+            'F' => '营业状态',
+            'G' => '所在楼层',
+            'H' => '店铺编号',
+            'I' => '营业时间',
+            'J' => '面积',
+            'K' => '商家一级业态',
+            'L' => '商家二级业态',
+            'M' => '联系电话',
+            'N' => '创建时间'
+        );
+         //设置excel 表头
+        foreach ($arr_title as $key => $value) {
+            $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+            $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+            $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+           $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+            $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        }
+        $i = 1;
+        //查询数据库得到要导出的内容
+        $bookings = $this->shop_model->shop_list();
+        if(count($bookings) > 0)
+        {
+            foreach ($bookings as $booking) {
+                $i++;
+                $type_name_one = $this->shop_model->get_store_type_name($booking['commercial_type_name']);
+                $type_name_tow = $this->shop_model->get_store_type_name($booking['subcommercial_type_name']);
+             //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
+                $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['barnd_name']);
+                $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['store_name']);
+                $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['en_name']);
+                $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['open_busin']);
+                $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['store_type']);
+                $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['op_status']);
+                $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['floor_name']);
+                $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['door_no']);
+                $this->excel->getActiveSheet()->setCellValue('I' . $i, $booking['business_hours']);
+                $this->excel->getActiveSheet()->setCellValue('J' . $i, $booking['area']);
+                $this->excel->getActiveSheet()->setCellValue('K' . $i, $type_name_one);
+                $this->excel->getActiveSheet()->setCellValue('L' . $i, $type_name_tow);
+                $this->excel->getActiveSheet()->setCellValue('M' . $i, $booking['phone']); 
+                $this->excel->getActiveSheet()->setCellValue('N' . $i, $booking['create_time']);
+            }
+        }
 
+        $filename = '商户列表.xls'; //save our workbook as this file name
+
+        header('Content-Type: application/vnd.ms-excel'); //mime type
+        header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+        header('Cache-Control: max-age=0'); //no cache
+
+        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+        $objWriter->save('php://output');
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 }
 
