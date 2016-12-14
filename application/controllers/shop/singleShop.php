@@ -152,8 +152,7 @@ class singleShop extends default_Controller {
     function store_goods_list(){
         if($_POST){
             //查询出商家店铺
-           $store = $this->mallShop_model->get_store_list($this->session->businessId);
-           $arr = $this->mallShop_model->get_goods_list($store['store_id']);
+           $arr = $this->mallShop_model->get_goods_list($this->session->businessId);
            if(empty($arr)){
                 echo "2";
            }else{
@@ -367,7 +366,8 @@ class singleShop extends default_Controller {
             $storeid = $_POST['storeid'];
             //h获取订单
             $orders = $this->mallShop_model->get_store_orders($storeid);
-            if(empty($order)){
+          
+            if(empty($orders)){
                 echo "2";
             }else{
                 echo json_encode($orders);
@@ -394,8 +394,9 @@ class singleShop extends default_Controller {
     //提交物流信息
     function send_express(){
         if($_POST){
-            $data['send_no'] = $_POST['send_no'];
-            $data['send_type'] = $_POST['send_type'];
+            $data['logistic_code'] = $_POST['send_no'];
+            $data['shipper_code'] = $_POST['send_type'];
+            $data['order_status'] = '3';
             $orderid= $_POST['orderid'];
             if($this->mallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
