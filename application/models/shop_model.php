@@ -78,6 +78,12 @@ class shop_model extends CI_Model
         $query = $this->db->where('gid','2')->where($where)->get($this->member);
         return $query->row_array();
     }
+    //用户
+    function get_user_id($name){
+        $where['username'] = $name;
+        $query = $this->db->where('gid','5')->where($where)->get($this->member);
+        return $query->row_array();
+    }
     //修改商家登录账号
     function edit_store_member($userid,$data){
         $where['user_id'] = $userid;
