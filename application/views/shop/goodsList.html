@@ -80,7 +80,7 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品单价:</label>
                         <div class="am-u-sm-9">
-                            <input type="number" class="stable"  name="startPrice" min="1"  />
+                            <input type="number" class="stable" id="startPrice" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
                             <input type="number" class="stable" id="endPrice" name="endPrice" min="1"  />
                         </div>
@@ -110,7 +110,7 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
+                        <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf">
@@ -303,11 +303,19 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
-        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
-        goodsState=$('#goodsState option:selected').val();
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
+        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
+        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
+            alert("交易总额必须是一个范围！");
+            return false;
+        }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
+            alert("库存必须是一个范围！");
+            return false;
+        }else{
+            console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+            // getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+        }
+        
     });
 })
 </script>
