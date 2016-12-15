@@ -303,6 +303,7 @@ class singleShop extends default_Controller {
     function search_goods(){
         if($_POST){
             $cate = $_POST['cateid'];
+            $storeid = $this->session->businessId;
             //单价起价格
             $startPrice = $_POST['startPrice'];
             //单价结束价格
@@ -310,13 +311,15 @@ class singleShop extends default_Controller {
             //kucun
             $startRepertory = $_POST['startRepertory'];
             $endRepertory = $_POST['endRepertory'];
+            //商品状态
+            $state = $_POST['state']; 
             //关键字
             $sear = $_POST['sear'];
-            if(empty($startPrice) && !empty($endPrice)){
-                echo "2";
-            }
-            if(!empty($startPrice) && empty($endPrice)){
-                echo "2"; 
+            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear);
+            if(empty($res)){
+                echo '2';
+            }else{
+                json_encode($res);
             }
         }else{
             echo "2";

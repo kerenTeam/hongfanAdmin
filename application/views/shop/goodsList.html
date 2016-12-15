@@ -65,7 +65,7 @@ td.am-text-middle img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">商品搜索</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('/shop/singleShop/search_goods');?>" method='post'>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsType" class="am-form-label am-u-sm-3">商品分类:</label>
                         <div class="am-u-sm-9">
@@ -96,20 +96,21 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsState" class="am-form-label am-u-sm-3">商品状态:</label>
                         <div class="am-u-sm-9">
-                        <select id="goodsState" name="goodsState">
+                        <select id="goodsState" name="state">
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1">上架</option>
-                            <option value="option2">下架</option>
+                            <option value="1">上架</option>
+                            <option value="0">下架</option>
                         </select>
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-3 am-form-label">关键字搜索:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" />
+                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" name="sear" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                    <input type="hidden" name="">
                         <button type="submit" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
@@ -141,7 +142,7 @@ td.am-text-middle img{
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
                                     <th class="shop_block">库存 </th> 
-                                    <th class="shop_block">货物批次 </th>                                 
+                                    <!-- <th class="shop_block">货物批次 </th>                                  -->
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
@@ -314,7 +315,7 @@ $(document).ready(function(){
 <script type="text/html" id="shopGoodsModal">
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= categoryid%></td>
+        <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
         </td>
@@ -323,7 +324,7 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= orders%></td>
         <td class="am-text-middle"><%= sales%></td>
         <td class="am-text-middle"><%= amount%></td>
-        <td class="am-text-middle">2016年上半季</td>
+        <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
