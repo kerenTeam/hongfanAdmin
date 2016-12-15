@@ -79,7 +79,7 @@
                                     <th>&nbsp;</th>
                                 </thead>
                                 <tbody class="addPropertyBody">
-                                    <td class="propertyName"><input type="text" name="parameter_name[]"></td>
+                                    <td class="propertyName"><input type="text"></td>
                                     <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
                                     <table class="addPropertyContent">
                                         <thead>
@@ -90,18 +90,18 @@
                                         </thead>
                                         <tbody class="addPropertyTr">
                                             <tr class="addPropertytr">
-                                                <td class="propertyValue"><input type="text" name="child_parameter_name"></td>
-                                                <td class="propertyValue"><input type="text" name="equivalence"></td>
-                                                <td class="propertyValue"><input type="text" name="Inventory"></td>
+                                                <td class="propertyValue"><input type="text" ></td>
+                                                <td class="propertyValue"><input type="text"></td>
+                                                <td class="propertyValue"><input type="text" ></td>
                                                 <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </tbody>
                             </table>
-                           
+                           <input type="hidden" name="parameter" id='inputproperty'>
                             </div>
-                            <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button>
+                            <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
                         </div>
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
@@ -202,7 +202,7 @@
                 </div>
 
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit" >添加</button>
+                        <button class="am-btn am-btn-secondary" type="submit" id='addProperty'>提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
 
@@ -289,7 +289,42 @@ var i=1;
 //实例化编辑器
   var ue = UE.getEditor('editor');
 
+ //添加属性名称的设置
+    $('.createMoreName').click(function(){   
+        i++;
+        $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody class="addPropertyBody"><td class="propertyName"><input type="text" ></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr class="addPropertytr"><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore'+ i +'"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+        //添加属性值的设置
 
+        $('.createMore'+i).click(function(){
+           $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+        });    
+    })
+    //添加属性值的设置
+    $('.createMore1').click(function(){
+       $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+    });
+
+    //添加属性
+    $('#addProperty').click(function(){
+        var propertyArray=[];
+        for(var i=0;i<$('.addPropertyBody').length;i++){
+            var arrayPropertyName={},addPropertyBody={};
+            arrayPropertyName.parameter_name=$('.addPropertyBody').eq(i).find('input').val();    
+            arrayPropertyName.child_value=[];
+            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
+            for(var j=0;j<addPropertytr.length;j++){
+                var td=addPropertytr.eq(j).find('td');
+                var addPropertytd={};
+                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
+                addPropertytd.equivalence=td.eq('1').find('input').val();
+                addPropertytd.Inventory=td.eq('2').find('input').val();
+                arrayPropertyName.child_value.push(addPropertytd);
+            }
+            propertyArray.push(arrayPropertyName);
+        }
+        $("#inputproperty").val(JSON.stringify(propertyArray));
+       // console.log(JSON.stringify(propertyArray));
+    });
 
 
 </script>
