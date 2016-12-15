@@ -126,6 +126,8 @@ class shop extends default_Controller {
            $userid = $this->shop_model->add_store_member($arr);
            if(!empty($userid)){
                 $data['business_id'] = $userid;
+                $data['send_userid'] = $this->session->users['user_id'];
+                $data['create_time'] = date('Y-m-d');
                 unset($data['password'],$data['username']);
                 if($this->shop_model->add_store_info($data)){
                      echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
@@ -242,7 +244,7 @@ class shop extends default_Controller {
                 $type_name = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取d列的值
                 $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
                 $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue());//获取d列的值
-                $data['create_time'] = date('Y-m-d H:i:s');
+                $data['create_time'] = date('Y-m-d');
                 $data['send_userid'] = $this->session->users['user_id'];
                 if($data['barnd_name'] == NULL){
                      //删除临时文件

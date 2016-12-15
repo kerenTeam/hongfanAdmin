@@ -57,27 +57,25 @@ td.am-text-middle img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">订单搜索</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('/shop/singleShop/order_search');?>" method="post">
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsBatch" class="am-form-label am-u-sm-3">状态:</label>
                         <div class="am-u-sm-9">
-                        <select id="orderState" name="goodsBatch">
+                        <select id="orderState" name="state">
                             <option value="">-=请选择一项=-</option>
-                            <option value="option1">待确认</option>
-                            <option value="option2">待付款</option>
-                            <option value="option2">待发货</option>
-                            <option value="option2">已发货</option>
-                            <option value="option2">交易成功</option>
-                            <option value="option2">申请退款</option>
-                            <option value="option2">已退款</option>
-                            <option value="option2">货到付款</option>
-                            <option value="option2">买家关闭</option>
-                            <option value="option2">卖家关闭</option>
-
+                            <option value="1">未支付</option>
+                            <option value="2">已支付</option>
+                            <option value="3">已发货</option>
+                            <option value="4">已收货</option>
+                            <option value="5">已评价</option>
+                            <option value="6">求退货</option>
+                            <option value="7">退货中</option>
+                            <option value="8">退款</option>
+                            <option value="9">其他</option>
                         </select>
                         </div>
                     </div>
-                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+   <!--                   <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsBatch" class="am-form-label am-u-sm-3">排序方式:</label>
                         <div class="am-u-sm-9">
                         <select id="orderType" name="goodsBatch">
@@ -96,7 +94,7 @@ td.am-text-middle img{
                             <option value="option2">附加金额升序</option>
                         </select>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">交易总额:</label>
                         <div class="am-u-sm-9">
@@ -107,33 +105,33 @@ td.am-text-middle img{
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="businessTime" class="am-form-label am-u-sm-3">下单时间:</label>
-                        <div class="am-u-sm-9">
-                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                            </div>
-                            <div class="am-g">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="startTime"></button><span id="my-startDate">2014-12-20</span>
-                            </div>
+                       <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                          <input type="text" name='date' class="am-form-field" placeholder="" readonly>
+                          <span class="am-input-group-btn am-datepicker-add-on">
+                            <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
+                          </span>   
                         </div>
                     </div>
                     
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">订单单号:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="orderid" name="startPrice" />
+                            <input type="text" id="orderid" name="orderid" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">买家:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="buyer" name="startPrice" />
+                            <input type="text" id="buyer" name="username" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl">
+                   <!--  <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl">
                         <label for="source_state" class="am-u-sm-3 am-form-label">关键词搜索:</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="keywords" placeholder="请输入搜素的关键字">
+                            <input type="text" id="keywords" placeholder="请输入搜素的关键字" name="sear">
                         </div>
-                    </div>
+                    </div> -->
+                    <input type="hidden" name="storeid" value="<?php echo $storeid;?>">
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
