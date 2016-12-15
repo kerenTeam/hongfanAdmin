@@ -347,6 +347,21 @@ class singleShop extends default_Controller {
         $data['menu'] = array('sales','shopSalesList');
         $this->load->view('template.html',$data);
     }
+    //获取店铺优惠券
+    function get_sales_list(){
+        if($_POST){
+            $storeid = $this->session->businessId;
+            $data = $this->mallShop_model->get_store_coupon($storeid);
+            if(empty($data)){
+                echo "2";
+            }else{
+                echo json_encode($data);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //商家促销管理 新增促销
     function shopAddSales(){
         $data['page'] = $this->view_shopAddSales;
@@ -361,10 +376,21 @@ class singleShop extends default_Controller {
     }
      //商家促销管理 编辑促销
     function shopEditSales(){
+
         $data['page'] = $this->view_shopEditSales;
         $data['menu'] = array('sales','shopSalesList');
       $this->load->view('template.html',$data);
     }
+    //
+    function delshopSales(){
+        if($_POST){
+            echo "1";
+        }else{
+            echo "2";
+        }
+    }
+
+
     //商家活动管理 活动列表
     function shopActivityList(){
         $data['page'] = $this->view_shopActivityList;

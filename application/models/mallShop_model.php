@@ -14,7 +14,9 @@ class mallShop_model extends CI_Model
     //商品评论表
     public $shop_comment = 'hf_mall_comment'; 
     //商家订单表
-    public $shop_order = 'hf_mall_order';  
+    public $shop_order = 'hf_mall_order'; 
+    //优惠劵
+    public $shop_coupon = "hf_shop_coupon";
     function __construct()
     {
         parent::__construct();
@@ -122,8 +124,6 @@ class mallShop_model extends CI_Model
         return $query->row_array();
     }
 
-
-
     //返回店铺详情
     function get_basess_info($storeid){
         $where['store_id'] = $storeid;
@@ -134,6 +134,13 @@ class mallShop_model extends CI_Model
     function edit_store_info($id,$data){
         $where['store_id'] = $id;
         return $this->db->where($where)->update($this->shop_store,$data);
+    }
+
+    //返回店铺优惠券
+    function get_store_coupon($storeid){
+        $where['storeid'] = $storeid;
+        $query = $this->db->where($where)->get($this->shop_coupon);
+        return $query->result_array();
     }
 
 }
