@@ -75,7 +75,7 @@ class shop_model extends CI_Model
     //根据username返回数据
     function get_user_info($name){
         $where['username'] = $name;
-        $query = $this->db->where($where)->get($this->member);
+        $query = $this->db->where('gid','2')->where($where)->get($this->member);
         return $query->row_array();
     }
     //修改商家登录账号

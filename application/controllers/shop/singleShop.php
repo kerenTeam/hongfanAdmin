@@ -29,7 +29,17 @@ class singleShop extends default_Controller {
     public $view_shopEditOrder = "shop/shopEditOrder.html";
     //促销劵列表
     public $view_shopSalesList = 'shop/shopSalesList.html';
-
+    //优惠劵新增编辑
+    public $view_shopEditSales = "shop/shopEditSales.html";
+    public $view_shopAddSales = "shop/shopAddSales.html";
+    //优惠劵验证
+    public $view_shopCheckSales = 'shop/shopCheckSales.html';
+    //活动
+    public $view_shopEditActivity = 'shop/shopEditActivity.html';
+    public $view_shopActivityList = 'shop/shopActivityList.html';
+    public $view_shopAddActivity = 'shop/shopAddActivity.html';
+    //评论
+    public $view_shopComment = "shop/shopComment.html";
     function __construct()
     {
         parent::__construct();
@@ -322,7 +332,9 @@ class singleShop extends default_Controller {
     }
     //商家评论管理
     function shopComment(){
-        $this->load->view('shop/shopComment.html');
+        $data['page'] = $this->view_shopComment;  
+        $data['menu'] = array('shop','shopComment');   
+        $this->load->view('template.html',$data);
     }
    
     //商家促销管理 促销列表
@@ -334,27 +346,39 @@ class singleShop extends default_Controller {
     }
     //商家促销管理 新增促销
     function shopAddSales(){
-        $this->load->view('shop/shopAddSales.html');
+        $data['page'] = $this->view_shopAddSales;
+        $data['menu'] = array('sales','shopAddSales');
+       $this->load->view('template.html',$data);
     }
      //商家促销管理 促销验证
     function shopCheckSales(){
-        $this->load->view('shop/shopCheckSales.html');
+        $data['page'] = $this->view_shopCheckSales;
+        $data['menu'] = array('sales','shopCheckSales');
+        $this->load->view('template.html',$data);
     }
      //商家促销管理 编辑促销
     function shopEditSales(){
-        $this->load->view('shop/shopEditSales.html');
+        $data['page'] = $this->view_shopEditSales;
+        $data['menu'] = array('sales','shopSalesList');
+      $this->load->view('template.html',$data);
     }
     //商家活动管理 活动列表
     function shopActivityList(){
-        $this->load->view('shop/shopActivityList.html');
+        $data['page'] = $this->view_shopActivityList;
+        $data['menu'] = array('activity','shopActivityList');
+        $this->load->view('template.html',$data);
     }
      //商家活动管理 添加活动
     function shopAddActivity(){
-        $this->load->view('shop/shopAddActivity.html');
+         $data['page'] = $this->view_shopAddActivity;
+        $data['menu'] = array('activity','shopAddActivity');
+        $this->load->view('template.html',$data);
     }
      //商家活动管理 编辑活动
     function shopEditActivity(){
-        $this->load->view('shop/shopEditActivity.html');
+         $data['page'] = $this->view_shopEditActivity;
+        $data['menu'] = array('activity','shopActivityList');
+        $this->load->view('template.html',$data);
     }
 
 
@@ -440,6 +464,48 @@ class singleShop extends default_Controller {
             $this->load->view('template.html',$data);
         }
       
+    }
+    //订单搜索
+    function order_search(){
+      
+        if($_POST){
+            $storeid = $_POST['storeid'];
+            $state = $_POST['state'];
+            $startMoney = $_POST['startPrice'];
+            $endMoney = $_POST['endPrice'];
+            $date = $_POST['date'];
+            $orderid = $_POST['orderid'];
+            $username = $_POST['username'];
+            // $sear = $_POST['sear'];
+            if(!empty($state) && empty($startMoney) && empty($date) && empty($orderid) && empty($username)){
+                $where = array('seller'=>$storeid,"order_status"=>$state);
+                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+            }else 
+            if(empty($state) && !empty($startMoney) && empty($date) && empty($orderid) && empty($username)){
+                $query = $this->db->where('seller',$storeid)->where('amount>=',$startMoney)->where('amount=<',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
+            }else 
+            if(empty($state) && empty($startMoney) && !empty($date) && empty($orderid) && empty($username)){
+                $where = array('seller'=>$storeid,'create_time'=>$date);
+                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+            }else
+            if(empty($state) && empty($startMoney) && empty($date) && !empty($orderid) && empty($username)){
+                $where = array('seller'=>$storeid,'order_id'=>$orderid);
+                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+            }else
+            if(empty($state) && empty($startMoney) && empty($date) && empty($orderid) && !empty($username)){
+                $user = $this->shop_model->get_user_info($username);
+                $where = array('seller'=>$storeid,'buyer'=>$user['user_id']);
+                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+            }
+            echo "<pre>";
+            $result = $query->result_array();
+            var_dump($result);
+
+
+
+        }else{
+            echo "2";
+        }
     }
 }
 
