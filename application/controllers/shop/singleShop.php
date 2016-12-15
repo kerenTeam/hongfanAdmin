@@ -428,6 +428,6 @@ class singleShop extends default_Controller {
     //订单管理 确认订单
     function sureOrder(){
         $this->load->view('shop/shopOrder.html');
-    }
+    } 
 }
 
