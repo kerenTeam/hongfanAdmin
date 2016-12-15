@@ -77,18 +77,6 @@ td.am-text-middle img{
                             </select>
                         </div>
                     </div>
-                 <!--    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-3">货物批次:</label>
-                        <div class="am-u-sm-9">
-                        <select id="goodsBatch" name="goodsBatch">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="option1">2016年秋冬</option>
-                            <option value="option2">2015年秋冬</option>
-                            <option value="option2">2016年上半季</option>
-                            <option value="option2">2016年冬新款</option>
-                        </select>
-                        </div>
-                    </div> -->
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品单价:</label>
                         <div class="am-u-sm-9">
@@ -160,7 +148,7 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="shopGoodsList">
-                                
+                                <tr><td colspan="12" class="am-text-center"><p id="nullMessage"></p></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -296,7 +284,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopGoodsList");
+                document.getElementById('nullMessage').innerHTML="暂无相关商品信息！";
             }
 
             

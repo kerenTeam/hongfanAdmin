@@ -43,9 +43,9 @@ padding: 5px 6px!important;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
-            <a href="<?php echo site_url().'/electronic/electronic/electronicList';?>" style="font-size:16px;">电子券列表</a>
-            <small><a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>" style="font-size:16px;">编辑电子券</a></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 优惠券管理 
+            <a href="<?php echo site_url().'/electronic/electronic/electronicList';?>" style="font-size:16px;">优惠券列表</a>
+            <small><a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>" style="font-size:16px;">编辑优惠券</a></small></div>
         </div>
     </div>
 </div>
@@ -54,23 +54,23 @@ padding: 5px 6px!important;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">编辑电子券</div>
+                    <div class="widget-title  am-cf">编辑优惠券</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">电子券名称<span class="red">*</span>：</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">优惠券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" value="电子券名称" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="" value="优惠券名称" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">标题<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" value="电子券标题" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="" value="优惠券标题" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">电子券类型<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">优惠券类型<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
@@ -122,7 +122,7 @@ padding: 5px 6px!important;
                     </div>
                     
                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券发放方式<span class="red">*</span>:</label>
+                        <label for="source_state" class="am-u-sm-3 am-form-label">优惠券发放方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select id="source_state" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="请选择">请选择</option>
@@ -135,7 +135,7 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">电子券使用方式<span class="red">*</span>:</label>
+                        <label for="source_state" class="am-u-sm-3 am-form-label">优惠券使用方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select id="source_state" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="请选择">请选择</option>
@@ -148,7 +148,7 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">电子券内容<span class="red">*</span>:</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">优惠券内容<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <textarea rows="5" required class="" name="">
                                 
@@ -171,7 +171,7 @@ padding: 5px 6px!important;
                         </div>                        
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 addpadding am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加电子券</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
+                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
                     </div>
                 </form>
             </div>

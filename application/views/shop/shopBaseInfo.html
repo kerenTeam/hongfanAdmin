@@ -21,7 +21,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/singleShop/edit_busin_info');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/shop/singleShop/edit_busin_info');?>" method="post"  data-am-validator>
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">商家基础信息</div>
@@ -31,22 +31,22 @@
                         <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
                         <input type="text" id="doc-vld-name-1" minlength="2" value="宏帆广场" readonly required />
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label>经营品牌：</label>
-                       <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" required>
+                       <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="建议不超过二十个字符" required>
                     </div>
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">登录账户:<span class="red">*</span>：</label>
                         <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
-                        <input type="text" id="Name" name="username" value="<?php echo $user['username']?>" required />
+                        <input type="text" id="" name="username" value="<?php echo $user['username']?>" required />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">商家名称<span class="red">*</span>：</label>
-                        <input type="text" id="Name" name="store_name" value="<?php echo $busin['store_name']?>" required />
+                        <input type="text" id="" name="store_name" value="<?php echo $busin['store_name']?>" required />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">登录密码:<span class="red">*</span>：</label>
-                        <input type="password" id="Name" name="password" value="<?php echo $user['password']?>" required />
+                        <input type="password" id="" name="password" value="<?php echo $user['password']?>" required />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="englishName">英文名称 ：</label>
@@ -102,13 +102,13 @@
                
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="area">面积/平方米<span class="red">*</span>：</label>
-                        <input type="number" name="area"  id="area" min="0" value="<?php echo $busin['area']?>" required />
+                        <input type="text" name="area"  value="<?php echo $busin['area']?>" required />
                     </div>
                   <!--   <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="comments">当前评价<span class="red">*</span>：</label>
                         <input type="number" class="" name="comments" value="12"  id="comments"  min="0" required />
                     </div> -->
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
                         <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
                         <label class="am-radio-inline">
                             <input type="radio" value="1" name="verification" <?php if($busin['verification'] == '1'){echo "checked";}?>> 是
@@ -168,7 +168,7 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">客单价<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="number" name="pct" class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['pct']?>" required>
+                            <input type="text" name="pct" class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['pct']?>" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -218,7 +218,7 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
                         <div class="am-u-sm-9">
-                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" required>
                                 <option value="B3" <?php if($busin['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
                                 <option value="B2" <?php if($busin['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
                                 <option value="B1" <?php if($busin['floor_name'] == 'B1'){echo "selected";}?>>B1</option>
@@ -246,7 +246,7 @@
                                 <option value="003">003</option>
                                 <option value="005">005</option>
                             </select> -->
-                            <input type="text" name="door_no" value="<?php echo $busin['door_no'];?>" />
+                            <input type="text" name="door_no" value="<?php echo $busin['door_no'];?>" required />
                         </div>
                        <div class="am-u-sm-3">
                           <!--  <button type="button" class="am-btn am-btn-success am-btn-xs">
