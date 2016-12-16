@@ -44,114 +44,244 @@ function get_card_name($cardid){
 //商家商品搜索
 function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear){
             $CI = &get_instance();
+            if(empty($state)){
+               $state= '2';
+            }
             $res= '';
             if(!empty($cate) && empty($startPrice) && empty($startRepertory) && empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->order_by('create_time','desc')->get('hf_mall_goods');
+                 $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && empty($startRepertory) && empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->get('hf_mall_goods');
+                 $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else 
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where("goods_state",$state)->order_by('create_time','desc')->get('hf_mall_goods');
+               
+                if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where("goods_state",$state)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->like("title",$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->like("title",$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && empty($state) && empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && !empty($startRepertory) && empty($state) && empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && empty($startRepertory) && empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && empty($startRepertory) && empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else 
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else 
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && empty($state) && !empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->get();
                  $res = $query->result_array();
                 
             }else 
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && empty($state) && !empty($sear)){
-                  $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                  $query = $CI->db->where('storeid',$storeid)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get('hf_mall_goods');
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                 $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && !empty($sear)){
-                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get();
                  $res = $query->result_array();
                
             }else if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get('hf_mall_goods');
+                 if($state == 2){
+                    $state = '0';
+                }
+                $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->get();
+                  $res = $query->result_array();
+            }else if(empty($cate) && empty($startPrice) && empty($startRepertory) && empty($state) && empty($sear)){
+                 $CI->db->select('a.*, b.catname as catname');
+                 $CI->db->from('hf_mall_goods a');
+                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
+                 $query = $CI->db->where('storeid',$storeid)->order_by('create_time','desc')->get();
                   $res = $query->result_array();
             }
             return $res;

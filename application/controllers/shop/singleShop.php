@@ -310,6 +310,7 @@ class singleShop extends default_Controller {
         if($_POST){
             $cate = $_POST['cateid'];
             $storeid = $this->session->businessId;
+           // echo $storeid;
             //单价起价格
             $startPrice = $_POST['startPrice'];
             //单价结束价格
@@ -325,7 +326,7 @@ class singleShop extends default_Controller {
             if(empty($res)){
                 echo '2';
             }else{
-                json_encode($res);
+                echo json_encode($res);
             }
         }else{
             echo "2";
@@ -345,8 +346,59 @@ class singleShop extends default_Controller {
         $data['menu'] = array('shop','shopComment');   
         $this->load->view('template.html',$data);
     }
-   
-    //商家促销管理 促销列表
+    //获取评论列表
+    function comment_list(){
+        if($_POST){
+            $storeid = $this->session->businessId;
+            //所有评论
+            $comment = $this->mallShop_model->get_store_comment($storeid);
+            if(empty($comment)){
+                echo "2";
+            }else{
+            //回复
+            foreach ($comment as $key => $value) {
+               $comment[$key]['reply'] = $this->mallShop_model->gte_store_reply($value['id']);
+            }
+            echo json_encode($comment);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //评论状态修改
+    function edit_comment_state(){
+        if($_POST){
+            $id = $_POST['commentid'];
+            $data['state'] = $_POST['state'];
+            if($this->mallShop_model->edit_comment_state($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //删除评论
+    function del_comment(){
+        if($_POST){
+            $commentid = $_POST["commentid"];
+            foreach ($commentid as $key => $v) {
+                $a = $this->mallShop_model->del_store_comment($v);
+            }
+            if($a){
+                echo '1';
+            }else{
+                echo '2';
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
+
+    //商家促销管理 优惠劵列表
     function shopSalesList(){
 
         $data['page'] = $this->view_shopSalesList;
@@ -368,19 +420,19 @@ class singleShop extends default_Controller {
         }
     }
 
-    //商家促销管理 新增促销
+    //商家优惠劵管理 新增优惠劵
     function shopAddSales(){
         $data['page'] = $this->view_shopAddSales;
         $data['menu'] = array('sales','shopAddSales');
        $this->load->view('template.html',$data);
     }
-     //商家促销管理 促销验证
+     //商家优惠劵管理 优惠劵验证
     function shopCheckSales(){
         $data['page'] = $this->view_shopCheckSales;
         $data['menu'] = array('sales','shopCheckSales');
         $this->load->view('template.html',$data);
     }
-     //商家促销管理 编辑促销
+     //商家优惠劵管理 编辑优惠劵
     function shopEditSales(){
 
         $data['page'] = $this->view_shopEditSales;

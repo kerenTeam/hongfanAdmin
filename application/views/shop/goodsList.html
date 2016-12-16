@@ -149,7 +149,7 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="shopGoodsList">
-                                <tr><td colspan="12" class="am-text-center"><p id="nullMessage"></p></td></tr>
+                               
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -285,7 +285,15 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                document.getElementById('nullMessage').innerHTML="暂无相关商品信息！";
+                //$("#nullMessage").html("暂无相关商品信息！");
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#shopGoodsList');
+
+
             }
 
             
@@ -314,7 +322,7 @@ $(document).ready(function(){
             return false;
         }else{
             console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-            // getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         
     });
