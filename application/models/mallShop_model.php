@@ -147,6 +147,7 @@ class mallShop_model extends CI_Model
     function get_store_comment($store_id){
         //$where['storeid'] = $storeid;
        $this->db->select('a.*, b.username,c.title');
+
         $this->db->from('hf_mall_comment as a');
         $this->db->join('hf_user_member as b','a.buyerid = b.user_id','left');
         $this->db->join('hf_mall_goods as c','a.goodsid = c.goods_id','left');
