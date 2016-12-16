@@ -20,7 +20,13 @@
      .deleteImg:hover{
         cursor: pointer;
      }
-
+.stable{
+    display: inline-block !important;
+    width: 45% !important;
+}
+.linkWord{
+    width: 5% !important;
+}
 .am-selected{
 width: 100%!important;
 }
@@ -61,34 +67,30 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">标题<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
-                            <input type="text" name="" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">优惠券类型<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
-                                <option value="礼品券">礼品券</option>
-                                <option value="代金券">代金券</option>
-                                <option value="折扣券">折扣券</option>
+                                <option value="0">代金券</option>
+                                <option value="1">折扣券</option>
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取等级限制<span class="red">*</span>:</label>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="voucher" style="display: none;">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="">输入查找/选择</option>
-                                <option value="不限制">不限制</option>
-                                <option value="商家促销">超级VIP</option>
-                                <option value="商家活动">普通会员</option>
-                            </select>
+                            <span class="linkWord">满</span>
+                            <input type="number" class="stable" id="meetMoney" name="meetMoney" min="1"  />
+                            <span class="linkWord">减</span>
+                            <input type="number" class="stable" id="reduceMoney" name="reduceMoney" min="1"  />
                         </div>
                     </div>
-
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="discount" style="display: none;">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" name="" maxlength="10" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                        </div>
+                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
@@ -105,7 +107,6 @@ padding: 5px 6px!important;
                             <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
                                 <option value="到店核销">到店核销</option>
-                                <option value="扫码">扫码</option>
                                 <option value="在线核销">在线抵用</option>
                                 <option value="不限">不限</option>
                             </select>
@@ -117,33 +118,6 @@ padding: 5px 6px!important;
                             <input type="number" name="" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
                         </div>
                     </div>
-                    
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">优惠券发放方式<span class="red">*</span>:</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state" required>
-                                <option value="请选择">请选择</option>
-                                <option value="免费">免费</option>
-                                <option value="购买">购买</option>
-                                <option value="分享链接">分享链接</option>
-                                <option value="到店领取">到店领取</option>
-                                <option value="消费金额限制">消费金额限制</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">优惠券使用方式<span class="red">*</span>:</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state" required>
-                                <option value="请选择">请选择</option>
-                                <option value="免费">免费</option>
-                                <option value="购买">购买</option>
-                                <option value="分享链接">分享链接</option>
-                                <option value="短信">短信</option>
-                                <option value="消费金额限制">消费金额限制</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券内容<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
@@ -152,23 +126,8 @@ padding: 5px 6px!important;
                             </textarea>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-weibo" class="am-u-sm-3 am-form-label">二维码：</label>
-                        <div class="am-u-sm-9 ">
-                            <div class="wx_type_img">
-                                 <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                  <!-- 图片实时预览 -->
-                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                  <br />
-                            </div>
-                             <div class="am-text-center father">
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                            </div> 
-                        </div>                        
-                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 addpadding am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button><button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
+                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button><button class="am-btn am-btn-default" id="cancle" type="button">取消</button> 
                     </div>
                 </form>
             </div>
@@ -181,5 +140,18 @@ padding: 5px 6px!important;
   $('#cancle').click(function(){
     history.go(-1);
   });
-
+  //优惠券类型选择
+  function changeSalesType() {
+    if($('#salesType option:selected').val()=="0"){
+        $('#discount').css('display','none');
+        $('#voucher').css('display','block');
+    }else if($('#salesType option:selected').val()=="1"){
+        $('#voucher').css('display','none');
+        $('#discount').css('display','block');
+    }else{
+        alert("请选择优惠券类型！");
+    }
+  
+  }
+  
 </script>
