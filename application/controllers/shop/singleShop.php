@@ -156,7 +156,6 @@ class singleShop extends default_Controller {
     function goodsList(){
         //分类
         $data['cates'] = $this->mallShop_model->get_goods_cates();
-       // var_dump($this->session->businessId);exit;
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
