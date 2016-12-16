@@ -152,41 +152,6 @@ padding: 5px 6px!important;
                                 </tr>
                             </thead>
                             <tbody id="shopList">
-                                <tr>
-                                    <td>宏帆广场</td>
-                                    <td class="am-text-middle">F1003</td>
-                                    <td class="am-text-middle">满记甜品</td>
-                                    <td class="am-text-middle">满记甜品</td>
-                                    <td class="am-text-middle">暂无</td>
-                                    <td class="am-text-middle">F1/007</td>
-                                    <td class="am-text-middle">缺评价,缺logo</td>
-                                    <td class="am-text-middle">实体商户</td>
-                                    <td class="am-text-middle">【5597】mc_xyc</td>
-                                    <td class="am-text-middle">2016-09-26 10:00:00</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>正常 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">正常</a></li>
-                                                <li><a href="#">冻结</a></li>
-                                                <li><a href="#">删除</a></li>
-                                            </ul>
-                                        </div>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/shop/singleShop/shopAdmin/1';?>" class="tpl-table-black-operation-set">
-                                                <i class="am-icon-gear" ></i> 管理
-                                            </a>
-                                            <a href="<?php echo site_url().'/shop/shop/editShop/1';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -347,7 +312,12 @@ padding: 5px 6px!important;
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopList");
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商家信息！</p></td></tr>').appendTo('#shopList');
             }
 
             

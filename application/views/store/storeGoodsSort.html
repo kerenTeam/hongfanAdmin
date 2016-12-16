@@ -184,7 +184,12 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('#storeGoodsList').html("暂无相关分类信息！");
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#storeSortList');
             }
 
             

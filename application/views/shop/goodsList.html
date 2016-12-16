@@ -1,7 +1,7 @@
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
-}
+} 
 .table-check{
 width: 30px;
 } 
@@ -149,7 +149,7 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="shopGoodsList">
-                               
+
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -287,15 +287,13 @@ td.am-text-middle img{
             }else{
                 //$("#nullMessage").html("暂无相关商品信息！");
                 for(var i=0;i<$('.trClass').length;i++){
+
                     $('.trClass').eq(i).remove();
                 }
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#shopGoodsList');
-
-
             }
-
             
         },
         error:function(xhr,type,errorThrown){

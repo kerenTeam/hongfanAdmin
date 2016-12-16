@@ -54,7 +54,8 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>商品列表</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 积分商城 
+            <small>商品列表</small></div>
         </div>
     </div>
 </div>
@@ -78,7 +79,7 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品单价:</label>
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品积分:</label>
                         <div class="am-u-sm-9">
                             <input type="number" class="stable" id="startPrice" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
@@ -138,7 +139,7 @@ td.am-text-middle img{
                                     <th class="moll_name">分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
-                                    <th class="shop_yetai">价格 </th>
+                                    <th class="shop_yetai">商品积分 </th>
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
                                     <th class="shop_block">库存 </th> 
@@ -148,8 +149,7 @@ td.am-text-middle img{
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="shopGoodsList">
-                                <tr><td colspan="12" class="am-text-center"><p id="nullMessage"></p></td></tr>
+                            <tbody id="integralGoodList">
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -196,7 +196,7 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('shopGoodsList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('integralGoodList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
                             $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
@@ -285,7 +285,13 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                document.getElementById('nullMessage').innerHTML="暂无相关商品信息！";
+                 for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#integralGoodList');
+
             }
 
             

@@ -88,7 +88,6 @@ td img{
                                 </tr>
                             </thead>
                             <tbody id="shopSalesList">
-                                <tr><td colspan="12" class="am-text-center"><p id="nullMessage"></p></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -123,7 +122,7 @@ td img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        // listData+= template('shopGoodsModal',res[i]);
+                        listData+= template('shopGoodsModal',res[i]);
                      }
                     
                     return listData;
@@ -172,7 +171,12 @@ td img{
                     }
                 })
             }else{
-                document.getElementById('nullMessage').innerHTML="暂无相关商品信息！";
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关优惠券信息！</p></td></tr>').appendTo('#shopSalesList');
             }
 
             
