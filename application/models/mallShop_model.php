@@ -67,10 +67,9 @@ class mallShop_model extends CI_Model
 
     //商家商品列表
     function get_goods_list($storeid){
-        $where['storeid'] = $storeid;
         $this->db->from('hf_mall_goods');
         $this->db->join('hf_mall_category', 'hf_mall_category.catid = hf_mall_goods.categoryid');
-        $query = $this->db->where($where)->order_by('hf_mall_goods.create_time','desc')->get();
+        $query = $this->db->where('differentiate','1')->order_by('hf_mall_goods.create_time','desc')->get();
         return $query->result_array(); 
     }
     //商品上下架

@@ -49,7 +49,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/singleShop/add_goods');?>" method="post" enctype="multipart/form-data">
+            <form class="am-form" action="<?php echo site_url('/integral/integral/add_goods');?>" method="post" enctype="multipart/form-data">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">商品基础信息</div>
@@ -59,6 +59,15 @@
                         <div class="am-form-group">
                             <label for="Name">商品名称<span class="red">*</span>：</label>
                             <input type="text" id="Name" name='title' required="required" />
+                        </div>
+                          <div class="am-form-group">
+                            <label>商品分类<span class="red">*</span>：</label>
+                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
+                                <option value=''>请选择一个！</option>
+                                <?php foreach($cates as $val):?>
+                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                                <?php endforeach;?>
+                            </select>
                         </div>
                         
                         <div class="am-form-group">
@@ -71,7 +80,7 @@
                             <input type="text" name='brand' id="englishName"  />
                         </div>
                         
-                        <div class="am-form-group">
+<!--                         <div class="am-form-group">
                             <label for="englishName">添加属性：</label>
                             <div class="tableContainer">
                                 <table class="addProperty">
@@ -102,8 +111,7 @@
                             </table>
                            <input type="hidden" name="parameter" id='inputproperty'>
                             </div>
-                            <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
-                        </div>
+                        </div> -->
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
                             <input type="radio" name="cod" value="1" id="dispostage" />是
@@ -113,48 +121,29 @@
                             <label for="englishName">请输入运费<span class="red">*</span>：</label>
                             <input type="number"  id="postageNum" name="postage"  />
                         </div>
-                        <div class="am-form-group">
+                       <!--  <div class="am-form-group">
                             <label for="oneType">货到付款：</label>
                             <select id="oneType" required="required" name="cod">
                                 <option value="">-=请选择一项=-</option>
                                 <option value="1">支持货到付款</option>
                                 <option value="0">不支持货到付款</option>
                             </select>
-                        </div>
+                        </div> -->
                         
                     </div>
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    <div class="am-form-group">
-                            <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
-                                <option value=''>请选择一个！</option>
-                                <?php foreach($cates as $val):?>
-                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                        <div class="am-form-group"> 
+                  
+                       <!--  <div class="am-form-group"> 
                             <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
                             <input type="radio" name="recommend" value="1"/>是
                             <input type="radio" name="recommend" value="0"/>否
-                        </div>
+                        </div> -->
                         
                         <div class="am-form-group">
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
                             <input type="number"  id="respority" name="amount" required="required" />
                         </div>
-                        <?php if($this->session->users['gid'] != 2):?>
-                        <div class="am-form-group">
-                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
-                            <select id="oneType" required="required" name='auditing_state'>
-                                <option value="">-=请选择一项=-</option>
-                                <option value="1">通过审核</option>
-                                <option value="0">待审核</option>
-                                <option value="2">未通过</option>
-                            </select>
-
-                        </div> 
-                        <?php endif;?>
+                       
                         <div class="am-form-group">
                             <label for="englishName">商品状态：<span class="red">*</span>：</label>
                             <input type="radio" name="goods_state" value="1"/>上架
@@ -289,43 +278,5 @@ var i=1;
   
 //实例化编辑器
   var ue = UE.getEditor('editor');
-
- //添加属性名称的设置
-    $('.createMoreName').click(function(){   
-        i++;
-        $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody class="addPropertyBody"><td class="propertyName"><input type="text" ></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr class="addPropertytr"><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore'+ i +'"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
-        //添加属性值的设置
-
-        $('.createMore'+i).click(function(){
-           $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-        });    
-    })
-    //添加属性值的设置
-    $('.createMore1').click(function(){
-       $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-    });
-
-    //添加属性
-    $('#addProperty').click(function(){
-        var propertyArray=[];
-        for(var i=0;i<$('.addPropertyBody').length;i++){
-            var arrayPropertyName={},addPropertyBody={};
-            arrayPropertyName.parameter_name=$('.addPropertyBody').eq(i).find('input').val();    
-            arrayPropertyName.child_value=[];
-            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
-            for(var j=0;j<addPropertytr.length;j++){
-                var td=addPropertytr.eq(j).find('td');
-                var addPropertytd={};
-                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
-                addPropertytd.equivalence=td.eq('1').find('input').val();
-                addPropertytd.Inventory=td.eq('2').find('input').val();
-                arrayPropertyName.child_value.push(addPropertytd);
-            }
-            propertyArray.push(arrayPropertyName);
-        }
-        $("#inputproperty").val(JSON.stringify(propertyArray));
-       // console.log(JSON.stringify(propertyArray));
-    });
-
 
 </script>

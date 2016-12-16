@@ -123,7 +123,7 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/integral/integral/integralAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                    <!--  <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
                                     <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
@@ -140,8 +140,8 @@ td.am-text-middle img{
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_yetai">商品积分 </th>
-                                    <th class="brand">订单 </th>
-                                    <th class="shop_block">月销量 </th>
+                                    <!-- <th class="brand">订单 </th> -->
+                                    <!-- <th class="shop_block">月销量 </th> -->
                                     <th class="shop_block">库存 </th> 
                                     <!-- <th class="shop_block">货物批次 </th>                                  -->
                                     <th class="shop_block">商品状态</th>
@@ -303,10 +303,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+    getList('<?php echo site_url("/integral/integral/store_goods_list");?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+        getList('<?php echo site_url('/integral/integral/store_goods_list');?>','default=1');
     });
     //点击搜索
     $('.searchGoods').click(function(){

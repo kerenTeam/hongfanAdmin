@@ -241,24 +241,19 @@
         </ul>
     </li>
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'localLife'){ echo 'active';}?>">
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'integral'){ echo 'active';}?>">
             <i class="am-icon-tag sidebar-nav-link-logo"></i> 积分商城
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'integral'){ echo "style='display:block;'";}?>>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/localLife/localLifeList';?>">
+                <a href="<?php echo site_url().'/integral/integral/integralList';?>" <?php if($menu[1] == 'integralList'){ echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分商品管理
                 </a>
             </li>
             <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/module/charge';?>">
+                <a href="<?php echo site_url().'/integral/integral/integralOrderList';?>" <?php if($menu[1] == 'integralOrderList'){ echo "class='sub-active'";}?>> 
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分订单管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/module/module/charge';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分规则管理
                 </a>
             </li>
         </ul>
