@@ -45,7 +45,7 @@ class login extends CI_Controller {
                            break;
                        case 2:
                            
-                           redirect( site_url('shop/singleShop/shopAdmin/') );
+                           redirect( site_url('shop/singleShop/shopAdmin') );
                            break;
                    }
                 }

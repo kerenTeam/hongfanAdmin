@@ -156,7 +156,6 @@ class singleShop extends default_Controller {
     function goodsList(){
         //分类
         $data['cates'] = $this->mallShop_model->get_goods_cates();
-       // var_dump($this->session->businessId);exit;
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
@@ -221,10 +220,16 @@ class singleShop extends default_Controller {
                     if(!$this->upload->do_upload('img'.$i)) {
                        echo $this->upload->display_errors();
                     }else{
+                        if($i == '1'){
+                            $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
+                        }
                         $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
+                    if($i == '1'){
+                            $data['thumb'] = $data['img'.$i];
+                    }
                      $pic[]['bannerPic'] = $data['img'.$i];
                      unset($data['img'.$i]);
                 }
@@ -256,31 +261,32 @@ class singleShop extends default_Controller {
             $data= $this->input->post();
             $pic = array();
             $i =1;
-            echo "<pre>";
-            var_dump($data);
-            // foreach($_FILES as $file=>$val){
-            //     if(!empty($_FILES['img'.$i]['name'])){
-            //         $config['upload_path']      = 'upload/goods/';
-            //         $config['allowed_types']    = 'gif|jpg|png|jpeg';
-            //         $config['max_size']     = 2048;
-            //         $config['file_name'] = date('Y-m-d_His');
-            //         $this->load->library('upload', $config);
-            //         // 上传
-            //         if(!$this->upload->do_upload('img'.$i)) {
-            //            echo $this->upload->display_errors();
-            //         }else{
-            //             $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
-            //             }
-            //     }
-            //     $i++;
-            //  }
-            //  $data['good_pic'] = json_encode($pic);
-            //  $data['storeid'] = '2';
-            //  if($this->mallShop_model->add_shop_goods($data)){
-            //     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
-            //  }else{
-            //     echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsAdd')."'</script>";exit;
-            //  }
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'upload/goods/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                       echo $this->upload->display_errors();
+                    }else{
+                        if($i == '1'){
+                            $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
+                        }
+                        $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
+                        }
+                }
+                $i++;
+             }
+             $data['good_pic'] = json_encode($pic);
+             $data['storeid'] = $this->session->businessId;;
+             if($this->mallShop_model->add_shop_goods($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
+             }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsAdd')."'</script>";exit;
+             }
         }else{
             $this->load->view('404.html');
         }
