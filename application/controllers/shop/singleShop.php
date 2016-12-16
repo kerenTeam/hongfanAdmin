@@ -382,10 +382,29 @@ class singleShop extends default_Controller {
     //删除评论
     function del_comment(){
         if($_POST){
+            // $a = '';
             $commentid = $_POST["commentid"];
-            foreach ($commentid as $key => $v) {
+
+            $comment = json_decode($commentid,true);
+            // echo $commentid;
+            foreach ($comment as $key => $v) {
                 $a = $this->mallShop_model->del_store_comment($v);
             }
+
+            if($a){
+                echo '1';
+            }else{
+                echo '2';
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //
+    function del_comment_single(){
+         if($_POST){
+            $commentid = $_POST["commentid"];
+            $a = $this->mallShop_model->del_store_comment($commentid);
             if($a){
                 echo '1';
             }else{

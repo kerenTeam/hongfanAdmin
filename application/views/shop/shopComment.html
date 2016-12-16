@@ -9,20 +9,52 @@ width: 30px;
 font-size: 12px!important;
 padding: 5px 6px!important;
 }
-/*.theme-white .tpl-table-black-operation a {
-    border:1px solid #75a5ca;
-    color:#75a5ca;
+.am-modal-bd {
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
 }
-.theme-white .tpl-table-black-operation a:last-child{
-    border:1px solid #75a5ca;
-    color:#75a5ca;
-}*/
-
 .am-modal-bd textarea{
     margin:0 40px;
     margin-top: 30px;
     margin-bottom: 10px;
 
+}
+.goodsName{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.commentState{
+    background: #15b5ac;
+    border-radius: 5px;
+    border: 1px solid #15b5ac;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.commentState option{
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+}
+.commentState option[selected="selected"]{
+    background: #15b5ac;
+}
+.modal-content{
+    width: 400px;
+    height: 30px;
+    margin:20px auto;
+    
+}
+.modal-content span.am-fr{
+    color: #15b5ac;
+}
+.commentImg{
+    width:100px;
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
 }
 </style>
 
@@ -80,8 +112,8 @@ padding: 5px 6px!important;
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-trash "></span> 批量删除</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                    <a type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -93,9 +125,7 @@ padding: 5px 6px!important;
                                     <th class="table-check"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="shop_name">用户 </th>
-                                    <th class="shop_name">提交时间 </th>
                                     <th class="shop_name">评论商品名</th>
-                                    <th class="shop_name">评论商品详情</th>
                                     <th class="shop_type">评论内容 </th>
                                     <th class="shop_type">回复内容 </th>
                                     <th>创建时间</th>
@@ -121,8 +151,22 @@ padding: 5px 6px!important;
     </div>
 </div>
 </div>
+ <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定删除所有选中的记录吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
+    var deleteArray=[];
+
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -132,7 +176,7 @@ padding: 5px 6px!important;
         success: function(result){
             
             var res = eval(result);
-            console.log(res);
+            // console.log(res);
             if(res!=2){
                 var nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -142,8 +186,8 @@ padding: 5px 6px!important;
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
-                        // listData+= template('commentListModal',res[i]);
+                        res[i].comment_pic=eval(res[i].comment_pic);
+                        listData+= template('commentListModal',res[i]);
                      }
                     
                     return listData;
@@ -154,27 +198,27 @@ padding: 5px 6px!important;
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('commentList').innerHTML = thisDate(obj.curr);
-                        $('.editGoods').click(function(){//编辑商品信息
-                            var commentId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + commentId + "');?>");
-                        });
+                        
                         for(var i=0;i<$('.tpl-del').length;i++){
-                            var commentId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ commentId +"'}");
-                            if($('.commentState option:selected').eq(i).val()=="下架"){
+                            var id=$('.tpl-del').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
+                            if($('.commentState option:selected').eq(i).val()=="隐藏"){
                                 $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }
-                            var recommentId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.unresponse').eq(i).attr("data-am-modal","{target: '#re"+ recommentId +"'}");                        
+                            var reid=$('.commendResponse').eq(i).attr('data-id');
+                            $('.commendResponse').eq(i).attr("data-am-modal","{target: '#re"+ id +"'}"); 
+                            var editid=$('.editComment').eq(i).attr('data-id'); 
+                            $('.editComment').eq(i).attr("data-am-modal","{target: '#co"+ id +"'}"); 
+
                         }
-                        //更改商品的状态
+                        //更改评论的状态
                         $('.commentState').change(function(){
-                            var commentId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
+                            var id=$(this).attr('data-id');
+                            if($(this).find('option:selected').val()=="显示"){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ commentId+'&state=1',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
+                                    data: 'goodsid='+ id+'&state=1',
                                     success: function(data){
                                         if(data==1){
     
@@ -190,8 +234,8 @@ padding: 5px 6px!important;
                             }else{
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ commentId+'&state=0',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
+                                    data: 'goodsid='+ id+'&state=0',
                                     success: function(data){
                                         if(data==1){
 
@@ -210,21 +254,25 @@ padding: 5px 6px!important;
                             
                         });
 
-                        //删除商品的AJAX请求
+                        //单个商品删除的AJAX请求
                         $('.sureDelete').click(function(){
-                            var commentId=$(this).attr('data-id');
+                            var deleteId=$(this).attr('data-id');
+                            deleteArray[0]= deleteId;  
+                            deleteArray=eval(deleteArray);
+                            console.log(deleteArray);                        
                             for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==commentId){
+                                if($('table tbody tr').eq(i).attr('data-id')==id){
                                     $.ajax({
                                         type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+commentId,
+                                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                                        data: 'commentid='+deleteArray,
                                         success: function(data){
+                                            alert(data);
                                             if(data==1){                                           
                                                 for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==commentId){
+                                                    if($('.trClass').eq(i).attr('data-id')==id){
                                                         $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
                                                     }
                                                 }
                                             }else{
@@ -240,37 +288,73 @@ padding: 5px 6px!important;
                             }
                             
                         });
-                        //回复评论的AJAX请求
-                        $('.sureComment').click(function(){
-                            var commentId=$(this).attr('data-id');
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==commentId){
-                                    var contentText=$('#contentText').val();
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+contentText,
-                                        success: function(data){
-                                            if(data==1){                                           
-                                                $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
-                                }
+                        
+                        //多个商品删除的AJAX请求
+                        $('.deleteAll').click(function(){
+                            var deleteId=$(this).attr('data-id');
+                            var array=[];
+                           // alert($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                                
+                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
                             }
                             
+                            deleteArray=JSON.stringify(array);
+                            $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/del_comment');?>',
+                                    data: 'commentid='+deleteArray,
+                                    success: function(data){
+                                        console.log(data);
+                                        if(data==1){
+                                            getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                            
                         });
+                        //回复评论的AJAX请求
+                        // $('.sureComment').click(function(){
+                        //     var id=$(this).attr('data-id');
+                        //     for(var i=0;i<$('.trClass').length;i++){
+                        //         if($('table tbody tr').eq(i).attr('data-id')==id){
+                        //             var contentText=$('#contentText').val();
+                        //             $.ajax({
+                        //                 type:'post',
+                        //                 url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                        //                 data: 'goodsid='+contentText,
+                        //                 success: function(data){
+                        //                     if(data==1){                                           
+                        //                         $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
+                        //                     }else{
+                        //                         alert("操作失败！");
+                        //                     }
+                                            
+                        //                 },
+                        //                 error:function(xhr,type,errorThrown){
+                        //                     alert("操作失败，请检查网络设置！");
+                        //                 }
+                        //             });
+                        //         }
+                        //     }
+                            
+                        // });
                         
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#commentList");
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#commentList');
             }
 
             
@@ -290,26 +374,36 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="commentListModal">
-    <tr class="trClass" data-id="<%= comment_id%>">
-        <td  class="am-text-middle"><input type="checkbox"></td>
-        <td class="am-text-middle"><%= comment_id%></td>
-        <td class="am-text-middle"><%= userName%></td>
-        <td class="am-text-middle"><%= comment_time%></td>
-        <td class="am-text-middle"><%= goods_name%></td>
-        <td class="am-text-middle"><a href="<%= ggods_id%>"></a></td>
+    <tr class="trClass" data-id="<%= id%>">
+        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle goodsName" width="100"><%= title%></td>
         <td class="am-text-middle"><%= commendContent%></td>
-        <td class="am-text-middle commendResponse"><%= commendResponse%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle"><%= responseState%></td>
-        <td class="am-text-middle">
-        <%if(comment_state=="1"){%>
-            <select id="" class="commentState" name="commentState" data-id="<%= comment_id%>">
+        <%if(reply) {%>
+        <td class="am-text-middle"><%= reply.seller_comment%></td>
+        <%}else {%>
+        <td class="am-text-middle">无回复内容</td>
+        <%}%>
+        
+        <td class="am-text-middle"><%= seller_ctime%></td>
+        <%if(reply) {%>
+        <td class="am-text-middle"><div class="tpl-table-black-operation"><i class="am-icon-toggle-on"></i>已回复</div></td>
+        <%}else {%>
+        <td class="am-text-middle commendResponse">
+        <div class="tpl-table-black-operation"><a class="canResponse" data-id="<%= id%>"><i class="am-icon-toggle-on" ></i>可回复</a></div></td>
+        <%}%>
+        <%if(state=="1"){%>
+        <td class="am-text-middle">        
+            <select id="" class="commentState" name="commentState" data-id="<%= id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="显示" selected="selected">显示</option>
                 <option value="隐藏">隐藏</option>
             </select>
+        </td>
         <%}else{%>
-            <select id="" class="commentState" name="commentState" data-id="<%= comment_id%>">
+        <td class="am-text-middle">
+            <select id="" class="commentState" name="commentState" data-id="<%= id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="显示">显示</option>
                 <option value="隐藏" selected="selected">隐藏</option>
@@ -318,23 +412,16 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <%if(comment_state=="1"){%>
-                <a class="tpl-table unresponse">
-                    <i class="am-icon-toggle-on"></i> 回复
+                <a data-id="<%= id%>" class="editComment">
+                    <i class="am-icon-eye"></i> 查看详情
                 </a>
-                 <%}else{%>
-                 <a class="tpl-table">
-                    <i class="am-icon-toggle-on"></i> 已回复
-                </a>
-                 <%}%>
-                
-                <a data-id="<%= comment_id%>" class="tpl-table-black-operation-del tpl-del">
+                <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= comment_id%>">
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -342,23 +429,12 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= comment_id%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= id%>" data-am-modal-confirm>确定</span>
             </div>
         </div>
     </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn deleteAll" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= comment_id%>">
+   
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">回复评论</div>
             <div class="am-modal-bd am-text-center">
@@ -366,8 +442,66 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureComment" data-id="<%= comment_id%>" data-am-modal-confirm>评论</span>
+                <span class="am-modal-btn sureComment" data-id="<%= id%>" data-am-modal-confirm>评论</span>
             </div>
         </div>
     </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="co<%= id%>">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">评论详情</div>
+        <div class="am-modal-bd">
+            <div class="modal-content">
+                <span class="am-fl">评论id：</span>
+                <span class="am-fr">
+                    <%= id%>
+                </span>
+            </div>
+            <div class="modal-content">
+                <span class="am-fl">评论星级：</span>
+                <span class="am-fr">
+                    <%= grade_star%>
+                </span>
+            </div>
+            <div class="modal-content">
+                <span class="am-fl">评论时间：</span>
+                <span class="am-fr">
+                    <%= seller_ctime%>
+                </span>
+            </div>
+            <div class="modal-content">
+                <span class="am-fl">评论内容：</span>
+                <span class="am-fr">
+                    <%= seller_comment%>
+                </span>
+            </div>
+            
+            <div class="modal-content">
+                <span class="am-fl">评论图片：</span>
+                <span class="am-fr">
+                <%if(comment_pic) {%>
+                    <%for(var i=0;i<comment_pic.length;i++) {%>
+                        <img src="<%= comment_pic[i].comment_pic%>" class="commentImg">
+                    <%}%>
+                <%}else {%>
+                    暂无评论图片
+                <%}%>             
+                
+                </span>
+            </div>
+            <div class="modal-content">
+                <span class="am-fl">回复内容：</span>
+                <span class="am-fr">
+                    <%if(reply) {%>
+                    <%= reply.seller_comment%>
+                    <%}else {%>
+                    无回复内容
+                    <%}%>
+                </span>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>关闭</span>
+        </div>
+    </div>
+</div>
 </script>
