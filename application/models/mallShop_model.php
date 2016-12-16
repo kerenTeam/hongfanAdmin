@@ -143,6 +143,33 @@ class mallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //返回商家所有评论
+    function get_store_comment($store_id){
+        //$where['storeid'] = $storeid;
+        $this->db->select('a.*, b.username');
+        $this->db->from('hf_mall_comment as a');
+        $this->db->join('hf_user_member as b','a.buyerid = b.user_id','left');
+        $query =  $this->db->where('a.stroeid', $store_id)->where('commentid','0')->get();
+         return $query->result_array();
+    } 
+    function gte_store_reply($commentid){
+        //$where['storeid'] = $storeid;
+        $this->db->select('seller_comment');
+        $this->db->from('hf_mall_comment');
+        $query =  $this->db->where('commentid',$commentid)->get();
+         return $query->row_array();
+    }
+    //修改评论状态
+    function edit_comment_state($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->shop_comment,$data);
+    }
+    //删除评论
+    function del_store_comment($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->shop_comment);
+    }
+
 }
 
 

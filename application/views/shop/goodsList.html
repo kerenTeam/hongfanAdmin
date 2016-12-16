@@ -149,7 +149,7 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="shopGoodsList">
-                                
+
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -285,7 +285,9 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                 for(var i=0;i<$('.trClass').length;i++){
+                //$("#nullMessage").html("暂无相关商品信息！");
+                for(var i=0;i<$('.trClass').length;i++){
+
                     $('.trClass').eq(i).remove();
                 }
                 $('.dataNumber').html("");
@@ -318,7 +320,7 @@ $(document).ready(function(){
             return false;
         }else{
             console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-            // getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         
     });
