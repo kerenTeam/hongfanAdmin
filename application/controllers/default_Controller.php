@@ -25,10 +25,10 @@ class default_Controller extends CI_Controller
 		date_default_timezone_set("Asia/Shanghai");
 		$this->load->helper('default_helper');
         //验证是否登陆
-		// if(!isset($_SESSION['users'])){
-		// 	echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/login/index')."';</script>";
-		// 	exit;
-		// }
+		if(!isset($_SESSION['users'])){
+			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/login/index')."';</script>";
+			exit;
+		}
 	}
 }
 

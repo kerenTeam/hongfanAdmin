@@ -45,15 +45,15 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商家管理
-            <a href="<?php echo site_url().'shop/singleShop/goodsList';?>" style="font-size: 16px;">商品列表</a> 
-            <small><a href="<?php echo site_url().'shop/singleShop/goodsDetail';?>" style="font-size: 16px;">编辑商品详情</a></small></div>
+            <a href="<?php echo site_url().'integral/integral/integralList';?>" style="font-size: 16px;">商品列表</a> 
+            <small><a href="<?php echo site_url().'integral/integral/integralEditGoods';?>" style="font-size: 16px;">编辑商品详情</a></small></div>
         </div>
     </div>
 </div>
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/singleShop/edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/integral/integral/edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">商品基础信息
@@ -74,7 +74,15 @@
                             <label for="Name">商品名称<span class="red">*</span>：</label>
                             <input type="text" id="Name" value="<?php echo $goods['title'];?>" name="title" required="required" />
                         </div>
-                        
+                               <div class="am-form-group">
+                            <label>商品分类<span class="red">*</span>：</label>
+                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="categoryid">
+                                <option value=''>请选择一项...</option>
+                                <?php foreach($cates as $v):?>
+                                <option value="<?php echo $v['catid'];?>" <?php if($v['catid'] == $goods['categoryid']){echo "selected";} ?>><?php echo $v['catname'];?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
                         <div class="am-form-group">
                             <label for="englishName">商品价格<span class="red">*</span>：</label>
                             <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="<?php echo $goods['price'];?>" name="price" required="required" />
@@ -84,75 +92,7 @@
                             <label for="englishName">商品品牌：</label>
                             <input type="text" id="englishName"  value="<?php echo $goods['brand'];?>" name="brand"/>
                         </div>
-                        <?php $param = json_decode($goods['parameter'],true);?>
-                        <div class="am-form-group">
-                            <label for="englishName">添加属性：</label>
-                            <div class="tableContainer">
-                            <?php if(!empty($param)):?>
-                            <?php foreach($param as $v):?>
-                                <table class="addProperty">
-                                <thead>
-                                    <th>属性名称</th>
-                                    <th>&nbsp;</th>
-                                </thead>
-                                <tbody class="addPropertyBody">
-                                    <td class="propertyName"><input type="text" value="<?php echo $v['parameter_name'];?>"></td>
-                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                    <table class="addPropertyContent">
-                                        <thead>
-                                            <th>属性值</th>
-                                            <th>附加值</th>
-                                            <th>库存</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyTr">
-                                         <?php foreach($v['child_value'] as $child):?>
-                                            <tr class="addPropertytr">
-                                           
-                                                <td class="propertyValue"><input type="text" value="<?php echo $child['child_parameter_name'];?>" ></td>
-                                                <td class="propertyValue"><input type="text" value="<?php echo $child['equivalence'];?>"></td>
-                                                <td class="propertyValue"><input type="text" value="<?php echo $child['Inventory'];?>"></td>
-                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                            
-                                            </tr>
-                                            <?php endforeach;?>
-                                        </tbody>
-                                    </table>
-                                </tbody>
-                            </table>
-                            <?php endforeach;?>
-                        <?php else:?>
-                             <table class="addProperty">
-                                <thead>
-                                    <th>属性名称</th>
-                                    <th>&nbsp;</th>
-                                </thead>
-                                <tbody class="addPropertyBody">
-                                    <td class="propertyName"><input type="text" ></td>
-                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                    <table class="addPropertyContent">
-                                        <thead>
-                                            <th>属性值</th>
-                                            <th>附加值</th>
-                                            <th>库存</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyTr">
-                                            <tr class="addPropertytr">
-                                                <td class="propertyValue"><input type="text" ></td>
-                                                <td class="propertyValue"><input type="text" ></td>
-                                                <td class="propertyValue"><input type="text" ></td>
-                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tbody>
-                            </table>
-                        <?php endif;?>
-                           <input type="hidden" name="parameter" id='inputproperty'/>
-                            </div>
-                            <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
-                        </div>
+                      
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
                             <input type="radio" name='postage' <?php if(empty($goods['postage'])){echo "checked";}?> id="dispostage" />是
@@ -163,52 +103,17 @@
                             <input type="number"  id="postageNum" value="<?php echo $goods['postage'];?>" name="postage" required="required" />
                         </div>
 
-                        <div class="am-form-group">
-                            <label for="oneType">货到付款：</label>
-                            <select id="oneType" required="required" name="cod">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="1" <?php if($goods['cod'] == "1"){echo "selected";}?>>支持货到付款</option>
-                                <option value="0" <?php if($goods['cod'] == "0"){echo "selected";}?>>不支持货到付款</option>
-                            </select>
-                        </div>
+                       
                         
                     </div>
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    <div class="am-form-group">
-                            <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="categoryid">
-                                <option value=''>请选择一项...</option>
-                                <?php foreach($cates as $v):?>
-                                <option value="<?php echo $v['catid'];?>" <?php if($v['catid'] == $goods['categoryid']){echo "selected";} ?>><?php echo $v['catname'];?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
-                            <input type="radio" name="recommend" value="1" <?php if($goods['recommend'] == "1"){echo "checked";}?> />是
-                            <input type="radio" name="recommend" value="0" <?php if($goods['recommend'] == "0"){echo "checked";}?> />否
-                        </div>
+             
+                        
                         <div class="am-form-group">
                             <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
                             <input type="number"  id="respority" value="<?php echo $goods['amount'];?>" name="amount" required="required" />
                         </div>
-                         <div class="am-form-group" >
-                            <label for="oneType">审核状态:</label>
-                            &nbsp;<span style="color: red; font-weight: bold;">
-                           <?php switch ($goods['auditing_state']) {
-                               case '1':
-                                  echo "审核通过";
-                                   break;  
-                               case '0':
-                                  echo "待审核";
-                                   break;
-                               
-                               default:
-                                   echo "审核未通过";
-                                   break;
-                           }?>
-                           </span>
-                        </div>
+                        
                         <div class="am-form-group">
                             <label for="englishName">商品状态：<span class="red">*</span>：</label>
                             <input type="radio" name="goods_state" value="1" <?php if($goods['goods_state'] == "1"){echo "checked";}?> />上架
@@ -274,12 +179,12 @@
                 </div>
                 <div class="am-form-group am-text-center">
                     <input type="hidden" name="goods_id" value="<?php echo $goods['goods_id'];?>">
-                        <button class="am-btn am-btn-secondary" type="submit" id="addProperty">提交</button>
+                        <button class="am-btn am-btn-secondary" type="submit" >提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
                 </div>
             </form>
-            <div id="goodsComments">
+        <!--     <div id="goodsComments">
                 <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                 <div class="am-form-group">
                     <div class="am-btn-toolbar ampadding">
@@ -288,8 +193,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="am-u-sm-12">
+            </div> -->
+           <!--  <div class="am-u-sm-12">
                 <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                     <thead>
                         <tr>
@@ -415,7 +320,6 @@
                                 </div>
                             </td>
                         </tr>
-                        <!-- more data -->
                     </tbody>
                 </table>
             </div>
@@ -432,8 +336,8 @@
                     </ul>
                     <p>共5条数据，共4页</p>
                 </div>
-            </div>
-            </div>
+            </div>-->
+            </div> 
         </div>
     </div>
 </div>
@@ -498,42 +402,4 @@ $('#dispostage').click(function(){
   var ue = UE.getEditor('editor');
 
 
-
-var i =1;
- //添加属性名称的设置
-    $('.createMoreName').click(function(){   
-        i++;
-        $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody class="addPropertyBody"><td class="propertyName"><input type="text" ></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr class="addPropertytr"><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore'+ i +'"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
-        //添加属性值的设置
-
-        $('.createMore'+i).click(function(){
-           $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-        });    
-    })
-    //添加属性值的设置
-    $('.createMore1').click(function(){
-       $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-    });
-
-    //添加属性
-    $('#addProperty').click(function(){
-        var propertyArray=[];
-        for(var i=0;i<$('.addPropertyBody').length;i++){
-            var arrayPropertyName={},addPropertyBody={};
-            arrayPropertyName.parameter_name=$('.addPropertyBody').eq(i).find('input').val();    
-            arrayPropertyName.child_value=[];
-            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
-            for(var j=0;j<addPropertytr.length;j++){
-                var td=addPropertytr.eq(j).find('td');
-                var addPropertytd={};
-                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
-                addPropertytd.equivalence=td.eq('1').find('input').val();
-                addPropertytd.Inventory=td.eq('2').find('input').val();
-                arrayPropertyName.child_value.push(addPropertytd);
-            }
-            propertyArray.push(arrayPropertyName);
-        }
-        $("#inputproperty").val(JSON.stringify(propertyArray));
-       //console.log(JSON.stringify(propertyArray));
-    });
 </script>

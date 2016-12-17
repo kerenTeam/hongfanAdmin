@@ -24,6 +24,7 @@ class integral extends default_Controller
     }
     //商品列表
     function integralList(){
+        $data['cates'] = $this->integral_model->get_goods_cates();
         $data['page'] = $this->view_integralList;
         $data['menu'] = array('integral','integralList');
         $this->load->view('template.html',$data);
@@ -117,7 +118,7 @@ class integral extends default_Controller
     function search_goods(){
         if($_POST){
             $cate = $_POST['cateid'];
-            $storeid = $this->session->businessId;
+            $storeid = '';
            // echo $storeid;
             //单价起价格
             $startPrice = $_POST['startPrice'];
@@ -130,7 +131,8 @@ class integral extends default_Controller
             $state = $_POST['state']; 
             //关键字
             $sear = $_POST['sear'];
-            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear);
+            $differentiate = '2';
+            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
             if(empty($res)){
                 echo '2';
             }else{
@@ -143,24 +145,63 @@ class integral extends default_Controller
 
     //编辑商品
     function integralEditGoods(){
-        $data['page'] = $this->view_integralEditGoods;
-        $data['menu'] = array('integral','integralList');
-        $this->load->view('template.html',$data);
-    }
-     //商品详情
-    function goodsDetail(){
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['goods'] = $this->mallShop_model->get_goodsInfo($id);
+            $data['goods'] = $this->integral_model->get_goodsInfo($id);
             //所有商品分类
-            $data['cates'] = $this->mallShop_model->get_goods_cates();
-            $data['page'] = $this->view_goodsDetail;
-            $data['menu'] = array('shop','goodsList');       
+            $data['cates'] = $this->integral_model->get_goods_cates();
+            $data['page'] = $this->view_integralEditGoods;
+            $data['menu'] = array('integral','integralList');
             $this->load->view('template.html',$data);
         }
     }
+    //商品编辑操作
+    function edit_goods(){
+        if($_POST){
+            $data = $this->input->post();
+            $pic = array();
+            $i =1;
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'upload/goods/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                       echo $this->upload->display_errors();
+                    }else{
+                        if($i == '1'){
+                            $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
+                        }
+                        $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
+                        unset($data['img'.$i]);
+                    }
+                }else{
+                    if(isset($data['img'.$i])){
+                         if($i == '1'){
+                                $data['thumb'] = $data['img'.$i];
+                         }
+                         $pic[]['bannerPic'] = $data['img'.$i];
+                         unset($data['img'.$i]);
+                     }
+                }
+                $i++;
+             }
+             $data['good_pic'] = json_encode($pic);
+             if($this->integral_model->edit_goods($data['goods_id'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/integral/integralList')."'</script>";exit;
+             }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/integral/integralEditGoods').$data['id']."'</script>";exit;
+             }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+  
     //订单管理
     function integralOrderList(){
         $data['page'] = $this->view_integralOrderList;

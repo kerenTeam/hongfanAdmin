@@ -199,7 +199,7 @@ td.am-text-middle img{
                         document.getElementById('integralGoodList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/integral/integral/integralEditGoods/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -214,7 +214,7 @@ td.am-text-middle img{
                             if($(this).find('option:selected').val()=="上架"){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/integral/integral/edit_goods_state');?>',
                                     data: 'goodsid='+ dataId+'&state=1',
                                     success: function(data){
                                         if(data==1){
@@ -231,7 +231,7 @@ td.am-text-middle img{
                             }else{
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/integral/integral/edit_goods_state');?>',
                                     data: 'goodsid='+ dataId+'&state=0',
                                     success: function(data){
                                         if(data==1){
@@ -258,14 +258,14 @@ td.am-text-middle img{
                                 if($('table tbody tr').eq(i).attr('data-id')==dataId){
                                     $.ajax({
                                         type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                                        url:'<?php echo site_url('/integral/integral/del_goods/');?>',
                                         data: 'goodsid='+dataId,
                                         success: function(data){
                                             if(data==1){                                           
                                                 for(var i=0;i<$('.trClass').length;i++){
                                                     if($('.trClass').eq(i).attr('data-id')==dataId){
                                                         $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                                         getList('<?php echo site_url('/integral/integral/store_goods_list');?>','default=1');
                                                     }
                                                 }
                                             }else{
@@ -319,8 +319,8 @@ $(document).ready(function(){
             alert("库存必须是一个范围！");
             return false;
         }else{
-            console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-            // getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+            //console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('/integral/integral/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         
     });

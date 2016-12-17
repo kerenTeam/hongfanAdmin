@@ -323,7 +323,8 @@ class singleShop extends default_Controller {
             $state = $_POST['state']; 
             //关键字
             $sear = $_POST['sear'];
-            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear);
+            $differentiate = '1';
+            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
             if(empty($res)){
                 echo '2';
             }else{
