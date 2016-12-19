@@ -14,7 +14,7 @@
         line-height: 25px;
         text-align: center;
         color: #666;
-        font-size: 1.2rem;
+         font-size: 1.2rem;
         border:1px solid #ddd;
     }
      .deleteImg:hover{
@@ -59,7 +59,7 @@ padding: 5px 6px!important;
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">新增优惠券</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('/shop/singleShop/salesAdd');?>" method="post"> 
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('/shop/singleShop/salesAdd');?>" method="post" data-am-validator> 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
@@ -69,7 +69,7 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">优惠券类型<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="typeid" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="typeid" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}" required>
                                 <option value="">输入查找/选择</option>
                                 <option value="1">代金券</option>
                                 <option value="2">折扣券</option>
@@ -80,15 +80,15 @@ padding: 5px 6px!important;
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
-                            <input type="number" class="stable" id="meetMoney" name="overflowValue" min="1"  />
+                            <input type="number" class="stable" required  id="meetMoney" name="overflowValue" min="1"  />
                             <span class="linkWord">减</span>
-                            <input type="number" class="stable" id="reduceMoney" name="cutValue" min="1"  />
+                            <input type="number" class="stable" required id="reduceMoney" name="cutValue" min="1"  />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: none;float:left !important;">
                         <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="discount" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" >
+                            <input type="text" name="discount" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -109,10 +109,10 @@ padding: 5px 6px!important;
                             </div>
                             <div class="am-g">
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" name="begin_date" value=""><span id="my-startDate">2014-12-20</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
                               </div>
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" name="end_date" value=""><span id="my-endDate">2014-12-25</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
                               </div>
                             </div>
                         </div>
@@ -180,6 +180,7 @@ padding: 5px 6px!important;
           $alert.hide();
           startDate = new Date(event.date);
           $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
         }
         $(this).datepicker('close');
       });
@@ -192,6 +193,7 @@ padding: 5px 6px!important;
           $alert.hide();
           endDate = new Date(event.date);
           $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
         }
         $(this).datepicker('close');
       });
