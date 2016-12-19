@@ -14,6 +14,8 @@ class member_model extends CI_Model{
         parent::__construct();
     }
 
+
+
     //获取登陆用户信息
     function get_login_user($phone){
         $sql = "select * FROM ".$this->member." where gid != 5 and username='".$phone."'";
