@@ -1,10 +1,11 @@
+
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
-} 
+}
 .table-check{
 width: 30px;
-} 
+}
 .hf-dropdown{
 font-size: 12px!important;
 padding: 5px 6px!important;
@@ -13,38 +14,19 @@ td.am-text-middle img{
     width:80px;
 }
 .am-u-sm6{
-    width:100px !important;
+    width:50px !important;
     margin:0;
 }
 .am-form-group div{
     line-height: 37px;
-} 
+}
+
 .stable{
     display: inline-block !important;
     width: 45% !important;
 }
 .linkWord{
     width: 10% !important;
-}
-.goodsState{
-    background: #15b5ac;
-    border-radius: 5px;
-    border: 1px solid #15b5ac;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
-}
-
-.goodsState option{
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding:2px 5px;
-    color: #000;
-    text-align: center;
-}
-.goodsState option[selected="selected"]{
-    background: #15b5ac;
 }
 
 </style>
@@ -54,8 +36,8 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 积分商城 
-            <small>商品列表</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>爱购 &nbsp;&nbsp;<a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGoList';?>" style="font-size:16px;">商品列表</a>
+            </div>
         </div>
     </div>
 </div>
@@ -63,69 +45,14 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">商品搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('/shop/singleShop/search_goods');?>" method='post'>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsType" class="am-form-label am-u-sm-3">商品分类:</label>
-                        <div class="am-u-sm-9">
-                            <select id="goodsType" name="cateid">
-                                <option value="">-=请选择一项=-</option>
-                                <?php foreach($cates as $val):?>
-                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-fl">商品积分:</label>
-                        <div class="am-u-sm-9">
-                            <input type="number" class="stable" id="startPrice" name="startPrice" min="1"  />
-                            <span class="linkWord">至</span>
-                            <input type="number" class="stable" id="endPrice" name="endPrice" min="1"  />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3">库存:</label>
-                        <div class="am-u-sm-9">
-                            <input type="number" class="stable" id="startRepertory" name="startRepertory" min="1"  />
-                            <span class="linkWord">至</span>
-                            <input type="number" class="stable" id="endRepertory" name="endRepertory" min="1"  />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsState" class="am-form-label am-u-sm-3">商品状态:</label>
-                        <div class="am-u-sm-9">
-                        <select id="goodsState" name="state">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">上架</option>
-                            <option value="0">下架</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">关键字搜索:</label>
-                        <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" name="sear" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-
-                        <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form>
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear: both;">商品列表</div>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">爱购 · 商品列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/integral/integral/integralAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                   <!--  <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
                                     <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
@@ -135,21 +62,38 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="moll_name">分类 </th>
-                                    <th class="shop_id">图片 </th>
-                                    <th class="shop_name">商品名 </th>
-                                    <th class="shop_yetai">商品积分 </th>
-                                    <!-- <th class="brand">订单 </th> -->
-                                    <!-- <th class="shop_block">月销量 </th> -->
-                                    <th class="shop_block">库存 </th> 
-                                    <!-- <th class="shop_block">货物批次 </th>                                  -->
-                                    <th class="shop_block">商品状态</th>
-                                    <th class="shop_block">变更时间</th>
+                                    <th class="shop_id">商品编号 </th>
+                                    <th class="moll_name">缩略图 </th>
+                                    <th class="shop_id">商品名称 </th>
+                                    <th class="shop_name">商品价格</th>
+                                    <th class="shop_type">商品库存 </th>
+                                    <th class="shop_yetai">佣金 </th>
+                                    <th class="brand">佣金比例</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="integralGoodList">
+                            <tbody id="storeGoodsList">
+                                <tr class="trClass" data-id="">
+                                    <td class="am-text-middle">#12551</td>
+                                    <td class="am-text-middle">
+                                        <img src="assets/img/a5.png" class="am-img-responsive" alt=""/>
+                                    </td>
+                                    <td class="am-text-middle">金伯利钻石</td>
+                                    <td class="am-text-middle">200.00</td>
+                                    <td class="am-text-middle">300</td>
+                                    <td class="am-text-middle">5%</td>
+                                    <td class="am-text-middle">221.5</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGogoodDetail';?>" class="editGoods">
+                                                <i class="am-icon-eye"></i> 查看详情
+                                            </a>
+                                            <a class="tpl-table-black-operation-del tpl-del">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -166,6 +110,8 @@ td.am-text-middle img{
 </div>
 </div>
 
+<script src="assets/js/artTemplate-native.js"></script>
+<script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -175,7 +121,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(res);
+            //console.log(res);
             if(res!=2){
                 var nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -186,7 +132,7 @@ td.am-text-middle img{
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
                         res[i].title=res[i].title.split(' ')[0];
-                        listData+= template('shopGoodsModal',res[i]);
+                        // listData+= template('storeGoodsModal',res[i]);
                      }
                     
                     return listData;
@@ -196,10 +142,10 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('integralGoodList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('storeGoodsList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/integral/integral/integralEditGoods/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -214,7 +160,7 @@ td.am-text-middle img{
                             if($(this).find('option:selected').val()=="上架"){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/integral/integral/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
                                     data: 'goodsid='+ dataId+'&state=1',
                                     success: function(data){
                                         if(data==1){
@@ -231,7 +177,7 @@ td.am-text-middle img{
                             }else{
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/integral/integral/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
                                     data: 'goodsid='+ dataId+'&state=0',
                                     success: function(data){
                                         if(data==1){
@@ -258,12 +204,16 @@ td.am-text-middle img{
                                 if($('table tbody tr').eq(i).attr('data-id')==dataId){
                                     $.ajax({
                                         type:'post',
-                                        url:'<?php echo site_url('/integral/integral/del_goods/');?>',
+                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
                                         data: 'goodsid='+dataId,
                                         success: function(data){
-                                            if(data==1){
-                                                $('.trClass').eq(i).remove();
-                                                 getList('<?php echo site_url('/integral/integral/store_goods_list');?>','default=1');
+                                            if(data==1){                                           
+                                                for(var i=0;i<$('.trClass').length;i++){
+                                                    if($('.trClass').eq(i).attr('data-id')==dataId){
+                                                        $('.trClass').eq(i).remove();
+                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                                    }
+                                                }
                                             }else{
                                                 alert("操作失败！");
                                             }
@@ -281,13 +231,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                 for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#integralGoodList');
-
+                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#storeGoodsList");
             }
 
             
@@ -299,33 +243,25 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url("/integral/integral/store_goods_list");?>','default=1');
+    // getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/integral/integral/store_goods_list');?>','default=1');
+        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
-        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
-            alert("商品积分必须是一个范围！");
-            return false;
-        }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
-            alert("库存必须是一个范围！");
-            return false;
-        }else{
-            //console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-             getList('<?php echo site_url('/integral/integral/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-        }
-        
+        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
+        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
+        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
+        goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
+        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
     });
 })
 </script>
-<script type="text/html" id="shopGoodsModal">
+<script type="text/html" id="storeGoodsModal">
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle"><%= categoryid%></td>
         <td class="am-text-middle">
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
         </td>
@@ -334,7 +270,7 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= orders%></td>
         <td class="am-text-middle"><%= sales%></td>
         <td class="am-text-middle"><%= amount%></td>
-        <!-- <td class="am-text-middle">2016年上半季</td> -->
+        <td class="am-text-middle">2016年上半季</td>
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
