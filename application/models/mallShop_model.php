@@ -182,7 +182,22 @@ class mallShop_model extends CI_Model
     function add_coupon($data){
         return $this->db->insert($this->shop_coupon,$data);
     }
-
+    //获取优惠劵详情
+    function get_conpon_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->shop_coupon);
+        return $query->row_array();
+    }
+    //编辑优惠劵
+    function edit_coupon($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->shop_coupon,$data);
+    }
+    //删除
+    function del_coupon($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->shop_coupon);
+    }
 
 
 }
