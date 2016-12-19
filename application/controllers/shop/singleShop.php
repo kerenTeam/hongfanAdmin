@@ -55,6 +55,7 @@ class singleShop extends default_Controller {
             //商家登录
             $storeid = $this->mallShop_model->get_store_list($this->session->users['user_id']);
              $this->session->set_userdata('businessId',$storeid['store_id']);
+             
         }else{
             $this->session->set_userdata('businessId',$id);
         }
@@ -444,13 +445,26 @@ class singleShop extends default_Controller {
     function salesAdd(){
         if($_POST){
             $data = $this->input->post();
-            var_dump($data);
-            exit;
-             //优惠吗
-            $code = join("",guid('1','','8'));
-            var_dump($code);
-            //二维码地址
-            var_dump(generate_promotion_code($code));
+            if(isset($data['overflowValue'])){
+                if(empty($data['overflowValue'])){
+                    unset($data['overflowValue'],$data['cutValue']);
+                }else{
+                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
+                    $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = $data['cutValue'];
+                }
+            }
+            $code = implode(guid('1','','8'));
+            //erweima 
+            $data['qrcode'] = generate_promotion_code($code);
+            //优惠码
+            $data['codeNumber'] = $code;
+            $data['storeid'] = $this->session->businessId;
+            if($this->mallShop_model->add_coupon($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopSalesList')."'</script>";
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopAddSales')."'</script>";
+            }
         }else{
             $this->load->view('404.html');
         }

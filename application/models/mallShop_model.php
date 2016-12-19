@@ -178,6 +178,10 @@ class mallShop_model extends CI_Model
         $query = $this->db->get($this->shop_coupon_type);
         return $query->result_array();
     }
+    //新增优惠劵
+    function add_coupon($data){
+        return $this->db->insert($this->shop_coupon,$data);
+    }
 
 
 
