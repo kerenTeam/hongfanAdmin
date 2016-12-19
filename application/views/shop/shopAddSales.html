@@ -46,9 +46,9 @@ padding: 5px 6px!important;
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 优惠券管理 
-            <a href="<?php echo site_url().'/electronic/electronic/electronicList';?>" style="font-size:16px;">优惠券列表</a>
+            <a href="<?php echo site_url().'/shop/singleShop/shopSalesList';?>" style="font-size:16px;">优惠券列表</a>
             
-            <small><a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>">新增优惠券</a></small></div>
+            <small><a href="<?php echo site_url().'/shop/singleShop/shopAddSales';?>">新增优惠券</a></small></div>
         </div>
     </div>
 </div>
@@ -59,75 +59,90 @@ padding: 5px 6px!important;
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">新增优惠券</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('/shop/singleShop/salesAdd');?>" method="post"> 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="name" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">优惠券类型<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="typeid" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
-                                <option value="0">代金券</option>
-                                <option value="1">折扣券</option>
+                                <option value="1">代金券</option>
+                                <option value="2">折扣券</option>
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="voucher" style="display: none;">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: none;float: left !important; ">
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
-                            <input type="number" class="stable" id="meetMoney" name="meetMoney" min="1"  />
+                            <input type="number" class="stable" id="meetMoney" name="overflowValue" min="1"  />
                             <span class="linkWord">减</span>
-                            <input type="number" class="stable" id="reduceMoney" name="reduceMoney" min="1"  />
+                            <input type="number" class="stable" id="reduceMoney" name="cutValue" min="1"  />
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="discount" style="display: none;">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: none;float:left !important;">
                         <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="" maxlength="10" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="discount" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" >
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="receive_limit" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
-                                <option value="不限制">不限制</option>
-                                <option value="商家促销">仅一次</option>
+                                <option value="0">不限制</option>
+                                <option value="1">仅一次</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="businessTime" class="am-form-label am-u-sm-3">有效时间：</label>
+                        <div class="am-u-sm-9">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" name="begin_date" value=""><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" name="end_date" value=""><span id="my-endDate">2014-12-25</span>
+                              </div>
+                            </div>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">核销方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="verification" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
-                                <option value="到店核销">到店核销</option>
-                                <option value="在线核销">在线抵用</option>
-                                <option value="不限">不限</option>
+                                <option value="3">到店核销</option>
+                                <option value="2">在线抵用</option>
+                                <option value="1">不限</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">库存数<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <input type="number" name="" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
+                            <input type="number" name="stock" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券内容<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <textarea rows="5" required class="" name="">
-                                
-                            </textarea>
+                            <textarea rows="5" required class="" name="content"></textarea>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 addpadding am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button><button class="am-btn am-btn-default" id="cancle" type="button">取消</button> 
+                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button>
+                        <button class="am-btn am-btn-default" id="cancle" type="button">取消</button> 
                     </div>
                 </form>
             </div>
@@ -142,10 +157,10 @@ padding: 5px 6px!important;
   });
   //优惠券类型选择
   function changeSalesType() {
-    if($('#salesType option:selected').val()=="0"){
+    if($('#salesType option:selected').val()=="1"){
         $('#discount').css('display','none');
         $('#voucher').css('display','block');
-    }else if($('#salesType option:selected').val()=="1"){
+    }else if($('#salesType option:selected').val()=="2"){
         $('#voucher').css('display','none');
         $('#discount').css('display','block');
     }else{
@@ -153,5 +168,32 @@ padding: 5px 6px!important;
     }
   
   }
-  
+    $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
 </script>

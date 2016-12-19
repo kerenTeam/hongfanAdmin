@@ -440,12 +440,28 @@ class singleShop extends default_Controller {
             echo "2";
         }
     }
-
+    //新增优惠劵操作
+    function salesAdd(){
+        if($_POST){
+            $data = $this->input->post();
+            var_dump($data);
+            exit;
+             //优惠吗
+            $code = join("",guid('1','','8'));
+            var_dump($code);
+            //二维码地址
+            var_dump(generate_promotion_code($code));
+        }else{
+            $this->load->view('404.html');
+        }
+    }
     //商家优惠劵管理 新增优惠劵
     function shopAddSales(){
+        //获取优惠劵类型
+        $data['coupon'] = $this->mallShop_model->get_coupon_type();
         $data['page'] = $this->view_shopAddSales;
         $data['menu'] = array('sales','shopAddSales');
-       $this->load->view('template.html',$data);
+        $this->load->view('template.html',$data);
     }
      //商家优惠劵管理 优惠劵验证
     function shopCheckSales(){
