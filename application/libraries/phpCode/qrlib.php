@@ -41,3 +41,14 @@
 	include $QR_BASEDIR."qrmask.php";
 	include $QR_BASEDIR."qrencode.php";
 
+/**
+* 
+*/
+class Qrlib
+{
+	
+	function __construct()
+	{
+		
+	}
+}

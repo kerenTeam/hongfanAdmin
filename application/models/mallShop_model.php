@@ -16,7 +16,9 @@ class mallShop_model extends CI_Model
     //商家订单表
     public $shop_order = 'hf_mall_order'; 
     //优惠劵
-    public $shop_coupon = "hf_shop_coupon";
+    public $shop_coupon = "hf_shop_coupon"; 
+     //优惠劵类型
+    public $shop_coupon_type = "hf_shop_coupon_type";
     function __construct()
     {
         parent::__construct();
@@ -170,6 +172,14 @@ class mallShop_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->delete($this->shop_comment);
     }
+
+    //获取会员卡类型
+    function get_coupon_type(){
+        $query = $this->db->get($this->shop_coupon_type);
+        return $query->result_array();
+    }
+
+
 
 }
 
