@@ -19,8 +19,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>为民服务 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsList';?>" style="font-size:16px;">邻水帮帮团</a>
-            <small><a href="<?php echo site_url().'/store/store/storeAddGoods';?>">新增帮帮团</a></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>为民服务 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团</a>
+            <small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/addhelpgroup';?>">新增帮帮团</a></small></div>
         </div>
     </div>
 </div>
@@ -33,13 +33,13 @@
                         <div class="widget-title  am-cf">帮帮团基础信息</div>
                     </div>
                     <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">                        
+                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">                        
                         <div class="am-form-group">
                             <label for="Name">帮帮团名称<span class="red">*</span>：</label>
                             <input type="text" id="Name" value="" required="required" />
                         </div>
                         <div class="am-form-group">
-                            <label for="user-weibo" >商品图片：</label>
+                            <label for="user-weibo" >缩略图：</label>
                             <div class="am-u-sm-12">
                                 <div class="am-u-sm-4">
                                     <div class="wx_type_img">
@@ -72,84 +72,33 @@
                           </div> 
                         </div>
                         <div class="am-form-group">
-                            <label for="englishName">商品价格<span class="red">*</span>：</label>
-                            <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" />
+                            <label for="englishName">团队规模</label>
+                            <input type="text" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" placeholder="请务必保证填写信息的正确性" />
                         </div>
                          
                         <div class="am-form-group">
-                            <label for="englishName">商品品牌：</label>
-                            <input type="number" id="englishName" value=""  />
-                        </div>
-                        <div class="am-form-group" >
-                            <label for="oneType">是否包邮：</label>
-                            <input type="radio" name="yes" value="0" id="dispostage" />是
-                            <input type="radio" name="yes" id="postage" value="1"/>否
-                        </div>
-                        <div class="am-form-group postageNumber" >
-                            <label for="englishName">请输入运费<span class="red">*</span>：</label>
-                            <input type="number"  id="postageNum" value="" required="required" />
+                            <label for="englishName">帮扶范围<span class="red">*</span>：</label>
+                            <input type="text" id="englishName" value="" placeholder="请务必保证填写信息的正确性" />
                         </div>
                         <div class="am-form-group">
-                            <label for="oneType">货到付款：</label>
-                            <select id="oneType" required="required">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">支持货到付款</option>
-                                <option value="option2">不支持货到付款</option>
-                            </select>
+                            <label for="englishName">所在地区<span class="red">*</span>：</label>
+                            <input type="text" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" placeholder="请务必保证填写信息的正确性" />
                         </div>
-                        
-                    </div>
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    <div class="am-form-group">
-                            <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value=>输入查找/选择</option>
-                                <option value="上装">上装</option>
-                                <option value="下装">下装</option>
-                                <option value="裙装">裙装</option>
-                            </select>
+                         
+                        <div class="am-form-group">
+                            <label for="englishName">所在街道<span class="red">*</span>：</label>
+                            <input type="text" id="englishName" value="" placeholder="请务必保证填写信息的正确性" />
                         </div>
                         <div class="am-form-group">
-                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>是
-                            <input type="radio" name="yes" value=""/>否
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
-                            <input type="number"  id="respority" value="" required="required" />
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
-                            <select id="oneType" required="required">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="通过审核">通过审核</option>
-                                <option value="待审核">待审核</option>
-                                <option value="未通过">未通过</option>
-                            </select>
-
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">商品状态：<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>上架
-                            <input type="radio" name="yes" value=""/>下架
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                            <div>
-                                <script id="editor" type="text/plain"></script>
-                            </div>
-                                                     
+                            <label for="englishName">团队简介<span class="red">*</span>：</label>
+                            <textarea rows="5" cols="40" placeholder="请务必保证填写信息的正确性"> </textarea>
                         </div>
                     </div>
-                </div>
-
                     <div class="am-form-group am-text-center">
                         <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
                         <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
-
+                	</div>
                 </div>
             </form>
         </div>
@@ -164,35 +113,6 @@
     <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 </body>
 <script type="text/javascript">
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-
 //点击取消返回上一页
   $('#cancle').click(function(){
     history.go(-1);
