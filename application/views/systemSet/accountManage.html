@@ -47,60 +47,6 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <!-- <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">系统管理员账号查询</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
-                                <option value="请选择">请选择</option>
-                                <option value="礼品券">礼品券</option>
-                                <option value="代金券">代金券</option>
-                                <option value="折扣券">折扣券</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
-                        <div class="am-u-sm-9">
-                            <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
-                        <label for="" class="am-u-sm-3 am-form-label">领取等级：</label>
-                        <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="">输入查找/选择</option>
-                                <option value="不限制">不限制</option>
-                                <option value="商家促销">超级VIP</option>
-                                <option value="商家活动">普通会员</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">审核状态：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
-                                <option value="请选择">请选择</option>
-                                <option value="0">待审核</option>
-                                <option value="1">通过审核</option>
-                                <option value="2">驳回</option>
-                                <option value="3">删除</option>
-                                <option value="3">过期</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form> -->
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf" style="clear:both;">系统管理员列表</div>
                 </div>
@@ -121,32 +67,32 @@
                             <div class="am-modal-hd">新增管理员</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' >
                                     <div class="am-form-group am-form-icon am-form-feedback am-cf ">
                                         <label class="am-u-sm-3 am-form-label">管理员姓名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
+                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='nickname' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员用户名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入用户名,不超过十个字符" name='name' minlength="2" maxlength="10" required>
+                                            <input type="text" placeholder="请输入用户名,不超过十个字符" name='username' minlength="2" maxlength="10" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员密码 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="password" placeholder="请输入6-16位的账号密码" name='name' minlength="2" maxlength="16" required onchange="confirm(this)">
+                                            <input type="password" placeholder="请输入6-16位的账号密码" name='password' minlength="2" maxlength="16" required onchange="confirm(this)">
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select onchange="confirmSelect()" id="manageBrand" name="manageBrand" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <div class="am-u-sm-9"> <select onchange="confirmSelect()" id="manageBrand" name="gid" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                             <option value="">输入查找/选择</option>
-                                            <option value="普通管理员" selected="selected">普通管理员</option>
-                                            <option value="超级管理员">超级管理员</option>
-                                            <option value="其他">其他</option>
+                                            <?php foreach($group as $val):?>
+                                            <option value="<?php echo $val['gid'];?>" ><?php echo $val['group_name'];?></option>
+                                            <?php endforeach;?>
                                         </select>
                                         </div>
                                     </div>
@@ -334,29 +280,7 @@
 </div>
 </div>
 <script type="text/javascript">
-    function uploadFiles(){
-        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-       // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/module/localLife/send_market_data');?>";//上传文件的后台地址
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
-           var form=new FormData();
-            form.append('file',fileObj); //文件对象
-            //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.onload=function(){
-                alert("导入成功！");
-                location.reload();
-            
-            };
-            xhr.send(form); 
-            return true;
-        }else{
-            alert("上传文件的格式错误！");
-            return false;
-        }
-        
-    }
+
 
     //删除图片
     $(".deleteImg").click(function(){  

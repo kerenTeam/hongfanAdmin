@@ -92,7 +92,8 @@ class mallShop_model extends CI_Model
     //根据商品返回评论
     function get_goods_comment($id){
         $where['goodsid'] = $id;
-        $query = $this->db->where($where)->get($this->shop_comment);
+      
+        $query = $this->db->where($where)->where('commentid','0')->get($this->shop_comment);
         return $query->result_array();
     }
     //编辑商品

@@ -204,6 +204,23 @@ class singleShop extends default_Controller {
             $this->load->view('template.html',$data);
         }
     }
+    //获取商品评价
+    function get_goods_comment(){
+        if($_POST){
+            $goodsid = $_POST['goodsid'];
+            $comment = $this->mallShop_model->get_goods_comment($goodsid);
+            if(empty($comment)){
+                echo '2';
+            }else{
+                foreach ($comment as $key => $value) {
+                   $comment[$key]['reply'] = $this->mallShop_model->gte_store_reply($value['id']);
+                }
+                echo json_encode($comment);
+            }
+        }else{
+            echo "2";
+        }
+    }
     //编辑商品操作
     function edit_goods(){
         if($_POST){
@@ -382,7 +399,7 @@ class singleShop extends default_Controller {
             echo "2";
         }
     }
-    //删除评论
+    //批量删除评论
     function del_comment(){
         if($_POST){
             // $a = '';
@@ -403,7 +420,7 @@ class singleShop extends default_Controller {
             echo "2";
         }
     }
-    //
+    //删除评论
     function del_comment_single(){
          if($_POST){
             $commentid = $_POST["commentid"];
@@ -522,7 +539,7 @@ class singleShop extends default_Controller {
             $this->load->view('template.html',$data);
         }
     }
-    //
+    //删除优惠劵
     function delshopSales(){
         if($_POST){
             $id = $_POST['id'];
