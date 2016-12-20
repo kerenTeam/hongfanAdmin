@@ -50,7 +50,7 @@ class serveForPeople extends default_Controller
     // 是否推荐
     function recommend(){
         if($_POST){
-            $data['state'] = $_POST['state'];
+            $data['recommend'] = $_POST['state'];
             $id = $_POST['id'];
             if($this->service_model->edit_helpuser_state($id,$data)){
                 echo "1";
@@ -65,6 +65,9 @@ class serveForPeople extends default_Controller
     function del_help_user(){
        if($_POST){
             $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
             if($this->service_model->del_help_user($id)){
                 echo "1";
             }else{
@@ -78,6 +81,9 @@ class serveForPeople extends default_Controller
     function del_users(){
         if($_POST){
             $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
             $arr = json_decode($id,true);
             foreach ($arr as $key => $v) {
                 $res = $this->service_model->del_help_user($v);
@@ -109,6 +115,68 @@ class serveForPeople extends default_Controller
         $data['page'] = $this->view_helpgroupservelist;
         $data['menu'] = array('serveForPeople','helpgroupservelist');
         $this->load->view('template.html',$data);
+    }
+    //服务请求列表
+    function help_request_list(){
+         if($_POST){
+            $requert = $this->service_model->get_requert();
+            if(empty($requert)){
+                echo "2";
+            }else{
+                echo json_encode($requert);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //删除
+    function del_help_request(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
+            $arr = json_decode($id,true);
+            foreach ($arr as $key => $value) {
+               $res = $this->service_model->del_help_request($value);
+            }
+            if($res){
+                echo "1";
+            }else{
+                echo '2';
+            }
+        }else{
+            echo "2";
+        }
+    } 
+    //回复请求人
+    function reply_help_request(){
+        if($_POST){
+            $content = $_POST['content'];
+            $id = $_POST['id'];
+            $userid = $_POST['userid'];
+            if(empty($content)){
+                echo "2";exit;
+            }
+            $data['reply_content'] = $content;
+            $data['state'] = '1';
+            $data['reply_userid'] = $this->session->users['user_id'];
+            $data['reply_time'] = date('Y-m-d H:i:s');
+            $arr['userid'] = $userid;
+            $arr['content'] = $content;
+            $arr['sender'] = $this->session->users['user_id'];
+            if($this->service_model->edit_help_request($id,$data)){
+                if($this->service_model->add_user_message($arr)){
+                    echo "1";
+                }else{
+                    echo "1";
+                }
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
     }
     //为民服务  添加邻水帮帮团
     function addhelpgroup(){
