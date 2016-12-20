@@ -28,7 +28,29 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
+.deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
+    }
+     .clickUp{
+        display: inline-block;
+        float: left;
+        margin-left: 100px;
+    }
 
+ .preview{
+        height:200px !important;
+    }
+    .preview #imghead,#preview img{
+        
+        height:190px;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -50,34 +72,28 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">帮帮团搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">姓名:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入帮帮团名称" id="helpgroupName" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">所在地区:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入所在地区" id="helpgroupArea" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">职业:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入搜索的职业" id="helpgroupArea" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">所在街道:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入所在街道" id="helpgroupArea" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
@@ -85,14 +101,14 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帮帮团组织列表</div>
+                    <div class="widget-title  am-cf">帮帮团成员信息列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <a type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
+                                    <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
                                     <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
                                 </div>
                             </div>
@@ -117,11 +133,12 @@ td.am-text-middle img{
                             <tbody id="storeGoodsList">
                                 <tr class="trClass" data-id="">
                                     <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+                                    <td class="am-text-middle">S12245</td>
                                     <td class="am-text-middle">王明</td>
-                                    <td class="am-text-middle">搬运工</td>
                                     <td class="am-text-middle">
                                         <img src="assets/img/a5.png" class="am-img-responsive" alt=""/>
                                     </td>
+                                    <td class="am-text-middle">搬运工</td> 
                                     <td class="am-text-middle">12227587543</td>
                                     <td class="am-text-middle">解决纠纷 照顾老人</td>
                                     <td class="am-text-middle">邻水县</td>
@@ -131,7 +148,7 @@ td.am-text-middle img{
                                             <a data-id="" data-am-modal="{target: '#editbangModal'}" class="editbangbang">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a data-id=""  onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                            <a data-id=""  onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
@@ -142,69 +159,69 @@ td.am-text-middle img{
                                 <div class="am-modal-dialog">
                                     <div class="am-modal-hd">编辑帮帮成员信息</div>
                                     <div class="am-modal-bd">
-                                        <form class="am-form tpl-form-line-form"  enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type='hidden' name='type_id' />
-                                            <input type="text" placeholder="姓名" name='name' minlength="4" required="">
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <div class="wx_type_img">
-                                                <input type="file" id="" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
+                                        <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
+                                            <div class="am-u-sm-9">
+                                                <input type='hidden' name='type_id' />
+                                                <input type="text" placeholder="姓名" name='name' minlength="4" required="">
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">职业 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='house_layout' required>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
+                                            <div class="am-u-sm-9">
+                                                <div class="wx_type_img">
+                                                    <input type="file" id="" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                                    <!-- 图片实时预览 -->
+                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                </div>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系方式 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="tel" name='quarters' required>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
+                                            <div class="am-u-sm-9">
+                                                <input type="text" name='house_layout' required>
+                                            </div>
                                         </div>
-                                    </div>
-                                
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='area_address' required>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
+                                            <div class="am-u-sm-9">
+                                                <input type="tel" name='quarters' required>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">个人简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='intermediary_name' required>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='address' placeholder="如：邻水xxxx街道" required>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入所在街道" required>
-                                        </div>
-                                    </div>
                                     
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-secondary">保存</button>
-                                    </div>
-                                </form>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
+                                            <div class="am-u-sm-9">
+                                                <input type="text" name='area_address' required>
+                                            </div>
+                                        </div>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">个人简介 <span class="red">*</span>：</label>
+                                            <div class="am-u-sm-9">
+                                                <input type="text" name='intermediary_name' required>
+                                            </div>
+                                        </div>
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span>：</label>
+                                            <div class="am-u-sm-9">
+                                                <input type="text" name='address' placeholder="如：邻水xxxx街道" required>
+                                            </div>
+                                        </div>
+                                       
+                                        <div class="am-form-group am-cf">
+                                            <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span>：</label>
+                                            <div class="am-u-sm-9">
+                                                <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入所在街道" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="am-form-group am-btn-group-xs">
+                                            <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                                            <button type="submit" class="am-btn am-btn-secondary">保存</button>
+                                        </div>
+                                    </form>
                                         
                                     </div>
                                 </div>

@@ -126,7 +126,7 @@ td img{
                      }
                     
                     return listData;
-                };
+                }; 
                 //调用分页
                 laypage({
                     cont: 'paging_list',
@@ -137,6 +137,10 @@ td img{
                             var dataId=$(this).attr('data-id');
                             $(this).attr("href","<?php echo site_url('/shop/singleShop/shopEditSales/" + dataId + "');?>");
                         });
+                        for(var i=0;i<$('.tpl-del').length;i++){
+                            var dataId=$('.tpl-del').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                         
+                        }
                         //删除优惠券的AJAX请求
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
@@ -148,12 +152,7 @@ td img{
                                         data: 'id='+dataId,
                                         success: function(data){
                                             if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==dataId){
-                                                        $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/delshopSales/');?>','default=1');
-                                                    }
-                                                }
+                                               getList('<?php echo site_url('/shop/singleShop/get_sales_list');?>','default=1');     
                                             }else{
                                                 alert("操作失败！");
                                             }

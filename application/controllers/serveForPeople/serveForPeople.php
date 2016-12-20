@@ -12,6 +12,7 @@ class serveForPeople extends default_Controller
 	public $view_helpgrouplist = 'module/serveForPeople/helpgrouplist.html';
 	public $view_addhelpgroup = 'module/serveForPeople/addhelpgroup.html';
 	public $view_edithelpgroup = 'module/serveForPeople/edithelpgroup.html';
+	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
 	function __construct()
 	{
 		 parent::__construct();
@@ -24,10 +25,17 @@ class serveForPeople extends default_Controller
         $this->load->view('template.html',$data);
     }
 
-	//为民服务  邻水帮帮团列表
+	//为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
         $data['menu'] = array('serveForPeople','helpgrouplist');
+        $this->load->view('template.html',$data);
+    }
+
+    //为民服务  邻水帮帮团服务列表
+    function helpgroupservelist(){
+        $data['page'] = $this->view_helpgroupservelist;
+        $data['menu'] = array('serveForPeople','helpgroupservelist');
         $this->load->view('template.html',$data);
     }
     //为民服务  添加邻水帮帮团
