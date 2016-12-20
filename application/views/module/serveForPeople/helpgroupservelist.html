@@ -28,7 +28,10 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
-
+.editbangbang{
+    border: 1px solid #F37B1D !important;
+    color: #F37B1D !important;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -90,7 +93,7 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-up"></span> 导出</button>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +122,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle">2014年05月25日 15:00：00</td>
                                     <td class="am-text-middle">12227587543</td>
                                     <td class="am-text-middle">王丽</td>
-                                    <td class="am-text-middle">已处理</td>
+                                    <td class="am-text-middle">已帮助</td>
                                     <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">    
+                                        <div class="tpl-table-black-operation">
+                                            <a data-id="" data-am-modal="{target: '#bangServeDetail'}" class="bangServeDetail">
+                                                <i class="am-icon-info-circle"></i> 查看详情
+                                            </a>    
                                             <a data-id=""  onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
@@ -136,9 +142,12 @@ td.am-text-middle img{
                                     <td class="am-text-middle">2014年05月25日 15:00：00</td>
                                     <td class="am-text-middle">12227587543</td>
                                     <td class="am-text-middle">王丽</td>
-                                    <td class="am-text-middle">待处理</td>
+                                    <td class="am-text-middle">待帮助</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
+                                            <a data-id="" data-am-modal="{target: '#bangServeDetail'}" class="bangServeDetail">
+                                                <i class="am-icon-info-circle"></i> 查看详情
+                                            </a>
                                             <a data-id="" data-am-modal="{target: '#editbangModal'}" class="editbangbang">
                                                 <i class="am-icon-pencil"></i> 给予答复
                                             </a>
@@ -155,7 +164,7 @@ td.am-text-middle img{
                                     <div class="am-modal-bd">
                                         <form class="am-form tpl-form-line-form"  enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">回复内容 <span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">回复内容 </label>
                                         <div class="am-u-sm-9">
                                             <input type='hidden' name='type_id' />
                                             <input type="text" placeholder="请输入回复内容" name='name' minlength="4" required="">
@@ -172,6 +181,78 @@ td.am-text-middle img{
                             </div>
                             </tbody>
                         </table>
+                        <!--查看详情模态框开始-->
+                        <div class="am-modal am-modal-confirm" tabindex="-1" id="bangServeDetail">
+                                    <div class="am-modal-dialog">
+                                        <div class="am-modal-hd">帮帮服务信息</div>
+                                        <div class="am-modal-bd">
+                                            <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">姓名 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <input type='hidden' name='type_id' />
+                                                    <span class="am-text-left">王明</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">头像： </label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left"><img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="assets/img/a5.png" class="am-img-responsive cardView"> </span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">职业： </label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left">居委会大妈</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">联系方式： </label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left">18227587543</span>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">帮扶内容 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left">帮扶内容</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">个人简介 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <span>这是一个个人简介</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">所在地区 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left">天府三街新希望国际B座2813</span>
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">所在街道 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <span>天府三街</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-cf">
+                                                <label class="am-u-sm-3 am-form-label">是否推荐 ：</label>
+                                                <div class="am-u-sm-9">
+                                                    <span class="am-text-left">是</span>
+                                                </div>
+                                            </div>
+                                            <div class="am-form-group am-btn-group-xs">
+                                                <button type="submit" class="am-btn am-btn-secondary">关闭</button>
+                                            </div>
+                                        </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                        <!--查看详情模态框结束-->
                     </div>
                     <div class="am-u-lg-12 am-cf am-text-center">
                         <div class="" id="paging_list">
