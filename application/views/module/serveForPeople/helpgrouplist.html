@@ -113,19 +113,19 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">职业:</label>
                         <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入搜索的职业" id="helpgroupArea" />
+                            <input type="text" placeholder="请输入搜索的职业" id="helpgroupJob" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">所在街道:</label>
                         <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入所在街道" id="helpgroupArea" />
+                            <input type="text" placeholder="请输入所在街道" id="helpgroupAddress" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
                         <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入所在街道" id="helpgroupArea" />
+                            <input type="text" placeholder="请输入关键词" id="helpgroupkey" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
@@ -179,7 +179,19 @@ td.am-text-middle img{
     </div>
 </div>
 </div>
-
+<!--批量删除的弹窗-->
+ <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定删除所有选中的记录吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
@@ -191,7 +203,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(res);
+            
             if(res!=2){
                 var nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -201,10 +213,11 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
+                        res[i].content=eval(res[i].content);
+                        // res[i].content=res[i].content.split(']');
                         listData+= template('helpUserModal',res[i]);
                      }
-                    
+                    console.log(res);
                     return listData;
                 };
                 //调用分页
@@ -213,24 +226,21 @@ td.am-text-middle img{
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('helpUserList').innerHTML = thisDate(obj.curr);
-                        $('.editGoods').click(function(){//编辑商品信息
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
-                        });
                         for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
+                            var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editHelpUser').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="下架"){
+                            $('.editHelpUser').eq(i).attr("data-am-modal","{target: '#ed"+ edDataId +"'}")
+                            if($('.goodsState option:selected').eq(i).val()=="否"){
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
-                        //更改商品的状态
+                        //更改帮帮团成员的状态
                         $('.goodsState').change(function(){
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
+                            if($(this).find('option:selected').val()=="否"){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
                                     data: 'goodsid='+ dataId+'&state=1',
                                     success: function(data){
                                         if(data==1){
@@ -247,7 +257,7 @@ td.am-text-middle img{
                             }else{
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
                                     data: 'goodsid='+ dataId+'&state=0',
                                     success: function(data){
                                         if(data==1){
@@ -267,23 +277,22 @@ td.am-text-middle img{
                             
                         });
 
-                        //删除商品的AJAX请求
+                        //单个商品删除的AJAX请求
                         $('.sureDelete').click(function(){
-                            var dataId=$(this).attr('data-id');
+                            var deleteId=$(this).attr('data-id');
+                            deleteArray[0]= deleteId;  
+                            deleteArray=eval(deleteArray);
+                            console.log(deleteArray);                        
                             for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
+                                if($('table tbody tr').eq(i).attr('data-id')==id){
                                     $.ajax({
                                         type:'post',
                                         url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_user');?>',
-                                        data: 'goodsid='+dataId,
+                                        data: 'commentid='+deleteArray,
                                         success: function(data){
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==dataId){
-                                                        $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
-                                                    }
-                                                }
+                                            alert(data);
+                                            if(data==1){
+                                                getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
                                             }else{
                                                 alert("操作失败！");
                                             }
@@ -295,6 +304,36 @@ td.am-text-middle img{
                                     });
                                 }
                             }
+                            
+                        });
+                        
+                        //多个商品删除的AJAX请求
+                        $('.deleteAll').click(function(){
+                            var deleteId=$(this).attr('data-id');
+                            var array=[];
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                                
+                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                            }
+                            
+                            deleteArray=JSON.stringify(array);
+                            $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
+                                    data: 'commentid='+deleteArray,
+                                    success: function(data){
+                                        console.log(data);
+                                        if(data==1){
+                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
                             
                         });
                         
@@ -320,7 +359,7 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
+        var helpgroupName=$('#helpgroupName').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
         var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
         startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
         goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
@@ -336,30 +375,35 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="helpUserModal">
-    <tr class="trClass" data-id="<%= goods_id%>">
-        <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= categoryid%></td>
+    <tr class="trClass" data-id="<%= helper_id%>">
+        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= helper_id%>" name="commentBox"></td>
+
+        <td class="am-text-middle"><%= helper_id%></td>
+        <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle">
-            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
+            <img src="<%= headPic%>" class="am-img-responsive" alt=""/>
         </td>
-        <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><%= price%></td>
-        <td class="am-text-middle"><%= orders%></td>
-        <td class="am-text-middle"><%= sales%></td>
-        <td class="am-text-middle"><%= amount%></td>
-        <td class="am-text-middle">2016年上半季</td>
+        <td class="am-text-middle"><%= occupation%></td>
+        <td class="am-text-middle"><%= phone%></td>
         <td class="am-text-middle">
-        <%if(goods_state=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+        <%for(var i=0;i<content.length;i++){%>
+            <%= content[i]%>  
+        <%}%>
+        </td>
+        <td class="am-text-middle"><%= area%></td>
+        <td class="am-text-middle"><%= address%></td>
+        <td class="am-text-middle">
+        <%if(state=="1"){%>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="上架" selected="selected">上架</option>
-                <option value="下架">下架</option>
+                <option value="是" selected="selected">是</option>
+                <option value="否">否</option>
             </select>
         <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="上架">上架</option>
-                <option value="下架" selected="selected">下架</option>
+                <option value="是">是</option>
+                <option value="否" selected="selected">否</option>
             </select>
         <%}%>
         </td>
@@ -368,16 +412,16 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= goods_id%>" class="editGoods">
+                <a data-id="<%= helper_id%>" class="editHelpUser">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
-                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
+                <a data-id="<%= helper_id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= goods_id%>">
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= helper_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -385,7 +429,93 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= goods_id%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= helper_id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="ed<%= helper_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">编辑帮帮成员信息</div>
+            <div class="am-modal-bd">
+                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">
+                        <input type='hidden' name='type_id' />
+                        <input type="text" placeholder="姓名" value="<%= name%>" name='name' minlength="4" required="">
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
+                    <div class="am-u-sm-9">
+                        <div class="wx_type_img">
+                            <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+                              <!-- 图片实时预览 -->
+                              <div id="preview"> <img style="border-radius: 3px;" src="<%= headPic%>" class="am-img-responsive cardView"> </div>
+                        </div>
+                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
+                    <div class="am-u-sm-9">
+                        <input type="text" name='house_layout' value="<%= occupation%>" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
+                    <div class="am-u-sm-9">
+                        <input type="tel" value="<%= phone%>" name='quarters' required>
+                    </div>
+                </div>
+            
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">                     
+                        <input type="text" name='area_address' value="<%for(var i=0;i<content.length;i++){%>
+                            <%= content[i]%>  
+                      <%}%>"
+                         required />
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" name='address' placeholder="如：邻水xxxx" value="<%= area%>" required>
+                    </div>
+                </div>
+               
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" name="phone" class="js-pattern-mobile" value="<%= address%>" placeholder="输入所在街道" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">
+                    <%if(state=="1"){%>
+                        <select id="" class="am-u-sm-12" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="是" selected="selected">是</option>
+                            <option value="否">否</option>
+                        </select>
+                    <%}else{%>
+                        <select id="" class="am-u-sm-12" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="是">是</option>
+                            <option value="否" selected="selected">否</option>
+                        </select>
+                    <%}%>
+                    </div>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消<tton>
+                    <button type="submit" class="am-btn am-btn-secondary">保存<tton>
+                </div>
+            </form>
+                
             </div>
         </div>
     </div>
