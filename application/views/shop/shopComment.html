@@ -201,16 +201,16 @@ padding: 5px 6px!important;
                         document.getElementById('commentList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
                         $('.tablecheck').click(function() {
-                            if(!flag){
+                            if(flag==0){
                               for(var i=0;i<nums;i++) {
-                                $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','true');
+                                document.getElementsByClassName('commentBox')[i].checked=true;
                               }  
-                              flag=1;console.log(flag);
+                              flag=1;
                             }else{
                                for(var i=0;i<nums;i++) {
-                                $('tr.trClass td input:checkbox[name=commentBox]').removeAttr('checked');
-                              }
-                              flag=0;console.log(flag);
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
                             }
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){

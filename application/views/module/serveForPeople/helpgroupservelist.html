@@ -32,6 +32,10 @@ td.am-text-middle img{
     border: 1px solid #F37B1D !important;
     color: #F37B1D !important;
 }
+.conResponse:hover{
+    background: #F37B1D !important; 
+    color: #fff !important;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -102,7 +106,7 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
+                                    <th class="tablecheck"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">求助人姓名 </th>
                                     <th class="moll_name">求助内容 </th>
@@ -150,6 +154,7 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
+    var nums=0,flag=0
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -160,7 +165,7 @@ td.am-text-middle img{
             var res = eval(result);
             
             if(res!=2){
-                var nums = 2; //每页出现的数量
+                nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
@@ -169,7 +174,7 @@ td.am-text-middle img{
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
                         res[i].pics=eval(res[i].pics);
-                        
+
                         listData+= template('storeGoodsModal',res[i]);
                      }
                     console.log(res);
@@ -181,68 +186,64 @@ td.am-text-middle img{
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
+                        //点击选中所有
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<nums;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<nums;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
+                            }
+                        });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),detailId=$('.bangServeDetail').eq(i).attr('data-id'),reDataId=$('.conResponse').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
                             $('.bangServeDetail').eq(i).attr("data-am-modal","{target: '#detail"+ detailId +"'}");
-                            $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="下架"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-                            }                          
+                            $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");                     
                         }
-                        //更改商品的状态
-                        $('.goodsState').change(function(){
-                            var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=1',
-                                    success: function(data){
-                                        if(data==1){
-    
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
-                        });
-
-                        //单个帮帮服务删除
-                        $('.sureDelete').click(function(){
-                            var deleteId=$(this).attr('data-id'); 
+                        
+                        //回复某个服务
+                        $('.response').click(function(){
+                            var serveId=$(this).attr('data-id'),user_id=$('this').attr('data_id');
+                            var content=document.getElementsByClassName('content'+serveId)[0].value;
+                            console.log(content);
                             $.ajax({
                                 type:'post',
-                                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_user');?>',
-                                data: 'id='+deleteId,
+                                url:'<?php echo site_url('/serveForPeople/serveForPeople/reply_help_request');?>',
+                                data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
+                                success: function(data){
+                                    console.log(data);
+                                    if(data==1){
+                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
+                                }
+                            });
+                            
+                        });
+                        //单个帮帮服务删除
+                        $('.sureDelete').click(function(){
+                            var deleteId=$(this).attr('data-id');
+                            var array=[]; 
+                            array[0]=deleteId;
+                            array=JSON.stringify(array);
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
+                                data: 'id='+array,
                                 success: function(data){
                                     if(data==1){
-                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -265,11 +266,11 @@ td.am-text-middle img{
                             array=JSON.stringify(array);
                             $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
+                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
                                     data: 'id='+array,
                                     success: function(data){
                                         if(data==1){
-                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
                                         }else{
                                             alert("操作失败！");
                                         }
@@ -315,7 +316,7 @@ $(document).ready(function(){
 <script type="text/html" id="storeGoodsModal">
 
     <tr class="trClass" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle"><%= content%></td>
@@ -388,7 +389,16 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">图片描述： </label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left"><img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="<%= username%>" class="am-img-responsive cardView"> </span>
+                        <span class="am-text-left">
+                        <%if(pics){%>
+                            <%for(var i=0;i<pics.length;i++){%>
+                                <img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="<%= pics[i].picImg%>" class="am-img-responsive cardView"> 
+                            <%}%>
+                        <%}else{%>
+                            暂无图片
+                        <%}%>
+                        
+                        </span>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
@@ -452,7 +462,7 @@ $(document).ready(function(){
                 
             </div>
             <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-confirm>关闭</span>
+                <span class="am-modal-btn" data-am-modal-close>关闭</span>
             </div>
         </div>
     </div>
@@ -464,16 +474,17 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">回复内容 </label>
                         <div class="am-u-sm-9">
-                            <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="请输入回复内容" name='name' minlength="4" required="">
+                            <input type="text" placeholder="请输入回复内容" value="" class="content<%= id%>" name='name' minlength="4" required />
                         </div>
-                    </div>
-                    <div class="am-form-group am-btn-group-xs">
-                        <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                        <button type="submit" class="am-btn am-btn-secondary">回复</button>
                     </div>
                 </form>
                 
+            </div>
+            <div class="am-modal-footer" style="margin-top: 20px !important;">
+            <div class="am-form-group am-cf">
+                <button type="reset" class="am-btn am-btn-default am-btn-xs" data-am-modal-close>取消</button>
+                <button type="button" data-id="<%= id%>" data_id="<%= user_id%>" class="am-btn am-btn-secondary am-btn-xs response" data-am-modal-confirm>回复</button>
+                </div>
             </div>
         </div>
     </div>
