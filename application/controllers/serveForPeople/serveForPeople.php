@@ -74,10 +74,32 @@ class serveForPeople extends default_Controller
             echo "2";
         }
     }
+    //批量删除
+    function del_users(){
+        if($_POST){
+            $id = $_POST['id'];
+            $arr = json_decode($id,true);
+            foreach ($arr as $key => $v) {
+                $res = $this->service_model->del_help_user($v);
+            }
+            if($res){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
     //帮帮团搜索
     function help_search(){
         if($_POST){
-            
+            $name = $_POST['name'];
+            $area = $_POST['area'];
+            $address = $_POST['address'];
+            $occupation = $_POST['occupation'];
+            $sear = $_POST['sear'];
+
         }else{
             echo '2';
         }
