@@ -37,7 +37,10 @@ width: 30px;
 font-size: 12px!important;
 padding: 5px 6px!important;
 }
-
+.tips{
+    padding-left: 20%;
+    margin: 0;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -63,7 +66,7 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="name" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符"  required>
+                            <input type="text" name="name" maxlength="15" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" id="salesName" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -71,12 +74,12 @@ padding: 5px 6px!important;
                         <div class="am-u-sm-9">
                             <select name="typeid" id="salesType" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}" required>
                                 <option value="">输入查找/选择</option>
-                                <option value="1">代金券</option>
+                                <option value="1" selected>代金券</option>
                                 <option value="2">折扣券</option>
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: none;float: left !important; ">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: block;float: left !important; ">
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
@@ -88,13 +91,13 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: none;float:left !important;">
                         <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="discount" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" required>
+                            <input type="text" name="discount" id="discount" class="am-form-field tpl-form-no-bg" placeholder="请输入0-10之间的小数" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="receive_limit" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="receive_limit" id="receive_limit" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
                                 <option value="0">不限制</option>
                                 <option value="1">仅一次</option>
@@ -120,7 +123,7 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">核销方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="verification" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="verification" id="salesType" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
                                 <option value="3">到店核销</option>
                                 <option value="2">在线抵用</option>
@@ -131,17 +134,22 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">库存数<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <input type="number" name="stock" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
+                            <input type="number" name="stock" id="stock" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
                         <label for="user-email" class="am-u-sm-3 am-form-label">优惠券内容<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <textarea rows="5" required class="" name="content"></textarea>
+                            <textarea rows="5" id="salesContent" required class="" name="content"></textarea>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-u-sm-12">
+                            <p class="red tips">这是存放小贴士的地方</p>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 addpadding am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">添加优惠券</button>
+                        <button class="am-btn am-btn-secondary" type="submit" id="addSales">添加优惠券</button>
                         <button class="am-btn am-btn-default" id="cancle" type="button">取消</button> 
                     </div>
                 </form>
@@ -168,6 +176,9 @@ padding: 5px 6px!important;
     }
   
   }
+
+
+
     $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -197,5 +208,24 @@ padding: 5px 6px!important;
         }
         $(this).datepicker('close');
       });
+
+      //点击添加优惠券之前的验证
+      $('#addSales').click(function() {
+        var salesName = $('#salesName').val(),salesType = $('#salesType option:selected').val(),meetMoney = $('#meetMoney').val(),reduceMoney = $('#reduceMoney').val(),discount = $('#discount').val(),receive_limit = $('#receive_limit option:selected').val(),salesType = $('#salesType option:selected').val(),stock = $('#stock').val(),salesContent = $('#salesContent').val();
+        if(salesName=="" || salesType=="" || receive_limit=="" || salesType=="" || stock=="" || salesContent==""){
+            alert("您还有未填写项奥~");
+            return false;
+        }else if(meetMoney && reduceMoney && parseInt(meetMoney)<parseInt(reduceMoney)){
+            alert("亲，折扣金额大于总金额啦~");
+            return false;
+        }else if(discount && (parseInt(discount)<0 || parseInt(discount)>1)){
+            alert("亲，折扣率是0-1之间的小数奥~");
+            return false;
+        }else{
+            return true;
+        }
+      })
+
+
   });
 </script>
