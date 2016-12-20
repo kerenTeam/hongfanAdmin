@@ -200,19 +200,19 @@ padding: 5px 6px!important;
                     jump: function(obj){
                         document.getElementById('commentList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
-                        // $('.tablecheck').click(function() {
-                        //     if(!flag){
-                        //       for(var i=0;i<nums;i++) {
-                        //         $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','true');
-                        //       }  
-                        //       flag=1;console.log(flag);
-                        //     }else{
-                        //        for(var i=0;i<nums;i++) {
-                        //         $('tr.trClass td input:checkbox[name=commentBox]').removeAttr('checked');
-                        //       }
-                        //       flag=0;console.log(flag);
-                        //     }
-                        // });
+                        $('.tablecheck').click(function() {
+                            if(!flag){
+                              for(var i=0;i<nums;i++) {
+                                $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','true');
+                              }  
+                              flag=1;console.log(flag);
+                            }else{
+                               for(var i=0;i<nums;i++) {
+                                $('tr.trClass td input:checkbox[name=commentBox]').removeAttr('checked');
+                              }
+                              flag=0;console.log(flag);
+                            }
+                        });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var id=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
