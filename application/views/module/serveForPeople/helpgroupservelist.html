@@ -85,7 +85,7 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帮帮团组织列表</div>
+                    <div class="widget-title  am-cf">帮帮团服务信息列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -104,13 +104,11 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="table-check"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">姓名 </th>
-                                    <th class="moll_name">头像 </th>
-                                    <th class="shop_id">职业</th>
+                                    <th class="moll_name">求助人姓名 </th>
+                                    <th class="moll_name">求助内容 </th>
+                                    <th class="shop_id">求助时间</th>
                                     <th class="shop_id">联系方式</th>
-                                    <th class="shop_name">帮扶内容 </th>
-                                    <th class="shop_yetai">所在地区</th>
-                                    <th class="brand">所在街道</th>
+                                    <th class="shop_id">服务状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -118,18 +116,31 @@ td.am-text-middle img{
                                 <tr class="trClass" data-id="">
                                     <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
                                     <td class="am-text-middle">王明</td>
-                                    <td class="am-text-middle">搬运工</td>
-                                    <td class="am-text-middle">
-                                        <img src="assets/img/a5.png" class="am-img-responsive" alt=""/>
-                                    </td>
+                                    <td class="am-text-middle">解决纠纷</td>
+                                    <td class="am-text-middle">2014年05月25日 15:00：00</td>
                                     <td class="am-text-middle">12227587543</td>
-                                    <td class="am-text-middle">解决纠纷 照顾老人</td>
-                                    <td class="am-text-middle">邻水县</td>
-                                    <td class="am-text-middle">临水街道</td>
+                                    
+                                    <td class="am-text-middle">已处理</td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">    
+                                            <a data-id=""  onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="trClass" data-id="">
+                                    <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+                                    <td class="am-text-middle">王明</td>
+                                    <td class="am-text-middle">解决纠纷</td>
+                                    <td class="am-text-middle">2014年05月25日 15:00：00</td>
+                                    <td class="am-text-middle">12227587543</td>
+                                    
+                                    <td class="am-text-middle">待处理</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
                                             <a data-id="" data-am-modal="{target: '#editbangModal'}" class="editbangbang">
-                                                <i class="am-icon-pencil"></i> 编辑
+                                                <i class="am-icon-pencil"></i> 给予答复
                                             </a>
                                             <a data-id=""  onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
                                                 <i class="am-icon-trash"></i> 删除
@@ -140,69 +151,19 @@ td.am-text-middle img{
                                 <!-- more data -->
                                 <div class="am-modal am-modal-confirm" tabindex="-1" id="editbangModal">
                                 <div class="am-modal-dialog">
-                                    <div class="am-modal-hd">编辑帮帮成员信息</div>
+                                    <div class="am-modal-hd">答复求助人员</div>
                                     <div class="am-modal-bd">
                                         <form class="am-form tpl-form-line-form"  enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">回复内容 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
                                             <input type='hidden' name='type_id' />
-                                            <input type="text" placeholder="姓名" name='name' minlength="4" required="">
+                                            <input type="text" placeholder="请输入回复内容" name='name' minlength="4" required="">
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <div class="wx_type_img">
-                                                <input type="file" id="" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">职业 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='house_layout' required>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系方式 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="tel" name='quarters' required>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='area_address' required>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">个人简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='intermediary_name' required>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='address' placeholder="如：邻水xxxx街道" required>
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入所在街道" required>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="am-form-group am-btn-group-xs">
                                         <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-secondary">保存</button>
+                                        <button type="submit" class="am-btn am-btn-secondary">回复</button>
                                     </div>
                                 </form>
                                         
