@@ -37,6 +37,7 @@ td.am-text-middle img{
         color: #666;
         font-size: 1.2rem;
         border:  1px solid #ddd;
+        margin-right: 80px;
     }
      .clickUp{
         display: inline-block;
@@ -44,12 +45,16 @@ td.am-text-middle img{
         margin-left: 100px;
     }
 
- .preview{
-        height:200px !important;
+ #preview,.wx_type_img{ 
+    width: 250px !important;
+       
     }
-    .preview #imghead,#preview img{
-        
-        height:190px;
+    #preview #imghead,#preview img{
+      width: 240px !important; 
+    }
+    textarea{
+        border: none;
+        border-bottom: 1px solid #ccc;
     }
 </style>
 
@@ -72,26 +77,32 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">帮帮团搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
-                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">姓名:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入帮帮团名称" id="helpgroupName" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">所在地区:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入所在地区" id="helpgroupArea" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">职业:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入搜索的职业" id="helpgroupArea" />
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-3">
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">所在街道:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" placeholder="请输入所在街道" id="helpgroupArea" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入所在街道" id="helpgroupArea" />
                         </div>
@@ -171,9 +182,9 @@ td.am-text-middle img{
                                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
                                             <div class="am-u-sm-9">
                                                 <div class="wx_type_img">
-                                                    <input type="file" id="" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                    <!-- 图片实时预览 -->
-                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                    <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+                                                      <!-- 图片实时预览 -->
+                                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 </div>
                                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                             </div>
@@ -200,7 +211,7 @@ td.am-text-middle img{
                                         <div class="am-form-group am-cf">
                                             <label class="am-u-sm-3 am-form-label">个人简介 <span class="red">*</span>：</label>
                                             <div class="am-u-sm-9">
-                                                <input type="text" name='intermediary_name' required>
+                                                <textarea rows="3" class="am-u-sm-12" required></textarea>
                                             </div>
                                         </div>
                                         <div class="am-form-group am-cf">
@@ -386,6 +397,13 @@ $(document).ready(function(){
         startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
         goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
         getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+    });
+
+     //删除图片
+    $(".deleteImg").click(function(){      
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).prevUntil('.preview').find('input').val(" ");
+        $(this).prevUntil('.preview').find('input').files="";
     });
 })
 </script>
