@@ -310,6 +310,20 @@ class singleShop extends default_Controller {
             $this->load->view('404.html');
         }
     }
+
+    //商家导入商品
+    function impolt_goods(){
+        // if(!empty($_FILES["file"]["tmp_name"])){
+            // $name = date('Y-m-d');
+            // $inputFileName = "./upload/xls/" .$name .'.xls';
+            // move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+            echo "345";
+        // }else{
+        //    $this->load->view('404.html'); 
+        // }
+    }
+
+
     //商品删除
     function del_goods(){
         if($_POST){
