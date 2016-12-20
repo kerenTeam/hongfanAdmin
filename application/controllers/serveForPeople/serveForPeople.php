@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
-* 
+*  为民服务
 */
 require_once(APPPATH.'controllers/default_Controller.php');
 
@@ -16,6 +16,7 @@ class serveForPeople extends default_Controller
 	function __construct()
 	{
 		 parent::__construct();
+         $this->load->model('service_model');  
 	}
 
 	//为民服务 为民服务主页
@@ -24,6 +25,7 @@ class serveForPeople extends default_Controller
         $data['menu'] = array('serveForPeople','serveForPeople');
         $this->load->view('template.html',$data);
     }
+    //
 
 	//为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
@@ -31,7 +33,77 @@ class serveForPeople extends default_Controller
         $data['menu'] = array('serveForPeople','helpgrouplist');
         $this->load->view('template.html',$data);
     }
+    //获取成员列表
+    function helpUser_list(){
+        if($_POST){
+            //h获取列表
+            $users = $this->service_model->get_help_user();
+            if(empty($users)){
+                echo "2";
+            }else{
+                echo json_encode($users);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    // 是否推荐
+    function recommend(){
+        if($_POST){
+            $data['state'] = $_POST['state'];
+            $id = $_POST['id'];
+            if($this->service_model->edit_helpuser_state($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+         }else{
+            echo "2";
+        }
+    }
+    //删除帮帮团成员
+    function del_help_user(){
+       if($_POST){
+            $id = $_POST['id'];
+            if($this->service_model->del_help_user($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+         }else{
+            echo "2";
+        }
+    }
+    //批量删除
+    function del_users(){
+        if($_POST){
+            $id = $_POST['id'];
+            $arr = json_decode($id,true);
+            foreach ($arr as $key => $v) {
+                $res = $this->service_model->del_help_user($v);
+            }
+            if($res){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //帮帮团搜索
+    function help_search(){
+        if($_POST){
+            $name = $_POST['name'];
+            $area = $_POST['area'];
+            $address = $_POST['address'];
+            $occupation = $_POST['occupation'];
+            $sear = $_POST['sear'];
 
+        }else{
+            echo '2';
+        }
+    }
     //为民服务  邻水帮帮团服务列表
     function helpgroupservelist(){
         $data['page'] = $this->view_helpgroupservelist;
