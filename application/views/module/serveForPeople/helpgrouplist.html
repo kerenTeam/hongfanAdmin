@@ -195,6 +195,7 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
+var nums=0;
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -203,9 +204,8 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            
             if(res!=2){
-                var nums = 2; //每页出现的数量
+                nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
@@ -213,11 +213,9 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].content=eval(res[i].content);
-                        // res[i].content=res[i].content.split(']');
+                        res[i].competency=eval(res[i].competency);
                         listData+= template('helpUserModal',res[i]);
                      }
-                    console.log(res);
                     return listData;
                 };
                 //调用分页
@@ -226,6 +224,12 @@ td.am-text-middle img{
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('helpUserList').innerHTML = thisDate(obj.curr);
+                        //点击选中所有
+                        $('.table-check').change(function() {
+                            for(var i=0;i<nums;i++) {
+                                $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','checked');
+                            }
+                        })
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editHelpUser').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
@@ -237,14 +241,14 @@ td.am-text-middle img{
                         //更改帮帮团成员的状态
                         $('.goodsState').change(function(){
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="否"){
+                            if($(this).find('option:selected').val()=="是"){
                                 $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
-                                    data: 'goodsid='+ dataId+'&state=1',
+                                    data: 'state=1&id='+dataId,
                                     success: function(data){
                                         if(data==1){
-    
+                                            alert(data);
                                         }else{
                                             alert("操作失败！");
                                         }
@@ -254,11 +258,12 @@ td.am-text-middle img{
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
+                                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
                             }else{
                                 $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
-                                    data: 'goodsid='+ dataId+'&state=0',
+                                    data: 'state=0&id='+dataId,
                                     success: function(data){
                                         if(data==1){
 
@@ -271,7 +276,7 @@ td.am-text-middle img{
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
                             }
                             
                             
@@ -279,31 +284,23 @@ td.am-text-middle img{
 
                         //单个商品删除的AJAX请求
                         $('.sureDelete').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            deleteArray[0]= deleteId;  
-                            deleteArray=eval(deleteArray);
-                            console.log(deleteArray);                        
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==id){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_user');?>',
-                                        data: 'commentid='+deleteArray,
-                                        success: function(data){
-                                            alert(data);
-                                            if(data==1){
-                                                getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            var deleteId=$(this).attr('data-id'); 
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_user');?>',
+                                data: 'id='+deleteId,
+                                success: function(data){
+                                    if(data==1){
+                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
                                 }
-                            }
+                            });
                             
                         });
                         
@@ -311,18 +308,15 @@ td.am-text-middle img{
                         $('.deleteAll').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[];
-                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
-                                
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
                                 array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
                             }
-                            
-                            deleteArray=JSON.stringify(array);
+                            array=JSON.stringify(array);
                             $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
-                                    data: 'commentid='+deleteArray,
+                                    data: 'id='+array,
                                     success: function(data){
-                                        console.log(data);
                                         if(data==1){
                                             getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
                                         }else{
@@ -340,7 +334,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#helpUserList");
+                $('<tr><td colspan="12" class="am-text-center">暂无帮帮团成员信息！</td><td></td></tr>').appendTo("#helpUserList");
             }
 
             
@@ -359,11 +353,8 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var helpgroupName=$('#helpgroupName').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
-        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
-        goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','sear='+keywords);
+        var helpgroupName=$('#helpgroupName').val(),helpgroupArea=$('#helpgroupArea').val(),helpgroupJob=$('#helpgroupJob').val(),helpgroupAddress=$('#helpgroupAddress').val(),helpgroupkey=$('#helpgroupkey').val();
+        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','name='+ helpgroupName +'&area' + helpgroupArea +'&address'+ helpgroupAddress +'&occupation'+ helpgroupJob +'&sear'+ helpgroupkey);
     });
 
      //删除图片
@@ -386,14 +377,14 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= occupation%></td>
         <td class="am-text-middle"><%= phone%></td>
         <td class="am-text-middle">
-        <%for(var i=0;i<content.length;i++){%>
-            <%= content[i]%>  
+        <%for(var i=0;i<competency.length;i++){%>
+            <%= competency[i]%>  
         <%}%>
         </td>
         <td class="am-text-middle"><%= area%></td>
         <td class="am-text-middle"><%= address%></td>
         <td class="am-text-middle">
-        <%if(state=="1"){%>
+        <%if(recommend=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="是" selected="selected">是</option>
@@ -473,10 +464,7 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">                     
-                        <input type="text" name='area_address' value="<%for(var i=0;i<content.length;i++){%>
-                            <%= content[i]%>  
-                      <%}%>"
-                         required />
+                        <input type="text" name='area_address' value="<%for(var i=0;i<competency.length;i++){%><%= competency[i]%> <%}%>" required />
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
@@ -495,7 +483,7 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                    <%if(state=="1"){%>
+                    <%if(recommend=="1"){%>
                         <select id="" class="am-u-sm-12" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
                             <option value="">-=请选择一项=-</option>
                             <option value="是" selected="selected">是</option>

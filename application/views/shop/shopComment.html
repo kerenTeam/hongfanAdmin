@@ -122,7 +122,7 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
+                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="shop_name">用户 </th>
                                     <th class="shop_name">评论商品名</th>
@@ -166,7 +166,7 @@ padding: 5px 6px!important;
 </div>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-    var deleteArray=[];
+    var deleteArray=[],nums=0,flag=0;
 
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -179,7 +179,7 @@ padding: 5px 6px!important;
             var res = eval(result);
             // console.log(res);
             if(res!=2){
-                var nums = 2; //每页出现的数量
+                nums = 2; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
@@ -199,7 +199,20 @@ padding: 5px 6px!important;
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('commentList').innerHTML = thisDate(obj.curr);
-                        
+                        //点击选中所有
+                        // $('.tablecheck').click(function() {
+                        //     if(!flag){
+                        //       for(var i=0;i<nums;i++) {
+                        //         $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','true');
+                        //       }  
+                        //       flag=1;console.log(flag);
+                        //     }else{
+                        //        for(var i=0;i<nums;i++) {
+                        //         $('tr.trClass td input:checkbox[name=commentBox]').removeAttr('checked');
+                        //       }
+                        //       flag=0;console.log(flag);
+                        //     }
+                        // });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var id=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
@@ -249,7 +262,7 @@ padding: 5px 6px!important;
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
                             }
                             
                             
