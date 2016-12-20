@@ -144,8 +144,8 @@ td img{
                                 if($('table tbody tr').eq(i).attr('data-id')==dataId){
                                     $.ajax({
                                         type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+dataId,
+                                        url:'<?php echo site_url('/shop/singleShop/delshopSales');?>',
+                                        data: 'id='+dataId,
                                         success: function(data){
                                             if(data==1){                                           
                                                 for(var i=0;i<$('.trClass').length;i++){

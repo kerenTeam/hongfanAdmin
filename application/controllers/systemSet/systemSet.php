@@ -37,16 +37,64 @@ class systemSet extends default_Controller {
         }else{
              echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
         }
+        $this->load->model('system_model');
 
     }
 
     //系统设置 后台管理员账号管理
     function index()
     {
-        $data['page'] = $this->view_admin_user;
-        $data['menu'] = array('systemSet','systemSet');
+        //获取权限类型
+         $data['group'] = $this->system_model->get_member_group();
+         $data['page'] = $this->view_admin_user;
+         $data['menu'] = array('systemSet','systemSet');
     	 $this->load->view('template.html',$data);
     }
+    //获取管理员列表
+    function adminUserList(){
+        if($_POST){
+            $user = $this->system_model->get_admin_user();
+            if(empty($user)){
+                echo "2";
+            }else{
+                echo json_encode($user);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //新增管理操作
+    function add_admin_user(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'upload/headPic';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+                    exit;
+                } else{
+                    $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
+                }
+            }
+            $data['password'] = md5($data['password']);
+            if($this->system_model->add_admin_user($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+             }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+             }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
+
     //系统设置 支付账号管理
     function apliyManage(){
          $data['page'] = $this->view_paymanage;

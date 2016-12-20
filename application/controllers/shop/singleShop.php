@@ -204,6 +204,23 @@ class singleShop extends default_Controller {
             $this->load->view('template.html',$data);
         }
     }
+    //获取商品评价
+    function get_goods_comment(){
+        if($_POST){
+            $goodsid = $_POST['goodsid'];
+            $comment = $this->mallShop_model->get_goods_comment($goodsid);
+            if(empty($comment)){
+                echo '2';
+            }else{
+                foreach ($comment as $key => $value) {
+                   $comment[$key]['reply'] = $this->mallShop_model->gte_store_reply($value['id']);
+                }
+                echo json_encode($comment);
+            }
+        }else{
+            echo "2";
+        }
+    }
     //编辑商品操作
     function edit_goods(){
         if($_POST){
@@ -382,7 +399,7 @@ class singleShop extends default_Controller {
             echo "2";
         }
     }
-    //删除评论
+    //批量删除评论
     function del_comment(){
         if($_POST){
             // $a = '';
@@ -403,7 +420,7 @@ class singleShop extends default_Controller {
             echo "2";
         }
     }
-    //
+    //删除评论
     function del_comment_single(){
          if($_POST){
             $commentid = $_POST["commentid"];
@@ -452,6 +469,7 @@ class singleShop extends default_Controller {
                     $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
                     $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = $data['cutValue'];
+                    unset($data['overflowValue'],$data['cutValue']);
                 }
             }
             $code = implode(guid('1','','8'));
@@ -483,17 +501,53 @@ class singleShop extends default_Controller {
         $data['menu'] = array('sales','shopCheckSales');
         $this->load->view('template.html',$data);
     }
+    //编辑优惠劵操作
+    function edit_coupon(){
+        if($_POST){
+            $data = $this->input->post();
+            if(isset($data['overflowValue'])){
+                if(empty($data['overflowValue'])){
+                    unset($data['overflowValue'],$data['cutValue']);
+                }else{
+                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
+                    $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = $data['cutValue'];
+                    unset($data['overflowValue'],$data['cutValue']);
+                }
+            }
+            if($this->mallShop_model->edit_coupon($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopSalesList')."'</script>";
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopEditSales/').$data['id']."'</script>";
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
      //商家优惠劵管理 编辑优惠劵
     function shopEditSales(){
-
-        $data['page'] = $this->view_shopEditSales;
-        $data['menu'] = array('sales','shopSalesList');
-      $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取优惠劵详情
+            $data['coupon'] = $this->mallShop_model->get_conpon_info($id);
+            $data['page'] = $this->view_shopEditSales;
+            $data['menu'] = array('sales','shopSalesList');
+            $this->load->view('template.html',$data);
+        }
     }
-    //
+    //删除优惠劵
     function delshopSales(){
         if($_POST){
-            echo "1";
+            $id = $_POST['id'];
+            if($this->mallShop_model->del_coupon($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
         }else{
             echo "2";
         }

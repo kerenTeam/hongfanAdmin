@@ -92,7 +92,8 @@ class mallShop_model extends CI_Model
     //根据商品返回评论
     function get_goods_comment($id){
         $where['goodsid'] = $id;
-        $query = $this->db->where($where)->get($this->shop_comment);
+      
+        $query = $this->db->where($where)->where('commentid','0')->get($this->shop_comment);
         return $query->result_array();
     }
     //编辑商品
@@ -182,7 +183,22 @@ class mallShop_model extends CI_Model
     function add_coupon($data){
         return $this->db->insert($this->shop_coupon,$data);
     }
-
+    //获取优惠劵详情
+    function get_conpon_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->shop_coupon);
+        return $query->row_array();
+    }
+    //编辑优惠劵
+    function edit_coupon($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->shop_coupon,$data);
+    }
+    //删除
+    function del_coupon($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->shop_coupon);
+    }
 
 
 }
