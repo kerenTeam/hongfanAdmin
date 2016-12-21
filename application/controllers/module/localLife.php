@@ -685,10 +685,11 @@ class localLife extends default_Controller {
 	            }
 	            //插入数据库
 	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
-	            $import =  $this->db->insert('hf_local_market_data',$data); 
+	            $import =  $this->db->insert('hf_local_market_data',$data);
+                 unlink($inputFileName); 
 	         }
 	     //删除临时文件
-	    unlink($inputFileName);
+	   
 	}
 	//导出超市比价
 	function dowload_market_data(){

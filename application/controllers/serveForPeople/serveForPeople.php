@@ -97,6 +97,57 @@ class serveForPeople extends default_Controller
             echo "2";
         }
     }
+    //导入帮帮团成员
+    function impolt_help_user(){
+       if(!empty($_FILES['file']['tmp_name'])){
+            $name = date('Y-m-d');
+            $inputFileName = "upload/xls/" .$name .'.xls';
+            move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+            //引入类库
+            $this->load->library('excel');
+            if(!file_exists($inputFileName)){
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
+                    exit;
+            }
+            //导入excel文件类型 excel2007 or excel5
+            $PHPReader = new PHPExcel_Reader_Excel2007();
+            if(!$PHPReader->canRead($inputFileName)){
+              $PHPReader = new PHPExcel_Reader_Excel5();
+              if(!$PHPReader->canRead($inputFileName)){
+                echo 'no Excel';
+                return;
+              }
+            }
+           $PHPExcel = $PHPReader->load($inputFileName);
+           $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+           $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+           $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+           $erp_orders_id = array();  //声明数组
+          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+            $data['name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+            $data['sex'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+            $data['phone'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+            $data['email'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
+            $data['occupation'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
+           $com = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值 
+            $data['area'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
+            $data['address'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取c列的值
+            $data['info'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取c列的值
+            $data['competency'] = json_encode(explode(',',$com),JSON_UNESCAPED_UNICODE);
+            $data['import_userid'] = $this->session->users['user_id'];
+            if($data['name'] == NULL){
+                exit;
+            }
+           
+            $import =  $this->db->insert('hf_service_help_user',$data); 
+            @unlink($inputFileName); 
+
+          }
+       }else{
+            $this->load->view('404.html');
+       }
+    }
+
     //帮帮团搜索
     function help_search(){
         if($_POST){

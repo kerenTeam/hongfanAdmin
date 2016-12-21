@@ -313,14 +313,85 @@ class singleShop extends default_Controller {
 
     //商家导入商品
     function impolt_goods(){
-        // if(!empty($_FILES["file"]["tmp_name"])){
-            // $name = date('Y-m-d');
-            // $inputFileName = "./upload/xls/" .$name .'.xls';
-            // move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
-            echo "345";
-        // }else{
-        //    $this->load->view('404.html'); 
-        // }
+        if(!empty($_FILES["file"]["tmp_name"])){
+            $name = date('Y-m-d');
+            $inputFileName = "./upload/xls/" .$name .'.xls';
+            move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+             $this->load->library('excel');
+            if(!file_exists($inputFileName)){
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
+                    exit;
+            }
+            //导入excel文件类型 excel2007 or excel5
+            $PHPReader = new PHPExcel_Reader_Excel2007();
+            if(!$PHPReader->canRead($inputFileName)){
+              $PHPReader = new PHPExcel_Reader_Excel5();
+              if(!$PHPReader->canRead($inputFileName)){
+                echo 'no Excel';
+                return;
+              }
+            }
+           $PHPExcel = $PHPReader->load($inputFileName);
+           $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+           $i = 0;   
+           foreach ($PHPExcel->getActiveSheet()->getDrawingCollection() as $drawing) {
+                if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
+                    ob_start();
+                    call_user_func(
+                        $drawing->getRenderingFunction(),
+                        $drawing->getImageResource()
+                    );
+                    $imageContents = ob_get_contents();
+                    ob_end_clean();
+                    switch ($drawing->getMimeType()) {
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_PNG :
+                                $extension = 'png'; break;
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_GIF:
+                                $extension = 'gif'; break;
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
+                                $extension = 'jpg'; break;
+                    }
+                } else {
+                    $zipReader = fopen($drawing->getPath(),'r');
+                    $imageContents = '';
+                    while (!feof($zipReader)) {
+                        $imageContents .= fread($zipReader,1024);
+                    }
+                    fclose($zipReader);
+                    $extension = $drawing->getExtension();
+                }
+                $codata = $drawing->getCoordinates(); 
+                $myFileName = 'upload/goods/'.date('His').++$i.'.'.$extension;
+                file_put_contents($myFileName,$imageContents);
+                $arr[$codata][]['bannerPic'] = $myFileName;
+            }
+           $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+           $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+           $erp_orders_id = array();  //声明数组
+          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+            $data['title'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+            $data['brand'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+            $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+            $data['price'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
+            $data['amount'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
+            $data['goods_state'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
+            $shuxing = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
+            if(isset($arr['H'.$currentRow])){
+                 $data['good_pic'] = json_encode($arr['H'.$currentRow]);
+             }else{
+                $data['good_pic'] = '';
+             }
+            $data['content'] =$PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue(); 
+            $data['import_userid'] = $this->session->users['user_id'];
+            if($data['title'] == NULL){
+                exit;
+            }
+            var_dump($data);
+             
+           }
+        }else{
+           $this->load->view('404.html'); 
+        }
     }
 
 
