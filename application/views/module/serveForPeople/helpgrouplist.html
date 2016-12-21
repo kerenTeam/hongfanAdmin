@@ -162,7 +162,7 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
+                                    <th class="tablecheck"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">姓名 </th>
                                     <th class="moll_name">头像 </th>
@@ -207,7 +207,7 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-var nums=0;
+var nums=0,flag=0;
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -237,11 +237,19 @@ var nums=0;
                     jump: function(obj){
                         document.getElementById('helpUserList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
-                        $('.table-check').change(function() {
-                            for(var i=0;i<nums;i++) {
-                                $('tr.trClass td input:checkbox[name=commentBox]').attr('checked','checked');
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<nums;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<nums;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
                             }
-                        })
+                        });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editHelpUser').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
@@ -294,7 +302,7 @@ var nums=0;
                             
                         });
 
-                        //单个商品删除的AJAX请求
+                        //单个帮帮成员删除
                         $('.sureDelete').click(function(){
                             var deleteId=$(this).attr('data-id'); 
                             $.ajax({
@@ -316,7 +324,7 @@ var nums=0;
                             
                         });
                         
-                        //多个商品删除的AJAX请求
+                        //多个帮帮成员删除
                         $('.deleteAll').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[];
@@ -406,7 +414,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="helpUserModal">
     <tr class="trClass" data-id="<%= helper_id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= helper_id%>" name="commentBox"></td>
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id%>" name="commentBox"></td>
 
         <td class="am-text-middle"><%= helper_id%></td>
         <td class="am-text-middle"><%= name%></td>
