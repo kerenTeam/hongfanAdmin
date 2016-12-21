@@ -101,8 +101,10 @@ class singleShop extends default_Controller {
             $data = $this->input->post();
             $arr['username'] = trim($this->input->post('username'));
             $arr['password'] =trim($this->input->post('password'));
-            if(strlen($arr['password']) != 32){
+            if(!empty($arr['password'])){
                 $arr['password'] = md5($arr['password']);
+            }else{
+              unset($arr['password']);  
             }
             $arr['user_id'] = $this->input->post('user_id');
             unset($data['username'],$data['password'],$data['user_id']);
@@ -122,13 +124,12 @@ class singleShop extends default_Controller {
                     if(!$this->upload->do_upload('img'.$i)) {
                        echo $this->upload->display_errors();
                     }else{
+                        unset($data['img'.$i]);
                         if($i == 1){
                             $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
                         }else{
                             $data['pic'] = 'upload/logo/'.$this->upload->data('file_name');
                         }
-                       
-                        unset($data['img'.$i]);
                     }
                 }else{
                     if($i == 1){
@@ -136,8 +137,7 @@ class singleShop extends default_Controller {
                     }else{
                         $data['pic'] = $data['img'.$i];
                     }
-                     
-                     unset($data['img'.$i]);
+                    unset($data['img'.$i]);
                 }
                 $i++;
              }
