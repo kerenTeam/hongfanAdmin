@@ -35,9 +35,21 @@ class mallShop_model extends CI_Model
         $query = $this->db->where($where)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
+    //根据名称返回分类
+    function get_cate_id($name){
+        $where['catname'] = $name;
+        $query = $this->db->where($where)->get($this->shop_cates);
+        $res = $query->row_array();
+        return $res['catid'];
+    }
     //新增分类
     function add_store_cate($data){
         return $this->db->insert($this->shop_cates,$data);
+    } 
+    //新增分类 返回id
+    function add_cate($data){
+         $this->db->insert($this->shop_cates,$data);
+         return $this->db->insert_id();
     }
     //删除分类
     function del_store_cate($id){

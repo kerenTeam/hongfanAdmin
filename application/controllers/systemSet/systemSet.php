@@ -177,22 +177,158 @@ class systemSet extends default_Controller {
 
      //banner列表
     function bannerList(){
-
+        //获去首页banner
+        $data['homebanner'] = $this->system_model->get_bannerlist('Index');
+        //获取超市比价banner
+        $data['supermarketBanner'] = $this->system_model->get_bannerlist('Supermarket');
+        //获取为民服务banner
+        $data['serviceBanner'] = $this->system_model->get_bannerlist('Service'); 
+        //获取商城banner
+        $data['mallBanner'] = $this->system_model->get_bannerlist('Mall');
         $data['page'] = $this->view_bannerList;
         $data['menu'] = array('systemSet','banner');
         $this->load->view('template.html',$data);
     }
     //新增banner
     function addBanner(){
-         $data['page'] = $this->view_addBanner;
-        $data['menu'] = array('systemSet','banner');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['id'] = $id;
+            $data['page'] = $this->view_addBanner;
+            $data['menu'] = array('systemSet','banner');
+            $this->load->view('template.html',$data);
+        }
+       
+    }
+    //新增banner操作
+    function add_banner(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                $config['upload_path']      = 'upload/banner/';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                // 上传
+                if(!$this->upload->do_upload('img')) {
+                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/addBanner/').$data['id']."'</script>";exit;
+                }else{
+                   
+                    $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
+                    }
+            }
+            unset($data['id']);
+             $a[] = $data;
+            //获取原由的banner
+            $banner = $this->system_model->get_banner($id);
+            if(!empty($banner['banner'])){
+                $bannerPic = json_decode($banner['banner'],true);
+                 $shu = array_merge($bannerPic,$a);
+                 $json = json_encode($shu);
+                 $arr = array('banner'=>$json);
+            }else{
+                $json = json_encode($a);
+                $arr = array('banner'=>$json);
+            }
+            if($this->system_model->edit_banner($id,$arr)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+            }else{
+                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/addBanner/').$id."'</script>";exit;
+            }
+        }
     }
     //编辑banner
     function editBanner(){
-         $data['page'] = $this->view_editBanner;
-        $data['menu'] = array('systemSet','banner');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        $num = intval($this->uri->segment(5));
+        if($id == 0 || $num == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取banner信息
+            $banner = $this->system_model->get_banner($id);
+            $bannerpic = json_decode($banner['banner'],true);
+            $data['id'] = $id;
+            $data['num'] = $num;
+            $data['banner'] = $bannerpic[$num-1];
+            $data['page'] = $this->view_editBanner;
+            $data['menu'] = array('systemSet','banner');
+            $this->load->view('template.html',$data);
+         }
+    }
+    //编辑banner操作
+    function edit_banner(){
+        if($_POST){
+             $id = $this->input->post('id');
+             $num = $this->input->post('num');
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                $config['upload_path']      = 'upload/banner/';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                // 上传
+                if(!$this->upload->do_upload('img')) {
+                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/editBanner/').$data['id'].'/'.$num."'</script>";exit;
+                }else{
+                   
+                    $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
+                    }
+            }
+            unset($data['id']);
+            unset($data['num']);
+      
+            //获取原由的banner
+            $banner = $this->system_model->get_banner($id);
+            if(!empty($banner['banner'])){
+                $bannerPic = json_decode($banner['banner'],true);
+                $bannerPic[$num-1] = $data;
+               // var_dump($bannerPic);
+                  $json = json_encode($bannerPic);
+                  $arr = array('banner'=>$json);
+                if($this->system_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                }else{
+                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/editBanner/').$id.'/'.$num."'</script>";exit;
+                }
+            }
+        }
+    }
+
+    //删除banner
+    function del_banner(){
+        $id = intval($this->uri->segment(4));
+        $num = intval($this->uri->segment(5));
+        if($id == 0 || $num == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取banner信息
+            $banner = $this->system_model->get_banner($id);
+            $bannerpic = json_decode($banner['banner'],true);
+            $list = $num-1;
+            @unlink($bannerpic[$list]['bannerPic']);
+            unset($bannerpic[$list]);
+            if(!empty($bannerpic)){
+                $json = json_encode(array_merge($bannerpic));
+                $arr = array('banner'=>$json);
+                if($this->system_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                }else{
+                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                }
+            }else{
+                $arr = array('banner'=>'');
+                if($this->system_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                }else{
+                    echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                }
+            }
+         }
     }
 }
 

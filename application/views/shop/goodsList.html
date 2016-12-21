@@ -129,8 +129,9 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="upload/xls/import_goods.xlsx"><span class="am-icon-plus"></span> 下载导入模板</a></button>
                                    <a class="wx_type_img am-inline" >
-                                         <input type="file" id="imgUpload" name="" onchange="uploadFiles()" class="upload-add fileUpLoad">
+                                         <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
                                           <!-- 图片实时预览 -->
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </a>
@@ -314,7 +315,7 @@ td.am-text-middle img{
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/shop/shop/impolt_store');?>";//上传文件的后台地址
+        var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
            var form=new FormData();
             form.append('file',fileObj); //文件对象
@@ -323,7 +324,7 @@ td.am-text-middle img{
             xhr.open('post',FileController,true);
             xhr.onload=function(){
                 alert("导入成功！");
-                location.reload();
+                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
             
             };
             xhr.send(form); 
