@@ -8,6 +8,7 @@ class system_model extends CI_Model
     //用户表
     public $member = 'hf_user_member';
     //banner 表
+    public $banner = 'hf_banners';
     //系统设置表
 
     function __construct()
@@ -35,6 +36,23 @@ class system_model extends CI_Model
     }
     //编辑
 
+    //返回所有banner
+    function get_bannerlist($name){
+        $where['name'] = $name;
+        $query = $this->db->where($where)->get($this->banner);
+        return $query->row_array();
+    }
+    //根据id返回banner数据
+    function get_banner($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->banner);
+        return $query->row_array();
+     }
+     //修改banner
+     function edit_banner($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->banner,$data);
+     }
 
 }
 

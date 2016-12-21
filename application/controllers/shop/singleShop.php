@@ -370,24 +370,67 @@ class singleShop extends default_Controller {
            $erp_orders_id = array();  //声明数组
           for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
             $data['title'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+            if($data['title'] == NULL){
+                unlink($inputFileName);
+                exit;
+            }
             $data['brand'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+            //分类
             $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+            //根据名称返回分类
+            $cateid = $this->mallShop_model->get_cate_id($cate);
+            if(empty($cateid)){
+                //新增分类
+                $cates = array('catname'=>$cate);
+                $cateid = $this->mallShop_model->add_cate($cates);
+            }
+            $data['categoryid'] = $cateid;
             $data['price'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
             $data['amount'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
             $data['goods_state'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
             $shuxing = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
-            if(isset($arr['H'.$currentRow])){
-                 $data['good_pic'] = json_encode($arr['H'.$currentRow]);
-             }else{
-                $data['good_pic'] = '';
-             }
-            $data['content'] =$PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue(); 
-            $data['import_userid'] = $this->session->users['user_id'];
-            if($data['title'] == NULL){
-                exit;
+            //商品属性
+            if(!empty($shuxing)){
+                $abc = explode(".",trim($shuxing));
+                foreach ($abc as $key => $value) {
+                  $parameter_name =  explode(":",trim($value));
+                  $parameterName[$key] = $parameter_name[0];
+                  $check = explode(",",trim($parameter_name[1]));
+                  foreach ($check as $k => $v) {
+                      $val[$k] = explode("|",trim($v));
+                      $checkvalue[$key][$k]['child_parameter_name'] = $val[$k][0];
+                      $checkvalue[$key][$k]['equivalence'] = $val[$k][1];
+                      $checkvalue[$key][$k]['Inventory'] = $val[$k][2];
+                  }
+                }
+                foreach ($parameterName as $key => $value) {
+                   $property[$key]['parameter_name'] = $value;
+                   $property[$key]['child_value'] = $checkvalue[$key];
+                }
+                $data['parameter'] = json_encode($property,JSON_UNESCAPED_UNICODE);
+            }else{
+                $data['parameter'] = '';
             }
-            var_dump($data);
-             
+            //缩略图
+            if(isset($arr['H'.$currentRow])){
+                 $data['thumb'] = $arr['H'.$currentRow][0]['bannerPic'];
+            }else{
+                $data['thumb'] = '';
+            } 
+            //商品banner
+            if(isset($arr['I'.$currentRow])){
+                 $data['good_pic'] = json_encode($arr['I'.$currentRow]);
+            }else{
+                $data['good_pic'] = '';
+            }
+           
+            $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
+            $data['storeid'] = $this->session->businessId;
+          
+            //新增
+            $this->mallShop_model->add_shop_goods($data);
+
+            echo "1";
            }
         }else{
            $this->load->view('404.html'); 

@@ -47,12 +47,13 @@ h4.am-panel-title{
                                         <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
+                               
                                 <div id="homepage" class="am-panel-collapse am-collapse am-in">
                                     <div class="am-panel-bd">
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/1';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -68,38 +69,27 @@ h4.am-panel-title{
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            <?php if(!empty($homebanner['banner'])):?>
+                                             <?php $home_banner = json_decode($homebanner['banner'],true);?>
+                                            <?php foreach($home_banner as $k=>$value):?>
                                                 <tr class="gradeX">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle"><?php $num = $k+1; echo $num;?></td>
+                                                    <!-- <td class="am-text-middle"><?php echo $value['name'];?></td> -->
+                                                    <td class="am-text-middle"><img src="<?php echo $value['bannerPic'];?>"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
+                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/').$homebanner['id'].'/'.$num;?>">
                                                                 <i class="am-icon-pencil"></i> 编辑
                                                             </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/').$homebanner['id'].'/'.$num;?>" >
                                                                 <i class="am-icon-trash"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <?php endforeach;?>
+                                            <?php endif;?>
                                                 <!-- more data -->
                                             </tbody>
                                         </table>
@@ -118,7 +108,7 @@ h4.am-panel-title{
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/4';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -134,38 +124,28 @@ h4.am-panel-title{
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                             <?php if(!empty($supermarketBanner['banner'])):?>
+                                             <?php $marketBanner = json_decode($supermarketBanner['banner'],true);?>
+                                            <?php foreach($marketBanner as $k=>$value):?>
                                                 <tr class="gradeX">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
+                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
+                                                    <td class="am-text-middle"><img src="<?php echo $value['bannerPic'];?>"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
+                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/').$supermarketBanner['id'].'/'.$num;?>">
                                                                 <i class="am-icon-pencil"></i> 编辑
                                                             </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/').$supermarketBanner['id'].'/'.$num;?>" class="tpl-table-black-operation-del">
                                                                 <i class="am-icon-trash"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <?php endforeach;?>
+                                            <?php endif;?>
+                                                
                                                 <!-- more data -->
                                             </tbody>
                                         </table>
@@ -184,7 +164,7 @@ h4.am-panel-title{
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/3';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -200,38 +180,28 @@ h4.am-panel-title{
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                              <?php if(!empty($mallBanner['banner'])):?>
+                                             <?php $mall = json_decode($mallBanner['banner'],true);?>
+                                            <?php foreach($mall as $k=>$value):?>
                                                 <tr class="gradeX">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
+                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
+                                                    <td class="am-text-middle"><img src="<?php echo $value['bannerPic'];?>"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
+                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/').$mallBanner['id'].'/'.$num;?>">
                                                                 <i class="am-icon-pencil"></i> 编辑
                                                             </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/').$mallBanner['id'].'/'.$num;?>" class="tpl-table-black-operation-del">
                                                                 <i class="am-icon-trash"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <?php endforeach;?>
+                                            <?php endif;?>
+                                              
                                                 <!-- more data -->
                                             </tbody>
                                         </table>
@@ -250,7 +220,7 @@ h4.am-panel-title{
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/5';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -266,38 +236,28 @@ h4.am-panel-title{
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                 <?php if(!empty($serviceBanner['banner'])):?>
+                                             <?php $service = json_decode($serviceBanner['banner'],true);?>
+                                            <?php foreach($service as $k=>$value):?>
                                                 <tr class="gradeX">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
+                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
+                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
+                                                    <td class="am-text-middle"><img src="<?php echo $value['bannerPic'];?>"></td>
+                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/systemSet/systemSet/editBanner';?>">
+                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/').$serviceBanner['id'].'/'.$num;?>">
                                                                 <i class="am-icon-pencil"></i> 编辑
                                                             </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/').$serviceBanner['id'].'/'.$num;?>" class="tpl-table-black-operation-del">
                                                                 <i class="am-icon-trash"></i> 删除
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr class="">
-                                                    <td class="am-text-middle">F1003</td>
-                                                    <td class="am-text-middle">满记甜品</td>
-                                                    <td class="am-text-middle"><img src="assets/img/baojie.png"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;">http://www.baidu.com</a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url().'/banner/banner/editBanner';?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                            <?php endforeach;?>
+                                            <?php endif;?>
+                                              
                                                 <!-- more data -->
                                             </tbody>
                                         </table>
