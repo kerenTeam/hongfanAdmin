@@ -186,7 +186,7 @@ td.am-text-middle img{
             var res = eval(result);
             console.log(res);
             if(res!=2){
-                var nums = 2; //每页出现的数量
+                var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
@@ -294,7 +294,6 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                //$("#nullMessage").html("暂无相关商品信息！");
                 for(var i=0;i<$('.trClass').length;i++){
 
                     $('.trClass').eq(i).remove();
@@ -372,7 +371,6 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= orders%></td>
         <td class="am-text-middle"><%= sales%></td>
         <td class="am-text-middle"><%= amount%></td>
-        <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">

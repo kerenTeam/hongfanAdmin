@@ -5,7 +5,7 @@ width: 100%!important;
 }
 .table-check{
 width: 30px;
-}
+} 
 .hf-dropdown{
 font-size: 12px!important;
 padding: 5px 6px!important;
@@ -37,7 +37,8 @@ td.am-text-middle img{
         color: #666;
         font-size: 1.2rem;
         border:  1px solid #ddd;
-        margin-right: 80px;
+       float:left;
+       margin-left: 40%;
     }
      .clickUp{
         display: inline-block;
@@ -45,12 +46,16 @@ td.am-text-middle img{
         margin-left: 100px;
     } 
 
- #preview,.wx_type_img{ 
-    width: 250px !important;
+ .wx_type_img{ 
+    width: 100%;
+     height:140px !important;
        
     }
+    #preview{
+        height:140px !important;
+    }
     #preview #imghead,#preview img{
-      width: 240px !important; 
+      height: 130px !important; 
     }
     textarea{
         border: none;
@@ -103,7 +108,7 @@ td.am-text-middle img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">帮帮团搜索</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" >
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">姓名:</label>
                         <div class="am-u-sm-8">
@@ -147,7 +152,7 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                     <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
+                                     <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-default am-btn-success"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
                                     <a class="wx_type_img am-inline" >
                                          <input type="file" id="imgUpload" name="" onchange="uploadFiles()" class="upload-add fileUpLoad">
                                           <!-- 图片实时预览 -->
@@ -217,7 +222,7 @@ var nums=0,flag=0;
         success: function(result){         
             var res = eval(result);
             if(res!=2){
-                nums = 2; //每页出现的数量
+                nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
@@ -254,21 +259,20 @@ var nums=0,flag=0;
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editHelpUser').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
                             $('.editHelpUser').eq(i).attr("data-am-modal","{target: '#ed"+ edDataId +"'}")
-                            if($('.goodsState option:selected').eq(i).val()=="否"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+                            if($('.goodsState option:selected').eq(i).val()=="0"){
+                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
                         //更改帮帮团成员的状态
                         $('.goodsState').change(function(){
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="是"){
+                            if($(this).find('option:selected').val()=="1"){
                                 $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
                                     data: 'state=1&id='+dataId,
                                     success: function(data){
                                         if(data==1){
-                                            alert(data);
                                         }else{
                                             alert("操作失败！");
                                         }
@@ -297,9 +301,7 @@ var nums=0,flag=0;
                                     }
                                 });
                                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
+                            }                                                
                         });
 
                         //单个帮帮成员删除
@@ -320,8 +322,7 @@ var nums=0,flag=0;
                                 error:function(xhr,type,errorThrown){
                                     alert("操作失败，请检查网络设置！");
                                 }
-                            });
-                            
+                            });                       
                         });
                         
                         //多个帮帮成员删除
@@ -350,6 +351,60 @@ var nums=0,flag=0;
                                 });
                             
                         });
+                         //删除图片
+                        $(".deleteImg").click(function(){      
+                            $(this).prevUntil('#preview').find('img').attr('src','assets/img/nullImg.jpg');
+                            $(this).prevUntil('#preview').find('input').val("");
+                            $(this).prevUntil('#preview').find('input').files="";
+                        });
+                        //上传图片
+                        var picArray=[];//定义一个定时器
+                        for(var i=0;i<$('.imgUp').length;i++){
+                            $('.imgUp').eq(i).change(function() {
+                                var dataId=$(this).attr('data-id');                              
+                                if(this.files[0] && this.files){
+                                    picArray[0]=this.files[0];
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(this.files[0]);
+                                    reader.onload = function(e) {
+                                        var str='<img class="picimg" src="'+this.result+'"/>';
+                                        document.getElementsByClassName('preview'+dataId)[0].innerHTML=str;
+                                    } 
+                                    console.log(picArray);
+                                    
+                                }
+                            });
+                            //保存编辑后的成员信息
+                            $('.sureSave').eq(i).click(function(){
+                                var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_hele_user');?>";//上传文件的后台地址;
+                                var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,area=document.getElementsByClassName('area'+dataId)[0].value,address=document.getElementsByClassName('address'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
+                                console.log(name+picArray[0] +job+phone+content+area+address+state);
+                                formD.append('name',name);
+                                formD.append('picArray',picArray[0]);
+                                formD.append('job',job);
+                                formD.append('phone',phone);
+                                formD.append('content',content);
+                                formD.append('area',area);
+                                formD.append('address',address);
+                                formD.append('state',state);
+                                 //实例化XMLHttpRequest对象
+                                var xhr=new XMLHttpRequest();
+                                xhr.open('post',FileController,true);
+                                xhr.send(formD);
+                                xhr.onreadystatechange = function(){
+                                    if (xhr.readyState===4) {  
+                                        if (xhr.status===200) {
+                                            alert("保存成功！");
+                                            $('#ed'+dataId).modal('close');
+                                            // console.log(xhr.responseText)
+                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                            return true;
+                                        }
+                                    }
+                                }  
+                            });
+                        }
+                        
                         
                     }
                 })
@@ -365,30 +420,6 @@ var nums=0,flag=0;
     });
 }
 
-//导入数据
-    function uploadFiles(){
-        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-       // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/serveForPeople/serveForPeople/impolt_help_user');?>";//上传文件的后台地址
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
-           var form=new FormData();
-            form.append('file',fileObj); //文件对象
-            //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.onload=function(){
-                alert("导入成功！");
-                location.reload();
-            
-            };
-            xhr.send(form); 
-            return true;
-        }else{
-            alert("上传文件的格式错误！");
-            return false;
-        }
-        
-    }
 
 
 $(document).ready(function(){
@@ -404,12 +435,7 @@ $(document).ready(function(){
         getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','name='+ helpgroupName +'&area' + helpgroupArea +'&address'+ helpgroupAddress +'&occupation'+ helpgroupJob +'&sear'+ helpgroupkey);
     });
 
-     //删除图片
-    $(".deleteImg").click(function(){      
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).prevUntil('.preview').find('input').val(" ");
-        $(this).prevUntil('.preview').find('input').files="";
-    });
+    
 })
 </script>
 <script type="text/html" id="helpUserModal">
@@ -419,7 +445,11 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= helper_id%></td>
         <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle">
+        <%if(headPic){%>
             <img src="<%= headPic%>" class="am-img-responsive" alt=""/>
+        <%}else{%>  
+            暂无
+        <%}%>
         </td>
         <td class="am-text-middle"><%= occupation%></td>
         <td class="am-text-middle"><%= phone%></td>
@@ -481,16 +511,22 @@ $(document).ready(function(){
                     <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
                         <input type='hidden' name='type_id' />
-                        <input type="text" placeholder="姓名" value="<%= name%>" name='name' minlength="4" required="">
+                        <input type="text" placeholder="姓名" class="name<%= helper_id%>" value="<%= name%>" name='name' minlength="4" required="">
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
                     <div class="am-u-sm-9">
                         <div class="wx_type_img">
-                            <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+                            <input type="file" name="img1" data-id="<%= helper_id%>" id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
                               <!-- 图片实时预览 -->
-                              <div id="preview"> <img style="border-radius: 3px;" src="<%= headPic%>" class="am-img-responsive cardView"> </div>
+                              <div id="preview" class="preview<%= helper_id%>">
+                                <%if(headPic){%>
+                                <img style="border-radius: 3px;" src="<%= headPic%>" class="am-img-responsive cardView"> 
+                                <%}else{%>  
+                                    暂无图片信息
+                                <%}%>
+                                </div>
                         </div>
                         <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                     </div>
@@ -498,59 +534,62 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
                     <div class="am-u-sm-9">
-                        <input type="text" name='house_layout' value="<%= occupation%>" required>
+                        <input type="text" name='house_layout' class="job<%= helper_id%>" value="<%= occupation%>" required>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
                     <div class="am-u-sm-9">
-                        <input type="tel" value="<%= phone%>" name='quarters' required>
+                        <input type="tel" value="<%= phone%>" class="phone<%= helper_id%>" name='quarters' required>
                     </div>
                 </div>
             
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">                     
-                        <input type="text" name='area_address' value="<%for(var i=0;i<competency.length;i++){%><%= competency[i]%> <%}%>" required />
+                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length;i++){%><%= competency[i]%> <%}%>" required />
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                        <input type="text" name='address' placeholder="如：邻水xxxx" value="<%= area%>" required>
+                        <input type="text" name='address' class="area<%= helper_id%>"  placeholder="如：邻水xxxx" value="<%= area%>" required>
                     </div>
                 </div>
                
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                        <input type="text" name="phone" class="js-pattern-mobile" value="<%= address%>" placeholder="输入所在街道" required>
+                        <input type="text" name="phone" class="address<%= helper_id%>" value="<%= address%>" placeholder="输入所在街道" required>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
                     <%if(recommend=="1"){%>
-                        <select id="" class="am-u-sm-12" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                        <select class="am-u-sm-12 state<%= helper_id%>" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
                             <option value="">-=请选择一项=-</option>
-                            <option value="是" selected="selected">是</option>
-                            <option value="否">否</option>
+                            <option value="1" selected="selected">是</option>
+                            <option value="0">否</option>
                         </select>
                     <%}else{%>
-                        <select id="" class="am-u-sm-12" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                        <select class="am-u-sm-12 state<%= helper_id%>" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
                             <option value="">-=请选择一项=-</option>
-                            <option value="是">是</option>
-                            <option value="否" selected="selected">否</option>
+                            <option value="1">是</option>
+                            <option value="0" selected="selected">否</option>
                         </select>
                     <%}%>
                     </div>
                 </div>
-                <div class="am-form-group am-btn-group-xs">
-                    <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消<tton>
-                    <button type="submit" class="am-btn am-btn-secondary">保存<tton>
-                </div>
+                
             </form>
                 
+            </div>
+            <div class="am-modal-footer">
+                <div class="am-form-group am-btn-group-xs" style="margin-top: 20px;">
+                    <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消<tton>
+                    <button type="button" class="am-btn am-btn-secondary sureSave" data-id="<%= helper_id%>" data-am-modal-confirm>保存<tton>
+                </div>
             </div>
         </div>
     </div>
