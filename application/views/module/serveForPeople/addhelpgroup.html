@@ -27,7 +27,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="" method="" enctype="multipart/form-data" >
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">帮帮团基础信息</div>
@@ -43,25 +43,9 @@
                             <div class="am-u-sm-12">
                                 <div class="am-u-sm-4">
                                     <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                     <input type="file" id="imgUpload" name="img[]" onchange="uploadFiles(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                </div>
-                                <div class="am-u-sm-4">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                </div>
-                                <div class="am-u-sm-4">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                      <div id="preview"> <img id="img1" style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                     </div>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                 </div>
@@ -95,7 +79,7 @@
                         </div>
                     </div>
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
+                        <button class="am-btn am-btn-secondary" onclick="sendData()" type="button">添加</button>
                         <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
                 	</div>
@@ -132,4 +116,55 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
+
+
+//上传图片
+var timer=null,picArray={};//定义一个定时器
+function uploadFiles(obj){
+var i=1;   
+    timer = setInterval(function() {
+        
+        if(obj.files[0] && obj.files){
+            clearInterval(timer);
+            for(var i=0;i<obj.files.length;i++){
+                picArray[i]=obj.files[i];
+                var reader = new FileReader();
+                reader.readAsDataURL(obj.files[i]);
+                reader.onload = function(e) {
+                    var str='<img class="picimg" src="'+this.result+'"/>';
+                    document.getElementById('preview').innerHTML+=str;
+                }
+            }
+            
+            
+            
+            console.log(picArray);
+            
+        }
+    },500)
+    
+}
+
+
+//导入数据
+function sendData(){
+    var formD = new FormData();
+    var Name=document.getElementById('Name').value;
+    for(var j=0;j<picArray.length;j++){
+      formD.append('headPic',picArray[j]); 
+    }
+    formD.append('Name','sfwsefhjthrth');
+    formD.append('jool','srth');
+     //实例化XMLHttpRequest对象
+    // var xhr=new XMLHttpRequest();
+    // xhr.open('post',url,true);
+    // xhr.onload=function(){
+    //     alert("导入成功！");
+    //     location.reload();
+    
+    // };
+    // xhr.send(formD);
+    console.log(formD); 
+    return true;
+}
 </script>

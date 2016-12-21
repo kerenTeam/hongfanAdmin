@@ -48,7 +48,7 @@ td.am-text-middle img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">商品搜索</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data">
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsType" class="am-form-label am-u-sm-4">商品分类:</label>
                         <div class="am-u-sm-8">
@@ -189,7 +189,7 @@ td.am-text-middle img{
             var res = eval(result);
             //console.log(res);
             if(res!=2){
-                var nums = 2; //每页出现的数量
+                var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);

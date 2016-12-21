@@ -13,6 +13,7 @@ class serveForPeople extends default_Controller
 	public $view_addhelpgroup = 'module/serveForPeople/addhelpgroup.html';
 	public $view_edithelpgroup = 'module/serveForPeople/edithelpgroup.html';
 	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
+
 	function __construct()
 	{
 		 parent::__construct();
@@ -33,6 +34,7 @@ class serveForPeople extends default_Controller
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
+
     //获取成员列表
     function helpUser_list(){
         if($_POST){
@@ -242,6 +244,16 @@ class serveForPeople extends default_Controller
         $data['page'] = $this->view_edithelpgroup;
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
+    }
+    //编辑操作
+    function edit_hele_user(){
+        if($_POST){
+            var_dump($_POST);
+            var_dump($_FILES);
+
+        }else{
+            echo "2";
+        }
     }
 
 
