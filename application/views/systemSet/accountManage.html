@@ -224,6 +224,35 @@
                                     
                                 }
                             });
+
+                            //账号类型管理
+                            for(var i=0;i<$('.account_type_name').length;i++){
+                                var gid=$('.account_type_name').attr('data-id'),str='',sttr='';
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('store/store/admin_user_group');?>',
+                                    data: 'default=1',
+                                    success: function(data){   
+                                        var jsonData=eval(data);
+                                        console.log(jsonData);
+                                        if(data){
+                                            for(var i=0;i<jsonData.length;i++){
+                                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                                                sttr=sttr+str;
+                                            }
+                                            console.log(sttr);
+                                            $("#account_type_name").append(sttr);
+                                        }else{
+                                            alert("操作失败，请检查网络设置！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                            }
+
                             //保存管理员账号信息
                             $('.sureSave').eq(i).click(function(){
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/systemSet/edit_admin_user');?>";//上传文件的后台地址;
@@ -343,7 +372,9 @@ $(document).ready(function(){
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="姓名" class="group_name<%= user_id%>" value="<%= group_name%>" name='name' minlength="4" required="">
+                            <select name="subcommercial_type_name" class="account_type_name" data-id="<%= gid%>">
+                            <option value="">-=请选择一项=-</option>
+                        </select>   
                         </div>
                     </div>
                     <div class="am-form-group am-cf">

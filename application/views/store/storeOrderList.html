@@ -241,8 +241,8 @@ $(document).ready(function(){
             alert("交易总额必须是一个范围！");
             return false;
         }else{
-          //  console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
-         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
+         
+         getList('<?php echo site_url('/shop/singleShop/order_search');?>','state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
             return true;
         }
         
