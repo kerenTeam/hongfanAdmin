@@ -379,6 +379,7 @@ var nums=0,flag=0;
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_hele_user');?>";//上传文件的后台地址;
                                 var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,area=document.getElementsByClassName('area'+dataId)[0].value,address=document.getElementsByClassName('address'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
                                 console.log(name+picArray[0] +job+phone+content+area+address+state);
+                                formD.append('id',dataId);
                                 formD.append('name',name);
                                 formD.append('picArray',picArray[0]);
                                 formD.append('job',job);
