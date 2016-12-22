@@ -200,14 +200,15 @@ padding: 5px 6px!important;
                     jump: function(obj){
                         document.getElementById('commentList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
-                        $('.tablecheck').click(function() {
+                         $('.tablecheck').click(function() {
                             if(flag==0){
-                              for(var i=0;i<nums;i++) {
+                              for(var i=0;i<$('.commentBox').length;i++) {
                                 document.getElementsByClassName('commentBox')[i].checked=true;
                               }  
                               flag=1;
                             }else{
-                               for(var i=0;i<nums;i++) {
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                // $('.commentBox').eq(i).attr('checked',false);
                                 document.getElementsByClassName('commentBox')[i].checked=false;
                                 }
                                flag=0;
