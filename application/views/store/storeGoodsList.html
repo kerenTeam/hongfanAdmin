@@ -85,8 +85,8 @@ td.am-text-middle img{
                         <div class="am-u-sm-8">
                         <select id="goodsState" name="goodsState">
                             <option value="">-=请选择一项=-</option>
-                            <option value="上架">上架</option>
-                            <option value="下架">下架</option>
+                            <option value="1">上架</option>
+                            <option value="0">下架</option>
                         </select>
                         </div>
                     </div>
@@ -212,7 +212,7 @@ td.am-text-middle img{
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="下架"){
+                            if($('.goodsState option:selected').eq(i).val()=="0"){
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
@@ -276,7 +276,7 @@ $(document).ready(function(){
             return false;
         }else{
             console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-             getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('store/store/goods_search');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         
     });

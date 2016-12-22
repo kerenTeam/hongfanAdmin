@@ -214,14 +214,14 @@ td.am-text-middle img{
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="下架"){
+                            if($('.goodsState option:selected').eq(i).val()=="0"){
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
                         //更改商品的状态
                         $('.goodsState').change(function(){
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
+                            if($(this).find('option:selected').val()=="1"){
                                 $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
@@ -376,14 +376,14 @@ $(document).ready(function(){
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="上架" selected="selected">上架</option>
-                <option value="下架">下架</option>
+                <option value="1" selected="selected">上架</option>
+                <option value="0">下架</option>
             </select>
         <%}else{%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="上架">上架</option>
-                <option value="下架" selected="selected">下架</option>
+                <option value="1">上架</option>
+                <option value="0" selected="selected">下架</option>
             </select>
         <%}%>
         </td>
