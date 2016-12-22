@@ -28,7 +28,26 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
+.goodsState{
+        background: #15b5ac;
+        border-radius: 5px;
+        border: 1px solid #15b5ac;
+        padding:5px 5px;
+        color: #fff;
+        text-align: center;
+    }
 
+    .goodsState option{
+        background: #fff;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding:2px 5px;
+        color: #000;
+        text-align: center;
+    }
+    .goodsState option[selected="selected"]{
+        background: #15b5ac;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -81,17 +100,17 @@ td.am-text-middle img{
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-4 am-fl">商品单价:</label>
                         <div class="am-u-sm-8 am-u-md-8 am-u-lg-8">
-                            <input type="number" class="stable" name="startPrice" min="1"  />
+                            <input type="number" class="stable" name="startPrice" id="startPrice" min="1"  />
                             <span class="linkWord">至</span>
-                            <input type="number" class="stable" name="endPrice" min="1"  />
+                            <input type="number" class="stable" name="endPrice" id="endPrice" min="1"  />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-4">库存:</label>
                         <div class="am-u-sm-8">
-                            <input type="number" class="stable" name="startPrice" min="1"  />
+                            <input type="number" class="stable" id="startRepertory" name="startRepertory" min="1"  />
                             <span class="linkWord">至</span>
-                            <input type="number" class="stable" name="endPrice" min="1"  />
+                            <input type="number" class="stable" id="endRepertory" name="endRepertory" min="1"  />
                         </div>
                     </div>
                     
@@ -163,7 +182,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(result);
+            console.log(res);
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -173,8 +192,9 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        // res[i].title=res[i].title.split(' ')[0];
-                        // listData+= template('storeGoodsModal',res[i]);
+                        res[i].good_pic=eval(res[i].good_pic);
+                        res[i].title=res[i].title.split(' ')[0]+' '+res[i].title.split(' ')[1];
+                        listData+= template('storeGoodsModal',res[i]);
                      }
                     
                     return listData;
@@ -187,7 +207,7 @@ td.am-text-middle img{
                         document.getElementById('storeGoodsList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -196,48 +216,6 @@ td.am-text-middle img{
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
-                        //更改商品的状态
-                        $('.goodsState').change(function(){
-                            var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="上架"){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=1',
-                                    success: function(data){
-                                        if(data==1){
-    
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
-                        });
 
                         //删除商品的AJAX请求
                         $('.sureDelete').click(function(){
@@ -288,20 +266,28 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
-        startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
-        goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
+        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
+        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
+            alert("交易总额必须是一个范围！");
+            return false;
+        }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
+            alert("库存必须是一个范围！");
+            return false;
+        }else{
+            console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+        }
+        
     });
 })
 </script>
 <script type="text/html" id="storeGoodsModal">
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= categoryid%></td>
+        <td class="am-text-middle"><%= category%></td>
         <td class="am-text-middle">
-            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
+            <img src="<%= good_pic[0].bannerPic%>" class="am-img-responsive" alt=""/>
         </td>
         <td class="am-text-middle"><%= title%></td>
         <td class="am-text-middle"><%= store_name%></td>
@@ -312,17 +298,9 @@ $(document).ready(function(){
         <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="上架" selected="selected">上架</option>
-                <option value="下架">下架</option>
-            </select>
+            <span class="">上架</span>
         <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="上架">上架</option>
-                <option value="下架" selected="selected">下架</option>
-            </select>
+            <span class="red">下架</span>
         <%}%>
         </td>
         <td class="am-text-middle">
