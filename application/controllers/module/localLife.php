@@ -50,7 +50,7 @@ class localLife extends default_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
@@ -58,10 +58,10 @@ class localLife extends default_Controller {
             }
             $data['c_id'] = '本地生活';
             if($this->module_model->add_cates($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                 exit;
             }
         }else{
@@ -80,17 +80,17 @@ class localLife extends default_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->module_model->edit_cates($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/module/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
                 exit;
             }
         }else{
