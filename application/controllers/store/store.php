@@ -266,9 +266,12 @@ class store extends default_Controller {
     function order_search(){
         if($_POST){
             var_dump($_POST);
+
+
+
         }else{
             echo "2";
-        }
+        }    
     }
 
 
