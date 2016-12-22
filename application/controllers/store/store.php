@@ -265,9 +265,34 @@ class store extends default_Controller {
     //订单搜索
     function order_search(){
         if($_POST){
-            var_dump($_POST);
-
-
+            $state = $_POST['order_status'];
+            $startPrice = trim($_POST['startPrice']);
+            $endPrice = trim($_POST['endPrice']);
+            $buyer = trim($_POST['buyer']);
+            $seller = trim($_POST['seller']);
+            $time = trim($_POST['create_time']);
+            if(!empty($buyer)){
+                //获取买家id
+                $query = $this->db->where('username',$buyer)->get('hf_user_member');
+                $res = $query->row_array();
+                $buyer = $res['user_id'];
+            }else{
+                $buyer = '';
+            }
+            if(!empty($seller)){
+                //获取卖家商铺id
+                $query1 = $this->db->where('store_name',$seller)->get('hf_shop_store');
+                $res1 = $query1->row_array();
+                $seller = $res1['store_id'];
+            }else{
+                $seller = '';
+            }
+            $list = order_search($state,$startPrice,$endPrice,$buyer,$seller,$time);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
 
         }else{
             echo "2";
