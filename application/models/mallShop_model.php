@@ -214,9 +214,10 @@ class mallShop_model extends CI_Model
 
     //返回所有商品列表
     function get_goodslist(){
-        $this->db->select('a.*,b.store_name');
+        $this->db->select('a.*,b.store_name,c.catname');
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
         $query = $this->db->get();
         return $query->result_array();
     }

@@ -91,6 +91,28 @@ class systemSet extends default_Controller {
             $this->load->view('404.html');
         }
     }
+    //返回管理员类别
+    function admin_user_group(){
+        if($_POST){
+             $group= $this->system_model->get_member_group();
+             if(!empty($group)){
+                echo json_encode($group);
+             }else{
+                echo "2";
+             }
+        }else{
+            echo "2";
+        }
+    }
+    //编辑管理员操作
+    function edit_admin_user(){
+        if($_POST){
+
+            file_put_contents('text.log',json_encode($_POST));
+        }else{
+            echo "2";
+        }
+    }
 
 
 

@@ -32,6 +32,7 @@ class store extends default_Controller {
     {
         parent::__construct();
         $this->load->model('mallShop_model');
+        $this->load->helper('search_helper');
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
@@ -64,13 +65,24 @@ class store extends default_Controller {
     //搜索商品
     function goods_search(){
         if($_POST){
-            var_dump($_POST);
+            $cateid = $_POST['cateid'];
+            $state = $_POST['state'];
+            $sear = $_POST['sear'];
+            $startPrice = $_POST['startPrice'];
+            $endPrice = $_POST['endPrice'];
+            $startRepertory = $_POST['startRepertory'];
+            $endRepertory = $_POST['endRepertory'];
+
+            $list = search_goods($cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
         }else{
             echo "2";
         }
     }
-
-
     //商品分类
     function storeGoodsSort(){
          $data['page'] = $this->view_storeGoodsSort;
