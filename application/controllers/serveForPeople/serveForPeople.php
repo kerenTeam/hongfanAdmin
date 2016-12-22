@@ -23,7 +23,7 @@ class serveForPeople extends default_Controller
 	//为民服务 为民服务主页
     function serveForPeople(){
         $data['page'] = $this->view_serveForPeople;
-        $data['menu'] = array('serveForPeople','serveForPeople');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
     //
@@ -31,7 +31,7 @@ class serveForPeople extends default_Controller
 	//为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
-        $data['menu'] = array('serveForPeople','helpgrouplist');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
 
@@ -127,6 +127,10 @@ class serveForPeople extends default_Controller
            $erp_orders_id = array();  //声明数组
           for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
             $data['name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+            if($data['name'] == NULL){
+                 @unlink($inputFileName); 
+                exit;
+            }
             $data['sex'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
             $data['phone'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
             $data['email'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
@@ -137,12 +141,10 @@ class serveForPeople extends default_Controller
             $data['info'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取c列的值
             $data['competency'] = json_encode(explode(',',$com),JSON_UNESCAPED_UNICODE);
             $data['import_userid'] = $this->session->users['user_id'];
-            if($data['name'] == NULL){
-                exit;
-            }
+
            
             $import =  $this->db->insert('hf_service_help_user',$data); 
-            @unlink($inputFileName); 
+           
 
           }
        }else{
@@ -166,7 +168,7 @@ class serveForPeople extends default_Controller
     //为民服务  邻水帮帮团服务列表
     function helpgroupservelist(){
         $data['page'] = $this->view_helpgroupservelist;
-        $data['menu'] = array('serveForPeople','helpgroupservelist');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
     //服务请求列表
@@ -234,20 +236,34 @@ class serveForPeople extends default_Controller
     //为民服务  添加邻水帮帮团
     function addhelpgroup(){
         $data['page'] = $this->view_addhelpgroup;
-        $data['menu'] = array('serveForPeople','addhelpgroup');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
 	//为民服务  编辑邻水帮帮团
     function edithelpgroup(){
         $data['page'] = $this->view_edithelpgroup;
-        $data['menu'] = array('serveForPeople','edithelpgroup');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
     //编辑操作
     function edit_hele_user(){
         if($_POST){
-            var_dump($_POST);
-            var_dump($_FILES);
+            $data = $this->input->post();
+            if(!empty($_FILES['picArray']['name'])){
+                    $config['upload_path']      = 'upload/headPic/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('picArray')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/serveForPeople/helpgrouplist')."'</script>";exit;
+                    }else{
+                      
+                        $data['headPic'] = 'upload/headPic/'.$this->upload->data('file_name');
+                   }     
+            }
+            
 
         }else{
             echo "2";
