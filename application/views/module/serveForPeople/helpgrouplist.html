@@ -12,7 +12,7 @@ padding: 5px 6px!important;
 }
 td.am-text-middle img{
     width:80px;
-}
+} 
 .am-u-sm6{
     width:50px !important;
     margin:0;
@@ -246,12 +246,13 @@ var nums=0,flag=0;
                         //点击选中所有
                         $('.tablecheck').click(function() {
                             if(flag==0){
-                              for(var i=0;i<nums;i++) {
+                              for(var i=0;i<$('.commentBox').length;i++) {
                                 document.getElementsByClassName('commentBox')[i].checked=true;
                               }  
                               flag=1;
                             }else{
-                               for(var i=0;i<nums;i++) {
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                // $('.commentBox').eq(i).attr('checked',false);
                                 document.getElementsByClassName('commentBox')[i].checked=false;
                                 }
                                flag=0;
@@ -335,22 +336,23 @@ var nums=0,flag=0;
                                 array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
                             }
                             array=JSON.stringify(array);
+                            console.log(array)
                             $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
-                                    data: 'id='+array,
-                                    success: function(data){
-                                        if(data==1){
-                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
+                                type:'post',
+                                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
+                                data: 'id='+array,
+                                success: function(data){
+                                    if(data==1){
+                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                    }else{
+                                        alert("操作失败！");
                                     }
-                                });
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
+                                }
+                            });
                             
                         });
                          //删除图片

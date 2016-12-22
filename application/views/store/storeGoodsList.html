@@ -61,7 +61,6 @@ td.am-text-middle img{
                             </select>
                         </div>
                     </div>
-
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsState" class="am-form-label am-u-sm-4">商品状态:</label>
                         <div class="am-u-sm-8">
@@ -128,8 +127,7 @@ td.am-text-middle img{
                                     <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
-                                    <th class="shop_block">库存 </th> 
-                                 
+                                    <th class="shop_block">库存 </th>                               
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
@@ -165,7 +163,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            //console.log(res);
+            console.log(result);
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -175,8 +173,8 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
-                        listData+= template('storeGoodsModal',res[i]);
+                        // res[i].title=res[i].title.split(' ')[0];
+                        // listData+= template('storeGoodsModal',res[i]);
                      }
                     
                     return listData;
@@ -252,12 +250,7 @@ td.am-text-middle img{
                                         data: 'goodsid='+dataId,
                                         success: function(data){
                                             if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==dataId){
-                                                        $('.trClass').eq(i).remove();
-                                                         getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
-                                                    }
-                                                }
+                                              getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
                                             }else{
                                                 alert("操作失败！");
                                             }
@@ -287,10 +280,11 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/store/store/storeGoods_page');?>','default=1');
+    getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/store/store/storeGoods_page');?>','default=1');
+        getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
+
     });
     //点击搜索
     $('.searchGoods').click(function(){
