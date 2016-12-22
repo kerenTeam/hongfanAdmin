@@ -248,8 +248,22 @@ class serveForPeople extends default_Controller
     //编辑操作
     function edit_hele_user(){
         if($_POST){
-            var_dump($_POST);
-            var_dump($_FILES);
+            $data = $this->input->post();
+            if(!empty($_FILES['picArray']['name'])){
+                    $config['upload_path']      = 'upload/headPic/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('picArray')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/serveForPeople/helpgrouplist')."'</script>";exit;
+                    }else{
+                      
+                        $data['headPic'] = 'upload/headPic/'.$this->upload->data('file_name');
+                   }     
+            }
+            
 
         }else{
             echo "2";
