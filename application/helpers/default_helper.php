@@ -44,7 +44,11 @@ function get_card_name($cardid){
 //商家商品搜索
 function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate){
             $CI = &get_instance();
-            
+            if(empty($state)){
+                $state = '2';
+            }else{
+                $state = $state;
+            }
             $res= '';
             if(!empty($cate) && empty($startPrice) && empty($startRepertory) && empty($state) && empty($sear)){
                  $CI->db->select('a.*, b.catname as catname');
@@ -68,7 +72,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else 
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                if(empty($state)){
+                 if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -99,7 +103,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                if(empty($state)){
+                 if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -124,7 +128,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 } 
 
@@ -143,7 +147,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else 
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
 
@@ -162,7 +166,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
 
@@ -181,7 +185,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -198,7 +202,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -216,7 +220,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else
             if(empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -226,7 +230,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -243,7 +247,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else 
             if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -253,7 +257,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else
             if(!empty($cate) && empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -263,7 +267,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                 $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                  if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
@@ -273,7 +277,7 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
                  $res = $query->result_array();
                
             }else if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && !empty($state) && !empty($sear)){
-                 if(empty($state)){
+                if($state == 2){
                     $state = '0';
                 }
                 $CI->db->select('a.*, b.catname as catname');
