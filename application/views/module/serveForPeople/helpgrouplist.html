@@ -140,7 +140,7 @@ td.am-text-middle img{
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
+                        <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
@@ -219,7 +219,7 @@ var nums=0,flag=0;
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){   
             var res = eval(result);
             if(res!=2){
                 nums = 10; //每页出现的数量
@@ -382,12 +382,12 @@ var nums=0,flag=0;
                                 formD.append('id',dataId);
                                 formD.append('name',name);
                                 formD.append('picArray',picArray[0]);
-                                formD.append('job',job);
+                                formD.append('occupation',job);
                                 formD.append('phone',phone);
-                                formD.append('content',content);
+                                formD.append('competency',content);
                                 formD.append('area',area);
                                 formD.append('address',address);
-                                formD.append('state',state);
+                                formD.append('recommend',state);
                                  //实例化XMLHttpRequest对象
                                 var xhr=new XMLHttpRequest();
                                 xhr.open('post',FileController,true);
@@ -433,7 +433,7 @@ $(document).ready(function(){
     //点击搜索
     $('.searchGoods').click(function(){
         var helpgroupName=$('#helpgroupName').val(),helpgroupArea=$('#helpgroupArea').val(),helpgroupJob=$('#helpgroupJob').val(),helpgroupAddress=$('#helpgroupAddress').val(),helpgroupkey=$('#helpgroupkey').val();
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','name='+ helpgroupName +'&area' + helpgroupArea +'&address'+ helpgroupAddress +'&occupation'+ helpgroupJob +'&sear'+ helpgroupkey);
+        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','name='+ helpgroupName +'&area=' + helpgroupArea +'&address='+ helpgroupAddress +'&occupation='+ helpgroupJob +'&sear='+ helpgroupkey);
     });
 
     
@@ -548,7 +548,7 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">                     
-                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length;i++){%><%= competency[i]%> <%}%>" required />
+                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length;i++){%><%= competency[i]%>，<%}%>" required />
                     </div>
                 </div>
                 <div class="am-form-group am-cf">

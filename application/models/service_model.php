@@ -53,6 +53,13 @@ class service_model extends CI_Model
         return $this->db->insert('hf_user_message',$data);
     }
 
+    //修改帮帮团成员资料
+    function edit_help_user($id,$data){
+        $where['helper_id'] = $id;
+        return $this->db->where($where)->update($this->service_user,$data);
+
+    }
+
 }
 
 
