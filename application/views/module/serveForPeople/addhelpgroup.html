@@ -118,32 +118,7 @@ $(".deleteImg").click(function(){
 });
 
 
-//上传图片
-var timer=null,picArray={};//定义一个定时器
-function uploadFiles(obj){
-var i=1;   
-    timer = setInterval(function() {
-        
-        if(obj.files[0] && obj.files){
-            clearInterval(timer);
-            for(var i=0;i<obj.files.length;i++){
-                picArray[i]=obj.files[i];
-                var reader = new FileReader();
-                reader.readAsDataURL(obj.files[i]);
-                reader.onload = function(e) {
-                    var str='<img class="picimg" src="'+this.result+'"/>';
-                    document.getElementById('preview').innerHTML+=str;
-                }
-            }
-            
-            
-            
-            console.log(picArray);
-            
-        }
-    },500)
-    
-}
+
 
 
 //导入数据

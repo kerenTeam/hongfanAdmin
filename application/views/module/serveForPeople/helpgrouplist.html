@@ -88,6 +88,9 @@ td.am-text-middle img{
     vertical-align: middle;
     float:left;
 }
+.am-btn-toolbar{
+    height: 50px;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -96,7 +99,7 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
-            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>">为民服务</a>&nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团</a>
+            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size:18px;">为民服务</a>&nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团</a>
             </div>
         </div>
     </div>
@@ -147,21 +150,20 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">帮帮团成员信息列表</div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                     <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-default am-btn-success"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
-                                    <a class="wx_type_img am-inline" >
-                                         <input type="file" id="imgUpload" name="" onchange="uploadFiles()" class="upload-add fileUpLoad">
-                                          <!-- 图片实时预览 -->
-                                          <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
+                             <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-success"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
+                            <!-- <a class="am-btn am-btn-secondary am-btn-xs" >
+                                 <input type="file" id="imgUpload" name="" onchange="uploadFiles()" class="upload-add fileUpLoad">
+                                  <button class=""><span class="am-icon-arrow-down"></span> 导入</button>
+                            </a> -->
+                            
+                        </div><a class="wx_type_img am-inline am-fl" style="height: 28px !important;width:100px;">
+                                 <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
+                                  <!-- 图片实时预览 -->
+                                  <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
+                            </a>
                     </div>
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
@@ -465,19 +467,16 @@ $(document).ready(function(){
         <%if(recommend=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="是" selected="selected">是</option>
-                <option value="否">否</option>
+                <option value="1" selected="selected">是</option>
+                <option value="0">否</option>
             </select>
         <%}else{%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="是">是</option>
-                <option value="否" selected="selected">否</option>
+                <option value="1">是</option>
+                <option value="0" selected="selected">否</option>
             </select>
         <%}%>
-        </td>
-        <td class="am-text-middle">
-            <span><%= create_time%></span>
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
