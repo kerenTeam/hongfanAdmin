@@ -42,6 +42,7 @@ class store extends default_Controller {
     }
     //商品列表
     function storeGoodsList(){
+         $data['cates'] = $this->mallShop_model->get_goods_cates();
          $data['page'] = $this->view_storeGoodsList;
          $data['menu'] = array('store','storeGoodsList');
     	 $this->load->view('template.html',$data);
@@ -49,11 +50,27 @@ class store extends default_Controller {
     //返回商品列表
     function storeGoods_page(){
         if($_POST){
-            
+            //获取所有商品
+            $goods_list = $this->mallShop_model->get_goodslist();
+            if(empty($goods_list)){
+                echo "2";
+            }else{
+                echo json_encode($goods_list);
+            }
         }else{
             echo "2";
         }
     }
+    //搜索商品
+    function goods_search(){
+        if($_POST){
+            var_dump($_POST);
+        }else{
+            echo "2";
+        }
+    }
+
+
     //商品分类
     function storeGoodsSort(){
          $data['page'] = $this->view_storeGoodsSort;
@@ -202,12 +219,47 @@ class store extends default_Controller {
         $data['menu'] = array('store','storeOrderList');
          $this->load->view('template.html',$data);
     }
+
+    //获取所有订单
+    function Order_page(){
+        if($_POST){
+            $order = $this->mallShop_model->get_order_list();
+            if(empty($order)){
+                echo "2";
+            }else{
+                echo json_encode($order);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //订单管理 订单详情
     function storeOrderDetail(){
-        $data['page'] = $this->view_storeOrderDetail;
-        $data['menu'] = array('store','storeOrderList');
-         $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id != 0){
+            //获取订单详情
+             $data['order'] = $this->mallShop_model->get_order_info($id);
+
+             $data['page'] = $this->view_storeOrderDetail;
+             $data['menu'] = array('store','storeOrderList');
+             $this->load->view('template.html',$data);
+        }else{
+            $this->load->view('404.html');
+        }
     }
+
+    //订单搜索
+    function order_search(){
+        if($_POST){
+            var_dump($_POST);
+        }else{
+            echo "2";
+        }
+    }
+
+
     //快递管理
     function storeDeliveryList(){
          $data['page'] = $this->view_storeDeliveryList;

@@ -212,6 +212,26 @@ class mallShop_model extends CI_Model
         return $this->db->where($where)->delete($this->shop_coupon);
     }
 
+    //返回所有商品列表
+    function get_goodslist(){
+        $this->db->select('a.*,b.store_name');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    //返回所有订单
+    function get_order_list(){
+        $this->db->select('a.*,b.store_name,c.username');
+        $this->db->from('hf_mall_order as a');
+        $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+        $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+
 
 }
 

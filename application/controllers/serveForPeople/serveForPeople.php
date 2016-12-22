@@ -155,12 +155,18 @@ class serveForPeople extends default_Controller
     //帮帮团搜索
     function help_search(){
         if($_POST){
-            $name = $_POST['name'];
-            $area = $_POST['area'];
-            $address = $_POST['address'];
-            $occupation = $_POST['occupation'];
-            $sear = $_POST['sear'];
+            $name = trim($_POST['name']);
+            $area = trim($_POST['area']);
+            $address = trim($_POST['address']);
+            $occupation = trim($_POST['occupation']);
+            $sear = trim($_POST['sear']);
+            $list = search_help_user($name,$area,$address,$occupation,$sear);
 
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
         }else{
             echo '2';
         }
@@ -248,7 +254,7 @@ class serveForPeople extends default_Controller
     //编辑操作
     function edit_hele_user(){
         if($_POST){
-            $data = $this->input->post();
+            $data = $_POST;
             if(!empty($_FILES['picArray']['name'])){
                     $config['upload_path']      = 'upload/headPic/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
@@ -263,8 +269,17 @@ class serveForPeople extends default_Controller
                         $data['headPic'] = 'upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
-            
-
+            $id = $data['id'];
+            unset($data['picArray'],$data['id']);
+            $con = mb_substr($data['competency'], 0, -1);
+            $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
+            if($this->service_model->edit_help_user($id,$data))
+            {
+                echo "1";
+            } else{
+                echo "2";
+            }
+           
         }else{
             echo "2";
         }

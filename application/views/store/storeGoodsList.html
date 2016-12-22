@@ -54,25 +54,13 @@ td.am-text-middle img{
                         <div class="am-u-sm-8">
                             <select id="goodsType" name="goodsType">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="option1">上衣</option>
-                                <option value="option2">夏装</option>
-                                <option value="option2">裙装</option>
-                                <option value="option2">秋冬款</option>
+                                <?php foreach($cates as $v):?>
+                                <option value="<?php echo $v['catid'];?>"><?php echo $v['catname'];?></option>
+                                <?php endforeach;?>
+                             
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-4">货物批次:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsBatch" name="goodsBatch">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="option1">2016年秋冬</option>
-                            <option value="option2">2015年秋冬</option>
-                            <option value="option2">2016年上半季</option>
-                            <option value="option2">2016年冬新款</option>
-                        </select>
-                        </div>
-                    </div> -->
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsState" class="am-form-label am-u-sm-4">商品状态:</label>
                         <div class="am-u-sm-8">
@@ -83,17 +71,7 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="checkState" class="am-form-label am-u-sm-4">审核状态:</label>
-                        <div class="am-u-sm-8">
-                        <select id="checkState" name="checkState">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="待审核">待审核</option>
-                            <option value="通过审核">通过审核</option>
-                            <option value="未审核">未审核</option>
-                        </select>
-                        </div>
-                    </div>
+                 
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
                         <div class="am-u-sm-8">
@@ -149,8 +127,7 @@ td.am-text-middle img{
                                     <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
-                                    <th class="shop_block">库存 </th>
-                                    <th class="shop_block">审核状态 </th>                                 
+                                    <th class="shop_block">库存 </th>                               
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
@@ -307,6 +284,7 @@ $(document).ready(function(){
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
+
     });
     //点击搜索
     $('.searchGoods').click(function(){
@@ -326,11 +304,12 @@ $(document).ready(function(){
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
         </td>
         <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%= store_name%></td>
         <td class="am-text-middle"><%= price%></td>
         <td class="am-text-middle"><%= orders%></td>
         <td class="am-text-middle"><%= sales%></td>
         <td class="am-text-middle"><%= amount%></td>
-        <td class="am-text-middle">2016年上半季</td>
+        <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
