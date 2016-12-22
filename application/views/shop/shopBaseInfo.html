@@ -273,7 +273,8 @@
                 type:'post',
                 url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
                 data: 'gid='+ firstYetai,
-                success: function(data){   
+                success: function(data){ 
+                    $("#secondYetaiSelect").html("");  
                     var jsonData=eval(data);
                     console.log(jsonData);
                     if(data){

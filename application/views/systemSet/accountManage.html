@@ -229,6 +229,7 @@
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_hele_user');?>";//上传文件的后台地址;
                                 var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByClassName('group_name'+dataId)[0].value;
                                 console.log(name+nickname+picArray[0]+group_name);
+                                formD.append('id',dataId);
                                 formD.append('name',name);
                                 formD.append('nickname',nickname);
                                 formD.append('group_name',group_name);
