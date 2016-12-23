@@ -31,6 +31,13 @@
         
         height:140px;
     }
+    select.account_type_name{
+        border: none;
+        border-bottom: 1px solid #c2cad8;
+        font-size: 14px;
+        color: #555;
+        padding-left: 0;
+    }
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -147,7 +154,7 @@
 </div>
 </div>
 <script type="text/javascript">
-var flag=1,tag=1;
+var flag=1,tag=1,str='';
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -221,13 +228,16 @@ var flag=1,tag=1;
                                         var str='<img class="picimg" src="'+this.result+'"/>';
                                         document.getElementsByClassName('preview'+dataId)[0].innerHTML=str;
                                     } 
-                                    console.log(picArray);
+                                    // console.log(picArray);
                                     
                                 }
                             });
-
+                            //删除图片
+                            $(".deleteImg").click(function(){  
+                                $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');  
+                            });
                             //账号类型管理
-                            var str='',sttr='',namelength=$('.account_type_name').length;                           
+                            var name=$('.account_type_name');
                             if(flag){
                                 $.ajax({
                                     type:'post',
@@ -237,22 +247,19 @@ var flag=1,tag=1;
                                         var jsonData=eval(data);
                                         if(data){
                                             for(var i=0;i<jsonData.length;i++){
-                                                console.log(jsonData);
-                                                for(var j=0;j<namelength;j++){
-                                                    if($('.account_type_name').eq(j).attr('data-id')==jsonData[i].gid){
-                                                       str+='<option value="'+ jsonData[i].gid +'" selected="selected">' + jsonData[i].group_name + '</option>'; 
-                                                       tag=0 
-                                                    }
-                                                }
-                                                if(tag){
-                                                 str+='<option value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>'; 
-                                                }
-                                                tag=1;
-                                            }
-                                            console.log(str);
-                                            for(var k=0;k<namelength;j++){
-                                                document.getElementsByClassName('account_type_name')[k].innerHTML+=str;
-                                            }
+                                                str+='<option class="option" value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>';                           
+                                            } 
+                                            for(var i=0;i<name.length;i++){
+                                               var typeid=name.eq(i).attr('data-id');
+                                               $('#usertype'+typeid).append(str);
+                                               var ddd=$('#usertype'+typeid).find('option');
+                                               for(var j=1;j<ddd.length;j++){
+                                                   if(ddd.eq(j).val()==typeid){
+                                                      ddd.eq(j).attr('selected',true);
+                                                   }
+                                               }
+                                            } 
+                                            tag=1; 
                                         }else{
                                             alert("操作失败，请检查网络设置！");
                                         }
@@ -263,9 +270,8 @@ var flag=1,tag=1;
                                     }
                                 });
                                 flag=0;
-                            }
-                            
 
+                            }
                             //保存管理员账号信息
                             $('.sureSave').eq(i).click(function(){
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/systemSet/edit_admin_user');?>";//上传文件的后台地址;
@@ -296,7 +302,6 @@ var flag=1,tag=1;
                 })
             }else{
                 for(var i=0;i<$('.trClass').length;i++){
-
                     $('.trClass').eq(i).remove();
                 }
                 $('.dataNumber').html("");
@@ -318,10 +323,7 @@ $(document).ready(function(){
     $('.refresh').click(function(){
         getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
     });
-    //删除图片
-    $(".deleteImg").click(function(){  
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');  
-    });
+    
 
 })
 </script>
@@ -384,9 +386,8 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type='hidden' name='type_id' />
-                            <select name="account_type_name" class="account_type_name" id="type<%= gid%>" data-id="<%= gid%>">
-                            <option value="">-=请选择一项=-</option>
+                            <select name="account_type_name" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>">
+                            <option value="">不选择则默认不修改</option>
                             </select>   
                         </div>
                     </div>

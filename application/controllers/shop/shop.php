@@ -63,7 +63,11 @@ class shop extends default_Controller {
             $sear = $_POST['sear'];
 
             $list = search_store_list($yetai,$state,$floor,$berth,$sear);
-            var_dump($list);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
 
         }else{
             echo "2";
@@ -136,7 +140,8 @@ class shop extends default_Controller {
             $arr['username'] = trim($this->input->post('username'));
             $arr['gid'] = '2';
             $arr['password'] = md5(trim($this->input->post('password')));
-            if(!empty($this->shop_model->get_user_info($arr['username']))){
+            $username = $this->shop_model->get_user_info($arr['username']);
+            if(!empty($username)){
                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
             }
             //新增商家用户账号
@@ -286,7 +291,8 @@ class shop extends default_Controller {
                 $arr['password'] = md5('123456');
                 $arr['gid'] = '2';
                 //获取用户id
-                if(empty($this->shop_model->get_user_info($arr['username']))){
+                 $username = $this->shop_model->get_user_info($arr['username']);
+                if(empty($username)){
                     $userid = $this->shop_model->add_store_member($arr);
                      //插入数据库
                     $data['business_id'] = $userid;

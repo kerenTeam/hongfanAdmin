@@ -10,10 +10,25 @@ class loveToGo extends default_Controller
 {
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
+    public $view_loveToGoListLocal = 'loveToGo/loveToGoListLocal.html';   
+    public $view_loveToGogoodLocalDetail = 'loveToGo/loveToGogoodLocalDetail.html';
 	function __construct()
 	{
 		 parent::__construct();
 	}
+    //爱购 本地商品
+    function loveToGoListLocal(){
+        $data['page'] = $this->view_loveToGoListLocal;
+        $data['menu'] = array('loveToGo','loveToGoListLocal');
+        $this->load->view('template.html',$data);
+    }
+
+    //爱购 本地商品详情
+    function loveToGogoodLocalDetail(){
+        $data['page'] = $this->view_loveToGogoodDetail;
+        $data['menu'] = array('loveToGo','loveToGogoodLocalDetail');
+        $this->load->view('template.html',$data);
+    }
 
     //获取远程爱购商品列表
     function get_remote_goods(){
@@ -45,8 +60,7 @@ class loveToGo extends default_Controller
             echo "2";
         }
     }
-
-	//爱购 商品列表
+	//爱购 商品库
     function loveToGoList(){
 
         $data['page'] = $this->view_loveToGoList;
@@ -54,7 +68,7 @@ class loveToGo extends default_Controller
         $this->load->view('template.html',$data);
     }
 
-	//爱购 商品详情
+	//爱购 商品库 商品详情
     function loveToGogoodDetail(){
         $data['page'] = $this->view_loveToGogoodDetail;
         $data['menu'] = array('loveToGo','loveToGogoodDetail');

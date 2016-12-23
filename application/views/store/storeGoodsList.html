@@ -1,4 +1,4 @@
-
+ 
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
@@ -246,7 +246,10 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#storeGoodsList");
+                $('#shopList').find('tr').remove();
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#storeGoodsList");
             }
 
             
@@ -285,7 +288,7 @@ $(document).ready(function(){
 <script type="text/html" id="storeGoodsModal">
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= category%></td>
+        <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">
             <img src="<%= good_pic[0].bannerPic%>" class="am-img-responsive" alt=""/>
         </td>
