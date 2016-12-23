@@ -34,7 +34,8 @@ class shop extends default_Controller {
     //商家 列表主页
     function index()
     {  
-
+        //获取一级业态
+         $data['yetai'] = $this->shop_model->store_type_level();
          $data['page'] = $this->view_shopIndex;
          $data['menu'] = array('store','shopList');
     	 $this->load->view('template.html',$data);
@@ -51,6 +52,22 @@ class shop extends default_Controller {
          }else{
              echo "2";
          }
+    }
+    //搜索商家列表
+    function search_store(){
+        if($_POST){
+            $yetai = $_POST['yetai'];
+            $state = $_POST['state'];
+            $floor = $_POST['floor'];
+            $berth = $_POST['berth'];
+            $sear = $_POST['sear'];
+
+            $list = search_store_list($yetai,$state,$floor,$berth,$sear);
+            var_dump($list);
+
+        }else{
+            echo "2";
+        }
     }
 
     //商家状态修改

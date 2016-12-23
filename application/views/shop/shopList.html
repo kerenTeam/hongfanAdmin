@@ -55,18 +55,9 @@ padding: 5px 6px!important;
                         <div class="am-u-sm-10">
                             <select id="yetaiSort" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value>输入查找/选择</option>
-                                <option value="百货">百货</option>
-                                <option value="配套服务">配套服务</option>
-                                <option value="超市/便利">超市/便利</option>
-                                <option value="百货">百货</option>
-                                <option value="配套服务">配套服务</option>
-                                <option value="超市/便利">超市/便利</option>
-                                <option value="百货">百货</option>
-                                <option value="配套服务">配套服务</option>
-                                <option value="超市/便利">超市/便利</option>
-                                <option value="百货">百货</option>
-                                <option value="配套服务">配套服务</option>
-                                <option value="超市/便利">超市/便利</option>
+                                <?php foreach($yetai as $val):?>
+                                    <option value="<?php echo $val['id']?>"><?php echo $val['type_name']?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>
