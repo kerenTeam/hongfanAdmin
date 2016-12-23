@@ -83,3 +83,10 @@ defined('EXIT_USER_INPUT')     OR define('EXIT_USER_INPUT', 7); // invalid user 
 defined('EXIT_DATABASE')       OR define('EXIT_DATABASE', 8); // database error
 defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automatically-assigned error code
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
+
+
+//爱购保稅 AppKey 和 AppSecret
+defined('IGOAPPKEY')           OR define('IGOAPPKEY', '6458153266');//爱购AppKey
+defined('IGOAPPSECRET')           OR define('IGOAPPSECRET', '2a1cc0c25a60e8c394e5a822936df862');//爱购AppSecret
+defined('IGOLISTAPIURL')           OR define('IGOLISTAPIURL', 'http://api.igetmall.net/DRP_getProList');//爱购商品列表api
+defined('IGOINFOAPIURL')           OR define('IGOINFOAPIURL', 'http://api.igetmall.net/DRP_getProDetail'); //爱购商品详情api

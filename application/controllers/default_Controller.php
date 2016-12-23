@@ -21,7 +21,6 @@ class default_Controller extends CI_Controller
 		//用户表
 		$this->load->model('member_model','user_model');
 
-
 		date_default_timezone_set("Asia/Shanghai");
         $this->load->helper('default_helper');
 		$this->load->helper('search_helper');
