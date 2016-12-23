@@ -29,6 +29,16 @@ padding: 5px 6px!important;
 }
 .shopState option[selected="selected"]{
     background: #15b5ac;
+
+}
+.editShop{
+    border:1px solid #e0690c !important;
+    padding:5px 6px !important;
+    color: #e0690c !important;
+}
+.editShop:hover {
+    background: #e0690c !important;
+    color: #fff !important;
 }
 </style>
 
@@ -51,10 +61,10 @@ padding: 5px 6px!important;
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="yetai" class="am-u-sm-2 am-form-label">分类业态</label>
-                        <div class="am-u-sm-10">
+                        <label for="yetai" class="am-u-sm-3 am-form-label">分类业态</label>
+                        <div class="am-u-sm-9">
                             <select id="yetaiSort" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value>输入查找/选择</option>
+                                <option value="">输入查找/选择</option>
                                 <?php foreach($yetai as $val):?>
                                     <option value="<?php echo $val['id']?>"><?php echo $val['type_name']?></option>
                                 <?php endforeach;?>
@@ -62,30 +72,20 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="shop_state" class="am-u-sm-2 am-form-label">状态</label>
-                        <div class="am-u-sm-10">
-                            <select id="shop_state" id="shopStateS" >
-                                <option value>请选择</option>
-                                <option value="0">正常</option>
-                                <option value="1">冻结</option>
+                        <label for="shop_state" class="am-u-sm-3 am-form-label">状态</label>
+                        <div class="am-u-sm-9">
+                            <select id="shopstate"  data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value="">请选择</option>
+                                <option value="1">正常</option>
+                                <option value="0">冻结</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="shop_block"  class="am-u-sm-2 am-form-label">街区</label>
-                        <div class="am-u-sm-10" id="block_name">
-                            <select id="shop_block">
-                                <option value>请选择</option>
-                                <option value="0">邻水街道</option>
-                                <option value="1">邻水街道</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-2 am-form-label">楼层</label>
-                        <div class="am-u-sm-10" id="floorNumber">
-                            <select id="source_state">
-                                <option value>请选择</option>
+                        <label for="source_state" class="am-u-sm-3 am-form-label">楼层</label>
+                        <div class="am-u-sm-9" id="floorNumber">
+                            <select id="source_state" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value="">请选择</option>
                                 <option value="0">F1</option>
                                 <option value="1">F2</option>
                                 <option value="2">F3</option>
@@ -94,9 +94,15 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-2 am-form-label">铺号</label>
-                        <div class="am-u-sm-10">
-                            <input type="text" placeholder="" id="shopNo">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">铺号</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" placeholder="" id="berth">
+                        </div>
+                    </div>
+                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">关键字查询</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" placeholder="" id="keywords">
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
@@ -118,8 +124,7 @@ padding: 5px 6px!important;
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
                                     <a href="<?php echo site_url('/shop/shop/dowload_store/1');?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a> 
-                                    <a href="upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh refresh"></span> 刷新</button>
+                                    <a href="upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                 </div>
                             </div>
                         </div>
@@ -189,7 +194,7 @@ padding: 5px 6px!important;
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){        
             var res = eval(result);
             console.log(res);
             if(res!=2){
@@ -223,14 +228,14 @@ padding: 5px 6px!important;
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.shopState option:selected').eq(i).val()=="冻结"){
-                                $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+                            if($('.shopState option:selected').eq(i).val()=="0"){
+                                $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
                         //更改商家的状态
                         $('.shopState').change(function(){
                             var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="正常"){
+                            if($(this).find('option:selected').val()=="1"){
                                 $.ajax({
                                     type:'post',
                                     url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
@@ -246,7 +251,7 @@ padding: 5px 6px!important;
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
-
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }else{
                                 $.ajax({
                                     type:'post',
@@ -263,7 +268,7 @@ padding: 5px 6px!important;
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
                             }
                             
                             
@@ -303,9 +308,7 @@ padding: 5px 6px!important;
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
+                $('#shopList').find('tr').remove();
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商家信息！</p></td></tr>').appendTo('#shopList');
@@ -327,9 +330,9 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchShop').click(function(){
-        var yetaiSort=$('#yetaiSort option:selected').val(),shopStateS=$('#shopStateS option:selected').val(),shop_block=$('#shop_block option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),shopNo=$('#shopNo').val();
-        
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),berth=$('#berth').val(),keywords=$('#keywords').val();
+        console.log('yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
+       getList('<?php echo site_url('/shop/shop/search_store');?>','yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
     });
 })
 </script>
@@ -349,14 +352,14 @@ $(document).ready(function(){
             <%if(state=="1"){%>
             <select id="" class="shopState" name="shopState" data-id="<%= store_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="正常" selected="selected">正常</option>
-                <option value="冻结">冻结</option>
+                <option value="1" selected="selected">正常</option>
+                <option value="0">冻结</option>
             </select>
             <%}else{%>
             <select id="" class="shopState" name="shopState" data-id="<%= store_id%>">
                 <option value="">-=请选择一项=-</option>
-                <option value="正常">正常</option>
-                <option value="冻结" selected="selected">冻结</option>
+                <option value="1">正常</option>
+                <option value="0" selected="selected">冻结</option>
             </select>
             <%}%>
         </td>
