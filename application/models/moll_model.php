@@ -143,6 +143,11 @@ class moll_model extends CI_Model
 		$query = $this->db->get($this->market);
 		return $query->row_array();
 	}
+	//编辑商场详情
+	function edit_mollInfo($data){
+		$where['id'] = '1';
+		return $this->db->where($where)->update($this->market,$data);
+	}
 
 
 

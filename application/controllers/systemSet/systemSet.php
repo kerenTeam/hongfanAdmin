@@ -123,6 +123,10 @@ class systemSet extends default_Controller {
          $data['menu'] = array('systemSet','apliyManage');
     	 $this->load->view('template.html',$data);
     }
+
+    
+
+    
     //系统设置 其他管理
     function other(){
      $data['page'] = $this->view_other;
@@ -131,9 +135,41 @@ class systemSet extends default_Controller {
     }
     //系统设置 网站信息管理
     function webMessage(){
-         $data['page'] = $this->view_web_config;
-         $data['menu'] = array('systemSet','webMessage');
-         $this->load->view('template.html',$data);
+        //获取web设置
+        $system = $this->system_model->get_webSystem();
+        $data['webset'] = json_decode($system['system_value'],true);
+        $data['page'] = $this->view_web_config;
+        $data['menu'] = array('systemSet','webMessage');
+        $this->load->view('template.html',$data);
+    }
+    //网站信息操做
+    function edit_WebSystem(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'upload/logo';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";
+                    exit;
+                } else{
+                    $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
+                }
+            }
+            $json = json_encode($data,JSON_UNESCAPED_UNICODE);
+            $arr= array('system_value'=>$json);
+            if($this->system_model->edit_WebSystem($arr)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
     }
 
       //权限管理

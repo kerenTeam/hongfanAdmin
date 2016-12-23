@@ -54,51 +54,65 @@ font-size: 1.2rem;
                     <div class="widget-title  am-cf">商场信息：</div>
                 </div>
                 <div class="widget-body am-fr">
-                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/moll/moll/edit_mollInfo');?>" method="post">
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">商场名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid "  value="宏帆广场" required readonly>
+                                <input type="text" name="market_name" class="am-form-field tpl-form-no-bg am-field-valid "  value="<?php echo $market['market_name'];?>" required readonly>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">英文名称<：</label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">英文名称：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" required value="Mallcoo" >
+                                <input type="text" name="sulg_name" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" required value="<?php echo $market['sulg_name'];?>" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">城市<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="邻水县" minlength="2" maxlength="10" required readonly>
+                                <input type="text" name="city" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="<?php echo $market['city'];?>" minlength="2" maxlength="10" required readonly>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                     <!--    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">详细地址<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="" minlength="2" maxlength="20" required >
+                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " placeholder="" value="<?php echo $market['address'];?>" minlength="2" maxlength="20" required >
                             </div>
-                        </div>
+                        </div> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">所在商圈<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" minlength="2" maxlength="20" value="商场所在商圈" >
+                                <input type="text" name="trading" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" minlength="2" maxlength="20" value="<?php echo $market['trading'];?>" >
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-email" class="am-u-sm-3 am-form-label">地址<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" maxlength="50" value="灵石路658号" >
+                                <input type="text" name="address" class="am-form-field tpl-form-no-bg am-field-valid " required placeholder="" maxlength="50" value="<?php echo $market['address'];?>" >
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="hours_time" class="am-form-field tpl-form-no-bg am-field-valid"   value="<?php echo $market['hours_time'];?>" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">LOGO<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                             <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                    <?php if(empty($market['logo'])):?>
+                                     <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                       <br />
+                                  <?php else:?>
+                                      <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" name="img1" value="<?php echo $market['logo'];?>">
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $market['logo'];?>" class="am-img-responsive cardView"> </div>
+                                      <br />
+                                  <?php endif;?>
                                 </div>
                                 <div class="am-text-center father">
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
@@ -110,10 +124,18 @@ font-size: 1.2rem;
                             <label for="user-weibo" class="am-u-sm-3 am-form-label">商家图片<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                                 <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                    <?php if(empty($market['pic'])):?>
+                                     <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                       <br />
+                                  <?php else:?>
+                                      <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" name="img2" value="<?php echo $market['pic'];?>">
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $market['pic'];?>" class="am-img-responsive cardView"> </div>
+                                      <br />
+                                  <?php endif;?>
                                 </div>
                                 <div class="am-text-center father">
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
@@ -121,57 +143,52 @@ font-size: 1.2rem;
                                 </div>
                             </div> 
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid"   value="例如10:00-22:00" required>
-                            </div>
-                        </div>
+                        
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="tel" name="" class="am-form-field tpl-form-no-bg am-field-valid"  value="4000480484" placeholder="请输入11位的手机号码" required>
+                                <input type="tel" name="phone" class="am-form-field tpl-form-no-bg am-field-valid"  value="<?php echo $market['phone'];?>" placeholder="请输入11位的手机号码" required>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
                             <div class="am-u-sm-9">
-                               <input type="text" name="" class="am-form-field tpl-form-no-bg am-field-valid"   placeholder="请不要输入@" >
+                               <input type="text" name="sina" class="am-form-field tpl-form-no-bg am-field-valid" value="<?php echo $market['sina'];?>">
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
                             <div class="am-u-sm-9">
-                               <input type="text" class="am-form-field tpl-form-no-bg am-field-valid" placeholder="请不要输入@">
+                               <input type="text" class="am-form-field tpl-form-no-bg am-field-valid" name="tencent" value="<?php echo $market['tencent'];?>">
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">商场会员卡简介<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <textarea name="" rows="5" cols="40" required>
-                                    VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
+                                <textarea name="cardinfo" rows="5" cols="40" required>
+                                     <?php echo $market['cardinfo'];?>
                                 </textarea>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">开通绑定商场会员卡提示<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <textarea name="" rows="5" cols="40" required>
-                                    VERO MODA是丹麦国际时装公司BESTSELLER集团旗下知名品牌之一。2001年VERO MODA进入中国市场，面向25-35岁女性的职业休闲装。Vero Moda专为25岁以上拥有超强自我意识和独立性的女士设计。年龄不再敏感，因为Vero Moda女性对时尚有独特的感悟。
+                                <textarea name="open_cared_info" rows="5" cols="40" required>
+                                    <?php echo $market['open_cared_info'];?>
                                 </textarea>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">文字简介<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <textarea name="" rows="5" cols="40" required>
-                                    “猫酷”是艾逛的主打产品，是中国领先的实体商业数字化运营服务平台。致力于为实体商场/购物中心/商家提供移动端O2O应用、智能WIFI、云CRM、消费者大数据采集与分析、精准营销等服务。猫酷系列的商场APP、微信轻应用，已经在全国上百家商场上线使用，其中多项功能均为业内首创，目前已经成为各商场移动应用的标配。同时，猫酷也是国内最早在商业地产中实现室内定位的公司，并基于用户位置数据、消费数据、偏好数据，形成了一套完整的商场大数据采集与分析系统，并通过全渠道平台帮助商场实现精准营销。我们在带给用户全新商场消费体验的同时，帮助商场提高运营效率、推进商业转型。。
+                                <textarea name="market_info" rows="5" cols="40" required>
+                                   <?php echo $market['market_info'];?>
                                 </textarea>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <div class="am-u-sm-9 am-u-sm-push-3">
-                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                                <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
                                 <button type="button" class="am-btn am-btn-default am-btn-sm">重置</button>
                             </div>
                         </div>
