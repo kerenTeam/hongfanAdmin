@@ -30,8 +30,39 @@ class loveToGo extends default_Controller
         $this->load->view('template.html',$data);
     }
 
+    //获取远程爱购商品列表
+    function get_remote_goods(){
+        if($_POST){
+            $page = $_POST['page'];
+            $post_data = array(  
+              'appkey' => IGOAPPKEY,  
+              'appsecret' => IGOAPPSECRET,
+              'page_no' => $page,
+              'page_size' => 100
+            ); 
+            $post = curl_post(IGOLISTAPIURL, $post_data);  
+            $goods = json_decode($post,true);
+            $goods_list = array_values($goods['data']['lists']);
+            if(empty($goods_list)){
+                echo "2";
+            }else{
+                echo json_encode($goods_list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //获取远程爱购商品详情
+    function remote_goods_info(){
+        if($_POST){
+            echo "1";
+        }else{
+            echo "2";
+        }
+    }
 	//爱购 商品库
     function loveToGoList(){
+
         $data['page'] = $this->view_loveToGoList;
         $data['menu'] = array('loveToGo','loveToGoList');
         $this->load->view('template.html',$data);

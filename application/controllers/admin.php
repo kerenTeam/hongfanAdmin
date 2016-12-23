@@ -19,8 +19,6 @@ class admin extends default_Controller
         $data['menu'] = array('index','index');
  		$this->load->view('template.html',$data);
 	}
-
-
 }
 
 
