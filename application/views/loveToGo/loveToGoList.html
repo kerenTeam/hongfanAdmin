@@ -121,7 +121,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            //console.log(res);
+            console.log(res);
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -131,7 +131,7 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
+                        // res[i].title=res[i].title.split(' ')[0];
                         // listData+= template('storeGoodsModal',res[i]);
                      }
                     
@@ -243,10 +243,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+    getList('<?php echo site_url('/loveToGo/loveToGo/get_remote_goods');?>','page=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+        getList('<?php echo site_url('/loveToGo/loveToGo/get_remote_goods');?>','page=1');
     });
     //点击搜索
     $('.searchGoods').click(function(){
