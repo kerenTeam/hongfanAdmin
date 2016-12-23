@@ -728,13 +728,13 @@ class singleShop extends default_Controller {
     function edit_goods_order(){
         if($_POST){
             $data['order_status'] = $_POST['state'];
+            $data['updatetime'] = date('Y-m-d His');
             $orderid = $_POST['orderid'];
             if($this->mallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
             }else{
                 echo "2";
             }
-
         }else{
             echo "2";
         }
@@ -745,6 +745,7 @@ class singleShop extends default_Controller {
             $data['logistic_code'] = $_POST['send_no'];
             $data['shipper_code'] = $_POST['send_type'];
             $data['order_status'] = '3';
+            $data['updatetime'] = date("Y-m-d His");
             $orderid= $_POST['orderid'];
             if($this->mallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
@@ -762,7 +763,6 @@ class singleShop extends default_Controller {
             $this->load->view('404.html');
         }else{
             $data['order'] = $this->mallShop_model->get_order_info($id);
-
             $data['page'] = $this->view_sureOrder;
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);

@@ -277,11 +277,58 @@ class moll extends default_Controller {
     //商场简介
     function mollBrief(){
          $data['market'] = $this->moll_model->get_marketinfo();
- 
          $data['page'] = $this->view_mollBrief;
          $data['menu'] = array('moll','mollBrief');
          $this->load->view('template.html',$data);
     }
+
+    //商场简介修改
+    function edit_mollInfo(){
+        if($_POST){
+            $data = $this->input->post();
+            $i = 1;
+            foreach ($_FILES as $key => $v) {
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'upload/logo';
+                    $config['allowed_types']    = 'jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    //上传
+                    if ( ! $this->upload->do_upload('img'.$i)) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/moll/moll/mollBrief')."'</script>";
+                        exit;
+                    } else{
+                        unset($data['img'.$i]);
+                        if($i == 1){
+                           $data['logo'] =  'upload/logo/'.$this->upload->data('file_name');
+                        }else{
+                            $data['pic'] = 'upload/logo/'.$this->upload->data('file_name');
+                        }
+                    }
+                }else{
+                    if($i == 1){
+                           $data['logo'] =  $data['img'.$i];
+                    }else{
+                        $data['pic'] = $data['img'.$i];
+                    }
+                    unset($data['img'.$i]);
+                }
+                $i ++;
+            }
+
+            if($this->moll_model->edit_mollInfo($data)){
+                 echo "<script>alert('操作成功！！');window.location.href='".site_url('/moll/moll/mollBrief')."'</script>";
+                        exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/moll/mollBrief')."'</script>";
+                        exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
 
 
 

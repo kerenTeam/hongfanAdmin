@@ -10,6 +10,7 @@ class system_model extends CI_Model
     //banner 表
     public $banner = 'hf_banners';
     //系统设置表
+    public $system = "hf_system";
 
     function __construct()
     {
@@ -53,6 +54,22 @@ class system_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->update($this->banner,$data);
      }
+
+
+     //返回网站系统设置
+     function get_webSystem(){
+        $where['system_name'] = 'web_system';
+        $this->db->select('system_value');
+        $query = $this->db->where($where)->get($this->system);
+        return $query->row_array();
+     }
+     //修改网站系统配置
+     function edit_WebSystem($data){
+        $where['system_name'] = 'web_system';
+        return $this->db->where($where)->update($this->system,$data);
+     }
+
+
 
 }
 

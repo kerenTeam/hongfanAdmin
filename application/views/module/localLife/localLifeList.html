@@ -156,7 +156,7 @@ width:50%;
                                                                 <option value="1" <?php if($v['typeid'] ==1){echo "selected";}?>>普通信息类</option>
                                                                 <option value="2" <?php if($v['typeid'] ==2){echo "selected";}?>>房产信息类</option>
                                                                 <option value="3" <?php if($v['typeid'] ==3){echo "selected";}?>>法律咨询类</option>
-                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option>
+                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option> <option value="5" <?php if($v['typeid'] ==5){echo "selected";}?>>超市比价类</option>
                                                             </select>
                                                         </div>
                                                       </div>
@@ -167,6 +167,12 @@ width:50%;
                                                             <input type="number" name="sort" value="<?php echo $v['sort'];?>" min="1" required>
                                                         </div>
                                                       </div>
+                                                      <div class="am-form-group am-cf">
+                                                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">icon 背景色 <span class="red">*</span></label>
+                                                         <div class="am-u-sm-10">
+                                                             <input type="color" name="icon_color" id="doc-ipt-3" min="1" value="<?php echo $v['icon_color']?>" required>
+                                                         </div>
+                                                     </div>
                                                       <div class="am-form-group am-cf">
                                                             <label for="imgUpload" class="am-u-sm-2 am-form-label">LOGO <span class="red">*</span></label>
                                                             <div class="am-u-sm-10">
