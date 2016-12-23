@@ -147,6 +147,7 @@
 </div>
 </div>
 <script type="text/javascript">
+var flag=1,tag=1;
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -226,22 +227,32 @@
                             });
 
                             //账号类型管理
-                            for(var i=0;i<$('.account_type_name').length;i++){
-                                var gid=$('.account_type_name').attr('data-id'),str='',sttr='';
+                            var str='',sttr='',namelength=$('.account_type_name').length;                           
+                            if(flag){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('store/store/admin_user_group');?>',
+                                    url:'<?php echo site_url('/systemSet/systemSet/admin_user_group');?>',
                                     data: 'default=1',
-                                    success: function(data){   
+                                    success: function(data){ 
                                         var jsonData=eval(data);
-                                        console.log(jsonData);
                                         if(data){
                                             for(var i=0;i<jsonData.length;i++){
-                                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                                                sttr=sttr+str;
+                                                console.log(jsonData);
+                                                for(var j=0;j<namelength;j++){
+                                                    if($('.account_type_name').eq(j).attr('data-id')==jsonData[i].gid){
+                                                       str+='<option value="'+ jsonData[i].gid +'" selected="selected">' + jsonData[i].group_name + '</option>'; 
+                                                       tag=0 
+                                                    }
+                                                }
+                                                if(tag){
+                                                 str+='<option value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>'; 
+                                                }
+                                                tag=1;
                                             }
-                                            console.log(sttr);
-                                            $("#account_type_name").append(sttr);
+                                            console.log(str);
+                                            for(var k=0;k<namelength;j++){
+                                                document.getElementsByClassName('account_type_name')[k].innerHTML+=str;
+                                            }
                                         }else{
                                             alert("操作失败，请检查网络设置！");
                                         }
@@ -251,7 +262,9 @@
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
+                                flag=0;
                             }
+                            
 
                             //保存管理员账号信息
                             $('.sureSave').eq(i).click(function(){
@@ -372,9 +385,9 @@ $(document).ready(function(){
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <input type='hidden' name='type_id' />
-                            <select name="subcommercial_type_name" class="account_type_name" data-id="<%= gid%>">
+                            <select name="account_type_name" class="account_type_name" id="type<%= gid%>" data-id="<%= gid%>">
                             <option value="">-=请选择一项=-</option>
-                        </select>   
+                            </select>   
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
