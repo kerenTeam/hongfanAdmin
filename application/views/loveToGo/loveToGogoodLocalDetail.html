@@ -1,0 +1,143 @@
+
+<style type="text/css" media="screen">
+    .am-selected{
+        width: 100%!important;
+    }
+    .table-check{
+        width: 30px;
+    }
+    .hf-dropdown{
+        font-size: 12px!important;
+    padding: 5px 6px!important;
+    }
+ #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display: inline-block;
+        background: #ff0000;
+        width:60px;
+        height:28px;
+        line-height: 28px;
+        text-align: center;
+        position: absolute;
+        left:330px;
+        top:342px;
+        color:#ffffff;
+        font-size: 1.2rem;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+    .tableImg{
+    width:80px;
+}
+label.am-u-sm-8{
+        font-weight: normal;
+        margin: 0 !important;
+    font-size: 16px !important;
+    padding-top: 5px;
+    }
+    .background{
+        background: #eaeaea;
+        clear: both;
+        margin-left: -20px;
+    }
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 爱购
+                <a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGoList';?>" style="font-size:16px;">商品列表</a>
+                <small><a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGogoodDetail';?>" >查看商品详情</a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                
+                <div class="widget-body am-fr">
+                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+                        <div class="widget-head am-cf ">
+                            <div class="widget-title  am-cf background">&nbsp;&nbsp;商品信息:</div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品编号：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               S456151
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品缩略图：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                <img class="tableImg" src="assets/img/a5.png">
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               金伯利钻石
+                            </label>
+                        </div>                        
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品价格：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                              225.00 
+                            </label>
+                        </div>
+                        
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品库存：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               200
+                            </label>
+                        </div> 
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">佣金：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               215.54
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">佣金比例：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               5%
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">佣金开始收取时间：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                 2016-15-02 15:00:00
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">佣金结束收取时间：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                 2016-15-02 15:00:00
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">返回上一页</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+</div>
