@@ -217,13 +217,13 @@
         </ul>
     </li> 
     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'loveToGo'){echo 'active';}?>"  >
             <i class="am-icon-cart-plus sidebar-nav-link-logo"></i> 爱购保税
             <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
         </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'loveToGo'){echo "style=display:block;";}?>>
              <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGoList';?>">
+                <a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGoList';?>" <?php if($menu[1] == 'loveToGoList'){echo "class='sub-active'";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
                 </a>
             </li>
@@ -298,11 +298,11 @@
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 一键钟情
                 </a>
             </li>
-            <li class="sidebar-nav-link">
+           <!--  <li class="sidebar-nav-link">
                 <a href="<?php echo site_url().'/module/homeReport/index';?>">
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 家乡报道
                 </a>
-            </li>
+            </li> -->
             <li class="sidebar-nav-link" >
                 <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" <?php if($menu[1] == 'serveForPeople'){echo "class='sub-active';";}?>>
                     <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 为民服务

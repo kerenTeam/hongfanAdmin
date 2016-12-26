@@ -107,8 +107,36 @@ class systemSet extends default_Controller {
     //编辑管理员操作
     function edit_admin_user(){
         if($_POST){
-            
-            file_put_contents('text.log',json_encode($_POST));
+            $id = $_POST['user_id'];
+            $username = trim($_POST['username']);
+            $user = $this->system_model->get_user($id,$username);
+            if(empty($user)){
+                $data['username'] = $username;
+            }else{
+                echo "2";exit;
+            }
+            if(!empty($_FILES['picArray']['tmp_name'])){
+                $config['upload_path']      = 'upload/headPic';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('picArray')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+                    exit;
+                } else{
+                    $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
+                }
+            }
+            $data['nickname'] = trim($_POST['nickname']);
+            $data['gid'] = $_POST['group_name'];
+            if($this->system_model->edit_admin_user($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+
         }else{
             echo "2";
         }

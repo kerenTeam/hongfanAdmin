@@ -10,38 +10,23 @@ class loveToGo extends default_Controller
 {
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
-    public $view_loveToGoListLocal = 'loveToGo/loveToGoListLocal.html';   
-    public $view_loveToGogoodLocalDetail = 'loveToGo/loveToGogoodLocalDetail.html';
 	function __construct()
 	{
 		 parent::__construct();
          $this->load->model('integral_model');
-	}
-    //爱购 本地商品
-    function loveToGoListLocal(){
-        $data['page'] = $this->view_loveToGoListLocal;
-        $data['menu'] = array('loveToGo','loveToGoListLocal');
-        $this->load->view('template.html',$data);
-    }
+         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+         $plateid = json_decode($plateid,true);
+         if(!empty($plateid)){
+            if(!in_array('0',$plateid) && !in_array('8',$plateid)){
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+            }
+         }else{
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+         }
 
-    //爱购 本地商品详情
-    function loveToGogoodLocalDetail(){
-        if(!$_GET){
-            $this->load->view('404.html');
-        }else{
-            $post_data = array(  
-              'appkey' => IGOAPPKEY,  
-              'appsecret' => IGOAPPSECRET,
-              'open_iid' => $_GET['openid']
-            ); 
-            $post = curl_post(IGOINFOAPIURL, $post_data);  
-            $goods = json_decode($post,true);
-            $data['goods'] = $goods['data'];
-            $data['page'] = $this->view_loveToGogoodDetail;
-            $data['menu'] = array('loveToGo','loveToGogoodLocalDetail');
-            $this->load->view('template.html',$data);
-        }
-    }
+
+	}
+
 
     //获取远程爱购商品列表
     function get_remote_goods(){
@@ -58,20 +43,34 @@ class loveToGo extends default_Controller
         }
     }
    
-	//爱购 商品库
+    //爱购 商品列表
     function loveToGoList(){
 
         $data['page'] = $this->view_loveToGoList;
         $data['menu'] = array('loveToGo','loveToGoList');
         $this->load->view('template.html',$data);
     }
-
-	//爱购 商品库 商品详情
-    function loveToGogoodDetail(){
-        $data['page'] = $this->view_loveToGogoodDetail;
-        $data['menu'] = array('loveToGo','loveToGogoodDetail');
-        $this->load->view('template.html',$data);
+    //爱购 本地商品详情
+    function loveToGogoodLocalDetail(){
+        if(!$_GET){
+            $this->load->view('404.html');
+        }else{
+            $post_data = array(  
+              'appkey' => IGOAPPKEY,  
+              'appsecret' => IGOAPPSECRET,
+              'open_iid' => $_GET['openid']
+            ); 
+            $post = curl_post(IGOINFOAPIURL, $post_data);  
+            $goods = json_decode($post,true);
+            $data['goods'] = $goods['data'];
+            $data['page'] = $this->view_loveToGogoodDetail;
+            $data['menu'] = array('loveToGo','loveToGoList');
+            $this->load->view('template.html',$data);
+        }
     }
+
+
+
 
 
 }
