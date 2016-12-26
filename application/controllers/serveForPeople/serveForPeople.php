@@ -1,4 +1,4 @@
-  <?php 
+﻿  <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -317,6 +317,71 @@ class serveForPeople extends default_Controller
             echo "2";
         }
     }
+
+    //服务请求导出
+    function dowload_helprequest(){
+        if($_GET){
+            $this->load->library('excel');
+            //activate worksheet number 1
+            $this->excel->setActiveSheetIndex(0);
+            //name the worksheet
+            $this->excel->getActiveSheet()->setTitle('Stores');
+            $arr_title = array(
+                'A' => '求助人',
+                'B' => '求助内容',
+                'C' => '求助时间',
+                'D' => '联系电话',
+                'E' => '求助对象',
+                'F' => '服务状态',
+                'G' => '回复内容',
+                'H' => '回复时间'
+            );
+             //设置excel 表头
+            foreach ($arr_title as $key => $value) {
+                $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+            $i = 1;
+            //查询数据库得到要导出的内容
+            $bookings = $this->service_model->get_requert();
+            if(count($bookings) > 0)
+            {
+                foreach ($bookings as $booking) {
+                    $i++;
+                    if($booking['state'] == 0){
+                        $t = "待解决";
+                    }else{
+                        $t = '已解决';
+                    }
+                 //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['username']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['content']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['create_time']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['phone']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['name']);
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['state']);
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['reply_content']);
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['reply_time']);
+                }
+            }
+
+            $filename = '帮帮团服务请求.xls'; //save our workbook as this file name
+            ob_end_clean();
+            header('Content-Type: application/vnd.ms-excel'); //mime type
+            header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+            header('Cache-Control: max-age=0'); //no cache
+
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+   
 
 
 }
