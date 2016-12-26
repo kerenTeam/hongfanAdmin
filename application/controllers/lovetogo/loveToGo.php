@@ -15,6 +15,7 @@ class loveToGo extends default_Controller
 	function __construct()
 	{
 		 parent::__construct();
+         $this->load->model('integral_model');
 	}
     //爱购 本地商品
     function loveToGoListLocal(){
@@ -25,6 +26,7 @@ class loveToGo extends default_Controller
 
     //爱购 本地商品详情
     function loveToGogoodLocalDetail(){
+        
         $data['page'] = $this->view_loveToGogoodDetail;
         $data['menu'] = array('loveToGo','loveToGogoodLocalDetail');
         $this->load->view('template.html',$data);
@@ -34,15 +36,7 @@ class loveToGo extends default_Controller
     function get_remote_goods(){
         if($_POST){
             $page = $_POST['page'];
-            $post_data = array(  
-              'appkey' => IGOAPPKEY,  
-              'appsecret' => IGOAPPSECRET,
-              'page_no' => $page,
-              'page_size' => 100
-            ); 
-            $post = curl_post(IGOLISTAPIURL, $post_data);  
-            $goods = json_decode($post,true);
-            $goods_list = array_values($goods['data']['lists']);
+            $goods_list = $this->integral_model->get_igo_goods();
             if(empty($goods_list)){
                 echo "2";
             }else{
