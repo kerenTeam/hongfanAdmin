@@ -57,7 +57,21 @@ class service_model extends CI_Model
     function edit_help_user($id,$data){
         $where['helper_id'] = $id;
         return $this->db->where($where)->update($this->service_user,$data);
+    }
 
+    //返回用户id
+    function get_user_id($username){
+        $where['username'] = $username;
+        $query = $this->db->where($where)->get('hf_user_member');
+        $res = $query->row_array();
+        return $res['user_id'];
+    }
+    //返回帮帮团尘成员id
+    function get_help_userid($name){
+        $where['name'] = $name;
+        $query = $this->db->where($where)->get($this->service_user);
+        $res = $query->row_array();
+        return $res['helper_id'];
     }
 
 }

@@ -18,6 +18,7 @@ class serveForPeople extends default_Controller
 	{
 		 parent::__construct();
          $this->load->model('service_model');  
+        // $this->load->helper('search_helper');  
 	}
 
 	//为民服务 为民服务主页
@@ -234,6 +235,28 @@ class serveForPeople extends default_Controller
                 }
             }else{
                 echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //帮帮团请求搜索
+    function search_request(){
+        if($_POST){
+            $username = trim($_POST['username']);
+            $helpname = trim($_POST['helpname']);
+            $state = $_POST['state'];
+            $sear = $_POST['sear'];
+            //求助用户id
+            $userid = $this->service_model->get_user_id($username);
+           
+            //帮帮团成员id
+            $helperid = $this->service_model->get_help_userid($helpname); 
+            $list = search_help_request($userid,$helperid,$state,$sear);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
             }
         }else{
             echo "2";

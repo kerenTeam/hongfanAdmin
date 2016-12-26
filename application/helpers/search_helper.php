@@ -380,6 +380,104 @@ function search_help_user($name,$area,$address,$occupation,$sear){
       return $res;
 }
 
+//帮帮团请求搜索
+function search_help_request($userid,$helperid,$state,$sear){
+    $CI = &get_instance();
+    $res = '';
+    if(!empty($userid) && empty($helperid) && $state == '' && empty($sear)){
+        $query = $CI->db->where('user_id',$userid)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && !empty($helperid) && $state == '' && empty($sear)){
+        $query = $CI->db->where('helper_id',$helperid)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && empty($helperid) && $state != '' && empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where('state',$state)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && empty($helperid) && $state == '' && !empty($sear)){
+        $query = $CI->db->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    //二组
+    if(!empty($userid) && !empty($helperid) && $state == '' && empty($sear)){
+        $query = $CI->db->where('user_id',$userid)->where('helper_id',$helperid)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(!empty($userid) && empty($helperid) && $state != '' && empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where('user_id',$userid)->where('state',$state)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(!empty($userid) && empty($helperid) && $state == '' && !empty($sear)){
+         $query = $CI->db->where('user_id',$userid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+         $res = $query->result_array();
+    }else
+    if(empty($userid) && !empty($helperid) && $state != '' && empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where('helper_id',$helperid)->where('state',$state)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && !empty($helperid) && $state == '' && !empty($sear)){
+         $query = $CI->db->where('helper_id',$helperid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+         $res = $query->result_array();
+    }else
+    if(empty($userid) && empty($helperid) && $state != '' && !empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+         $res = $query->result_array();
+    }else
+    //三组
+    if(!empty($userid) && !empty($helperid) && $state != '' && empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where("user_id",$userid)->where('helper_id',$helperid)->where('state',$state)->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(!empty($userid) && !empty($helperid) && $state == '' && !empty($sear)){
+        $query = $CI->db->where("user_id",$userid)->where('helper_id',$helperid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(!empty($userid) && empty($helperid) && $state != '' && !empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where("user_id",$userid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && !empty($helperid) && $state != '' && !empty($sear)){
+        if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where("helper_id",$helperid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(!empty($userid) && !empty($helperid) && $state != '' && !empty($sear)){
+          if($state == ''){
+            $state = '0';
+        }
+        $query = $CI->db->where('user_id',$userid)->where("helper_id",$helperid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
+        $res = $query->result_array();
+    }else
+    if(empty($userid) && empty($helperid) && $state == '' && empty($sear)){
+        $query = $CI->db->get('hf_service_request');
+        $res = $query->result_array();
+    }
+    return $res;
+}
+
+
 //管理 员商品搜索
 function search_goods($cate,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory){
             $CI = &get_instance();

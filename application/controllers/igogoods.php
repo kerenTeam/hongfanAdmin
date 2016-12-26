@@ -23,7 +23,7 @@ class igogoods extends CI_Controller
           $this->db->where('differentiate','3')->delete('hf_mall_goods');
         }
         //获取本地的列表
-        $num = '10';
+         $num = '10';
          for ($i=1; $i < 6; $i++) { 
            $post_data = array(  
             'appkey' => IGOAPPKEY,  
@@ -34,7 +34,6 @@ class igogoods extends CI_Controller
            $post = curl_post(IGOLISTAPIURL, $post_data);  
            $goods = json_decode($post,true);
            $goods_list = array_values($goods['data']['lists']);
-
            foreach($goods_list as $k=>$val){
                 $pic = explode(',',$val['pic_url']['pic_url']);
                 $val['thumb'] = $pic[0];
@@ -45,20 +44,6 @@ class igogoods extends CI_Controller
            }  
         }
     }
-    function goods_Info(){
-        //
-        $post_data = array(  
-          'appkey' => IGOAPPKEY,  
-          'appsecret' => IGOAPPSECRET,
-          'open_iid' => '2634106857'
-        ); 
-        $post = curl_post(IGOINFOAPIURL, $post_data);  
-        $goods = json_decode($post,true);
-        var_dump($goods);
-
-    }
-
-
 }
 
  ?>

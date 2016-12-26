@@ -26,10 +26,21 @@ class loveToGo extends default_Controller
 
     //爱购 本地商品详情
     function loveToGogoodLocalDetail(){
-        
-        $data['page'] = $this->view_loveToGogoodDetail;
-        $data['menu'] = array('loveToGo','loveToGogoodLocalDetail');
-        $this->load->view('template.html',$data);
+        if(!$_GET){
+            $this->load->view('404.html');
+        }else{
+            $post_data = array(  
+              'appkey' => IGOAPPKEY,  
+              'appsecret' => IGOAPPSECRET,
+              'open_iid' => $_GET['openid']
+            ); 
+            $post = curl_post(IGOINFOAPIURL, $post_data);  
+            $goods = json_decode($post,true);
+            $data['goods'] = $goods['data'];
+            $data['page'] = $this->view_loveToGogoodDetail;
+            $data['menu'] = array('loveToGo','loveToGogoodLocalDetail');
+            $this->load->view('template.html',$data);
+        }
     }
 
     //获取远程爱购商品列表
@@ -46,14 +57,7 @@ class loveToGo extends default_Controller
             echo "2";
         }
     }
-    //获取远程爱购商品详情
-    function remote_goods_info(){
-        if($_POST){
-            echo "1";
-        }else{
-            echo "2";
-        }
-    }
+   
 	//爱购 商品库
     function loveToGoList(){
 
