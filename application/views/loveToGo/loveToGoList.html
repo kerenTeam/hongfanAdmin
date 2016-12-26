@@ -127,7 +127,7 @@ td.am-text-middle img{
                         document.getElementById('igoList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//查看商品详情
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodLocalDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodDetail/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
