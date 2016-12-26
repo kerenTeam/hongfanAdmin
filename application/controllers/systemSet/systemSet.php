@@ -107,7 +107,7 @@ class systemSet extends default_Controller {
     //编辑管理员操作
     function edit_admin_user(){
         if($_POST){
-
+            
             file_put_contents('text.log',json_encode($_POST));
         }else{
             echo "2";
