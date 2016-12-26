@@ -1,4 +1,4 @@
-
+ 
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
@@ -43,8 +43,9 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
-            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size:18px;">为民服务</a>&nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团服务</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块
+            <a href="<?php echo site_url().'/module/fallinlove/loveactivityList';?>" style="font-size:18px;">一键钟情</a>
+            <small></small>
             </div>
         </div>
     </div>
@@ -53,10 +54,10 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <div class="widget-head am-cf">
+                <!-- <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">帮帮团搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
+                </div> -->
+                <!-- <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">求助人姓名:</label>
                         <div class="am-u-sm-8">
@@ -87,17 +88,17 @@ td.am-text-middle img{
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
                     </div>
-                </form>
+                </form> -->
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帮帮团服务信息列表</div>
+                    <div class="widget-title  am-cf">一键钟情 活动列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
+                                	<button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/module/fallinlove/loveAddactivity';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-up"></span> 导出</button>
                                 </div>
                             </div>
                         </div>
@@ -108,24 +109,45 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">求助人姓名 </th>
-                                    <th class="moll_name">求助内容 </th>
-                                    <th class="shop_id">求助时间</th>
-                                    <th class="shop_id">联系方式</th>
-                                    <th class="moll_name">求助对象</th>
-                                    <th class="shop_id">服务状态</th>
+                                    <th class="moll_name">活动名称 </th>
+                                    <th class="moll_name">活动分类 </th>
+                                    <th class="shop_id">活动人数</th>
+                                    <th class="shop_id">活动时间</th>
+                                    <th class="moll_name">活动地点</th>
+                                    <th class="shop_id">资费情况</th>
+                                    <th class="shop_id">已报名人数</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="helpGroupList">
-                                
+                                <tr class="trClass" data-id="">
+							        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="" name="commentBox"></td>
+							        <td class="am-text-middle">S154561</td>
+							        <td class="am-text-middle">遇见命中的他</td>
+							        <td class="am-text-middle">化妆舞会</td>
+							        <td class="am-text-middle">20</td>
+							        <td class="am-text-middle">2016.01.21-2016.01.30</td>
+							        <td class="am-text-middle">宏帆广场</td>
+							        <td class="am-text-middle">免费</td>
+							        <td class="am-text-middle">20</td>
+							        <td class="am-text-middle">
+							            <div class="tpl-table-black-operation">
+							                <a data-id="" class="bangServeDetail" href="<?php echo site_url().'/module/fallinlove/loveEditactivity';?>">
+							                    <i class="am-icon-pencil"></i> 编辑详情
+							                </a>
+							                <a data-id="" href="<?php echo site_url().'/module/fallinlove/loveApplyList';?>" class="conResponse">
+							                    <i class="am-icon-eye"></i> 报名情况
+							                </a>
+							                <a data-id="" class="tpl-table-black-operation-del tpl-del">
+							                    <i class="am-icon-trash"></i> 删除
+							                </a>
+							            </div>
+							        </td>
+							    </tr>
                                 <!-- more data -->
                                 
                             </tbody>
                         </table>
-                        <!--查看详情模态框开始-->
-                        
-                        <!--查看详情模态框结束-->
                     </div>
                     <div class="am-u-lg-12 am-cf am-text-center">
                         <div class="" id="paging_list">
@@ -174,9 +196,7 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].pics=eval(res[i].pics);
-
-                        listData+= template('storeGoodsModal',res[i]);
+                        // listData+= template('storeGoodsModal',res[i]);
                      }
                     console.log(res);
                     return listData;
@@ -186,7 +206,7 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
+                        // document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
                          $('.tablecheck').click(function() {
                             if(flag==0){
@@ -301,7 +321,7 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+    // getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
