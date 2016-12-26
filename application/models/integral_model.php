@@ -1,6 +1,6 @@
 <?php 
 /**
-*   积分商城
+*   积分商城 + 爱购保税商品
 */
 class integral_model extends CI_Model
 {
@@ -51,6 +51,14 @@ class integral_model extends CI_Model
     function del_goods($id){
         $where['goods_id'] = $id;
         return $this->db->where($where)->delete($this->shop_goods);
+    }
+
+    //爱购商品类表
+    function get_igo_goods(){
+        $where['differentiate'] = '3';
+        $this->db->select('goods_id,open_iid,title,price,thumb,commission_price,commission_rate');
+        $query = $this->db->where($where)->get($this->shop_goods);
+        return $query->result_array();
     }
 
 
