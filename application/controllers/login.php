@@ -47,11 +47,14 @@ class login extends CI_Controller {
                            
                            redirect( site_url('shop/singleShop/shopAdmin') );
                            break;
+                        default:
+                           redirect( site_url('admin/index') );
+                           break;
                    }
+                   
                 }
             }
         }else{
-
             $this->load->view('errors/index.html');
         }
     }

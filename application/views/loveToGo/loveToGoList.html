@@ -127,7 +127,7 @@ td.am-text-middle img{
                         document.getElementById('igoList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//查看商品详情
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodLocalDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodLocalDetail?openid=" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -191,14 +191,7 @@ $(document).ready(function(){
     $('.refresh').click(function(){
         getList('<?php echo site_url('/loveToGo/loveToGo/get_remote_goods');?>','page=1');
     });
-    //点击搜索
-    // $('.searchGoods').click(function(){
-    //     var goodsType=$('#goodsType option:selected').val(),goodsBatch=$('#goodsBatch option:selected').val(),keywords=$('#searchKey').val();
-    //     var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),
-    //     startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val(),
-    //     goodsState=$('#goodsState option:selected').val(),checkState=$('#checkState option:selected').val();
-    //     getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
-    // });
+
 })
 </script>
 <script type="text/html" id="igoListModal">
