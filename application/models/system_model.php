@@ -35,7 +35,16 @@ class system_model extends CI_Model
     function add_admin_user($data){
         return $this->db->insert($this->member,$data);
     }
-    //编辑
+    //根据用户名返回用户
+    function get_user($usreid,$username){
+        $query = $this->db->where('user_id !=',$usreid)->where('gid !=','2')->where('gid !=','5')->where('username',$username)->get($this->member);
+        return $query->result_array();
+    }
+    //编辑管理员用户
+    function edit_admin_user($id,$data){
+        $where['user_id'] = $id;
+        return $this->db->where($where)->update($this->member,$data);
+    }
 
     //返回所有banner
     function get_bannerlist($name){
