@@ -216,7 +216,7 @@ var flag=1,tag=1,str='';
                             
                         });
                         //上传头像
-                        var picArray=[];//定义一个定时器
+                        var picArray=[' ',' '];//定义一个定时器
                         for(var i=0;i<$('.imgUp').length;i++){
                             $('.imgUp').eq(i).change(function() {
                                 var dataId=$(this).attr('data-id');                              
@@ -237,7 +237,7 @@ var flag=1,tag=1,str='';
                                 $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');  
                             });
                             //账号类型管理
-                            var name=$('.account_type_name');
+                            var name=$('.account_type_name'),jsondata={};
                             if(flag){
                                 $.ajax({
                                     type:'post',
@@ -273,9 +273,10 @@ var flag=1,tag=1,str='';
 
                             }
                             //保存管理员账号信息
-                            $('.sureSave').eq(i).click(function(){
+                            for(var i=0;i<$('.sureSave').length;i++){
+                                $('.sureSave').eq(i).click(function(){
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/systemSet/edit_admin_user');?>";//上传文件的后台地址;
-                                var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByClassName('group_name'+dataId)[0].value;
+                                var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value;
                                 console.log(name+nickname+picArray[0]+group_name);
                                 formD.append('user_id',dataId);
                                 formD.append('username',name);
@@ -297,13 +298,13 @@ var flag=1,tag=1,str='';
                                     }
                                 }  
                             });
+                            }
+                            
                         }                        
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
+                $('#shopGoodsList').find('tr').remove();
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#shopGoodsList');
@@ -386,7 +387,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <select name="account_type_name" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>">
+                            <select name="account_type_name<%= user_id%>" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>">
                             <option value="">不选择则默认不修改</option>
                             </select>   
                         </div>
