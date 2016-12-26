@@ -70,7 +70,6 @@ td.am-text-middle img{
                                     <th class="moll_name">缩略图 </th>
                                     <th class="shop_id">商品名称 </th>
                                     <th class="shop_name">商品价格</th>
-                                    <th class="shop_type">商品库存 </th>
                                     <th class="shop_yetai">佣金 </th>
                                     <th class="brand">佣金比例</th>
                                     <th>操作</th>
@@ -114,23 +113,21 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].pic_url.pic_url=res[i].pic_url.pic_url.split('"')[1].split(',')[0];
-                        // res[i].pic_url.pic_url=eval(res[i].pic_url.pic_url);
                         listData+= template('igoListModal',res[i]);
                      }
                     
                     return listData;
                 };
-                console.log(res);
+                // console.log(res);
                 //调用分页
                 laypage({
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
                         document.getElementById('igoList').innerHTML = thisDate(obj.curr);
-                        $('.editGoods').click(function(){//编辑商品信息
+                        $('.editGoods').click(function(){//查看商品详情
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/remote_goods_info/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodLocalDetail/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -139,48 +136,6 @@ td.am-text-middle img{
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
-                        //更改商品的状态
-                        $('.goodsState').change(function(){
-                            var dataId=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="1"){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=1',
-                                    success: function(data){
-                                        if(data==1){
-    
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                                    data: 'goodsid='+ dataId+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
-                        });
 
                         //删除商品的AJAX请求
                         $('.sureDelete').click(function(){
@@ -251,7 +206,7 @@ $(document).ready(function(){
         <td  class="am-text-middle" ><input type="checkbox" data-id="<%= open_iid%>" name="commentBox"></td>
         <td class="am-text-middle"><%= open_iid%></td>
         <td class="am-text-middle">
-            <img src="<%= pic_url.pic_url%>" class="am-img-responsive" alt=""/>
+            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
         </td>
         <td class="am-text-middle"><%= title%></td>
         <td class="am-text-middle"><%= price%></td>
