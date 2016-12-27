@@ -2,7 +2,7 @@
 /**
 *   积分商城 + 爱购保税商品
 */
-class integral_model extends CI_Model
+class Integral_model extends CI_Model
 {
     //商品表
     public $shop_goods = 'hf_mall_goods';

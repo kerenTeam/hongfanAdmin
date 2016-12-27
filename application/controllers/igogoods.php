@@ -5,12 +5,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  *  获取爱购保税商品
 */
-class igogoods extends CI_Controller
+class Igogoods extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
-        $this->load->helper('default_helper');
+        $this->load->helper('Default_helper');
     }
 
 

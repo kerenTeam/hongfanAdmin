@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 * 
 */
-class system_model extends CI_Model
+class System_model extends CI_Model
 {
     //用户表
     public $member = 'hf_user_member';

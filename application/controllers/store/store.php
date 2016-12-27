@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  商城管理
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class store extends default_Controller {
+class Store extends Default_Controller {
     //商品列表
     public $view_storeGoodsList = "store/storeGoodsList.html";
     //商品分类
@@ -31,19 +31,21 @@ class store extends default_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model('mallShop_model');
-        $this->load->helper('search_helper');
+        $this->load->model('MallShop_model');
+        $this->load->helper('Search_helper');
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('4',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
+        }else{
+            echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
     }
     //商品列表
     function storeGoodsList(){
-         $data['cates'] = $this->mallShop_model->get_goods_cates();
+         $data['cates'] = $this->MallShop_model->get_goods_cates();
          $data['page'] = $this->view_storeGoodsList;
          $data['menu'] = array('store','storeGoodsList');
     	 $this->load->view('template.html',$data);
@@ -52,7 +54,7 @@ class store extends default_Controller {
     function storeGoods_page(){
         if($_POST){
             //获取所有商品
-            $goods_list = $this->mallShop_model->get_goodslist();
+            $goods_list = $this->MallShop_model->get_goodslist();
             if(empty($goods_list)){
                 echo "2";
             }else{
@@ -92,7 +94,7 @@ class store extends default_Controller {
     //返回商品分类列表
     function goods_cates(){
         if($_POST){
-            $catelist = $this->mallShop_model->get_goods_cates();
+            $catelist = $this->MallShop_model->get_goods_cates();
             echo json_encode($catelist);
         }else{
             echo "2";
@@ -125,7 +127,7 @@ class store extends default_Controller {
     //添加分类
     function storeAddSort(){
         //获取顶级分类
-         $data['cates'] = $this->mallShop_model->get_cate_level();
+         $data['cates'] = $this->MallShop_model->get_cate_level();
 
          $data['page'] = $this->view_storeAddSort;
          $data['menu'] = array('store','storeGoodsSort');
@@ -144,16 +146,16 @@ class store extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('icon')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/store/storeAddSort/')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeAddSort/')."'</script>";
                     exit;
                 } else{
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
-            if($this->mallShop_model->add_store_cate($data)){
-                echo  "<script>alert('操作成功！');window.location.href='".site_url('/store/store/storeGoodsSort')."'</script>";
+            if($this->MallShop_model->add_store_cate($data)){
+                echo  "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSort')."'</script>";
             }else{
-                echo  "<script>alert('操作失败！');window.location.href='".site_url('/store/store/storeAddSort')."'</script>";
+                echo  "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeAddSort')."'</script>";
             }
         }else{
             $this->load->view('404.html');
@@ -166,8 +168,8 @@ class store extends default_Controller {
             $this->load->view('404.html');
          }else{
              //获取顶级分类
-             $data['cates'] = $this->mallShop_model->get_cate_level();
-             $data['cateinfo'] = $this->mallShop_model->get_cateInfo($id);
+             $data['cates'] = $this->MallShop_model->get_cate_level();
+             $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
              $data['page'] = $this->view_storeEditSort;
              $data['menu'] = array('store','storeGoodsSort');
             $this->load->view('template.html',$data);
@@ -185,16 +187,16 @@ class store extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('icon')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/store/storeEditSort/').$data['catid']."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeEditSort/').$data['catid']."'</script>";
                     exit;
                 } else{
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
-            if($this->mallShop_model->edit_store_cate($data['catid'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/store/storeGoodsSort')."'</script>";
+            if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSort')."'</script>";
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/store/storeEditSort/').$data['catid']."'</script>";
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeEditSort/').$data['catid']."'</script>";
              }
         }else{
             $this->load->view('404.html');
@@ -205,7 +207,7 @@ class store extends default_Controller {
     function del_store_cate(){
         if($_POST){
             $id = $_POST['id'];
-            if($this->mallShop_model->del_store_cate($id)){
+            if($this->MallShop_model->del_store_cate($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -218,7 +220,7 @@ class store extends default_Controller {
     function search_cate(){
         if($_POST){
             $sear = $_POST['sear'];
-            $cates = $this->mallShop_model->search_cates($sear);
+            $cates = $this->MallShop_model->search_cates($sear);
             echo json_encode($cates);
         }else{
             echo "2";
@@ -235,7 +237,7 @@ class store extends default_Controller {
     //获取所有订单
     function Order_page(){
         if($_POST){
-            $order = $this->mallShop_model->get_order_list();
+            $order = $this->MallShop_model->get_order_list();
             if(empty($order)){
                 echo "2";
             }else{
@@ -252,7 +254,7 @@ class store extends default_Controller {
         $id = intval($this->uri->segment(4));
         if($id != 0){
             //获取订单详情
-             $data['order'] = $this->mallShop_model->get_order_info($id);
+             $data['order'] = $this->MallShop_model->get_order_info($id);
 
              $data['page'] = $this->view_storeOrderDetail;
              $data['menu'] = array('store','storeOrderList');

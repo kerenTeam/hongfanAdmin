@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  商家管理
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class singleShop extends default_Controller {
+class SingleShop extends Default_Controller {
     //商家 列表主页
     public $view_shopAdmin = "shop/shopAdmin.html";
     //商家基础信息
@@ -44,8 +44,8 @@ class singleShop extends default_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model('mallShop_model');
-        $this->load->model('shop_model');
+        $this->load->model('MallShop_model');
+        $this->load->model('Shop_model');
     }
 
     //商家 列表主页
@@ -54,7 +54,7 @@ class singleShop extends default_Controller {
         $id = intval($this->uri->segment(4));
         if($id == 0){
             //商家登录
-            $storeid = $this->mallShop_model->get_store_list($this->session->users['user_id']);
+            $storeid = $this->MallShop_model->get_store_list($this->session->users['user_id']);
              $this->session->set_userdata('businessId',$storeid['store_id']);
              
         }else{
@@ -68,13 +68,13 @@ class singleShop extends default_Controller {
     function shopBaseInfo(){
 
         //获取商家信息
-       $store = $this->mallShop_model->get_basess_info($this->session->businessId);
+       $store = $this->MallShop_model->get_basess_info($this->session->businessId);
         //获取商家登录账户
-         $data['user'] = $this->shop_model->get_login_store($store['business_id']);
+        $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
        
-          $data['busin'] = $store; 
+        $data['busin'] = $store; 
         //返回所有一级业态
-        $data['yetai'] = $this->shop_model->store_type_level();
+        $data['yetai'] = $this->Shop_model->store_type_level();
 
         $data['page'] = $this->view_shopBaseInfo;
         $data['menu'] = array('shop','shopBaseInfo');       
@@ -85,7 +85,7 @@ class singleShop extends default_Controller {
         if($_POST){
             $gid = $_POST['gid'];
             //根据gid返回
-            $type = $this->shop_model->store_type_tow($gid);
+            $type = $this->Shop_model->store_type_tow($gid);
             if(empty($type)){
                 echo "2";
             }else{
@@ -109,8 +109,8 @@ class singleShop extends default_Controller {
             }
             $arr['user_id'] = $this->input->post('user_id');
             unset($data['username'],$data['password'],$data['user_id']);
-            if($this->shop_model->get_member_info($arr['user_id'],$arr['username'])){
-                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
+                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
             }
             $pic = array();
             $i =1;
@@ -142,12 +142,12 @@ class singleShop extends default_Controller {
                 }
                 $i++;
              }
-            if($this->shop_model->edit_store_member($arr['user_id'],$arr)){
-                 if($this->mallShop_model->edit_store_info($data['store_id'],$data)){
-                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+            if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
+                 if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
+                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                    // echo "23";
                  }else{
-                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopBaseInfo')."'</script>";exit;
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                  }
             }
         }else{
@@ -157,7 +157,7 @@ class singleShop extends default_Controller {
     //  //商品列表
     function goodsList(){
         //分类
-        $data['cates'] = $this->mallShop_model->get_goods_cates();
+        $data['cates'] = $this->MallShop_model->get_goods_cates();
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
@@ -167,7 +167,7 @@ class singleShop extends default_Controller {
     function store_goods_list(){
         if($_POST){
             //查询出商家店铺
-           $arr = $this->mallShop_model->get_goods_list($this->session->businessId);
+           $arr = $this->MallShop_model->get_goods_list($this->session->businessId);
            if(empty($arr)){
                 echo "2";
            }else{
@@ -182,7 +182,7 @@ class singleShop extends default_Controller {
          if($_POST){
             $data['goods_state'] = $_POST['state'];
             $goods_id = $_POST['goodsid'];
-            if($this->mallShop_model->edit_goods_state($goods_id,$data)){
+            if($this->MallShop_model->edit_goods_state($goods_id,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -197,9 +197,9 @@ class singleShop extends default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['goods'] = $this->mallShop_model->get_goodsInfo($id);
+            $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             //所有商品分类
-            $data['cates'] = $this->mallShop_model->get_goods_cates();
+            $data['cates'] = $this->MallShop_model->get_goods_cates();
             $data['page'] = $this->view_goodsDetail;
             $data['menu'] = array('shop','goodsList');       
             $this->load->view('template.html',$data);
@@ -209,12 +209,12 @@ class singleShop extends default_Controller {
     function get_goods_comment(){
         if($_POST){
             $goodsid = $_POST['goodsid'];
-            $comment = $this->mallShop_model->get_goods_comment($goodsid);
+            $comment = $this->MallShop_model->get_goods_comment($goodsid);
             if(empty($comment)){
                 echo '2';
             }else{
                 foreach ($comment as $key => $value) {
-                   $comment[$key]['reply'] = $this->mallShop_model->gte_store_reply($value['id']);
+                   $comment[$key]['reply'] = $this->MallShop_model->gte_store_reply($value['id']);
                 }
                 echo json_encode($comment);
             }
@@ -237,7 +237,7 @@ class singleShop extends default_Controller {
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                       echo $this->upload->display_errors();
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail').$data['id']."'</script>";exit;
                     }else{
                         if($i == '1'){
                             $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
@@ -255,10 +255,10 @@ class singleShop extends default_Controller {
                 $i++;
              }
              $data['good_pic'] = json_encode($pic);
-             if($this->mallShop_model->edit_goods($data['goods_id'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
+             if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsDetail').$data['id']."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail').$data['id']."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -268,7 +268,7 @@ class singleShop extends default_Controller {
      //新增商品
     function goodsAdd(){
         //所有商品分类
-        $data['cates'] = $this->mallShop_model->get_goods_cates();
+        $data['cates'] = $this->MallShop_model->get_goods_cates();
 
         $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       
@@ -302,10 +302,10 @@ class singleShop extends default_Controller {
              $data['good_pic'] = json_encode($pic);
              $data['storeid'] = $this->session->businessId;
              $data['differentiate'] = '1';
-             if($this->mallShop_model->add_shop_goods($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/goodsList')."'</script>";exit;
+             if($this->MallShop_model->add_shop_goods($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/goodsAdd')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsAdd')."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -379,7 +379,7 @@ class singleShop extends default_Controller {
             //分类
             $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
             //根据名称返回分类
-            $cateid = $this->mallShop_model->get_cate_id($cate);
+            $cateid = $this->MallShop_model->get_cate_id($cate);
             if(!empty($categoryid)){
                 $data['categoryid'] = $cateid;
             }else{
@@ -428,7 +428,7 @@ class singleShop extends default_Controller {
             $data['storeid'] = $this->session->businessId;
           
             //新增
-            $this->mallShop_model->add_shop_goods($data);
+            $this->MallShop_model->add_shop_goods($data);
            }
         }else{
            $this->load->view('404.html'); 
@@ -440,7 +440,7 @@ class singleShop extends default_Controller {
     function del_goods(){
         if($_POST){
             $id = $_POST['goodsid'];
-            if($this->mallShop_model->del_goods($id)){
+            if($this->MallShop_model->del_goods($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -497,13 +497,13 @@ class singleShop extends default_Controller {
         if($_POST){
             $storeid = $this->session->businessId;
             //所有评论
-            $comment = $this->mallShop_model->get_store_comment($storeid);
+            $comment = $this->MallShop_model->get_store_comment($storeid);
             if(empty($comment)){
                 echo "2";
             }else{
             //回复
             foreach ($comment as $key => $value) {
-               $comment[$key]['reply'] = $this->mallShop_model->gte_store_reply($value['id']);
+               $comment[$key]['reply'] = $this->MallShop_model->gte_store_reply($value['id']);
             }
             echo json_encode($comment);
             }
@@ -516,7 +516,7 @@ class singleShop extends default_Controller {
         if($_POST){
             $id = $_POST['commentid'];
             $data['state'] = $_POST['state'];
-            if($this->mallShop_model->edit_comment_state($id,$data)){
+            if($this->MallShop_model->edit_comment_state($id,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -534,7 +534,7 @@ class singleShop extends default_Controller {
             $comment = json_decode($commentid,true);
             // echo $commentid;
             foreach ($comment as $key => $v) {
-                $a = $this->mallShop_model->del_store_comment($v);
+                $a = $this->MallShop_model->del_store_comment($v);
             }
 
             if($a){
@@ -550,7 +550,7 @@ class singleShop extends default_Controller {
     function del_comment_single(){
          if($_POST){
             $commentid = $_POST["commentid"];
-            $a = $this->mallShop_model->del_store_comment($commentid);
+            $a = $this->MallShop_model->del_store_comment($commentid);
             if($a){
                 echo '1';
             }else{
@@ -573,7 +573,7 @@ class singleShop extends default_Controller {
     function get_sales_list(){
         if($_POST){
             $storeid = $this->session->businessId;
-            $data = $this->mallShop_model->get_store_coupon($storeid);
+            $data = $this->MallShop_model->get_store_coupon($storeid);
             if(empty($data)){
                 echo "2";
             }else{
@@ -603,10 +603,10 @@ class singleShop extends default_Controller {
             //优惠码
             $data['codeNumber'] = $code;
             $data['storeid'] = $this->session->businessId;
-            if($this->mallShop_model->add_coupon($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopSalesList')."'</script>";
+            if($this->MallShop_model->add_coupon($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopSalesList')."'</script>";
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopAddSales')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopAddSales')."'</script>";
             }
         }else{
             $this->load->view('404.html');
@@ -615,7 +615,7 @@ class singleShop extends default_Controller {
     //商家优惠劵管理 新增优惠劵
     function shopAddSales(){
         //获取优惠劵类型
-        $data['coupon'] = $this->mallShop_model->get_coupon_type();
+        $data['coupon'] = $this->MallShop_model->get_coupon_type();
         $data['page'] = $this->view_shopAddSales;
         $data['menu'] = array('sales','shopAddSales');
         $this->load->view('template.html',$data);
@@ -640,10 +640,10 @@ class singleShop extends default_Controller {
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
-            if($this->mallShop_model->edit_coupon($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/singleShop/shopSalesList')."'</script>";
+            if($this->MallShop_model->edit_coupon($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopSalesList')."'</script>";
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/singleShop/shopEditSales/').$data['id']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopEditSales/').$data['id']."'</script>";
             }
         }else{
             $this->load->view('404.html');
@@ -658,7 +658,7 @@ class singleShop extends default_Controller {
             $this->load->view('404.html');
         }else{
             //获取优惠劵详情
-            $data['coupon'] = $this->mallShop_model->get_conpon_info($id);
+            $data['coupon'] = $this->MallShop_model->get_conpon_info($id);
             $data['page'] = $this->view_shopEditSales;
             $data['menu'] = array('sales','shopSalesList');
             $this->load->view('template.html',$data);
@@ -668,7 +668,7 @@ class singleShop extends default_Controller {
     function delshopSales(){
         if($_POST){
             $id = $_POST['id'];
-            if($this->mallShop_model->del_coupon($id)){
+            if($this->MallShop_model->del_coupon($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -718,7 +718,7 @@ class singleShop extends default_Controller {
             //获取卖家id
             $storeid = $_POST['storeid'];
             //h获取订单
-            $orders = $this->mallShop_model->get_store_orders($storeid);
+            $orders = $this->MallShop_model->get_store_orders($storeid);
           
             if(empty($orders)){
                 echo "2";
@@ -735,7 +735,7 @@ class singleShop extends default_Controller {
             $data['order_status'] = $_POST['state'];
             $data['updatetime'] = date('Y-m-d His');
             $orderid = $_POST['orderid'];
-            if($this->mallShop_model->edit_order_state($orderid,$data)){
+            if($this->MallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -752,7 +752,7 @@ class singleShop extends default_Controller {
             $data['order_status'] = '3';
             $data['updatetime'] = date("Y-m-d His");
             $orderid= $_POST['orderid'];
-            if($this->mallShop_model->edit_order_state($orderid,$data)){
+            if($this->MallShop_model->edit_order_state($orderid,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -767,7 +767,7 @@ class singleShop extends default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['order'] = $this->mallShop_model->get_order_info($id);
+            $data['order'] = $this->MallShop_model->get_order_info($id);
             $data['page'] = $this->view_sureOrder;
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);
@@ -780,7 +780,7 @@ class singleShop extends default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['order'] = $this->mallShop_model->get_order_info($id);
+            $data['order'] = $this->MallShop_model->get_order_info($id);
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);
@@ -820,7 +820,7 @@ class singleShop extends default_Controller {
              //$result = $query->result_array();
             // }else
             if(empty($state) && empty($startMoney) && empty($date) && !empty($username)){
-                $user = $this->shop_model->get_user_id($username);
+                $user = $this->Shop_model->get_user_id($username);
                 $where = array('seller'=>$storeid,'buyer'=>$user['user_id']);
                 $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
                  $result = $query->result_array();
@@ -834,7 +834,7 @@ class singleShop extends default_Controller {
                  $result = $query->result_array();
             }else
             if (!empty($state) && empty($startMoney) && empty($date) && !empty($username)) {
-                 $user = $this->shop_model->get_user_id($username);
+                 $user = $this->Shop_model->get_user_id($username);
                 $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('buyer',$user['user_id'])->order_by('create_time','desc')->get('hf_mall_order');
                  $result = $query->result_array();
             }else
@@ -843,12 +843,12 @@ class singleShop extends default_Controller {
                   $result = $query->result_array();
             }else
             if(empty($state) && !empty($startMoney) && empty($date) && !empty($username)){
-                  $user = $this->shop_model->get_user_id($username);
+                  $user = $this->Shop_model->get_user_id($username);
                 $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
                  $result = $query->result_array();
             }else
             if(empty($state) && empty($startMoney) && !empty($date) && !empty($username)){
-                $user = $this->shop_model->get_user_id($username);
+                $user = $this->Shop_model->get_user_id($username);
                   $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
                    $result = $query->result_array();
             }else
@@ -857,17 +857,17 @@ class singleShop extends default_Controller {
                  $result = $query->result_array();
             }else
             if(!empty($state) && !empty($startMoney) && empty($date) && !empty($username)){
-                 $user = $this->shop_model->get_user_id($username);
+                 $user = $this->Shop_model->get_user_id($username);
                   $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('order_status',$state)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
                    $result = $query->result_array();
             }else
             if(empty($state) && !empty($startMoney) && !empty($date) && !empty($username)){
-                 $user = $this->shop_model->get_user_id($username);
+                 $user = $this->Shop_model->get_user_id($username);
                   $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
                    $result = $query->result_array();
             }else 
             if(!empty($state) && !empty($startMoney) && !empty($date) && !empty($username)){
-                $user = $this->shop_model->get_user_id($username);
+                $user = $this->Shop_model->get_user_id($username);
                 $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
                  $result = $query->result_array();
             }

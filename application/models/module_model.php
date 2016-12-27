@@ -4,7 +4,7 @@
  *
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
-class module_model extends CI_Model{
+class Module_model extends CI_Model{
     //分类表
     public $cate = 'hf_local_service_cates';
     //保姆、维修、开锁信息表

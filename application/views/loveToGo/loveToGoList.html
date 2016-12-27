@@ -38,7 +38,7 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>爱购 &nbsp;&nbsp;<a href="<?php echo site_url().'/loveToGo/loveToGo/loveToGoList';?>" style="font-size:16px;">商品列表</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>爱购 &nbsp;&nbsp;<a href="<?php echo site_url().'/igo/loveToGo/loveToGoList';?>" style="font-size:16px;">商品列表</a>
             </div>
         </div>
     </div>
@@ -127,7 +127,7 @@ td.am-text-middle img{
                         document.getElementById('igoList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//查看商品详情
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/loveToGo/loveToGo/loveToGogoodLocalDetail?openid=" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/igo/loveToGo/loveToGogoodLocalDetail?openid=" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -186,10 +186,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/loveToGo/loveToGo/get_remote_goods');?>','page=1');
+    getList('<?php echo site_url('/igo/loveToGo/get_remote_goods');?>','page=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/loveToGo/loveToGo/get_remote_goods');?>','page=1');
+        getList('<?php echo site_url('/igo/loveToGo/get_remote_goods');?>','page=1');
     });
 
 })

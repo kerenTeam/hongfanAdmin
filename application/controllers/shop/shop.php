@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  商城管理
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
-class shop extends default_Controller {
+require_once(APPPATH.'controllers/Default_Controller.php');
+class Shop extends Default_Controller {
     //商家首页
     public $view_shopIndex = "shop/shopList.html";
     //新增商家
@@ -22,20 +22,20 @@ class shop extends default_Controller {
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('3',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
         //model
-        $this->load->model('shop_model');
+        $this->load->model('Shop_model');
     }
 
     //商家 列表主页
     function index()
     {  
         //获取一级业态
-         $data['yetai'] = $this->shop_model->store_type_level();
+         $data['yetai'] = $this->Shop_model->store_type_level();
          $data['page'] = $this->view_shopIndex;
          $data['menu'] = array('store','shopList');
     	 $this->load->view('template.html',$data);
@@ -43,7 +43,7 @@ class shop extends default_Controller {
     //返回列表信息
     function return_shop_page(){
          if($_POST){
-            $list = $this->shop_model->shop_list();
+            $list = $this->Shop_model->shop_list();
             if(empty($list)){
                 echo "2";
             }else{
@@ -82,7 +82,7 @@ class shop extends default_Controller {
             switch ($action) {
                 case '1':
                     $data['state'] = '1';
-                    if($this->shop_model->edit_shop_state($id,$data)){
+                    if($this->Shop_model->edit_shop_state($id,$data)){
                         echo "1";
                     }else{
                         echo "2";
@@ -90,7 +90,7 @@ class shop extends default_Controller {
                     break;
                 case '2':
                     $data['state'] = '0';
-                    if($this->shop_model->edit_shop_state($id,$data)){
+                    if($this->Shop_model->edit_shop_state($id,$data)){
                         echo "1";
                     }else{
                         echo "2";
@@ -108,7 +108,7 @@ class shop extends default_Controller {
     function del_shop_store(){
         if($_POST){
             $id = $_POST['id'];
-            if($this->shop_model->del_shop_store($id)){
+            if($this->Shop_model->del_shop_store($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -126,7 +126,7 @@ class shop extends default_Controller {
     //新增商家
     function addShop(){
         //获取所有业态
-        $data['yetai'] = $this->shop_model->store_type_level(); 
+        $data['yetai'] = $this->Shop_model->store_type_level(); 
 
         $data['page'] = $this->view_addShop;
         $data['menu'] = array('store','shopList');
@@ -140,24 +140,24 @@ class shop extends default_Controller {
             $arr['username'] = trim($this->input->post('username'));
             $arr['gid'] = '2';
             $arr['password'] = md5(trim($this->input->post('password')));
-            $username = $this->shop_model->get_user_info($arr['username']);
+            $username = $this->Shop_model->get_user_info($arr['username']);
             if(!empty($username)){
-                echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+                echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit;
             }
             //新增商家用户账号
-           $userid = $this->shop_model->add_store_member($arr);
+           $userid = $this->Shop_model->add_store_member($arr);
            if(!empty($userid)){
                 $data['business_id'] = $userid;
                 $data['send_userid'] = $this->session->users['user_id'];
                 $data['create_time'] = date('Y-m-d');
                 unset($data['password'],$data['username']);
-                if($this->shop_model->add_store_info($data)){
-                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+                if($this->Shop_model->add_store_info($data)){
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/index')."'</script>";exit;
                 }else{
-                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit;
                 }
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
@@ -170,11 +170,11 @@ class shop extends default_Controller {
             $this->load->view('404.html');
         }else{
             //获取一级业态
-            $data['yetai'] = $this->shop_model->store_type_level();
+            $data['yetai'] = $this->Shop_model->store_type_level();
             //获取商家信息
-            $store = $this->shop_model->get_store_Info($id);
+            $store = $this->Shop_model->get_store_Info($id);
             //获取账户
-            $data['user'] = $this->shop_model->get_login_store($store['business_id']);
+            $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
             $data['store'] = $store;
             $data['page'] = $this->view_EditShop;
             $data['menu'] = array('store','shopList');
@@ -192,15 +192,15 @@ class shop extends default_Controller {
             }
             $arr['user_id'] = $this->input->post('user_id');
             unset($data['username'],$data['password'],$data['user_id']);
-            if($this->shop_model->get_member_info($arr['user_id'],$arr['username'])){
-                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/shop/addShop')."'</script>";exit;
+            if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
+                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit;
             }
             //修改登录账户
-            if($this->shop_model->edit_store_member($arr['user_id'],$arr)){
-                if($this->shop_model->edit_store_info($data['store_id'],$data)){
-                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/shop/index')."'</script>";exit;
+            if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
+                if($this->Shop_model->edit_store_info($data['store_id'],$data)){
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/index')."'</script>";exit;
                 }else{
-                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/shop/editShop/').$data['store_id']."'</script>";exit;
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/editShop/').$data['store_id']."'</script>";exit;
                 }
             }
 
@@ -213,7 +213,7 @@ class shop extends default_Controller {
         if($_POST){
             $gid = $_POST['gid'];
             //根据gid返回
-            $type = $this->shop_model->store_type_tow($gid);
+            $type = $this->Shop_model->store_type_tow($gid);
             if(empty($type)){
                 echo "2";
             }else{
@@ -233,7 +233,7 @@ class shop extends default_Controller {
              //引入类库
           $this->load->library('excel');
             if(!file_exists($inputFileName)){
-                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/shop/shop/index')."'</script>";
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/shop/Shop/index')."'</script>";
                     exit;
             }
             //导入excel文件类型 excel2007 or excel5
@@ -275,25 +275,25 @@ class shop extends default_Controller {
                 }
                 
                 //判断一级业态是否存在
-                $commercial_type_name = $this->shop_model->get_store_type_id(trim($type_name),'0');
+                $commercial_type_name = $this->Shop_model->get_store_type_id(trim($type_name),'0');
                 if($commercial_type_name == NULL){
                     $type = array('type_name'=>$type_name);
-                    $commercial_type_name = $this->shop_model->add_store_type($type);
+                    $commercial_type_name = $this->Shop_model->add_store_type($type);
                 }
                 //判断二级业态是否存在
-                $subcommercial_type_name = $this->shop_model->get_store_type_id(trim($type_tow_name),$commercial_type_name);
+                $subcommercial_type_name = $this->Shop_model->get_store_type_id(trim($type_tow_name),$commercial_type_name);
                 if($subcommercial_type_name == NULL){
                     $comm = array('type_name'=>$type_tow_name,'gid'=>$commercial_type_name);
-                    $subcommercial_type_name = $this->shop_model->add_store_type($comm);
+                    $subcommercial_type_name = $this->Shop_model->add_store_type($comm);
                 }
                 //新增商家用户账号
                 $arr['username'] = trim($data['phone']).trim($data['floor_name']);
                 $arr['password'] = md5('123456');
                 $arr['gid'] = '2';
                 //获取用户id
-                 $username = $this->shop_model->get_user_info($arr['username']);
+                 $username = $this->Shop_model->get_user_info($arr['username']);
                 if(empty($username)){
-                    $userid = $this->shop_model->add_store_member($arr);
+                    $userid = $this->Shop_model->add_store_member($arr);
                      //插入数据库
                     $data['business_id'] = $userid;
                     $data['subcommercial_type_name'] = $subcommercial_type_name;
@@ -339,13 +339,13 @@ class shop extends default_Controller {
         }
         $i = 1;
         //查询数据库得到要导出的内容
-        $bookings = $this->shop_model->shop_list();
+        $bookings = $this->Shop_model->shop_list();
         if(count($bookings) > 0)
         {
             foreach ($bookings as $booking) {
                 $i++;
-                $type_name_one = $this->shop_model->get_store_type_name($booking['commercial_type_name']);
-                $type_name_tow = $this->shop_model->get_store_type_name($booking['subcommercial_type_name']);
+                $type_name_one = $this->Shop_model->get_store_type_name($booking['commercial_type_name']);
+                $type_name_tow = $this->Shop_model->get_store_type_name($booking['subcommercial_type_name']);
              //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
                 $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['barnd_name']);
                 $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['store_name']);

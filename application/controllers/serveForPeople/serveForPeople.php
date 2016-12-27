@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 *  为民服务
 */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class serveForPeople extends default_Controller
+class ServeForPeople extends Default_Controller
 {
 	public $view_serveForPeople = 'module/serveForPeople/serveForPeople.html';	
 	public $view_helpgrouplist = 'module/serveForPeople/helpgrouplist.html';
@@ -17,17 +17,17 @@ class serveForPeople extends default_Controller
 	function __construct()
 	{
 		 parent::__construct();
-         $this->load->model('service_model');  
+         $this->load->model('Service_model');  
         // $this->load->helper('search_helper');  
          $plateid = $this->user_model->group_permiss($this->session->users['gid']);
          $plateid = json_decode($plateid,true);
  
          if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('6',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
          }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
          }
 	}
 
@@ -50,7 +50,7 @@ class serveForPeople extends default_Controller
     function helpUser_list(){
         if($_POST){
             //h获取列表
-            $users = $this->service_model->get_help_user();
+            $users = $this->Service_model->get_help_user();
             if(empty($users)){
                 echo "2";
             }else{
@@ -65,7 +65,7 @@ class serveForPeople extends default_Controller
         if($_POST){
             $data['recommend'] = $_POST['state'];
             $id = $_POST['id'];
-            if($this->service_model->edit_helpuser_state($id,$data)){
+            if($this->Service_model->edit_helpuser_state($id,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -81,7 +81,7 @@ class serveForPeople extends default_Controller
             if(empty($id)){
                 echo "2";exit;
             }
-            if($this->service_model->del_help_user($id)){
+            if($this->Service_model->del_help_user($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -99,7 +99,7 @@ class serveForPeople extends default_Controller
             }
             $arr = json_decode($id,true);
             foreach ($arr as $key => $v) {
-                $res = $this->service_model->del_help_user($v);
+                $res = $this->Service_model->del_help_user($v);
             }
             if($res){
                 echo "1";
@@ -119,7 +119,7 @@ class serveForPeople extends default_Controller
             //引入类库
             $this->load->library('excel');
             if(!file_exists($inputFileName)){
-                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/module/LocalLife/serviceList/8')."'</script>";
                     exit;
             }
             //导入excel文件类型 excel2007 or excel5
@@ -191,7 +191,7 @@ class serveForPeople extends default_Controller
     //服务请求列表
     function help_request_list(){
          if($_POST){
-            $requert = $this->service_model->get_requert();
+            $requert = $this->Service_model->get_requert();
             if(empty($requert)){
                 echo "2";
             }else{
@@ -210,7 +210,7 @@ class serveForPeople extends default_Controller
             }
             $arr = json_decode($id,true);
             foreach ($arr as $key => $value) {
-               $res = $this->service_model->del_help_request($value);
+               $res = $this->Service_model->del_help_request($value);
             }
             if($res){
                 echo "1";
@@ -237,8 +237,8 @@ class serveForPeople extends default_Controller
             $arr['userid'] = $userid;
             $arr['content'] = $content;
             $arr['sender'] = $this->session->users['user_id'];
-            if($this->service_model->edit_help_request($id,$data)){
-                if($this->service_model->add_user_message($arr)){
+            if($this->Service_model->edit_help_request($id,$data)){
+                if($this->Service_model->add_user_message($arr)){
                     echo "1";
                 }else{
                     echo "1";
@@ -258,10 +258,10 @@ class serveForPeople extends default_Controller
             $state = $_POST['state'];
             $sear = $_POST['sear'];
             //求助用户id
-            $userid = $this->service_model->get_user_id($username);
+            $userid = $this->Service_model->get_user_id($username);
            
             //帮帮团成员id
-            $helperid = $this->service_model->get_help_userid($helpname); 
+            $helperid = $this->Service_model->get_help_userid($helpname); 
             $list = search_help_request($userid,$helperid,$state,$sear);
             if(empty($list)){
                 echo "2";
@@ -296,7 +296,7 @@ class serveForPeople extends default_Controller
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('picArray')) {
-                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/serveForPeople/helpgrouplist')."'</script>";exit;
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
                     }else{
                       
                         $data['headPic'] = 'upload/headPic/'.$this->upload->data('file_name');
@@ -306,7 +306,7 @@ class serveForPeople extends default_Controller
             unset($data['picArray'],$data['id']);
             $con = mb_substr($data['competency'], 0, -1);
             $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
-            if($this->service_model->edit_help_user($id,$data))
+            if($this->Service_model->edit_help_user($id,$data))
             {
                 echo "1";
             } else{
@@ -346,7 +346,7 @@ class serveForPeople extends default_Controller
             }
             $i = 1;
             //查询数据库得到要导出的内容
-            $bookings = $this->service_model->get_requert();
+            $bookings = $this->Service_model->get_requert();
             if(count($bookings) > 0)
             {
                 foreach ($bookings as $booking) {

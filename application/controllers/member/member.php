@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  会员管理
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class member extends default_Controller {
+class Member extends Default_Controller {
     //会员列表
     public $view_memberList = 'member/memberList.html';
     //新增会员
@@ -29,10 +29,10 @@ class member extends default_Controller {
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('7',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
     }
 
@@ -108,15 +108,15 @@ class member extends default_Controller {
             //是否被注册
             $user = $this->user_model->get_login_user($data['phone']);
             if($user){
-                echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".site_url('/member/member/addMember')."'</script>";
+                echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".site_url('/member/Member/addMember')."'</script>";
                 exit;
             }
             //插入
             if($this->user_model->add_user_member($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/addMember')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/addMember')."'</script>";
                 exit;
             }
         }else{
@@ -149,10 +149,10 @@ class member extends default_Controller {
             $data = $this->input->post();
             $data['password'] = md5($this->input->post('password'));
             if($this->user_model->edit_userinfo($data['user_id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/editMember/').$data['userid']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/editMember/').$data['userid']."'</script>";
                 exit;
             }
         }else{
@@ -168,14 +168,14 @@ class member extends default_Controller {
            
             //自己不能删除
             if($id == $this->session->users['user_id']){
-                echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+                echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }
             if($this->user_model->del_member($id)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }
         }
@@ -305,7 +305,7 @@ class member extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/member/memberCardDetail/').$data['id']."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardDetail/').$data['id']."'</script>";
                     exit;
                 } else{
                     $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
@@ -313,10 +313,10 @@ class member extends default_Controller {
             }
             //操作数据库
             if($this->user_model->edit_cards($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCardDetail/').$data['id']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberCardDetail/').$data['id']."'</script>";
                 exit;
             }
         }else{
@@ -331,10 +331,10 @@ class member extends default_Controller {
             $this->load->view('404.html');
         }else{
             if($this->user_model->del_cards($id)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }
         }
@@ -363,7 +363,7 @@ class member extends default_Controller {
 
                 if ( ! $this->upload->do_upload('img'))
                 {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/member/memberCardAdd')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardAdd')."'</script>";
                     exit;
                 }
                 else
@@ -372,10 +372,10 @@ class member extends default_Controller {
                 }
             }
             if($this->user_model->add_cards($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberCard')."'</script>";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/member/memberCardAdd')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberCardAdd')."'</script>";
                 exit;
             }
         }else{
@@ -393,12 +393,12 @@ class member extends default_Controller {
     	}else if($state == 1 || $state ==2){
     	    //网站建立者不能屏蔽
     		if($id == 1){
-    			echo "<script>alert('网站创建者不能冻结！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+    			echo "<script>alert('网站创建者不能冻结！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
     			exit;
     		}
     		//自己不能屏蔽
     		if($id == $this->session->users['user_id']){
-    			echo "<script>alert('不能冻结自己！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+    			echo "<script>alert('不能冻结自己！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
     			exit;
     		}
     		if($state == 2){
@@ -406,10 +406,10 @@ class member extends default_Controller {
     		}
     		$arr = array('state'=>$state);
     		if($this->user_model->edit_state($id,$arr)){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
 				exit;
     		}else{
-    			echo "<script>alert('失败，请重新操作！');window.location.href='".site_url('/member/member/memberList')."'</script>";
+    			echo "<script>alert('失败，请重新操作！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
 				exit;
     		}
     	}else{

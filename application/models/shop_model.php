@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 *     管理员商城管理 
 */
-class shop_model extends CI_Model
+class Shop_model extends CI_Model
 {
     //商家用户表
     public $member = "hf_user_member";

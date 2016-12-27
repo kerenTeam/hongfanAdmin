@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 *  充值缴费
 */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class payment extends default_Controller
+class Payment extends Default_Controller
 {
 	public $view_payment = 'module/payment/payment.html';	
 	public $view_waterRate = 'module/payment/waterRate.html';
@@ -18,7 +18,7 @@ class payment extends default_Controller
 	function __construct()
 	{
 		 parent::__construct();
-         $this->load->model('service_model');  
+         $this->load->model('Service_model');  
 	}
 
 	//充值缴费 主页

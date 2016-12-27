@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  系统设置
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class systemSet extends default_Controller {
+class SystemSet extends Default_Controller {
     //权限首页
     public $view_memberLimit = 'member/memberLimit.html';
     //后台管理员账号管理
@@ -32,12 +32,12 @@ class systemSet extends default_Controller {
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('1',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
-        $this->load->model('system_model');
+        $this->load->model('System_model');
 
     }
 
@@ -45,7 +45,7 @@ class systemSet extends default_Controller {
     function index()
     {
         //获取权限类型
-         $data['group'] = $this->system_model->get_member_group();
+         $data['group'] = $this->System_model->get_member_group();
          $data['page'] = $this->view_admin_user;
          $data['menu'] = array('systemSet','systemSet');
     	 $this->load->view('template.html',$data);
@@ -53,7 +53,7 @@ class systemSet extends default_Controller {
     //获取管理员列表
     function adminUserList(){
         if($_POST){
-            $user = $this->system_model->get_admin_user();
+            $user = $this->System_model->get_admin_user();
             if(empty($user)){
                 echo "2";
             }else{
@@ -75,17 +75,17 @@ class systemSet extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
                     $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
                 }
             }
             $data['password'] = md5($data['password']);
-            if($this->system_model->add_admin_user($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+            if($this->System_model->add_admin_user($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
              }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
              }
         }else{
             $this->load->view('404.html');
@@ -94,7 +94,7 @@ class systemSet extends default_Controller {
     //返回管理员类别
     function admin_user_group(){
         if($_POST){
-             $group= $this->system_model->get_member_group();
+             $group= $this->System_model->get_member_group();
              if(!empty($group)){
                 echo json_encode($group);
              }else{
@@ -109,7 +109,7 @@ class systemSet extends default_Controller {
         if($_POST){
             $id = $_POST['user_id'];
             $username = trim($_POST['username']);
-            $user = $this->system_model->get_user($id,$username);
+            $user = $this->System_model->get_user($id,$username);
             if(empty($user)){
                 $data['username'] = $username;
             }else{
@@ -123,7 +123,7 @@ class systemSet extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('picArray')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/index/')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
                     $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
@@ -131,7 +131,7 @@ class systemSet extends default_Controller {
             }
             $data['nickname'] = trim($_POST['nickname']);
             $data['gid'] = $_POST['group_name'];
-            if($this->system_model->edit_admin_user($id,$data)){
+            if($this->System_model->edit_admin_user($id,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -164,7 +164,7 @@ class systemSet extends default_Controller {
     //系统设置 网站信息管理
     function webMessage(){
         //获取web设置
-        $system = $this->system_model->get_webSystem();
+        $system = $this->System_model->get_webSystem();
         $data['webset'] = json_decode($system['system_value'],true);
         $data['page'] = $this->view_web_config;
         $data['menu'] = array('systemSet','webMessage');
@@ -182,7 +182,7 @@ class systemSet extends default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";
                     exit;
                 } else{
                     $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
@@ -190,10 +190,10 @@ class systemSet extends default_Controller {
             }
             $json = json_encode($data,JSON_UNESCAPED_UNICODE);
             $arr= array('system_value'=>$json);
-            if($this->system_model->edit_WebSystem($arr)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";exit;
+            if($this->System_model->edit_WebSystem($arr)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
             }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/systemSet/webMessage')."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
@@ -217,9 +217,9 @@ class systemSet extends default_Controller {
             $data['group_name'] = $this->input->post('group_name');
             $data['group_permission'] = json_encode($this->input->post('group_permission'));
             if($this->user_model->add_group($data)){
-                echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
@@ -233,9 +233,9 @@ class systemSet extends default_Controller {
             $data['group_name'] = $this->input->post('group_name');
             $data['group_permission'] = json_encode($this->input->post('group_permission'));
             if($this->user_model->edit_group($id,$data)){
-                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -250,12 +250,12 @@ class systemSet extends default_Controller {
             $data['gid'] = '0';
             if($this->user_model->edit_admin_user($id,$data)){
                 if($this->user_model->del_group($id)){
-                     echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                     echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
                 }else{
-                      echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                      echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
                 }
             }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/memberLimit')."'</script>";exit;
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }
         }
     }
@@ -264,13 +264,13 @@ class systemSet extends default_Controller {
      //banner列表
     function bannerList(){
         //获去首页banner
-        $data['homebanner'] = $this->system_model->get_bannerlist('Index');
+        $data['homebanner'] = $this->System_model->get_bannerlist('Index');
         //获取超市比价banner
-        $data['supermarketBanner'] = $this->system_model->get_bannerlist('Supermarket');
+        $data['supermarketBanner'] = $this->System_model->get_bannerlist('Supermarket');
         //获取为民服务banner
-        $data['serviceBanner'] = $this->system_model->get_bannerlist('Service'); 
+        $data['serviceBanner'] = $this->System_model->get_bannerlist('Service'); 
         //获取商城banner
-        $data['mallBanner'] = $this->system_model->get_bannerlist('Mall');
+        $data['mallBanner'] = $this->System_model->get_bannerlist('Mall');
         $data['page'] = $this->view_bannerList;
         $data['menu'] = array('systemSet','banner');
         $this->load->view('template.html',$data);
@@ -301,7 +301,7 @@ class systemSet extends default_Controller {
                 $this->load->library('upload', $config);
                 // 上传
                 if(!$this->upload->do_upload('img')) {
-                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/addBanner/').$data['id']."'</script>";exit;
+                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/').$data['id']."'</script>";exit;
                 }else{
                    
                     $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
@@ -310,7 +310,7 @@ class systemSet extends default_Controller {
             unset($data['id']);
              $a[] = $data;
             //获取原由的banner
-            $banner = $this->system_model->get_banner($id);
+            $banner = $this->System_model->get_banner($id);
             if(!empty($banner['banner'])){
                 $bannerPic = json_decode($banner['banner'],true);
                  $shu = array_merge($bannerPic,$a);
@@ -320,10 +320,10 @@ class systemSet extends default_Controller {
                 $json = json_encode($a);
                 $arr = array('banner'=>$json);
             }
-            if($this->system_model->edit_banner($id,$arr)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+            if($this->System_model->edit_banner($id,$arr)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
             }else{
-                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/addBanner/').$id."'</script>";exit;
+                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/addBanner/').$id."'</script>";exit;
             }
         }
     }
@@ -335,7 +335,7 @@ class systemSet extends default_Controller {
             $this->load->view('404.html');
         }else{
             //获取banner信息
-            $banner = $this->system_model->get_banner($id);
+            $banner = $this->System_model->get_banner($id);
             $bannerpic = json_decode($banner['banner'],true);
             $data['id'] = $id;
             $data['num'] = $num;
@@ -359,7 +359,7 @@ class systemSet extends default_Controller {
                 $this->load->library('upload', $config);
                 // 上传
                 if(!$this->upload->do_upload('img')) {
-                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/systemSet/editBanner/').$data['id'].'/'.$num."'</script>";exit;
+                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/editBanner/').$data['id'].'/'.$num."'</script>";exit;
                 }else{
                    
                     $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
@@ -369,17 +369,17 @@ class systemSet extends default_Controller {
             unset($data['num']);
       
             //获取原由的banner
-            $banner = $this->system_model->get_banner($id);
+            $banner = $this->System_model->get_banner($id);
             if(!empty($banner['banner'])){
                 $bannerPic = json_decode($banner['banner'],true);
                 $bannerPic[$num-1] = $data;
                // var_dump($bannerPic);
                   $json = json_encode($bannerPic);
                   $arr = array('banner'=>$json);
-                if($this->system_model->edit_banner($id,$arr)){
-                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                if($this->System_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
-                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/editBanner/').$id.'/'.$num."'</script>";exit;
+                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/editBanner/').$id.'/'.$num."'</script>";exit;
                 }
             }
         }
@@ -393,7 +393,7 @@ class systemSet extends default_Controller {
             $this->load->view('404.html');
         }else{
             //获取banner信息
-            $banner = $this->system_model->get_banner($id);
+            $banner = $this->System_model->get_banner($id);
             $bannerpic = json_decode($banner['banner'],true);
             $list = $num-1;
             @unlink($bannerpic[$list]['bannerPic']);
@@ -401,17 +401,17 @@ class systemSet extends default_Controller {
             if(!empty($bannerpic)){
                 $json = json_encode(array_merge($bannerpic));
                 $arr = array('banner'=>$json);
-                if($this->system_model->edit_banner($id,$arr)){
-                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                if($this->System_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
-                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }
             }else{
                 $arr = array('banner'=>'');
-                if($this->system_model->edit_banner($id,$arr)){
-                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                if($this->System_model->edit_banner($id,$arr)){
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
-                    echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/systemSet/bannerList')."'</script>";exit;
+                    echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }
             }
          }
