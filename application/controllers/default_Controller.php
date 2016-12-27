@@ -5,18 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 class Default_Controller extends CI_Controller
 {
-	public $mokuai = array(
-                '0'=>array('id'=>'0','name'=>'所有模块'),
-                '1'=>array('id'=>'1','name'=>'系统设置'),
-                '2'=>array('id'=>'2','name'=>'商场设置'),
-                '3'=>array('id'=>'3','name'=>'店铺管理'),
-                '4'=>array('id'=>'4','name'=>'电商管理'),
-                '5'=>array('id'=>'5','name'=>'卡卷管理'),
-                '6'=>array('id'=>'6','name'=>'主页模块'),
-                '7'=>array('id'=>'7','name'=>'会员管理'),
-                '8'=>array('id'=>'8','name'=>'爱购保税'),
-                '9'=>array('id'=>'9','name'=>'积分商城')
-    );
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -24,13 +13,28 @@ class Default_Controller extends CI_Controller
 		$this->load->model('Member_model','user_model');
 
 		date_default_timezone_set("Asia/Shanghai");
-        $this->load->helper('default_helper');
-		$this->load->helper('search_helper');
+        $this->load->helper('Default_helper');
+		$this->load->helper('Search_helper');
         //验证是否登陆
 		if(!isset($_SESSION['users'])){
-			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/login/index')."';</script>";
+			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/Login/index')."';</script>";
 			exit;
 		}
+        //获取所有模块
+        $query = $this->db->get('hf_system_modular');
+        $mokuai = $query->result_array();
+       
+
+        // $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        // $plateid = json_decode($plateid,true);
+        
+        // if(!empty($plateid)){
+        //     if(!in_array('0',$plateid) && !in_array('7',$plateid)){
+        //         echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
+        //     }
+        // }else{
+        //      echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
+        // }
 	}
 }
 

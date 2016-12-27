@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '211.149.195.183',
-	'username' => 'hiji',
-	'password' => 'hiji',
-	'database' => 'hiji',
+	'hostname' => '120.77.53.20',
+	'username' => 'hijimysql',
+	'password' => 'hijimysql',
+	'database' => 'hijimysql',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'hf_',
 	'pconnect' => FALSE,

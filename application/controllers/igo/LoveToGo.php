@@ -63,7 +63,7 @@ class LoveToGo extends Default_Controller
             $post = curl_post(IGOINFOAPIURL, $post_data);  
             $goods = json_decode($post,true);
             $data['goods'] = $goods['data'];
-
+          
             $data['page'] = $this->view_loveToGogoodDetail;
             $data['menu'] = array('loveToGo','loveToGoList');
             $this->load->view('template.html',$data);

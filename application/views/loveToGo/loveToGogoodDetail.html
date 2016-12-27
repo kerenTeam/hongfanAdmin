@@ -57,7 +57,7 @@ body{
         clear: both;
     }
     .paddingright{
-        padding-left: 300px;
+        padding-left: 20px;
     }
     .paddingleft{
         padding-left: 80px;
@@ -87,67 +87,115 @@ body{
                             <div class="background">商品信息:</div>
                         </div>
                         <div class="am-form-group">
-                            <div class="am-u-sm-6 paddingright am-text-left">
+                            <div class="am-u-sm-4 paddingright am-text-left">
                                 <label for="user-email" class="am-form-label">商品编号：</label>
                                 <label class="am-text-middle">
-                                   S456151
+                                   <?php echo $goods['open_iid'];?>
                                 </label>
                             </div>
-                            <div class="am-u-sm-6 am-text-left paddingleft">
+                            <div class="am-u-sm-4 am-text-left">
                                 <label for="user-email" class="am-form-label">商品名称：</label>
                                 <label class="am-text-middle">
-                                   金伯利钻石
+                                    <?php echo $goods['title'];?>
                                 </label>
                             </div>
-                        </div>
-                        <div class="am-form-group">
-                            <div class="am-u-sm-6 paddingright am-text-left">
-                                <label for="user-email" class="am-form-label">商品缩略图：</label>
-                                <label class="am-text-middle">
-                                    <img class="tableImg" src="assets/img/a5.png">
-                                    <img class="tableImg" src="assets/img/a5.png">
-                                </label>
-                            </div>
-                            <div class="am-u-sm-6 am-text-left paddingleft">
+                             <div class="am-u-sm-4 am-text-left paddingleft">
                                 <label for="user-email" class="am-form-label">商品价格：</label>
                                 <label class="am-text-middle">
-                                  225.00 
+                                   <?php echo $goods['price'];?>
                                 </label>
-                            </div>                
-                        </div>                        
+                            </div>   
+                        </div>
                         <div class="am-form-group">
-                            <div class="am-u-sm-6 paddingright am-text-left">
+                            <div class="am-u-sm-4 paddingright am-text-left">
+                                <label for="user-email" class="am-form-label">商品缩略图：</label>
+                                <label class="am-text-middle">
+                                    <?php foreach($goods['imglist'] as $k=>$val):?>
+                                        
+                                    <img class="tableImg" src="<?php echo $val?>">
+                                    <?php endforeach;?>
+                                </label>
+                            </div>
+                            <div class="am-u-sm-4 am-text-left">
+                                <label for="user-email" class="am-form-label">原价：</label>
+                                <label class="am-text-middle">
+                                    <?php echo $goods['original_price'];?>
+                                </label>
+                            </div>
+                            <div class="am-u-sm-4 am-text-left paddingleft">
+                                <label for="user-email" class="am-form-label">商品类型：</label>
+                                <label class="am-text-middle">
+                                   <?php switch ($goods['pro_type']) {
+                                       case '0':
+                                           echo "完稅";
+                                           break;
+                                       case '1':
+                                           echo "海外直邮";
+                                           break; 
+                                        case '2':
+                                           echo "保税进口";
+                                           break;
+                                   };?>
+                                </label>
+                            </div>         
+                                        
+                        </div>      
+                                          
+                        <div class="am-form-group">
+                            <div class="am-u-sm-4 paddingright am-text-left">
                                 <label for="user-email" class="am-form-label">佣金：</label>
                                 <label class="am-text-middle">
-                                   215.54
+                                    <?php echo $goods['commission_price'];?>
                                 </label>
                             </div>
-                            <div class="am-u-sm-6 am-text-left paddingleft">
+                            <div class="am-u-sm-4 am-text-left">
                                 <label for="user-email" class="am-form-label">佣金比例：</label>
                                 <label class="am-text-middle">
-                                   5%
+                                   <?php echo $goods['commission_rate'];?>
                                 </label>
                             </div>
-                        </div> 
+                            <div class="am-u-sm-4 am-text-left paddingleft">
+                                <label for="user-email" class="am-form-label">重量：</label>
+                                <label class="am-text-middle">
+                                    <?php echo $goods['weight'];?>
+                                </label>
+                            </div>
+                        </div>  
                         <div class="am-form-group">
-                            <div class="am-u-sm-6 paddingright am-text-left">
-                                <label for="user-email" class="am-form-label">佣金开始收取时间：</label>
+
+                            <div class="am-u-sm-4 am-text-left paddingright">
+                                <label for="user-email" class="am-form-label">包邮类型：</label>
                                 <label class="am-text-middle">
-                                     2016-15-02 15:00:00
-                                </label>
-                            </div> 
-                            <div class="am-u-sm-6 am-text-left paddingleft">
-                                <label for="user-email" class="am-form-label">佣金结束收取时间：</label>
-                                <label class="am-text-middle">
-                                     2016-15-02 15:00:00
+                                   <?php switch ($goods['shipping_free_type']) {
+                                       case '0':
+                                           echo "不免邮";
+                                           break;
+                                       case '1':
+                                           echo "全免邮";
+                                           break; 
+                                        case '2':
+                                           echo "免国际";
+                                           break;
+                                       case '3':
+                                           echo "免国内";
+                                           break;
+                                   };?>
                                 </label>
                             </div>
-                        </div>
+                            <div class="am-u-sm-4 am-text-left">
+                                 <label for="user-email" class="am-form-label">支持快递：</label>
+                                <label class="am-text-middle">
+                                    <?php foreach($goods['shipping'] as $val):?>
+                                        <?php echo $val['shipping_name']."(价格:".$val['shipping_fee']."元)";?>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <?php endforeach;?>
+                                </label>
+                              </div>
+                        </div> 
                         <div class="am-form-group">
                             <div class="background">商品详情:</div>
                         </div>
                         <div class="am-form-group am-text-center">
-                            <img class="" src="assets/img/dianfanbao.jpg">
+                            <?php echo $goods['remark'];?>
                         </div> 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                             <!-- <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确认</button> -->

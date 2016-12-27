@@ -33,6 +33,10 @@ class ServeForPeople extends Default_Controller
 
 	//为民服务 为民服务主页
     function serveForPeople(){
+        //获取团队信息
+        $data['team'] = $this->Service_model->get_team_info();
+        // var_dump($team);
+        // exit;
         $data['page'] = $this->view_serveForPeople;
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
@@ -387,6 +391,7 @@ class ServeForPeople extends Default_Controller
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
+
 
 
 }

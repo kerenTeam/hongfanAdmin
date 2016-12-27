@@ -8,6 +8,11 @@ class Service_model extends CI_Model
     public $service_user = "hf_service_help_user";
     //用户请求表
     public $service_request = 'hf_service_request';
+    //义工团队表
+    public $team = 'hf_service_volunteer_team';
+    //团队活动表
+    public $team_activity = 'hf_service_volunteer_activities';
+
     function __construct()
     {
         parent::__construct();
@@ -72,6 +77,11 @@ class Service_model extends CI_Model
         $query = $this->db->where($where)->get($this->service_user);
         $res = $query->row_array();
         return $res['helper_id'];
+    }
+    //返回义工团队详情
+    function get_team_info(){
+        $query = $this->db->get($this->team);
+        return $query->row_array();
     }
 
 }
