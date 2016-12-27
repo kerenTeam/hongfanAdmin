@@ -5,16 +5,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * */
 
-class login extends CI_Controller {
+class Login extends CI_Controller {
 
     function __construct()
     {
         parent::__construct();
-        $this->load->model('member_model','m_model');
+        $this->load->model('Member_model','m_model');
     }
     //管理员登陆界面
     function index(){
-      
+        
         $this->load->view('login.html');
     }
     
@@ -41,14 +41,14 @@ class login extends CI_Controller {
                     // 判断用户分组
                    switch ($user['gid']){
                        case 1:
-                           redirect( site_url('admin/index') );
+                           redirect( site_url('Admin/index') );
                            break;
                        case 2:
                            
-                           redirect( site_url('shop/singleShop/shopAdmin') );
+                           redirect( site_url('shop/SingleShop/shopAdmin') );
                            break;
                         default:
-                           redirect( site_url('admin/index') );
+                           redirect( site_url('Admin/index') );
                            break;
                    }
                    
@@ -63,7 +63,7 @@ class login extends CI_Controller {
     function loginOut(){
         if($_GET){
             $this->session->unset_userdata('users');
-            redirect('login/index');
+            redirect('Login/index');
         }else{
             $this->load->view('errors/index.html');
         }

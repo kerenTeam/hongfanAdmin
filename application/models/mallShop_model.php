@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 *   商品管理
 */
-class mallShop_model extends CI_Model
+class MallShop_model extends CI_Model
 {
     //商品分类表
     public $shop_cates = "hf_mall_category";

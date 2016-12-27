@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  电子券管理
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
-class electronic extends default_Controller {
+require_once(APPPATH.'controllers/Default_Controller.php');
+class Electronic extends Default_Controller {
     //电子劵列表
     public $view_electronicList = "electronic/electronicList.html"; 
     //电子劵新增
@@ -19,10 +19,10 @@ class electronic extends default_Controller {
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('5',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
 
     }

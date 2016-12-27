@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 *  积分商城
 */
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
-class integral extends default_Controller
+class Integral extends Default_Controller
 {
     public $view_integralList = 'integral/integralGoodList.html';
     public $view_integralAddGoods = 'integral/integralGoodAdd.html';
@@ -19,20 +19,20 @@ class integral extends default_Controller
     function __construct()
     {   
         parent::__construct();
-        $this->load->model('integral_model');
+        $this->load->model('Integral_model');
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('9',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
     }
     //商品列表
     function integralList(){
-        $data['cates'] = $this->integral_model->get_goods_cates();
+        $data['cates'] = $this->Integral_model->get_goods_cates();
         $data['page'] = $this->view_integralList;
         $data['menu'] = array('integral','integralList');
         $this->load->view('template.html',$data);
@@ -40,7 +40,7 @@ class integral extends default_Controller
     //返回积分商品列表
     function store_goods_list(){
         if($_POST){
-           $arr = $this->integral_model->get_goods_list();
+           $arr = $this->Integral_model->get_goods_list();
            if(empty($arr)){
                 echo "2";
            }else{
@@ -55,7 +55,7 @@ class integral extends default_Controller
          if($_POST){
             $data['goods_state'] = $_POST['state'];
             $goods_id = $_POST['goodsid'];
-            if($this->integral_model->edit_goods_state($goods_id,$data)){
+            if($this->Integral_model->edit_goods_state($goods_id,$data)){
                 echo "1";
             }else{
                 echo "2";
@@ -68,7 +68,7 @@ class integral extends default_Controller
     function del_goods(){
         if($_POST){
             $id = $_POST['goodsid'];
-            if($this->integral_model->del_goods($id)){
+            if($this->Integral_model->del_goods($id)){
                 echo "1";
             }else{
                 echo "2";
@@ -80,7 +80,7 @@ class integral extends default_Controller
     //新增商品
     function integralAddGoods(){
           //所有商品分类
-        $data['cates'] = $this->integral_model->get_goods_cates();
+        $data['cates'] = $this->Integral_model->get_goods_cates();
 
         $data['page'] = $this->view_integralAddGoods;
         $data['menu'] = array('integral','integralList');
@@ -101,7 +101,7 @@ class integral extends default_Controller
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/integral/integralAddGoods')."'</script>";exit;
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/Integral/integralAddGoods')."'</script>";exit;
                     }else{
                         if($i == '1'){
                             $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
@@ -113,10 +113,10 @@ class integral extends default_Controller
              }
              $data['good_pic'] = json_encode($pic);
              $data['differentiate'] = '2';
-             if($this->integral_model->add_shop_goods($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/integral/integralList')."'</script>";exit;
+             if($this->Integral_model->add_shop_goods($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/Integral/integralList')."'</script>";exit;
              }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/integral/integralAddGoods')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/Integral/integralAddGoods')."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -157,9 +157,9 @@ class integral extends default_Controller
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['goods'] = $this->integral_model->get_goodsInfo($id);
+            $data['goods'] = $this->Integral_model->get_goodsInfo($id);
             //所有商品分类
-            $data['cates'] = $this->integral_model->get_goods_cates();
+            $data['cates'] = $this->Integral_model->get_goods_cates();
             $data['page'] = $this->view_integralEditGoods;
             $data['menu'] = array('integral','integralList');
             $this->load->view('template.html',$data);
@@ -180,7 +180,7 @@ class integral extends default_Controller
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                       echo $this->upload->display_errors();
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods').$data['id']."'</script>";exit;
                     }else{
                         if($i == '1'){
                             $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
@@ -200,10 +200,10 @@ class integral extends default_Controller
                 $i++;
              }
              $data['good_pic'] = json_encode($pic);
-             if($this->integral_model->edit_goods($data['goods_id'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/integral/integralList')."'</script>";exit;
+             if($this->Integral_model->edit_goods($data['goods_id'],$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/Integral/integralList')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/integral/integralEditGoods').$data['id']."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods').$data['id']."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');

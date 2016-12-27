@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 * 
 */
-class default_Controller extends CI_Controller
+class Default_Controller extends CI_Controller
 {
 	public $mokuai = array(
                 '0'=>array('id'=>'0','name'=>'所有模块'),
@@ -21,7 +21,7 @@ class default_Controller extends CI_Controller
 	{
 		parent::__construct();
 		//用户表
-		$this->load->model('member_model','user_model');
+		$this->load->model('Member_model','user_model');
 
 		date_default_timezone_set("Asia/Shanghai");
         $this->load->helper('default_helper');

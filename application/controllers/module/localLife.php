@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  本地生活
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
-class localLife extends default_Controller {
+require_once(APPPATH.'controllers/Default_Controller.php');
+class LocalLife extends Default_Controller {
     //本地生活 分类列表
     public $view_localLifeList = "module/localLife/localLifeList.html";
     //本地服务 信息列表、
@@ -17,15 +17,15 @@ class localLife extends default_Controller {
     function __construct()
     {
         parent::__construct();
-        $this->load->model('module_model');
+        $this->load->model('Module_model');
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $plateid = json_decode($plateid,true);
         if(!empty($plateid)){
             if(!in_array('0',$plateid) && !in_array('8',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
             }
         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/admin/index')."';</script>";exit;
+             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
         }
     }
 
@@ -33,7 +33,7 @@ class localLife extends default_Controller {
     function localLifeList()
     {
         //获取本地列表
-        $data['cates'] = $this->module_model->get_cates('本地生活');
+        $data['cates'] = $this->Module_model->get_cates('本地生活');
         //视图界面
         $data['page'] = $this->view_localLifeList;
         $data['menu'] = array('localLife','service');
@@ -50,18 +50,18 @@ class localLife extends default_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
             $data['c_id'] = '本地生活';
-            if($this->module_model->add_cates($data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+            if($this->Module_model->add_cates($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }
         }else{
@@ -80,17 +80,17 @@ class localLife extends default_Controller {
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
                     $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
                 }
             }
-            if($this->module_model->edit_cates($data['id'],$data)){
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+            if($this->Module_model->edit_cates($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/localLife/localLifeList')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }
         }else{
@@ -113,7 +113,7 @@ class localLife extends default_Controller {
 			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
 			//var_dump($current_page);
 				//配置
-			$config['base_url'] = site_url('/module/localLife/serviceList/').$id;
+			$config['base_url'] = site_url('/module/LocalLife/serviceList/').$id;
 			//分页配置
 			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 			$config['full_tag_close'] = '</ul>';
@@ -137,7 +137,7 @@ class localLife extends default_Controller {
 				
 			
             //获取分类信息
-            $cate = $this->module_model->get_cateinfo($id);
+            $cate = $this->Module_model->get_cateinfo($id);
 			if(empty($cate)){
 				$this->load->view('404.html');
 			}else{
@@ -147,42 +147,42 @@ class localLife extends default_Controller {
 					//普通信息  保姆、保洁、维修、咨询、开锁
 					case '1':
 						//总条数
-						$list = $this->module_model->get_serviceList($cate['id']);
+						$list = $this->Module_model->get_serviceList($cate['id']);
 						 $config['total_rows'] = count($list);
 						//分页数据
-						$listpage = $this->module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
+						$listpage = $this->Module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
 					
 						break;
 					//房产信息
 					case '2':
 					//	$userid = $this->session->users['user_id'];
-						$list = $this->module_model->get_houst();
+						$list = $this->Module_model->get_houst();
 						$config['total_rows'] = count($list);
 						//分页数据
-						$listpage = $this->module_model->get_houst_page($config['per_page'],$current_page);
+						$listpage = $this->Module_model->get_houst_page($config['per_page'],$current_page);
 						break;
 					//二手市场
 					case '3':
-						$list = $this->module_model->get_mark();
+						$list = $this->Module_model->get_mark();
 						$config['total_rows'] = count($list);
 						//分页数据
-						$listpage = $this->module_model->get_mark_page($config['per_page'],$current_page);
+						$listpage = $this->Module_model->get_mark_page($config['per_page'],$current_page);
 						//分类信息
-						$type = $this->module_model->get_mark_type();
+						$type = $this->Module_model->get_mark_type();
 						break;
 					// 快递上门
 					case '4':
-						$list = $this->module_model->get_express();
+						$list = $this->Module_model->get_express();
 						$config['total_rows'] = count($list);
 						//分页数据
-						$listpage = $this->module_model->get_express_page($config['per_page'],$current_page);
+						$listpage = $this->Module_model->get_express_page($config['per_page'],$current_page);
 						break;
 					//超市比价
 					case '5':
-						$list = $this->module_model->get_market_data();
+						$list = $this->Module_model->get_market_data();
 						$config['total_rows'] = count($list);
 						//分页数据
-						$listpage = $this->module_model->get_market_data_page($config['per_page'],$current_page);
+						$listpage = $this->Module_model->get_market_data_page($config['per_page'],$current_page);
 						break;
 				}
 
@@ -210,7 +210,7 @@ class localLife extends default_Controller {
 			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
 			//var_dump($current_page);
 				//配置
-			$config['base_url'] = site_url('/module/localLife/serviceList/').$cate;
+			$config['base_url'] = site_url('/module/LocalLife/serviceList/').$cate;
 			//分页配置
 			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 			$config['full_tag_close'] = '</ul>';
@@ -233,46 +233,46 @@ class localLife extends default_Controller {
 			$config['last_link']= '末页';
 
 			$type = '';
-              $cates = $this->module_model->get_cateinfo($cate);
+              $cates = $this->Module_model->get_cateinfo($cate);
     		switch ($typeid) {
     			//普通信息
     			case '1':
     				//总数据
-    				$list = $this->module_model->search_service($sear,$cate);
+    				$list = $this->Module_model->search_service($sear,$cate);
 					$config['total_rows'] = count($list);
 					// //分页数据
-				    $listpage = $this->module_model->search_service_page($sear,$cate,$config['per_page'],$current_page);
+				    $listpage = $this->Module_model->search_service_page($sear,$cate,$config['per_page'],$current_page);
     				break;
     				//房产
     			case '2':
     				//总数据
-    				$list = $this->module_model->search_houst($sear);
+    				$list = $this->Module_model->search_houst($sear);
 					$config['total_rows'] = count($list);
 					// //分页数据
-				    $listpage = $this->module_model->search_houst_page($sear,$config['per_page'],$current_page);
+				    $listpage = $this->Module_model->search_houst_page($sear,$config['per_page'],$current_page);
     				break;
     			// 二手市场
 	    		case '3':
-	    			$list = $this->module_model->search_mark($sear);
+	    			$list = $this->Module_model->search_mark($sear);
 					$config['total_rows'] = count($list);
 					// //分页数据
-				    $listpage = $this->module_model->search_mark_page($sear,$config['per_page'],$current_page);
+				    $listpage = $this->Module_model->search_mark_page($sear,$config['per_page'],$current_page);
                     //分类信息
-                    $type = $this->module_model->get_mark_type();
+                    $type = $this->Module_model->get_mark_type();
 	    			break;
                     //快递上门
                 case '4':
-                    $list = $this->module_model->search_express($sear);
+                    $list = $this->Module_model->search_express($sear);
                     $config['total_rows'] = count($list);
                     // //分页数据
-                    $listpage = $this->module_model->search_express_page($sear,$config['per_page'],$current_page);
+                    $listpage = $this->Module_model->search_express_page($sear,$config['per_page'],$current_page);
                     break;
                     //超市比价
                 case '5':
-                    $list = $this->module_model->search_market_data($sear);
+                    $list = $this->Module_model->search_market_data($sear);
                     $config['total_rows'] = count($list);
                     // //分页数据
-                    $listpage = $this->module_model->search_market_data_page($sear,$config['per_page'],$current_page);
+                    $listpage = $this->Module_model->search_market_data_page($sear,$config['per_page'],$current_page);
                     break;
     		}
 			$this->load->library('pagination');//加载ci pagination类
@@ -299,24 +299,24 @@ class localLife extends default_Controller {
 			$this->load->view('404.html');
 		}else{
 				$tag = '';
-            $cate = $this->module_model->get_cateinfo($cateid);
+            $cate = $this->Module_model->get_cateinfo($cateid);
 			switch($type){
 				case '1':
 					//$title = '普通信息';
-					$info = $this->module_model->get_serviceinfo($id);
+					$info = $this->Module_model->get_serviceinfo($id);
 					break;
 				case '2':
 					//$title = '房产信息';
-					$info = $this->module_model->get_houstinfo($id);
+					$info = $this->Module_model->get_houstinfo($id);
 					break;
 				case '3':
 					//$title = '二手市场';
-					$info = $this->module_model->get_markinfo($id);
-					$tag = $this->module_model->get_mark_type();
+					$info = $this->Module_model->get_markinfo($id);
+					$tag = $this->Module_model->get_mark_type();
 					break;
 				case '5':
 					//$title = '超市比价';
-					$info = $this->module_model->get_market_data_info($id);
+					$info = $this->Module_model->get_market_data_info($id);
 					break;
 			}
 			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
@@ -338,22 +338,22 @@ class localLife extends default_Controller {
 		
 			switch($type){
 				case '1':
-					$info = $this->module_model->del_service($id);
+					$info = $this->Module_model->del_service($id);
 					break;
 				case '2':
-					$info = $this->module_model->del_houst($id);
+					$info = $this->Module_model->del_houst($id);
 					break;
 				case '3':
-					$info = $this->module_model->del_mark($id);
+					$info = $this->Module_model->del_mark($id);
 					break;
 				case '5':
-					$info = $this->module_model->del_market_data($id);
+					$info = $this->Module_model->del_market_data($id);
 					break;
 			}
 			if($info){
-				 echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$cate."'</script>";exit;
 			}else{
-				 echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+				 echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$cate."'</script>";exit;
 			}
 		}
 	}
@@ -374,7 +374,7 @@ class localLife extends default_Controller {
 					$this->load->library('upload', $config);
 					// 上传
 					if(!$this->upload->do_upload('img'.$i)) {
-					   echo $this->upload->display_errors();
+					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 					}else{
 						if($i != 4){
 						$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
@@ -388,10 +388,10 @@ class localLife extends default_Controller {
 
 			 $data['pic'] = json_encode($pic);
 			 $data['logo'] = $logo;
-			 if($this->module_model->add_service($data)){
-				 echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
+			 if($this->Module_model->add_service($data)){
+				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 			 }else{
-				 echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$data['type_name']."'</script>";exit;
+				 echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 			 }
 			 
 		}else{
@@ -414,7 +414,7 @@ class localLife extends default_Controller {
 					$this->load->library('upload', $config);
 					//上传
 					if(!$this->upload->do_upload('img'.$i)) {
-					   echo $this->upload->display_errors();
+					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_id']."'</script>";exit;
 					}else{
 						if($i != 4){
 							$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
@@ -430,10 +430,10 @@ class localLife extends default_Controller {
 			 $data['userid'] = $this->session->users['user_id'];
 			 $id = $data['type_id'];
 			 unset($data['type_id']);
-			 if($this->module_model->add_houst($data)){
-				  echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			 if($this->Module_model->add_houst($data)){
+				  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$id."'</script>";exit;
 			 }else{
-				  echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+				  echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$id."'</script>";exit;
 			 }
 			
 		}else{
@@ -456,7 +456,7 @@ class localLife extends default_Controller {
 					$this->load->library('upload', $config);
 					//上传
 					if(!$this->upload->do_upload('img'.$i)) {
-					   echo $this->upload->display_errors();
+					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['id']."'</script>";exit;
 					}else{
 						if($i != 4){
 							$pic[]['picImg'] = 'upload/service/mark/'.$this->upload->data('file_name');
@@ -472,10 +472,10 @@ class localLife extends default_Controller {
 			$data['userid'] = $this->session->users['user_id'];
 			$type= $data['id'];
 			unset($data['id']);
-			if($this->module_model->add_market($data)){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$type."'</script>";exit;
+			if($this->Module_model->add_market($data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$type."'</script>";exit;
 			}else{
-				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$type."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$type."'</script>";exit;
 			}
 		}else{
 			$this->load->view('404.html');
@@ -523,7 +523,7 @@ class localLife extends default_Controller {
 					 $data['logo'] = $logo;
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
-					 $isOk = $this->module_model->edit_service($data['id'],$data);
+					 $isOk = $this->Module_model->edit_service($data['id'],$data);
 					break;
 					//房产
 				case '2':
@@ -564,7 +564,7 @@ class localLife extends default_Controller {
 					 $data['list_pic'] = $logo;
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
-			 		$isOk = $this->module_model->edit_houst($data['id'],$data);
+			 		$isOk = $this->Module_model->edit_houst($data['id'],$data);
 					break;
 					//二手市场
 				case '3':
@@ -603,7 +603,7 @@ class localLife extends default_Controller {
 					$data['list_pic'] = $logo;
 					$type = $data['type_id'];
 					unset($data['type_id']);
-					$isOk = $this->module_model->edit_markinfo($data['id'],$data);
+					$isOk = $this->Module_model->edit_markinfo($data['id'],$data);
 					break;
 					//超市比价
 				case '5':
@@ -611,17 +611,17 @@ class localLife extends default_Controller {
 						$cate = $data['cate'];
 						$data['date'] = date('Y-m-d H:i:s');
 						unset($data['type_id'],$data['cate']);
-						if($this->module_model->edit_market_info($data['id'],$data)){
-							echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+						if($this->Module_model->edit_market_info($data['id'],$data)){
+							echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$cate."'</script>";exit;
 						}else{
-							echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$cate."'</script>";exit;
+							echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$cate."'</script>";exit;
 						}
 					break;
 			}
 			if($isOk){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 			}else{
-				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 			}
 
 		}else{
@@ -637,10 +637,10 @@ class localLife extends default_Controller {
 			$data['date'] = date('Y-m-d H:i:s');
 			// var_dumP($data);
 			// exit;
-			if($this->module_model->add_market_data($data)){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+			if($this->Module_model->add_market_data($data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$id."'</script>";exit;
 			}else{
-				echo "<script>alert('操作失败！');window.location.href='".site_url('module/localLife/serviceList/').$id."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$id."'</script>";exit;
 			}
 		}else{
 			$this->load->view('404.html');
@@ -655,7 +655,7 @@ class localLife extends default_Controller {
 	        //引入类库
 	      $this->load->library('excel');
 	        if(!file_exists($inputFileName)){
-	                echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
+	                echo "<script>alert('文件导入失败!');window.location.href='".site_url('/module/LocalLife/serviceList/8')."'</script>";
 	                exit;
 	        }
 	        //导入excel文件类型 excel2007 or excel5
@@ -719,7 +719,7 @@ class localLife extends default_Controller {
 
 	        $i = 1;
 	    	//查询数据库得到要导出的内容
-	        $market = $this->module_model->get_market_data();
+	        $market = $this->Module_model->get_market_data();
 	        if(count($market) > 0)
 	        {
 	            foreach ($market as $booking) {

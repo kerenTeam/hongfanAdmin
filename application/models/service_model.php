@@ -2,7 +2,7 @@
 /**
 *    为名服务
 */
-class service_model extends CI_Model
+class Service_model extends CI_Model
 {
     // 帮帮团成员
     public $service_user = "hf_service_help_user";

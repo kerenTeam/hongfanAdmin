@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *  一键钟情
  *
  * */
-require_once(APPPATH.'controllers/default_Controller.php');
-class fallinlove extends default_Controller {
+require_once(APPPATH.'controllers/Default_Controller.php');
+class Fallinlove extends Default_Controller {
     //一键钟情 活动列表
     public $view_loveactivityList = "module/fallinlove/loveactivityList.html";
     //本地服务 编辑活动详情

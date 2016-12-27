@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once(APPPATH.'controllers/default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 
 /**
  *  后台 首页
 */
-class admin extends default_Controller
+class Admin extends Default_Controller
 {
 
 	function __construct()

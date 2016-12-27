@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
 * 
 */
-class moll_model extends CI_Model
+class Moll_model extends CI_Model
 {
 	//商场详情
 	public $market = 'hf_market_info';
