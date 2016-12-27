@@ -38,6 +38,7 @@ class singleShop extends default_Controller {
     public $view_shopEditActivity = 'shop/shopEditActivity.html';
     public $view_shopActivityList = 'shop/shopActivityList.html';
     public $view_shopAddActivity = 'shop/shopAddActivity.html';
+    public $view_shopActivityApplyList = 'shop/shopActivityApplyList.html';
     //评论
     public $view_shopComment = "shop/shopComment.html";
     function __construct()
@@ -564,7 +565,6 @@ class singleShop extends default_Controller {
 
     //商家促销管理 优惠劵列表
     function shopSalesList(){
-
         $data['page'] = $this->view_shopSalesList;
         $data['menu'] = array('sales','shopSalesList');
         $this->load->view('template.html',$data);
@@ -697,7 +697,12 @@ class singleShop extends default_Controller {
         $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
     }
-
+    //商家活动管理 活动报名情况
+    function shopActivityApplyList(){
+         $data['page'] = $this->view_shopActivityApplyList;
+        $data['menu'] = array('activity','shopActivityApplyList');
+        $this->load->view('template.html',$data);
+    }
 
     //商家订单管理
     function shopOrder(){

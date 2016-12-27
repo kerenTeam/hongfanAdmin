@@ -13,7 +13,7 @@ class serveForPeople extends default_Controller
 	public $view_addhelpgroup = 'module/serveForPeople/addhelpgroup.html';
 	public $view_edithelpgroup = 'module/serveForPeople/edithelpgroup.html';
 	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
-
+    public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
 	function __construct()
 	{
 		 parent::__construct();
@@ -381,7 +381,12 @@ class serveForPeople extends default_Controller
         }
     }
 
-   
+   //为民服务  义工团队 服务列表
+    function volunteerTeamservelist(){
+        $data['page'] = $this->view_volunteerTeamservelist;
+        $data['menu'] = array('localLife','serveForPeople');
+        $this->load->view('template.html',$data);
+    }
 
 
 }

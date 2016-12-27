@@ -44,7 +44,9 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
-            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size:18px;">为民服务</a><small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>">邻水帮帮团服务</a></small>
+            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size:18px;">为民服务</a>
+            <small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgroupservelist';?>">
+            义工团队服务列表</a></small>
             </div>
         </div>
     </div>
@@ -54,7 +56,7 @@ td.am-text-middle img{
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">帮帮团 服务搜索</div>
+                    <div class="widget-title  am-cf">义工团队 服务搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
@@ -89,7 +91,7 @@ td.am-text-middle img{
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帮帮团服务信息列表</div>
+                    <div class="widget-title  am-cf">义工团队 服务列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -112,7 +114,7 @@ td.am-text-middle img{
                                     <th class="moll_name">求助内容 </th>
                                     <th class="shop_id">求助时间</th>
                                     <th class="shop_id">联系方式</th>
-                                    <th class="moll_name">求助对象</th>
+                                    <th class="moll_name">求助团队</th>
                                     <th class="shop_id">服务状态</th>
                                     <th>操作</th>
                                 </tr>
@@ -234,7 +236,7 @@ td.am-text-middle img{
                             });
                             
                         });
-                        //单个帮帮服务删除
+                        //单个义工服务删除
                         $('.sureDelete').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[]; 
@@ -259,7 +261,7 @@ td.am-text-middle img{
                             
                         });
                         
-                        //多个帮帮服务删除
+                        //多个义工服务删除
                         $('.deleteAll').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[];

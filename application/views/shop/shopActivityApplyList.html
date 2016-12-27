@@ -1,8 +1,8 @@
-
+  
 <style type="text/css" media="screen">
 .am-selected{
 width: 100%!important;
-} 
+}
 .table-check{
 width: 30px;
 }
@@ -43,8 +43,8 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
-            <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size:18px;">为民服务</a><small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>">邻水帮帮团服务</a></small>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon">商家管理
+            <a href="<?php echo site_url().'/shop/singleShop/shopActivityApplyList';?>" style="font-size: 18px;">活动报名列表</a></span>  
             </div>
         </div>
     </div>
@@ -53,51 +53,15 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">帮帮团 服务搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" data-am-validator>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">求助人姓名:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入求助人姓名" id="helpgroupName" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">求助对象姓名:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入求助对象姓名" id="askhelpName" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">服务状态:</label>
-                        <div class="am-u-sm-8">
-                            <select id="source_state">
-                                <option value="1">已帮助</option>
-                                <option value="0">待帮助</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帮帮团服务信息列表</div>
+                    <div class="widget-title  am-cf">商家管理 报名情况列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                    <a href='<?php echo site_url("/serveForPeople/serveForPeople/dowload_helprequest?id=1");?>' class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-up"></span> 导出</a>
+                                    <a type="button" class="am-btn am-btn-default am-btn-danger" ><span class="am-icon-refresh" ></span> 刷新</a>
                                 </div>
                             </div>
                         </div>
@@ -106,26 +70,27 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="tablecheck"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">求助人姓名 </th>
-                                    <th class="moll_name">求助内容 </th>
-                                    <th class="shop_id">求助时间</th>
+                                    <th class="moll_name">活动名称 </th>
+                                    <th class="moll_name">报名人姓名 </th>
+                                    <th class="moll_name">性别</th>
+                                    <th class="shop_id">年龄</th>
                                     <th class="shop_id">联系方式</th>
-                                    <th class="moll_name">求助对象</th>
-                                    <th class="shop_id">服务状态</th>
-                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="helpGroupList">
-                                
+                                <tr class="trClass" data-id="">
+							        <td class="am-text-middle">S154561</td>
+							        <td class="am-text-middle">遇见命中的他</td>
+							        <td class="am-text-middle">夏目</td>
+							        <td class="am-text-middle">女</td>
+							        <td class="am-text-middle">20</td>
+							        <td class="am-text-middle">1924854561215</td>
+							    </tr>
                                 <!-- more data -->
                                 
                             </tbody>
                         </table>
-                        <!--查看详情模态框开始-->
-                        
-                        <!--查看详情模态框结束-->
                     </div>
                     <div class="am-u-lg-12 am-cf am-text-center">
                         <div class="" id="paging_list">
@@ -174,9 +139,7 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].pics=eval(res[i].pics);
-
-                        listData+= template('storeGoodsModal',res[i]);
+                        // listData+= template('storeGoodsModal',res[i]);
                      }
                     console.log(res);
                     return listData;
@@ -186,7 +149,7 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
+                        // document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
                          $('.tablecheck').click(function() {
                             if(flag==0){
@@ -301,7 +264,7 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+    // getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
