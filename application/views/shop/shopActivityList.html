@@ -17,7 +17,7 @@ padding: 5px 6px!important;
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon">商家管理
-            <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size: 16px;">活动列表</a></span>  
+            <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size: 18px;">活动列表</a></span>  
             </div>
         </div>
     </div>
@@ -34,7 +34,8 @@ padding: 5px 6px!important;
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <a type="button" class="am-btn am-btn-default am-btn-danger" ><span class="am-icon-refresh" ></span> 刷新</a>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/module/fallinlove/loveAddactivity';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
                                 </div>
                             </div>
                         </div>
@@ -68,10 +69,10 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">20</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a data-id="" class="bangServeDetail" href="<?php echo site_url().'/module/fallinlove/loveEditactivity';?>">
+                                            <a data-id="" class="bangServeDetail" href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">
                                                 <i class="am-icon-pencil"></i> 编辑详情
                                             </a>
-                                            <a data-id="" href="<?php echo site_url().'/module/fallinlove/loveApplyList';?>" class="conResponse">
+                                            <a data-id="" href="<?php echo site_url().'/shop/singleShop/shopActivityApplyList';?>" class="conResponse">
                                                 <i class="am-icon-eye"></i> 报名情况
                                             </a>
                                             <a data-id="" class="tpl-table-black-operation-del tpl-del">

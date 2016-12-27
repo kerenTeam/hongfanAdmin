@@ -38,7 +38,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size:16px;">活动管理</a>
+                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size:18px;">活动管理</a>
                 <small><a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">编辑活动详情</a></small></div>
         </div>
     </div>
@@ -46,125 +46,88 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">编辑活动</div>
-                </div>
-                <div class="widget-body am-fr">
-                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg" value="满记甜品促销" placeholder="建议不超过14个字符"  required>
+            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">编辑活动详情</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动名称<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入活动名称" required="required" />
+                                </div>
+                                
                             </div>
-                        </div>                      
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">自定义活动编号</label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name="" class="am-form-field tpl-form-no-bg" value="F14525" placeholder="用于与第三方活动关联" required>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动开始时间<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="" id="" class="am-form-field" value="2013-10-25" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动分类<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <option value=>输入查找/选择</option>
+                                        <option value="舞会">舞会</option>
+                                        <option value="室外游戏">室外游戏</option>
+                                        <option value="室内玩乐">室内玩乐</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动结束时间<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="" id="" class="am-form-field" value="2013-10-25" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动时间<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                                      <p>开始日期应小于结束日期！</p>
+                                    </div>
+                                    <div class="am-g">
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
+                                      </div>
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
+                                      </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动人数限制<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <option value=>输入查找/选择</option>
+                                        <option value="20人以下">20人以下</option>
+                                        <option value="20-50人">20-50人</option>
+                                        <option value="50-100人">50-100人</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
+                                <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text"  id="postageNum" value="" required="required" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
+                                <label class="am-u-sm-3 am-text-right">资费情况<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text"  id="postageNum" value="" required="required" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <div>
+                                        <script id="editor" type="text/plain"></script>
+                                    </div>
+                                </div>                            
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">验证方式<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <select name="" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value="">输入查找/选择</option>
-                                    <option value="无需验证" selected="selected">无需验证</option>
-                                    <option value="会员卡">会员卡</option>
-                                    <option value="电子券">电子券</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">参与等级限制<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value="">输入查找/选择</option>
-                                    <option value="不限制" selected="selected">不限制</option>
-                                    <option value="商家促销">超级VIP</option>
-                                    <option value="商家活动">普通会员</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">参与人数限制<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <input type="number" name="" value="12" class="am-form-field tpl-form-no-bg" placeholder="参加该活动的总人数限制" required>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name="" value="宏帆广场一楼" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <input type="tel" name="" value="18225784652" class="am-form-field tpl-form-no-bg" placeholder="活动举办的地点" required>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">开始报名时间<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="" id="" value="2013-10-25" class="am-form-field" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="" class="am-u-sm-3 am-form-label">结束报名时间<span class="red">*</span></label>
-                            <div class="am-u-sm-9">
-                                <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="" id="" value="2013-10-25" class="am-form-field" placeholder="日历组件" readonly>
-                                  <span class="am-input-group-btn am-datepicker-add-on">
-                                    <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                  </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="englishName" class="am-u-sm-3 am-form-label">活动详情(富文本)</label>
-                            <div class="am-u-sm-9">
-                                <div>
-                                    <script id="editor" type="text/plain"></script>
-                                </div>
-                            </div>
-                                                 
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                            <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">添加</button>
-                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
-                        </div>
-                    </form>
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="cancle">保存</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                    </div>
+
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
