@@ -19,6 +19,8 @@ class MallShop_model extends CI_Model
     public $shop_coupon = "hf_shop_coupon"; 
      //优惠劵类型
     public $shop_coupon_type = "hf_shop_coupon_type";
+    //活动表
+    public $shop_activity = "hf_system_activity";
     function __construct()
     {
         parent::__construct();
@@ -232,6 +234,11 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //获取所有活动
+    function get_activity_list($storeid){
+        $query = $this->db->where('storeid',$storeid)->get($this->shop_activity);
+        return $query->result_array();
+    }
 
 
 }

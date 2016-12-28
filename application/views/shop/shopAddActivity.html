@@ -114,37 +114,31 @@
                                         <label class="am-u-sm-3 am-text-right">优惠券<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <ul class="am-list">
+                                            <?php foreach($coupon as $val):?>
                                               <li><a href="javascript:;" class="quan">
+                                               <?php if($val['typeid'] == 1):?>
+                                                <?php $sale = json_decode($val['salerule'],true);?>
                                                   <div class="am-u-sm-3">
-                                                      8折
+                                                      满<?php echo $sale['overflowValue'];?>减<?php echo $sale['cutValue'];?>
                                                   </div>
                                                   <div class="am-u-sm-9">
+
                                                       <p>折扣卷</p>
+                                                    <?php else:?>
+                                                  <div class="am-u-sm-3">
+                                                      <?php echo $discount*10;?>折
+                                                  </div>
+                                                  <div class="am-u-sm-9">
+
+                                                      <p>折扣卷</p>
+                                                    <?php endif?>
                                                       <p>无限制</p>
                                                       <p>有效时间：2016.01.21-2016.01.30</p>
                                                   </div>
                                               </a></li>
-                                              <li><a href="javascript:;" class="quan">
-                                                  <div class="am-u-sm-3">
-                                                      8折
-                                                  </div>
-                                                  <div class="am-u-sm-9">
-                                                      <p>折扣卷</p>
-                                                      <p>无限制</p>
-                                                      <p>有效时间：2016.01.21-2016.01.30</p>
-                                                  </div>
-                                              </a></li>
-                                              <li><a href="javascript:;" class="quan">
-                                                  <div class="am-u-sm-3">
-                                                      8折
-                                                  </div>
-                                                  <div class="am-u-sm-9">
-                                                      <p>折扣卷</p>
-                                                      <p>无限制</p>
-                                                      <p>有效时间：2016.01.21-2016.01.30</p>
-                                                  </div>
-                                              </a></li>
-                                            </ul>
+                                            <?php endforeach;?>
+                                              
+                                            </ul> 
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">

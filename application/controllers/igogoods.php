@@ -44,6 +44,19 @@ class Igogoods extends CI_Controller
            }  
         }
     }
+
+
+
+    // function goods_info(){
+    //   $post_data = array(  
+    //         'appkey' => IGOAPPKEY,  
+    //         'appsecret' => IGOAPPSECRET,
+    //         'open_iid' => '3540088125'
+    //        );
+    //   $post = curl_post(IGOINFOAPIURL, $post_data);  
+    //   $goods = json_decode($post,true);
+    //   var_dump(count($goods['data']));
+    // }
 }
 
  ?>

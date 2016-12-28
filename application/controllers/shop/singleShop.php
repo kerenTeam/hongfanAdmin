@@ -598,11 +598,7 @@ class SingleShop extends Default_Controller {
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
-            $code = implode(guid('1','','8'));
-            //erweima 
-            $data['qrcode'] = generate_promotion_code($code);
-            //优惠码
-            $data['codeNumber'] = $code;
+          
             $data['storeid'] = $this->session->businessId;
             if($this->MallShop_model->add_coupon($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopSalesList')."'</script>";
@@ -688,16 +684,34 @@ class SingleShop extends Default_Controller {
     }
      //商家活动 & 优惠 添加活动
     function shopAddActivity(){
-         $data['page'] = $this->view_shopAddActivity;
+        //获取所有优惠劵
+        $data['coupon'] = $this->MallShop_model->get_store_coupon($this->session->businessId);
+
+        $data['page'] = $this->view_shopAddActivity;
         $data['menu'] = array('activity','shopAddActivity');
         $this->load->view('template.html',$data);
     }
      //商家活动 & 优惠 编辑活动
     function shopEditActivity(){
-         $data['page'] = $this->view_shopEditActivity;
+        $data['page'] = $this->view_shopEditActivity;
         $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
     }
+    //获取商家活动列表
+    function activity_list(){
+        if($_POST){
+            //活动列表
+            $activity = $this->MallShop_model->get_activity_list($this->session->businessId);
+            if(empty($activity)){
+                echo "2";
+            }else{
+                echo json_encode($activity);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //商家活动 & 优惠 编辑优惠
     function shopEdityouhui(){
          $data['page'] = $this->view_shopEdityouhui;
