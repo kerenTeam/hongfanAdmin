@@ -9,6 +9,8 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 class SystemSet extends Default_Controller {
     //权限首页
     public $view_memberLimit = 'member/memberLimit.html';
+    //编辑权限
+    public $view_memberLimitEdit = 'member/memberLimitEdit.html';
     //后台管理员账号管理
     public $view_admin_user = 'systemSet/accountManage.html';
     //支付账号管理
@@ -219,7 +221,12 @@ class SystemSet extends Default_Controller {
         $data['menu'] = array('systemSet','memberLimit');
         $this->load->view('template.html',$data);
     }
-
+    //权限编辑
+    function memberLimitEdit(){
+        $data['page'] = $this->view_memberLimitEdit;
+        $data['menu'] = array('systemSet','memberLimitEdit');
+        $this->load->view('template.html',$data);
+    }
     //新增权限
     function add_member_group(){
         if($_POST){
