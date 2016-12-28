@@ -28,15 +28,6 @@ class SystemSet extends Default_Controller {
     function __construct()
     {
         parent::__construct();
-        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-        $plateid = json_decode($plateid,true);
-        if(!empty($plateid)){
-            if(!in_array('0',$plateid) && !in_array('1',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-            }
-        }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-        }
         $this->load->model('System_model');
 
     }
@@ -205,7 +196,11 @@ class SystemSet extends Default_Controller {
         //返回所有权限  
         $data['group'] = $this->user_model->get_user_group($this->session->users['gid']);
         //所有模块 
-        $data['plate'] = $this->mokuai;
+        $query = $this->db->where('m_id','0')->get('hf_system_modular');
+        $data['module'] = $query->result_array();  
+        $query1 = $this->db->where('m_id !=','0')->get('hf_system_modular');
+        $data['module_list'] = $query1->result_array();
+
         $data['page'] = $this->view_memberLimit;
         $data['menu'] = array('systemSet','memberLimit');
         $this->load->view('template.html',$data);
@@ -214,8 +209,15 @@ class SystemSet extends Default_Controller {
     //新增权限
     function add_member_group(){
         if($_POST){
-            $data['group_name'] = $this->input->post('group_name');
-            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+             $data['group_name'] = $this->input->post('group_name');
+             $group_permission = $this->input->post('group_permission');
+             foreach ($group_permission as $key => $value) {
+                $k[] = (string)$key; 
+                foreach ($value as $v) {
+                    $arr[]  = $v;
+                }
+             }
+            $data['group_permission'] = array_merge($k,$arr);
             if($this->user_model->add_group($data)){
                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }else{
@@ -272,7 +274,7 @@ class SystemSet extends Default_Controller {
         //获取商城banner
         $data['mallBanner'] = $this->System_model->get_bannerlist('Mall');
         $data['page'] = $this->view_bannerList;
-        $data['menu'] = array('systemSet','banner');
+        $data['menu'] = array('systemSet','bannerList');
         $this->load->view('template.html',$data);
     }
     //新增banner
