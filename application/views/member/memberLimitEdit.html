@@ -27,11 +27,11 @@ color: black;
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/edit_member_group');?>" method='post' >
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
                         <div class="am-u-sm-6 am-u-end">
-                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" required>
+                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" value="<?php echo $group['group_name']?>" required>
                             <small class="black">建议在2-10字以内</small>
                         </div>
                     </div>
@@ -40,44 +40,20 @@ color: black;
                         <div class="am-u-sm-9">                     
                         </div>
                     </div>
+                    <?php foreach($module_list as $val):?>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商家管理:</label>
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required><?php echo $val['name'];?>:</label>
                         <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
+                            <?php foreach($val['check'] as $v):?>
+                            <div class="am-u-sm-2"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>"<?php if($v['true'] == 1){echo "checked";}?> /><?php echo $v['name'];?></div>
+                            <?php endforeach;?>
                         </div>
                     </div>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商品管理:</label>
-                        <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>爱购管理:</label>
-                        <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
-                        </div>
-                    </div>
+                    <?php endforeach;?>
+                 
                     <div class="am-form-group am-btn-group-xs am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" >
                         <button type="reset" class="am-btn am-btn-default">重置</button>
+                        <input type="hidden" name="gid" value="<?php echo $group['gid'];?>">
                         <button type="submit" class="am-btn am-btn-secondary">保存</button>
                     </div>
                 </form>

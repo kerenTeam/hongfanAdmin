@@ -14,8 +14,6 @@ class member_model extends CI_Model{
         parent::__construct();
     }
 
-
-
     //获取登陆用户信息
     function get_login_user($phone){
         $sql = "select * FROM ".$this->member." where gid != 5 and username='".$phone."'";
@@ -174,11 +172,19 @@ class member_model extends CI_Model{
     function add_group($data){
         return $this->db->insert($this->group,$data);
     }
+    //根据gid返回管理组
+    function get_group_info($id){
+        $where['gid'] = $id;
+        $query = $this->db->where($where)->get($this->group);
+        return $query->row_array();
+    }
     //编辑权限管理
     function edit_group($id,$data){
         $where['gid'] = $id;
         return $this->db->where($where)->update($this->group,$data);
     }
+
+
     //根据权限ID 返回权限
     function group_permiss($id){
         $where['gid'] = $id;
@@ -196,6 +202,7 @@ class member_model extends CI_Model{
         $where['gid'] = $gid;
         return $this->db->where($where)->update($this->member,$data);
     }
+
 
 
 

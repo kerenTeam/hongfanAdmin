@@ -86,7 +86,7 @@ color: #333;
                                     <td><?php echo $v['create_time'];?></td>
                                     <td>
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit';?>">
+                                            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit/'.$v['gid'];?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a href="<?php echo site_url('/systemSet/systemSet/del_group/').$v['gid'];?>" class="tpl-table-black-operation-del" onClick="return confirm('删除后，权限下的所有用户权限会清零。确定删除?');" >
