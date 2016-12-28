@@ -88,7 +88,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_adver');?>" method="post" enctype="multipart/form-data" >
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">编辑广告详情</div>
@@ -96,12 +96,25 @@
                             <div class="widget-body">
                                 <div class="memberInfo padding-horizontal-lg">
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                        <label class="am-u-sm-3 am-text-right">标题<span class="red">*</span>：</label>
+                                         <div class="am-u-sm-6 am-u-end">
+                                           <input type="text" name="title" value="<?php echo $adver['title'];?>">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">广告缩略图<span class="red">*</span>：</label>
                                          <div class="am-u-sm-6 am-u-end">
                                             <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                            <?php if(empty($adver['pic'])):?>
+                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                            <?php else:?>
+                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field">
+                                              <!-- 图片实时预览 -->
+                                              <input type="hidden" name="pic" value="<?php echo $adver['pic'];?>">
+                                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $adver['pic'];?>" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
                                             </div>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                             <small class="red">提示：需注意制作的广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
@@ -112,7 +125,7 @@
                                         <label class="am-u-sm-3 am-text-right">广告详情<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <div>
-                                                <script id="editor" type="text/plain"></script>
+                                                <script id="editor" type="text/plain" name="content"><?php echo $adver['content'];?></script>
                                             </div>
                                         </div>                            
                                     </div>
@@ -120,7 +133,8 @@
                             </div>
 
                             <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="cancle">新增</button>
+                                <input type="hidden" name="id" value="<?php echo $id;?>" />
+                                <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >保存</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>
 

@@ -86,6 +86,19 @@ class System_model extends CI_Model
         return $query->result_array();
      }
 
+     //返回广告详情
+     function get_adver_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->adver);
+        return $query->row_array();
+     }
+
+     //修改广告详情
+     function edit_adver($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->adver,$data);
+     }
+
 
 
 }

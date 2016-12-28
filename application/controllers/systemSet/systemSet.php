@@ -147,11 +147,45 @@ class SystemSet extends Default_Controller {
     }
     //系统设置 编辑广告
     function adverEdit(){
-         $data['page'] = $this->view_adverEdit;
-         $data['menu'] = array('systemSet','adverEdit');
-         $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['adver'] = $this->System_model->get_adver_info($id);
+            $data['id'] = $id;
+             $data['page'] = $this->view_adverEdit;
+             $data['menu'] = array('systemSet','adverEdit');
+             $this->load->view('template.html',$data);
+        }
     }
-
+    //编辑广告操做
+    function edit_adver(){
+        if($_POST){
+            $data = $this->input->post();
+   
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'upload/adver';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/').$data['id']."'</script>";
+                    exit;
+                } else{
+                    $data['pic'] = 'upload/adver/'.$this->upload->data('file_name');
+                }
+            }
+            if($this->System_model->edit_adver($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/adverManage')."'</script>";
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/').$data['id']."'</script>";
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
     //系统设置 支付账号管理
     function apliyManage(){
          $data['page'] = $this->view_paymanage;
