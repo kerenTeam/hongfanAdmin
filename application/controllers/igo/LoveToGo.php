@@ -14,16 +14,6 @@ class LoveToGo extends Default_Controller
 	{
 		 parent::__construct();
          $this->load->model('Integral_model');
-         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-         $plateid = json_decode($plateid,true);
-         if(!empty($plateid)){
-            if(!in_array('0',$plateid) && !in_array('8',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-            }
-         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-         }
-
 
 	}
 

@@ -19,16 +19,6 @@ class ServeForPeople extends Default_Controller
 		 parent::__construct();
          $this->load->model('Service_model');  
         // $this->load->helper('search_helper');  
-         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-         $plateid = json_decode($plateid,true);
- 
-         if(!empty($plateid)){
-            if(!in_array('0',$plateid) && !in_array('6',$plateid)){
-                echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-            }
-         }else{
-             echo "<script>alert('您没有权限访问！');window.location.href='".site_url('/Admin/index')."';</script>";exit;
-         }
 	}
 
 	//为民服务 为民服务主页
@@ -36,12 +26,27 @@ class ServeForPeople extends Default_Controller
         //获取团队信息
         $data['team'] = $this->Service_model->get_team_info();
         // var_dump($team);
+        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        $data['plateid'] = json_decode($plateid,true);
         // exit;
         $data['page'] = $this->view_serveForPeople;
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
-    //
+    function helper_time(){
+        //获取团队信息
+        $data['team'] = $this->Service_model->get_team_info();
+        // var_dump($team);
+        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
+        $data['plateid'] = json_decode($plateid,true);
+        // exit;
+        $data['page'] = $this->view_serveForPeople;
+        $data['menu'] = array('localLife','helper_time');
+        $this->load->view('template.html',$data);
+    }
+
+
+
 
 	//为民服务  邻水帮帮团成员列表
     function helpgrouplist(){

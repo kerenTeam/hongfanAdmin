@@ -165,7 +165,7 @@ class member_model extends CI_Model{
 
     //返回用户权限分组
     function get_user_group($usergid){
-        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 and gid != $usergid order by create_time desc";
+        $sql = "SELECT * FROM $this->group where gid != 5 and gid !=1 and gid != $usergid and gid != 2 order by create_time desc";
         $query = $this->db->query($sql);
         return $query->result_array();
     }

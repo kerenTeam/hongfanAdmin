@@ -40,15 +40,32 @@ class Login extends CI_Controller {
                    $this->session->set_userdata('users',$user);
                     // 判断用户分组
                    switch ($user['gid']){
-                       case 1:
-                           redirect( site_url('Admin/index') );
-                           break;
                        case 2:
-                           
                            redirect( site_url('shop/SingleShop/shopAdmin') );
                            break;
                         default:
-                           redirect( site_url('Admin/index') );
+                           $plateid = $this->m_model->group_permiss($this->session->users['gid']);
+                           $plateid = json_decode($plateid,true);
+                           if(!empty($plateid)){
+                                foreach ($plateid as $key => $value) {
+                                  $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
+                                  $menu[] = $query->row_array();
+                                }
+                                $arr = array();
+                                foreach ($menu as $key => $value) {
+                                    if($value['m_id'] == 0){
+                                      $arr[$value['modular_id']]['value'] = $value;
+                                    }else{
+                                       $arr[$value['m_id']]['chick'][] = $value;
+                                    }
+                                }
+                                $json = json_encode($arr);
+                                $this->session->set_userdata('menu',$json);
+                            }else{
+                                $a['error'] = '你没有权限登录！';
+                                $this->load->view('login.html',$a);
+                            }
+                            redirect( site_url('/Admin/index') );
                            break;
                    }
                    
@@ -63,6 +80,8 @@ class Login extends CI_Controller {
     function loginOut(){
         if($_GET){
             $this->session->unset_userdata('users');
+            $this->session->unset_userdata('menu');
+            //var_dump($_SESSION['menu']);
             redirect('Login/index');
         }else{
             $this->load->view('errors/index.html');

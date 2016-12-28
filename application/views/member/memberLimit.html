@@ -37,48 +37,21 @@ color: black;
                     </div>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-phone" class="am-u-sm-3 am-form-label black" required>权限勾选:</label>  
-                        <div class="am-u-sm-9">                     
-                        </div>
                     </div>
+                    <?php foreach($module as $val):?>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商家管理:</label>
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required><?php echo $val['name'];?>:</label>
                         <div class="am-u-sm-9">
                         <br />
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
+                        <?php foreach($module_list as $v):?>
+                            <?php if($v['m_id'] == $val['modular_id']):?>
+                            <div class="am-u-sm-4"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>" /><?php echo $v['name']?></div>
+                        <?php endif;?>
+                        <?php endforeach;?>
                         </div>
                     </div>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商品管理:</label>
-                        <div class="am-u-sm-9">
-                        <br />
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>爱购管理:</label>
-                        <div class="am-u-sm-9">
-                        <br />
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div>
-                            <div class="am-u-sm-4"><input type="checkbox" name="store" />商家管路</div> 
-                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
-                        </div>
-                    </div>
+                    <?php endforeach;?>
+                  
                     <div class="am-form-group am-btn-group-xs">
                         <button type="reset" class="am-btn am-btn-default">重置</button>
                         <button type="submit" class="am-btn am-btn-danger">提交</button>
