@@ -95,12 +95,10 @@ function generate_promotion_code($code){
 //模拟post
 function curl_post($url, $post){
     $options = array(
-    CURLOPT_RETURNTRANSFER =>true,
-    CURLOPT_HEADER =>false,
-    CURLOPT_POST =>true,
-  
-    CURLOPT_POSTFIELDS => $post,
-
+        CURLOPT_RETURNTRANSFER =>true,
+        CURLOPT_HEADER =>false,
+        CURLOPT_POST =>true,
+        CURLOPT_POSTFIELDS => $post,
     );
     $ch = curl_init($url);
     curl_setopt_array($ch, $options);

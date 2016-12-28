@@ -11,6 +11,8 @@ class System_model extends CI_Model
     public $banner = 'hf_banners';
     //系统设置表
     public $system = "hf_system";
+    //系统设置表
+    public $adver = "hf_ads";
 
     function __construct()
     {
@@ -76,6 +78,12 @@ class System_model extends CI_Model
      function edit_WebSystem($data){
         $where['system_name'] = 'web_system';
         return $this->db->where($where)->update($this->system,$data);
+     }
+
+     //返回所有广告
+     function get_app_adver(){
+        $query = $this->db->get($this->adver);
+        return $query->result_array();
      }
 
 
