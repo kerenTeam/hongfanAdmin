@@ -1,0 +1,113 @@
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+color: black;
+}
+
+.widget-body-lg {
+    min-height:800px;
+}
+
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimit';?>" style="font-size: 18px;">权限管理
+            </a>  
+            <small><a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit';?>">编辑权限
+            </a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                        <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
+                        <div class="am-u-sm-6 am-u-end">
+                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" required>
+                            <small class="black">建议在2-10字以内</small>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>权限勾选:</label>  
+                        <div class="am-u-sm-9">                     
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商家管理:</label>
+                        <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>商品管理:</label>
+                        <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:100px;">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>爱购管理:</label>
+                        <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="store" />商家管路</div> 
+                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="store" />商家管路</div>                        
+                        </div>
+                    </div>
+                    <div class="am-form-group am-btn-group-xs am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" >
+                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                        <button type="submit" class="am-btn am-btn-secondary">保存</button>
+                    </div>
+                </form>
+
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+$(function(){
+$('.secondLimit').css("display","none");
+$('.firstLimit').on('change',function(){
+var firstLimit = this.value;
+//alert(firstLimit);
+$('.secondLimit').each(function(){
+var id=$(this).attr("id");
+if(firstLimit==id){
+$('#'+firstLimit).css("display","block");
+}
+})
+})
+})
+
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+})
+</script>

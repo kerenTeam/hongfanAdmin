@@ -1,11 +1,14 @@
 
 <style type="text/css" media="screen">
 .theme-white .tpl-user-card{
-color: black;
+color: #333;
 }
 
 .widget-body-lg {
-    min-height:650px;
+    min-height:800px;
+}
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
 }
 
 </style>
@@ -16,36 +19,38 @@ color: black;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>权限管理</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimit';?>" style="font-size: 18px;">权限管理
+            </a>  
+            <small></small></div>
         </div>
     </div>
 </div>
 <div class="row-content am-cf">
     <div class="row am-cf">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 widget-margin-bottom-lg ">
             <div class="tpl-user-card am-text-center widget-body-lg">
                 <div class="tpl-user-card-title">
                     新增权限
                 </div>
                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
-                        <div class="am-u-sm-9">
+                        <label for="user-name" class="am-u-sm-2 am-form-label black">权限名:</label>
+                        <div class="am-u-sm-10">
                             <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" required>
                             <small class="black">建议在2-10字以内</small>
                         </div>
                     </div>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required>权限勾选:</label>  
+                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required>权限勾选:</label>  
                     </div>
                     <?php foreach($module as $val):?>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label black" required><?php echo $val['name'];?>:</label>
-                        <div class="am-u-sm-9">
-                        <br />
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:20px;">
+                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required><?php echo $val['name'];?>:</label>
+                        <div class="am-u-sm-10 am-text-left" style="padding-top:5px;font-size: 14px;">
                         <?php foreach($module_list as $v):?>
                             <?php if($v['m_id'] == $val['modular_id']):?>
-                            <div class="am-u-sm-4"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>" /><?php echo $v['name']?></div>
+                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>" /><?php echo $v['name']?></div>
                         <?php endif;?>
                         <?php endforeach;?>
                         </div>
@@ -59,7 +64,7 @@ color: black;
                 </form>
             </div>
         </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-8 widget-margin-bottom-lg">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-7 widget-margin-bottom-lg">
             <div class="widget am-cf widget-body-lg">
                 <div class="widget-body  am-fr">
                     <div class="am-scrollable-horizontal ">
@@ -81,7 +86,7 @@ color: black;
                                     <td><?php echo $v['create_time'];?></td>
                                     <td>
                                         <div class="tpl-table-black-operation">
-                                            <a href="javascript:;" data-am-modal="{target: '#edit<?php echo $v['gid'];?>'}">
+                                            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
                                             <a href="<?php echo site_url('/systemSet/systemSet/del_group/').$v['gid'];?>" class="tpl-table-black-operation-del" onClick="return confirm('删除后，权限下的所有用户权限会清零。确定删除?');" >
