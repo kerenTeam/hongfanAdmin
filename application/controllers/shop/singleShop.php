@@ -38,6 +38,7 @@ class SingleShop extends Default_Controller {
     public $view_shopEditActivity = 'shop/shopEditActivity.html';
     public $view_shopActivityList = 'shop/shopActivityList.html';
     public $view_shopAddActivity = 'shop/shopAddActivity.html';
+    public $view_shopEdityouhui = 'shop/shopEdityouhui.html';
     public $view_shopActivityApplyList = 'shop/shopActivityApplyList.html';
     //评论
     public $view_shopComment = "shop/shopComment.html";
@@ -679,28 +680,28 @@ class SingleShop extends Default_Controller {
     }
 
 
-    //商家活动管理 活动列表
+    //商家活动 & 优惠 活动列表
     function shopActivityList(){
         $data['page'] = $this->view_shopActivityList;
         $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
     }
-     //商家活动管理 添加活动
+     //商家活动 & 优惠 添加活动
     function shopAddActivity(){
          $data['page'] = $this->view_shopAddActivity;
         $data['menu'] = array('activity','shopAddActivity');
         $this->load->view('template.html',$data);
     }
-     //商家活动管理 编辑活动
+     //商家活动 & 优惠 编辑活动
     function shopEditActivity(){
          $data['page'] = $this->view_shopEditActivity;
         $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
     }
-    //商家活动管理 活动报名情况
-    function shopActivityApplyList(){
-         $data['page'] = $this->view_shopActivityApplyList;
-        $data['menu'] = array('activity','shopActivityApplyList');
+    //商家活动 & 优惠 编辑优惠
+    function shopEdityouhui(){
+         $data['page'] = $this->view_shopEdityouhui;
+        $data['menu'] = array('activity','shopEdityouhui');
         $this->load->view('template.html',$data);
     }
 

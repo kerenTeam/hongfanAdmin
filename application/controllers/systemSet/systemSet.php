@@ -24,7 +24,10 @@ class SystemSet extends Default_Controller {
     // banner 编辑
     public $view_editBanner = "banner/editBanner.html";
 
-
+    //系统设置 广告管理
+    public $view_adverManage = 'systemSet/adverManage.html';
+    //系统设置 广告管理
+    public $view_adverEdit = 'systemSet/adverEdit.html';
     function __construct()
     {
         parent::__construct();
@@ -143,7 +146,18 @@ class SystemSet extends Default_Controller {
     }
 
 
-
+    //系统设置 广告管理
+    function adverManage(){
+         $data['page'] = $this->view_adverManage;
+         $data['menu'] = array('systemSet','adverManage');
+         $this->load->view('template.html',$data);
+    }
+    //系统设置 编辑广告
+    function adverEdit(){
+         $data['page'] = $this->view_adverEdit;
+         $data['menu'] = array('systemSet','adverEdit');
+         $this->load->view('template.html',$data);
+    }
 
     //系统设置 支付账号管理
     function apliyManage(){

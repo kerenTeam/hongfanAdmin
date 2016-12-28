@@ -18,26 +18,36 @@
     <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/jquery.min.js"></script>
-
+    <style type="text/css">
+        *{
+            padding:0;
+            margin:0;
+        }
+        body{padding:0;
+            margin:0;
+            width: 100%;
+            height: inherit;
+            background-image: url("assets/img/banner.jpg");
+            background-repeat: no-repeat;
+            background-origin: 0 0;
+            background-position: center;
+            background-size: 100% 100%;
+            position: relative;
+        }
+       .background{
+        position: fixed;
+        top:0;
+        right:0;
+        left:0;
+        bottom:0;
+        background: rgba(0,0,0,0.35);
+       }
+    </style>
 </head>
 
-<body data-type="login">
-    <script src="assets/js/theme.js"></script>
+<body>
+    <div class="background"></div>
     <div class="am-g tpl-g">
-        <!-- 风格切换 -->
-      <!--   <div class="tpl-skiner">
-            <div class="tpl-skiner-toggle am-icon-cog">
-            </div>
-            <div class="tpl-skiner-content">
-                <div class="tpl-skiner-content-title">
-                    选择主题
-                </div>
-                <div class="tpl-skiner-content-bar">
-                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
-                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
-                </div>
-            </div>
-        </div> -->
         <div class="tpl-login">
             <div class="tpl-login-content">
                 <div class="tpl-login-logo">
