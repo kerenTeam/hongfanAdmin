@@ -99,6 +99,11 @@ class System_model extends CI_Model
         return $this->db->where($where)->update($this->adver,$data);
      }
 
+    //返回权限子模块
+    function get_modular($id){
+        $query = $this->db->where('m_id',$id)->get('hf_system_modular');
+        return $query->result_array();
+    }
 
 
 }

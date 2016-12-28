@@ -259,10 +259,37 @@ class SystemSet extends Default_Controller {
     }
     //权限编辑
     function memberLimitEdit(){
-        $data['page'] = $this->view_memberLimitEdit;
-        $data['menu'] = array('systemSet','memberLimitEdit');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取详情
+            $group = $this->user_model->get_group_info($id);
+            $group_permission = json_decode($group['group_permission'],true);
+       
+            //获取所有模块
+            $query = $this->db->where('m_id','0')->get('hf_system_modular');
+            $modular = $query->result_array();
+            foreach ($modular as $key => $value) {
+                $a = $this->System_model->get_modular($value['modular_id']);
+                foreach ($a as $k => $v) {
+                   if(in_array($v['modular_id'],$group_permission)){
+                         $a[$k]['true'] = '1';
+                   }else{
+                        $a[$k]['true'] = '0';
+                   }
+                }
+                $modular[$key]['check'] = $a;
+            }
+            $data['group'] = $group;
+      
+            $data['module_list'] = $modular;
+            $data['page'] = $this->view_memberLimitEdit;
+            $data['menu'] = array('systemSet','memberLimitEdit');
+            $this->load->view('template.html',$data);
+        }
     }
+
     //新增权限
     function add_member_group(){
         if($_POST){
@@ -274,7 +301,7 @@ class SystemSet extends Default_Controller {
                     $arr[]  = $v;
                 }
              }
-            $data['group_permission'] = array_merge($k,$arr);
+            $data['group_permission'] = json_encode(array_merge($k,$arr));
             if($this->user_model->add_group($data)){
                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }else{
@@ -290,7 +317,14 @@ class SystemSet extends Default_Controller {
         if($_POST){
             $id = $this->input->post('gid');
             $data['group_name'] = $this->input->post('group_name');
-            $data['group_permission'] = json_encode($this->input->post('group_permission'));
+            $group_permission = $this->input->post('group_permission');
+             foreach ($group_permission as $key => $value) {
+                $k[] = (string)$key; 
+                foreach ($value as $v) {
+                    $arr[]  = $v;
+                }
+             }
+            $data['group_permission'] = json_encode(array_merge($k,$arr));
             if($this->user_model->edit_group($id,$data)){
                  echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
              }else{
