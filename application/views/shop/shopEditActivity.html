@@ -10,25 +10,21 @@
     padding: 5px 6px!important;
     }
 #preview{
-        width:200px;
         height:200px !important;
     }
     #preview #imghead,#preview img{
          width:200px;
-        height:200px;
+        height:190px;
     }
-
-    .am-form-group .deleteImg{
-        display: inline-block;
-        background: #ff0000;
+    .deleteImg{
+        display:inline-block;
         width:60px;
         height:25px;
         line-height: 25px;
         text-align: center;
-        position: absolute;
-        left:130px;
-        top:202px;
-        color:#ffffff;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
     }
 </style>
 
@@ -38,8 +34,8 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size:18px;">活动管理</a>
-                <small><a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">编辑活动详情</a></small></div>
+                <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size:18px;">活动 & 优惠</a>
+                <small><a href="<?php echo site_url().'/shop/singleShop/shopEditActivity';?>">编辑</a></small></div>
         </div>
     </div>
 </div>
@@ -49,31 +45,41 @@
             <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">编辑活动详情</div>
+                        <div class="widget-title  am-cf">编辑</div>
                     </div>
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg">
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动名称<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入活动名称" required="required" />
-                                </div>
-                                
+                                <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
+                                <div class="am-u-sm-4 am-u-end">
+                                    <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称" required="required" />
+                                </div>                                    
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动分类<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value=>输入查找/选择</option>
-                                        <option value="舞会">舞会</option>
-                                        <option value="室外游戏">室外游戏</option>
-                                        <option value="室内玩乐">室内玩乐</option>
+                                <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
+                                <div class="am-u-sm-4 am-u-end">
+                                    <select id="property" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <option value="">输入查找/选择</option>
+                                        <option value="优惠">优惠</option>
+                                        <option value="活动">活动</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动时间<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
+                                <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-4 am-u-end">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small>提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="businessTime" class="am-u-sm-3 am-text-right">时间<span class="red">*</span>：</label>
+                                <div class="am-u-sm-4  am-u-end">
                                     <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
                                       <p>开始日期应小于结束日期！</p>
                                     </div>
@@ -84,35 +90,14 @@
                                       <div class="am-u-sm-6">
                                         <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
                                       </div>
+                                      <div class="am-u-sm-6 am-u-end red"><small>请先选择结束日期</small></div>
                                     </div>
                                 </div>
+                                
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动人数限制<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value=>输入查找/选择</option>
-                                        <option value="20人以下">20人以下</option>
-                                        <option value="20-50人">20-50人</option>
-                                        <option value="50-100人">50-100人</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
-                                <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text"  id="postageNum" value="" required="required" />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
-                                <label class="am-u-sm-3 am-text-right">资费情况<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text"  id="postageNum" value="" required="required" />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
+                                <label class="am-u-sm-3 am-text-right">详情<span class="red">*</span>：</label>
+                                <div class="am-u-sm-4 am-u-end">
                                     <div>
                                         <script id="editor" type="text/plain"></script>
                                     </div>
@@ -157,7 +142,47 @@
      //实例化编辑器
     //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     var ue = UE.getEditor('editor');
+     $(document).ready(function(){
+        var startDate = new Date(2014, 11, 20);
+        var endDate = new Date(2014, 11, 25);
+        var $alert = $('#my-alert');
+        $('#my-start').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+              $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+              $alert.hide();
+              startDate = new Date(event.date);
+              $('#my-startDate').text($('#my-start').data('date'));
+              $('#begin_date').val($('#my-start').data('date'));
+            }
+            $(this).datepicker('close');
+          });
 
+        $('#my-end').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+              $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+              $alert.hide();
+              endDate = new Date(event.date);
+              $('#my-endDate').text($('#my-end').data('date'));
+              $('#end_date').val($('#my-end').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+      
+
+         $('#property').change(function(){
+            //根据一级业态的内容来控制二级业态的显示
+            var property=$('#property option:selected').val(),str='',sttr='';
+            if(property=="优惠"){
+                $('#discountCard').css('display','block');
+            }else{
+                $('#discountCard').css('display','none');
+            }
+        });
+    })
 
    
 </script>
