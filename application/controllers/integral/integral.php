@@ -15,13 +15,13 @@ class Integral extends Default_Controller
     public $view_integralOrderList = 'integral/integralOrderList.html';
     public $view_integralOrderModify = 'integral/integralOrderModify.html';
     public $view_integralOrderDetail = 'integral/integralOrderDetail.html';
-    
+    public $view_integralRule = 'integral/integralRule.html';
     function __construct()
     {   
         parent::__construct();
         $this->load->model('Integral_model');
     }
-    //商品列表
+    //积分列表
     function integralList(){
         $data['cates'] = $this->Integral_model->get_goods_cates();
         $data['page'] = $this->view_integralList;
@@ -219,7 +219,12 @@ class Integral extends Default_Controller
         $data['menu'] = array('integral','integralOrderList');
         $this->load->view('template.html',$data);
     }
-
+    //积分规则
+    function integralRule(){
+        $data['page'] = $this->view_integralRule;
+        $data['menu'] = array('integral','integralRule');
+        $this->load->view('template.html',$data);
+    }
 
 }
 
