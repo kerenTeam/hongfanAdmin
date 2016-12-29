@@ -8,7 +8,8 @@ class Integral_model extends CI_Model
     public $shop_goods = 'hf_mall_goods';
     //分类表
     public $shop_cates = 'hf_mall_category';
-
+    //积分规则表
+    public $integral_rule = "hf_system_integral";
     
     function __construct()
     {
@@ -59,6 +60,17 @@ class Integral_model extends CI_Model
         $this->db->select('goods_id,open_iid,title,price,thumb,commission_price,commission_rate');
         $query = $this->db->where($where)->get($this->shop_goods);
         return $query->result_array();
+    }
+
+    //返回所有积分规则
+    function get_integral_rule(){
+        $query = $this->db->get($this->integral_rule);
+        return $query->result_array();
+    }
+    //修改积分规则
+    function edit_integral_rule($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->integral_rule,$data);
     }
 
 
