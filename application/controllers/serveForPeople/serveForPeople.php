@@ -453,7 +453,7 @@ class ServeForPeople extends Default_Controller
     //获取义工团队活动列表
     function get_volunter_activities_list(){
         if($_POST){
-            $list = $this->Service_model->get_activities_list();\
+            $list = $this->Service_model->get_activities_list();
             if(empty($list)){
                 echo "2";
             }else{
@@ -496,7 +496,7 @@ class ServeForPeople extends Default_Controller
             }else{
                 echo "2";
             }
-        }else{=
+        }else{
            echo "2";
         }
     }
