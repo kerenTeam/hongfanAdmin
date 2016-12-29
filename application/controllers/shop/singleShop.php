@@ -707,8 +707,16 @@ class SingleShop extends Default_Controller {
                         $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
-           
-            $data['couponid'] = json_encode(array_filter($data['couponid']));
+            if($data['type'] == 2){
+                $cou = array_filter($data['couponid']);
+                if(!empty($cou)){
+                    $data['couponid'] = json_encode($cou);
+                }else{
+                    $data['couponid'] = '';
+                 }
+             }else{
+                $data['couponid'] = '';
+             }
             $data['storeid'] = $this->session->businessId;
             if($this->MallShop_model->add_activity($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
@@ -763,7 +771,16 @@ class SingleShop extends Default_Controller {
                         $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
-            $data['couponid'] = json_encode(array_filter($data['couponid']));
+            if($data['type'] == 2){
+                $cou = array_unique(array_filter($data['couponid']));
+                if(!empty($cou)){
+                    $data['couponid'] = json_encode($cou);
+                }else{
+                    $data['couponid'] = '';
+                }
+            }else{
+                $data['couponid'] = '';
+            }
             if($this->MallShop_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{

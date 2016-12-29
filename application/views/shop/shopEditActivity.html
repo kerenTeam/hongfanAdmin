@@ -118,7 +118,7 @@
                                             <ul class="am-list">
                                             <?php $state = json_decode($info['couponid'],true);?>
                                             <?php foreach($coupon as $val):?>
-                                              <li class="quan" <?php if(!isset($val['check'])){if($val['check'] == '1'){echo "state='1'";}else{echo "state='0'";}}else{echo "state='0'";}?> data-id="<?php echo $val['id'];?>">
+                                              <li class="quan" <?php if(isset($val['check'])){if($val['check'] == '1'){echo "state='1'";}else{echo "state='0'";}}else{echo "state='0'";}?> data-id="<?php echo $val['id'];?>">
                                                <?php if($val['typeid'] == 1):?>
                                                 <?php $sale = json_decode($val['salerule'],true);?>
                                                   <div class="am-u-sm-3">
@@ -140,10 +140,14 @@
                                                       
                                                       <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
                                                   </div>
-                                                  <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $val['id']?>" />
+                                                  <?php if(!empty($info['couponid'])):?>
+                                                    <?php $cou = json_decode($info['couponid'],true);$couponid = implode(',',$cou);?>
+                                                  <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $couponid;?>" />
+                                                <?php else:?>
+                                                    <input type="hidden" name="couponid[]" class="saveid" value="" />
+                                                <?php endif;?>
                                               </li>
                                             <?php endforeach;?>
-                                              
                                             </ul> 
                                         </div>
                                     </div>
