@@ -119,21 +119,23 @@
                                                <?php if($val['typeid'] == 1):?>
                                                 <?php $sale = json_decode($val['salerule'],true);?>
                                                   <div class="am-u-sm-3">
-                                                      满<?php echo $sale['overflowValue'];?>减<?php echo $sale['cutValue'];?>
+                                                      <?php echo $sale['cutValue'];?>
                                                   </div>
                                                   <div class="am-u-sm-9">
 
-                                                      <p>折扣卷</p>
+                                                      <p>代金劵</p>
+                                                      <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "每人只可领取一次";}else{echo "无限制";}?></p>
                                                     <?php else:?>
                                                   <div class="am-u-sm-3">
-                                                      <?php echo $discount*10;?>折
+                                                      <?php echo $val['discount']*10;?>折
                                                   </div>
                                                   <div class="am-u-sm-9">
 
                                                       <p>折扣卷</p>
+                                                      <p><?php if($val['receive_limit'] == 1){echo "每人只可领取一次";}else{echo "无限制";}?></p>
                                                     <?php endif?>
-                                                      <p>无限制</p>
-                                                      <p>有效时间：2016.01.21-2016.01.30</p>
+                                                      
+                                                      <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
                                                   </div>
                                               </a></li>
                                             <?php endforeach;?>
