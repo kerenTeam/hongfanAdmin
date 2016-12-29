@@ -84,6 +84,27 @@ class Service_model extends CI_Model
         return $query->row_array();
     }
 
+    //修改义工团队信息
+    function edit_team_info($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->team,$data);
+    }
+
+    //发起活动
+    function add_volunteer_activities($data){
+        return $this->db->insert($this->team_activity,$data);
+    }
+
+    //返回活动列表
+    function get_activities_list(){
+        $query = $this->db->order_by('create_time','desc')->get($this->team_activity);
+        return $query->result_array();
+    }
+    //删除活动列表
+    function del_volunter_activivies($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->team_activity);
+    }
 }
 
 

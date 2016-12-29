@@ -686,16 +686,93 @@ class SingleShop extends Default_Controller {
     function shopAddActivity(){
         //获取所有优惠劵
         $data['coupon'] = $this->MallShop_model->get_store_coupon($this->session->businessId);
-
         $data['page'] = $this->view_shopAddActivity;
         $data['menu'] = array('activity','shopAddActivity');
         $this->load->view('template.html',$data);
     }
+    //新增活动操作
+    function add_activity(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'upload/image/activity';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
+                    }else{
+                        $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
+                    }
+            }
+           
+            $data['couponid'] = json_encode(array_filter($data['couponid']));
+            $data['storeid'] = $this->session->businessId;
+            if($this->MallShop_model->add_activity($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
      //商家活动 & 优惠 编辑活动
     function shopEditActivity(){
-        $data['page'] = $this->view_shopEditActivity;
-        $data['menu'] = array('activity','shopActivityList');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $info = $this->MallShop_model->get_activity_info($id);
+            //获取所有优惠劵            
+            $coupon = $this->MallShop_model->get_store_coupon($this->session->businessId);
+            if(!empty($info['couponid'])){
+                $couponid = json_decode($info['couponid'],true);
+                foreach ($coupon as $key => $value) {
+                   if(in_array($value['id'],$couponid)){
+                        $coupon[$key]['check'] = '1'; 
+                   }else{
+                        $coupon[$key]['check'] = '0';  
+                   }
+                }
+            }
+            $data['coupon'] = $coupon;
+            $data['info'] = $info;
+            $data['page'] = $this->view_shopEditActivity;
+            $data['menu'] = array('activity','shopActivityList');
+            $this->load->view('template.html',$data);
+        }
+     
+    }
+
+    //编辑活动操作
+    function edit_activity_info(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'upload/image/activity';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/').$data['id']."'</script>";exit;
+                    }else{
+                        $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
+                    }
+            }
+            $data['couponid'] = json_encode(array_filter($data['couponid']));
+            if($this->MallShop_model->edit_activity_info($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopEditActivity/').$data['id']."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
     }
     //获取商家活动列表
     function activity_list(){
@@ -713,11 +790,11 @@ class SingleShop extends Default_Controller {
     }
 
     //商家活动 & 优惠 编辑优惠
-    function shopEdityouhui(){
-         $data['page'] = $this->view_shopEdityouhui;
-        $data['menu'] = array('activity','shopEdityouhui');
-        $this->load->view('template.html',$data);
-    }
+    // function shopEdityouhui(){
+    //     $data['page'] = $this->view_shopEdityouhui;
+    //     $data['menu'] = array('activity','shopEdityouhui');
+    //     $this->load->view('template.html',$data);
+    // }
 
     //商家订单管理
     function shopOrder(){

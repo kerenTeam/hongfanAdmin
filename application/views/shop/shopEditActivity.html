@@ -4,18 +4,19 @@
     }
     .table-check{
         width: 30px;
-    }
+    } 
     .hf-dropdown{
         font-size: 12px!important;
     padding: 5px 6px!important;
     }
-#preview{
+ #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
-         width:200px;
+        
         height:190px;
     }
+
     .deleteImg{
         display:inline-block;
         width:60px;
@@ -26,8 +27,54 @@
         font-size: 1.2rem;
         border:  1px solid #ddd;
     }
-</style>
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+    label{
+        font-weight: normal;
+    }
+    .am-list>li {
+        border: none;
+    }
+    .am-list>li.quan{
+        width: 300px;
+        height: 80px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #f43b41;
+        color:#fff;
+        padding-top:10px;
+    }
+    .am-list>li.quan:hover{
+        color:#fff;
+    }
+    .am-list>li.quan div {
+        height: 50px;
+        line-height: 50px;
+        display: inline-block;
+        vertical-align:middle;
+        font-size:30px;
+    }
+    .am-list>li.quan div.am-u-sm-3{
+        text-align: center;
+    }
+    .am-list>li.quan div p {
+        padding:0;
+        margin:0;
+        color:#ccc;
+        height:20px;
+        line-height: 20px;
+        font-size:10px;
+    }
+    .am-list>li.quan div p:first-child{
+        color:#fff;
+        font-size:16px;
+    }
 
+</style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -42,7 +89,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" enctype="multipart/form-data" action="<?php echo site_url('/shop/SingleShop/edit_activity_info');?>" method="post">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">编辑</div>
@@ -52,26 +99,68 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
                                 <div class="am-u-sm-6 am-u-end">
-                                    <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称" required="required" />
+                                    <input type="text" id="doc-vld-name-1" name="title" minlength="2" placeholder="请输入名称" required="required" value="<?php echo $info['title'];?>" />
                                 </div>                                    
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
-                                <div class="am-u-sm-6 am-u-end">
-                                    <select id="property" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value="">输入查找/选择</option>
-                                        <option value="优惠">优惠</option>
-                                        <option value="活动">活动</option>
-                                    </select>
-                                </div>
-                            </div>
+                                        <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                            <select id="property" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="type">
+                                                <option value="">输入查找/选择</option>
+                                                <option value="2" <?php if($info['type'] == 2){echo "selected";}?>>优惠</option>
+                                                <option value="1" <?php if($info['type'] == 1){echo "selected";}?>>活动</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" <?php if($info['type'] == "2"){echo 'style="display: block"';}else{echo "style='display:none'";}?> >
+                                        <label class="am-u-sm-3 am-text-right">优惠券<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                            <ul class="am-list">
+                                            <?php $state = json_decode($info['couponid'],true);?>
+                                            <?php foreach($coupon as $val):?>
+                                              <li class="quan" <?php if($val['check'] == '1'){echo "state='1'";}else{echo "state='0'";}?> data-id="<?php echo $val['id'];?>">
+                                               <?php if($val['typeid'] == 1):?>
+                                                <?php $sale = json_decode($val['salerule'],true);?>
+                                                  <div class="am-u-sm-3">
+                                                      <?php echo $sale['cutValue'];?>
+                                                  </div>
+                                                  <div class="am-u-sm-9">
+
+                                                      <p>代金劵</p>
+                                                      <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
+                                                    <?php else:?>
+                                                  <div class="am-u-sm-3">
+                                                      <?php echo $val['discount']*10;?>折
+                                                  </div>
+                                                  <div class="am-u-sm-9">
+
+                                                      <p>折扣卷</p>
+                                                      <p><?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
+                                                    <?php endif?>
+                                                      
+                                                      <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
+                                                  </div>
+                                                  <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $val['id']?>" />
+                                              </li>
+                                            <?php endforeach;?>
+                                              
+                                            </ul> 
+                                        </div>
+                                    </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
                                  <div class="am-u-sm-6 am-u-end">
                                     <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                    <?php if(empty($info['picImg'])):?>
+                                     <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                  <?php else:?>
+                                    <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" name="picImg" value="<?php echo $info['picImg'];?>">
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $info['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                  <?php endif;?>
                                     </div>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                     <small>提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
@@ -85,10 +174,10 @@
                                     </div>
                                     <div class="am-g">
                                       <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="<?php echo $info['begin_time']?>" /><span id="my-startDate"><?php echo $info['begin_time']?></span>
                                       </div>
                                       <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="<?php echo $info['end_time']?>" /><span id="my-endDate"><?php echo $info['end_time']?></span>
                                       </div>
                                       <div class="am-u-sm-6 am-u-end red"><small>请先选择结束日期</small></div>
                                     </div>
@@ -99,7 +188,7 @@
                                 <label class="am-u-sm-3 am-text-right">详情<span class="red">*</span>：</label>
                                 <div class="am-u-sm-6 am-u-end">
                                     <div>
-                                        <script id="editor" type="text/plain"></script>
+                                        <script id="editor" type="text/plain" name="content"><?php echo $info['content'];?></script>
                                     </div>
                                 </div>                            
                             </div>
@@ -107,7 +196,8 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="cancle">保存</button>
+                    <input type="hidden" name="id" value="<?php echo $info['id'];?>">
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit">保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>
 
@@ -176,7 +266,7 @@
          $('#property').change(function(){
             //根据一级业态的内容来控制二级业态的显示
             var property=$('#property option:selected').val(),str='',sttr='';
-            if(property=="优惠"){
+            if(property=="2"){
                 $('#discountCard').css('display','block');
             }else{
                 $('#discountCard').css('display','none');
@@ -184,5 +274,29 @@
         });
     })
 
-   
+    var clickflag=1,clickarray=[],str='';
+        //优惠券选中状态
+          $(".quan").each(function(){
+                var dataId=$(this).attr("data-id");
+                if($(this).attr("state")=="1"){
+                    $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
+                }
+            })
+        //优惠券选中状态
+          $(".quan").each(function(){
+            $(this).click(function(){
+                var dataId=$(this).attr("data-id");
+                if($(this).attr("state")=="0"){
+                    $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
+                    $(this).attr("state","1");
+                    $(this).find('.saveid').val(dataId);
+                }else{
+                    $(this).css({"box-shadow":"none","background":"rgba(244,60,65,1)","border":"2px solid #fff"});
+                    $(this).attr("state","0");
+                    $(this).find('.saveid').val("");
+                }
+            })
+            
+          })
+        
 </script>
