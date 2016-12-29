@@ -744,7 +744,6 @@ class SingleShop extends Default_Controller {
             $data['menu'] = array('activity','shopActivityList');
             $this->load->view('template.html',$data);
         }
-     
     }
 
     //编辑活动操作
@@ -774,6 +773,23 @@ class SingleShop extends Default_Controller {
             $this->load->view('404.html');
         }
     }
+    //删除活动
+    function del_shopActivity(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
+            if($this->MallShop_model->del_Activity($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //获取商家活动列表
     function activity_list(){
         if($_POST){

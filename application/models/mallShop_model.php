@@ -256,6 +256,11 @@ class MallShop_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->update($this->shop_activity,$data);
     }    
+    //删除活动
+    function del_Activity($id){
+         $where['id'] = $id;
+        return $this->db->where($where)->delete($this->shop_activity);
+    }
 
 }
 
