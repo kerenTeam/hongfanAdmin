@@ -54,7 +54,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>积分商城
-            <a href="<?php echo site_url().'/integral/Integral/integralRule';?>">积分规则管理</a>  
+            <a href="<?php echo site_url().'/integral/Integral/integralRule';?>" style="font-size: 18px;">积分规则管理</a>  
             <small></small></div>
         </div>
     </div>
@@ -246,12 +246,30 @@ $('#changeSign').click(function(){
         $('.changeSign').eq(i).css('display','none');
         $('.saveSign').eq(i).css('display','block');
     }
+
 });
 $('#saveSign').click(function(){
     for(var i=0;i<$('.saveSign').length;i++){
         $('.saveSign').eq(i).css('display','none');
         $('.changeSign').eq(i).css('display','block');       
     }
+    var integral=$('.saveSign').eq('0').find('input').val();
+    var id=$('.saveSign').eq('1').find('input').val();
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+        data: 'id='+ id +'&integral='+ integral,
+        success: function(data){
+            if(data==1){
+               $('.changeSign').eq('0').find('span').html(integral); 
+            }else{
+                alert("操作失败！");
+            }
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+    });
 });
 
 //连续签到送积分
@@ -266,6 +284,23 @@ $('#saveSignThree').click(function(){
         $('.saveSignThree').eq(i).css('display','none');
         $('.changeSignThree').eq(i).css('display','block');       
     }
+    var integral=$('.saveSignThree').eq('0').find('input').val();
+    var id=$('.saveSignThree').eq('1').find('input').val();
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+        data: 'id='+ id +'&integral='+ integral,
+        success: function(data){
+            if(data==1){
+               $('.changeSignThree').eq('0').find('span').html(integral); 
+            }else{
+                alert("操作失败！");
+            }
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+    });
 });
 $('#changeSignFour').click(function(){//四次
     for(var i=0;i<$('.changeSignFour').length;i++){
@@ -331,6 +366,23 @@ $('#saveBuy').click(function(){
         $('.saveBuy').eq(i).css('display','none');
         $('.changeBuy').eq(i).css('display','block');
     }
+    var integral=$('.saveBuy').eq('0').find('input').val();
+    var id=$('.saveBuy').eq('1').find('input').val();
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+        data: 'id='+ id +'&integral='+ integral,
+        success: function(data){
+            if(data==1){
+               $('.changeBuy').eq('0').find('span').html(integral); 
+            }else{
+                alert("操作失败！");
+            }
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+    });
 });
 $('#changeActivity').click(function(){
     for(var i=0;i<$('.changeActivity').length;i++){
@@ -343,5 +395,22 @@ $('#saveActivity').click(function(){
         $('.saveActivity').eq(i).css('display','none');
         $('.changeActivity').eq(i).css('display','block');
     }
+    var integral=$('.saveActivity').eq('0').find('input').val();
+    var id=$('.saveActivity').eq('1').find('input').val();
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+        data: 'id='+ id +'&integral='+ integral,
+        success: function(data){
+            if(data==1){
+               $('.changeActivity').eq('0').find('span').html(integral); 
+            }else{
+                alert("操作失败！");
+            }
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+    });
 });
 </script>
