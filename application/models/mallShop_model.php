@@ -240,6 +240,22 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //新增商家活动
+    function add_activity($data){
+        return $this->db->insert($this->shop_activity,$data);
+    }
+    //获取商家活动详情
+    function get_activity_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->shop_activity);
+        return $query->row_array();
+    }
+
+    //编辑活动详情
+    function edit_activity_info($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->shop_activity,$data);
+    }    
 
 }
 
