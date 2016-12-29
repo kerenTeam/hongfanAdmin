@@ -122,33 +122,40 @@
     <div class="am-modal-dialog">
         <div class="am-modal-hd">义工团队信息</div>
         <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_team_info');?>" method="post">
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">团队名称<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">  
-                        <input type="text" value="<?php echo $item['name'];?>" placeholder="建议不超过十四个字符" name='name' minlength="2" maxlength="14" required>
+                        <input type="text" value="<?php echo $team['name'];?>" placeholder="建议不超过十四个字符" name='name' minlength="2" maxlength="14" required>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">团队人数<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                        <input type="number" name='star' min="1" value="20" required />
+                        <input type="number" name='team_number' min="1" value="<?php echo $team['team_number']?>" required />
                     </div>
                 </div>
            
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">团队口号<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                        <input type="text" placeholder="如:让我们携手共建美好未来" value="让我们携手共建美好未来" name='service_cope' required />
+                        <input type="text" placeholder="如:让我们携手共建美好未来" value="<?php echo $team['slogan']?>" name='slogan' required />
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label for="" class="am-u-sm-3 am-form-label">团队风采 <span class="red">*</span></label>
                      <div class="am-u-sm-9">
                         <div class="wx_type_img">
-                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                            <?php if(empty($team['picImg'])):?>
+                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                           <!-- 图片实时预览 -->
                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                      <?php else:?>
+                           <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                          <!-- 图片实时预览 -->
+                          <input type="hidden" name="picImg" value="<?php echo $team['picImg'];?>">
+                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $team['picImg'];?>" class="am-img-responsive cardView"> </div>
+                      <?php endif;?>
                         </div>
                         <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                         <small>提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
@@ -157,11 +164,12 @@
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">团队简介<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">
-                        <textarea rows='8' type="text" placeholder="" name='content' required></textarea>
+                        <textarea rows='8' type="text" placeholder="请输入团队简介。" name='content' required><?php echo $team['content'];?></textarea>
                     </div>
                 </div>
             
                 <div class="am-form-group am-btn-group-xs">
+                    <input type="hidden" name="id" value="<?php echo $team['id'];?>"> 
                     <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                     <button type="submit" class="am-btn am-btn-danger" data-am-modal-confirm>保存</button>
                 </div>
@@ -175,17 +183,17 @@
     <div class="am-modal-dialog">
         <div class="am-modal-hd">义工团队活动</div>
         <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/serveForPeople/ServeForPeople/add_volunteer_activities');?>" method="post">
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">  
-                        <input type="text" placeholder="建议不超过十四个字符" name='name' minlength="2" maxlength="14" required>
+                        <input type="text" placeholder="建议不超过十四个字符" name='title' minlength="2" maxlength="14" required>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span>：</label>
                     <div class="am-u-sm-9">  
-                        <input type="text" value="活动地点" placeholder="请输入活动举办的地点" name='name' minlength="2" maxlength="30" required>
+                        <input type="text"  placeholder="请输入活动举办的地点" name='address' minlength="2" maxlength="30" required>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
@@ -198,7 +206,7 @@
                     <label for="" class="am-u-sm-3 am-form-label">活动图片<span class="red">*</span></label>
                      <div class="am-u-sm-9">
                         <div class="wx_type_img">
-                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                           <!-- 图片实时预览 -->
                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                         </div>

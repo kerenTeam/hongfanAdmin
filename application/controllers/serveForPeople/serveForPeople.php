@@ -47,7 +47,6 @@ class ServeForPeople extends Default_Controller
 
 
 
-
 	//为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
@@ -395,6 +394,111 @@ class ServeForPeople extends Default_Controller
         $data['page'] = $this->view_volunteerTeamservelist;
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
+    }
+
+    //编辑义工团队信息
+    function edit_team_info(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'upload/team/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                    }else{
+                        $data['picImg'] = 'upload/team/'.$this->upload->data('file_name');
+                   }     
+            }
+            if($this->Service_model->edit_team_info($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //义工团心发布活动
+    function add_volunteer_activities(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'upload/team/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                    }else{
+                        $data['picImg'] = 'upload/team/'.$this->upload->data('file_name');
+                   }     
+            }
+            if($this->Service_model->add_volunteer_activities($data)){
+                  echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamservelist')."'</script>";exit;
+            }else{
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //获取义工团队活动列表
+    function get_volunter_activities_list(){
+        if($_POST){
+            $list = $this->Service_model->get_activities_list();\
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //批量删除活动
+    function del_volunter_activivies(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
+            $arr = json_decode($id,true);
+            foreach ($arr as $key => $v) {
+                $res = $this->Service_model->del_volunter_activivies($v);
+            }
+            if($res){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //活动单个删除
+    function del_volunter_active(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
+            if($this->Service_model->del_volunter_activivies($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{=
+           echo "2";
+        }
     }
 
 
