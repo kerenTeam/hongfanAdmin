@@ -222,10 +222,29 @@ class Integral extends Default_Controller
 
     //积分规则
     function integralRule(){
+        //获取积分所有规则
+        $data['inter'] = $this->Integral_model->get_integral_rule();
+        // var_dump($inter);
+        // exit;
         $data['page'] = $this->view_integralRule;
         $data['menu'] = array('integral','integralRule');
         $this->load->view('template.html',$data);
     }
+    //修改积分规则
+    function edit_integralrule(){
+        if($_POST){
+            $id = $_POST['id'];
+            $data['integral'] = $_POST['integral'];
+            if($this->Integral_model->edit_integral_rule($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
 
 }
 
