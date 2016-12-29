@@ -39,25 +39,29 @@
     .am-list>li {
         border: none;
     }
-    .quan{
-        width: 280px;
+    .am-list>li.quan{
+        width: 300px;
         height: 80px;
         border-radius: 10px;
         margin-bottom: 10px;
         background: #f43b41;
         color:#fff;
+        padding-top:10px;
     }
-    a.quan:hover{
+    .am-list>li.quan:hover{
         color:#fff;
     }
-    .quan div {
+    .am-list>li.quan div {
         height: 50px;
         line-height: 50px;
         display: inline-block;
         vertical-align:middle;
         font-size:30px;
     }
-    .quan div p {
+    .am-list>li.quan div.am-u-sm-3{
+        text-align: center;
+    }
+    .am-list>li.quan div p {
         padding:0;
         margin:0;
         color:#ccc;
@@ -65,7 +69,7 @@
         line-height: 20px;
         font-size:10px;
     }
-    .quan div p:first-child{
+    .am-list>li.quan div p:first-child{
         color:#fff;
         font-size:16px;
     }
@@ -115,7 +119,7 @@
                                         <div class="am-u-sm-6 am-u-end">
                                             <ul class="am-list">
                                             <?php foreach($coupon as $val):?>
-                                              <li><a href="javascript:;" class="quan">
+                                              <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
                                                <?php if($val['typeid'] == 1):?>
                                                 <?php $sale = json_decode($val['salerule'],true);?>
                                                   <div class="am-u-sm-3">
@@ -124,7 +128,7 @@
                                                   <div class="am-u-sm-9">
 
                                                       <p>代金劵</p>
-                                                      <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "每人只可领取一次";}else{echo "无限制";}?></p>
+                                                      <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
                                                     <?php else:?>
                                                   <div class="am-u-sm-3">
                                                       <?php echo $val['discount']*10;?>折
@@ -132,12 +136,13 @@
                                                   <div class="am-u-sm-9">
 
                                                       <p>折扣卷</p>
-                                                      <p><?php if($val['receive_limit'] == 1){echo "每人只可领取一次";}else{echo "无限制";}?></p>
+                                                      <p><?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
                                                     <?php endif?>
                                                       
                                                       <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
                                                   </div>
-                                              </a></li>
+                                                  <input type="hidden" name="" class="saveid" />
+                                              </li>
                                             <?php endforeach;?>
                                               
                                             </ul> 
@@ -258,6 +263,24 @@
                 $('#discountCard').css('display','none');
             }
         });
+         var clickflag=1,clickarray=[],str='';
+        //优惠券选中状态
+          $(".quan").each(function(){
+            $(this).click(function(){
+                var dataId=$(this).attr("data-id");
+                if($(this).attr("state")=="0"){
+                    $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
+                    $(this).attr("state","1");
+                    $(this).find('.saveid').val(dataId);
+                }else{
+                    $(this).css({"box-shadow":"none","background":"rgba(244,60,65,1)","border":"2px solid #fff"});
+                    $(this).attr("state","0");
+                    $(this).find('.saveid').val("");
+                }
+            })
+            
+          })
+        
     })
 
 </script>
