@@ -152,8 +152,9 @@ td.am-text-middle img{
                 <div class="widget-body  am-fr">
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
+                            <a type="button" href="<?php echo site_url().'/serveForPeople/serveForPeople/addhelpgroup';?>" class="am-btn am-btn-default am-btn-success" ><span class="am-icon-trash " ></span> 新增成员</a>
                             <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                             <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-success"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
+                             <a href="upload/xls/import_help_user.xlsx" class="am-btn am-btn-warning"><span class="am-icon-arrow-down" ></span>下载导入模板</a>
                             <!-- <a class="am-btn am-btn-secondary am-btn-xs" >
                                  <input type="file" id="imgUpload" name="" onchange="uploadFiles()" class="upload-add fileUpLoad">
                                   <button class=""><span class="am-icon-arrow-down"></span> 导入</button>
@@ -173,6 +174,7 @@ td.am-text-middle img{
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">姓名 </th>
                                     <th class="moll_name">头像 </th>
+                                    <th class="moll_name">年龄 </th>
                                     <th class="shop_id">职业</th>
                                     <th class="shop_id">联系方式</th>
                                     <th class="shop_name">帮扶内容 </th>
@@ -251,6 +253,7 @@ var nums=0,flag=0;
         data: data,
         success: function(result){   
             var res = eval(result);
+            console.log(res);
             if(res!=2){
                 nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -409,11 +412,12 @@ var nums=0,flag=0;
                             //保存编辑后的成员信息
                             $('.sureSave').eq(i).click(function(){
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_hele_user');?>";//上传文件的后台地址;
-                                var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,area=document.getElementsByClassName('area'+dataId)[0].value,address=document.getElementsByClassName('address'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
+                                var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,area=document.getElementsByClassName('area'+dataId)[0].value,address=document.getElementsByClassName('address'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
                                 console.log(name+picArray[0] +job+phone+content+area+address+state);
                                 formD.append('id',dataId);
                                 formD.append('name',name);
                                 formD.append('picArray',picArray[0]);
+                                formD.append('age',age);
                                 formD.append('occupation',job);
                                 formD.append('phone',phone);
                                 formD.append('competency',content);
@@ -484,6 +488,7 @@ $(document).ready(function(){
             暂无
         <%}%>
         </td>
+        <td class="am-text-middle"><%= age%></td>
         <td class="am-text-middle"><%= occupation%></td>
         <td class="am-text-middle"><%= phone%></td>
         <td class="am-text-middle">
@@ -562,6 +567,12 @@ $(document).ready(function(){
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
+                    <div class="am-u-sm-9">
+                        <input type="number" name='house_layout' class="age<%= helper_id%>" value="<%= age%>" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
                     <div class="am-u-sm-9">
                         <input type="text" name='house_layout' class="job<%= helper_id%>" value="<%= occupation%>" required>
@@ -612,7 +623,7 @@ $(document).ready(function(){
                     </div>
                 </div>
                 
-            </form>
+                </form>
                 
             </div>
             <div class="am-modal-footer">
