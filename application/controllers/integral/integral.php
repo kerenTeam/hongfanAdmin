@@ -219,7 +219,7 @@ class Integral extends Default_Controller
         $data['menu'] = array('integral','integralOrderList');
         $this->load->view('template.html',$data);
     }
-    
+
     //积分规则
     function integralRule(){
         $data['page'] = $this->view_integralRule;
