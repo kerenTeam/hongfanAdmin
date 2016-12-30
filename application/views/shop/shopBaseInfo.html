@@ -55,7 +55,7 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="doc-vld-528">开业时间<span class="red">*</span>：</label>
                         <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                          <input type="text" value='<?php echo $busin["open_busin"]?>' name='open_busin' class="am-form-field" placeholder="日历组件" readonly>
+                          <input type="text" value='<?php echo $busin["open_busin"]?>' name='open_busin' class="am-form-field" id="startBusinessTime" placeholder="日历组件" readonly>
                           <span class="am-input-group-btn am-datepicker-add-on">
                             <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
                           </span>
@@ -104,10 +104,6 @@
                         <label for="area">面积/平方米<span class="red">*</span>：</label>
                         <input type="text" name="area"  value="<?php echo $busin['area']?>" required />
                     </div>
-                  <!--   <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="comments">当前评价<span class="red">*</span>：</label>
-                        <input type="number" class="" name="comments" value="12"  id="comments"  min="0" required />
-                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
                         <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
                         <label class="am-radio-inline">
@@ -255,7 +251,7 @@
                     </div>
                     <div class="am-form-group am-text-center">
                     <input type="hidden" name="store_id" value="<?php echo $busin['store_id'];?>">
-                        <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                        <button type="submit" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
                         <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                     </div>
                 </div>
@@ -328,6 +324,14 @@
         })
     })
 
-
+    //点击保存按钮作验证
+    $('#submit').click(function(){
+        if($('#startBusinessTime').val()==""){
+            alert("请选择开业时间！");
+            return false;
+        }else{
+            return true;
+        }
+    });
 
 </script>

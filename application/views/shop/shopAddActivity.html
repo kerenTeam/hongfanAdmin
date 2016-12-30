@@ -182,7 +182,7 @@
                                               <div class="am-u-sm-6">
                                                 <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
                                               </div>
-                                              <div class="am-u-sm-6 am-u-end red"><small>请先选择结束日期</small></div>
+                                              <small class="red redtips" style="display: none">请先选择结束日期</small>
                                             </div>
                                         </div>
                                         
@@ -259,6 +259,11 @@
           $('#end_date').val($('#my-end').data('date'));
         }
         $(this).datepicker('close');
+      });
+    $('#my-start').hover(function(){
+        $('.redtips').css('display','block');
+      },function(){
+        $('.redtips').css('display','none');
       });
     
     //优惠和活动的选择
