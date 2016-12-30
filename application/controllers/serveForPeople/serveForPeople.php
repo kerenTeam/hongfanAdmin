@@ -175,10 +175,6 @@ class ServeForPeople extends Default_Controller
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['headPic'] = $myFileName;
             }
-            var_dump($arr);
-            exit;
-
-
 
            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
@@ -189,21 +185,26 @@ class ServeForPeople extends Default_Controller
                  @unlink($inputFileName); 
                 exit;
             }
-            $data['sex'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
-            $data['phone'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
-            $data['email'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
-            $data['occupation'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
-           $com = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值 
-            $data['area'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
-            $data['address'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取c列的值
-            $data['info'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取c列的值
-            $data['competency'] = json_encode(explode(',',$com),JSON_UNESCAPED_UNICODE);
+            $data['age'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+
+            $data['sex'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取B列的值
+            $data['phone'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
+            $data['email'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值 
+            $data['occupation'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值 
+            $com = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取c列的值 
+            $data['area'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取c列的值
+            $data['address'] = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取c列的值
+            $data['info'] = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取c列的值
+            $data['competency'] = json_encode(explode('&',$com),JSON_UNESCAPED_UNICODE);
             $data['import_userid'] = $this->session->users['user_id'];
 
-           
+               //缩略图
+            if(isset($arr['D'.$currentRow])){
+                 $data['headPic'] = $arr['D'.$currentRow][0]['headPic'];
+            }else{
+                $data['headPic'] = '';
+            } 
             $import =  $this->db->insert('hf_service_help_user',$data); 
-           
-
           }
        }else{
             $this->load->view('404.html');
