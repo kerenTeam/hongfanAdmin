@@ -113,17 +113,19 @@ padding: 5px 6px!important;
                             <div class="am-g">
                               <div class="am-u-sm-6">
                                 <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
+                                <small class="red redtips" style="display: none">请先选择结束日期</small>
                               </div>
                               <div class="am-u-sm-6">
                                 <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
                               </div>
+                              
                             </div>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">核销方式<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="verification" id="salesType" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="verification" id="salesmethod" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                 <option value="">输入查找/选择</option>
                                 <option value="3">到店核销</option>
                                 <option value="2">在线抵用</option>
@@ -131,7 +133,7 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-start">
                         <label for="user-email" class="am-u-sm-3 am-form-label">库存数<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <input type="number" name="stock" id="stock" min="0"  class="am-form-field tpl-form-no-bg" placeholder="请输入库存数量"  required>
@@ -204,12 +206,19 @@ padding: 5px 6px!important;
         }
         $(this).datepicker('close');
       });
-
+      $('#my-start').hover(function(){
+        $('.redtips').css('display','block');
+      },function(){
+        $('.redtips').css('display','none');
+      });
       //点击添加优惠券之前的验证
       $('#addSales').click(function() {
-        var salesName = $('#salesName').val(),salesType = $('#salesType option:selected').val(),meetMoney = $('#meetMoney').val(),reduceMoney = $('#reduceMoney').val(),discount = $('#discount').val(),receive_limit = $('#receive_limit option:selected').val(),salesType = $('#salesType option:selected').val(),stock = $('#stock').val(),salesContent = $('#salesContent').val();
-        if(salesName=="" || salesType=="" || receive_limit=="" || salesType=="" || stock=="" || salesContent==""){
+        var salesName = $('#salesName').val(),salesType = $('#salesType option:selected').val(),meetMoney = $('#meetMoney').val(),reduceMoney = $('#reduceMoney').val(),discount = $('#discount').val(),receive_limit = $('#receive_limit option:selected').val(),salesmethod = $('#salesmethod option:selected').val(),stock = $('#stock').val(),salesContent = $('#salesContent').val();
+        if(salesName=="" || salesType=="" || receive_limit=="" || salesmethod=="" || stock=="" || salesContent==""){
             alert("您还有未填写项奥~");
+            return false;
+        }else if($('#end_date').val()=="" || $('#begin_date').val()==""){
+            alert("请选择活动时间！");
             return false;
         }else if(meetMoney && reduceMoney && parseInt(meetMoney)<parseInt(reduceMoney)){
             alert("亲，折扣金额大于总金额啦~");
@@ -220,7 +229,7 @@ padding: 5px 6px!important;
         }else{
             return true;
         }
-      })
+      });
 
 
   });
