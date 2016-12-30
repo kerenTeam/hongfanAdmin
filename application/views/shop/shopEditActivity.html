@@ -1,5 +1,5 @@
 <style type="text/css" media="screen">
-    .am-selected{
+    .am-selected{ 
         width: 100%!important;
     }
     .table-check{
@@ -145,6 +145,7 @@
                                                   <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $couponid;?>" />
                                                 <?php else:?>
                                                     <input type="hidden" name="couponid[]" class="saveid" value="" />
+                                                    <span class="am-icon"></span>
                                                 <?php endif;?>
                                               </li>
                                             <?php endforeach;?>
@@ -266,41 +267,33 @@
             $(this).datepicker('close');
           });
       
-
-         $('#property').change(function(){
-            //根据一级业态的内容来控制二级业态的显示
-            var property=$('#property option:selected').val(),str='',sttr='';
-            if(property=="2"){
-                $('#discountCard').css('display','block');
-            }else{
-                $('#discountCard').css('display','none');
-            }
-        });
     })
 
-    var clickflag=1,clickarray=[],str='';
-        //优惠券选中状态
-          $(".quan").each(function(){
-                var dataId=$(this).attr("data-id");
-                if($(this).attr("state")=="1"){
-                    $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
-                }
-            })
-        //优惠券选中状态
-          $(".quan").each(function(){
-            $(this).click(function(){
-                var dataId=$(this).attr("data-id");
-                if($(this).attr("state")=="0"){
-                    $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
-                    $(this).attr("state","1");
-                    $(this).find('.saveid').val(dataId);
-                }else{
-                    $(this).css({"box-shadow":"none","background":"rgba(244,60,65,1)","border":"2px solid #fff"});
-                    $(this).attr("state","0");
-                    $(this).find('.saveid').val("");
-                }
-            })
-            
-          })
+    //优惠和活动的选择
+    $(".discount").click(function(){ 
+        $('#discountCard').css('display','block');       
+    });
+    $(".activity").click(function(){ 
+        $('#discountCard').css('display','none');       
+    });   
+     var clickflag=1,clickarray=[],str='';
+    //优惠券选中状态
+      $(".quan").each(function(){
+        $(this).click(function(){
+            var dataId=$(this).attr("data-id");
+            if($(this).attr("state")=="0"){
+                $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
+                $(this).attr("state","1");
+                $(this).find('.saveid').val(dataId);
+                $(this).find('span').addClass("am-icon-check");
+            }else{
+                $(this).css({"box-shadow":"none","background":"rgba(244,60,65,1)","border":"2px solid #fff"});
+                $(this).attr("state","0");
+                $(this).find('.saveid').val("");
+                $(this).find('span').removeClass("am-icon-check");
+            }
+        });
+        
+      });
         
 </script>

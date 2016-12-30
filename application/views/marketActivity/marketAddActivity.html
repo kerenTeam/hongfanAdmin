@@ -8,7 +8,7 @@
     .hf-dropdown{
         font-size: 12px!important;
     padding: 5px 6px!important;
-    }
+    } 
  #preview{
         height:200px !important;
     }
@@ -107,11 +107,13 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
-                                            <select id="property" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name="type">
-                                                <option value="">输入查找/选择</option>
-                                                <option value="2">优惠</option>
-                                                <option value="1">活动</option>
-                                            </select>
+                                            <div class="am-u-sm-6 am-u-end">
+                                                <input type="radio" name="property" value="1" class="discount" />优惠     
+                                            </div>
+                                            <div class="am-u-sm-6 am-u-end">
+                                                <input type="radio" name="property" value="0" class="activity" />活动                                      
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style="display: none">
@@ -142,6 +144,7 @@
                                                       <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
                                                   </div>
                                                   <input type="hidden" name="couponid[]" class="saveid" />
+                                                  <span class="am-icon"></span>
                                               </li>
                                             <?php endforeach;?>
                                               
@@ -254,15 +257,13 @@
       });
     
 
-         $('#property').change(function(){
-            //根据一级业态的内容来控制二级业态的显示
-            var property=$('#property option:selected').val(),str='',sttr='';
-            if(property=="2"){
-                $('#discountCard').css('display','block');
-            }else{
-                $('#discountCard').css('display','none');
-            }
+        //优惠和活动的选择
+        $(".discount").click(function(){ 
+            $('#discountCard').css('display','block');       
         });
+        $(".activity").click(function(){ 
+            $('#discountCard').css('display','none');       
+        });   
          var clickflag=1,clickarray=[],str='';
         //优惠券选中状态
           $(".quan").each(function(){
@@ -272,14 +273,16 @@
                     $(this).css({"box-shadow":"5px 5px 5px #ccc","background":"rgba(244,60,65,0.8)","border":"2px solid #fff"});
                     $(this).attr("state","1");
                     $(this).find('.saveid').val(dataId);
+                    $(this).find('span').addClass("am-icon-check");
                 }else{
                     $(this).css({"box-shadow":"none","background":"rgba(244,60,65,1)","border":"2px solid #fff"});
                     $(this).attr("state","0");
                     $(this).find('.saveid').val("");
+                    $(this).find('span').removeClass("am-icon-check");
                 }
-            })
+            });
             
-          })
+          });
         
     })
 
