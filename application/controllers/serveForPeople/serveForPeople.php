@@ -171,9 +171,9 @@ class ServeForPeople extends Default_Controller
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'upload/goods/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'upload/headPic/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
-                $arr[$codata][]['bannerPic'] = $myFileName;
+                $arr[$codata][]['headPic'] = $myFileName;
             }
             var_dump($arr);
             exit;
