@@ -15,16 +15,29 @@ class Electronic extends Default_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->model('Activity_model');
     }
     //electronic列表
     function electronicList(){
-
-    	 
          $data['page']= $this->view_electronicList;
          $data['menu'] = array('electronic','electronicList');
          $this->load->view('template.html',$data);
-
     }
+
+    //返回所有卡卷
+    function get_electr_list(){
+        if($_POST){
+            $list = $this->Activity_model->get_coupons();
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //新增electronic
     function addElectronic(){
        $data['page']= $this->view_addElectronic;
@@ -33,9 +46,34 @@ class Electronic extends Default_Controller {
     }
     //编辑electronic
     function editElectronic(){
-        $data['page']= $this->view_editElectronic;
-         $data['menu'] = array('electronic','electronicList');
-         $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+
+
+
+             $data['page']= $this->view_editElectronic;
+             $data['menu'] = array('electronic','electronicList');
+             $this->load->view('template.html',$data);
+        }
+    }
+
+    //删除优惠劵
+    function del_coupon(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";exit;
+            }
+            if($this->Activity_model->del_coupon($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{ 
+            echo "2";
+        }
     }
 }
 
