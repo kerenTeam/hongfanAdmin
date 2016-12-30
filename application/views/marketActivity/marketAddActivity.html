@@ -199,7 +199,7 @@
                             </div>
 
                             <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <button class="am-btn am-btn-secondary am-btn-xs" type="submit">新增</button>
+                                <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="submit">新增</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>
 
@@ -272,7 +272,7 @@
         });   
          var clickflag=1,clickarray=[],str='';
         //优惠券选中状态
-          $(".quan").each(function(){
+        $(".quan").each(function(){
             $(this).click(function(){
                 var dataId=$(this).attr("data-id");
                 if($(this).attr("state")=="0"){
@@ -288,7 +288,16 @@
                 }
             });
             
-          });
+        });
+        //点击保存按钮作验证
+        $('#submit').click(function(){
+            if($('#end_date').val()=="" || $('#begin_date').val()==""){
+                alert("请选择活动时间！");
+                return false;
+            }else{
+                return true;
+            }
+        });
         
     })
 

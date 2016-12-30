@@ -114,7 +114,7 @@
                                         <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="property" value="1" class="discount" />优惠     
+                                                <input type="radio" name="property" checked="checked" value="1" class="discount" />优惠     
                                             </div>
                                             <div class="am-u-sm-6 am-u-end">
                                                 <input type="radio" name="property" value="0" class="activity" />活动                                      
@@ -122,7 +122,7 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style="display: none">
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style="display: block">
                                         <label class="am-u-sm-3 am-text-right">优惠券<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <ul class="am-list">
@@ -199,7 +199,7 @@
                             </div>
 
                             <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <button class="am-btn am-btn-secondary am-btn-xs" type="submit">新增</button>
+                                <button class="am-btn am-btn-secondary am-btn-xs" id="submit" type="submit">新增</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>
 
@@ -287,6 +287,16 @@
         });
         
       });
+
+    //点击保存按钮作验证
+    $('#submit').click(function(){
+        if($('#end_date').val()=="" || $('#begin_date').val()==""){
+            alert("请选择活动时间！");
+            return false;
+        }else{
+            return true;
+        }
+    });
         
 })
 
