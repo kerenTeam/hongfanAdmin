@@ -13,27 +13,26 @@
     <div class="container-fluid am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>为民服务 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团</a>
-                <small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/addhelpgroup';?>">新增帮帮团</a></small></div>
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>为民服务 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/ServeForPeople/helpgrouplist';?>" style="font-size:16px;">邻水帮帮团</a>
+                <small><a href="<?php echo site_url().'/serveForPeople/ServeForPeople/addhelpgroup';?>">新增帮帮团</a></small></div>
             </div>
         </div>
     </div>
     <div class="row-content am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
-                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                <form class="am-form tpl-form-line-form"  action="<?php echo site_url('/serveForPeople/ServeForPeople/add_help_user');?>" method="post" enctype='multipart/form-data'>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type='hidden' name='type_id' />
-                                <input type="text" placeholder="姓名" class="name" name='name' minlength="4" required="">
+                                <input type="text" placeholder="姓名" class="name" name='name' minlength="2" required="">
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
                                 <div class="wx_type_img">
-                                    <input type="file" name="img1" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
+                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview" class="preview">
                                         <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
@@ -45,47 +44,52 @@
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="number" name='house_layout' class="age" value="" required>
+                                <input type="number" name='age' class="age"  required>
+                            </div>
+                        </div>  
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name='sex' class="age"  required>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="text" name='house_layout' class="job" value="" required>
+                                <input type="text" name='occupation' class="job"  required>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="tel" value="" class="phone" name='quarters' required>
+                                <input type="tel"  class="phone" name='phone' required>
                             </div>
                         </div>            
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">                     
-                                <input type="text" name='area_address' class="content" required />
+                                <input type="text" name='competency' class="content" placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" required />
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name='address' class="area"  placeholder="如：邻水xxxx" required>
+                                <input type="text" name='area' class="area" value="四川 广安 邻水" readonly >
                             </div>
                         </div>
-                       
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">所在街道 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" name="phone" class="address"  placeholder="输入所在街道" required>
+                                <input type="text" name="address" class="address"  placeholder="输入所在街道" required>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <select class="am-u-sm-12 state" name="goodsState" data-id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value="">-=请选择一项=-</option>
-                                    <option value="1" selected="selected">是</option>
-                                    <option value="0">否</option>
+                                <select class="am-u-sm-12 state" name="recommend" data-id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                    <option >-=请选择一项=-</option>
+                                    <option value="1">是</option>
+                                    <option value="0"  selected="selected">否</option>
                                 </select>
                             </div>
                         </div>
