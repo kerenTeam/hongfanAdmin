@@ -710,7 +710,7 @@ class SingleShop extends Default_Controller {
             if($data['type'] == 2){
                 $cou = array_filter($data['couponid']);
                 if(!empty($cou)){
-                    $data['couponid'] = json_encode($cou);
+                    $data['couponid'] = implode(',',$cou);
                 }else{
                     $data['couponid'] = '';
                  }
@@ -737,7 +737,7 @@ class SingleShop extends Default_Controller {
             //获取所有优惠劵            
             $coupon = $this->MallShop_model->get_store_coupon($this->session->businessId);
             if(!empty($info['couponid'])){
-                $couponid = json_decode($info['couponid'],true);
+                $couponid = explode(',',$info['couponid']);
                 foreach ($coupon as $key => $value) {
                    if(in_array($value['id'],$couponid)){
                         $coupon[$key]['check'] = '1'; 
@@ -748,6 +748,7 @@ class SingleShop extends Default_Controller {
             }
             $data['coupon'] = $coupon;
             $data['info'] = $info;
+
             $data['page'] = $this->view_shopEditActivity;
             $data['menu'] = array('activity','shopActivityList');
             $this->load->view('template.html',$data);
@@ -771,16 +772,21 @@ class SingleShop extends Default_Controller {
                         $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
+            var_dump($data);
+            exit;
             if($data['type'] == 2){
                 $cou = array_unique(array_filter($data['couponid']));
+                var_dump($cou);
                 if(!empty($cou)){
-                    $data['couponid'] = json_encode($cou);
+                    $data['couponid'] = $cou;
                 }else{
                     $data['couponid'] = '';
                 }
             }else{
                 $data['couponid'] = '';
             }
+            var_dump($data);
+            exit;
             if($this->MallShop_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
