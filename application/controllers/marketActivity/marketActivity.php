@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once(APPPATH.'controllers/Default_Controller.php');
 class MarketActivity extends Default_Controller {
     //商场活动列表
-    public $view_marketActivity = "marketActivity/marketActivity.html"; 
+    public $view_marketActivity = "marketActivity/marketActivityList.html"; 
     //商场活动新增
     public $view_marketAddActivity = "marketActivity/marketAddActivity.html.html";
     //商场活动编辑
@@ -17,9 +17,10 @@ class MarketActivity extends Default_Controller {
         parent::__construct();
     }
     //商场活动列表
-    function marketActivity(){   	 
+    function activity(){   	 
+
          $data['page']= $this->view_marketActivity;
-         $data['menu'] = array('marketActivity','marketActivity');
+         $data['menu'] = array('marketActivity','activity');
          $this->load->view('template.html',$data);
 
     }

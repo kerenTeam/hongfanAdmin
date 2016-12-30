@@ -694,6 +694,10 @@ class SingleShop extends Default_Controller {
     function add_activity(){
         if($_POST){
             $data = $this->input->post();
+            if(empty($data['type'])){
+                echo "<script>alert('活动类型不能为空！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";
+                exit;
+            }
             if(!empty($_FILES['img']['name'])){
                     $config['upload_path']      = 'upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
@@ -721,7 +725,7 @@ class SingleShop extends Default_Controller {
             if($this->MallShop_model->add_activity($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
@@ -759,6 +763,10 @@ class SingleShop extends Default_Controller {
     function edit_activity_info(){
         if($_POST){
             $data = $this->input->post();
+            if(empty($data['type'])){
+                echo "<script>alert('活动类型不能为空！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";
+                exit;
+            }
             if(!empty($_FILES['img']['name'])){
                     $config['upload_path']      = 'upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
@@ -772,21 +780,17 @@ class SingleShop extends Default_Controller {
                         $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
-            var_dump($data);
-            exit;
+          
             if($data['type'] == 2){
                 $cou = array_unique(array_filter($data['couponid']));
-                var_dump($cou);
                 if(!empty($cou)){
-                    $data['couponid'] = $cou;
+                    $data['couponid'] = implode(',',$cou);
                 }else{
                     $data['couponid'] = '';
                 }
             }else{
                 $data['couponid'] = '';
             }
-            var_dump($data);
-            exit;
             if($this->MallShop_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
