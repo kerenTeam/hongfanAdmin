@@ -122,7 +122,7 @@ padding: 5px 6px!important;
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editActivity').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            $('.editActivity').eq(i).attr("href","<?php echo site_url().'/shop/singleShop/shopEditActivity/"+ dataId +"';?>");                         
+                            $('.editActivity').eq(i).attr("href","<?php echo site_url().'/marketActivity/MarketActivity/marketEditActivity/"+ dataId +"';?>");                         
                         }
 
                         //单个商家活动删除
@@ -130,11 +130,11 @@ padding: 5px 6px!important;
                             var deleteId=$(this).attr('data-id'); 
                             $.ajax({
                                 type:'post',
-                                url:'<?php echo site_url('/shop/singleShop/del_shopActivity');?>',
+                                url:'<?php echo site_url('/marketActivity/MarketActivity/del_Activity');?>',
                                 data: 'id='+deleteId,
                                 success: function(data){
                                     if(data==1){
-                                        getList('<?php echo site_url('/shop/singleShop/activity_list');?>','default=1');
+                                        getList('<?php echo site_url('/marketActivity/MarketActivity/get_activity_list');?>','default=1');
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -164,10 +164,10 @@ padding: 5px 6px!important;
 
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/singleShop/activity_list');?>','default=1');
+    getList('<?php echo site_url('/marketActivity/MarketActivity/get_activity_list');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/activity_list');?>','default=1');
+        getList('<?php echo site_url('/marketActivity/MarketActivity/get_activity_list');?>','default=1');
     });
     //点击搜索
     $('.searchGoods').click(function(){

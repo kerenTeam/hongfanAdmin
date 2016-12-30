@@ -21,7 +21,7 @@ td img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
-            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:16px;">电子券列表</a>
+            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
             <small></small></div>
         </div>
     </div>
@@ -50,10 +50,12 @@ td img{
                         <div class="am-u-sm-9">
                             <div class="am-u-sm-6">
                                 <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                                <small class="red redtips" style="display: none">请先选择结束日期</small>
                               </div>
                               <div class="am-u-sm-6">
                                 <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
                               </div>
+
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
@@ -106,130 +108,21 @@ td img{
                                     <th class="shop_id">名称</th>
                                     <th class="shop_name">标题 </th>
                                     <th class="shop_type">类型 </th>
-                                     <th class="shop_type">库存数</th>
                                     <th class="shop_yetai">有效期</th>
                                     <th class="brand">领取限制</th>
                                     <th class="brand">核销方式</th>
-                                    <th class="brand">二维码</th>
-                                    <th class="brand">发放方式</th>
-                                    <th class="brand">使用方式</th>
-                                    <th class="floor_shopId">审核状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="am-text-middle">S10022></td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">折扣券</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
-                                    <td class="am-text-middle">普通会员</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">免费领取</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle">通过审核</td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">S10022></td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">折扣券</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
-                                    <td class="am-text-middle">普通会员</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">免费领取</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle">通过审核</td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">S10022></td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">折扣券</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
-                                    <td class="am-text-middle">普通会员</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">免费领取</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle">通过审核</td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronic';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">S10022></td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">满记甜品促销</td>
-                                    <td class="am-text-middle">折扣券</td>
-                                    <td class="am-text-middle">200</td>
-                                    <td class="am-text-middle">2016-09-26至2016-11-20</td>
-                                    <td class="am-text-middle">普通会员</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png"></td>
-                                    <td class="am-text-middle">免费领取</td>
-                                    <td class="am-text-middle">到店核销</td>
-                                    <td class="am-text-middle">通过审核</td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/electronic/electronic/editElectronicy';?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                            <tbody id="electronicList">
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
+                    <div class="am-u-lg-12 am-cf am-text-center">
+                        <div class="" id="paging_list">
                         </div>
+                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
                     </div>
                 </div>
             </div>
@@ -238,3 +131,196 @@ td img{
 </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //异步刷新的ajax请求   
+    function getList(dataurl,data){
+        $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){         
+            var res = eval(result);
+            console.log(res);
+            if(res!=2){
+                var nums = 10; //每页出现的数量
+                var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
+                var thisDate = function(curr){
+                    var listData = '' , last = curr*nums - 1;
+                    last = last >= res.length ? (res.length-1) : last;
+                     for(var i = (curr*nums - nums); i <= last; i++){
+                        listData+= template('electronicListModal',res[i]);
+                     }
+                    
+                    return listData;
+                }; 
+                //调用分页
+                laypage({
+                    cont: 'paging_list',
+                    pages: pages,
+                    jump: function(obj){
+                        document.getElementById('electronicList').innerHTML = thisDate(obj.curr);
+                        $('.editElectronic').click(function(){//编辑商品信息
+                            var dataId=$(this).attr('data-id');
+                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/editElectronic/" + dataId + "');?>");
+                        });
+                        for(var i=0;i<$('.tpl-del').length;i++){
+                            var dataId=$('.tpl-del').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                         
+                        }
+                        //删除优惠券的AJAX请求
+                        $('.sureDelete').click(function(){
+                            var dataId=$(this).attr('data-id');
+                            for(var i=0;i<$('.trClass').length;i++){
+                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
+                                    $.ajax({
+                                        type:'post',
+                                        url:'<?php echo site_url('/electronic/Electronic/del_coupon');?>',
+                                        data: 'id='+dataId,
+                                        success: function(data){
+                                            if(data==1){                 
+                                               getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');  
+                                            }else{
+                                                alert("操作失败，请检查网络设置！");
+                                            }
+                                            
+                                        },
+                                        error:function(xhr,type,errorThrown){
+                                            alert("操作失败，请检查网络设置！");
+                                        }
+                                    });
+                                }
+                            }
+                            
+                        });
+                        
+                    }
+                })
+            }else{
+                for(var i=0;i<$('.trClass').length;i++){
+                    $('.trClass').eq(i).remove();
+                }
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关优惠券信息！</p></td></tr>').appendTo('#electronicList');
+            }
+
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+}
+$(document).ready(function(){
+var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+      $('#my-start').hover(function(){
+        $('.redtips').css('display','block');
+      },function(){
+        $('.redtips').css('display','none');
+      });
+
+
+    
+    //加载列表数数据
+    getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');
+    //刷新页面
+    $('.refresh').click(function(){
+        getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');
+    });
+    //点击搜索
+    $('.searchSales').click(function(){
+        var salesType=$('#salesType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
+        var startDate=$('#startDate').val(),endDate=$('#endDate').val();
+        if((startDate=="" && endDate!="") || (startDate!="" && endDate=="")){
+            alert("交易总额必须是一个范围！");
+            return false;
+        }else{
+            getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+        }
+        
+    });
+})
+</script>
+<script type="text/html" id="electronicListModal">
+    <tr class="trClass" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= name%></td>
+        <td class="am-text-middle"><%= title%></td>
+        <%if(typeid=="1") {%>
+        <td class="am-text-middle">代金券</td>
+        <%}else if(typeid=="2") {%>
+        <td class="am-text-middle">折扣券</td>
+        <%}else if(typeid=="3") {%>
+        <td class="am-text-middle">活动券</td>
+        <%}else if(typeid=="4") {%>
+        <td class="am-text-middle">礼品券</td>
+        <%}else {%>
+        <td class="am-text-middle">停车券</td>
+        <%}%>
+        <td class="am-text-middle"><%= begin_date%>至<%= end_date%></td>
+        <%if(receive_limit=="1") {%>
+        <td class="am-text-middle">限领一次</td>
+        <%}else {%>
+        <td class="am-text-middle">不限制</td>
+        <%}%>
+        <%if(verification=="1") {%>
+        <td class="am-text-middle">不限制</td>
+        <%}else if(verification=="2") {%>
+        <td class="am-text-middle">在线抵用</td>
+        <%}else {%>
+        <td class="am-text-middle">到店核销</td>
+        <%}%>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= id%>" class="editElectronic">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+                <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+</script>
+
