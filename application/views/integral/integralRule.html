@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="am-u-sm-5 saveBuy" style="display: none;">
                                     消费每满十元送
-                                    <input type="number" name="integral" class="signIn" id="intergral" min="1" required="required" />积分
+                                    <input type="number" name="integral" value="<?php echo $val['integral'];?>" class="signIn" id="intergral" min="1" required="required" />积分
                                 </div>
                                 <div class="am-u-sm-2  am-fl saveBuy" style="display: none;">
                                 <input type="hidden" name="id" value="<?php echo $val['id'];?>">
@@ -118,7 +118,7 @@
                                     每参加一次活动送  <span style="font-weight: bold;font-size: 20px;"><?php echo $val['integral'];?></span>  积分
                                 </div>
                                 <div class="am-u-sm-2 am-text-left changeActivity">
-                                    <button type="button" name="integral" class="am-btn-warning" id="changeActivity">修改</button>
+                                    <button type="button" name="integral" value="<?php echo $val['integral'];?>" class="am-btn-warning" id="changeActivity">修改</button>
                                 </div>
                                 <div class="am-u-sm-5 saveActivity" style="display: none;">
                                     每参加一次活动送

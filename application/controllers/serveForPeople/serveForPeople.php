@@ -141,6 +141,45 @@ class ServeForPeople extends Default_Controller
             }
            $PHPExcel = $PHPReader->load($inputFileName);
            $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+
+
+           $i = 0;   
+           foreach ($PHPExcel->getActiveSheet()->getDrawingCollection() as $drawing) {
+                if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
+                    ob_start();
+                    call_user_func(
+                        $drawing->getRenderingFunction(),
+                        $drawing->getImageResource()
+                    );
+                    $imageContents = ob_get_contents();
+                    ob_end_clean();
+                    switch ($drawing->getMimeType()) {
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_PNG :
+                                $extension = 'png'; break;
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_GIF:
+                                $extension = 'gif'; break;
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
+                                $extension = 'jpg'; break;
+                    }
+                } else {
+                    $zipReader = fopen($drawing->getPath(),'r');
+                    $imageContents = '';
+                    while (!feof($zipReader)) {
+                        $imageContents .= fread($zipReader,1024);
+                    }
+                    fclose($zipReader);
+                    $extension = $drawing->getExtension();
+                }
+                $codata = $drawing->getCoordinates(); 
+                $myFileName = 'upload/goods/'.date('His').++$i.'.'.$extension;
+                file_put_contents($myFileName,$imageContents);
+                $arr[$codata][]['bannerPic'] = $myFileName;
+            }
+            var_dump($arr);
+            exit;
+
+
+
            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
            $erp_orders_id = array();  //声明数组
@@ -286,6 +325,35 @@ class ServeForPeople extends Default_Controller
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
+    //新增帮帮成员
+    function add_help_user(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'upload/headPic/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
+                    }else{
+                      
+                        $data['headPic'] = 'upload/headPic/'.$this->upload->data('file_name');
+                   }     
+            }
+            $data['competency'] = json_encode(explode("&",$data['competency']));
+            if($this->Service_model->add_help_user($data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
 	//为民服务  编辑邻水帮帮团
     function edithelpgroup(){
         $data['page'] = $this->view_edithelpgroup;
