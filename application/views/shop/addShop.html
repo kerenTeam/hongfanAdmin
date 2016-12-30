@@ -7,7 +7,7 @@
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
             <a href="<?php echo site_url().'/shop/shop/addShop';?>" style="font-size:16px;">新增商家</a><small></small></div>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="row-content am-cf">
     <div class="row">
@@ -43,7 +43,7 @@
                             <div class="am-form-group">
                                 <label for="onlineTime">开业时间<span class="red">*</span>：</label>
                                 <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                  <input type="text" name="open_busin" id="onlineTime" class="am-form-field" placeholder="日历组件" readonly>
+                                  <input type="text" name="open_busin" id="startBusinessTime" class="am-form-field" placeholder="日历组件" readonly>
                                   <span class="am-input-group-btn am-datepicker-add-on">
                                     <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
                                   </span>
@@ -138,7 +138,7 @@
                     </div>
 
                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">添加</button>
+                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" id="submit" type="submit">添加</button>
                     </div>
                 </div>
             </form>
@@ -208,6 +208,17 @@ $(document).ready(function(){
                 alert("操作失败，请检查网络设置！");
             }
         });
-    })
+    });
+
+    //点击保存按钮作验证
+    $('#submit').click(function(){
+        if($('#startBusinessTime').val()==""){
+            alert("请选择开业时间！");
+            return false;
+        }else{
+            return true;
+        }
+    });
+
 })
 </script>
