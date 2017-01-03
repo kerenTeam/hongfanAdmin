@@ -63,7 +63,7 @@ class Electronic extends Default_Controller {
     function del_coupon(){
         if($_POST){
             $id = $_POST['id'];
-            if(empty($id)){
+            if(empty($id)){ 
                 echo "2";exit;
             }
             if($this->Activity_model->del_coupon($id)){

@@ -380,19 +380,20 @@ class SingleShop extends Default_Controller {
             //分类
             $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
             //根据名称返回分类
-            $cateid = $this->MallShop_model->get_cate_id($cate);
-            if(!empty($categoryid)){
+            $cateid = $this->MallShop_model->get_cate_id(trim($cate));
+            if(!empty($cateid)){
                 $data['categoryid'] = $cateid;
             }else{
                 $data['categoryid'] = '1';
             }
+
             $data['price'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
             $data['amount'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
             $data['goods_state'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
             $shuxing = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
             //商品属性
             if(!empty($shuxing)){
-               $abc = explode("*",trim($b));
+               $abc = explode("*",trim($shuxing));
                 foreach ($abc as $key => $value) {
                   $parameter_name =  explode(":",trim($value));
                   $parameterName[$key] = $parameter_name[0];
@@ -405,8 +406,8 @@ class SingleShop extends Default_Controller {
                   }
                 }
                 foreach ($parameterName as $key => $value) {
-                   $data[$key]['parameter_name'] = $value;
-                   $data[$key]['child_value'] = $checkvalue[$key];
+                   $property[$key]['parameter_name'] = $value;
+                   $property[$key]['child_value'] = $checkvalue[$key];
                 }
                 $data['parameter'] = json_encode($property,JSON_UNESCAPED_UNICODE);
             }else{
@@ -427,7 +428,7 @@ class SingleShop extends Default_Controller {
            
             $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
             $data['storeid'] = $this->session->businessId;
-          
+         
             //新增
             $this->MallShop_model->add_shop_goods($data);
            }
