@@ -38,7 +38,7 @@ class Member extends Default_Controller {
         //分页数据
         $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
        	//配置
-        $config['base_url'] = site_url('/member/member/memberList');
+        $config['base_url'] = site_url('/member/Member/memberList');
         //分页配置
         $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
         $config['full_tag_close'] = '</ul>';
@@ -207,7 +207,7 @@ class Member extends Default_Controller {
             //分页数据
             $result = $this->user_model->search_users_page('5',$card_type,$gender,$state,$sear,$current_page,$config['per_page']);
             //配置
-            $config['base_url'] = site_url('/member/member/memberList');
+            $config['base_url'] = site_url('/member/Member/memberList');
             //分页配置
             $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
             $config['full_tag_close'] = '</ul>';
@@ -289,7 +289,7 @@ class Member extends Default_Controller {
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
                 //配置
-                $config['upload_path']      = 'upload/cards';
+                $config['upload_path']      = 'hijijsUpload/cards';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -299,7 +299,7 @@ class Member extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardDetail/').$data['id']."'</script>";
                     exit;
                 } else{
-                    $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
+                    $data['pic'] =  'hijijsUpload/cards/'.$this->upload->data('file_name');
                 }
             }
             //操作数据库
@@ -345,7 +345,7 @@ class Member extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/cards';
+                $config['upload_path']      = 'hijijsUpload/cards';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -359,7 +359,7 @@ class Member extends Default_Controller {
                 }
                 else
                 {
-                    $data['pic'] =  'upload/cards/'.$this->upload->data('file_name');
+                    $data['pic'] =  'hijijsUpload/cards/'.$this->upload->data('file_name');
                 }
             }
             if($this->user_model->add_cards($data)){

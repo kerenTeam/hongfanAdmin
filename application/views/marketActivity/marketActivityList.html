@@ -20,7 +20,7 @@ padding: 5px 6px!important;
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>
-            <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size: 18px;">活动 & 优惠</a>  
+            <a href="<?php echo site_url().'/marketActivity/MarketActivity/activity';?>" style="font-size: 18px;">活动 & 优惠</a>  
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@ padding: 5px 6px!important;
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/marketActivity/MarketActivity/marketAddActivity';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                 </div>
                             </div>
                         </div>
@@ -49,6 +49,7 @@ padding: 5px 6px!important;
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">缩略图 </th>
                                     <th class="moll_name">名称 </th>
+                                    <th class="moll_name">所属商家 </th>
                                     <th class="shop_id">时间</th>
                                     <th class="moll_name">性质</th>
                                     <th>操作</th>
@@ -183,12 +184,18 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle">
         <%if(picImg){%>
-            <img src="<%= picImg%>" class="am-img-responsive imgbox" alt="广告缩略图"/>
+            <img src="<%= picImg%>" class="am-img-responsive imgbox" alt="<%= title%>"/>
         <%}else{%>  
             暂无
         <%}%>
         </td>
         <td class="am-text-middle"><%= title%></td>
+        <%if(store_name){%>
+         <td class="am-text-middle"><%= store_name%></td>
+        <%}else{%>
+                 <td class="am-text-middle">宏帆商场</td>
+
+        <%}%>
         <td class="am-text-middle"><%= begin_time%>至<%= end_time%></td>
         <td class="am-text-middle">
         <%if(type=="1"){%>

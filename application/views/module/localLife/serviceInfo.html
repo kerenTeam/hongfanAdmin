@@ -219,7 +219,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">房屋类型<span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <select name='type' required>
+                                            <select name='house_type' required>
                                                 <option value="">-=请选择一项=-</option>
                                                 <option value="二手房" <?php if($info['type'] == '二手房'){ echo "selected";}?>>二手房</option>
                                                 <option value="新房" <?php if($info['type'] == '新房'){ echo "selected";}?>>新房</option>
@@ -347,7 +347,7 @@ width:50%;
                                     </div>
                                      <div class="am-form-group am-text-center am-btn-group-xs">
                                         <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-										<input type='hidden' name='id' value='<?php echo $info['id'];?>'/>
+										<input type='hidden' name='house_id' value='<?php echo $info['house_id'];?>'/>
                                         <button type="submit" class="am-btn am-btn-danger">提交</button>
                                     </div>
                                 </form>
@@ -370,7 +370,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">新旧 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" value="<?php echo $info['brand_new']?>" name='brand_new' placeholder="如：9成新" required>
+                                            <input type="text" value="<?php echo $info['colour']?>" name='colour' placeholder="如：9成新" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">

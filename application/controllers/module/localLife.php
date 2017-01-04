@@ -35,7 +35,7 @@ class LocalLife extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/icon';
+                $config['upload_path']      = 'hijijsUpload/icon';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -44,7 +44,7 @@ class LocalLife extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
-                    $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
                 }
             }
             $data['c_id'] = '本地生活';
@@ -65,7 +65,7 @@ class LocalLife extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/icon';
+                $config['upload_path']      = 'hijijsUpload/icon';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -74,7 +74,7 @@ class LocalLife extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
-                    $data['icon'] =  'upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->Module_model->edit_cates($data['id'],$data)){
@@ -157,6 +157,7 @@ class LocalLife extends Default_Controller {
 						$list = $this->Module_model->get_mark();
 						$config['total_rows'] = count($list);
 						//分页数据
+
 						$listpage = $this->Module_model->get_mark_page($config['per_page'],$current_page);
 						//分类信息
 						$type = $this->Module_model->get_mark_type();
@@ -181,6 +182,7 @@ class LocalLife extends Default_Controller {
 				$this->pagination->initialize($config);
 				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
 				//视图
+
                 $data['page'] = $this->view_serviceList;
                 $data['menu'] = array('localLife','service');
                 $this->load->view('template.html',$data);
@@ -358,7 +360,7 @@ class LocalLife extends Default_Controller {
 			$i =1;
 			foreach($_FILES as $file=>$val){
 				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service/ordinary';
+					$config['upload_path']      = 'hijijsUpload/service/ordinary';
 					$config['allowed_types']    = 'gif|jpg|png|jpeg';
 					$config['max_size']     = 2048;
 					$config['file_name'] = date('Y-m-d_His');
@@ -368,9 +370,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 					}else{
 						if($i != 4){
-						$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
+						$pic[]['banner'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
+							$logo = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -398,7 +400,7 @@ class LocalLife extends Default_Controller {
 			$i =1;
 			foreach($_FILES as $file=>$val){
 				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service/houst';
+					$config['upload_path']      = 'hijijsUpload/service/houst';
 					$config['allowed_types']    = 'gif|jpg|png|jpeg';
 					$config['max_size']     = 2048;
 					$config['file_name'] = date('Y-m-d_His');
@@ -408,9 +410,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_id']."'</script>";exit;
 					}else{
 						if($i != 4){
-							$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
+							$pic[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'upload/service/houst/'.$this->upload->data('file_name');
+							$logo = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -440,7 +442,7 @@ class LocalLife extends Default_Controller {
 			$i =1;
 			foreach($_FILES as $file=>$val){
 				if(!empty($_FILES['img'.$i]['name'])){
-					$config['upload_path']      = 'upload/service/mark';
+					$config['upload_path']      = 'hijijsUpload/service/mark';
 					$config['allowed_types']    = 'gif|jpg|png|jpeg';
 					$config['max_size']     = 2048;
 					$config['file_name'] = date('Y-m-d_His');
@@ -450,9 +452,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['id']."'</script>";exit;
 					}else{
 						if($i != 4){
-							$pic[]['picImg'] = 'upload/service/mark/'.$this->upload->data('file_name');
+							$pic[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'upload/service/mark/'.$this->upload->data('file_name');
+							$logo = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -482,20 +484,20 @@ class LocalLife extends Default_Controller {
 					$i =1;
 					foreach($_FILES as $file=>$val){
 						if(!empty($_FILES['img'.$i]['name'])){
-							$config['upload_path']      = 'upload/service/ordinary';
+							$config['upload_path']      = 'hijijsUpload/service/ordinary';
 							$config['allowed_types']    = 'gif|jpg|png|jpeg';
 							$config['max_size']     = 2048;
 							$config['file_name'] = date('Y-m-d_His');
 							$this->load->library('upload', $config);
 							//上传
 							if(!$this->upload->do_upload('img'.$i)) {
-							   echo $this->upload->display_errors();
+							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 							}else{
 								unset($data['img'.$i]);
 								if($i != 4){
-									$pic[]['banner'] = 'upload/service/ordinary/'.$this->upload->data('file_name');
+									$pic[]['banner'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'upload/service/ordinary/'.$this->upload->data('file_name');
+									$logo = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -521,20 +523,20 @@ class LocalLife extends Default_Controller {
 					$i =1;
 					foreach($_FILES as $file=>$val){
 						if(!empty($_FILES['img'.$i]['name'])){
-							$config['upload_path']      = 'upload/service/houst';
+							$config['upload_path']      = 'hijijsUpload/service/houst';
 							$config['allowed_types']    = 'gif|jpg|png|jpeg';
 							$config['max_size']     = 2048;
 							$config['file_name'] = date('Y-m-d_His');
 							$this->load->library('upload', $config);
 							//上传
 							if(!$this->upload->do_upload('img'.$i)) {
-							   echo $this->upload->display_errors();
+							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 							}else{
                                 unset($data['img'.$i]);
 								if($i != 4){
-								$pic[]['picImg'] = 'upload/service/houst/'.$this->upload->data('file_name');
+								$pic[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'upload/service/houst/'.$this->upload->data('file_name');
+									$logo = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -562,20 +564,20 @@ class LocalLife extends Default_Controller {
 					$i = '1';
 					foreach($_FILES as $file=>$val){
 						if(!empty($_FILES['img'.$i]['name'])){
-							$config['upload_path']      = 'upload/service/mark';
+							$config['upload_path']      = 'hijijsUpload/service/mark';
 							$config['allowed_types']    = 'gif|jpg|png|jpeg';
 							$config['max_size']     = 2048;
 							$config['file_name'] = date('Y-m-d_His');
 							$this->load->library('upload', $config);
 							//上传
 							if(!$this->upload->do_upload('img'.$i)) {
-							   echo $this->upload->display_errors();
+							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 							}else{
 								unset($data['img'.$i]);
 								if($i != 4){
-									$pic[]['picImg'] = 'upload/service/mark/'.$this->upload->data('file_name');
+									$pic[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'upload/service/mark/'.$this->upload->data('file_name');
+									$logo = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -641,7 +643,7 @@ class LocalLife extends Default_Controller {
 	//导入超市比价
 	function send_market_data(){
 		  $name = date('Y-m-d');
-		  $inputFileName = "./upload/xls/" .$name .'.xls';
+		  $inputFileName = "./hijijsUpload/xls/" .$name .'.xls';
 	      move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
 	        //引入类库
 	      $this->load->library('excel');

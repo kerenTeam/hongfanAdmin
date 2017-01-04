@@ -117,7 +117,7 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'upload/logo/';
+                    $config['upload_path']      = 'hijijsUpload/logo/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -128,9 +128,9 @@ class SingleShop extends Default_Controller {
                     }else{
                         unset($data['img'.$i]);
                         if($i == 1){
-                            $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
+                            $data['logo'] = 'hijijsUpload/logo/'.$this->upload->data('file_name');
                         }else{
-                            $data['pic'] = 'upload/logo/'.$this->upload->data('file_name');
+                            $data['pic'] = 'hijijsUpload/logo/'.$this->upload->data('file_name');
                         }
                     }
                 }else{
@@ -231,7 +231,7 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'upload/goods/';
+                    $config['upload_path']      = 'hijijsUpload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -241,9 +241,9 @@ class SingleShop extends Default_Controller {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail').$data['id']."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
@@ -283,7 +283,7 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'upload/goods/';
+                    $config['upload_path']      = 'hijijsUpload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -293,9 +293,9 @@ class SingleShop extends Default_Controller {
                        echo $this->upload->display_errors();
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'upload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'upload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
                         }
                 }
                 $i++;
@@ -317,7 +317,7 @@ class SingleShop extends Default_Controller {
     function impolt_goods(){
         if(!empty($_FILES["file"]["tmp_name"])){
             $name = date('Y-m-d');
-            $inputFileName = "./upload/xls/" .$name .'.xls';
+            $inputFileName = "hijijsUpload/xls/" .$name .'.xls';
             move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
              $this->load->library('excel');
             if(!file_exists($inputFileName)){
@@ -363,7 +363,7 @@ class SingleShop extends Default_Controller {
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'upload/goods/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'hijijsUpload/goods/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['bannerPic'] = $myFileName;
             }
@@ -700,7 +700,7 @@ class SingleShop extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'upload/image/activity';
+                    $config['upload_path']      = 'hijijsUpload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -709,7 +709,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -769,7 +769,7 @@ class SingleShop extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'upload/image/activity';
+                    $config['upload_path']      = 'hijijsUpload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -778,7 +778,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/').$data['id']."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           

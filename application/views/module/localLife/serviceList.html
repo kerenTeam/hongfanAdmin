@@ -42,8 +42,8 @@ padding: 5px 6px!important;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/localLife/localLifeList');?>">本地生活</a> 
-            <small>><?php if(isset($catename)):?><a href="<?php echo site_url('/module/localLife/serviceList/').$id;?>"><?php echo $catename;?></a>><?php endif;?> <?php echo $name;?></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/LocalLife/localLifeList');?>">本地生活</a> 
+            <small>><?php if(isset($catename)):?><a href="<?php echo site_url('/module/LocalLife/serviceList/').$id;?>"><?php echo $catename;?></a>><?php endif;?> <?php echo $name;?></small></div>
         </div>
     </div>
 </div>
@@ -70,7 +70,7 @@ padding: 5px 6px!important;
                         </div>
                     </div>
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                     <form action="<?php echo site_url('module/localLife/search')?>" method="post">
+                     <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                             <input type="text" name='sear' class="am-form-field" placeholder="名称/联系人/联系号码" required>
                             <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
@@ -87,7 +87,7 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/localLife/add_service')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/LocalLife/add_service')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -219,10 +219,10 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['create_time']?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/module/localLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="tpl-table-black-operation-set">
+                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="<?php echo site_url('/module/localLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
@@ -280,7 +280,7 @@ padding: 5px 6px!important;
                     </div>
 
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                         <form action="<?php echo site_url('module/localLife/search')?>" method="post">
+                         <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                             <input type="text" name='sear' class="am-form-field" placeholder="小区名/户型/地址" required>
                             <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
@@ -298,7 +298,7 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 房产资讯类类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/localLife/add_houst')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/LocalLife/add_houst')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -445,10 +445,10 @@ padding: 5px 6px!important;
 							<?php if(!empty($lists)):?>
 								<?php foreach($lists as $val):?>
                                 <tr>
-                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['house_id'];?></td>
                                     <td class="am-text-middle"><?php echo $val['name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['house_layout'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['type'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['house_type'];?></td>
                                     <td class="am-text-middle"><?php echo $val['quarters'];?></td>
                                     <td class="am-text-middle"><?php echo $val['area_address'];?></td>
                                     <td class="am-text-middle"><?php echo $val['avg_price'];?></td>
@@ -457,10 +457,10 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/module/localLife/serviceInfo/'.$val['id'].'/'.$typeid;?>" class="tpl-table-black-operation-set">
+                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['house_id'].'/'.$typeid;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="<?php echo site_url('/module/localLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#h_delete1'}">
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['house_id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#h_delete1'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
@@ -516,7 +516,7 @@ padding: 5px 6px!important;
                     </div>
 
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                        <form action="<?php echo site_url('module/localLife/search')?>" method="post">
+                        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                             <input type="text" name='sear' class="am-form-field" placeholder="宝贝名" required>
                             <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
@@ -533,7 +533,7 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/localLife/add_market')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/LocalLife/add_market')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -549,7 +549,7 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">新旧 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name='brand_new' placeholder="如：9成新" required>
+                                            <input type="text" name='colour' placeholder="如：9成新" required>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -660,17 +660,17 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $v['title'];?></td>
                                     <td class="am-text-middle"><?php echo $v['price'];?></td>
                                     <td class="am-text-middle"><?php echo $v['tag']?></td>
-                                    <td class="am-text-middle"><?php echo $v['brand_new'];?></td>
+                                    <td class="am-text-middle"><?php echo $v['colour'];?></td>
                                     <td class="am-text-middle"><?php echo $v['address'];?></td>
                                     <td class="am-text-middle"><?php echo $v['phone']?></td>
                                     <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/module/localLife/serviceInfo/'.$v['id'].'/'.$typeid;?>" class="tpl-table-black-operation-set">
+                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$v['id'].'/'.$typeid;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="<?php echo site_url('/module/localLife/del_service/'.$v['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?'); class="tpl-table-black-operation-del" data-am-modal="{target: '#b_delete1'}">
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$v['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?'); class="tpl-table-black-operation-del" data-am-modal="{target: '#b_delete1'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
@@ -702,7 +702,7 @@ padding: 5px 6px!important;
                     <div class="widget-title  am-cf">快递上门</div>
                 </div>
                 <div class="am-fr am-u-sm-6 am-margin">
-                        <form action="<?php echo site_url('module/localLife/search')?>" method="post">
+                        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                             <input type="text" name='sear' class="am-form-field" placeholder="联系人/寄件人地址/联系号码" required>
                             <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
@@ -812,7 +812,7 @@ padding: 5px 6px!important;
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
                                     <!-- <input type="file" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button> -->
-                                    <a href="<?php echo site_url('module/localLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a>
+                                    <a href="<?php echo site_url('module/LocalLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a>
                                     <a href="upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                 </div>
                             </div>
@@ -820,7 +820,7 @@ padding: 5px 6px!important;
                     </div>
 
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                        <form action="<?php echo site_url('module/localLife/search')?>" method="post">
+                        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
                             <input type="text" name='sear' class="am-form-field" placeholder="超市名/商品名" required>
                             <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
@@ -837,7 +837,7 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/localLife/add_market_data')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/add_market_data')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -897,7 +897,7 @@ padding: 5px 6px!important;
                                             <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['id']?>'}">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a href="<?php echo site_url('/module/localLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#m_delete1'}">
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#m_delete1'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
                                         </div>
@@ -909,7 +909,7 @@ padding: 5px 6px!important;
                                         <div class="am-modal-hd">编辑</div>
                                         <div class="am-modal-bd">
                                             <!-- 本地生活 跳蚤市场类 -->
-                                            <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/localLife/edit_service')?>' method='post' enctype='multipart/form-data'>
+                                            <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/edit_service')?>' method='post' enctype='multipart/form-data'>
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
                                                     <div class="am-u-sm-9">
@@ -974,7 +974,7 @@ padding: 5px 6px!important;
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/module/localLife/send_market_data');?>";//上传文件的后台地址
+        var FileController="<?php echo site_url('/module/LocalLife/send_market_data');?>";//上传文件的后台地址
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
            var form=new FormData();
             form.append('file',fileObj); //文件对象

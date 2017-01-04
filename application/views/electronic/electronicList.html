@@ -33,7 +33,7 @@ td img{
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">电子券查询</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
                         <div class="am-u-sm-9">
@@ -48,40 +48,16 @@ td img{
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
                         <div class="am-u-sm-9">
-                            <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                           <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
                                 <small class="red redtips" style="display: none">请先选择结束日期</small>
                               </div>
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
                               </div>
-
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
-                        <label for="" class="am-u-sm-3 am-form-label">领取等级：</label>
-                        <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="">输入查找/选择</option>
-                                <option value="不限制">不限制</option>
-                                <option value="商家促销">超级VIP</option>
-                                <option value="商家活动">普通会员</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">审核状态：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
-                                <option value="请选择">请选择</option>
-                                <option value="0">待审核</option>
-                                <option value="1">通过审核</option>
-                                <option value="2">驳回</option>
-                                <option value="3">删除</option>
-                                <option value="3">过期</option>
-                            </select>
-                        </div>
-                    </div>
+   
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -107,6 +83,7 @@ td img{
                                     <th class="moll_name">编号</th>
                                     <th class="shop_id">名称</th>
                                     <th class="shop_name">标题 </th>
+                                    <th class="shop_name">所属商家 </th>
                                     <th class="shop_type">类型 </th>
                                     <th class="shop_yetai">有效期</th>
                                     <th class="brand">领取限制</th>
@@ -264,7 +241,7 @@ var startDate = new Date(2014, 11, 20);
             alert("交易总额必须是一个范围！");
             return false;
         }else{
-            getList('<?php echo site_url('/shop/singleShop/search_goods');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+            getList('<?php echo site_url('/electronic/Electronic/search_electronic');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         
     });
@@ -275,6 +252,11 @@ var startDate = new Date(2014, 11, 20);
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle"><%= title%></td>
+         <%if(store_name== null) {%>
+        <td class="am-text-middle">宏帆广场</td>
+        <%}else{%>
+        <td class="am-text-middle"><%= store_name%></td>
+        <%}%>
         <%if(typeid=="1") {%>
         <td class="am-text-middle">代金券</td>
         <%}else if(typeid=="2") {%>

@@ -88,8 +88,8 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商家管理
-            <a href="<?php echo site_url().'/shop/singleShop/shopActivityList';?>" style="font-size: 18px;">活动 & 优惠</a>  
-            <small><a href="<?php echo site_url().'/shop/singleShop/shopAddActivity';?>">新增</a></small>
+            <a href="<?php echo site_url().'/marketActivity/MarketActivity/activity';?>" style="font-size: 18px;">活动 & 优惠</a>  
+            <small><a href="<?php echo site_url().'/marketActivity/MarketActivity/marketAddActivity';?>">新增</a></small>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/SingleShop/add_activity'); ?>" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/marketActivity/MarketActivity/market_add_activity'); ?>" method="post" enctype="multipart/form-data" >
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">新增</div>
@@ -111,13 +111,13 @@
                                         </div>                                    
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                        <label class="am-u-sm-3 am-text-right">性质<span class="red">*</span>：</label>
+                                        <label class="am-u-sm-3 am-text-right">活动类型<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="property" value="1" class="discount" />优惠     
+                                                <input type="radio" name="type" value="2" class="discount" />优惠活动     
                                             </div>
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="property" value="0" class="activity" />活动                                      
+                                                <input type="radio" name="type" value="1" class="activity" />普通活动                                      
                                             </div>
                                             
                                         </div>

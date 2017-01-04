@@ -40,24 +40,76 @@ class Electronic extends Default_Controller {
 
     //新增electronic
     function addElectronic(){
-       $data['page']= $this->view_addElectronic;
+        //获取优惠劵类型
+        $data['type'] = $this->Activity_model->get_coupon_type();
+         $data['page']= $this->view_addElectronic;
          $data['menu'] = array('electronic','electronicList');
          $this->load->view('template.html',$data);
     }
+    //新增优惠劵操作
+    function add_electronic(){
+        if($_POST){
+            $data = $this->input->post();
+            if(isset($data['overflowValue'])){
+                if(empty($data['overflowValue'])){
+                    unset($data['overflowValue'],$data['cutValue']);
+                }else{
+                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
+                    $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = $data['cutValue'];
+                    unset($data['overflowValue'],$data['cutValue']);
+                }
+            }
+            if($this->Activity_model->add_electronic($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/addElectronic')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
     //编辑electronic
     function editElectronic(){
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
         }else{
-
-
+            $data['type'] = $this->Activity_model->get_coupon_type();
+            //获取卡卷信息
+            $data['coupon'] = $this->Activity_model->get_electr_info($id);
 
              $data['page']= $this->view_editElectronic;
              $data['menu'] = array('electronic','electronicList');
              $this->load->view('template.html',$data);
         }
     }
+
+    //卡卷编辑操作
+    function edit_Electronic(){
+        if($_POST){
+            $data = $this->input->post();
+            if(isset($data['overflowValue'])){
+                if(empty($data['overflowValue'])){
+                    unset($data['overflowValue'],$data['cutValue']);
+                }else{
+                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
+                    $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = $data['cutValue'];
+                    unset($data['overflowValue'],$data['cutValue']);
+                }
+            }
+            if($this->Activity_model->edit_electronic($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/editElectronic/').$data['id']."'</script>";
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
 
     //删除优惠劵
     function del_coupon(){
@@ -75,5 +127,20 @@ class Electronic extends Default_Controller {
             echo "2";
         }
     }
+
+    //搜索优惠劵
+    function search_electronic(){
+        if($_POST){
+            var_dump($_POST);
+            exit;
+            $type = $_POST['type'];
+            $start_time = $_POST['begin_date'];
+            $end_date = $_POST['end_date'];
+        }else{
+            echo "2";
+        }
+    }
+
+
 }
 

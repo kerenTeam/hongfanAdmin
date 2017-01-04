@@ -114,7 +114,7 @@ class Module_model extends CI_Model{
 	
 	//获取房产信息详情
 	function get_houstinfo($id){
-		$where['id'] = $id;
+		$where['house_id'] = $id;
 		$query = $this->db->where($where)->get($this->house);
 		return $query->row_array();
 	}
@@ -133,13 +133,13 @@ class Module_model extends CI_Model{
 
 	//编辑房产信息
 	function edit_houst($id,$data){
-		$where['id'] = $id;
+		$where['house_id'] = $id;
 		return $this->db->where($where)->update($this->house,$data);
 	}
 	
 	//删除房产信息
 	function del_houst($id){
-		$where['id'] = $id;
+		$where['house_id'] = $id;
 		return $this->db->where($where)->delete($this->house);
 	}
 	
@@ -155,7 +155,7 @@ class Module_model extends CI_Model{
 	}
 	//二手市场 分页
 	function get_mark_page($off,$page){
-		$sql ="SELECT a.id,a.userid,a.title,a.phone,a.type,a.price,a.address,a.brand_new,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid order by create_time desc limit $page,$off";
+		$sql ="SELECT a.id,a.userid,a.colour,a.title,a.phone,a.type,a.price,a.address,a.brand,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid order by create_time desc limit $page,$off";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

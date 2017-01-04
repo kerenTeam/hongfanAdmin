@@ -64,7 +64,7 @@ class SystemSet extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/headPic';
+                $config['upload_path']      = 'hijijsUpload/headPic';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -74,7 +74,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = 'hijijsUpload/headPic/'.$this->upload->data('file_name');
                 }
             }
             $data['password'] = md5($data['password']);
@@ -112,7 +112,7 @@ class SystemSet extends Default_Controller {
                 echo "2";exit;
             }
             if(!empty($_FILES['picArray']['tmp_name'])){
-                $config['upload_path']      = 'upload/headPic';
+                $config['upload_path']      = 'hijijsUpload/headPic';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -122,7 +122,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = 'upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = 'hijijsUpload/headPic/'.$this->upload->data('file_name');
                 }
             }
             $data['nickname'] = trim($_POST['nickname']);
@@ -166,7 +166,7 @@ class SystemSet extends Default_Controller {
             $data = $this->input->post();
    
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/adver';
+                $config['upload_path']      = 'hijijsUpload/adver';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -176,7 +176,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/').$data['id']."'</script>";
                     exit;
                 } else{
-                    $data['pic'] = 'upload/adver/'.$this->upload->data('file_name');
+                    $data['pic'] = 'hijijsUpload/adver/'.$this->upload->data('file_name');
                 }
             }
             if($this->System_model->edit_adver($data['id'],$data)){
@@ -218,7 +218,7 @@ class SystemSet extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'upload/logo';
+                $config['upload_path']      = 'hijijsUpload/logo';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -228,7 +228,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";
                     exit;
                 } else{
-                    $data['logo'] = 'upload/logo/'.$this->upload->data('file_name');
+                    $data['logo'] = 'hijijsUpload/logo/'.$this->upload->data('file_name');
                 }
             }
             $json = json_encode($data,JSON_UNESCAPED_UNICODE);
@@ -387,7 +387,7 @@ class SystemSet extends Default_Controller {
             $id = $this->input->post('id');
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
-                $config['upload_path']      = 'upload/banner/';
+                $config['upload_path']      = 'hijijsUpload/banner/';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -397,7 +397,7 @@ class SystemSet extends Default_Controller {
                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/').$data['id']."'</script>";exit;
                 }else{
                    
-                    $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
+                    $data['bannerPic'] = 'hijijsUpload/banner/'.$this->upload->data('file_name');
                     }
             }
             unset($data['id']);
@@ -445,7 +445,7 @@ class SystemSet extends Default_Controller {
              $num = $this->input->post('num');
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
-                $config['upload_path']      = 'upload/banner/';
+                $config['upload_path']      = 'hijijsUpload/banner/';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -455,7 +455,7 @@ class SystemSet extends Default_Controller {
                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/editBanner/').$data['id'].'/'.$num."'</script>";exit;
                 }else{
                    
-                    $data['bannerPic'] = 'upload/banner/'.$this->upload->data('file_name');
+                    $data['bannerPic'] = 'hijijsUpload/banner/'.$this->upload->data('file_name');
                     }
             }
             unset($data['id']);
