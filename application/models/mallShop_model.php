@@ -220,7 +220,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->get();
+        $query = $this->db->where('differentiate','1')->get();
         return $query->result_array();
     }
 

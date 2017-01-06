@@ -48,7 +48,7 @@ class Store extends Default_Controller {
             if(empty($goods_list)){
                 echo "2";
             }else{
-                echo json_encode($goods_list);
+                echo json_encode($goods_list,JSON_UNESCAPED_UNICODE);
             }
         }else{
             echo "2";
