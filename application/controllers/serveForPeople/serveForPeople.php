@@ -350,6 +350,7 @@ class ServeForPeople extends Default_Controller
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
             }
+            
         }else{
             $this->load->view('404.html');
         }
