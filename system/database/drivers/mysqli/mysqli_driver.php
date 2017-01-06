@@ -125,7 +125,8 @@ class CI_DB_mysqli_driver extends CI_DB {
 		}
 		else
 		{
-			$hostname = ($persistent === TRUE)
+			// Persistent connection support was added in PHP 5.3.0
+			$hostname = ($persistent === TRUE && is_php('5.3'))
 				? 'p:'.$this->hostname : $this->hostname;
 			$port = empty($this->port) ? NULL : $this->port;
 			$socket = NULL;
@@ -183,7 +184,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 					// https://bugs.php.net/bug.php?id=68344
 					elseif (defined('MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT'))
 					{
-						$client_flags |= MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;
+						$this->_mysqli->options(MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT, TRUE);
 					}
 				}
 
@@ -211,6 +212,13 @@ class CI_DB_mysqli_driver extends CI_DB {
 				$message = 'MySQLi was configured for an SSL connection, but got an unencrypted connection instead!';
 				log_message('error', $message);
 				return ($this->db->db_debug) ? $this->db->display_error($message, '', TRUE) : FALSE;
+			}
+
+			if ( ! $this->_mysqli->set_charset($this->char_set))
+			{
+				log_message('error', "Database: Unable to set the configured connection charset ('{$this->char_set}').");
+				$this->_mysqli->close();
+				return ($this->db->db_debug) ? $this->display_error('db_unable_to_set_charset', $this->char_set) : FALSE;
 			}
 
 			return $this->_mysqli;
@@ -255,24 +263,10 @@ class CI_DB_mysqli_driver extends CI_DB {
 		if ($this->conn_id->select_db($database))
 		{
 			$this->database = $database;
-			$this->data_cache = array();
 			return TRUE;
 		}
 
 		return FALSE;
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Set client character set
-	 *
-	 * @param	string	$charset
-	 * @return	bool
-	 */
-	protected function _db_set_charset($charset)
-	{
-		return $this->conn_id->set_charset($charset);
 	}
 
 	// --------------------------------------------------------------------
@@ -501,8 +495,8 @@ class CI_DB_mysqli_driver extends CI_DB {
 		if ( ! empty($this->_mysqli->connect_errno))
 		{
 			return array(
-				'code'    => $this->_mysqli->connect_errno,
-				'message' => $this->_mysqli->connect_error
+				'code' => $this->_mysqli->connect_errno,
+				'message' => is_php('5.2.9') ? $this->_mysqli->connect_error : mysqli_connect_error()
 			);
 		}
 
