@@ -290,7 +290,11 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">
-            <img src="<%= good_pic[0].bannerPic%>" class="am-img-responsive" alt=""/>
+        <%if(thumb) {%>
+            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
+        <%}else {%>
+            暂无图片
+        <%}%>
         </td>
         <td class="am-text-middle"><%= title%></td>
         <td class="am-text-middle"><%= store_name%></td>

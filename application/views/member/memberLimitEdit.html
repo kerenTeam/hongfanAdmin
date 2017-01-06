@@ -31,8 +31,9 @@ color: black;
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
                         <div class="am-u-sm-6 am-u-end">
-                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" value="<?php echo $group['group_name']?>" required>
-                            <small class="black">建议在2-10字以内</small>
+                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" value="<?php echo $group['group_name']?>" required onblur="validate(this)" />
+                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                     </div>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
@@ -64,6 +65,19 @@ color: black;
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+
+//表单验证函数
+function validate(obj){
+    var content=obj.value;
+    if(content.length<2 || content.length>10){
+        $('.blacktips').css('display','none');
+        $('.redtips').css('display','block');
+    }else{
+        $('.redtips').css('display','none');
+        $('.blacktips').css('display','block');
+    }
+}
+
 $(function(){
 $('.secondLimit').css("display","none");
 $('.firstLimit').on('change',function(){

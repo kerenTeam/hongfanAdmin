@@ -52,11 +52,13 @@
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                             <div class="am-form-group am-form-icon am-form-feedback">
-                                <label for="shopName">Banner名称 ：</label>
-                                <input type="text" id="shopName" name="name" maxlength="10" minlength="2" class="am-form-field" placeholder="建议输入2-10位字符" value="" required />
+                                <label for="shopName">Banner名称<span class="red">*</span>：</label>
+                                <input type="text" id="shopName" name="name" maxlength="10" minlength="2" class="am-form-field" placeholder="建议输入2-10位字符" value="" required onblur="validate(this,2,10,1)" />
+                                <small class="red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                             </div> 
                             <div class="am-form-group">
-                                <label for="user-weibo">图片：</label>
+                                <label for="user-weibo">图片<span class="red">*</span>：</label>
                                 <div class="wx_type_img">
                                      <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add"  required>
                                       <!-- 图片实时预览 -->
@@ -68,9 +70,11 @@
                                   <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
                               </div> 
                             </div>
-                            <div class="am-form-group">
-                                <label for="englishName">跳转地址 ：</label>
-                                <input type="url" id="" name="url" placeholder="请输入合法的跳转地址" value="" required />
+                            <div class="am-form-group am-form-icon am-form-feedback">
+                                <label for="englishName">跳转地址<span class="red">*</span>：</label>
+                                <input type="url" id="" name="url" placeholder="请输入合法的跳转地址" value="" required onblur="validate(this,2,30,2)" />
+                                <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                         </div>
                     </div>
@@ -87,6 +91,18 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);

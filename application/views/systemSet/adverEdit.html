@@ -98,8 +98,10 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">标题<span class="red">*</span>：</label>
                                          <div class="am-u-sm-6 am-u-end">
-                                           <input type="text" name="title" value="<?php echo $adver['title'];?>">
+                                           <input type="text" name="title" placeholder="请输入2-10个字符" value="<?php echo $adver['title'];?>" required onblur="validate(this,2,10,1)" />
                                         </div>
+                                        <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">广告缩略图<span class="red">*</span>：</label>
@@ -117,7 +119,7 @@
                                           <?php endif;?>
                                             </div>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="red">提示：需注意制作的广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
+                                            <small class="red">广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
                                            </small> 
                                         </div>
                                     </div>
@@ -152,6 +154,17 @@
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
     //删除图片
     $(".deleteImg").click(function(){
         

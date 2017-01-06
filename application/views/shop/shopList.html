@@ -218,11 +218,11 @@ padding: 5px 6px!important;
                         document.getElementById('shopList').innerHTML = thisDate(obj.curr);
                         $('.editShop').click(function(){//编辑商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/Shop/editShop/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/shop/editShop/" + dataId + "');?>");
                         });
                          $('.manageShop').click(function(){//管理商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/SingleShop/shopAdmin/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopAdmin/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -248,7 +248,7 @@ padding: 5px 6px!important;
                                     },
                                     error:function(xhr,type,errorThrown){
                                         alert("操作失败，请检查网络设置！");
-                                    }
+                                    } 
                                 });
                                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }else{

@@ -1,4 +1,8 @@
-
+<style type="text/css">
+    input{
+        display: inline-block !important;
+    }
+</style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -23,18 +27,24 @@
                                 <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
                                 <input type="text" id="marketName" minlength="2" value="宏帆广场" readonly required />
                             </div>
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="username">账户 <span class="red">*</span>：</label>
-                                <input type="text" minlength="2" name="username" required />
+                                <input type="text" minlength="2" placeholder="请输入2-10个字符" name="username" required onblur="validate(this,2,10,2)" />
+                                <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                             </div> 
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="password">密码 <span class="red">*</span>：</label>
-                                <input type="password" name="password" minlength="6"  required />
+                                <input type="password" name="password" minlength="6" maxlength="16" required onblur="validate(this,6,16,3)" />
+                                <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                          
-                            <div class="am-form-group">
-                                <label for="shopName">商家名称 ：</label>
-                                <input type="text" id="shopName" name="store_name" value="" required/>
+                            <div class="am-form-group am-form-icon am-form-feedback">
+                                <label for="shopName">商家名称 <span class="red">*</span>：</label>
+                                <input type="text" id="shopName" name="store_name" required onblur="validate(this,2,10,4)" />
+                                <small class="red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">英文名称 ：</label>
@@ -67,15 +77,11 @@
                             </div>
                         </div>
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                           <div class="am-form-group">
+                           <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="manageBrand">经营品牌 <span class="red">*</span>：</label>
-                               <!--  <select id="manageBrand" name="barnd_name" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option value="">输入查找/选择</option>
-                                    <option value="0">xxxx</option>
-                                    <option value="1">xxxx</option>
-                                    <option value="2">xxxx</option>
-                                </select> -->
-                                 <input type="text" id="barnd_name" name="barnd_name" value=""/>
+                                 <input type="text" id="barnd_name" name="barnd_name" onblur="validate(this,2,20,5)"  value="" required />
+                                 <small class="red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                             <div class="am-form-group">
                                 <label for="shopType">商家类型 <span class="red">*</span>：</label>
@@ -110,18 +116,19 @@
                                 </select>
                             </div>
                             <div class="am-form-group">
-                                <label for="businessTime">店铺编号<span class="red">*</span>：</label>
-                                <input type="text" placeholder="1001" class="" name="door_no"  id="comments"  min="0" required />
+                                <label for="businessTime">店铺编号：</label>
+                                <input type="text" placeholder="1001" class="" name="door_no"  id="comments"  min="0" />
                                 
                             </div>
                             <div class="am-form-group">
                                 <label for="businessTime">营业时间<span class="red">*</span>：</label>
-                                <input type="text" placeholder="9:20-22:00" class="" name="business_hours"  id="comments"  min="0" required />
-                                
+                                <input type="text" placeholder="9:20-22:00" class="" name="business_hours"  id="comments" required onblur="validate(this,2,30,6)" />
+                                <small class="red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                             <div class="am-form-group">
                                 <label for="area">面积/平方米<span class="red">*</span>：</label>
-                                <input type="number" name="area" id="area" min="0" required />
+                                <input type="number" name="area" id="area" min="1" required />
                             </div>
                            
                             <div class="am-form-group">
@@ -149,6 +156,19 @@
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 
 <script type="text/javascript">
+
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);

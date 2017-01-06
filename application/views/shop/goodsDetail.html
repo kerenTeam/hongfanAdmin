@@ -158,7 +158,7 @@
                             <input type="radio" name='postage' <?php if(empty($goods['postage'])){echo "checked";}?> id="dispostage" />是
                             <input type="radio" id="postage" <?php if(!empty($goods['postage'])){echo "checked";}?> name='postage'/>否
                         </div>
-                        <div class="am-form-group postageNumber" >
+                        <div  <?php if(!empty($goods['postage'])){echo "style='display:block;'";}else{echo "style='display:none';";}?> class="am-form-group postageNumber"  >
                             <label for="englishName">请输入运费<span class="red">*</span>：</label>
                             <input type="number"  id="postageNum" value="<?php echo $goods['postage'];?>" name="postage" required="required" />
                         </div>

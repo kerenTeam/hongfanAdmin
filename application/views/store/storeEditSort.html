@@ -44,8 +44,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" style="font-size:16px;">商品分类</a>
-            <small><a href="<?php echo site_url().'/store/store/storeAddSort';?>">编辑分类</a></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" style="font-size:18px;">商品分类</a>
+            <small><a style="font-size: 16px;" href="<?php echo site_url().'/store/store/storeAddSort';?>">编辑分类</a></small></div>
         </div>
     </div>
 </div>
@@ -59,23 +59,29 @@
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="oneType">上级分类</label>
-                                <select id="oneType" required name="parentid" >
+                                <select id="oneType" required name="parentid" onblur="validate(this,2,20,1)" >
                                     <option value="">-=请选择一项=-</option>
                                     <option value="0" <?php if($cateinfo['parentid'] == 0){echo "selected";}?>>--</option>
                                     <?php foreach($cates as $val):?>
                                     <option value="<?php echo $val['catid'];?>" <?php if($cateinfo['parentid'] == $val['catid']){echo "selected";}?>><?php echo $val['catname'];?></option>
                                     <?php endforeach;?>
                                 </select>
+                                <small class="red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="doc-vld-name-1">分类名称 <span class="red">*</span>：</label>
-                                <input type="text" name="catname" id="doc-vld-name-1" minlength="2" value="<?php echo $cateinfo['catname'];?>" placeholder="请输入商品分类名称" required />
+                                <input type="text" name="catname" id="doc-vld-name-1" minlength="2" value="<?php echo $cateinfo['catname'];?>" placeholder="请输入商品分类名称" required onblur="validate(this,2,15,2)" />
+                                <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>  
-                            <div class="am-form-group">
+                            <div class="am-form-group am-form-icon am-form-feedback">
                                 <label for="doc-vld-name-1">字母索引 <span class="red">*</span>：</label>
-                                <input type="text" name="letter" id="doc-vld-name-1" minlength="2" value="<?php echo $cateinfo['letter'];?>" placeholder="请输入字母索引" required />
+                                <input type="text" name="letter" id="doc-vld-name-1" minlength="2" value="<?php echo $cateinfo['letter'];?>" placeholder="请输入字母索引" required onblur="validate(this,2,15,3)" />
+                                <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div> 
                             <div class="am-form-group am-cf">
                                 <label for="doc-vld-name-1" >icon 背景色 <span class="red">*</span></label>
@@ -152,14 +158,25 @@
       });
   });
 //点击取消返回上一页
-  $('#cancle').click(function(){
+$('#cancle').click(function(){
     history.go(-1);
-  });
+});
 
-  //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).siblings('.wx_type_img').find('img').remove();
-        
-    });
+//删除图片
+$(".deleteImg").click(function(){
+    
+    $(this).siblings('.wx_type_img').find('img').remove();
+    
+});
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
 </script>

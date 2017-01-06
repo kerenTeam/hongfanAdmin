@@ -38,6 +38,9 @@
         color: #555;
         padding-left: 0;
     }
+    label.am-form-label{
+        font-weight: normal;
+    }
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -74,40 +77,48 @@
                             <div class="am-modal-hd">新增管理员</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' >
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' data-am-validator>
                                     <div class="am-form-group am-form-icon am-form-feedback am-cf ">
                                         <label class="am-u-sm-3 am-form-label">管理员姓名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='nickname' minlength="2" maxlength="10" required>
+                                            <input type="text" class="am-form-field" placeholder="请输入姓名,不超过十个字符" name='nickname' minlength="2" maxlength="10" value="" required onblur="validate(this,2,10,1)" />
+                                            <small class="red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                            <small class="green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员用户名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="text" placeholder="请输入用户名,不超过十个字符" name='username' minlength="2" maxlength="10" required>
+                                            <input type="text" placeholder="请输入用户名,不超过十个字符" value="" name='username' minlength="2" maxlength="10" required onblur="validate(this,2,10,2)" />
+                                            <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                            <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label class="am-u-sm-3 am-form-label">管理员密码 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">  
-                                            <input type="password" placeholder="请输入6-16位的账号密码" name='password' minlength="2" maxlength="16" required >
+                                            <input type="password" placeholder="请输入6-16位的账号密码" name='password' minlength="6" maxlength="16" value="" required onblur="validate(this,6,16,3)" />
+                                            <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                            <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9"> <select onchange="confirmSelect()" id="manageBrand" name="gid" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <div class="am-u-sm-9"> <select onblur="validate(this,1,15,4)" id="manageBrand" name="gid" required data-am-selected="{searchBox: 1,maxHeight: 200}">
                                             <option value="">输入查找/选择</option>
                                             <?php foreach($group as $val):?>
                                             <option value="<?php echo $val['gid'];?>" ><?php echo $val['group_name'];?></option>
                                             <?php endforeach;?>
                                         </select>
+                                        <small class="red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="" class="am-u-sm-3 am-form-label">管理员头像 <span class="red">*</span></label>
                                          <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                               <span class="clickUp"> 选择图片</span>
@@ -155,6 +166,19 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+
 var flag=1,tag=1,str='';
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -373,24 +397,27 @@ $(document).ready(function(){
                 <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">用户名 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8">
                             <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="姓名" class="name<%= user_id%>" value="<%= username%>" name='name' minlength="4" required="">
+                            <input type="text" placeholder="姓名" class="name<%= user_id%>" value="<%= username%>" name='name' minlength="4" required="" onblur="validate(this,2,10,1)" />          
                         </div>
+                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8">
                             <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="姓名" class="nickname<%= user_id%>" value="<%= nickname%>" name='name' minlength="4" required="">
+                            <input type="text" placeholder="姓名" class="nickname<%= user_id%>" value="<%= nickname%>" name='name' minlength="2" required="" onblur="validate(this,2,10,2)" >
                         </div>
+                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <select name="account_type_name<%= user_id%>" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>">
-                            <option value="">不选择则默认不修改</option>
-                            </select>   
+                            <select name="account_type_name<%= user_id%>" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>" >
+                            </select>
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
@@ -402,9 +429,9 @@ $(document).ready(function(){
                                   <div id="preview" class="preview<%= user_id%>">
                                   <%if(avatar) {%>
                                     <img src="<%= avatar%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
-                                    <%}else {%>
+                                  <%}else {%>
                                         <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
-                                    <%}%></div>
+                                  <%}%></div>
                             </div>
                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                         </div>
