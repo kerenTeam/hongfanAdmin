@@ -140,8 +140,6 @@ padding: 5px 6px!important;
                                     <th class="brand">品牌 </th>
                                     <th class="shop_block">街区 </th>
                                     <th class="floor_shopId">楼层/铺位号 </th>
-                                    <th>商户模式</th>
-                                    <th>创建人</th>
                                     <th>创建时间</th>
                                     <th>状态</th>
                                     <th>操作</th>
@@ -346,9 +344,7 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= barnd_name%></td>
         <td class="am-text-middle"><%= block_name%></td>
         <td class="am-text-middle"><%= floor_name%></td>
-        <td class="am-text-middle">实体商户</td>
-        <td class="am-text-middle">创建人</td>
-        <td class="am-text-middle">2016-09-26 10:00:00</td>
+        <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <%if(state=="1"){%>
             <select id="" class="shopState" name="shopState" data-id="<%= store_id%>">

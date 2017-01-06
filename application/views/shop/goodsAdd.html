@@ -33,6 +33,47 @@
     table tbody tr{
         margin: 20px 0 !important;
     }
+    .am-modal-dialog {
+        width: 414px;
+        height: 750px;
+        overflow-y: scroll;
+    }
+    .bannerPic{
+        width: 100%;
+    }
+    .good-price{
+        color: #f43A44;
+        font-size: 20px;
+    }
+    .shoplogo{
+        width: 30px;
+    }
+    .small-word{
+        color: #999;
+        font-size: 14px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .big-word{
+        font-size: 20px;
+    }
+    .smallsize{
+        font-size: 14px;
+    }
+
+    .good-detail{
+        padding-left: 20px !important;
+        padding-bottom: 10px;
+    }
+    .good-bd {
+        border-bottom: none;
+    }
+    .addpadding{
+        padding-top: 1.0rem;
+    }
+    article{
+        text-indent: 2em;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -56,18 +97,18 @@
                     <div class="widget-body  am-fr">
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">                                        
                         <div class="am-form-group">
-                            <label for="Name">商品名称<span class="red">*</span>：</label>
-                            <input type="text" id="Name" name='title' required="required" />
+                            <label for="goodName">商品名称<span class="red">*</span>：</label>
+                            <input type="text" id="goodName" name='title' required="required" />
                         </div>
                         
                         <div class="am-form-group">
-                            <label for="englishName">商品价格<span class="red">*</span>：</label>
-                             <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" name="price" required="required" />
+                            <label for="goodPrice">商品价格<span class="red">*</span>：</label>
+                             <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" name="price" required="required" />
                         </div>
                          
                         <div class="am-form-group">
-                            <label for="englishName">商品品牌：</label>
-                            <input type="text" name='brand' id="englishName"  />
+                            <label for="goodBrand">商品品牌：</label>
+                            <input type="text" name='brand' id="goodBrand"  />
                         </div>
                         
                         <div class="am-form-group">
@@ -166,7 +207,7 @@
                                     <div class="wx_type_img">
                                      <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView firstBanner"> </div>
                                     </div>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                 </div>
@@ -192,9 +233,12 @@
                               <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
                           </div> 
                         </div>
+                        
+                    </div>
+                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg"> 
                         <div class="am-form-group">
                             <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                            <div>
+                            <div id="editorContent">
                                 <script id="editor" type="text/plain" name='content'></script>
                             </div>                  
                         </div>
@@ -202,6 +246,7 @@
                 </div>
 
                     <div class="am-form-group am-text-center">
+                        <a data-am-modal="{target: '#goodMessage'}" id="eyeDetail" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-eye"></span> 点击预览</a> 
                         <button class="am-btn am-btn-secondary" type="submit" id='addProperty'>提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
@@ -212,6 +257,47 @@
     </div>
 </div>
 </div>
+<!-- 预览开始 -->
+<div class="am-modal am-modal-prompt" tabindex="-1" id="goodMessage">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">商品详情预览</div>
+        <div class="am-modal-bd good-bd">
+            <div class="goodBanner">
+                <img src="" class="bannerPic" />
+            </div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left addpadding">
+                <div class="am-u-lg-10 am-u-sm-10 am-u-md-10">leica/徕卡 SOFORT相机 一次成像立拍立得相机 限量出售</div>
+                <div class="am-u-lg-2 am-u-sm-2 am-u-md-2 am-text-center" style="border-left: 1px solid #ccc;">
+                    <img src="assets/img/shangjia.png" class="shoplogo" />
+                    <p class="small-word">商家</p>
+                </div>
+            </div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price">
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4">￥ 2299</div>
+            </div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">快递：免邮</div>
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
+                    销量：21笔
+                </div>
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
+                    重庆
+                </div>
+            </div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-detail">
+                <p class="big-word">商品详情</p>
+                <article class="smallsize">
+                    它融合了徕卡的独特设计专属功能，令我们重新发现即影即有的摄影世界，创造出可以触摸到的小小艺术品。
+                </article>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancle>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<!-- 预览结束 -->
 <!-- 设置运费弹出框开始 -->
 <div class="am-modal am-modal-prompt" tabindex="-1" id="myModal">
     <div class="am-modal-dialog">
@@ -262,6 +348,17 @@
         $(this).datepicker('close');
       });
 
+      //点击预览商品详情
+      $('#eyeDetail').click(function() {
+        var picSrc=$('.firstBanner').attr("src");
+        var goodName=$('#goodName').val();
+        var goodPrice=$('#goodPrice').val();
+        var postage=$('#postage').attr('checked');
+        var dispostage=$('#dispostage').attr('checked');
+        var editorContent=$('#editorContent').html(); 
+        console.log(editorContent);
+        $(".bannerPic").attr('src',picSrc);
+      })
       
   });
 //点击取消返回上一页
