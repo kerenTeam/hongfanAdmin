@@ -19,7 +19,7 @@ td.am-text-middle img{
 }
 .am-form-group div{
     line-height: 37px;
-}
+} 
 
 .stable{
     display: inline-block !important;
@@ -28,7 +28,7 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
-.goodsState{
+.goodsState,.recommend{
         background: #15b5ac;
         border-radius: 5px;
         border: 1px solid #15b5ac;
@@ -37,7 +37,7 @@ td.am-text-middle img{
         text-align: center;
     }
 
-    .goodsState option{
+    .goodsState option,.recommend option{
         background: #fff;
         border-radius: 5px;
         border: 1px solid #aaa;
@@ -45,7 +45,7 @@ td.am-text-middle img{
         color: #000;
         text-align: center;
     }
-    .goodsState option[selected="selected"]{
+    .goodsState option[selected="selected"],.recommend option[selected="selected"]{
         background: #15b5ac;
     }
 </style>
@@ -90,7 +90,16 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                 
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsState" class="am-form-label am-u-sm-4">是否推荐:</label>
+                        <div class="am-u-sm-8">
+                        <select id="goodsState" name="goodsState">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="1">是</option>
+                            <option value="0">否</option>
+                        </select>
+                        </div>
+                    </div>
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
                         <div class="am-u-sm-8">
@@ -148,6 +157,7 @@ td.am-text-middle img{
                                     <th class="shop_block">月销量 </th>
                                     <th class="shop_block">库存 </th>                               
                                     <th class="shop_block">商品状态</th>
+                                    <th class="shop_block">是否推荐</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -181,7 +191,7 @@ td.am-text-middle img{
         url:dataurl,
         data: data,
         success: function(result){         
-            var res = eval(result);
+            var res = eval("("+ result +")");
             console.log(res);
             if(res!=2){
                 var nums = 10; //每页出现的数量
@@ -193,7 +203,6 @@ td.am-text-middle img{
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
                         res[i].good_pic=eval(res[i].good_pic);
-                        res[i].title=res[i].title.split(' ')[0]+' '+res[i].title.split(' ')[1];
                         listData+= template('storeGoodsModal',res[i]);
                      }
                     
@@ -213,10 +222,98 @@ td.am-text-middle img{
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
                             if($('.goodsState option:selected').eq(i).val()=="0"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+                            }   
+                            if($('.recommend option:selected').eq(i).val()=="0"){
+                                $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
+                        //更改商品的状态
+                        $('.goodsState').change(function(){
+                            var dataId=$(this).attr('data-id');
+                            if($(this).find('option:selected').val()=="1"){
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ dataId+'&state=1',
+                                    success: function(data){
+                                        if(data==1){
+    
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                            }else{
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ dataId+'&state=0',
+                                    success: function(data){
+                                        if(data==1){
 
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+                            }
+                            
+                            
+                        });
+                        //推荐商品
+                        $('.recommend').change(function(){
+                            var dataId=$(this).attr('data-id');
+                            if($(this).find('option:selected').val()=="1"){
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ dataId+'&state=1',
+                                    success: function(data){
+                                        if(data==1){
+    
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                            }else{
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    data: 'goodsid='+ dataId+'&state=0',
+                                    success: function(data){
+                                        if(data==1){
+
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                        
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+                            }
+                            
+                            
+                        });
                         //删除商品的AJAX请求
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
@@ -305,9 +402,32 @@ $(document).ready(function(){
         <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
-            <span class="">上架</span>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">上架</option>
+                <option value="0">下架</option>
+            </select>
         <%}else{%>
-            <span class="red">下架</span>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">上架</option>
+                <option value="0" selected="selected">下架</option>
+            </select>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+        <%if(recommend=="1"){%>
+            <select id="" class="recommend" name="recommend" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">是</option>
+                <option value="0">否</option>
+            </select>
+        <%}else{%>
+            <select id="" class="recommend" name="recommend" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">是</option>
+                <option value="0" selected="selected">否</option>
+            </select>
         <%}%>
         </td>
         <td class="am-text-middle">
