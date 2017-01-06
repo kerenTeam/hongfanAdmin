@@ -143,7 +143,7 @@ class Member extends Default_Controller {
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/editMember/').$data['userid']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/editMember/'.$data['userid'])."'</script>";
                 exit;
             }
         }else{
@@ -287,6 +287,7 @@ class Member extends Default_Controller {
     function edit_card(){
         if($_POST){
             $data = $this->input->post();
+  
             if(!empty($_FILES['img']['tmp_name'])){
                 //配置
                 $config['upload_path']      = 'hijijsUpload/cards';
@@ -296,7 +297,7 @@ class Member extends Default_Controller {
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardDetail/').$data['id']."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardDetail/'.$data['id'])."'</script>";
                     exit;
                 } else{
                     $data['pic'] =  'hijijsUpload/cards/'.$this->upload->data('file_name');
@@ -307,7 +308,7 @@ class Member extends Default_Controller {
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberCardDetail/').$data['id']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/member/Member/memberCardDetail/'.$data['id'])."'</script>";
                 exit;
             }
         }else{

@@ -220,11 +220,11 @@ padding: 5px 6px!important;
                         document.getElementById('shopList').innerHTML = thisDate(obj.curr);
                         $('.editShop').click(function(){//编辑商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/shop/editShop/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/Shop/editShop/" + dataId + "');?>");
                         });
                          $('.manageShop').click(function(){//管理商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopAdmin/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/SingleShop/shopAdmin/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');

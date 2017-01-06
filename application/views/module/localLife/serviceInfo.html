@@ -96,7 +96,7 @@ width:50%;
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
-								<?php $banner = json_decode($info['pic'],true);?>
+								<?php $banner = json_decode($info['pic'],true); $logo = json_decode($info['logo'],true);?>
                                 <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
 										<div class="wx_type_img">
@@ -157,12 +157,12 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-									<?php if(!empty($info['logo'])):?>
+									<?php if(!empty($logo[0]['picImg'])):?>
                                     <div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                         <!-- 图片实时预览 -->
-										<input hidden='type' name='logo' value='<?php echo $info['logo'];?>'/>	
-                                        <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['logo'];?>" class="am-img-responsive cardView"> </div>
+										<input hidden='type' name='logo' value='<?php echo $logo[0]['picImg'];?>'/>	
+                                        <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $logo[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                         <span class="am-text-xs">点击选择图片</span>
                                         <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
                                             <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
@@ -221,12 +221,12 @@ width:50%;
                                         <div class="am-u-sm-9">
                                             <select name='house_type' required>
                                                 <option value="">-=请选择一项=-</option>
-                                                <option value="二手房" <?php if($info['type'] == '二手房'){ echo "selected";}?>>二手房</option>
-                                                <option value="新房" <?php if($info['type'] == '新房'){ echo "selected";}?>>新房</option>
-                                                <option value="商铺" <?php if($info['type'] == '商铺'){ echo "selected";}?>>商铺</option>
-                                                <option value="写字楼" <?php if($info['type'] == '写字楼'){ echo "selected";}?>>写字楼</option>
-                                                <option value="学区房" <?php if($info['type'] == '学区房'){ echo "selected";}?>>学区房</option>
-                                                <option value="其他" <?php if($info['type'] == '其他'){ echo "selected";}?>>其他</option>
+                                                <option value="二手房" <?php if($info['house_type'] == '二手房'){ echo "selected";}?>>二手房</option>
+                                                <option value="新房" <?php if($info['house_type'] == '新房'){ echo "selected";}?>>新房</option>
+                                                <option value="商铺" <?php if($info['house_type'] == '商铺'){ echo "selected";}?>>商铺</option>
+                                                <option value="写字楼" <?php if($info['house_type'] == '写字楼'){ echo "selected";}?>>写字楼</option>
+                                                <option value="学区房" <?php if($info['house_type'] == '学区房'){ echo "selected";}?>>学区房</option>
+                                                <option value="其他" <?php if($info['house_type'] == '其他'){ echo "selected";}?>>其他</option>
                                             </select>
                                         </div>
                                     </div>
@@ -326,13 +326,15 @@ width:50%;
                                         <div class="am-u-sm-9">
 										
                                             <div class="wx_type_img">
+                                            <?php $list_pic = json_decode($info['list_pic'],true);?>
+                                            <?php if(empty($list_pic[0]['picImg'])):?>
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-												<?php if(empty($info['list_pic'])):?>
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 <?php else:?>
-											    <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
-												<input type='hidden' name='img4' value='<?php echo $info['list_pic'];?>'/>
+                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
+											    <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+												<input type='hidden' name='img4' value='<?php echo $list_pic[0]['picImg'];?>'/>
 												<?php endif;?>
 												<div class="am-text-xs">点击选择图片</div>
                                             </div>
@@ -347,7 +349,7 @@ width:50%;
                                     </div>
                                      <div class="am-form-group am-text-center am-btn-group-xs">
                                         <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-										<input type='hidden' name='house_id' value='<?php echo $info['house_id'];?>'/>
+										<input type='hidden' name='id' value='<?php echo $info['house_id'];?>'/>
                                         <button type="submit" class="am-btn am-btn-danger">提交</button>
                                     </div>
                                 </form>
@@ -443,12 +445,14 @@ width:50%;
                                         <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
+                                                <?php $list_pic = json_decode($info['list_pic'],true);?>
                                                 <!-- 图片实时预览 -->
-                                               <?php if(!empty($info['list_pic'])):?>
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $info['list_pic'];?>" class="am-img-responsive cardView"> </div>
-                                                 <input type='hidden' name='list_pic' value="<?php echo $info['list_pic'];?>" />
+                                               <?php if(!empty($list_pic[0]['picImg'])):?>
+                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
+                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                 <input type='hidden' name='list_pic' value="<?php echo $list_pic[0]['picImg'];?>" />
 	                                            <?php else:?>
+                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
 	                                            <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
                                             </div>

@@ -74,9 +74,11 @@ class LocalLife extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
-                    $data['icon'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
+                    $icon[]['picImg'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
                 }
             }
+            $data['icon'] = json_encode($icon);
+    
             if($this->Module_model->edit_cates($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
@@ -370,17 +372,18 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 					}else{
 						if($i != 4){
-						$pic[]['banner'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
+						   $pic[]['banner'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 						}
 					}
 				}
 				$i++;
 			 }
-
+        
 			 $data['pic'] = json_encode($pic);
-			 $data['logo'] = $logo;
+			 $data['logo'] = json_encode($logo);
+
 			 if($this->Module_model->add_service($data)){
 				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$data['type_name']."'</script>";exit;
 			 }else{
@@ -412,14 +415,14 @@ class LocalLife extends Default_Controller {
 						if($i != 4){
 							$pic[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 						}
 					}
 				}
 				$i++;
 			 }
 			 $data['pic'] =json_encode($pic);
-			 $data['list_pic'] = $logo;
+			 $data['list_pic'] = json_encode($logo);
 			 $data['userid'] = $this->session->users['user_id'];
 			 $id = $data['type_id'];
 			 unset($data['type_id']);
@@ -454,17 +457,18 @@ class LocalLife extends Default_Controller {
 						if($i != 4){
 							$pic[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 						}else{
-							$logo = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 						}
 					}
 				}
 				$i++;
 			}
 			$data['pic'] = json_encode($pic);
-			$data['list_pic'] = $logo;
+			$data['list_pic'] = json_encode($logo);
 			$data['userid'] = $this->session->users['user_id'];
 			$type= $data['id'];
 			unset($data['id']);
+
 			if($this->Module_model->add_market($data)){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/').$type."'</script>";exit;
 			}else{
@@ -497,7 +501,7 @@ class LocalLife extends Default_Controller {
 								if($i != 4){
 									$pic[]['banner'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = 'hijijsUpload/service/ordinary/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -506,14 +510,14 @@ class LocalLife extends Default_Controller {
 									$pic[]['banner'] = $data['img'.$i];
 								}
 							}else{
-								$logo = $data['logo'];
+								$logo[]['picImg'] = $data['logo'];
 							}
                             unset($data['img'.$i]);
 						}
 						$i++;
 					 }
 					 $data['pic'] = json_encode($pic);
-					 $data['logo'] = $logo;
+					 $data['logo'] = json_encode($logo);
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
 					 $isOk = $this->Module_model->edit_service($data['id'],$data);
@@ -536,7 +540,7 @@ class LocalLife extends Default_Controller {
 								if($i != 4){
 								$pic[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = 'hijijsUpload/service/houst/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -547,14 +551,14 @@ class LocalLife extends Default_Controller {
 									// /unset($data['img'.$i]);
 								}
 							}else{
-								$logo = $data['logo'];
+								$logo[]['picImg'] = $data['img'.$i];
 							}
                             unset($data['img'.$i]);
 						}
 						$i++;
 					 }
 					 $data['pic'] = json_encode($pic);
-					 $data['list_pic'] = $logo;
+					 $data['list_pic'] = json_encode($logo);
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
 			 		$isOk = $this->Module_model->edit_houst($data['id'],$data);
@@ -577,7 +581,7 @@ class LocalLife extends Default_Controller {
 								if($i != 4){
 									$pic[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 								}else{
-									$logo = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = 'hijijsUpload/service/mark/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -586,14 +590,14 @@ class LocalLife extends Default_Controller {
 									$pic[]['picImg'] = $data['img'.$i];
 								}
 							}else{
-								$logo = $data['list_pic'];
+								$logo[]['picImg'] = $data['list_pic'];
 							}
 							unset($data['img'.$i]);
 						}
 						$i++;
 					}
 					$data['pic'] = json_encode($pic);
-					$data['list_pic'] = $logo;
+					$data['list_pic'] =json_encode($logo);
 					$type = $data['type_id'];
 					unset($data['type_id']);
 					$isOk = $this->Module_model->edit_markinfo($data['id'],$data);
@@ -611,6 +615,8 @@ class LocalLife extends Default_Controller {
 						}
 					break;
 			}
+
+            
 			if($isOk){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/').$data['id'].'/'.$type."'</script>";exit;
 			}else{

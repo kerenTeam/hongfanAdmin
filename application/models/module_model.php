@@ -134,6 +134,7 @@ class Module_model extends CI_Model{
 	//编辑房产信息
 	function edit_houst($id,$data){
 		$where['house_id'] = $id;
+        unset($data['id']);
 		return $this->db->where($where)->update($this->house,$data);
 	}
 	
