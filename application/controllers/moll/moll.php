@@ -90,7 +90,7 @@ class Moll extends Default_Controller {
             $data = $this->input->post();
             if(!empty($_FILES['icon']['tmp_name'])){
                 //配置
-                $config['upload_path']      = 'hijijsUpload/icon';
+                $config['upload_path']      = 'Upload/icon';
                 $config['allowed_types']    = 'jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -100,7 +100,7 @@ class Moll extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/moll/Moll/mollAddYetai/')."'</script>";
                     exit;
                 } else{
-                    $data['icon'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  'Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->Moll_model->add_storetype($data)){
@@ -136,23 +136,23 @@ class Moll extends Default_Controller {
             $data = $this->input->post();
              if(!empty($_FILES['icon']['tmp_name'])){
                 //配置
-                $config['upload_path']      = 'hijijsUpload/icon';
+                $config['upload_path']      = 'Upload/icon';
                 $config['allowed_types']    = 'jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
                 //上传
                 if ( ! $this->upload->do_upload('icon')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/moll/Moll/mollEditYetai/').$data['id']."'</script>";
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/moll/Moll/mollEditYetai/'.$data['id'])."'</script>";
                     exit;
                 } else{
-                    $data['icon'] =  'hijijsUpload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  'Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->Moll_model->edit_storeYetai($data['id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/moll/Moll/mollyetaiList')."'</script>";exit;
             }else{
-                  echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/Moll/mollEditYetai/').$data['id']."'</script>";
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/Moll/mollEditYetai/'.$data['id'])."'</script>";
             }
         }else{
             $this->load->view('404.html');
@@ -282,7 +282,7 @@ class Moll extends Default_Controller {
             $i = 1;
             foreach ($_FILES as $key => $v) {
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/logo';
+                    $config['upload_path']      = 'Upload/logo';
                     $config['allowed_types']    = 'jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -294,7 +294,7 @@ class Moll extends Default_Controller {
                     } else{
                         unset($data['img'.$i]);
                         if($i == 1){
-                           $data['logo'] =  'hijijsUpload/logo/'.$this->upload->data('file_name');
+                           $data['logo'] =  'Upload/logo/'.$this->upload->data('file_name');
                         }else{
                             $data['pic'] = 'upload/logo/'.$this->upload->data('file_name');
                         }

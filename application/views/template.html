@@ -29,15 +29,21 @@
         $menulist = '';
     }
     if(empty($menu)){$menu = array('index','index');}
+    if(!isset($_SESSION['businessId'])){
+        $businessId = '';
+    }else{
+        $businessId = $_SESSION['businessId'];
+    }
  ?>
 
-<?php if(!empty($menulist)):?>
+<?php if(!empty($menulist) && empty($businessId)):?>
 <ul class="sidebar-nav">
     <li class="sidebar-nav-link">
         <a href="<?php echo site_url().'/Admin/index';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
             <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
         </a>
     </li>
+
     <?php foreach($menulist as $val):?>
     <li class="sidebar-nav-link">
         <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == $val['value']['controller']){echo 'active';}?>" >

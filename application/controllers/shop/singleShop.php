@@ -61,7 +61,6 @@ class SingleShop extends Default_Controller {
         }else{
             $this->session->set_userdata('businessId',$id);
         }
-      
         $data['page'] = $this->view_shopAdmin;
     	$this->load->view('template.html',$data);
     }
@@ -117,7 +116,7 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/logo/';
+                    $config['upload_path']      = 'Upload/logo/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -128,9 +127,9 @@ class SingleShop extends Default_Controller {
                     }else{
                         unset($data['img'.$i]);
                         if($i == 1){
-                            $data['logo'] = 'hijijsUpload/logo/'.$this->upload->data('file_name');
+                            $data['logo'] = 'Upload/logo/'.$this->upload->data('file_name');
                         }else{
-                            $data['pic'] = 'hijijsUpload/logo/'.$this->upload->data('file_name');
+                            $data['pic'] = 'Upload/logo/'.$this->upload->data('file_name');
                         }
                     }
                 }else{
@@ -231,19 +230,19 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/goods/';
+                    $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail').$data['id']."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
@@ -259,7 +258,7 @@ class SingleShop extends Default_Controller {
              if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail').$data['id']."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -283,7 +282,7 @@ class SingleShop extends Default_Controller {
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/goods/';
+                    $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -293,9 +292,9 @@ class SingleShop extends Default_Controller {
                        echo $this->upload->display_errors();
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
                 }
                 $i++;
@@ -317,7 +316,7 @@ class SingleShop extends Default_Controller {
     function impolt_goods(){
         if(!empty($_FILES["file"]["tmp_name"])){
             $name = date('Y-m-d');
-            $inputFileName = "hijijsUpload/xls/" .$name .'.xls';
+            $inputFileName = "Upload/xls/" .$name .'.xls';
             move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
              $this->load->library('excel');
             if(!file_exists($inputFileName)){
@@ -363,7 +362,7 @@ class SingleShop extends Default_Controller {
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'hijijsUpload/goods/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'Upload/goods/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['bannerPic'] = $myFileName;
             }
@@ -700,7 +699,7 @@ class SingleShop extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/image/activity';
+                    $config['upload_path']      = 'Upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -709,7 +708,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -769,16 +768,16 @@ class SingleShop extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/image/activity';
+                    $config['upload_path']      = 'Upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img')) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/').$data['id']."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/'.$data['id'])."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           
@@ -795,7 +794,7 @@ class SingleShop extends Default_Controller {
             if($this->MallShop_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopEditActivity/').$data['id']."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopEditActivity/'.$data['id'])."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');

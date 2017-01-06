@@ -85,7 +85,7 @@ class Integral extends Default_Controller
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/goods/';
+                    $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -95,9 +95,9 @@ class Integral extends Default_Controller
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/Integral/integralAddGoods')."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
                 }
                 $i++;
@@ -164,19 +164,19 @@ class Integral extends Default_Controller
             $i =1;
             foreach($_FILES as $file=>$val){
                 if(!empty($_FILES['img'.$i]['name'])){
-                    $config['upload_path']      = 'hijijsUpload/goods/';
+                    $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods').$data['id']."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods/'.$data['id'])."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'hijijsUpload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
@@ -194,7 +194,7 @@ class Integral extends Default_Controller
              if($this->Integral_model->edit_goods($data['goods_id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/Integral/integralList')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods').$data['id']."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/integral/Integral/integralEditGoods/'.$data['id'])."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');

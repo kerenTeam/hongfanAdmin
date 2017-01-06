@@ -118,7 +118,7 @@ width:50%;
                                     <td class="am-text-middle"><?php echo $v['name'];?></td>
                                     <td class="am-text-middle"><?php echo $v['sort'];?></td>
                                     <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市比价";break; }?></td>
-                                    <?php $icon = json_decode($val['icon'],true); ?>
+                                    <?php $icon = json_decode($v['icon'],true); ?>
                                     <td class="am-text-middle"><img class="am-imgContainer" src="<?php echo $icon[0]['picImg'];?>" ></td>
                                     <td class="am-text-middle"><input type="color" value="<?php echo $v['icon_color'];?>" disabled="disabled"/></td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>

@@ -218,7 +218,7 @@ class Shop extends Default_Controller {
     //导入商家信息
     function impolt_store(){
           $name = date('Y-m-d');
-          $inputFileName = "hijijsUpload/xls/" .$name .'.xls';
+          $inputFileName = "Upload/xls/" .$name .'.xls';
           move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
 
              //引入类库
