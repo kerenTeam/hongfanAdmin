@@ -45,7 +45,7 @@ color: black;
                         <label for="user-phone" class="am-u-sm-3 am-form-label black" required><?php echo $val['name'];?>:</label>
                         <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
                             <?php foreach($val['check'] as $v):?>
-                            <div class="am-u-sm-2"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>"<?php if($v['true'] == 1){echo "checked";}?> /><?php echo $v['name'];?></div>
+                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>"<?php if($v['true'] == 1){echo "checked";}?> /><?php echo $v['name'];?></div>
                             <?php endforeach;?>
                         </div>
                     </div>

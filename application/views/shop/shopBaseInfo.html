@@ -133,7 +133,7 @@
                                      <input type="hidden" name="img1" value="<?php echo $busin['logo']?>">
                                   <?php endif;?>
                                   <br />
-                            </div>
+                             </div>
                              <div class="am-text-center father">
                                   <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                   <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
@@ -161,12 +161,12 @@
                               </div> 
                         </div> 
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">客单价<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <input type="text" name="pct" class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['pct']?>" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
@@ -214,7 +214,7 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
                         <div class="am-u-sm-9">
-                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" required>
+                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" >
                                 <option value="B3" <?php if($busin['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
                                 <option value="B2" <?php if($busin['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
                                 <option value="B1" <?php if($busin['floor_name'] == 'B1'){echo "selected";}?>>B1</option>
@@ -242,7 +242,7 @@
                                 <option value="003">003</option>
                                 <option value="005">005</option>
                             </select> -->
-                            <input type="text" name="door_no" value="<?php echo $busin['door_no'];?>" required />
+                            <input type="text" name="door_no" value="<?php echo $busin['door_no'];?>"  />
                         </div>
                        <div class="am-u-sm-3">
                           <!--  <button type="button" class="am-btn am-btn-success am-btn-xs">

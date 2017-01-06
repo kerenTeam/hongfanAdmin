@@ -29,11 +29,11 @@ padding: 5px 6px!important;
     }
 
  .preview{
-        height:200px !important;
+        height:170px !important;
     }
     .preview #imghead,#preview img{
         
-        height:190px;
+        height:160px;
     }
 </style>
 
@@ -381,34 +381,43 @@ padding: 5px 6px!important;
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner1</div>
+                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner1</span>
                                             </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        </div>
+                                        <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                                <input type="file" id="" name="img2" onchange="previewImage(this)" class="upload-add">
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner2</div>
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner2</span>
                                             </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        </div>
+                                        <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                                <input type="file" id="" name="img3" onchange="previewImage(this)" class="upload-add">
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner3</div>
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner3</span>
                                             </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="" name="img4" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">点击选择图片</div>
+                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">缩略图</span>
                                             </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -568,37 +577,43 @@ padding: 5px 6px!important;
                                 
                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" >
-                                                <!-- 图片实时预览 -->
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            </div><sapn class="am-text-xs">banner1</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner1</span>
+                                            </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        </div>
+                                        <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
-                                                <!-- 图片实时预览 -->
-                                                      <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                       
-                                            </div><span class="am-text-xs">banner2</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner2</span>
+                                            </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        </div>
+                                        <div class="am-u-sm-9 am-fr">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
-                                                <!-- 图片实时预览 -->
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            </div><span class="am-text-xs">banner3</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">banner3</span>
+                                            </div>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
+                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
-                                                <!-- 图片实时预览 -->
-                                              
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            
+                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                              <!-- 图片实时预览 -->
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                              <span class="clickUp">缩略图</span>
                                             </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -790,9 +805,8 @@ padding: 5px 6px!important;
                                           <!-- 图片实时预览 -->
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
-                                    <!-- <input type="file" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button> -->
-                                    <a href="<?php echo site_url('module/LocalLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a>
-                                    <a href="upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
+                                    <!-- <a href="<?php echo site_url('module/LocalLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a>
+                                    <a href="upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a> -->
                                 </div>
                             </div>
                         </div>
