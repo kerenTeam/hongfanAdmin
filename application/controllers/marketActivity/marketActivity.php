@@ -61,7 +61,7 @@ class MarketActivity extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/image/activity';
+                    $config['upload_path']      = 'Upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -70,7 +70,7 @@ class MarketActivity extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -136,16 +136,16 @@ class MarketActivity extends Default_Controller {
                 exit;
             }
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/image/activity';
+                    $config['upload_path']      = 'Upload/image/activity';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img')) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/').$data['id']."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           
@@ -162,7 +162,7 @@ class MarketActivity extends Default_Controller {
             if($this->Activity_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/marketActivity/MarketActivity/activity')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.herf='".site_url('/marketActivity/MarketActivity/marketEditActivity/').$data['id']."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.herf='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
             }
 
         }else{

@@ -122,7 +122,7 @@ class ServeForPeople extends Default_Controller
     function impolt_help_user(){
        if(!empty($_FILES['file']['tmp_name'])){
             $name = date('Y-m-d');
-            $inputFileName = "hijijsUpload/xls/" .$name .'.xls';
+            $inputFileName = "Upload/xls/" .$name .'.xls';
             move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
             //引入类库
             $this->load->library('excel');
@@ -171,7 +171,7 @@ class ServeForPeople extends Default_Controller
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'hijijsUpload/headPic/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'Upload/headPic/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['headPic'] = $myFileName;
             }
@@ -331,7 +331,7 @@ class ServeForPeople extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/headPic/';
+                    $config['upload_path']      = 'Upload/headPic/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -341,7 +341,7 @@ class ServeForPeople extends Default_Controller
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
                     }else{
                       
-                        $data['headPic'] = 'hijijsUpload/headPic/'.$this->upload->data('file_name');
+                        $data['headPic'] = 'Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
             $data['competency'] = json_encode(explode("&",$data['competency']));
@@ -366,7 +366,7 @@ class ServeForPeople extends Default_Controller
         if($_POST){
             $data = $_POST;
             if(!empty($_FILES['picArray']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/headPic/';
+                    $config['upload_path']      = 'Upload/headPic/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -376,7 +376,7 @@ class ServeForPeople extends Default_Controller
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
                     }else{
                       
-                        $data['headPic'] = 'hijijsUpload/headPic/'.$this->upload->data('file_name');
+                        $data['headPic'] = 'Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
             $id = $data['id'];
@@ -470,7 +470,7 @@ class ServeForPeople extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/team/';
+                    $config['upload_path']      = 'Upload/team/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -479,7 +479,7 @@ class ServeForPeople extends Default_Controller
                     if(!$this->upload->do_upload('img')) {
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/team/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/team/'.$this->upload->data('file_name');
                    }     
             }
             if($this->Service_model->edit_team_info($data['id'],$data)){
@@ -497,7 +497,7 @@ class ServeForPeople extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
-                    $config['upload_path']      = 'hijijsUpload/team/';
+                    $config['upload_path']      = 'Upload/team/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
@@ -506,7 +506,7 @@ class ServeForPeople extends Default_Controller
                     if(!$this->upload->do_upload('img')) {
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'hijijsUpload/team/'.$this->upload->data('file_name');
+                        $data['picImg'] = 'Upload/team/'.$this->upload->data('file_name');
                    }     
             }
             if($this->Service_model->add_volunteer_activities($data)){

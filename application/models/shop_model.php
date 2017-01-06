@@ -18,8 +18,9 @@ class Shop_model extends CI_Model
         parent::__construct();
     }
     //获取所有店铺
-    function shop_list(){
-        $query = $this->db->order_by('create_time','desc')->get($this->shop_store);
+    function shop_list($type){
+        $where['store_distinction'] = $type;
+        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->shop_store);
         return $query->result_array();
     }
     //修改店铺状态

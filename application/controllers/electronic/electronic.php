@@ -103,7 +103,7 @@ class Electronic extends Default_Controller {
             if($this->Activity_model->edit_electronic($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/editElectronic/').$data['id']."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/editElectronic/'.$data['id'])."'</script>";
             }
         }else{
             $this->load->view('404.html');

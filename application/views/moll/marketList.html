@@ -47,8 +47,8 @@ padding: 5px 6px!important;
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商铺管理
-            <a href="<?php echo site_url().'/shop/shop/index';?>" style="font-size:16px;">商家列表</a><small></small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
+            <a href="<?php echo site_url().'/shop/Shop/marketBusiness';?>" style="font-size:16px;">商家列表</a><small></small></div>
         </div>
     </div>
 </div>
@@ -117,13 +117,13 @@ padding: 5px 6px!important;
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/shop/addShop/2';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/shop/add_market_shop';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <div class="wx_type_img am-inline">
                                          <input type="file" id="imgUpload" name="xml" onchange="uploadFiles()" class="upload-add fileUpLoad" >
                                           <!-- 图片实时预览 -->
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
-                                    <a href="<?php echo site_url('/shop/shop/dowload_store/2');?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a> 
+                                    <a href="<?php echo site_url('/shop/shop/dowload_store/1');?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a> 
                                     <a href="Upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@ padding: 5px 6px!important;
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
            var form=new FormData();
             form.append('file',fileObj); //文件对象
-            form.append('typeid','2'); //文件对象
+            form.append('typeid','1');
             //实例化XMLHttpRequest对象
             var xhr=new XMLHttpRequest();
             xhr.open('post',FileController,true);
@@ -219,11 +219,11 @@ padding: 5px 6px!important;
                         document.getElementById('shopList').innerHTML = thisDate(obj.curr);
                         $('.editShop').click(function(){//编辑商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/shop/editShop/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/Shop/editShop/" + dataId + "');?>");
                         });
                          $('.manageShop').click(function(){//管理商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopAdmin/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/SingleShop/shopAdmin/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -249,7 +249,7 @@ padding: 5px 6px!important;
                                     },
                                     error:function(xhr,type,errorThrown){
                                         alert("操作失败，请检查网络设置！");
-                                    } 
+                                    }
                                 });
                                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }else{
@@ -323,10 +323,10 @@ padding: 5px 6px!important;
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+    getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+        getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=1');
     });
     //点击搜索
     $('.searchShop').click(function(){
