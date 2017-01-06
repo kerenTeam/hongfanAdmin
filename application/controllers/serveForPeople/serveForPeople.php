@@ -171,7 +171,7 @@ class ServeForPeople extends Default_Controller
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'Upload/headPic/'.date('His').++$i.'.'.$extension;
+                $myFileName = '/Upload/headPic/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['headPic'] = $myFileName;
             }
@@ -341,7 +341,7 @@ class ServeForPeople extends Default_Controller
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
                     }else{
                       
-                        $data['headPic'] = 'Upload/headPic/'.$this->upload->data('file_name');
+                        $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
             $data['competency'] = json_encode(explode("&",$data['competency']));
@@ -376,7 +376,7 @@ class ServeForPeople extends Default_Controller
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
                     }else{
                       
-                        $data['headPic'] = 'Upload/headPic/'.$this->upload->data('file_name');
+                        $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
             $id = $data['id'];

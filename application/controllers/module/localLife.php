@@ -372,9 +372,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
 					}else{
 						if($i != 4){
-						   $pic[]['banner'] = 'Upload/service/ordinary/'.$this->upload->data('file_name');
+						   $pic[]['banner'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
-							$logo[]['picImg'] = 'Upload/service/ordinary/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -383,6 +383,7 @@ class LocalLife extends Default_Controller {
         
 			 $data['pic'] = json_encode($pic);
 			 $data['logo'] = json_encode($logo);
+             $data['userid'] = $this->session->users['user_id'];
 			 if($this->Module_model->add_service($data)){
 				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
 			 }else{
@@ -412,9 +413,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_id'])."'</script>";exit;
 					}else{
 						if($i != 4){
-							$pic[]['picImg'] = 'Upload/service/houst/'.$this->upload->data('file_name');
+							$pic[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
 						}else{
-							$logo[]['picImg'] = 'Upload/service/houst/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -454,9 +455,9 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['id'])."'</script>";exit;
 					}else{
 						if($i != 4){
-							$pic[]['picImg'] = 'Upload/service/mark/'.$this->upload->data('file_name');
+							$pic[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
 						}else{
-							$logo[]['picImg'] = 'Upload/service/mark/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
 						}
 					}
 				}
@@ -498,9 +499,9 @@ class LocalLife extends Default_Controller {
 							}else{
 								unset($data['img'.$i]);
 								if($i != 4){
-									$pic[]['banner'] = 'Upload/service/ordinary/'.$this->upload->data('file_name');
+									$pic[]['banner'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 								}else{
-									$logo[]['picImg'] = 'Upload/service/ordinary/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -537,9 +538,9 @@ class LocalLife extends Default_Controller {
 							}else{
                                 unset($data['img'.$i]);
 								if($i != 4){
-								$pic[]['picImg'] = 'Upload/service/houst/'.$this->upload->data('file_name');
+								$pic[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
 								}else{
-									$logo[]['picImg'] = 'Upload/service/houst/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
@@ -578,9 +579,9 @@ class LocalLife extends Default_Controller {
 							}else{
 								unset($data['img'.$i]);
 								if($i != 4){
-									$pic[]['picImg'] = 'Upload/service/mark/'.$this->upload->data('file_name');
+									$pic[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
 								}else{
-									$logo[]['picImg'] = 'Upload/service/mark/'.$this->upload->data('file_name');
+									$logo[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
 								}
 							}
 						}else{
