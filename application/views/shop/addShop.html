@@ -5,7 +5,13 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-            <a href="<?php echo site_url().'/shop/shop/addShop';?>" style="font-size:16px;">新增商家</a><small></small></div>
+            <?php if($type == 1):?>
+            <a href="<?php echo site_url().'/shop/Shop/marketBusiness';?>" style="font-size:16px;">商家列表</a>
+            <?php else:?>
+            <a href="<?php echo site_url().'/shop/Shop/index';?>" style="font-size:16px;">商家列表</a>
+            <?php endif;?>
+            <small>
+            新增商家</small></div>
         </div>
     </div> 
 </div>
@@ -138,6 +144,7 @@
                     </div>
 
                     <div class="am-form-group am-text-center">
+                        <input type="hidden" name="store_distinction" value="<?php echo $type;?>">
                         <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" id="submit" type="submit">添加</button>
                     </div>
                 </div>
