@@ -195,7 +195,6 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].title=res[i].title.split(' ')[0];
                         listData+= template('shopGoodsModal',res[i]);
                      }
                     
