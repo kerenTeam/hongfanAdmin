@@ -261,6 +261,7 @@ class Shop extends Default_Controller {
     function impolt_store(){
 
           $typeid = $_POST['typeid'];
+
           $name = date('Y-m-d');
           $inputFileName = "Upload/xls/" .$name .'.xls';
           move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
@@ -330,6 +331,7 @@ class Shop extends Default_Controller {
                 }else{
                     $data['store_distinction'] = '1';
                 }
+   
                 //获取用户id
                  $username = $this->Shop_model->get_user_info($arr['username']);
                 if(empty($username)){

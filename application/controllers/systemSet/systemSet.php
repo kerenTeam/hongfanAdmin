@@ -397,7 +397,7 @@ class SystemSet extends Default_Controller {
                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$data['id'])."'</script>";exit;
                 }else{
                    
-                    $data['bannerPic'] = 'Upload/banner/'.$this->upload->data('file_name');
+                    $data['bannerPic'] = '/Upload/banner/'.$this->upload->data('file_name');
                     }
             }
             unset($data['id']);
@@ -455,7 +455,7 @@ class SystemSet extends Default_Controller {
                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/editBanner/'.$data['id'].'/'.$num)."'</script>";exit;
                 }else{
                    
-                    $data['bannerPic'] = 'Upload/banner/'.$this->upload->data('file_name');
+                    $data['bannerPic'] = '/Upload/banner/'.$this->upload->data('file_name');
                     }
             }
             unset($data['id']);
