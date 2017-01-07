@@ -21,7 +21,7 @@ class System_model extends CI_Model
 
     //返回所有管理员账户
     function get_admin_user(){
-       $sql = "SELECT a.username,a.user_id,a.nickname,a.gid,a.create_time,a.avatar,b.gid,b.group_name FROM hf_user_member as a,hf_user_member_group as b where a.gid = b.gid and a.gid != 5 and a.gid != 2 order by a.create_time desc";
+       $sql = "SELECT a.username,a.user_id,a.nickname,a.gid,a.create_time,a.avatar,b.gid,b.group_name FROM hf_user_member as a,hf_user_member_group as b where a.gid = b.gid and a.gid != 5 and a.gid != 2 order by a.gid asc";
        $query = $this->db->query($sql);
        return $query->result_array();
     }
@@ -47,12 +47,15 @@ class System_model extends CI_Model
         $where['user_id'] = $id;
         return $this->db->where($where)->update($this->member,$data);
     }
-
+    //刪除管理員
+    function del_admin_user($id){
+        $where['user_id'] = $id;
+        return $this->db->where($where)->delete($this->member);
+    }
     //返回所有banner
-    function get_bannerlist($name){
-        $where['name'] = $name;
-        $query = $this->db->where($where)->get($this->banner);
-        return $query->row_array();
+    function get_bannerlist(){
+        $query = $this->db->get($this->banner);
+        return $query->result_array();
     }
     //根据id返回banner数据
     function get_banner($id){

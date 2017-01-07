@@ -43,20 +43,41 @@ h4.am-panel-title{
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
                         <div class="am-panel-group" id="accordion">
+                        <?php foreach($banners as $val):?>
                             <div class="am-panel am-panel-default am-in">
                                 <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
-                                        首页的banner
+                              
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage<?php echo $val['type'];?>'}">
+                                        <?php switch ($val['type']) {
+                                                case '1':
+                                                   echo '首頁的banner';
+                                                    break;
+                                                case '2':
+                                                   echo '家鄉報道的banner';
+                                                    break;
+                                                case '3':
+                                                   echo '购物中心的banner';
+                                                    break;
+                                                case '4':
+                                                   echo '超市比价的banner';
+                                                    break;
+                                                case '5':
+                                                   echo '为民服务的banner';
+                                                    break; 
+                                                case '6':
+                                                   echo '优品汇的banner';
+                                                    break;
+                                        }?>
                                         <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
                                 </div>
                                
-                                <div id="homepage" class="am-panel-collapse am-collapse am-in">
+                                <div id="homepage<?php echo $val['type'];?>" class="am-panel-collapse am-collapse am-in">
                                     <div class="am-panel-bd">
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/1';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/'.$val['type'];?>"><span class="am-icon-plus"></span> 新增</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -72,8 +93,8 @@ h4.am-panel-title{
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <?php if(!empty($homebanner['banner'])):?>
-                                             <?php $home_banner = json_decode($homebanner['banner'],true);?>
+                                            <?php if(!empty($val['banner'])):?>
+                                             <?php $home_banner = json_decode($val['banner'],true);?>
                                             <?php foreach($home_banner as $k=>$value):?>
                                                 <tr class="gradeX">
                                                     <td class="am-text-middle"><?php $num = $k+1; echo $num;?></td>
@@ -81,10 +102,10 @@ h4.am-panel-title{
                                                     <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$homebanner['id'].'/'.$num);?>">
+                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$val['type'].'/'.$num);?>">
                                                                 <i class="am-icon-pencil"></i> 编辑
                                                             </a>
-                                                            <a onClick="return confirm('确定删除?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$homebanner['id'].'/'.$num);?>" >
+                                                            <a onClick="return confirm('确定删除?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$val['type'].'/'.$num);?>" >
                                                                 <i class="am-icon-trash"></i> 删除
                                                             </a>
                                                         </div>
@@ -98,174 +119,8 @@ h4.am-panel-title{
                                     </div>
                                 </div>
                             </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
-                                        超市比价的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="market" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/4';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">编号 </th>
-                                                    <th class="am-text-middle">名称 </th>
-                                                    <th class="am-text-middle">图片 </th>
-                                                    <th class="am-text-middle">跳转地址 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                             <?php if(!empty($supermarketBanner['banner'])):?>
-                                             <?php $marketBanner = json_decode($supermarketBanner['banner'],true);?>
-                                            <?php foreach($marketBanner as $k=>$value):?>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
-                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="<?php echo $value['bannerPic'];?>"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$supermarketBanner['id'].'/'.$num);?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$supermarketBanner['id'].'/'.$num);?>" class="tpl-table-black-operation-del tpl-del">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach;?>
-                                            <?php endif;?>
-                                                
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
-                                        购物中心的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="shopCenter" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/3';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">编号 </th>
-                                                    <th class="am-text-middle">名称 </th>
-                                                    <th class="am-text-middle">图片 </th>
-                                                    <th class="am-text-middle">跳转地址 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                              <?php if(!empty($mallBanner['banner'])):?>
-                                             <?php $mall = json_decode($mallBanner['banner'],true);?>
-                                            <?php foreach($mall as $k=>$value):?>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
-                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="<?php echo $value['bannerPic'];?>"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$mallBanner['id'].'/'.$num);?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$mallBanner['id'].'/'.$num);?>" class="tpl-table-black-operation-del">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach;?>
-                                            <?php endif;?>
-                                              
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#servePeople'}">
-                                        为民服务的banner
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="servePeople" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/addBanner/5';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">编号 </th>
-                                                    <th class="am-text-middle">名称 </th>
-                                                    <th class="am-text-middle">图片 </th>
-                                                    <th class="am-text-middle">跳转地址 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                 <?php if(!empty($serviceBanner['banner'])):?>
-                                             <?php $service = json_decode($serviceBanner['banner'],true);?>
-                                            <?php foreach($service as $k=>$value):?>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><?php $num=$k+1; echo $num;?></td>
-                                                    <td class="am-text-middle"><?php echo $value['name'];?></td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="<?php echo $value['bannerPic'];?>"></td>
-                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$serviceBanner['id'].'/'.$num);?>">
-                                                                <i class="am-icon-pencil"></i> 编辑
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$serviceBanner['id'].'/'.$num);?>" class="tpl-table-black-operation-del">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach;?>
-                                            <?php endif;?>
-                                              
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                        <?php endforeach;?>
+                           
                         </div>
                     </div>
                 </div>

@@ -138,6 +138,25 @@ class SystemSet extends Default_Controller {
         }
     }
 
+      //刪除管理員
+    function del_admin_user(){
+       if($_POST){
+            $id = $_POST['userid'];
+            if(empty($id)){
+                echo "2";exit;
+            }else{
+                if($this->System_model->del_admin_user($id)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }
+       }else{
+         echo "2";
+       }
+    }
+
+
 
     //系统设置 广告管理
     function adverManage(){
@@ -176,7 +195,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/'.$data['id'])."'</script>";
                     exit;
                 } else{
-                    $data['pic'] = 'Upload/adver/'.$this->upload->data('file_name');
+                    $data['pic'] = '/Upload/adver/'.$this->upload->data('file_name');
                 }
             }
             if($this->System_model->edit_adver($data['id'],$data)){
@@ -188,14 +207,17 @@ class SystemSet extends Default_Controller {
             $this->load->view('404.html');
         }
     }
+
+
+
+
+
     //系统设置 支付账号管理
     function apliyManage(){
          $data['page'] = $this->view_paymanage;
          $data['menu'] = array('systemSet','apliyManage');
     	 $this->load->view('template.html',$data);
     }
-
-    
 
     
     //系统设置 其他管理
@@ -357,13 +379,17 @@ class SystemSet extends Default_Controller {
      //banner列表
     function bannerList(){
         //获去首页banner
-        $data['homebanner'] = $this->System_model->get_bannerlist('Index');
-        //获取超市比价banner
-        $data['supermarketBanner'] = $this->System_model->get_bannerlist('Supermarket');
-        //获取为民服务banner
-        $data['serviceBanner'] = $this->System_model->get_bannerlist('Service'); 
-        //获取商城banner
-        $data['mallBanner'] = $this->System_model->get_bannerlist('Mall');
+        // $data['homebanner'] = $this->System_model->get_bannerlist('Index');
+        // //获取超市比价banner
+        // $data['supermarketBanner'] = $this->System_model->get_bannerlist('Supermarket');
+        // //获取为民服务banner
+        // $data['serviceBanner'] = $this->System_model->get_bannerlist('Service'); 
+        // //获取商城banner
+        // $data['mallBanner'] = $this->System_model->get_bannerlist('Mall');
+       
+        $data['banners'] = $this->System_model->get_bannerlist();
+
+
         $data['page'] = $this->view_bannerList;
         $data['menu'] = array('systemSet','bannerList');
         $this->load->view('template.html',$data);
