@@ -123,7 +123,8 @@ padding: 5px 6px!important;
                                           <!-- 图片实时预览 -->
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
-                                    <a href="<?php echo site_url('/shop/shop/dowload_store/2');?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a> 
+                                    <a href="<?php echo site_url('/shop/shop/dowload_store/2');?>" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-arrow-up"></span> 导出</a> 
+                                    <a href="Upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                     <a href="Upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                 </div>
                             </div>
@@ -133,6 +134,7 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
+                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="moll_name">商场名称 </th>
                                     <th class="shop_id">商铺编号 </th>
                                     <th class="shop_name">商铺名称 </th>
@@ -338,6 +340,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="shopModal">
     <tr class="trClass" data-id="<%= store_id%>">
+        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= store_id%>" name="commentBox"></td>
         <td>宏帆广场</td>
         <td class="am-text-middle"><%= store_id%></td>
         <td class="am-text-middle"><%= store_name%></td>
