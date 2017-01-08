@@ -165,14 +165,23 @@
                     </div>
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                     <div class="am-form-group">
-                            <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
-                                <option value=''>请选择一个！</option>
-                                <?php foreach($cates as $val):?>
-                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
+                        <label>商品一级分类<span class="red">*</span>：</label>
+                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
+                            <option value=''>请选择一个！</option>
+                            <?php foreach($cates as $val):?>
+                            <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label>商品二级分类<span class="red">*</span>：</label>
+                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
+                            <option value=''>请选择一个！</option>
+                            <?php foreach($cates as $val):?>
+                            <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
                       <!--   <div class="am-form-group"> 
                             <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
                             <input type="radio" name="recommend" value="1"/>是
