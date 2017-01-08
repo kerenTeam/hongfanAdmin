@@ -21,7 +21,7 @@ class System_model extends CI_Model
 
     //返回所有管理员账户
     function get_admin_user(){
-       $sql = "SELECT a.username,a.user_id,a.nickname,a.gid,a.create_time,a.avatar,b.gid,b.group_name FROM hf_user_member as a,hf_user_member_group as b where a.gid = b.gid and a.gid != 5 and a.gid != 2 order by a.create_time desc";
+       $sql = "SELECT a.username,a.password,a.user_id,a.nickname,a.gid,a.create_time,a.avatar,b.gid,b.group_name FROM hf_user_member as a,hf_user_member_group as b where a.gid = b.gid and a.gid != 5 and a.gid != 2 order by a.create_time desc";
        $query = $this->db->query($sql);
        return $query->result_array();
     }

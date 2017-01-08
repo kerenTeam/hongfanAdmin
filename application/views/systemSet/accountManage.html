@@ -301,11 +301,12 @@ var flag=1,tag=1,str='';
                             for(var i=0;i<$('.sureSave').length;i++){
                                 $('.sureSave').eq(i).click(function(){
                                 var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/systemSet/edit_admin_user');?>";//上传文件的后台地址;
-                                var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value;
+                                var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
                                 console.log(name+nickname+picArray[0]+group_name);
                                 formD.append('user_id',dataId);
                                 formD.append('username',name);
                                 formD.append('nickname',nickname);
+                                formD.append('password',password);
                                 formD.append('group_name',group_name);
                                 formD.append('picArray',picArray[0]);
                                  //实例化XMLHttpRequest对象
@@ -414,23 +415,30 @@ $(document).ready(function(){
                         <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type='hidden' name='type_id' />
+                            <input type="password" placeholder="******" class="password<%= user_id%>" value="" name='name'>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <select name="account_type_name<%= user_id%>" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>" >
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <div class="wx_type_img">
-                                <input type="file" id="imgUpload" data-id="<%= user_id%>" name="img1" class="upload-add imgUp" multiple="multiple" required>
+                                <input type="file" id="imgUpload" data-id="<%= user_id%>" onchange="previewImage(this)" name="img[]" class="upload-add imgUp"  required>
                                   <!-- 图片实时预览 -->
                                   <div id="preview" class="preview<%= user_id%>">
                                   <%if(avatar) {%>
                                     <img src="<%= avatar%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
                                   <%}else {%>
-                                        <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
+                                    <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
                                   <%}%></div>
                             </div>
                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
