@@ -136,17 +136,18 @@ class Store extends Default_Controller {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeEditGoods/'.$data['id'])."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
                     if($i == '1'){
                             $data['thumb'] = $data['img'.$i];
                     }
-                      $pic[]['bannerPic'] = $data['img'.$i];
-                   
+                      if(!empty($data['img'.$i])){
+                     $pic[]['bannerPic'] = $data['img'.$i];
+                     }
                      unset($data['img'.$i]);
                 }
                 $i++;
@@ -193,7 +194,7 @@ class Store extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeAddSort/')."'</script>";
                     exit;
                 } else{
-                    $data['icon'] =  'Upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->MallShop_model->add_store_cate($data)){
@@ -234,7 +235,7 @@ class Store extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeEditSort/'.$data['catid'])."'</script>";
                     exit;
                 } else{
-                    $data['icon'] =  'Upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
