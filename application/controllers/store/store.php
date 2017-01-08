@@ -27,6 +27,8 @@ class Store extends Default_Controller {
     public $view_storeDeliveryList = 'store/storeDeliveryList.html';
     //订单详情
     public $view_storeOrderDetail = "store/storeOrderDetail.html";
+    //主题展销商品管理
+    public $view_storeGoodsSales = "store/storeGoodsSales.html";
 
     function __construct()
     {
@@ -343,7 +345,12 @@ class Store extends Default_Controller {
             echo "2";
         }    
     }
-
+    //主题展销商品管理
+    function storeGoodsSales(){
+         $data['page'] = $this->view_storeGoodsSales;
+         $data['menu'] = array('store','storeGoodsSales');
+         $this->load->view('template.html',$data);
+     }
 
     //快递管理
     function storeDeliveryList(){
