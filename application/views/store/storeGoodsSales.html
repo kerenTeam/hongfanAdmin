@@ -18,162 +18,182 @@ h4.am-panel-title{
     font-size:16px !important;
 }
 .imgbox{
-    width: 250px !important;
+    width: 100px !important;
 }
+#preview{
+        width:150px !important;
+    }
+    #preview #imghead,#preview img{
+     width:140px !important;
+    }
+    .width{
+        width: 350px !important;
+    }
 </style>
 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电商管理 
-            <a href="<?php echo site_url().'/systemSet/systemSet/bannerList';?>" style="font-size:16px;">主题展销</a>
-            <small></small></div>
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电商管理 
+                <a href="<?php echo site_url().'/systemSet/systemSet/bannerList';?>" style="font-size:16px;">主题展销</a>
+                <small></small></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">主题展销列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <div class="am-panel-group" id="accordion">
-                            <div class="am-panel am-panel-default am-in">
-                                <div class="am-panel-hd">             
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#first'">
-                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>                              
-                                <div id="first" class="am-panel-collapse am-collapse am-in">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeGoodsList';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">主题展销列表</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="am-u-sm-12">
+                            <div class="am-panel-group" id="accordion">
+                                <div class="am-panel am-panel-default">
+                                    <div class="am-panel-hd">             
+                                        <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#first'}">
+                                            主题一<span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                        </h4>
+                                    </div>                              
+                                    <div id="first" class="am-panel-collapse am-collapse am-in">
+                                        <div class="am-panel-bd">
+                                            <div class="am-form-group">
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeGoodsList';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="am-text-middle">主题展销缩略图</th>
+                                                        <th class="am-text-middle">商品编号</th>
+                                                        <th class="am-text-middle">商品名称 </th>
+                                                        <th class="am-text-middle">商品图片 </th>
+                                                        <th class="am-text-middle">商品分类 </th>
+                                                        <th class="am-text-middle">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="gradeX">
+                                                        <td class="am-text-middle width" rowspan="2">
+                                                            <div class="wx_type_img">
+                                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                                              <!-- 图片实时预览 -->
+                                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                            </div>
+                                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small></td>
+                                                        <td class="am-text-middle">E12456</td>
+                                                        <td class="am-text-middle">韩都一社</td>
+                                                        <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
+                                                        <td class="am-text-middle">服饰</td>
+                                                        <td class="am-text-middle">
+                                                            <div class="tpl-table-black-operation">
+                                                                <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="" >
+                                                                    <i class="am-icon-trash"></i>移除该商品
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="gradeX">
+                                                        <td class="am-text-middle">E12456</td>
+                                                        <td class="am-text-middle">韩都一社</td>
+                                                        <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
+                                                        <td class="am-text-middle">服饰</td>
+                                                        <td class="am-text-middle">
+                                                            <div class="tpl-table-black-operation">
+                                                                <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="" >
+                                                                    <i class="am-icon-trash"></i>移除该商品
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- more data -->
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">主题展销缩略图</th>
-                                                    <th class="am-text-middle">商品编号</th>
-                                                    <th class="am-text-middle">商品名称 </th>
-                                                    <th class="am-text-middle">商品图片 </th>
-                                                    <th class="am-text-middle">商品分类 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">E12456</td>
-                                                    <td class="am-text-middle">韩都一社</td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">服饰</td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                            <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$val['type'].'/'.$num);?>" >
-                                                                <i class="am-icon-trash"></i>移除该商品
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">E12456</td>
-                                                    <td class="am-text-middle">韩都一社</td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">服饰</td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                            <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$val['type'].'/'.$num);?>" >
-                                                                <i class="am-icon-trash"></i>移除该商品
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
                                     </div>
                                 </div>
+                                <div class="am-panel am-panel-default">
+                                    <div class="am-panel-hd">             
+                                        <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#second'}">
+                                            主题二<span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                        </h4>
+                                    </div>                              
+                                    <div id="second" class="am-panel-collapse am-collapse">
+                                        <div class="am-panel-bd">
+                                            <div class="am-form-group">
+                                                <div class="am-btn-toolbar">
+                                                    <div class="am-btn-group am-btn-group-xs">
+                                                        <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeGoodsList';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="am-text-middle">主题展销缩略图</th>
+                                                        <th class="am-text-middle">商品编号</th>
+                                                        <th class="am-text-middle">商品名称 </th>
+                                                        <th class="am-text-middle">商品图片 </th>
+                                                        <th class="am-text-middle">商品分类 </th>
+                                                        <th class="am-text-middle">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="gradeX">
+                                                        <td class="am-text-middle width" rowspan="2">
+                                                            <div class="wx_type_img">
+                                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                                              <!-- 图片实时预览 -->
+                                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                            </div>
+                                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                                        </td>
+                                                        <td class="am-text-middle">E12456</td>
+                                                        <td class="am-text-middle">韩都一社</td>
+                                                        <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
+                                                        <td class="am-text-middle">服饰</td>
+                                                        <td class="am-text-middle">
+                                                            <div class="tpl-table-black-operation">
+                                                                <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="" >
+                                                                    <i class="am-icon-trash"></i>移除该商品
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="gradeX">
+                                                        <td class="am-text-middle">E12456</td>
+                                                        <td class="am-text-middle">韩都一社</td>
+                                                        <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
+                                                        <td class="am-text-middle">服饰</td>
+                                                        <td class="am-text-middle">
+                                                            <div class="tpl-table-black-operation">
+                                                                <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="" >
+                                                                    <i class="am-icon-trash"></i>移除该商品
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- more data -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>     
                             </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">             
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#second'">
-                                        <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>                              
-                                <div id="second" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeGoodsList';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">主题展销缩略图</th>
-                                                    <th class="am-text-middle">商品编号</th>
-                                                    <th class="am-text-middle">商品名称 </th>
-                                                    <th class="am-text-middle">商品图片 </th>
-                                                    <th class="am-text-middle">商品分类 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">E12456</td>
-                                                    <td class="am-text-middle">韩都一社</td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">服饰</td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                            <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$val['type'].'/'.$num);?>" >
-                                                                <i class="am-icon-trash"></i>移除该商品
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">E12456</td>
-                                                    <td class="am-text-middle">韩都一社</td>
-                                                    <td class="am-text-middle"><img class="imgbox" src="assets/img/a5.png"></td>
-                                                    <td class="am-text-middle">服饰</td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                            <a onClick="return confirm('确定移除该商品吗?');" class="tpl-table-black-operation-del tpl-del" href="<?php echo site_url('/systemSet/systemSet/del_banner/'.$val['type'].'/'.$num);?>" >
-                                                                <i class="am-icon-trash"></i>移除该商品
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>     
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
@@ -189,4 +209,90 @@ $('.ulSign').click(function(){
     }
    
 });
+
+function previewImage(file) {
+  var MAXWIDTH = 350;
+  var MAXHEIGHT = 249;
+  var div = findPreview(file.parentNode);
+        
+
+  if (file.files && file.files[0]) {
+    div.innerHTML = '<img id=imghead>';
+    //var img = document.getElementById('imghead');
+    var img = div.lastChild;
+    img.onload = function() {
+      var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+      img.width = rect.width;
+      img.height = rect.height;
+    }
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      img.src = evt.target.result;
+    }
+    reader.readAsDataURL(file.files[0]);
+    var fileObj=file.files[0];//获取文件对象
+    var FileController="";//上传文件的后台地址
+    var form=new FormData();
+    form.append('file',fileObj); //文件对象
+    //实例化XMLHttpRequest对象
+    var xhr=new XMLHttpRequest();
+    xhr.open('post',FileController,true);
+    xhr.onload=function(){
+        location.reload();
+        
+    };
+    xhr.send(form); 
+
+
+  } else //鍏煎IE
+  {
+    //alert("123");
+    var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+    file.select();
+    var src = document.selection.createRange().text;
+    div.innerHTML = '<img id=imghead>';
+    //var img = document.getElementById('imghead');
+    var img = div.lastChild;
+    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+    status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+    div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
+  }
+}
+
+function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+  var param = {
+    top: 0,
+    left: 0,
+    width: width,
+    height: height
+  };
+  if (width > maxWidth || height > maxHeight) {
+    rateWidth = width / maxWidth;
+    rateHeight = height / maxHeight;
+
+    if (rateWidth > rateHeight) {
+      param.width = maxWidth;
+      param.height = Math.round(height / rateWidth);
+    } else {
+      param.width = Math.round(width / rateHeight);
+      param.height = maxHeight;
+    }
+  }
+
+  param.left = Math.round((maxWidth - param.width) / 2);
+  param.top = Math.round((maxHeight - param.height) / 2);
+  return param;
+}
+
+function findPreview(parent) {
+  var childs = parent.childNodes;
+  for (var i = 0; i < childs.length; i++) {
+    if (childs[i].id == "preview")
+      return childs[i];
+  }
+
+  return div = document.getElementById('preview');
+}
+
 </script>
