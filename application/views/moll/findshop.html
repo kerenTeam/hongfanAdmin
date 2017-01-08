@@ -1,0 +1,324 @@
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+color: #333;
+}
+ #preview{
+        height:150px !important;
+    }
+    #preview #imghead,#preview img{
+     height:140px !important;
+    }
+.theme-white .tpl-user-card {
+    /* border: 1px solid #3598dc; */
+    border-top: 2px solid #fff;
+    background: #f1f1f1;
+    color: #ffffff;
+    /* border-radius: 4px; */
+}
+
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
+}
+.theme-white .widget-water {
+        padding: 12px 17px;
+        border: 1px solid #77bde2;
+        border-top: 2px solid #77bde2;
+        background: #77bde2;
+        color: #ffffff;
+        min-height: 174px;
+    }
+.theme-white .tpl-form-line-form .am-form-label,.theme-white .widget {
+    color: #333;
+}
+.widget-body {
+    background: #e9ecf3;
+}
+
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商场管理
+            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimit';?>" style="font-size: 18px;">达人探店
+            </a>  
+            <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="widget am-cf">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5">
+            <div class="tpl-user-card am-text-center">
+                <div class="tpl-user-card-title">
+                    达人探店详情
+                </div>
+                <div class="tpl-user-card-body">
+                   <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                        <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <input type="text" name="group_name" class="tpl-form-input" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
+                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <div class="wx_type_img">
+                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                              <!-- 图片实时预览 -->
+                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                            </div>
+                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">详情 ：</label>
+                        <div class="am-u-sm-9 am-u-end">
+                          <div id="editorContent">
+                            <script id="editor" type="text/plain" name='content'></script>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-btn-group-xs">
+                        <button type="reset" class="am-btn am-btn-default">取消</button>
+                        <button type="submit" class="am-btn am-btn-danger">保存</button>
+                    </div>
+                </form> 
+                </div>
+                
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-7">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear: both;">达人探店商家列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-scrollable-horizontal ">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="moll_name">商场名称 </th>
+                                    <th class="shop_id">商铺编号 </th>
+                                    <th class="shop_name">商铺名称 </th>
+                                    <th class="shop_type">商铺类型 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shopList">
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center">
+                        <div class="" id="paging_list">
+                        </div>
+                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-7">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear: both;">普通商家列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-scrollable-horizontal ">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="moll_name">商场名称 </th>
+                                    <th class="shop_id">商铺编号 </th>
+                                    <th class="shop_name">商铺名称 </th>
+                                    <th class="shop_type">商铺类型 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="shopList1">
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center">
+                        <div class="" id="paging_list1">
+                        </div>
+                        <p>共<span class="dataNumber1"></span>条数据，共<span class="pageNumber1"></span>页</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+//表单验证函数
+function validate(obj){
+    var content=obj.value;
+    if(content.length<2 || content.length>10){
+        $('.blacktips').css('display','none');
+        $('.redtips').css('display','block');
+    }else{
+        $('.redtips').css('display','none');
+        $('.blacktips').css('display','block');
+    }
+}
+
+ //实例化编辑器
+var ue = UE.getEditor('editor');
+//删除图片
+$(".deleteImg").click(function(){      
+    $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).prevUntil('.preview').find('input').val(" ");
+    $(this).prevUntil('.preview').find('input').files="";
+});
+
+//点击保存按钮作验证
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+});
+//异步刷新的ajax请求   
+function getList(dataurl,data){
+    $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){        
+            var res = eval(result);
+            console.log(res);
+            if(res!=2){
+                var nums = 10; //每页出现的数量
+                var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
+                var thisDate = function(curr){
+                    var listData = '' , last = curr*nums - 1;
+                    last = last >= res.length ? (res.length-1) : last;
+                     for(var i = (curr*nums - nums); i <= last; i++){
+                        listData+= template('removeShopModal',res[i]);
+                     }         
+                    return listData;
+                };
+                //调用分页
+                laypage({
+                    cont: 'paging_list',
+                    pages: pages,
+                    jump: function(obj){
+                        document.getElementById('shopList').innerHTML = thisDate(obj.curr);              
+                    }
+                })
+            }else{
+                $('#shopList').find('tr').remove();
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商家信息！</p></td></tr>').appendTo('#shopList');
+            }
+
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+}
+//异步刷新的ajax请求   
+function getList1(dataurl,data){
+    $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){        
+            var res = eval(result);
+            console.log(res);
+            if(res!=2){
+                var nums = 10; //每页出现的数量
+                var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
+                var thisDate = function(curr){
+                    var listData = '' , last = curr*nums - 1;
+                    last = last >= res.length ? (res.length-1) : last;
+                     for(var i = (curr*nums - nums); i <= last; i++){
+                        listData+= template('addShopModal',res[i]);
+                     }
+                    
+                    return listData;
+                };
+                //调用分页
+                laypage({
+                    cont: 'paging_list1',
+                    pages: pages,
+                    jump: function(obj){
+                        document.getElementById('shopList1').innerHTML = thisDate(obj.curr);
+                    }
+                })
+            }else{
+                $('#shopList1').find('tr').remove();
+                $('.dataNumber1').html("");
+                $('.pageNumber1').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商家信息！</p></td></tr>').appendTo('#shopList1');
+            }
+
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+}
+$(document).ready(function(){
+    //加载列表数数据
+    // getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+    //刷新页面
+    // $('.refresh').click(function(){
+    //     getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+    // });
+});
+</script>
+<script type="text/html" id="removeShopModal">
+    <tr class="trClass" data-id="<%= store_id%>">
+        <td>宏帆广场</td>
+        <td class="am-text-middle"><%= store_id%></td>
+        <td class="am-text-middle"><%= store_name%></td>
+        <td class="am-text-middle"><%= store_type%></td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= store_id%>" class="removeShop">
+                    <i class="am-icon-pencil"></i> 移除达人探店
+                </a>
+            </div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="addShopModal">
+    <tr class="trClass" data-id="<%= store_id%>">
+        <td>宏帆广场</td>
+        <td class="am-text-middle"><%= store_id%></td>
+        <td class="am-text-middle"><%= store_name%></td>
+        <td class="am-text-middle"><%= store_type%></td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= store_id%>" class="addShop">
+                    <i class="am-icon-pencil"></i> 加入达人探店
+                </a>
+            </div>
+        </td>
+    </tr>
+</script>

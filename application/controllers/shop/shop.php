@@ -14,8 +14,8 @@ class Shop extends Default_Controller {
     public $view_addShop = "shop/addShop.html";
     //编辑商家
     public $view_EditShop = "shop/editShop.html";
-    //ceshio
-    public $view_ceshi = "banner/ceshi.html";
+    //达人探店
+    public $view_findshop = "moll/findshop.html";
 
     function __construct()
     {
@@ -256,6 +256,17 @@ class Shop extends Default_Controller {
             echo "2";
         }
     }
+
+    //达人探店
+    function findshop(){
+
+        $data['page'] = $this->view_findshop;
+        $data['menu']= array('moll','findshop');
+        $this->load->view('template.html',$data);
+     }
+
+
+
 
     //导入商家信息
     function impolt_store(){

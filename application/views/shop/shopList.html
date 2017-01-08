@@ -40,6 +40,12 @@ padding: 5px 6px!important;
     background: #e0690c !important;
     color: #fff !important;
 }
+ #preview{
+        height:150px !important;
+    }
+    #preview #imghead,#preview img{
+     height:140px !important;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -330,7 +336,7 @@ padding: 5px 6px!important;
                             
                         });
 
-                        //删除商品的AJAX请求
+                        //删除商家的AJAX请求
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
                             for(var i=0;i<$('.trClass').length;i++){
