@@ -265,8 +265,39 @@ class Shop extends Default_Controller {
         $this->load->view('template.html',$data);
      }
 
+     //获取所有商家
+     function findshop_goodslist(){
+        if($_POST){
+            $type = $_POST['type'];
+            $list = $this->Shop_model->get_find_shop($type);
+
+            
 
 
+
+        }else{
+            echo "2";
+        }
+     }
+     //获取达人推荐商家
+     function findshop_list(){
+        if($_POST){
+            $type = $_POST['type'];
+            $list = $this->Shop_model->get_find_shop($type);
+            $stores = explode(',', $list['store_list']);
+            var_dump($stores);
+            foreach ($stores as $key => $value) {
+               $data[] = $this->Shop_model->get_store_find($value);
+            }
+            if(empty($data)){
+                echo "2";
+            }else{
+                echo json_encode($data);
+            }
+        }else{
+            echo '2';
+        }
+     }
 
     //导入商家信息
     function impolt_store(){

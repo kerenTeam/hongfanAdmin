@@ -13,6 +13,9 @@ class Shop_model extends CI_Model
     public $store_type = "hf_shop_store_type";
     //商品表
     public $goods = "hf_mall_goods";
+    //推荐商品，或商家
+    public $store_goods = "hf_shop_active_store_goods";
+
     function __construct()
     {
         parent::__construct();
@@ -116,6 +119,25 @@ class Shop_model extends CI_Model
         $res = $query->row_array();
         return $res['type_name'];
     }
+
+
+    //获取推荐
+    function get_find_shop($type){
+        $where['type'] = $type;
+        $query = $this->db->where($where)->get($this->store_goods);
+        return $query->row_array();
+    }
+
+    //获取商家信息
+    function get_store_find($storeid){
+        $this->db->select('store_name,store_id');
+        $query = $this->db->where('store_id',$storeid)->where('state','1')->get('hf_shop_store');
+        return $query->row_array();
+    }
+
+
+
+
 }
 
 
