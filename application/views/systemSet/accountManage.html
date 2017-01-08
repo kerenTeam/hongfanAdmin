@@ -222,11 +222,12 @@ var flag=1,tag=1,str='';
                                 if($('table tbody tr').eq(i).attr('data-id')==dataId){
                                     $.ajax({
                                         type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+dataId,
+                                        url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',
+                                        data: 'userid='+dataId,
                                         success: function(data){
                                             if(data==1){
-                                                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                                
+                                                getList('<?php echo site_url('/systemSet/SystemSet/adminUserList');?>','default=1');
                                             }else{
                                                 alert("操作失败！");
                                             }

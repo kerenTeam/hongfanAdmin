@@ -214,7 +214,7 @@ padding: 5px 6px!important;
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/shop/shop/impolt_store');?>";//上传文件的后台地址
+        var FileController="<?php echo site_url('/shop/Shop/impolt_store');?>";//上传文件的后台地址
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
            var form=new FormData();
             form.append('file',fileObj); //文件对象

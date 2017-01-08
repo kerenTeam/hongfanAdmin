@@ -61,6 +61,7 @@ class SingleShop extends Default_Controller {
         }else{
             $this->session->set_userdata('businessId',$id);
         }
+       // var_dump($this->session->businessId);
         $data['page'] = $this->view_shopAdmin;
     	$this->load->view('template.html',$data);
     }
@@ -127,7 +128,7 @@ class SingleShop extends Default_Controller {
                     }else{
                         unset($data['img'.$i]);
                         if($i == 1){
-                            $data['logo'] = 'Upload/logo/'.$this->upload->data('file_name');
+                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
                         }else{
                             $data['pic'] = 'Upload/logo/'.$this->upload->data('file_name');
                         }
@@ -168,6 +169,7 @@ class SingleShop extends Default_Controller {
         if($_POST){
             //查询出商家店铺
            $arr = $this->MallShop_model->get_goods_list($this->session->businessId);
+
            if(empty($arr)){
                 echo "2";
            }else{
@@ -240,9 +242,9 @@ class SingleShop extends Default_Controller {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
                         unset($data['img'.$i]);
                     }
                 }else{
@@ -292,9 +294,9 @@ class SingleShop extends Default_Controller {
                        echo $this->upload->display_errors();
                     }else{
                         if($i == '1'){
-                            $data['thumb'] = 'Upload/goods/'.$this->upload->data('file_name');
+                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
-                        $pic[]['bannerPic'] = 'Upload/goods/'.$this->upload->data('file_name');
+                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
                 }
                 $i++;
@@ -414,7 +416,7 @@ class SingleShop extends Default_Controller {
             }
             //缩略图
             if(isset($arr['H'.$currentRow])){
-                 $data['thumb'] = $arr['H'.$currentRow][0]['bannerPic'];
+                 $data['thumb'] = '/'.$arr['H'.$currentRow][0]['bannerPic'];
             }else{
                 $data['thumb'] = '';
             } 

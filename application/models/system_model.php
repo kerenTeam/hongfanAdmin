@@ -47,12 +47,15 @@ class System_model extends CI_Model
         $where['user_id'] = $id;
         return $this->db->where($where)->update($this->member,$data);
     }
-
+    //刪除管理員
+    function del_admin_user($id){
+        $where['user_id'] = $id;
+        return $this->db->where($where)->delete($this->member);
+    }
     //返回所有banner
-    function get_bannerlist($name){
-        $where['name'] = $name;
-        $query = $this->db->where($where)->get($this->banner);
-        return $query->row_array();
+    function get_bannerlist(){
+        $query = $this->db->get($this->banner);
+        return $query->result_array();
     }
     //根据id返回banner数据
     function get_banner($id){

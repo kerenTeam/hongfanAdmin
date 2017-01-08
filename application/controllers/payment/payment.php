@@ -18,13 +18,19 @@ class Payment extends Default_Controller
 	function __construct()
 	{
 		 parent::__construct();
-         $this->load->model('Service_model');  
+         $this->load->model('Payment_model');  
 	}
 
 	//充值缴费 主页
     function payment(){
-
-        
+        //月开始
+        $BeginDate=date('Y-m-01', strtotime(date("Y-m-d")));
+        //月结束
+        $end = date('Y-m-d', strtotime("$BeginDate +1 month -1 day"));
+        //这个月订单
+        $list = $this->Payment_model->get_qianmi_money($BeginDate,$end);
+       
+        exit;
         $data['page'] = $this->view_payment;
         $data['menu'] = array('localLife','payment');
         $this->load->view('template.html',$data);
