@@ -251,7 +251,9 @@ class SingleShop extends Default_Controller {
                     if($i == '1'){
                             $data['thumb'] = $data['img'.$i];
                     }
+                    if(!empty($data['img'.$i])){
                      $pic[]['bannerPic'] = $data['img'.$i];
+                     }
                      unset($data['img'.$i]);
                 }
                 $i++;
@@ -276,6 +278,11 @@ class SingleShop extends Default_Controller {
         $data['menu'] = array('shop','goodsList');       
         $this->load->view('template.html',$data);
     }
+
+    
+
+
+    
     //新增商品操作
     function add_goods(){
         if($_POST){
