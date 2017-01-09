@@ -37,7 +37,7 @@ class Store extends Default_Controller {
     }
     //商品列表
     function storeGoodsList(){
-         $data['cates'] = $this->MallShop_model->get_goods_cates();
+         $data['cates'] = $this->MallShop_model->get_goods_cates('0');
          $data['page'] = $this->view_storeGoodsList;
          $data['menu'] = array('store','storeGoodsList');
     	 $this->load->view('template.html',$data);
@@ -86,7 +86,7 @@ class Store extends Default_Controller {
     //返回商品分类列表
     function goods_cates(){
         if($_POST){
-            $catelist = $this->MallShop_model->get_goods_cates();
+            $catelist = $this->MallShop_model->get_goods_cates('0');
             echo json_encode($catelist);
         }else{
             echo "2";
@@ -112,7 +112,7 @@ class Store extends Default_Controller {
          }else{
             //获取商品详情
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
-            $data['cates'] = $this->MallShop_model->get_goods_cates();
+            $data['cates'] = $this->MallShop_model->get_goods_cates('0');
             $data['page'] = $this->view_storeEditGoods;
             $data['menu'] = array('store','storeGoodsList');
             $this->load->view('template.html',$data);
