@@ -175,7 +175,8 @@
                     </div>
                     <div class="am-form-group" id="secondSort" style="display: none;">
                         <label>商品二级分类<span class="red">*</span>：</label>
-                        <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
+                        <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
+                        <option value=''>请选择一项...</option>
                         </select>
                     </div>
                       <!--   <div class="am-form-group"> 
@@ -434,14 +435,14 @@ var i=1;
         var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
         $.ajax({
             type:'post',
-            url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
-            data: 'gid='+ firstSort,
+            url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
+            data: 'catid='+ firstSort,
             success: function(data){   
                 var jsonData=eval(data);
                 console.log(jsonData);
                 if(data){                   
                     for(var i=0;i<jsonData.length;i++){
-                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                        str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
                         sttr=sttr+str;
                     }
                     console.log(sttr);
@@ -463,8 +464,8 @@ var i=1;
             var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
             $.ajax({
                 type:'post',
-                url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
-                data: 'gid='+ firstSort,
+                url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
+                data: 'catid='+ firstSort,
                 success: function(data){ 
                     $("#secondSortSelect").html("");  
                     var jsonData=eval(data);
@@ -472,8 +473,8 @@ var i=1;
                     if(data){
                         
                         for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                            sttr=sttr+str;
+                            str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
+                        sttr=sttr+str;
                         }
                         console.log(sttr);
                         $('#secondSort').css('display','block');
