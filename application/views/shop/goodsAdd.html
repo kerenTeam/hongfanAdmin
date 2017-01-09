@@ -8,8 +8,8 @@
     }
     .widget{
         font-color:#000 !;
-    } 
-
+    }  
+ 
     .postageNumber{
         display: none;
     }
@@ -166,20 +166,16 @@
                     <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                     <div class="am-form-group">
                         <label>商品一级分类<span class="red">*</span>：</label>
-                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
+                        <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
                             <option value=''>请选择一个！</option>
                             <?php foreach($cates as $val):?>
                             <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
                             <?php endforeach;?>
                         </select>
                     </div>
-                    <div class="am-form-group">
+                    <div class="am-form-group" id="secondSort" style="display: none;">
                         <label>商品二级分类<span class="red">*</span>：</label>
-                        <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
-                            <option value=''>请选择一个！</option>
-                            <?php foreach($cates as $val):?>
-                            <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
-                            <?php endforeach;?>
+                        <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
                         </select>
                     </div>
                       <!--   <div class="am-form-group"> 
@@ -433,5 +429,64 @@ var i=1;
        // console.log(JSON.stringify(propertyArray));
     });
 
+    $(document).ready(function(){
+        //根据一级业态的内容来控制二级业态的显示
+        var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
+            data: 'gid='+ firstSort,
+            success: function(data){   
+                var jsonData=eval(data);
+                console.log(jsonData);
+                if(data){                   
+                    for(var i=0;i<jsonData.length;i++){
+                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                        sttr=sttr+str;
+                    }
+                    console.log(sttr);
+                    $('#secondSort').css('display','block');
+                    $("#secondSortSelect").append(sttr);
+                }else{
+                    alert("操作失败，请检查网络设置！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
 
+
+         $('#firstSort').change(function(){
+            //根据一级业态的内容来控制二级业态的显示
+            var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
+                data: 'gid='+ firstSort,
+                success: function(data){ 
+                    $("#secondSortSelect").html("");  
+                    var jsonData=eval(data);
+                    console.log(jsonData);
+                    if(data){
+                        
+                        for(var i=0;i<jsonData.length;i++){
+                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            sttr=sttr+str;
+                        }
+                        console.log(sttr);
+                        $('#secondSort').css('display','block');
+                        $("#secondSortSelect").append(sttr);
+                    }else{
+                        alert("操作失败，请检查网络设置！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        });
+    });
 </script>
