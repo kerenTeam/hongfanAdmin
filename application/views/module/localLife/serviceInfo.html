@@ -53,12 +53,6 @@ width:50%;
                                     <input type="text" placeholder="请输入标题" name='name' value='<?php echo $info['name'];?>' minlength="4" required="">
                                 </div>
                             </div>
-                            <div class="am-form-group am-cf">
-                                <label class="am-u-sm-3 am-form-label">星级 </label>
-                                <div class="am-u-sm-9">
-                                    <input type="number" name='star' value='<?php echo $info['star'];?>' min="0">
-                                </div>
-                            </div>
 							 <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
                                  <div class="am-u-sm-9">
@@ -93,6 +87,15 @@ width:50%;
                                 <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
                                     <input type="text" name='address' value='<?php echo $info['address'];?>' required>
+                                </div>
+                            </div> 
+                            <div class="am-form-group am-cf">
+                                <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+                                <div class="am-u-sm-3">
+                                    <input type="radio" class="am-inline" name='isbusiness' value='1' <?php if($info['isbusiness'] == 1){echo "checked";}?> >商家
+                                </div>
+                                <div class="am-u-sm-3 am-u-end">
+                                    <input type="radio" class="am-inline" name='isbusiness' value="0" <?php if($info['isbusiness'] != 1){echo "checked";}?> >个人
                                 </div>
                             </div>
                             <div class="am-form-group am-cf">
@@ -268,6 +271,15 @@ width:50%;
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+                                        <div class="am-u-sm-3">
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1' <?php if($info['isbusiness'] == 1){echo "checked";}?> >商家
+                                        </div>
+                                        <div class="am-u-sm-3 am-u-end">
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" <?php if($info['isbusiness'] != 1){echo "checked";}?> >个人
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
 										<?php $banner = json_decode($info['pic'],true);?>
@@ -399,6 +411,15 @@ width:50%;
                                             <input type="text" name="phone" value="<?php echo $info['phone']?>" class="js-pattern-mobile" placeholder="输入手机号" required>
                                         </div>
                                     </div>
+                                     <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+                                        <div class="am-u-sm-3">
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1' <?php if($info['isbusiness'] == 1){echo "checked";}?> >商家
+                                        </div>
+                                        <div class="am-u-sm-3 am-u-end">
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" <?php if($info['isbusiness'] != 1){echo "checked";}?> >个人
+                                        </div>
+                                    </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                         <?php $banner = json_decode($info['pic'],true);?>
@@ -473,9 +494,6 @@ width:50%;
                                     </div>
                                 </form>
 								<?php }?>
-
-
-
                     </div>
                 </div>
             </div>

@@ -130,7 +130,7 @@ class SingleShop extends Default_Controller {
                         if($i == 1){
                             $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
                         }else{
-                            $data['pic'] = 'Upload/logo/'.$this->upload->data('file_name');
+                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
                         }
                     }
                 }else{
@@ -388,7 +388,7 @@ class SingleShop extends Default_Controller {
                 $codata = $drawing->getCoordinates(); 
                 $myFileName = 'Upload/goods/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
-                $arr[$codata][]['bannerPic'] = $myFileName;
+                $arr[$codata][]['bannerPic'] = '/'.$myFileName;
             }
            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
@@ -732,7 +732,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -801,7 +801,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/'.$data['id'])."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           

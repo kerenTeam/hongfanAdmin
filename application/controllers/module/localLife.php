@@ -101,12 +101,12 @@ class LocalLife extends Default_Controller {
             $this->load->view('404.html');
         }else{
 			//条数
-			$config['per_page'] = 10;
+			$config['per_page'] = 5;
 			//获取页码
 			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
 			//var_dump($current_page);
 				//配置
-			$config['base_url'] = site_url('/module/LocalLife/serviceList/').$id;
+			$config['base_url'] = site_url('/module/LocalLife/serviceList/'.$id);
 			//分页配置
 			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 			$config['full_tag_close'] = '</ul>';
@@ -122,7 +122,6 @@ class LocalLife extends Default_Controller {
 			$config['last_tag_close'] = '</li>';
 			$config['num_tag_open'] = '<li>';
 			$config['num_tag_close'] = '</li>';
-
 			$config['first_link']= '首页';
 			$config['next_link']= '下一页';
 			$config['prev_link']= '上一页';
@@ -372,7 +371,7 @@ class LocalLife extends Default_Controller {
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
 					}else{
 						if($i != 4){
-						   $pic[]['banner'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
+						   $pic[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 						}else{
 							$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 						}
@@ -499,7 +498,7 @@ class LocalLife extends Default_Controller {
 							}else{
 								unset($data['img'.$i]);
 								if($i != 4){
-									$pic[]['banner'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
+									$pic[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 								}else{
 									$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
 								}
@@ -507,7 +506,7 @@ class LocalLife extends Default_Controller {
 						}else{
 							if($i != 4){
 								if(!empty($data['img'.$i])){
-									$pic[]['banner'] = $data['img'.$i];
+									$pic[]['picImg'] = $data['img'.$i];
 								}
 							}else{
 								$logo[]['picImg'] = $data['logo'];

@@ -99,12 +99,7 @@ padding: 5px 6px!important;
                                             <input type="text" placeholder="请输入标题,不超过十四个字符" name='name' minlength="2" maxlength="14" required>
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">星级 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" name='star' min="1" max="5">
-                                        </div>
-                                    </div>
+                                 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -187,10 +182,10 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='star' >商家
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
                                         </div>
                                         <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='star' >个人
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
                                         </div>
                                     </div>
                                     <div class="am-form-group am-btn-group-xs">
@@ -208,10 +203,10 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">编号</td>
                                     <td class="am-text-middle">名称	</td>
                                     <td >缩略图</td>
-                                    <td class="am-text-middle">星级</td>
                                     <td class="am-text-middle">联系人</td>
                                     <td class="am-text-middle">联系号码</td>
                                     <td class="am-text-middle">价格</td>
+                                    <td class="am-text-middle">发布人身份</td>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -224,10 +219,10 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['name']?></td>
                                     <?php $logo = json_decode($val['logo'],true);?>
                                     <td ><img style='width:100px;' src='<?php echo $logo[0]['picImg'];?>' alt='<?php echo $val['name']?>'/></td>
-                                    <td class="am-text-middle"><?php echo $val['star']?></td>
                                     <td class="am-text-middle"><?php echo $val['link_man'];?></td>
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
                                     <td class="am-text-middle"><?php echo $val['price']?></td>
+                                    <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
                                     <td class="am-text-middle"><?php echo $val['create_time']?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -440,10 +435,10 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='star' >商家
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
                                         </div>
                                         <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='star' >个人
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
                                         </div>
                                     </div>
                                     <div class="am-form-group am-btn-group-xs">
@@ -467,6 +462,7 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">平均售价(元/平米)</td>
                                     <td class="am-text-middle">中介名称</td>
                                     <td class="am-text-middle">联系号码</td>
+                                    <td class="am-text-middle">发布人身份</td>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -479,11 +475,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['house_layout'];?></td>
                                     <td class="am-text-middle"><?php echo $val['house_type'];?></td>
+
                                     <td class="am-text-middle"><?php echo $val['quarters'];?></td>
                                     <td class="am-text-middle"><?php echo $val['area_address'];?></td>
                                     <td class="am-text-middle"><?php echo $val['avg_price'];?></td>
                                     <td class="am-text-middle"><?php echo $val['intermediary_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
+                                        <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -496,19 +494,6 @@ padding: 5px 6px!important;
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- 删除弹框 -->
-                                <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="h_delete1"> -->
-                                    <!-- <div class="am-modal-dialog"> -->
-                                        <!-- <div class="am-modal-hd">删除提示</div> -->
-                                        <!-- <div class="am-modal-bd"> -->
-                                            <!-- <p class="black">你，确定要删除这条记录吗？</p> -->
-                                        <!-- </div> -->
-                                        <!-- <div class="am-modal-footer"> -->
-                                            <!-- <span class="am-modal-btn" data-am-modal-cancel>取消</span> -->
-                                            <!-- <span class="am-modal-btn" data-am-modal-confirm>确定</span> -->
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
 								<?php endforeach;?>
 								<?php else:?>
 								<th colspan='10' style="text-align:center;">暂无内容！</th>
@@ -646,10 +631,10 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='star' >商家
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
                                         </div>
                                         <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='star' >个人
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
                                         </div>
                                     </div>
                                     <div class="am-form-group am-text-center am-btn-group-xs">
@@ -673,6 +658,7 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">地址</td>
                                     <td class="am-text-middle">联系号码</td>
                                     <td class="am-text-middle">发布人</td>
+                                    <td class="am-text-middle">发布人身份</td>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -689,6 +675,8 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $v['address'];?></td>
                                     <td class="am-text-middle"><?php echo $v['phone']?></td>
                                     <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
+                                    <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
+                                      <td class="am-text-middle"><?php if($v['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -889,10 +877,10 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='star' >商家
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
                                         </div>
                                         <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='star' >个人
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
                                         </div>
                                     </div>
                                     <div class="am-form-group am-btn-group-xs">
