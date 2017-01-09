@@ -28,14 +28,16 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
+
 .goodsState,.recommend{
-        background: #15b5ac;
-        border-radius: 5px;
-        border: 1px solid #15b5ac;
-        padding:5px 5px;
-        color: #fff;
-        text-align: center;
-    }
+    width: 100px;
+    background: #15b5ac;
+    border-radius: 5px;
+    border: 1px solid #15b5ac;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
 
     .goodsState option,.recommend option{
         background: #fff;
@@ -135,9 +137,6 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddGoods';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
                                     <a data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
@@ -151,7 +150,6 @@ td.am-text-middle img{
                                     <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">一级分类 </th>
-                                    <th class="moll_name">二级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_type">所属店铺 </th>
@@ -401,7 +399,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('#shopList').find('tr').remove();
+                $('#storeGoodsList').find('tr').remove();
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#storeGoodsList");
@@ -445,7 +443,6 @@ $(document).ready(function(){
         <td class="am-text-middle" ><input type="checkbox" data-id="<%= goods_id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
-        <td class="am-text-middle"><%= soncategoryid%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
@@ -491,7 +488,11 @@ $(document).ready(function(){
         <%}%>
         </td>
         <td class="am-text-middle">
+        <%if(update_time) {%>
+            <span><%= update_time%></span>
+        <%}else {%>
             <span><%= create_time%></span>
+        <%}%>
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

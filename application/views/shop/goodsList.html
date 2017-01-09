@@ -146,7 +146,6 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="shop_id">编号 </th>
                                     <th class="moll_name">一级分类 </th>
-                                    <th class="moll_name">二级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_yetai">价格 </th>
@@ -214,7 +213,7 @@ td.am-text-middle img{
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
                             if($('.goodsState option:selected').eq(i).val()=="0"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
                         //更改商品的状态
@@ -231,12 +230,12 @@ td.am-text-middle img{
                                         }else{
                                             alert("操作失败！");
                                         }
-                                        
                                     },
                                     error:function(xhr,type,errorThrown){
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
+                                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
                             }else{
                                 $.ajax({
                                     type:'post',
@@ -254,7 +253,7 @@ td.am-text-middle img{
                                         alert("操作失败，请检查网络设置！");
                                     }
                                 });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
                             }
                             
                             
@@ -294,10 +293,7 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-
-                    $('.trClass').eq(i).remove();
-                }
+                $('#shopGoodsList').find('tr').remove();
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#shopGoodsList');
@@ -363,7 +359,6 @@ $(document).ready(function(){
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
-        <td class="am-text-middle"><%= soncategoryid%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
@@ -392,7 +387,11 @@ $(document).ready(function(){
         <%}%>
         </td>
         <td class="am-text-middle">
+        <%if(update_time) {%>
+            <span><%= update_time%></span>
+        <%}else {%>
             <span><%= create_time%></span>
+        <%}%>
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
