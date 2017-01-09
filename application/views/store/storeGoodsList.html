@@ -150,7 +150,8 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">分类 </th>
+                                    <th class="moll_name">一级分类 </th>
+                                    <th class="moll_name">二级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_type">所属店铺 </th>
@@ -444,6 +445,7 @@ $(document).ready(function(){
         <td class="am-text-middle" ><input type="checkbox" data-id="<%= goods_id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle"><%= soncategoryid%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>

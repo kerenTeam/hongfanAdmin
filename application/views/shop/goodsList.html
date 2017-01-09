@@ -145,14 +145,14 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">分类 </th>
+                                    <th class="moll_name">一级分类 </th>
+                                    <th class="moll_name">二级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
                                     <th class="shop_block">库存 </th> 
-                                    <!-- <th class="shop_block">货物批次 </th>                                  -->
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
@@ -363,6 +363,7 @@ $(document).ready(function(){
     <tr class="trClass" data-id="<%= goods_id%>">
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle"><%= soncategoryid%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
