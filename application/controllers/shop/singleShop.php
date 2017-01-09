@@ -67,7 +67,6 @@ class SingleShop extends Default_Controller {
     }
     //商家基础信息
     function shopBaseInfo(){
-
         //获取商家信息
        $store = $this->MallShop_model->get_basess_info($this->session->businessId);
         //获取商家登录账户
@@ -374,7 +373,9 @@ class SingleShop extends Default_Controller {
                         case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_GIF:
                                 $extension = 'gif'; break;
                         case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
-                                $extension = 'jpg'; break;
+                                $extension = 'jpg'; break; 
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
+                                $extension = 'jpeg'; break;
                     }
                 } else {
                     $zipReader = fopen($drawing->getPath(),'r');
@@ -388,7 +389,7 @@ class SingleShop extends Default_Controller {
                 $codata = $drawing->getCoordinates(); 
                 $myFileName = 'Upload/goods/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
-                $arr[$codata][]['bannerPic'] = '/'.$myFileName;
+                $arr[$codata][]['bannerPic'] = $myFileName;
             }
            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
@@ -451,7 +452,7 @@ class SingleShop extends Default_Controller {
            
             $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
             $data['storeid'] = $this->session->businessId;
-         
+
             //新增
             $this->MallShop_model->add_shop_goods($data);
            }

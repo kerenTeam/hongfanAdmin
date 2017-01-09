@@ -70,7 +70,7 @@ class MarketActivity extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -145,7 +145,7 @@ class MarketActivity extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           
