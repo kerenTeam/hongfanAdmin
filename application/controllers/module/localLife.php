@@ -44,7 +44,7 @@ class LocalLife extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
-                    $data['icon'] =  'Upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             $data['c_id'] = '本地生活';
@@ -74,7 +74,7 @@ class LocalLife extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                     exit;
                 } else {
-                    $icon[]['picImg'] =  'Upload/icon/'.$this->upload->data('file_name');
+                    $icon[]['picImg'] =  '/Upload/icon/'.$this->upload->data('file_name');
                 }
             }
             $data['icon'] = json_encode($icon);
