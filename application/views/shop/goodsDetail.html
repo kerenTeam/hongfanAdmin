@@ -527,12 +527,14 @@ var i =1;
         var propertyArray=[];
         for(var i=0;i<$('.addPropertyBody').length;i++){
             var arrayPropertyName={},addPropertyBody={};
-            arrayPropertyName.parameter_name=$('.addPropertyBody').eq(i).find('input').val();    
+            var parameter_name=$('.addPropertyBody').eq(i).find('input').val();
+            arrayPropertyName.parameter_name=parameter_name;    
             arrayPropertyName.child_value=[];
             var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
             for(var j=0;j<addPropertytr.length;j++){
                 var td=addPropertytr.eq(j).find('td');
                 var addPropertytd={};
+                addPropertytd.parameter_name=parameter_name;
                 addPropertytd.child_parameter_name=td.eq('0').find('input').val();
                 addPropertytd.equivalence=td.eq('1').find('input').val();
                 addPropertytd.Inventory=td.eq('2').find('input').val();
