@@ -142,8 +142,6 @@
                             </table>
                            <input type="hidden" name="parameter" id='inputproperty'>
                             </div>
-                            <button type="button" id='addProperty'>组成</button>
-                            <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
                         </div>
                         <div class="am-form-group" >
                             <label for="oneType">是否包邮：</label>
@@ -177,7 +175,7 @@
                     <div class="am-form-group" id="secondSort" style="display: none;">
                         <label>商品二级分类<span class="red">*</span>：</label>
                         <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
-                        <option value=''>请选择一项...</option>
+                        
                         </select>
                     </div>
                       <!--   <div class="am-form-group"> 
@@ -254,7 +252,7 @@
 
                     <div class="am-form-group am-text-center">
                         <!-- <a data-am-modal="{target: '#goodMessage'}" id="eyeDetail" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-eye"></span> 点击预览</a>  -->
-                        <button class="am-btn am-btn-secondary" type="submit" >提交</button>
+                        <button class="am-btn am-btn-secondary" type="submit" id='addProperty'>提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
 
@@ -435,7 +433,7 @@ var i=1;
 
     $(document).ready(function(){
         //根据一级业态的内容来控制二级业态的显示
-        var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+        var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
         $.ajax({
             type:'post',
             url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
@@ -464,7 +462,7 @@ var i=1;
 
          $('#firstSort').change(function(){
             //根据一级业态的内容来控制二级业态的显示
-            var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+            var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
@@ -473,11 +471,10 @@ var i=1;
                     $("#secondSortSelect").html("");  
                     var jsonData=eval(data);
                     console.log(jsonData);
-                    if(data){
-                        
+                    if(data){                
                         for(var i=0;i<jsonData.length;i++){
                             str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
-                        sttr=sttr+str;
+                            sttr=sttr+str;
                         }
                         console.log(sttr);
                         $('#secondSort').css('display','block');

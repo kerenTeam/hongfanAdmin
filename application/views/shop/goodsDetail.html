@@ -186,7 +186,6 @@
                     <div class="am-form-group" id="secondSort">
                         <label>商品二级分类<span class="red">*</span>：</label>
                         <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
-                        <option value=''>请选择一项...</option>
                         </select>
                     </div>
                     <!--     <div class="am-form-group">
@@ -545,9 +544,9 @@ var i =1;
         $("#inputproperty").val(JSON.stringify(propertyArray));
        //console.log(JSON.stringify(propertyArray));
     });
-      $(document).ready(function(){
+    $(document).ready(function(){
         //根据一级业态的内容来控制二级业态的显示
-        var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+        var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
         var soncateid = '<?php echo $goods['soncategoryid'];?>';
         $.ajax({
             type:'post',
@@ -582,7 +581,7 @@ var i =1;
 
          $('#firstSort').change(function(){
             //根据一级业态的内容来控制二级业态的显示
-            var firstSort=$('#firstSort option:selected').val(),str='',sttr='';
+            var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
