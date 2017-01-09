@@ -67,7 +67,6 @@ class SingleShop extends Default_Controller {
     }
     //商家基础信息
     function shopBaseInfo(){
-
         //获取商家信息
        $store = $this->MallShop_model->get_basess_info($this->session->businessId);
         //获取商家登录账户
@@ -130,7 +129,7 @@ class SingleShop extends Default_Controller {
                         if($i == 1){
                             $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
                         }else{
-                            $data['pic'] = 'Upload/logo/'.$this->upload->data('file_name');
+                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
                         }
                     }
                 }else{
@@ -374,7 +373,9 @@ class SingleShop extends Default_Controller {
                         case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_GIF:
                                 $extension = 'gif'; break;
                         case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
-                                $extension = 'jpg'; break;
+                                $extension = 'jpg'; break; 
+                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
+                                $extension = 'jpeg'; break;
                     }
                 } else {
                     $zipReader = fopen($drawing->getPath(),'r');
@@ -451,7 +452,7 @@ class SingleShop extends Default_Controller {
            
             $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
             $data['storeid'] = $this->session->businessId;
-         
+
             //新增
             $this->MallShop_model->add_shop_goods($data);
            }
@@ -732,7 +733,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
             if($data['type'] == 2){
@@ -801,7 +802,7 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopEditActivity/'.$data['id'])."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/image/activity/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
           

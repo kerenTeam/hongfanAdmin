@@ -156,7 +156,7 @@ class Module_model extends CI_Model{
 	}
 	//二手市场 分页
 	function get_mark_page($off,$page){
-		$sql ="SELECT a.id,a.userid,a.colour,a.title,a.phone,a.type,a.price,a.address,a.brand,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid order by create_time desc limit $page,$off";
+		$sql ="SELECT a.id,a.userid,a.isbusiness,a.colour,a.title,a.phone,a.type,a.price,a.address,a.brand,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid order by create_time desc limit $page,$off";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
