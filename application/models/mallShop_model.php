@@ -27,8 +27,8 @@ class MallShop_model extends CI_Model
     }
 
     //返回商品分类列表
-    function get_goods_cates(){
-        $query = $this->db->order_by('sort','asc')->get($this->shop_cates);
+    function get_goods_cates($parentid){
+        $query = $this->db->where('parentid',$parentid)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
     //获取顶级分类

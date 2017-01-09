@@ -272,16 +272,31 @@ class SingleShop extends Default_Controller {
      //新增商品
     function goodsAdd(){
         //所有商品分类
-        $data['cates'] = $this->MallShop_model->get_goods_cates();
+        $data['cates'] = $this->MallShop_model->get_goods_cates('0');
 
         $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       
         $this->load->view('template.html',$data);
     }
 
-    
-
-
+    //返回二级分类
+    function return_godos_cate(){
+        if($_POST){
+            $c_id = $_POST['catid'];
+            if(empty($c_id)){
+                echo "2";
+            }else{
+                $date = $this->MallShop_model->get_goods_cates($c_id);
+                if(empty($date)){
+                    echo "2";
+                }else{
+                    echo json_encode($date);
+                }
+            }
+        }else{
+            echo "2";
+        }
+    }
     
     //新增商品操作
     function add_goods(){
