@@ -21,6 +21,8 @@ class MallShop_model extends CI_Model
     public $shop_coupon_type = "hf_shop_coupon_type";
     //活动表
     public $shop_activity = "hf_system_activity";
+      //推荐商品，或商家
+    public $store_goods = "hf_shop_active_store_goods";
     function __construct()
     {
         parent::__construct();
@@ -261,6 +263,25 @@ class MallShop_model extends CI_Model
          $where['id'] = $id;
         return $this->db->where($where)->delete($this->shop_activity);
     }
+
+
+    //返回商城展销商品
+    function get_active_sales($type){
+        $where['type'] = $type;
+        $query = $this->db->where($where)->get($this->store_goods);
+        return $query->result_array();
+    }
+
+    //获取商品信息
+    function get_goods_title($id){
+        $where['goods_id'] = $id;
+        $this->db->select('goods_id,title,thumb');
+        $query = $this->db->where($where)->get($this->shop_goods);
+        return $query->row_array();
+    }
+
+
+
 
 }
 

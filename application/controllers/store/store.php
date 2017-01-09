@@ -347,6 +347,17 @@ class Store extends Default_Controller {
     }
     //主题展销商品管理
     function storeGoodsSales(){
+        //获取所有展销商品
+        $sales = $this->MallShop_model->get_active_sales('1');
+        foreach ($sales as $key => $value) {
+            $goods = explode(',', $value['goods_list']);
+            foreach ($goods as $k => $v) {
+                 $sales[$key]['goods'][] = $this->MallShop_model->get_goods_title($v);
+            }
+           
+        }
+
+         $data['sales'] = $sales;
          $data['page'] = $this->view_storeGoodsSales;
          $data['menu'] = array('store','storeGoodsSales');
          $this->load->view('template.html',$data);
