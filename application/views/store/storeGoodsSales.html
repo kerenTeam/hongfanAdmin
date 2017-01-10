@@ -82,10 +82,11 @@ h4.am-panel-title{
                                                 </thead>
                                                 <tbody>
                                                     <tr class="trClas" >
+
                                                         <td class="am-text-middle width" rowspan="<?php echo count($val['goods'])+1;?>">
                                                         <?php $pic = json_decode($val['picImg'],true);?>
                                                             <div class="wx_type_img">
-                                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                                             <input type="file" id="imgUpload" name="img4" date-id="<?php echo $val['id'];?>" onchange="previewImage(this)" class="upload-add am-form-field <?php echo $val['id'];?>"  required>
                                                               <!-- 图片实时预览 -->
                                                               <?php if(empty($pic[0]['picImg'])):?>
                                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
@@ -162,54 +163,56 @@ $('.ulSign').click(function(){
    
 });
 
-function previewImage(file) {
-  var MAXWIDTH = 350;
-  var MAXHEIGHT = 249;
-  var div = findPreview(file.parentNode);
-        
+ function previewImage(file) {
+      var MAXWIDTH = 350;
+      var MAXHEIGHT = 249;
+      var div = findPreview(file.parentNode);
+      var uploadid=file.classList.item(2);
+      if (file.files && file.files[0]) {
+        div.innerHTML = '<img id=imghead>';
+        //var img = document.getElementById('imghead');
+        var img = div.lastChild;
+        img.onload = function() {
+          var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+          img.width = rect.width;
+          img.height = rect.height;
+        }
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+          img.src = evt.target.result;
+        }
+        reader.readAsDataURL(file.files[0]);
+        var fileObj=file.files[0];//获取文件对象
+        console.log(fileObj);
+        var FileController="<?php echo site_url('/store/Store/edit_sales_img');?>";//上传文件的后台地址
+        var form=new FormData();
+        form.append('file',fileObj); //文件对象
+        form.append('id',uploadid); //文件对象
+        //实例化XMLHttpRequest对象
+        var xhr=new XMLHttpRequest();
+        xhr.open('post',FileController,true);
+        xhr.onload=function(){
+            alert('成功！');
+            location.reload();
+            
+        };
+        xhr.send(form); 
 
-  if (file.files && file.files[0]) {
-    div.innerHTML = '<img id=imghead>';
-    //var img = document.getElementById('imghead');
-    var img = div.lastChild;
-    img.onload = function() {
-      var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-      img.width = rect.width;
-      img.height = rect.height;
-    }
-    var reader = new FileReader();
-    reader.onload = function(evt) {
-      img.src = evt.target.result;
-    }
-    reader.readAsDataURL(file.files[0]);
-    var fileObj=file.files[0];//获取文件对象
-    var FileController="";//上传文件的后台地址
-    var form=new FormData();
-    form.append('file',fileObj); //文件对象
-    //实例化XMLHttpRequest对象
-    var xhr=new XMLHttpRequest();
-    xhr.open('post',FileController,true);
-    xhr.onload=function(){
-        location.reload();
-        
-    };
-    xhr.send(form); 
 
-
-  } else //鍏煎IE
-  {
-    //alert("123");
-    var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
-    file.select();
-    var src = document.selection.createRange().text;
-    div.innerHTML = '<img id=imghead>';
-    //var img = document.getElementById('imghead');
-    var img = div.lastChild;
-    img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
-    var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
-    status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
-    div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
-  }
+      } else //鍏煎IE
+      {
+        //alert("123");
+        var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        var src = document.selection.createRange().text;
+        div.innerHTML = '<img id=imghead>';
+        //var img = document.getElementById('imghead');
+        var img = div.lastChild;
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+        div.innerHTML = "<div id=divhead style='width:" + rect.width + "px;height:" + rect.height + "px;margin-top:" + rect.top + "px;" + sFilter + src + "\"'></div>";
+      }
 }
 
 function clacImgZoomParam(maxWidth, maxHeight, width, height) {

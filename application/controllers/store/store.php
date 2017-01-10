@@ -364,7 +364,6 @@ class Store extends Default_Controller {
             }
            
         }
-
          $data['sales'] = $sales;
          $data['page'] = $this->view_storeGoodsSales;
          $data['menu'] = array('store','storeGoodsSales');
@@ -447,6 +446,29 @@ class Store extends Default_Controller {
         }
      }
 
+    //展销图片修改
+    function edit_sales_img(){
+        $id = $_POST['id'];
+        if(!empty($_FILES['file']['tmp_name'])){
+            $config['upload_path']      = 'Upload/adver';
+            $config['allowed_types']    = 'jpg|png|jpeg';
+            $config['max_size']     = 2048;
+            $config['file_name'] = date('Y-m-d_His');
+            $this->load->library('upload', $config);
+            if ( ! $this->upload->do_upload('file')) {
+                echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";
+                exit;
+            } else{
+                $img[]['picImg'] =  '/Upload/adver/'.$this->upload->data('file_name');
+            }
+        }
+        $data['picImg'] = json_encode($img);
+        if($this->MallShop_model->edit_salse($id,$data)){
+            echo "1";exit;
+        }else{
+            echo "2";exit;
+        }
+     }
 
     //快递管理
     function storeDeliveryList(){
