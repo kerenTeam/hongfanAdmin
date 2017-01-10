@@ -37,10 +37,17 @@ class Store extends Default_Controller {
     }
     //商品列表
     function storeGoodsList(){
-         $data['cates'] = $this->MallShop_model->get_goods_cates('0');
-         $data['page'] = $this->view_storeGoodsList;
-         $data['menu'] = array('store','storeGoodsList');
-    	 $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        // var_dump($id);
+        if($id == 0){
+            $data['saleid'] ='';
+        }else{
+            $data['saleid'] = $id;
+        }
+        $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+        $data['page'] = $this->view_storeGoodsList;
+        $data['menu'] = array('store','storeGoodsList');
+        $this->load->view('template.html',$data);
     }
     //返回商品列表
     function storeGoods_page(){
@@ -152,6 +159,7 @@ class Store extends Default_Controller {
                 }
                 $i++;
              }
+             $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
              if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
@@ -362,6 +370,83 @@ class Store extends Default_Controller {
          $data['menu'] = array('store','storeGoodsSales');
          $this->load->view('template.html',$data);
      }
+     // 删除展销某个活动的产品
+     function del_sales_goods(){
+        if($_POST){
+            $id = $_POST['id'];
+            $goodsid = $_POST['goodsid'];
+            if(empty($id) || empty($goodsid)){
+                echo "2";
+            }else{
+                $sale = $this->MallShop_model->get_sales_info($id);
+                $goods = explode(',',$sale['goods_list']);
+                foreach ($goods as $key => $value) {
+                   if($value == $goodsid){
+                     unset($goods[$key]);
+                   }
+                }
+                $data['goods_list'] = implode(',',$goods);
+                if($this->MallShop_model->edit_salse($id,$data)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }
+        }else{  
+            echo "2";
+        }
+     }
+
+     //新增某个展销商品
+     function add_sales_goods(){
+        if($_POST){
+            $id = $_POST['id'];
+            $goodsid = json_decode($_POST['goodsid'],true);
+            $sale = $this->MallShop_model->get_sales_info($id);
+            $goods = explode(',',$sale['goods_list']);
+            $arr = array_unique(array_merge($goodsid,$goods));
+            $data['goods_list'] = implode(',',$arr);
+            if($this->MallShop_model->edit_salse($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+     }
+
+     //新增展销
+     function add_sales(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/adver';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";
+                    exit;
+                } else{
+                    $img[]['picImg'] =  '/Upload/adver/'.$this->upload->data('file_name');
+                }
+            }
+            $data['goods_list'] = implode(',',json_decode($data['goodsid'],true));
+            unset($data['goodsid']);
+            $data['picImg'] = json_encode($img);
+            $data['type'] = '1';
+            if($this->MallShop_model->add_sales($data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
+            }
+        }else{
+            echo '2';
+        }
+     }
+
 
     //快递管理
     function storeDeliveryList(){

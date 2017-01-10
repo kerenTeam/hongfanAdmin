@@ -137,7 +137,11 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <a data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                <?php if(empty($saleid)):?>
+                                    <a id="add_sales" data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                <?php else:?>
+                                    <a id="add_sales_goods" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                <?php endif;?>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
@@ -187,18 +191,18 @@ td.am-text-middle img{
     <div class="am-modal-dialog">
         <div class="am-modal-hd">加入达人推荐</div>
         <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+        <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/add_sales');?>" method="post" enctype='multipart/form-data'>
             <div class="am-form-group am-cf">
                 <label class="am-u-sm-2 am-form-label">标题 ：</label>
                 <div class="am-u-sm-8 am-u-end">
-                    <input type="text" name="" />
+                    <input type="text" name="title" />
                 </div>
             </div>
             <div class="am-form-group am-cf">
                 <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
                 <div class="am-u-sm-8 am-u-end">
                     <div class="wx_type_img">
-                     <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                     <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                       <!-- 图片实时预览 -->
                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                     </div>
@@ -210,17 +214,18 @@ td.am-text-middle img{
                 <label class="am-u-sm-2 am-form-label">详情 ：</label>
                 <div class="am-u-sm-8 am-u-end">
                   <div id="editorContent">
+                  <input type="hidden" name="goodsid" id='goodsid' >
                     <script id="editor" type="text/plain" name='content'></script>
                   </div>
                 </div>
             </div>
-        </form>
+            <div class="am-form-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                <button type="submit" class="am-btn am-btn-danger">提交</button>
+            </div>
             
         </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn" data-id="" data-am-modal-confirm>提交</span>
-        </div>
+        </form>
     </div>
 </div>
 <!--加入达人推荐的弹窗结束-->
@@ -239,7 +244,6 @@ td.am-text-middle img{
         $(this).prevUntil('.preview').find('input').val(" ");
         $(this).prevUntil('.preview').find('input').files="";
     });
-
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -274,6 +278,7 @@ td.am-text-middle img{
                             var dataId=$(this).attr('data-id');
                             $(this).attr("href","<?php echo site_url('store/store/storeEditGoods/" + dataId + "');?>");
                         });
+
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
@@ -281,7 +286,7 @@ td.am-text-middle img{
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }   
                             if($('.recommend option:selected').eq(i).val()=="0"){
-                                $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+                                $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});  
                             }                          
                         }
                         //点击选中所有
@@ -408,6 +413,52 @@ td.am-text-middle img{
                                 }
                             }
                             
+                        });
+                        //加入达人推荐的ajax请求
+                        $('#add_sales_goods').click(function(){
+                            var array=[];
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                                
+                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                            }
+                            if(array == ''){
+                                alert('你还没有选择商品！');
+                            }else{
+                                goodsid=JSON.stringify(array);
+                              //  console.log(goodsid);
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/store/Store/add_sales_goods');?>',
+                                    data: 'goodsid='+goodsid+'&id='+'<?php echo $saleid;?>',
+                                    success: function(data){
+                                        if(data==1){
+                                            alert('加入成功');
+                                           window.location.href='<?php echo site_url("/store/Store/storeGoodsSales");?>';
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                            }
+                        });
+                        //
+                        $('#add_sales').click(function(){
+                            var array=[];
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                                
+                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                            }
+                            if(array == ''){
+                                alert('你还没有选择商品！');
+                                return false;
+                            }else{
+                                goodsid=JSON.stringify(array);
+                                $("#goodsid").val(goodsid);
+
+                            }
                         });
                         
                     }
