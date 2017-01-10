@@ -29,49 +29,51 @@
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
-                                <label for="doc-vld-name-1">商场名 <span class="red">*</span>：</label>
-                                <input type="text" id="marketName" minlength="2" value="宏帆广场" readonly required />
-                            </div>
-                            <div class="am-form-group am-form-icon am-form-feedback">
-                                <label for="username">账户 <span class="red">*</span>：</label>
-                                <div class="am-u-sm-8">
-                                    <input type="text" minlength="2" placeholder="请输入2-10个字符" name="username" required onblur="validate(this,2,10,2)" />
-                                </div>
-                                <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                            </div> 
-                            <div class="am-form-group am-form-icon am-form-feedback">
-                                <label for="password">密码 <span class="red">*</span>：</label>
-                                <div class="am-u-sm-8">
-                                    <input type="password" name="password" minlength="6" maxlength="16" required onblur="validate(this,6,16,3)" />
+                            <div class="am-form-group  am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="marketName" class="am-u-sm-3 am-form-label">商场名 <span class="red">*</span>：</label>
+                                <div class="am-u-sm-8 am-u-end">
+                                    <input type="text" id="marketName" minlength="2" value="宏帆广场" readonly required />
                                 </div>
                                 
-                                <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="username" class="am-u-sm-3 am-form-label">账户 <span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="text" minlength="2" placeholder="请输入2-15个字符" name="username" required onblur="validate(this,2,15,2)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div> 
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="password" class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="password" name="password" placeholder="请输入6-16位的密码" minlength="6" maxlength="16" required onblur="validate(this,6,16,3)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                          
-                            <div class="am-form-group am-form-icon am-form-feedback">
-                                <label for="shopName">商家名称 <span class="red">*</span>：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="store_name" class="am-u-sm-3 am-form-label">商家名称 <span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <input type="text" id="shopName" name="store_name" required onblur="validate(this,2,10,4)" />
+                                    <input type="text"  placeholder="请输入2-20个字符" name="store_name" required onblur="validate(this,2,20,4)" />
                                 </div>
                                 
-                                <small class="red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
+                                <small class="am-u-sm-1 red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
-                                <label for="englishName">英文名称 ：</label>
+                            <div class="am-form-group  am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="en_name" class="am-u-sm-3 am-form-label">英文名称 ：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <input type="text" id="englishName" name="en_name" value=""/>
+                                    <input type="text" name="en_name" placeholder="例如：lisa" value=""/>
                                 </div>
                                 
                             </div>
-                            <div class="am-form-group">
-                                <label for="onlineTime">开业时间<span class="red">*</span>：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="open_busin" class="am-u-sm-3 am-form-label">开业时间<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                      <input type="text" name="open_busin" id="startBusinessTime" class="am-form-field" placeholder="日历组件" readonly>
+                                      <input type="text" name="open_busin" id="startBusinessTime" class="am-form-field" placeholder="时间选择" readonly>
                                       <span class="am-input-group-btn am-datepicker-add-on">
                                         <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
                                       </span>
@@ -79,10 +81,10 @@
                                 </div>
                                 
                             </div>
-                            <div class="am-form-group">
-                                <label for="oneType">一级业态<span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <select id="firstYetai" name="commercial_type_name" required>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="commercial_type_name" class="am-u-sm-3 am-form-label">一级业态<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select id="firstYetai" name="commercial_type_name" required onchange="validate(this,1,20,5)" >
                                         <option value="">-=请选择一项=-</option>
                                         <?php foreach($yetai as $val):?>
                                         <option value="<?php echo $val['id'];?>"><?php echo $val['type_name'];?></option>
@@ -90,32 +92,33 @@
                                       
                                     </select>
                                 </div>
-                                
+                                <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group" id="secondYetai" style="clear: both;display: none;">
-                                <label for="subcommercial_type_name">二级业态<span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <select name="subcommercial_type_name" id="secondYetaiSelect" required>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondYetai" style="clear: both;display: none;">
+                                <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select name="subcommercial_type_name" id="secondYetaiSelect" required onchange="validate(this,1,20,6)" >
                                         <option value="">-=请选择一项=-</option>
                                     </select>
                                 </div>
-                                
+                                <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                         </div>
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                           <div class="am-form-group am-form-icon am-form-feedback">
-                                <label for="manageBrand">经营品牌 <span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                     <input type="text" id="barnd_name" name="barnd_name" onblur="validate(this,2,20,5)"  value="" required />
+                           <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="barnd_name" class="am-u-sm-3 am-form-label">经营品牌 <span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                     <input type="text" id="barnd_name" placeholder="请输入2-20个字符" name="barnd_name" onblur="validate(this,2,20,7)"  value="" required />
                                 </div>
-                                
-                                 <small class="red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                                <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
-                                <label for="shopType">商家类型 <span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <select id="shopType" name="store_type" required>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="store_type" class="am-u-sm-3 am-form-label">商家类型 <span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select id="store_type" name="store_type" required onchange="validate(this,1,20,8)" >
                                         <option value="">-=请选择一项=-</option>
                                         <option value="普通">普通</option>
                                         <option value="餐饮">餐饮</option>
@@ -125,12 +128,13 @@
                                     </select>
                                     <span class="am-form-caret"></span>
                                 </div>
-                                
+                                <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
-                                <label for="shopState">营业状态<span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <select id="shopState" name="op_status" required>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="op_status" class="am-u-sm-3 am-form-label">营业状态<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select id="op_status" name="op_status" required onchange="validate(this,1,20,9)" >
                                         <option value="">-=请选择一项=-</option>
                                         <option value="营业中">营业中</option>
                                         <option value="装修中">装修中</option>
@@ -138,12 +142,14 @@
                                         <option value="即将营业">即将营业</option>
                                     </select>
                                 </div>
-                                
+                                <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
-                                <label for="shopFloor">所在楼层<span class="red">*</span>：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="floor_name" class="am-u-sm-3 am-form-label">所在楼层 ：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <select id="shopFloor" name="floor_name" required>
+                                    <select id="floor_name" name="floor_name">
+                                        <option value="">-=请选择一项=-</option>
                                         <option value="0">F1</option>
                                         <option value="1">F2</option>
                                         <option value="2">F3</option>
@@ -151,44 +157,40 @@
                                         <option value="4">F5</option>
                                     </select>
                                 </div>
-                                
                             </div>
-                            <div class="am-form-group">
-                                <label for="businessTime">店铺编号：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="door_no" class="am-u-sm-3 am-form-label">店铺编号：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <input type="text" placeholder="1001" class="" name="door_no"  id="comments"  min="0" />
+                                    <input type="text" placeholder="例如：S1001" class="" name="door_no"  id="comments"/>
                                 </div>
                                 
-                                
                             </div>
-                            <div class="am-form-group">
-                                <label for="businessTime">营业时间<span class="red">*</span>：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="business_hours" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                   <input type="text" placeholder="9:20-22:00" class="" name="business_hours"  id="comments" required onblur="validate(this,2,30,6)" /> 
+                                   <input type="text" placeholder="例如：9:20-22:00" placeholder="例如：9:00-22:00" name="business_hours"  required onblur="validate(this,2,12,11)" /> 
                                 </div>
                                 
-                                <small class="red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
+                                <small class="red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group">
-                                <label for="area">面积/平方米<span class="red">*</span>：</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="area" class="am-u-sm-3 am-form-label">面积/平方米：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                   <input type="number" name="area" id="area" min="1" required /> 
-                                </div>
-                                
+                                   <input type="number" name="area" placeholder="例如：300.00" id="area" min="1" /> 
+                                </div>  
                             </div>
                            
-                            <div class="am-form-group">
-                                <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <label class="am-radio-inline">
-                                        <input type="radio" value="1" name="verification"> 是
+                                        <input type="radio" id="verification" value="1" checked="checked" name="verification"> 是
                                     </label>
                                     <label class="am-checkbox-inline">
-                                        <input type="radio" value="0" name="verification"> 否
+                                        <input type="radio" id="disverification" value="0" name="verification"> 否
                                     </label>
-                                </div>
-                                
+                                </div>    
                             </div>
 
                         </div>
@@ -283,10 +285,13 @@ $(document).ready(function(){
 
     //点击保存按钮作验证
     $('#submit').click(function(){
+        console.log(document.getElementById('verification').checked);
+        console.log(document.getElementById('disverification').checked);
         if($('#startBusinessTime').val()==""){
             alert("请选择开业时间！");
             return false;
         }else{
+
             return true;
         }
     });
