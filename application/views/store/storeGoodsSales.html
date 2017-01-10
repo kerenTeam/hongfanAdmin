@@ -81,7 +81,7 @@ h4.am-panel-title{
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr class="gradeX">
+                                                    <tr class="trClas" >
                                                         <td class="am-text-middle width" rowspan="<?php echo count($val['goods'])+1;?>">
                                                         <?php $pic = json_decode($val['picImg'],true);?>
                                                             <div class="wx_type_img">
@@ -97,7 +97,7 @@ h4.am-panel-title{
                                                         </td>
                                                     </tr>
                                                     <?php foreach($val['goods'] as $v):?>
-                                                    <tr class="gradeX">
+                                                    <tr class="trClass<?php echo $v['goods_id'];?>" data-id="<?php echo $v['goods_id'];?>">
                                                         <td class="am-text-middle"><?php echo $v['goods_id'];?></td>
                                                         <td class="am-text-middle"><?php echo $v['title'];?></td>
                                                         <td class="am-text-middle"><img class="imgbox" src="<?php echo $v['thumb'];?>"></td>
@@ -117,7 +117,7 @@ h4.am-panel-title{
                                                 </div>
                                                 <div class="am-modal-footer">
                                                     <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                                    <span class="am-modal-btn sureDelete" data-id="<?php echo $v['goods_id'];?>" data-am-modal-confirm>确定</span>
+                                                    <span class="am-modal-btn sureDelete" name="<?php echo $val['id']?>" data-id="<?php echo $v['goods_id'];?>" data-am-modal-confirm>确定</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -249,19 +249,19 @@ function findPreview(parent) {
 
   //删除商品的AJAX请求
   $('.sureDelete').click(function(){
-        var dataId=$(this).attr('data-id');
-        console.log(dataId);
-        for(var i=0;i<$('.trClass').length;i++){
-            if($('table tbody tr').eq(i).attr('data-id')==dataId){
+        var goodsId=$(this).attr('data-id'),id=$(this).attr('name');
                 $.ajax({
                     type:'post',
-                    url:'',
-                    data: 'goodsid='+dataId,
+                    url:'<?php echo site_url('store/Store/del_sales_goods')?>',
+                    data: 'id='+ id +'&goodsid='+goodsId,
                     success: function(data){
-                        if(data==1){                                           
-                         
+                        if(data==1){
+                            alert('成功');
+                            $('.trClass'+goodsId).remove();
+                
                         }else{
                             alert("操作失败！");
+                            return false;
                         }
                         
                     },
@@ -269,8 +269,7 @@ function findPreview(parent) {
                         alert("操作失败，请检查网络设置！");
                     }
                 });
-            }
-        }
+          
         
     });
 

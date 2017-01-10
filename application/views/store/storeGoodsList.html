@@ -392,27 +392,23 @@ td.am-text-middle img{
                         //删除商品的AJAX请求
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                                        data: 'goodsid='+dataId,
-                                        success: function(data){
-                                            if(data==1){                                           
-                                              getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                                data: 'goodsid='+dataId,
+                                success: function(data){
+                                    if(data==1){                                           
+                                      $('#trClass'+dataId).remove();
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
                                 }
-                            }
-                            
+                            });
+                    
                         });
                         //加入达人推荐的ajax请求
                         $('#add_sales_goods').click(function(){
@@ -504,7 +500,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="storeGoodsModal">
-    <tr class="trClass" data-id="<%= goods_id%>">
+    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
         <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= goods_id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
