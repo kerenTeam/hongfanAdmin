@@ -97,8 +97,8 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商家管理
-            <a href="<?php echo site_url().'shop/singleShop/goodsList';?>" style="font-size: 16px;">商品列表</a> 
-            <small><a href="<?php echo site_url().'shop/singleShop/goodsDetail';?>" style="font-size: 16px;">编辑商品详情</a></small></div>
+            <a href="<?php echo site_url().'shop/SingleShop/goodsList';?>" style="font-size: 16px;">商品列表</a> 
+            <small>编辑商品详情</small></div>
         </div>
     </div>
 </div>
@@ -109,13 +109,13 @@
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">商品基础信息
-                        <nav class="scrollspy-nav am-fr" data-am-scrollspynav="{offsetTop:60}">
+                       <!--  <nav class="scrollspy-nav am-fr" data-am-scrollspynav="{offsetTop:60}">
                             <ul>
                                 <li><a href="#goodsComments">
                             查看商品评论信息
                         </a></li>
                             </ul>
-                        </nav>                     
+                        </nav> -->                     
                         </div>
                         
                     </div>
@@ -527,22 +527,24 @@
         <div class="am-modal-hd">移动端商品预览(仅展示)</div>
         <div class="am-modal-bd good-bd">
             <div class="goodBanner" id="goodsBanner">
-                
+                <?php foreach($banner as $val):?>
+                    <img src="<?php echo $val['bannerPic'];?>">
+                <?php endforeach;?>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left addpadding">
-                <div class="am-u-lg-10 am-u-sm-10 am-u-md-10" id="showgoodsname">leica/徕卡 SOFORT相机 一次成像立拍立得相机 限量出售</div>
+                <div class="am-u-lg-10 am-u-sm-10 am-u-md-10" id="showgoodsname"><?php echo $goods['title'];?></div>
                 <div class="am-u-lg-2 am-u-sm-2 am-u-md-2 am-text-center" style="border-left: 1px solid #ccc;">
                     <img src="assets/img/shangjia.png" class="shoplogo" />
                     <p class="small-word">商家</p>
                 </div>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price">
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4" id="showgoodsprice">￥ 2299</div>
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4" id="showgoodsprice">￥ <?php echo $goods['price'];?></div>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage">快递：免邮</div>
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage">快递：<?php if(empty($goods['postage'])){echo "包邮";}else{echo $goods['postage'];}?></div>
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
-                    销量：21笔
+                    销量：<?php echo $goods['sales']?>笔
                 </div>
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
                     重庆
@@ -551,7 +553,7 @@
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-detail">
                 <p class="big-word">商品详情</p>
                 <article class="smallsize" id="showgoodsDetail">
-                    它融合了徕卡的独特设计专属功能，令我们重新发现即影即有的摄影世界，创造出可以触摸到的小小艺术品。
+                 <?php echo $goods['content'];?>
                 </article>
             </div>
         </div>

@@ -83,13 +83,14 @@ h4.am-panel-title{
                                                 <tbody>
                                                     <tr class="gradeX">
                                                         <td class="am-text-middle width" rowspan="<?php echo count($val['goods'])+1;?>">
+                                                        <?php $pic = json_decode($val['picImg'],true);?>
                                                             <div class="wx_type_img">
                                                              <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                                               <!-- 图片实时预览 -->
-                                                              <?php if(empty($val['picImg'])):?>
+                                                              <?php if(empty($pic[0]['picImg'])):?>
                                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                               <?php else:?>
-                                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $val['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                               <?php endif;?>
                                                             </div>
                                                             <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>

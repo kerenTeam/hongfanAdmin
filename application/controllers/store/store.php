@@ -152,6 +152,7 @@ class Store extends Default_Controller {
                 }
                 $i++;
              }
+             $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
              if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
@@ -361,6 +362,32 @@ class Store extends Default_Controller {
          $data['page'] = $this->view_storeGoodsSales;
          $data['menu'] = array('store','storeGoodsSales');
          $this->load->view('template.html',$data);
+     }
+     // 删除展销某个活动的产品
+     function del_sales_goods(){
+        if($_POST){
+            $id = $_POST['id'];
+            $goodsid = $_POST['goodsid'];
+            if(empty($id) || empty($goodsid)){
+                echo "2";
+            }else{
+                $sale = $this->MallShop_model->get_sales_info($id);
+                $goods = explode(',',$sale['goods_list']);
+                foreach ($goods as $key => $value) {
+                   if($value == $goodsid){
+                     unset($goods[$key]);
+                   }
+                }
+                $data['goods_list'] = implode(',',$goods);
+                if($this->MallShop_model->edit_salse($id,$data)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }
+        }else{  
+            echo "2";
+        }
      }
 
     //快递管理

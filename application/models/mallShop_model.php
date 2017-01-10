@@ -85,8 +85,9 @@ class MallShop_model extends CI_Model
 
     //商家商品列表
     function get_goods_list($storeid){
-        $this->db->from('hf_mall_goods as a');
-        $this->db->join('hf_mall_category as b', 'b.catid = a.categoryid');
+        $this->db->select('a.*, b.catname');
+        $this->db->from('hf_mall_goods a');
+        $this->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
         $query = $this->db->where('storeid',$storeid)->where('differentiate','1')->order_by('a.create_time','desc')->get();
         return $query->result_array(); 
     }
@@ -222,7 +223,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->get();
+        $query = $this->db->where('differentiate','1')->order_by("a.create_time",'desc')->get();
         return $query->result_array();
     }
 
@@ -272,12 +273,25 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
-    //获取商品信息
+    //获取展销商品信息
     function get_goods_title($id){
         $where['goods_id'] = $id;
         $this->db->select('goods_id,title,thumb');
         $query = $this->db->where($where)->get($this->shop_goods);
         return $query->row_array();
+    }
+
+    //获取某个展销信息
+    function get_sales_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->store_goods);
+        return $query->row_array();
+    }
+
+    //修改某个展销信息
+    function edit_salse($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->store_goods,$data);
     }
 
 
