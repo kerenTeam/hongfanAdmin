@@ -299,7 +299,7 @@ class Member extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/member/Member/memberCardDetail/'.$data['id'])."'</script>";
                     exit;
                 } else{
-                    $data['pic'] =  'Upload/cards/'.$this->upload->data('file_name');
+                    $data['pic'] =  '/Upload/cards/'.$this->upload->data('file_name');
                 }
             }
             //操作数据库
@@ -359,7 +359,7 @@ class Member extends Default_Controller {
                 }
                 else
                 {
-                    $data['pic'] =  'Upload/cards/'.$this->upload->data('file_name');
+                    $data['pic'] =  '/Upload/cards/'.$this->upload->data('file_name');
                 }
             }
             if($this->user_model->add_cards($data)){
