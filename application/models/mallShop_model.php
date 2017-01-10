@@ -294,7 +294,10 @@ class MallShop_model extends CI_Model
         return $this->db->where($where)->update($this->store_goods,$data);
     }
 
-
+    //新增展销活动
+    function add_sales($data){
+        return $this->db->insert($this->store_goods,$data);
+    }
 
 
 }

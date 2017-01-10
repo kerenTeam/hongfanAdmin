@@ -171,7 +171,7 @@ class ServeForPeople extends Default_Controller
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = '/Upload/headPic/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'Upload/headPic/'.date('His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
                 $arr[$codata][]['headPic'] = $myFileName;
             }
@@ -200,7 +200,7 @@ class ServeForPeople extends Default_Controller
 
                //缩略图
             if(isset($arr['D'.$currentRow])){
-                 $data['headPic'] = $arr['D'.$currentRow][0]['headPic'];
+                 $data['headPic'] = '/'.$arr['D'.$currentRow][0]['headPic'];
             }else{
                 $data['headPic'] = '';
             } 
