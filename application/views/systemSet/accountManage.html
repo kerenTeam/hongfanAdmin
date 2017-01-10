@@ -218,28 +218,22 @@ var flag=1,tag=1,str='';
                         //删除管理员帐户
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',
-                                        data: 'userid='+dataId,
-                                        success: function(data){
-                                            if(data==1){
-                                                
-                                                getList('<?php echo site_url('/systemSet/SystemSet/adminUserList');?>','default=1');
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',
+                                data: 'userid='+dataId,
+                                success: function(data){
+                                    if(data==1){
+                                        $('#trClass'+deleteId).remove();
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
                                 }
-                            }
-                            
+                            });              
                         });
                         //上传头像
                         var picArray=[' ',' '];//定义一个定时器
@@ -356,7 +350,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="accountListModal">
-    <tr class="trClass" data-id="<%= user_id%>">
+    <tr class="trClass" id="trClass<%= user_id%>" data-id="<%= user_id%>">
         <td class="am-text-middle"><%= user_id%></td>
         <td class="am-text-middle"><%= username%></td>
         

@@ -347,7 +347,7 @@ var nums=0,flag=0;
                                 data: 'id='+deleteId,
                                 success: function(data){
                                     if(data==1){
-                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                                        $('#trClass'+deleteId).remove();
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -476,7 +476,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="helpUserModal">
-    <tr class="trClass" data-id="<%= helper_id%>">
+    <tr class="trClass" id="trClass<%= helper_id%>" data-id="<%= helper_id%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id%>" name="commentBox"></td>
 
         <td class="am-text-middle"><%= helper_id%></td>

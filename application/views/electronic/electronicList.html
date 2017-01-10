@@ -149,27 +149,22 @@ td img{
                         //删除优惠券的AJAX请求
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/electronic/Electronic/del_coupon');?>',
-                                        data: 'id='+dataId,
-                                        success: function(data){
-                                            if(data==1){                 
-                                               getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');  
-                                            }else{
-                                                alert("操作失败，请检查网络设置！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/electronic/Electronic/del_coupon');?>',
+                                data: 'id='+dataId,
+                                success: function(data){
+                                    if(data==1){                 
+                                       $('#trClass'+deleteId).remove();
+                                    }else{
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
                                 }
-                            }
-                            
+                            });
                         });
                         
                     }
@@ -248,7 +243,7 @@ var startDate = new Date(2014, 11, 20);
 })
 </script>
 <script type="text/html" id="electronicListModal">
-    <tr class="trClass" data-id="<%= id%>">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle"><%= title%></td>

@@ -187,7 +187,7 @@ td.am-text-middle img{
                                 data: 'id='+array,
                                 success: function(data){
                                     if(data==1){
-                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
+                                        $('#trClass'+deleteId).remove();
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -256,7 +256,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="storeGoodsModal">
 
-    <tr class="trClass" data-id="<%= id%>">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= title%></td>

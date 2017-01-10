@@ -314,33 +314,24 @@ padding: 5px 6px!important;
                             var deleteId=$(this).attr('data-id');
                             deleteArray[0]= deleteId;  
                             deleteArray=eval(deleteArray);
-                            console.log(deleteArray);                        
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==id){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
-                                        data: 'commentid='+deleteArray,
-                                        success: function(data){
-                                            alert(data);
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==id){
-                                                        $('.trClass').eq(i).remove();
-                                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                                    }
-                                                }
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            console.log(deleteArray);
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                                data: 'commentid='+deleteArray,
+                                success: function(data){
+                                    alert(data);
+                                    if(data==1){                                           
+                                        $('#trClass'+deleteId).remove();
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
                                 }
-                            }
+                            });
                             
                         });
                         
@@ -429,7 +420,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="commentListModal">
-    <tr class="trClass" data-id="<%= id%>">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>

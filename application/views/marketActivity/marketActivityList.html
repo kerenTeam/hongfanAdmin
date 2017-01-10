@@ -135,7 +135,7 @@ padding: 5px 6px!important;
                                 data: 'id='+deleteId,
                                 success: function(data){
                                     if(data==1){
-                                        getList('<?php echo site_url('/marketActivity/MarketActivity/get_activity_list');?>','default=1');
+                                        $('#trClass'+deleteId).remove();
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -180,7 +180,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="shopActivityModal">
-    <tr class="trClass" data-id="<%= id%>">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle">
         <%if(picImg){%>

@@ -8,7 +8,7 @@
         
         height:190px;
     }
-</style>
+</style> 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -33,20 +33,30 @@
                     </div>
                     <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label>经营品牌：</label>
-                       <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="建议不超过二十个字符" required>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="建议不超过二十个字符" required>
+                        </div>
+                       
                     </div>
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">登录账户:<span class="red">*</span>：</label>
-                        <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
-                        <input type="text" id="" name="username" value="<?php echo $user['username']?>" required />
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
+                            <input type="text" id="" name="username" value="<?php echo $user['username']?>" required />
+                        </div>
+                        
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">商家名称<span class="red">*</span>：</label>
-                        <input type="text" id="" name="store_name" value="<?php echo $busin['store_name']?>" required />
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" id="" name="store_name" value="<?php echo $busin['store_name']?>" required />
+                        </div>  
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="Name">登录密码:<span class="red">*</span>：</label>
-                        <input type="password" id="" name="password" placeholder="******" />
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="password" id="" name="password" placeholder="******" />
+                        </div>  
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="englishName">英文名称 ：</label>
@@ -54,64 +64,84 @@
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="doc-vld-528">开业时间<span class="red">*</span>：</label>
-                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                          <input type="text" value='<?php echo $busin["open_busin"]?>' name='open_busin' class="am-form-field" id="startBusinessTime" placeholder="日历组件" readonly>
-                          <span class="am-input-group-btn am-datepicker-add-on">
-                            <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
-                          </span>
-                        </div>
+                        <div class="am-u-sm-8 am-u-end">
+                            <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                              <input type="text" value='<?php echo $busin["open_busin"]?>' name='open_busin' class="am-form-field" id="startBusinessTime" placeholder="日历组件" readonly>
+                              <span class="am-input-group-btn am-datepicker-add-on">
+                                <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
+                              </span>
+                            </div>
+                        </div>   
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="firstYetai">一级业态<span class="red">*</span>：</label>
-                        <select id="firstYetai" name="commercial_type_name" required>
-                            <option value="">-=请选择一项=-</option>
-                            <?php foreach($yetai as $val):?>
-                                <option value="<?php echo $val['id']?>" <?php if($val['id'] == $busin['commercial_type_name']){echo "selected";}?>><?php echo $val['type_name']?></option>
-                            <?php endforeach;?>
-                        </select>
+                        <div class="am-u-sm-8 am-u-end">
+                            <select id="firstYetai" name="commercial_type_name" required>
+                                <option value="">-=请选择一项=-</option>
+                                <?php foreach($yetai as $val):?>
+                                    <option value="<?php echo $val['id']?>" <?php if($val['id'] == $busin['commercial_type_name']){echo "selected";}?>><?php echo $val['type_name']?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        
                     </div>
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
                         <label for="subcommercial_type_name">二级业态<span class="red">*</span>：</label>
-                        <select name="subcommercial_type_name" id="secondYetaiSelect">
-                            <option value="">-=请选择一项=-</option>
-                        </select>   
+                        <div class="am-u-sm-8 am-u-end">
+                            <select name="subcommercial_type_name" id="secondYetaiSelect">
+                                <option value="">-=请选择一项=-</option>
+                            </select> 
+                        </div>
+                          
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="shopType">商家类型 <span class="red">*</span>：</label>
-                        <select id="shopType" name="store_type" required>
-                            <option value="">-=请选择一项=-</option>
-                            <option value="普通" <?php if($busin['store_type'] == "普通"){echo "selected";}?>>普通</option>
-                            <option value="餐饮" <?php if($busin['store_type'] == "餐饮"){echo "selected";}?>>餐饮</option>
-                            <option value="影院" <?php if($busin['store_type'] == "影院"){echo "selected";}?>>影院</option>
-                            <option value="KTV" <?php if($busin['store_type'] == "KTV"){echo "selected";}?>>KTV</option>
-                            <option value="冰场" <?php if($busin['store_type'] == "冰场"){echo "selected";}?>>冰场</option>
-                        </select>
-                        <span class="am-form-caret"></span>
+                        <div class="am-u-sm-8 am-u-end">
+                            <select id="shopType" name="store_type" required>
+                                <option value="">-=请选择一项=-</option>
+                                <option value="普通" <?php if($busin['store_type'] == "普通"){echo "selected";}?>>普通</option>
+                                <option value="餐饮" <?php if($busin['store_type'] == "餐饮"){echo "selected";}?>>餐饮</option>
+                                <option value="影院" <?php if($busin['store_type'] == "影院"){echo "selected";}?>>影院</option>
+                                <option value="KTV" <?php if($busin['store_type'] == "KTV"){echo "selected";}?>>KTV</option>
+                                <option value="冰场" <?php if($busin['store_type'] == "冰场"){echo "selected";}?>>冰场</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        
                     </div> 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="shopState">营业状态<span class="red">*</span>：</label>
-                        <select id="shopState" name="op_status" required>
+                        <div class="am-u-sm-8 am-u-end">
+                           <select id="shopState" name="op_status" required>
                             <option value="">-=请选择一项=-</option>
                             <option value="营业中" <?php if($busin['op_status'] == "营业中"){echo "selected";}?> >营业中</option>
                             <option value="装修中" <?php if($busin['op_status'] == "装修中"){echo "selected";}?>>装修中</option>
                             <option value="停止营业" <?php if($busin['op_status'] == "停止营业"){echo "selected";}?>>停止营业</option>
                             <option value="即将营业" <?php if($busin['op_status'] == "即将营业"){echo "selected";}?>>即将营业</option>
-                        </select>
+                          </select> 
+                        </div>
+                        
                     </div>
                    
                
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="area">面积/平方米<span class="red">*</span>：</label>
-                        <input type="text" name="area"  value="<?php echo $busin['area']?>" required />
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="area"  value="<?php echo $busin['area']?>" required />
+                        </div>
+                        
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
                         <label class="am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
-                        <label class="am-radio-inline">
-                            <input type="radio" value="1" name="verification" <?php if($busin['verification'] == '1'){echo "checked";}?>> 是
-                        </label>
-                        <label class="am-checkbox-inline">
-                            <input type="radio" value="0" name="verification" <?php if($busin['verification'] == '0'){echo "checked";}?>> 否
-                        </label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <label class="am-radio-inline">
+                                <input type="radio" value="1" name="verification" <?php if($busin['verification'] == '1'){echo "checked";}?>> 是
+                            </label>
+                            <label class="am-checkbox-inline">
+                                <input type="radio" value="0" name="verification" <?php if($busin['verification'] == '0'){echo "checked";}?>> 否
+                            </label>
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -122,7 +152,7 @@
                 </div>
                 <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">LOGO<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <div class="wx_type_img">
                                  <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                   <!-- 图片实时预览 -->
@@ -142,7 +172,7 @@
                     </div>
                     <div class="am-form-group am-backdrop-on-box am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-weibo" class="am-u-sm-3 am-form-label">商家图片<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <div class="wx_type_img">
                                  <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                     <!-- 图片实时预览 -->
@@ -169,37 +199,37 @@
                     </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <input type="text" name="business_hours" class="am-form-field tpl-form-no-bg" value="<?php echo $busin['business_hours'];?>" placeholder="9:00-22:00" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <input type="tel" name="phone" value="<?php echo $busin['phone']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入11位的手机号码" required>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                            <input type="text" name="sina_weibo" value="<?php echo $busin['sina_weibo']?>"  class="am-form-field tpl-form-no-bg" placeholder="" >
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm8 am-u-end">
                            <input type="text" name="tc_weibo" value="<?php echo $busin['tc_weibo']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">微信账号： </label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                            <input type="text" name="wechat" value="<?php echo $busin['wechat']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label class="am-u-sm-3 am-form-label">文字简介：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <textarea name="description" rows="5" cols="40">
                                <?php echo $busin['description'];?>
                             </textarea>
@@ -213,7 +243,7 @@
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-8 am-u-end">
                             <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" >
                                 <option value="B3" <?php if($busin['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
                                 <option value="B2" <?php if($busin['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
