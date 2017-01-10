@@ -14,7 +14,7 @@
     }
     .ampadding{
         margin-top:20px;
-    }
+    } 
   .postageNumber{
         display: none;
     } 
@@ -544,9 +544,12 @@
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
                     销量：21笔
                 </div>
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
-                    重庆
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodsresporty">
+                    库存：100件
                 </div>
+            </div>
+            <div id="showproporty" class="am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
+                
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-detail">
                 <p class="big-word">商品详情</p>
@@ -619,17 +622,40 @@ function validate(obj,minlen,maxlen,i){
   $('#cancle').click(function(){
     history.go(-1);
   });
-//点击预览商品详情
+  //点击预览商品详情
   $('#eyeDetail').click(function() {
+    var propertyArray=[],totalrespority=0;
+    for(var i=0;i<$('.addPropertyBody').length;i++){
+        var arrayPropertyName={},addPropertyBody={};
+        var parameter_name=$('.addPropertyBody').eq(i).find('input').val();
+        arrayPropertyName.parameter_name=parameter_name;    
+        arrayPropertyName.child_value=[];
+        var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
+        for(var j=0;j<addPropertytr.length;j++){
+            var td=addPropertytr.eq(j).find('td');
+            var addPropertytd={};
+            addPropertytd.parameter_name=parameter_name;
+            addPropertytd.child_parameter_name=td.eq('0').find('input').val();
+            addPropertytd.equivalence=td.eq('1').find('input').val();
+            addPropertytd.Inventory=td.eq('2').find('input').val();
+            totalrespority+=parseInt(addPropertytd.Inventory);
+            arrayPropertyName.child_value.push(addPropertytd);
+        }
+        propertyArray.push(arrayPropertyName);
+    }
+    // console.log(propertyArray);
+    var html = template("showproportyModal",{propertyArray:propertyArray});
+    document.getElementById('showproporty').innerHTML = html;
+
     var picSrc=$('#goodsBanner').html();
     var goodName=$('#goodName').val();
     var goodPrice=$('#goodPrice').val();
     var postage=document.getElementById('dispostage').checked,postageNum=$('#postageNum').val();
     var dispostage=$('#dispostage').attr('checked');
     var editorContent= UE.getEditor('editor').getContent();
-     console.log(editorContent);
     $('#showgoodsname').html(goodName);
-    $('#showgoodsprice').html(goodPrice);
+    $('#showgoodsprice').html('￥'+goodPrice);
+    $('#showgoodsresporty').html('库存：'+totalrespority);
     if(postage){
         $('#showgoodspostage').html("快递：免邮");
     }else{
@@ -818,4 +844,16 @@ function previewImage1(file) {
 }
 
 
+</script>
+<script type="text/html" id="showproportyModal">
+<%for(var i=0;i<propertyArray.length;i++) {%>
+    <div>
+        <p class="big-word1"><%= propertyArray[i].parameter_name%></p>
+        <p>
+        <%for(var j=0;j<propertyArray[i].child_value.length;j++) {%>
+            <span class="badgeTips"><%= propertyArray[i].child_value[j].child_parameter_name%></span>
+        <%}%>
+        </p>
+    </div>
+<%}%>
 </script>

@@ -13,7 +13,7 @@
     .postageNumber{
         display: none;
     } 
-   
+    
     .addStyle{
         display: inline-block;
         padding: 3px 5px;
@@ -56,6 +56,10 @@
     }
     .big-word{
         font-size: 20px;
+        margin-left: -10px;
+    }
+    .big-word1{
+        font-size: 20px;
     }
     .smallsize{
         font-size: 14px;
@@ -84,6 +88,14 @@
         top:0;left:0;
         width:100% !important;
         height: 100% !important;
+    }
+    .badgeTips{
+        display: inline-block;
+        padding:2px 10px !important;
+        border-radius: 8px;
+        background: #e0e0e0;
+        font-size: 14px;
+        margin-right: 10px;
     }
 </style>
 
@@ -314,9 +326,12 @@
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
                     销量：21笔
                 </div>
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
-                    重庆
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodsresporty">
+                    库存：100件
                 </div>
+            </div>
+            <div id="showproporty" class="am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
+                
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-detail">
                 <p class="big-word">商品详情</p>
@@ -326,8 +341,7 @@
             </div>
         </div>
         <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancle>取消</span>
-            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+            <button type="button" class="am-modal-btn" data-am-modal-confirm>确定</button>
         </div>
     </div>
 </div>
@@ -367,11 +381,10 @@ function validate(obj,minlen,maxlen,i){
 }
 
   $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
+      var startDate = new Date(2014, 11, 20);
+      var endDate = new Date(2014, 11, 25);
+      var $alert = $('#my-alert');
+      $('#my-start').datepicker().on('changeDate.datepicker.amui', function(event) {
         if (event.date.valueOf() > endDate.valueOf()) {
           $alert.find('p').text('开始日期应小于结束日期！').end().show();
         } else {
@@ -382,8 +395,7 @@ function validate(obj,minlen,maxlen,i){
         $(this).datepicker('close');
       });
 
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
+      $('#my-end').datepicker().on('changeDate.datepicker.amui', function(event) {
         if (event.date.valueOf() < startDate.valueOf()) {
           $alert.find('p').text('结束日期应大于开始日期！').end().show();
         } else {
@@ -396,15 +408,38 @@ function validate(obj,minlen,maxlen,i){
 
       //点击预览商品详情
       $('#eyeDetail').click(function() {
+        var propertyArray=[],totalrespority=0;
+        for(var i=0;i<$('.addPropertyBody').length;i++){
+            var arrayPropertyName={},addPropertyBody={};
+            var parameter_name=$('.addPropertyBody').eq(i).find('input').val();
+            arrayPropertyName.parameter_name=parameter_name;    
+            arrayPropertyName.child_value=[];
+            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
+            for(var j=0;j<addPropertytr.length;j++){
+                var td=addPropertytr.eq(j).find('td');
+                var addPropertytd={};
+                addPropertytd.parameter_name=parameter_name;
+                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
+                addPropertytd.equivalence=td.eq('1').find('input').val();
+                addPropertytd.Inventory=td.eq('2').find('input').val();
+                totalrespority+=parseInt(addPropertytd.Inventory);
+                arrayPropertyName.child_value.push(addPropertytd);
+            }
+            propertyArray.push(arrayPropertyName);
+        }
+        // console.log(propertyArray);
+        var html = template("showproportyModal",{propertyArray:propertyArray});
+        document.getElementById('showproporty').innerHTML = html;
+
         var picSrc=$('#goodsBanner').html();
         var goodName=$('#goodName').val();
         var goodPrice=$('#goodPrice').val();
         var postage=document.getElementById('dispostage').checked,postageNum=$('#postageNum').val();
         var dispostage=$('#dispostage').attr('checked');
         var editorContent= UE.getEditor('editor').getContent();
-         console.log(editorContent);
         $('#showgoodsname').html(goodName);
-        $('#showgoodsprice').html(goodPrice);
+        $('#showgoodsprice').html('￥'+goodPrice);
+        $('#showgoodsresporty').html('库存：'+totalrespority);
         if(postage){
             $('#showgoodspostage').html("快递：免邮");
         }else{
@@ -568,4 +603,16 @@ function previewImage1(file) {
 }
 
 
+</script>
+<script type="text/html" id="showproportyModal">
+<%for(var i=0;i<propertyArray.length;i++) {%>
+    <div>
+        <p class="big-word1"><%= propertyArray[i].parameter_name%></p>
+        <p>
+        <%for(var j=0;j<propertyArray[i].child_value.length;j++) {%>
+            <span class="badgeTips"><%= propertyArray[i].child_value[j].child_parameter_name%></span>
+        <%}%>
+        </p>
+    </div>
+<%}%>
 </script>

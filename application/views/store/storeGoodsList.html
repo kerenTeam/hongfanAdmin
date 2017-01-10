@@ -232,7 +232,7 @@ td.am-text-middle img{
 <script type="text/javascript">
 
     //实例化编辑器
-    var ue = UE.getEditor('editor');
+    var ue = UE.getEditor('editor'),flag=0;
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
@@ -284,6 +284,21 @@ td.am-text-middle img{
                                 $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
+                        //点击选中所有
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<$('.commentBox').length;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                // $('.commentBox').eq(i).attr('checked',false);
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
+                            }
+                        });
                         //更改商品的状态
                         $('.goodsState').change(function(){
                             var dataId=$(this).attr('data-id');
@@ -358,8 +373,7 @@ td.am-text-middle img{
 
                                         }else{
                                             alert("操作失败！");
-                                        }
-                                        
+                                        } 
                                     },
                                     error:function(xhr,type,errorThrown){
                                         alert("操作失败，请检查网络设置！");
@@ -440,7 +454,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="storeGoodsModal">
     <tr class="trClass" data-id="<%= goods_id%>">
-        <td class="am-text-middle" ><input type="checkbox" data-id="<%= goods_id%>" name="commentBox"></td>
+        <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= goods_id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= goods_id%></td>
         <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">

@@ -226,6 +226,21 @@ padding: 5px 6px!important;
                             $('.editComment').eq(i).attr("data-am-modal","{target: '#co"+ id +"'}"); 
 
                         }
+                        //点击选中所有
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<$('.commentBox').length;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                // $('.commentBox').eq(i).attr('checked',false);
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
+                            }
+                        });
                         //更改评论的状态
                         $('.commentState').change(function(){
                             var id=$(this).attr('data-id');
@@ -390,7 +405,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="commentListModal">
     <tr class="trClass" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle goodsName" width="100"><%= title%></td>

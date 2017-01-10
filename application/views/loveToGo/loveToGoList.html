@@ -96,6 +96,7 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
+var flag=0;
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -136,6 +137,20 @@ td.am-text-middle img{
                                 $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
+                        //点击选中所有
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<$('.commentBox').length;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
+                            }
+                        });
 
                         //删除商品的AJAX请求
                         $('.sureDelete').click(function(){
@@ -196,7 +211,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="igoListModal">
     <tr class="trClass" data-id="<%= open_iid%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= open_iid%>" name="commentBox"></td>
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= open_iid%>" name="commentBox"></td>
         <td class="am-text-middle"><%= open_iid%></td>
         <td class="am-text-middle">
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
