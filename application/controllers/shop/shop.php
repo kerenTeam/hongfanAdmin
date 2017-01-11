@@ -259,26 +259,33 @@ class Shop extends Default_Controller {
 
     //达人探店
     function findshop(){
-
+        $list = $this->Shop_model->get_find_shop();
+        foreach ($list as $key => $value) {
+            $store_list = explode(',',$value['store_list']);
+            foreach ($store_list as $k => $v) {
+                $list[$key]['store'][] = $this->Shop_model->get_store_find($v);
+            }
+        }
+        $data['find'] = $list;
         $data['page'] = $this->view_findshop;
         $data['menu']= array('moll','findshop');
         $this->load->view('template.html',$data);
      }
 
      //获取所有商家
-     function findshop_goodslist(){
-        if($_POST){
-            $type = $_POST['type'];
-            $list = $this->Shop_model->get_find_shop($type);
+     // function findshop_goodslist(){
+     //    if($_POST){
+     //        $type = $_POST['type'];
+     //        $list = $this->Shop_model->get_find_shop($type);
 
             
 
 
 
-        }else{
-            echo "2";
-        }
-     }
+     //    }else{
+     //        echo "2";
+     //    }
+     // }
      //获取达人推荐商家
      function findshop_list(){
         if($_POST){

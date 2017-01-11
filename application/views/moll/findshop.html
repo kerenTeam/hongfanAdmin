@@ -68,13 +68,15 @@ color: #333;
                     <div class="widget-body  am-fr">
                         <div class="am-u-sm-12">
                             <div class="am-panel-group" id="accordion">
+                            <?php if(!empty($find)):?>
+                                <?php foreach($find as $val):?>
                                 <div class="am-panel am-panel-default">
                                     <div class="am-panel-hd">             
-                                        <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#first'}">
-                                            457<span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                        <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#first<?php echo $val['id'];?>'}">
+                                            <?php if($val['type'] == '2'){echo "(达人探店)";}else{echo "(元气早餐)";}?>&nbsp;<?php echo $val['title']?><span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                         </h4>
                                     </div>                              
-                                    <div id="first" class="am-panel-collapse am-collapse am-in">
+                                    <div id="first<?php echo $val['id'];?>" class="am-panel-collapse am-collapse am-in">
                                         <div class="am-panel-bd">
                                             <div class="am-form-group">
                                                 <div class="am-btn-toolbar">
@@ -88,10 +90,10 @@ color: #333;
                                             <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
                                                 <thead>
                                                      <tr>
-                                                        <th class="shop_id">达人探店详情 </th>
+                                                        <th class="shop_id"><?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气早餐";}?>详情 </th>
                                                         <th class="shop_id">商铺编号 </th>
                                                         <th class="moll_name">商场名称 </th>
-                                                        <th class="shop_type">商铺类型 </th>
+                                                        <th class="shop_type">商铺品牌 </th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -100,14 +102,14 @@ color: #333;
                                                         <td class="am-text-middle width" rowspan="4">
                                                             <div class="tpl-user-card am-text-center">
                                                                 <div class="tpl-user-card-title">
-                                                                    达人探店详情
+                                                                    <?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气早餐";}?>详情
                                                                 </div>
                                                                 <div class="tpl-user-card-body">
                                                                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
                                                                         <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                                                             <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
                                                                             <div class="am-u-sm-9 am-u-end">
-                                                                                <input type="text" name="group_name" class="tpl-form-input" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
+                                                                                <input type="text" name="group_name" class="tpl-form-input" value="<?php echo $val['title'];?>" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
                                                                                 <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
                                                                                 <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
                                                                             </div>
@@ -115,10 +117,15 @@ color: #333;
                                                                         <div class="am-form-group am-cf">
                                                                             <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
                                                                             <div class="am-u-sm-9 am-u-end">
+                                                                            <?php $pic = json_decode($val['picImg'],true);?>
                                                                                 <div class="wx_type_img">
                                                                                  <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                                                                   <!-- 图片实时预览 -->
+                                                                                  <?php if(!empty($pic[0]['picImg'])):?>
+                                                                                  <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                                                  <?php else:?>
                                                                                   <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                                                  <?php endif;?>
                                                                                 </div>
                                                                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                                                                 <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
@@ -128,7 +135,7 @@ color: #333;
                                                                             <label class="am-u-sm-2 am-form-label">详情 ：</label>
                                                                             <div class="am-u-sm-9 am-u-end">
                                                                               <div id="editorContent">
-                                                                                <script id="editor" type="text/plain" name='content'></script>
+                                                                                <script id="editor" type="text/plain" name='content'><?php echo $val['content'];?></script>
                                                                               </div>
                                                                             </div>
                                                                         </div>
@@ -206,6 +213,12 @@ color: #333;
                                         </div>
                                     </div>
                                 </div>
+                                <?php endforeach;?>
+                            <?php else:?>
+                                <div class="am-panel am-panel-default">
+                                    暂无推荐商店！     
+                                </div>
+                            <?php endif;?>
                             </div>
                         </div>
                     </div>

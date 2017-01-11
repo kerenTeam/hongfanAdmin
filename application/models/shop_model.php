@@ -122,18 +122,19 @@ class Shop_model extends CI_Model
 
 
     //获取推荐
-    function get_find_shop($type){
-        $where['type'] = $type;
-        $query = $this->db->where($where)->get($this->store_goods);
-        return $query->row_array();
+    function get_find_shop(){
+        $query = $this->db->where('type !=','1')->get($this->store_goods);
+        return $query->result_array();
     }
 
     //获取商家信息
     function get_store_find($storeid){
-        $this->db->select('store_name,store_id');
+        $this->db->select('store_name,store_id,barnd_name');
         $query = $this->db->where('store_id',$storeid)->where('state','1')->get('hf_shop_store');
         return $query->row_array();
     }
+
+
 
 
 
