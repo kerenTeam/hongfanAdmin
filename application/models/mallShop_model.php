@@ -32,6 +32,11 @@ class MallShop_model extends CI_Model
     function get_goods_cates($parentid){
         $query = $this->db->where('parentid',$parentid)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
+    } 
+    //返回所有分类
+    function get_goods_cates_list(){
+        $query = $this->db->order_by('sort','asc')->get($this->shop_cates);
+        return $query->result_array();
     }
     //获取顶级分类
     function get_cate_level(){

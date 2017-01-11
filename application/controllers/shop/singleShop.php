@@ -123,7 +123,7 @@ class SingleShop extends Default_Controller {
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                       echo $this->upload->display_errors();
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                     }else{
                         unset($data['img'.$i]);
                         if($i == 1){
