@@ -106,6 +106,38 @@ class Payment extends Default_Controller
         $this->load->view('template.html',$data);
     }
 
+    //返回飞机票购买订单列表
+    function qianmi_order_list(){
+        if($_POST){
+            $type = $_POST['type'];
+            $list = $this->Payment_model->get_qianmi_order($type);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //删除千米订单
+    function del_qianmi_order(){
+        if($_POST){
+            $id = $_POST['id'];
+            if(empty($id)){
+                echo "2";
+            }else{
+                if($this->Payment_model->del_qianmi_order($id)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 
 }
