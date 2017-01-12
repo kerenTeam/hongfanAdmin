@@ -116,11 +116,7 @@ td.am-text-middle img{
                             <div class="am-form-group">
                                 <div class="am-btn-toolbar">
                                     <div class="am-btn-group am-btn-group-xs">
-                                    <?php if(empty($saleid)):?>
-                                        <a id="add_sales" data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
-                                    <?php else:?>
-                                        <a id="add_sales_goods" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
-                                    <?php endif;?>
+                                        <a id="add_sales" href="<?php echo site_url().'/store/Native/native_add';?>" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-edit"></span> 新增</a>
                                         <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                     </div>
                                 </div>
