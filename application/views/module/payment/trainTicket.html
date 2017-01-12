@@ -110,14 +110,13 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="shop_name">用户名 </th>
                                     <th class="shop_name">出发地</th>
                                     <th class="shop_type">目的地 </th>
                                     <th class="shop_type">出发时间 </th>
                                     <th class="shop_type">到达时间 </th>
-                                    <th class="shop_type">购买金额 </th>
+                                    <th class="shop_type">购买金额(元) </th>
                                     <th>购买时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -229,26 +228,21 @@ $(document).ready(function(){
     <tr class="trClass" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
-        <td class="am-text-middle goodsName" width="100"><%= title%></td>
-        <td class="am-text-middle"><%= commendContent%></td>
-        <%if(reply) {%>
-        <td class="am-text-middle"><%= reply.seller_comment%></td>
-        <%}else {%>
-        <td class="am-text-middle">无回复内容</td>
-        <%}%>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.startStation%></td>
         
-        <td class="am-text-middle"><%= seller_ctime%></td>
-        <%if(reply) {%>
-        <td class="am-text-middle"><div class="tpl-table-black-operation"><i class="am-icon-toggle-on"></i>已回复</div></td>
-        <%}else {%>
-        <td class="am-text-middle commendResponse">
-        <div class="tpl-table-black-operation"><a class="canResponse" data-id="<%= id%>"><i class="am-icon-toggle-on" ></i>可回复</a></div></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.recevieStation%></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.startTime%></td>
+        <td class="am-text-middle">
+        <%if(data.train_order_create_response.ticketTrade.recevieTime) {%>
+            <%= data.train_order_create_response.ticketTrade.recevieTime%>
+        <%} else {%>
+            暂无
         <%}%>
+        </td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.totalPayCash%></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.ctime%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="editComment">
-                    <i class="am-icon-eye"></i> 查看详情
-                </a>
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
