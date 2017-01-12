@@ -92,10 +92,13 @@ padding: 5px 6px!important;
                         <div class="am-u-sm-9" id="floorNumber">
                             <select id="source_state">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="0">F1</option>
-                                <option value="1">F2</option>
-                                <option value="2">F3</option>
-                                <option value="3">F4</option>
+                                <option value="B3">B3</option>
+                                <option value="B2">B2</option>
+                                <option value="B1">B1</option>
+                                <option value="F1">F1</option>
+                                <option value="F2">F2</option>
+                                <option value="F3">F3</option>
+                                <option value="F4">F4</option>
                             </select>
                         </div>
                     </div>
@@ -131,7 +134,9 @@ padding: 5px 6px!important;
                                     </div>
                                     <a href="<?php echo site_url('/shop/shop/dowload_store/2');?>" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-arrow-up"></span> 导出</a> 
                                     <a href="Upload/xls/impolt_store.xlsx" class="am-btn am-btn-default am-btn-primary"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
-                                    <a data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                    <?php if(!empty($find)):?>
+                                        <a id="add_store" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                    <?php endif;?>
                                 </div>
                             </div>
                         </div>
@@ -335,6 +340,36 @@ padding: 5px 6px!important;
                             
                             
                         });
+                        //加入达人推荐的ajax请求
+                        $('#add_store').click(function(){
+                            var array=[];
+                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                                
+                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                            }
+                            if(array == ''){
+                                alert('你还没有选择商品！');
+                            }else{
+                                storeid=JSON.stringify(array);
+                                $.ajax({
+                                    type:'post',
+                                    url:'<?php echo site_url('/shop/Shop/add_find_store');?>',
+                                    data: 'storeid='+storeid+'&id='+'<?php echo $find;?>',
+                                    success: function(data){
+                                        if(data==1){
+                                            alert('加入成功');
+                                            window.location.href='<?php echo site_url("/shop/Shop/findshop");?>';
+                                        }else{
+                                            alert("操作失败！");
+                                        }
+                                    },
+                                    error:function(xhr,type,errorThrown){
+                                        alert("操作失败，请检查网络设置！");
+                                    }
+                                });
+                            }
+                        });
+
 
                         //删除商家的AJAX请求
                         $('.sureDelete').click(function(){

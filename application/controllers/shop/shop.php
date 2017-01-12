@@ -27,6 +27,13 @@ class Shop extends Default_Controller {
     //商家 列表主页
     function index()
     {  
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $find = '';
+        }else{
+            $find = $id;
+        }
+        $data['find'] = $find;
         //获取一级业态
          $data['yetai'] = $this->Shop_model->store_type_level();
          $data['page'] = $this->view_shopIndex;
@@ -36,10 +43,17 @@ class Shop extends Default_Controller {
 
     //返回场内商家列表信息
     function marketBusiness(){
-         $data['yetai'] = $this->Shop_model->store_type_level();
-         $data['page'] = $this->view_market_shop;
-         $data['menu'] = array('moll','marketBusiness');
-         $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $find = '';
+        }else{
+            $find = $id;
+        }
+        $data['find'] = $find;
+        $data['yetai'] = $this->Shop_model->store_type_level();
+        $data['page'] = $this->view_market_shop;
+        $data['menu'] = array('moll','marketBusiness');
+        $this->load->view('template.html',$data);
     }
 
     //返回场外商家列表信息
@@ -272,40 +286,81 @@ class Shop extends Default_Controller {
         $this->load->view('template.html',$data);
      }
 
-     //获取所有商家
-     // function findshop_goodslist(){
-     //    if($_POST){
-     //        $type = $_POST['type'];
-     //        $list = $this->Shop_model->get_find_shop($type);
-
-            
-
-
-
-     //    }else{
-     //        echo "2";
-     //    }
-     // }
-     //获取达人推荐商家
-     function findshop_list(){
+     //新增推荐商家
+     function add_find_store(){
         if($_POST){
-            $type = $_POST['type'];
-            $list = $this->Shop_model->get_find_shop($type);
-            $stores = explode(',', $list['store_list']);
-            var_dump($stores);
-            foreach ($stores as $key => $value) {
-               $data[] = $this->Shop_model->get_store_find($value);
-            }
-            if(empty($data)){
-                echo "2";
+            $id = $_POST['id'];
+            $store_id = json_decode($_POST['storeid'],true);
+            $sale = $this->Shop_model->get_sales_info($id);
+            $stores = explode(',',$sale['store_list']);
+            $arr = array_unique(array_merge($store_id,$stores));
+            $data['store_list'] = implode(',',$arr);
+            if($this->Shop_model->edit_salse($id,$data)){
+                echo "1";
             }else{
-                echo json_encode($data);
+                echo "2";
             }
+
         }else{
-            echo '2';
+            echo "2";
         }
      }
 
+     //删除某个推荐商家
+     function del_find_store(){
+        if($_POST){
+            $id = $_POST['id'];
+            $storeid = $_POST['storeid'];
+            if(empty($id) || empty($storeid)){
+                echo "2";
+            }else{
+                $sale = $this->Shop_model->get_sales_info($id);
+                $store = explode(',',$sale['store_list']);
+                foreach ($store as $key => $value) {
+                   if($value == $storeid){
+                     unset($store[$key]);
+                   }
+                }
+                $data['store_list'] = implode(',',$store);
+                if($this->Shop_model->edit_salse($id,$data)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }
+        }else{
+            echo "2";
+        }
+     }
+
+     //修改推荐详情
+     function edit_find_info(){
+        if($_POST){
+            $data= $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/adver/';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                // 上传
+                if(!$this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/findshop')."';</script>";exit;
+                }else{
+                    $img[]['picImg'] = '/Upload/adver/'.$this->upload->data('file_name');
+                    $data['picImg'] = json_encode($img);
+                }
+            }
+           
+            if($this->Shop_model->edit_salse($data['id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/findshop')."';</script>";exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/findshop')."';</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+     }
     //导入商家信息
     function impolt_store(){
 

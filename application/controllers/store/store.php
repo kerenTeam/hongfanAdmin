@@ -93,7 +93,7 @@ class Store extends Default_Controller {
     //返回商品分类列表
     function goods_cates(){
         if($_POST){
-            $catelist = $this->MallShop_model->get_goods_cates('0');
+            $catelist = $this->MallShop_model->get_goods_cates_list();
             echo json_encode($catelist);
         }else{
             echo "2";

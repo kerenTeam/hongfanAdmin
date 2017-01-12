@@ -26,7 +26,7 @@ class Moll extends Default_Controller {
     //业态列表
     function mollyetaiList(){
              //获取所有业态
-            $store = $this->Moll_model->get_storetypeList();
+            $store = $this->Moll_model->get_storetype_List();
 
 
             $config['per_page'] = 10;
@@ -58,7 +58,7 @@ class Moll extends Default_Controller {
             $config['num_links'] = 2;
             $config['total_rows'] = count($store);
             //分页数据
-            $listpage = $this->Moll_model->get_storetype_page($config['per_page'],$current_page);
+            $listpage = $this->Moll_model->get_storetype_Listpage($config['per_page'],$current_page);
           
 
             $this->load->library('pagination');//加载ci pagination类

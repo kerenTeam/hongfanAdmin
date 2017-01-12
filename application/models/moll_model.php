@@ -29,6 +29,18 @@ class Moll_model extends CI_Model
 		$query = $this->db->where($where)->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
 		return $query->result_array();
 	}
+
+	//返回所有业态
+	function get_storetype_List(){
+		$query = $this->db->order_by('sort','asc')->get($this->stote_type);
+		return $query->result_array();
+	}
+	//返回业态
+	function get_storetype_Listpage($off,$page){
+		$query = $this->db->order_by('sort','asc')->limit($off,$page)->get($this->stote_type);
+		return $query->result_array();
+	}
+
 	//根据业态gid返回
 	function get_store($gid){
 		$where['gid'] = $gid;
