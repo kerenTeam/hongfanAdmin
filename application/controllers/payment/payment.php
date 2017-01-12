@@ -27,10 +27,37 @@ class Payment extends Default_Controller
         $BeginDate=date('Y-m-01', strtotime(date("Y-m-d")));
         //月结束
         $end = date('Y-m-d', strtotime("$BeginDate +1 month -1 day"));
-        //这个月订单
-        $list = $this->Payment_model->get_qianmi_money($BeginDate,$end);
-       
-        exit;
+        // echo "<pre>";
+        //1手机充值 这个月订单
+        $phone_money = '0';
+        $phone = $this->Payment_model->get_qianmi_money($BeginDate,$end,'1');
+        foreach ($phone as $key => $value) {
+            $phone_order = json_decode($value['data'],true);
+            // var_dump($phone_order);
+            $phone_money += $phone_order['data']['orderCost'];
+        }
+        //2水电煤
+
+        $Utilities = $this->Payment_model->get_qianmi_money($BeginDate,$end,'2');
+        foreach ($Utilities as $key => $value) {
+            $Utilities_order = json_decode($value['data'],true);
+        }
+        
+        //3火车票
+        $train_money = '0';
+        $train  = $this->Payment_model->get_qianmi_money($BeginDate,$end,'3');
+        foreach ($train as $key => $value) {
+            $train_order = json_decode($value['data'],true);
+            // var_dump($train_order);
+        }
+        // exit;
+        //4飞机票
+        $aircraft = $this->Payment_model->get_qianmi_money($BeginDate,$end,'4');
+        // echo "<pre>";
+        // var_dump($phone);
+
+
+        // exit;
         $data['page'] = $this->view_payment;
         $data['menu'] = array('localLife','payment');
         $this->load->view('template.html',$data);
@@ -38,10 +65,14 @@ class Payment extends Default_Controller
 
 	//充值缴费  水费
     function waterRate(){
+
+        $Utilities = $this->Payment_model->get_qianmi_order('2');
         $data['page'] = $this->view_waterRate;
         $data['menu'] = array('localLife','payment');
         $this->load->view('template.html',$data);
     }
+
+    //返回 水费
 
     //充值缴费  电费
     function energyCharge(){

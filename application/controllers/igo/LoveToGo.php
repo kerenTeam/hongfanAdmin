@@ -17,8 +17,6 @@ class LoveToGo extends Default_Controller
          $this->load->model('Integral_model');
 
 	}
-
-  
     //获取远程爱购商品列表
     function get_remote_goods(){
         if($_POST){
