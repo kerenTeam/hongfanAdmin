@@ -134,11 +134,12 @@ padding: 5px 6px!important;
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
+                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="moll_name">商场名称 </th>
                                     <th class="shop_id">商铺编号 </th>
                                     <th class="shop_name">商铺名称 </th>
@@ -167,8 +168,51 @@ padding: 5px 6px!important;
     </div>
 </div>
 </div>
+<!--加入达人推荐的弹窗开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="joinRecommend">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">加入达人推荐</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+            <div class="am-form-group am-cf">
+                <label class="am-u-sm-2 am-form-label">标题 ：</label>
+                <div class="am-u-sm-9 am-u-end">
+                    <input type="text" name="" />
+                </div>
+            </div>
+            <div class="am-form-group am-cf">
+                <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
+                <div class="am-u-sm-9 am-u-end">
+                    <div class="wx_type_img">
+                     <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                      <!-- 图片实时预览 -->
+                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                    </div>
+                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                </div>
+            </div>
+            <div class="am-form-group am-cf">
+                <label class="am-u-sm-2 am-form-label">详情 ：</label>
+                <div class="am-u-sm-9 am-u-end">
+                  <div id="editorContent">
+                    <script id="editor" type="text/plain" name='content'></script>
+                  </div>
+                </div>
+            </div>
+        </form>
+            
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-id="" data-am-modal-confirm>提交</span>
+        </div>
+    </div>
+</div>
+<!--加入达人推荐的弹窗结束-->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+var flag=0;
     //导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
@@ -238,6 +282,21 @@ padding: 5px 6px!important;
                                 $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
                             }                          
                         }
+                        //点击选中所有
+                        $('.tablecheck').click(function() {
+                            if(flag==0){
+                              for(var i=0;i<$('.commentBox').length;i++) {
+                                document.getElementsByClassName('commentBox')[i].checked=true;
+                              }  
+                              flag=1;
+                            }else{
+                               for(var i=0;i<$('.commentBox').length;i++) {
+                                // $('.commentBox').eq(i).attr('checked',false);
+                                document.getElementsByClassName('commentBox')[i].checked=false;
+                                }
+                               flag=0;
+                            }
+                        });
                         //更改商家的状态
                         $('.shopState').change(function(){
                             var dataId=$(this).attr('data-id');
@@ -363,6 +422,7 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="shopModal">
     <tr class="trClass" id="trClass<%= store_id%>" data-id="<%= store_id%>">
+        <td class="am-text-middle" ><input type="checkbox" data-id="<%= store_id%>" class="commentBox" name="commentBox"></td>
         <td>宏帆广场</td>
         <td class="am-text-middle"><%= store_id%></td>
         <td class="am-text-middle"><%= store_name%></td>
@@ -384,7 +444,7 @@ $(document).ready(function(){
                 <option value="1">正常</option>
                 <option value="0" selected="selected">冻结</option>
             </select>
-            <%}%>
+            <%}%> 
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

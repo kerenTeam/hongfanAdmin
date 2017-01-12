@@ -75,9 +75,6 @@
     .addpadding{
         padding-top: 1.0rem;
     }
-    article{
-        text-indent: 2em;
-    }
     #goodsBanner{
         position: relative;
         width: 100% !important;
@@ -88,6 +85,17 @@
         top:0;left:0;
         width:100% !important;
         height: 100% !important;
+    }
+    .badgeTips{
+        display: inline-block;
+        padding:2px 10px !important;
+        border-radius: 8px;
+        background: #e0e0e0;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+       #showgoodsDetail img{
+        width:100%;
     }
 </style>
 
@@ -134,7 +142,7 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="englishName" class="am-u-sm-3 am-form-label">商品价格<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8">
-                                   <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="<?php echo $goods['price'];?>" name="price" min="1" required="required" onblur="validate(this,2,20,2)" /> 
+                                   <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" value="<?php echo $goods['price'];?>" name="price" min="1" required="required" onblur="validate(this,2,20,2)" /> 
                                 </div>
                                 <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
