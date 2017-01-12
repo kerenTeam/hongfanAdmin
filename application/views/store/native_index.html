@@ -54,126 +54,115 @@ td.am-text-middle img{
 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;
-            <a href="<?php echo site_url().'/store/Native/native_index';?>" style="font-size:16px;">土特产列表</a>
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;
+                <a href="<?php echo site_url().'/store/Native/native_index';?>" style="font-size:16px;">土特产列表</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">商品搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data">
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                      <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsState" class="am-form-label am-u-sm-4">商品状态:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsState" name="goodsState">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">上架</option>
-                            <option value="0">下架</option>
-                        </select>
-                        </div>
-                      </div>
-                  <!--   <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsState" class="am-form-label am-u-sm-4">是否推荐:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsState" name="goodsState">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
-                        </select>
-                        </div>
-                    </div> -->
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入搜素的关键字" id="searchKey" />
-                        </div>
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf" style="padding-left: 15px;">商品搜索</div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4 am-fl">商品单价:</label>
-                        <div class="am-u-sm-8 am-u-md-8 am-u-lg-8">
-                            <input type="number" class="stable" name="startPrice" id="startPrice" min="1"  />
-                            <span class="linkWord">至</span>
-                            <input type="number" class="stable" name="endPrice" id="endPrice" min="1"  />
-                        </div>
+                    <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data">
+                        <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                                <label for="goodsState" class="am-form-label am-u-sm-4">商品状态:</label>
+                                <div class="am-u-sm-8">
+                                    <select id="goodsState" name="goodsState">
+                                        <option value="">-=请选择一项=-</option>
+                                        <option value="1">上架</option>
+                                        <option value="0">下架</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                                <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
+                                <div class="am-u-sm-8">
+                                    <input type="text" placeholder="请输入搜素的关键字" id="searchKey" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                                <label for="goodsPrice" class="am-form-label am-u-sm-4 am-fl">商品单价:</label>
+                                <div class="am-u-sm-8 am-u-md-8 am-u-lg-8">
+                                    <input type="number" class="stable" name="startPrice" id="startPrice" min="1"  />
+                                    <span class="linkWord">至</span>
+                                    <input type="number" class="stable" name="endPrice" id="endPrice" min="1"  />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                                <label for="goodsPrice" class="am-form-label am-u-sm-4">库存:</label>
+                                <div class="am-u-sm-8">
+                                    <input type="number" class="stable" id="startRepertory" name="startRepertory" min="1"  />
+                                    <span class="linkWord">至</span>
+                                    <input type="number" class="stable" id="endRepertory" name="endRepertory" min="1"  />
+                                </div>
+                            </div>   
+                            <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                                <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
+                            </div>
+                    </form>
+                    <div class="widget-head am-cf" style="clear:both;">
+                        <div class="widget-title  am-cf">商品列表</div>
                     </div>
-                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">库存:</label>
-                        <div class="am-u-sm-8">
-                            <input type="number" class="stable" id="startRepertory" name="startRepertory" min="1"  />
-                            <span class="linkWord">至</span>
-                            <input type="number" class="stable" id="endRepertory" name="endRepertory" min="1"  />
-                        </div>
-                    </div>
-                    
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form>
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">商品列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                <?php if(empty($saleid)):?>
-                                    <a id="add_sales" data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
-                                <?php else:?>
-                                    <a id="add_sales_goods" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
-                                <?php endif;?>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                    <div class="widget-body  am-fr">
+                        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <div class="am-form-group">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                    <?php if(empty($saleid)):?>
+                                        <a id="add_sales" data-am-modal="{target:'#joinRecommend'}" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                    <?php else:?>
+                                        <a id="add_sales_goods" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
+                                    <?php endif;?>
+                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th class="tablecheck"><input type="checkbox" /></th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="moll_name">一级分类 </th>
-                                    <th class="shop_id">图片 </th>
-                                    <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">所属店铺 </th>
-                                    <th class="shop_yetai">价格 </th>
-                                    <th class="brand">订单 </th>
-                                    <th class="shop_block">月销量 </th>
-                                    <th class="shop_block">库存 </th>                               
-                                    <th class="shop_block">商品状态</th>
-                                    <th class="shop_block">是否推荐</th>
-                                    <th class="shop_block">变更时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="storeGoodsList">
-                                
+                        <div class="am-u-sm-12">
+                            <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                <thead>
+                                    <tr>
+                                        <th class="tablecheck"><input type="checkbox" /></th>
+                                        <th class="shop_id">编号 </th>
+                                        <th class="moll_name">一级分类 </th>
+                                        <th class="shop_id">图片 </th>
+                                        <th class="shop_name">商品名 </th>
+                                        <th class="shop_type">所属店铺 </th>
+                                        <th class="shop_yetai">价格 </th>
+                                        <th class="brand">订单 </th>
+                                        <th class="shop_block">月销量 </th>
+                                        <th class="shop_block">库存 </th>                               
+                                        <th class="shop_block">商品状态</th>
+                                        <th class="shop_block">是否推荐</th>
+                                        <th class="shop_block">变更时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="storeGoodsList">
+                                    
 
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                                    <!-- more data -->
+                                </tbody>
+                            </table>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="am-u-lg-12 am-cf am-text-center">
+                            <div class="" id="paging_list">
+                            </div>
+                            <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <!--加入达人推荐的弹窗开始-->

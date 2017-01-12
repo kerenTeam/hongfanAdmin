@@ -65,7 +65,7 @@ padding: 5px 6px!important;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块 
                 <a href="<?php echo site_url().'/payment/payment/payment';?>" style="font-size: 18px;">充值缴费</a> 
-                <small style="font-size: 16px;"><a href="<?php echo site_url().'/payment/payment/waterRate';?>">水费缴费记录</a></small>
+                <small style="font-size: 16px;"><a href="<?php echo site_url().'/payment/payment/waterRate';?>">水电费缴费记录</a></small>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@ padding: 5px 6px!important;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">水费缴费记录搜索</div>
+                    <div class="widget-title  am-cf">水电费缴费记录搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
@@ -173,10 +173,9 @@ padding: 5px 6px!important;
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){
-            
+        success: function(result){         
             var res = eval(result);
-            // console.log(res);
+            console.log(res);
             if(res!=2){
                 nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -186,8 +185,7 @@ padding: 5px 6px!important;
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].comment_pic=eval(res[i].comment_pic);
-                        listData+= template('commentListModal',res[i]);
+                        // listData+= template('commentListModal',res[i]);
                      }
                     
                     return listData;
@@ -270,43 +268,32 @@ padding: 5px 6px!important;
                         //单个商品删除的AJAX请求
                         $('.sureDelete').click(function(){
                             var deleteId=$(this).attr('data-id');
-                            deleteArray[0]= deleteId;  
-                            deleteArray=eval(deleteArray);
-                            console.log(deleteArray);                        
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==id){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
-                                        data: 'commentid='+deleteArray,
-                                        success: function(data){
-                                            alert(data);
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==id){
-                                                        $('.trClass').eq(i).remove();
-                                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                                    }
-                                                }
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                                data: 'commentid='+deleteArray,
+                                success: function(data){
+                                    alert(data);
+                                    if(data==1){                                           
+                                        $('#trClass'+deleteId).remove();
+
+                                    }else{
+                                        alert("操作失败！");
+                                        return false;
+                                    }
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
+                                    return false;
                                 }
-                            }
-                            
+                            });
                         });
                         
                         //多个商品删除的AJAX请求
                         $('.deleteAll').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[];
-                           // alert($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
                             for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
                                 
                                 array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
@@ -353,16 +340,16 @@ padding: 5px 6px!important;
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+    getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+        getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','default=1');
     });
 })
 </script>
 <script type="text/html" id="commentListModal">
-    <tr class="trClass" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle goodsName" width="100"><%= title%></td>
