@@ -20,10 +20,18 @@ class Payment_model extends CI_Model
     //返回千米所有订单
     function get_qianmi_order($type){
         $where['type'] = $type;
-        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->payment);
+        $this->db->select('a.*,b.username');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where($where)->order_by('create_time','desc')->get();
         return $query->result_array();
     }
 
+    //删除千米订单
+    function del_qianmi_order($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->payment);
+    }
 
 }
 
