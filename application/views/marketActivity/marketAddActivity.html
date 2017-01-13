@@ -40,13 +40,14 @@
         border: none;
     }
      .am-list>li.quan{
-        width: 300px;
+        width:45%;
         height: 80px;
         border-radius: 10px;
         margin-bottom: 10px;
         background: #f43b41;
         color:#fff;
         padding-top:10px;
+        margin-right: 5%;
         position: relative;
     }
     .am-list>li.quan span{
@@ -70,7 +71,7 @@
     .am-list>li.quan div p {
         padding:0;
         margin:0;
-        color:#ccc;
+        color:#fff;
         height:20px;
         line-height: 20px;
         font-size:10px;
@@ -79,7 +80,23 @@
         color:#fff;
         font-size:16px;
     }
+    .youhuiquan{
+        font-size: 14px;
+    }
 
+    .youhuiquan input,.youhuiquan select *{
+        height: 30px;
+        line-height: 30px;
+        font-size:14px !important;
+    }
+    .youhuiquan select.am-form-select option{
+        font-size:14px !important;
+    }
+     .youhuiquan .am-input-group-btn>.am-btn{
+        height: 30px;
+
+        font-size:14px !important;
+     }
 </style>
 
 <!-- 内容区域 -->
@@ -106,34 +123,104 @@
                                 <div class="memberInfo padding-horizontal-lg">
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6 am-u-end">
+                                        <div class="am-u-sm-7 am-u-end">
                                             <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称" required="required" name="title" />
                                         </div>                                    
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">活动类型<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6 am-u-end">
+                                        <div class="am-u-sm-7 am-u-end">
                                             <div class="am-u-sm-6 am-u-end">
                                                 <input type="radio" name="type" value="2" class="discount" />优惠活动     
                                             </div>
                                             <div class="am-u-sm-6 am-u-end">
                                                 <input type="radio" name="type" value="1" class="activity" />普通活动                                      
                                             </div>
-                                            
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style="display: none">
                                         <label class="am-u-sm-3 am-text-right">优惠券<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6 am-u-end">
+                                        <div class="am-u-sm-8 am-u-end youhuiquan">
+                                            <div class="widget am-cf">
+                                                    <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                                                        <div class="am-form-group am-u-sm-6">
+                                                            <label for="yetai" class="am-u-sm-3 am-form-label">商家名:</label>
+                                                            <div class="am-u-sm-7 am-u-end">
+                                                                <input type="text" name="shopname" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="am-form-group am-u-sm-6">
+                                                            <label for="source_state" class="am-u-sm-3 am-form-label">类型:</label>
+                                                            <div class="am-u-sm-7 am-u-end" >
+                                                                <select id="quanType" class="quanType">
+                                                                    <option value="">-=请选择=-</option>
+                                                                    <option value="1">优惠券</option>
+                                                                    <option value="2">折扣券</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="am-form-group am-u-sm-6">
+                                                            <label for="businessTime" class="am-form-label am-u-sm-3">失效时间:</label>
+                                                            <div class="am-u-sm-7 am-u-end am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                                              <input type="text" name='date' id="orderDate" class="am-form-field am-inline" placeholder="" style="width:80%;" readonly>
+                                                              <span class="am-input-group-btn am-datepicker-add-on am-inline" style="height: 30px !important; line-height: 30px;">
+                                                                <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
+                                                              </span>   
+                                                            </div>
+                                                        </div>
+                                                         <div class="am-form-group am-u-sm-6">
+                                                            <label for="source_state" class="am-u-sm-3 am-form-label">关键字查询:</label>
+                                                            <div class="am-u-sm-7 am-u-end">
+                                                                <input type="text" placeholder="" id="keywords">
+                                                            </div>
+                                                        </div>
+                                                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                                                            <button type="button" class="am-btn am-btn-secondary searchShop"><i class="am-icon-search"></i> 查询</button>
+                                                        </div>
+                                                    </form>
+                                                    <div class="widget-body  am-fr">
+                                                        <div class="am-u-sm-12">
+                                                            <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="tablecheck"><input type="checkbox" /></th>
+                                                                        <th class="moll_name">编号 </th>
+                                                                        <th class="shop_id">名称 </th>
+                                                                        <th class="shop_name">所属商家 </th>
+                                                                        <th class="shop_type">类型 </th>
+                                                                        <th class="brand">有效期 </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="shopList">
+                                                                    <tr class="trClass" id="trClass">
+                                                                        <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="" name="commentBox"></td>
+                                                                        <td class="am-text-middle">S3251</td>
+                                                                        <td class="am-text-middle">优惠券1</td>
+                                                                        <td class="am-text-middle">宏帆广场</td>
+                                                                        <td class="am-text-middle">代金券</td>
+                                                                        <td class="am-text-middle">2016-08-12至2017-12-8</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="am-u-lg-12 am-cf am-text-center">
+                                                            <div class="" id="paging_list">
+                                                            </div>
+                                                            <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                        <!-- <div class="am-u-sm-8 am-u-end">
                                             <ul class="am-list">
                                             <?php foreach($coupon as $val):?>
-                                              <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
+                                              <li class="am-u-sm-6 am-u-end quan" state="0" data-id="<?php echo $val['id'];?>">
                                                <?php if($val['typeid'] == 1):?>
                                                 <?php $sale = json_decode($val['salerule'],true);?>
-                                                  <div class="am-u-sm-3">
+                                                  <div class="am-u-sm-2">
                                                       <?php echo $sale['cutValue'];?>
                                                   </div>
-                                                  <div class="am-u-sm-9">
+                                                  <div class="am-u-sm-10">
 
                                                       <p>代金劵</p>
                                                       <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
@@ -155,11 +242,11 @@
                                             <?php endforeach;?>
                                               
                                             </ul> 
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
-                                         <div class="am-u-sm-6 am-u-end">
+                                        <div class="am-u-sm-7 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
@@ -171,7 +258,7 @@
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label for="businessTime" class="am-u-sm-3 am-text-right">时间<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6  am-u-end">
+                                        <div class="am-u-sm-7  am-u-end">
                                             <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
                                               <p>开始日期应小于结束日期！</p>
                                             </div>
@@ -189,7 +276,7 @@
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">详情<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6 am-u-end">
+                                        <div class="am-u-sm-7 am-u-end">
                                             <div>
                                                 <script id="editor" type="text/plain" name="content"></script>
                                             </div>
