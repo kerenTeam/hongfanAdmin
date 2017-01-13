@@ -12,6 +12,10 @@ class Native extends Default_Controller {
     public $view_native_index = "store/native_index.html";
     //土特产订单列表
     public $view_native_order = "store/native_order.html";
+    //土特产新增
+    public $view_native_add = "store/native_add.html";
+    //土特产编辑
+    public $view_native_edit = "store/native_edit.html";
     function __construct()
     {
          parent::__construct();
@@ -41,6 +45,17 @@ class Native extends Default_Controller {
         $data['menu'] = array('native','native_order');
         $this->load->view('template.html',$data);
     }
-
+    //土特产新增
+    function native_add(){
+        $data['page'] = $this->view_native_add;
+        $data['menu'] = array('native','native_add');
+        $this->load->view('template.html',$data);
+    }
+    //土特产编辑
+    function native_edit(){
+        $data['page'] = $this->view_native_edit;
+        $data['menu'] = array('native','native_edit');
+        $this->load->view('template.html',$data);
+    }
 }
 ?>

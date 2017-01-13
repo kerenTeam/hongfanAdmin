@@ -87,17 +87,6 @@ padding: 5px 6px!important;
                           </span>   
                         </div>
                     </div>
-                    <!-- <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-4">缴费单位:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsBatch" name="goodsBatch">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="邻水县水电公司">邻水县水电公司</option>
-                            <option value="邻水县水电公司">邻水县水电公司</option>
-                            <option value="邻水县水电公司">邻水县水电公司</option>
-                        </select>
-                        </div>
-                    </div> -->
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <button type="button" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -121,19 +110,18 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th class="shop_id">编号 </th>
                                     <th class="shop_name">用户名 </th>
                                     <th class="shop_name">出发地</th>
                                     <th class="shop_type">目的地 </th>
                                     <th class="shop_type">出发时间 </th>
-                                    <th class="shop_type">购买数量 </th>
-                                    <th class="shop_type">购买金额 </th>
+                                    <th class="shop_type">到达时间 </th>
+                                    <th class="shop_type">购买金额(元) </th>
                                     <th>购买时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="commentList">
+                            <tbody id="dataList">
                                 
                                 <!-- more data -->
                             </tbody>
@@ -150,19 +138,6 @@ padding: 5px 6px!important;
     </div>
 </div>
 </div>
-<!--批量删除的弹窗-->
- <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
-        <div class="am-modal-bd">
-            <p class="black">你，确定删除所有选中的记录吗？</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
-        </div>
-    </div>
-</div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
@@ -174,10 +149,9 @@ padding: 5px 6px!important;
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){
-            
+        success: function(result){         
             var res = eval(result);
-            // console.log(res);
+            console.log(res);
             if(res!=2){
                 nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -187,10 +161,9 @@ padding: 5px 6px!important;
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].comment_pic=eval(res[i].comment_pic);
-                        listData+= template('commentListModal',res[i]);
-                     }
-                    
+                        res[i].data=JSON.parse(res[i].data);
+                        listData+= template('dataListModal',res[i]);
+                     } 
                     return listData;
                 };
                 //调用分页
@@ -198,142 +171,32 @@ padding: 5px 6px!important;
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('commentList').innerHTML = thisDate(obj.curr);
-                        //点击选中所有
-                        $('.tablecheck').click(function() {
-                            if(flag==0){
-                              for(var i=0;i<nums;i++) {
-                                document.getElementsByClassName('commentBox')[i].checked=true;
-                              }  
-                              flag=1;
-                            }else{
-                               for(var i=0;i<nums;i++) {
-                                document.getElementsByClassName('commentBox')[i].checked=false;
-                                }
-                               flag=0;
-                            }
-                        });
+                        document.getElementById('dataList').innerHTML = thisDate(obj.curr);
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var id=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
-                            if($('.commentState option:selected').eq(i).val()=="隐藏"){
-                                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-                            }
-                            var reid=$('.commendResponse').eq(i).attr('data-id');
-                            $('.commendResponse').eq(i).attr("data-am-modal","{target: '#re"+ id +"'}"); 
-                            var editid=$('.editComment').eq(i).attr('data-id'); 
-                            $('.editComment').eq(i).attr("data-am-modal","{target: '#co"+ id +"'}"); 
-
                         }
-                        //更改评论的状态
-                        $('.commentState').change(function(){
-                            var id=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="显示"){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                                    data: 'goodsid='+ id+'&state=1',
-                                    success: function(data){
-                                        if(data==1){
-    
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                                    data: 'goodsid='+ id+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
-                        });
-
                         //单个商品删除的AJAX请求
                         $('.sureDelete').click(function(){
                             var deleteId=$(this).attr('data-id');
-                            deleteArray[0]= deleteId;  
-                            deleteArray=eval(deleteArray);
-                            console.log(deleteArray);                        
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==id){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
-                                        data: 'commentid='+deleteArray,
-                                        success: function(data){
-                                            alert(data);
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==id){
-                                                        $('.trClass').eq(i).remove();
-                                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                                    }
-                                                }
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
-                                }
-                            }
-                            
-                        });
-                        
-                        //多个商品删除的AJAX请求
-                        $('.deleteAll').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            var array=[];
-                           // alert($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
-                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
-                                
-                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-                            }
-                            
-                            deleteArray=JSON.stringify(array);
                             $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/del_comment');?>',
-                                    data: 'commentid='+deleteArray,
-                                    success: function(data){
-                                        console.log(data);
-                                        if(data==1){
-                                            getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
+                                type:'post',
+                                url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                                data: 'commentid='+deleteArray,
+                                success: function(data){
+                                    alert(data);
+                                    if(data==1){                                           
+                                        $('#trClass'+deleteId).remove();
+                                    }else{
+                                        alert("操作失败！");
                                     }
-                                });
-                            
-                        });
-                        
+                                    
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
+                                }
+                            });
+                        });     
                     }
                 })
             }else{
@@ -342,7 +205,7 @@ padding: 5px 6px!important;
                 }
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#commentList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关购买记录！</p></td></tr>').appendTo('#dataList');
             }
 
             
@@ -354,38 +217,32 @@ padding: 5px 6px!important;
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+    getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','type=3');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+        getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','type=3');
     });
 })
 </script>
-<script type="text/html" id="commentListModal">
+<script type="text/html" id="dataListModal">
     <tr class="trClass" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
-        <td class="am-text-middle goodsName" width="100"><%= title%></td>
-        <td class="am-text-middle"><%= commendContent%></td>
-        <%if(reply) {%>
-        <td class="am-text-middle"><%= reply.seller_comment%></td>
-        <%}else {%>
-        <td class="am-text-middle">无回复内容</td>
-        <%}%>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.startStation%></td>
         
-        <td class="am-text-middle"><%= seller_ctime%></td>
-        <%if(reply) {%>
-        <td class="am-text-middle"><div class="tpl-table-black-operation"><i class="am-icon-toggle-on"></i>已回复</div></td>
-        <%}else {%>
-        <td class="am-text-middle commendResponse">
-        <div class="tpl-table-black-operation"><a class="canResponse" data-id="<%= id%>"><i class="am-icon-toggle-on" ></i>可回复</a></div></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.recevieStation%></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.startTime%></td>
+        <td class="am-text-middle">
+        <%if(data.train_order_create_response.ticketTrade.recevieTime) {%>
+            <%= data.train_order_create_response.ticketTrade.recevieTime%>
+        <%} else {%>
+            暂无
         <%}%>
+        </td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.totalPayCash%></td>
+        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.ctime%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="editComment">
-                    <i class="am-icon-eye"></i> 查看详情
-                </a>
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
