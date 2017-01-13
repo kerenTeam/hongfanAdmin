@@ -531,16 +531,18 @@ var i=1;
                     $("#secondSortSelect").html("");  
                     var jsonData=eval(data);
                     console.log(jsonData);
-                    if(data){                
+                    if(data!=2){                
                         for(var i=0;i<jsonData.length;i++){
                             str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
                             sttr=sttr+str;
                         }
                         console.log(sttr);
+
                         $('#secondSort').css('display','block');
+                        $("#secondSortSelect").attr('required');
                         $("#secondSortSelect").append(sttr);
                     }else{
-                        alert("操作失败，请检查网络设置！");
+                        $("#secondSortSelect").removeAttr('required');
                     }
                     
                 },

@@ -15,6 +15,7 @@ class Native extends Default_Controller {
     function __construct()
     {
          parent::__construct();
+         $this->load->model('Integral_model');
     }
 
     //土特产商品列表
@@ -23,6 +24,15 @@ class Native extends Default_Controller {
         $data['page'] = $this->view_native_index;
         $data['menu'] = array('native','native_index');
         $this->load->view('template.html',$data);
+    }
+
+    //返回土特产商品
+    function get_native_list(){
+        if($_POST){
+            $list = $this->Integral_model->
+        }else{
+            echo "2";
+        }
     }
 
     //土特产订单列表

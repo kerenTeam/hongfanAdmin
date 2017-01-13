@@ -757,7 +757,8 @@ var i =1;
                     $('#secondSort').css('display','block');
                     $("#secondSortSelect").append(sttr);
                 }else{
-                    $('#secondSort').css('display','block');
+                    $('#secondSort').css('display','none');
+                    $("#secondSortSelect").removeAttr('required');
                 }
                 
             },
@@ -780,21 +781,22 @@ var i =1;
                     console.log(jsonData);
                     console.log(soncateid);
                     if(data!="2"){   
-                    for(var i=0;i<jsonData.length;i++){
-                      if(jsonData[i].catid==soncateid){
-                        str='<option selected value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';  
-                      }else{
-                        str='<option  value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
-                      }
-                        
-                        sttr=sttr+str;
+                        for(var i=0;i<jsonData.length;i++){
+                          if(jsonData[i].catid==soncateid){
+                            str='<option selected value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';  
+                          }else{
+                            str='<option  value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
+                          }
+                            
+                            sttr=sttr+str;
+                        }
+                        console.log(sttr);
+                        $('#secondSort').css('display','block');
+                        $("#secondSortSelect").append(sttr);
+                    }else{
+                        $('#secondSort').css('display','none');
+                        $("#secondSortSelect").removeAttr('required');
                     }
-                    console.log(sttr);
-                    $('#secondSort').css('display','block');
-                    $("#secondSortSelect").append(sttr);
-                }else{
-                    $('#secondSort').css('display','block');
-                }
                     
                 },
                 error:function(xhr,type,errorThrown){

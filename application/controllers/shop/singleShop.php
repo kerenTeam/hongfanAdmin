@@ -325,7 +325,9 @@ class SingleShop extends Default_Controller {
              }
              $data['good_pic'] = json_encode($pic);
              $data['storeid'] = $this->session->businessId;
-             $data['differentiate'] = '1';
+
+                $data['differentiate'] = '1';
+       
              if($this->MallShop_model->add_shop_goods($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
