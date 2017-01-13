@@ -305,6 +305,12 @@ class MallShop_model extends CI_Model
     }
 
 
+    //新增商品并返回商品id
+    function add_goods_id($data){
+        $this->db->insert($this->shop_goods,$data);
+        return $this->db->insert_id();
+    }
+
 }
 
 

@@ -392,25 +392,24 @@ class Shop extends Default_Controller {
               $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
               $erp_orders_id = array();  //声明数组
               for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-                $username = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取c列的值
-                $data['barnd_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取c列的值
-                $data['store_name'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取d列的值
-                $data['en_name'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取d列的值
-                $data['open_busin'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取d列的值
-                $data['store_type'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取d列的值
-                $data['op_status'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取d列的值
-                $data['floor_name'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取d列的值
-                $data['door_no'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取d列的值
+                $data['barnd_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取c列的值
+                $username = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取c列的值
+                $data['en_name'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取d列的值
+                $data['open_busin'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取d列的值
+                $data['store_type'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取d列的值
+                $data['op_status'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取d列的值
+                $data['floor_name'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取d列的值
+                $data['door_no'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取d列的值
+                $data['area'] = $PHPExcel->getActiveSheet()->getCell("I".$currentRow)->getValue();//获取d列的值
                 $data['business_hours'] = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取d列的值
-                $data['area'] = trim($PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue());//获取d列的值
-                $type_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值
-                $type_tow_name = $PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue();//获取d列的值 
-                $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("N".$currentRow)->getValue());//获取d列的值
+             
+                $type_name = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取d列的值
+                $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
+                $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue());//获取d列的值
                 $data['create_time'] = date('Y-m-d');
                 $data['send_userid'] = $this->session->users['user_id'];
                 if($data['barnd_name'] == NULL){
                      //删除临时文件
-                     unlink($inputFileName);
                     exit;
                 }
                 
@@ -435,7 +434,7 @@ class Shop extends Default_Controller {
                 }else{
                     $data['store_distinction'] = '1';
                 }
-   
+                $data['store_name'] = $username;
                 //获取用户id
                  $username = $this->Shop_model->get_user_info($arr['username']);
                 if(empty($username)){
