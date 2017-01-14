@@ -326,7 +326,7 @@ class Uploader
     private function getFilePath()
     {
         $fullname = $this->fullName;
-        $rootPath = '../../../editorUpload';
+        $rootPath = '../../../EditorUpload';
 
         if (substr($fullname, 0, 1) != '/') {
             $fullname = '/' . $fullname;
@@ -361,7 +361,7 @@ class Uploader
     {
         return array(
             "state" => $this->stateInfo,
-            "url" => 'editorUpload'.$this->fullName,
+            "url" => 'EditorUpload'.$this->fullName,
             "title" => $this->fileName,
             "original" => $this->oriName,
             "type" => $this->fileType,
