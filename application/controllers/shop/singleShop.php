@@ -19,6 +19,8 @@ class SingleShop extends Default_Controller {
     public $view_goodsDetail = "shop/goodsDetail.html"; 
     //新增商品
     public $view_goodsAdd = "shop/goodsAdd.html"; 
+    //新增商品 副本
+    public $view_goodsAdd1 = "shop/goodsAdd1.html"; 
     //商家楼层关系
     public $view_shopFloorRelation = "shop/shopFloorRelation.html";
     //订单列表
@@ -1045,5 +1047,17 @@ class SingleShop extends Default_Controller {
             echo "2";
         }
     }
+
+
+
+
+
+     //新增商品的副本
+    function goodsAdd1(){
+         $data['page'] = $this->view_goodsAdd1;  
+        $data['menu'] = array('shop','goodsAdd1');       
+        $this->load->view('template.html',$data);
+    }
 }
 
+   

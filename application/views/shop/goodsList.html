@@ -54,7 +54,7 @@ td.am-text-middle img{
     float:left;
 }
 </style> 
-
+ 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -129,6 +129,7 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd1';?>"><span class="am-icon-plus"></span> 新增副本</a></button>
                                     <button type="button" class="am-btn am-btn-warning"><a href="Upload/xls/import_goods.xlsx"><span class="am-icon-plus"></span> 下载导入模板</a></button>
                                    <a class="wx_type_img am-inline" >
                                          <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
@@ -145,13 +146,12 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="shop_id">编号 </th>
+                                    <th class="shop_id">商品编号 </th>
                                     <th class="moll_name">一级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
-                                    <th class="shop_yetai">价格 </th>
                                     <th class="brand">订单 </th>
                                     <th class="shop_block">月销量 </th>
-                                    <th class="shop_block">库存 </th> 
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">变更时间</th>
                                     <th>操作</th>
@@ -348,8 +348,8 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="shopGoodsModal">
     <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
-
         <td class="am-text-middle"><%= goods_id%></td>
+        <td class="am-text-middle"><%= goods_code%></td>
         <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
@@ -359,10 +359,8 @@ $(document).ready(function(){
         <%}%>
         </td>
         <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><%= price%></td>
         <td class="am-text-middle"><%= orders%></td>
         <td class="am-text-middle"><%= sales%></td>
-        <td class="am-text-middle"><%= amount%></td>
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
             <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
