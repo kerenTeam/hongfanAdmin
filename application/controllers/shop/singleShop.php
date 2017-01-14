@@ -563,132 +563,6 @@ class SingleShop extends Default_Controller {
     }
 
 
-    //商家导入商品
-    function impolt_good(){
-        if(!empty($_FILES["file"]["tmp_name"])){
-            $name = date('Y-m-d');
-            $inputFileName = "Upload/xls/" .$name .'.xls';
-            move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
-             $this->load->library('excel');
-            if(!file_exists($inputFileName)){
-                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('module/localLife/serviceList/8')."'</script>";
-                    exit;
-            }
-            //导入excel文件类型 excel2007 or excel5
-            $PHPReader = new PHPExcel_Reader_Excel2007();
-            if(!$PHPReader->canRead($inputFileName)){
-              $PHPReader = new PHPExcel_Reader_Excel5();
-              if(!$PHPReader->canRead($inputFileName)){
-                echo 'no Excel';
-                return;
-              }
-            }
-           $PHPExcel = $PHPReader->load($inputFileName);
-           $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
-           $i = 0;   
-           foreach ($PHPExcel->getActiveSheet()->getDrawingCollection() as $drawing) {
-                if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
-                    ob_start();
-                    call_user_func(
-                        $drawing->getRenderingFunction(),
-                        $drawing->getImageResource()
-                    );
-                    $imageContents = ob_get_contents();
-                    ob_end_clean();
-                    switch ($drawing->getMimeType()) {
-                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_PNG :
-                                $extension = 'png'; break;
-                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_GIF:
-                                $extension = 'gif'; break;
-                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
-                                $extension = 'jpg'; break; 
-                        case PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_JPEG :
-                                $extension = 'jpeg'; break;
-                    }
-                } else {
-                    $zipReader = fopen($drawing->getPath(),'r');
-                    $imageContents = '';
-                    while (!feof($zipReader)) {
-                        $imageContents .= fread($zipReader,1024);
-                    }
-                    fclose($zipReader);
-                    $extension = $drawing->getExtension();
-                }
-                $codata = $drawing->getCoordinates(); 
-                $myFileName = 'Upload/goods/'.date('His').++$i.'.'.$extension;
-                file_put_contents($myFileName,$imageContents);
-                $arr[$codata][]['bannerPic'] = $myFileName;
-            }
-           $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
-           $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
-           $erp_orders_id = array();  //声明数组
-          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-            $data['title'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
-            if($data['title'] == NULL){
-                unlink($inputFileName);
-                exit;
-            }
-            $data['brand'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
-            //分类
-            $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
-            //根据名称返回分类
-            $cateid = $this->MallShop_model->get_cate_id(trim($cate));
-            if(!empty($cateid)){
-                $data['categoryid'] = $cateid;
-            }else{
-                $data['categoryid'] = '1';
-            }
-
-            $data['price'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
-            $data['amount'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
-            $data['goods_state'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
-            $shuxing = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
-            //商品属性
-            if(!empty($shuxing)){
-               $abc = explode("*",trim($shuxing));
-                foreach ($abc as $key => $value) {
-                  $parameter_name =  explode(":",trim($value));
-                  $parameterName[$key] = $parameter_name[0];
-                  $check = explode("&",trim($parameter_name[1]));
-                  foreach ($check as $k => $v) {
-                      $val[$k] = explode("|",trim($v));
-                      $checkvalue[$key][$k]['child_parameter_name'] = $val[$k][0];
-                      $checkvalue[$key][$k]['equivalence'] = $val[$k][1];
-                      $checkvalue[$key][$k]['Inventory'] = $val[$k][2];
-                  }
-                }
-                foreach ($parameterName as $key => $value) {
-                   $property[$key]['parameter_name'] = $value;
-                   $property[$key]['child_value'] = $checkvalue[$key];
-                }
-                $data['parameter'] = json_encode($property,JSON_UNESCAPED_UNICODE);
-            }else{
-                $data['parameter'] = '';
-            }
-            //缩略图
-            if(isset($arr['H'.$currentRow])){
-                 $data['thumb'] = '/'.$arr['H'.$currentRow][0]['bannerPic'];
-            }else{
-                $data['thumb'] = '';
-            } 
-            //商品banner
-            if(isset($arr['I'.$currentRow])){
-                 $data['good_pic'] = json_encode($arr['I'.$currentRow]);
-            }else{
-                $data['good_pic'] = '';
-            }
-           
-            $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
-            $data['storeid'] = $this->session->businessId;
-
-            //新增
-            $this->MallShop_model->add_shop_goods($data);
-           }
-        }else{
-           $this->load->view('404.html'); 
-        }
-    }
-
 
     //商品删除
     function del_goods(){
@@ -706,9 +580,14 @@ class SingleShop extends Default_Controller {
 
     //商品搜索
     function search_goods(){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
+            echo "2";exit;
+        }
+
         if($_POST){
             $cate = $_POST['cateid'];
-            $storeid = $this->session->businessId;
+           
            // echo $storeid;
             //单价起价格
             $startPrice = $_POST['startPrice'];
@@ -720,9 +599,9 @@ class SingleShop extends Default_Controller {
             //商品状态
             $state = $_POST['state']; 
             //关键字
-            $sear = $_POST['sear'];
+            $sear = trim($_POST['sear']);
             $differentiate = '1';
-            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
+            $res = search_store_goods($store_id,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
             if(empty($res)){
                 echo '2';
             }else{

@@ -145,6 +145,7 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="shop_id">编号 </th>
+                                    <th class="shop_id">货号 </th>
                                     <th class="moll_name">一级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
@@ -350,6 +351,7 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
 
         <td class="am-text-middle"><%= goods_id%></td>
+        <td class="am-text-middle"><%= goods_code%></td>
         <td class="am-text-middle"><%= catname%></td>
         <td class="am-text-middle">
         <%if(thumb) {%>
