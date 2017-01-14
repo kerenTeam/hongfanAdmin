@@ -49,19 +49,25 @@ class SingleShop extends Default_Controller {
         parent::__construct();
         $this->load->model('MallShop_model');
         $this->load->model('Shop_model');
+       
     }
 
     //商家 列表主页
     function shopAdmin()
     {   //缓存商家id
+        
         $id = intval($this->uri->segment(4));
         if($id == 0){
             //商家登录
-            $storeid = $this->MallShop_model->get_store_list($this->session->users['user_id']);
+             $storeid = $this->MallShop_model->get_store_list($this->session->users['user_id']);
              $this->session->set_userdata('businessId',$storeid['store_id']);
              
         }else{
             $this->session->set_userdata('businessId',$id);
+        }
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
        // var_dump($this->session->businessId);
         $data['page'] = $this->view_shopAdmin;
@@ -69,6 +75,10 @@ class SingleShop extends Default_Controller {
     }
     //商家基础信息
     function shopBaseInfo(){
+        $store_id = $this->session->businessId;
+         if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         //获取商家信息
        $store = $this->MallShop_model->get_basess_info($this->session->businessId);
         //获取商家登录账户
@@ -100,6 +110,10 @@ class SingleShop extends Default_Controller {
 
     //商家基础信息操作
     function edit_busin_info(){
+            $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         if($_POST){
             $data = $this->input->post();
             $arr['username'] = trim($this->input->post('username'));
@@ -158,6 +172,10 @@ class SingleShop extends Default_Controller {
     }
     //  //商品列表
     function goodsList(){
+        $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         //分类
         $data['cates'] = $this->MallShop_model->get_goods_cates('0');
         $data['page'] = $this->view_goodsList;
@@ -196,6 +214,10 @@ class SingleShop extends Default_Controller {
     }
     //商品详情
     function goodsDetail(){
+       $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -246,16 +268,7 @@ class SingleShop extends Default_Controller {
                             $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
                         $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-                        unset($data['img'.$i]);
                     }
-                }else{
-                    if($i == '1'){
-                            $data['thumb'] = $data['img'.$i];
-                    }
-                    if(!empty($data['img'.$i])){
-                     $pic[]['bannerPic'] = $data['img'.$i];
-                     }
-                     unset($data['img'.$i]);
                 }
                 $i++;
              }
@@ -273,6 +286,10 @@ class SingleShop extends Default_Controller {
 
      //新增商品
     function goodsAdd(){
+        $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         //所有商品分类
         $data['cates'] = $this->MallShop_model->get_goods_cates('0');
 
@@ -340,8 +357,15 @@ class SingleShop extends Default_Controller {
         }
     }
 
-    //商家导入商品
+    //
     function impolt_goods(){
+          $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
+        $error = array();
+        $yes = array();
+        header('content-type:text/html;charset=utf8');
         if(!empty($_FILES["file"]["tmp_name"])){
             $name = date('Y-m-d');
             $inputFileName = "Upload/xls/" .$name .'.xls';
@@ -361,8 +385,8 @@ class SingleShop extends Default_Controller {
               }
             }
            $PHPExcel = $PHPReader->load($inputFileName);
-           $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
-           $i = 0;   
+           $currentSheet = $PHPExcel->getSheet(0); 
+             $i = 0;   
            foreach ($PHPExcel->getActiveSheet()->getDrawingCollection() as $drawing) {
                 if ($drawing instanceof PHPExcel_Worksheet_MemoryDrawing) {
                     ob_start();
@@ -392,78 +416,190 @@ class SingleShop extends Default_Controller {
                     $extension = $drawing->getExtension();
                 }
                 $codata = $drawing->getCoordinates(); 
-                $myFileName = 'Upload/goods/'.date('His').++$i.'.'.$extension;
+                $myFileName = 'Upload/goods/'.date('Y-m-d_His').++$i.'.'.$extension;
                 file_put_contents($myFileName,$imageContents);
-                $arr[$codata][]['bannerPic'] = $myFileName;
+                $arr[$codata][]['bannerPic'] = '/'.$myFileName;
             }
-           $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
-           $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
-           $erp_orders_id = array();  //声明数组
-          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-            $data['title'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
-            if($data['title'] == NULL){
-                unlink($inputFileName);
-                exit;
-            }
-            $data['brand'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
-            //分类
-            $cate = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
-            //根据名称返回分类
-            $cateid = $this->MallShop_model->get_cate_id(trim($cate));
-            if(!empty($cateid)){
-                $data['categoryid'] = $cateid;
-            }else{
-                $data['categoryid'] = '1';
-            }
+            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+            for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+                //商品编号
+                $goods[$currentRow]['goods_code'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();
+                $goods[$currentRow]['title'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取A列的值
+                $goods[$currentRow]['brand'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取A列的值
+                $cate = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取A列的值
+                $soncate = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取A列的值
+                 $goodsstate = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取A列的值
+                 if(empty($goodsstate)){
+                    $goods[$currentRow]['goods_state'] = '0';
+                 }else{
+                     $goods[$currentRow]['goods_state'] = $goodsstate;
+                 }
+                
+                $goods[$currentRow]['content'] = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取A列的值
 
-            $data['price'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
-            $data['amount'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值 
-            $data['goods_state'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
-            $shuxing = $PHPExcel->getActiveSheet()->getCell("G".$currentRow)->getValue();//获取c列的值
-            //商品属性
-            if(!empty($shuxing)){
-               $abc = explode("*",trim($shuxing));
-                foreach ($abc as $key => $value) {
-                  $parameter_name =  explode(":",trim($value));
-                  $parameterName[$key] = $parameter_name[0];
-                  $check = explode("&",trim($parameter_name[1]));
-                  foreach ($check as $k => $v) {
-                      $val[$k] = explode("|",trim($v));
-                      $checkvalue[$key][$k]['child_parameter_name'] = $val[$k][0];
-                      $checkvalue[$key][$k]['equivalence'] = $val[$k][1];
-                      $checkvalue[$key][$k]['Inventory'] = $val[$k][2];
+                //获取规格项1
+                $standard1 = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取A列的值
+                //获取规格值1
+                $standardval1 = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();
+
+                if(!empty($standard1)){
+                  $num = $currentRow;
+                  $data[$num]['check'][$currentRow]['stend1'] = $standard1;
+                  if(!empty($standardval1)){
+                    $data[$num]['check'][$currentRow]['value1'] = $standardval1;
+                    //价格
+                    $data[$num]['check'][$currentRow]['price'] = $PHPExcel->getActiveSheet()->getCell("R".$currentRow)->getValue();
+                    //库存
+                    $data[$num]['check'][$currentRow]['stock'] = $PHPExcel->getActiveSheet()->getCell("S".$currentRow)->getValue(); 
+                    //库存
+                    $data[$num]['check'][$currentRow]['postage'] = $PHPExcel->getActiveSheet()->getCell("T".$currentRow)->getValue();
+                  }
+
+                }else{
+                  if(!empty($standardval1)){
+                    $data[$num]['check'][$currentRow]['value1'] = $standardval1;
+                    //价格
+                    $data[$num]['check'][$currentRow]['price'] = $PHPExcel->getActiveSheet()->getCell("R".$currentRow)->getValue();
+                    //库存
+                    $data[$num]['check'][$currentRow]['stock'] = $PHPExcel->getActiveSheet()->getCell("S".$currentRow)->getValue(); 
+                    //库存
+                    $data[$num]['check'][$currentRow]['postage'] = $PHPExcel->getActiveSheet()->getCell("T".$currentRow)->getValue();
                   }
                 }
-                foreach ($parameterName as $key => $value) {
-                   $property[$key]['parameter_name'] = $value;
-                   $property[$key]['child_value'] = $checkvalue[$key];
+                //获取规格项2
+                $standard2 = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取A列的值
+                $standardval2 = $PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue();
+                if(!empty($standard2)){
+                  $num = $currentRow;
+                  $data[$num]['check'][$currentRow]['stend2'] = $standard2;
+                  if(!empty($standardval1)){
+                    $data[$num]['check'][$currentRow]['value2'] = $standardval2;
+                  }
+                }else{
+                  if(!empty($standardval2)){
+                     $data[$num]['check'][$currentRow]['value2'] = $standardval2;
+                  }
                 }
-                $data['parameter'] = json_encode($property,JSON_UNESCAPED_UNICODE);
-            }else{
-                $data['parameter'] = '';
-            }
-            //缩略图
-            if(isset($arr['H'.$currentRow])){
-                 $data['thumb'] = '/'.$arr['H'.$currentRow][0]['bannerPic'];
-            }else{
-                $data['thumb'] = '';
-            } 
-            //商品banner
-            if(isset($arr['I'.$currentRow])){
-                 $data['good_pic'] = json_encode($arr['I'.$currentRow]);
-            }else{
-                $data['good_pic'] = '';
-            }
-           
-            $data['content'] =$PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue(); 
-            $data['storeid'] = $this->session->businessId;
+                //获取规格项3
+                 $standard3 = $PHPExcel->getActiveSheet()->getCell("N".$currentRow)->getValue();//获取A列的值
+                 $standardval3 = $PHPExcel->getActiveSheet()->getCell("O".$currentRow)->getValue();
+                if(!empty($standard3)){
+                   $num = $currentRow;
+                    $data[$num]['check'][$currentRow]['stend3'] = $standard3;
+                    if(!empty($standardval1)){
+                    $data[$num]['check'][$currentRow]['value3'] = $standardval3;
+                    }
+                }else{
+                  if(!empty($standardval3)){
+                      $data[$num]['check'][$currentRow]['value3'] = $standardval3;
+                  }
+                } 
+                //获取规格项4
+                $standard4 = $PHPExcel->getActiveSheet()->getCell("P".$currentRow)->getValue();//获取A列的值
+                $standardval4= $PHPExcel->getActiveSheet()->getCell("Q".$currentRow)->getValue();
+                if(!empty($standard4)){
+                  $num = $currentRow;
+                   $data[$num]['check'][$currentRow]['stend4'] = $standard4;
+                  if(!empty($standardval1)){
+                    $data[$num]['check'][$currentRow]['value4'] = $standardval4;
+                  }
+                }else{
+                  if(!empty($standardval4)){
+                    $data[$num]['check'][$currentRow]['value4'] = $standardval4;
+                  }
+                }
 
-            //新增
-            $this->MallShop_model->add_shop_goods($data);
+                $price =  $PHPExcel->getActiveSheet()->getCell("R".$currentRow)->getValue();
+                $amount= $PHPExcel->getActiveSheet()->getCell("S".$currentRow)->getValue();
+                 if(!empty($amount)){
+                       $goods[$currentRow]['amount']  = $amount;
+                 }else{
+                    if(!empty($standard1)){
+                      $error[] = $currentRow;
+                       unset($goods[$currentRow]);
+                      continue;
+                    }
+                 }  
+                 if(!empty($price)){
+                       $goods[$currentRow]['price']  = $price;
+                 }else{
+                    if(!empty($standard1)){
+                      $error[] = $currentRow;
+                       unset($goods[$currentRow]);
+                      continue;
+                    }
+                 }
+              
+                //根据名称返回一级分类
+                $cateid = $this->MallShop_model->get_cate_id(trim($cate));
+                if(!empty($cateid)){
+                    $goods[$currentRow]['categoryid'] = $cateid;
+                }else{
+                    if(!empty($standard1)){
+                      $error[] = $currentRow;
+                      unset($goods[$currentRow]);
+                      continue;
+                    }
+                }
+                //
+                $soncateid = $this->MallShop_model->get_cate_id(trim($soncate));
+                if(!empty($cateid)){
+                    $goods[$currentRow]['soncategoryid'] = $soncateid;
+                }else{
+                    $goods[$currentRow]['soncategoryid'] = '';
+                }
+                // //缩略图
+                if(isset($arr['H'.$currentRow])){
+                     $goods[$currentRow]['thumb'] = $arr['H'.$currentRow][0]['bannerPic'];
+                }else{
+                    $goods[$currentRow]['thumb'] = '';
+                } 
+                //商品banner
+                if(isset($arr['I'.$currentRow])){
+                     $goods[$currentRow]['good_pic'] = json_encode($arr['I'.$currentRow]);
+                }else{
+                    $goods[$currentRow]['good_pic'] = '';
+                }
+                $goods[$currentRow]['storeid'] = $this->session->businessId;
            }
-        }else{
-           $this->load->view('404.html'); 
-        }
+
+           //去掉空数组
+           foreach($goods as $key=>$val){
+              if(empty($val['title'])){
+                unset($goods[$key]);
+              }
+           }
+           //新增到数据
+           foreach ($goods as $k => $v) {
+              $goodsid =  $this->MallShop_model->add_goods_id($v);
+              if(empty($goodsid)){
+                  $error[] = $k;
+              }else{
+                $yes[] = $k;
+                if(!empty($data)){
+                 foreach ($data as $key => $value) {
+                    if($k == $key){ 
+                        foreach ($value['check'] as $j => $val) {
+                            $val['g_id'] = $goodsid;
+                            $this->db->insert('hf_mall_goods_property',$val); 
+                        }
+                      }
+                     }
+                 }
+                }
+            }
+           $ret = array('yes'=>count($yes),'error'=>count($error),'yeslist'=>$yes,'errorlist'=>$error);
+           echo json_encode($ret);
+           unlink($inputFileName);
+        } 
+    }
+    //获取商品属性
+    function get_goods_parent(){
+        $goodsid = '702';
+        $query = $this->db->where('g_id',$goodsid)->get('hf_mall_goods_property');
+        $res = $query->result_array();
+        var_dump(json_encode($res,JSON_UNESCAPED_UNICODE));
     }
 
 
@@ -483,9 +619,14 @@ class SingleShop extends Default_Controller {
 
     //商品搜索
     function search_goods(){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
+            echo "2";exit;
+        }
+
         if($_POST){
             $cate = $_POST['cateid'];
-            $storeid = $this->session->businessId;
+           
            // echo $storeid;
             //单价起价格
             $startPrice = $_POST['startPrice'];
@@ -497,9 +638,9 @@ class SingleShop extends Default_Controller {
             //商品状态
             $state = $_POST['state']; 
             //关键字
-            $sear = $_POST['sear'];
+            $sear = trim($_POST['sear']);
             $differentiate = '1';
-            $res = search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
+            $res = search_store_goods($store_id,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
             if(empty($res)){
                 echo '2';
             }else{
@@ -871,6 +1012,10 @@ class SingleShop extends Default_Controller {
 
     //商家订单管理
     function shopOrder(){
+         $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         $data['storeid'] = $this->session->businessId;
         $data['page'] = $this->view_shopOrder;
         $data['menu'] = array('shop','shopOrder');
@@ -928,6 +1073,10 @@ class SingleShop extends Default_Controller {
     }
     //商家订单编辑
     function shopEditOrder(){
+             $store_id = $this->session->businessId;
+           if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -940,7 +1089,10 @@ class SingleShop extends Default_Controller {
     }
     //订单管理 详情
     function sureOrder(){
-
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
+            echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
+        }
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');

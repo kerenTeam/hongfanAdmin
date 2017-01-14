@@ -480,7 +480,7 @@ class ServeForPeople extends Default_Controller
                     if(!$this->upload->do_upload('img')) {
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/team/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/team/'.$this->upload->data('file_name');
                    }     
             }
             if($this->Service_model->edit_team_info($data['id'],$data)){
@@ -507,7 +507,7 @@ class ServeForPeople extends Default_Controller
                     if(!$this->upload->do_upload('img')) {
                          echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
                     }else{
-                        $data['picImg'] = 'Upload/team/'.$this->upload->data('file_name');
+                        $data['picImg'] = '/Upload/team/'.$this->upload->data('file_name');
                    }     
             }
             if($this->Service_model->add_volunteer_activities($data)){

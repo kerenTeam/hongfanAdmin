@@ -192,14 +192,18 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody id="shopList">
+                                                                <?php if(!empty($coupon)):?>
+                                                                    <?php foreach($coupon as $val):?>
                                                                     <tr class="trClass" id="trClass">
                                                                         <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="" name="commentBox"></td>
-                                                                        <td class="am-text-middle">S3251</td>
+                                                                        <td class="am-text-middle"><?php echo $val['id'];?></td>
                                                                         <td class="am-text-middle">优惠券1</td>
                                                                         <td class="am-text-middle">宏帆广场</td>
                                                                         <td class="am-text-middle">代金券</td>
                                                                         <td class="am-text-middle">2016-08-12至2017-12-8</td>
                                                                     </tr>
+                                                                <?php endforeach;?>
+                                                                <?php endif;?>
                                                                 </tbody>
                                                             </table>
                                                         </div>

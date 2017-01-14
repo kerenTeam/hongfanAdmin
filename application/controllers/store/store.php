@@ -84,6 +84,24 @@ class Store extends Default_Controller {
             echo "2";
         }
     }
+
+    //推荐商品到首页
+    function edit_recommend(){
+        if($_POST){
+            $goods_id = $_POST['goodsid'];
+            $recommend = $_POST['state'];
+            $data['recommend'] = $recommend;
+            if($this->MallShop_model->edit_goods_state($goods_id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //商品分类
     function storeGoodsSort(){
          $data['page'] = $this->view_storeGoodsSort;
