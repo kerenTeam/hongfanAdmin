@@ -314,7 +314,7 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[0]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[0]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                       <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>">
+                                       <!-- <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>"> -->
                                         <?php else:?>
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
@@ -327,7 +327,7 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[1]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[1]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                       <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>">
+                                       <!-- <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>"> -->
                                         <?php else:?>
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
@@ -340,7 +340,7 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[2]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[2]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                      <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>">
+                                      <!-- <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>"> -->
                                         <?php else:?>
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
@@ -537,9 +537,13 @@
         <div class="am-modal-hd">移动端商品预览(仅展示)</div>
         <div class="am-modal-bd good-bd">
             <div class="goodBanner" id="goodsBanner">
+                <?php if(!empty($banner)):?>
                 <?php foreach($banner as $val):?>
                     <img src="<?php echo $val['bannerPic'];?>">
                 <?php endforeach;?>
+            <?php else:?>
+                 <img src="assets/img/nullImg.jpg">
+                 <?php endif;?>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left addpadding">
                 <div class="am-u-lg-10 am-u-sm-10 am-u-md-10" id="showgoodsname"><?php echo $goods['title'];?></div>

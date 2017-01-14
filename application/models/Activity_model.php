@@ -64,7 +64,10 @@ class Activity_model extends CI_Model
 
     //返回所有未过期的优惠劵
     function get_coupon_list($time){
-        $query = $this->db->where('end_date >=',$time)->get($this->coupon);
+        $this->db->select('a.*,b.store_name');
+        $this->db->from('hf_shop_coupon as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $query = $this->db->where('end_date >=',$time)->get();
         return $query->result_array();
     }
     //新增活动

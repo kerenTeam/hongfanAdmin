@@ -353,7 +353,7 @@ td.am-text-middle img{
                             if($(this).find('option:selected').val()=="1"){
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
                                     data: 'goodsid='+ dataId+'&state=1',
                                     success: function(data){
                                         if(data==1){
@@ -371,7 +371,7 @@ td.am-text-middle img{
                             }else{
                                 $.ajax({
                                     type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
                                     data: 'goodsid='+ dataId+'&state=0',
                                     success: function(data){
                                         if(data==1){

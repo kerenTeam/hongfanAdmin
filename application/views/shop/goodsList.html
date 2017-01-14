@@ -183,9 +183,10 @@ td.am-text-middle img{
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){  
+        console.log(result);       
             var res = eval(result);
-            console.log(res);
+            
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -197,7 +198,6 @@ td.am-text-middle img{
                      for(var i = (curr*nums - nums); i <= last; i++){
                         listData+= template('shopGoodsModal',res[i]);
                      }
-                    
                     return listData;
                 };
                 //调用分页
@@ -308,9 +308,11 @@ td.am-text-middle img{
             //实例化XMLHttpRequest对象
             var xhr=new XMLHttpRequest();
             xhr.open('post',FileController,true);
-            xhr.onload=function(){
+            xhr.onload=function(data){
+                console.log(data.currentTarget.response);
+                console.log(data);
                 alert("导入成功！");
-                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                 getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
             
             };
             xhr.send(form); 

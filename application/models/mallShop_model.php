@@ -93,7 +93,7 @@ class MallShop_model extends CI_Model
         $this->db->select('a.*, b.catname');
         $this->db->from('hf_mall_goods a');
         $this->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
-        $query = $this->db->where('storeid',$storeid)->where('differentiate','1')->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('storeid',$storeid)->where('differentiate','1')->order_by('a.goods_id','desc')->get();
         return $query->result_array(); 
     }
     //商品上下架
