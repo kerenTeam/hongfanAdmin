@@ -53,9 +53,6 @@ td.am-text-middle img{
     vertical-align: middle;
     float:left;
 }
-.updateImg{
-    width:200px;
-}
 </style> 
  
 <!-- 内容区域 -->
@@ -133,8 +130,6 @@ td.am-text-middle img{
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd1';?>"><span class="am-icon-plus"></span> 新增副本</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsList1';?>"><span class="am-icon-plus"></span> 商品列表副本</a></button>
-
                                     <button type="button" class="am-btn am-btn-warning"><a href="Upload/xls/import_goods.xlsx"><span class="am-icon-plus"></span> 下载导入模板</a></button>
                                    <a class="wx_type_img am-inline" >
                                          <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
@@ -180,22 +175,6 @@ td.am-text-middle img{
 </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<!--加载缓冲的弹窗开始-->
-<div class="am-modal am-modal-confirm" tabindex="-1" id="refreshModal">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">载入数据提示</div>
-        <div class="am-modal-bd">
-            <div id="refreshMessBox">
-            	<img src="assets/img/huanchong.gif" class="updateImg" />
-            </div>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
-        </div>
-    </div>
-</div>
-<!--加载缓冲的弹窗结束-->
 <script type="text/javascript">
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -203,9 +182,10 @@ td.am-text-middle img{
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){    
+        success: function(result){  
+        console.log(result);       
             var res = eval(result);
-            // console.log(res);  
+            
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -227,7 +207,7 @@ td.am-text-middle img{
                         document.getElementById('shopGoodsList').innerHTML = thisDate(obj.curr);
                         $('.editGoods').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/singleShop/goodsDetail1/" + dataId + "');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -288,7 +268,7 @@ td.am-text-middle img{
                                 data: 'goodsid='+dataId,
                                 success: function(data){
                                     if(data==1){                                           
-                                        getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                                        $('#trClass'+dataId).remove();
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -316,24 +296,23 @@ td.am-text-middle img{
         }
     });
 }
-	//导入数据
+//导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
         var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx' || fileObj.name.split('.')[1]=='xls'){
-        	$('#refreshModal').modal();
+        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
            var form=new FormData();
             form.append('file',fileObj); //文件对象
             //实例化XMLHttpRequest对象
             var xhr=new XMLHttpRequest();
             xhr.open('post',FileController,true);
             xhr.onload=function(data){
-                // console.log(data);
-                var jsondata=JSON.parse(data.currentTarget.response);
-                console.log(jsondata);
-                $('#refreshMessBox').html('<p class="am-text-center">共导入 '+jsondata.yes+'条数据，共计为 '+jsondata.yes/10+'页</p>');
-                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');    
+                console.log(data.currentTarget.response);
+                console.log(data);
+                alert("导入成功！");
+                 getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+            
             };
             xhr.send(form); 
             return true;

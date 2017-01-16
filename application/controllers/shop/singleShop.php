@@ -15,8 +15,12 @@ class SingleShop extends Default_Controller {
     public $view_shopInfo = "shop/shopInfo.html";
     //商品列表
     public $view_goodsList = "shop/goodsList.html"; 
+    //商品列表 副本
+    public $view_goodsList1 = "shop/goodsList1.html"; 
     //商品详情
     public $view_goodsDetail = "shop/goodsDetail.html"; 
+    //商品详情 副本
+    public $view_goodsDetail1 = "shop/goodsDetail1.html"; 
     //新增商品
     public $view_goodsAdd = "shop/goodsAdd.html"; 
     //新增商品 副本
@@ -1208,6 +1212,20 @@ class SingleShop extends Default_Controller {
     function goodsAdd1(){
          $data['page'] = $this->view_goodsAdd1;  
         $data['menu'] = array('shop','goodsAdd1');       
+        $this->load->view('template.html',$data);
+    }
+
+     //编辑商品详情的副本
+    function goodsDetail1(){
+         $data['page'] = $this->view_goodsDetail1;  
+        $data['menu'] = array('shop','goodsDetail1');       
+        $this->load->view('template.html',$data);
+    }
+
+     //商品列表 的副本
+    function goodsList1(){
+         $data['page'] = $this->view_goodsList1;  
+        $data['menu'] = array('shop','goodsList1');       
         $this->load->view('template.html',$data);
     }
 }

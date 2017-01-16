@@ -397,7 +397,7 @@ td.am-text-middle img{
                                 data: 'goodsid='+dataId,
                                 success: function(data){
                                     if(data==1){                                           
-                                      $('#trClass'+dataId).remove();
+                                      getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
                                     }else{
                                         alert("操作失败！");
                                     }

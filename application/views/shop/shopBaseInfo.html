@@ -347,8 +347,7 @@
                     $("#secondYetaiSelect").html("");  
                     var jsonData=eval(data);
                     console.log(jsonData);
-                    if(data){
-                        
+                    if(data!=2){    
                         for(var i=0;i<jsonData.length;i++){
                             str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
                             sttr=sttr+str;
