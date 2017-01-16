@@ -128,24 +128,27 @@
                         
                     </div>
                     <div class="widget-body  am-fr">
-                        <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">                   
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                        
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="Name" class="am-u-sm-3 am-form-label">商品名称<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8">
                                     <input type="text" id="Name" value="<?php echo $goods['title'];?>" name="title" onblur="validate(this,2,50,1)" required="required" />
                                 </div>
                                 <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                            </div> 
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            </div>
+                            
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="englishName" class="am-u-sm-3 am-form-label">商品价格<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8">
                                    <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" value="<?php echo $goods['price'];?>" name="price" min="1" required="required" onblur="validate(this,2,20,2)" /> 
                                 </div>
                                 <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                            </div>                          
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            </div>
+                             
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="englishName" class="am-u-sm-3 am-form-label">商品品牌：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <input type="text" id="englishName"  value="<?php echo $goods['brand'];?>" name="brand"/>
@@ -153,7 +156,7 @@
                                 
                             </div>
                             <?php $param = json_decode($goods['parameter'],true);?>
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="englishName" class="am-u-sm-3 am-form-label">添加属性：</label>
                                 <div class="tableContainer">
                                     <?php if(!empty($param)):?>
@@ -221,38 +224,7 @@
                                 </div>
                                 <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
                             </div>
-                            <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6"> -->
-                                <!-- <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
-                                <div class="am-u-sm-11">
-                                    <div class="am-u-sm-10 am-u-end addborder" >
-                                        <input type="hidden" name="parameter" id='inputproperty'>
-                                        <div class="addRule">
-                                           <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
-                                        </div>
-                                    </div>
-                                    <div class="am-u-sm-10 am-u-end addborder" >
-                                        <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                            <thead>
-                                                <tr class="addPropertyTh">
-                                                    <th class="salesPrices">销售价(元)</th>
-                                                    <th class="shop_id">库存</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="addPropertyTb">
-                                                
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
                                 <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <input type="radio" name='postage' <?php if(empty($goods['postage'])){echo "checked";}?> id="dispostage" />是
@@ -260,7 +232,7 @@
                                 </div>
                                 
                             </div>
-                            <div <?php if(!empty($goods['postage'])){echo "style='display:block;'";}else{echo "style='display:none';";}?> class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 postageNumber" >
+                            <div <?php if(!empty($goods['postage'])){echo "style='display:block;'";}else{echo "style='display:none';";}?> class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 postageNumber" >
                                 <label for="englishName" class="am-u-sm-3 am-form-label">请输入运费<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8">
                                     <input type="number" min="1" id="postageNum" value="<?php echo $goods['postage'];?>" name="postage" required="required" onblur="validate(this,2,20,3)"/>
@@ -268,7 +240,10 @@
                                 <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            
+                        </div>
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
@@ -280,7 +255,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondSort" style="display: none;">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondSort" style="display: none;">
                                 <label class="am-u-sm-3 am-form-label">商品二级分类<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
@@ -289,7 +264,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="oneType" class="am-u-sm-3 am-form-label">是否是推荐产品<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <input type="radio" name="recommend" value="1" <?php if($goods['recommend'] == "1"){echo "checked='checked'";}?> />是
@@ -298,62 +273,78 @@
                                 
                             </div>
                             <input type="hidden"  id="respority" name="amount" min="1" required="required" />   
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
-                                <div class="am-u-sm-8 am-u-end">
-                                    <input type="radio" name="goods_state" value="1" <?php if($goods['goods_state'] == "1"){echo "checked";}?> />上架
-                                    <input type="radio" name="goods_state" value="0" <?php if($goods['goods_state'] == "0"){echo "checked";}?> />下架
-                                </div>
-                                
+                            <!-- <div class="am-form-group" >
+                                <label for="oneType">审核状态:</label>
+                                &nbsp;<span style="color: red; font-weight: bold;">
+                               <?php switch ($goods['auditing_state']) {
+                                   case '1':
+                                      echo "审核通过";
+                                       break;  
+                                   case '0':
+                                      echo "待审核";
+                                       break;
+                                   
+                                   default:
+                                       echo "审核未通过";
+                                       break;
+                               }?>
+                               </span> -->
+                               <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="radio" name="goods_state" value="1" <?php if($goods['goods_state'] == "1"){echo "checked";}?> />上架
+                                <input type="radio" name="goods_state" value="0" <?php if($goods['goods_state'] == "0"){echo "checked";}?> />下架
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                <label for="user-weibo"  class="am-u-sm-3 am-u-end am-form-label">商品图片：</label>
-                                <?php $banner = json_decode($goods['good_pic'],true);?>
-                                <div class="am-u-sm-12">
-                                    <div class="am-u-sm-4">
-                                        <div class="wx_type_img">
-                                         <input type="file" id="imgUpload" name="img1" onchange="previewImage1(this)" class="upload-add" multiple="multiple" >
-                                          <!-- 图片实时预览 -->
-                                          <?php if(isset($banner[0]['bannerPic'])):?>
-                                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[0]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                           <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>">
-                                            <?php else:?>
-                                                 <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <?php endif;?>
-                                        </div>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                            
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <label for="user-weibo"  class="am-u-sm-3 am-u-end am-form-label">商品图片：</label>
+                            <?php $banner = json_decode($goods['good_pic'],true);?>
+                            <div class="am-u-sm-12">
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img1" onchange="previewImage1(this)" class="upload-add" multiple="multiple" >
+                                      <!-- 图片实时预览 -->
+                                      <?php if(isset($banner[0]['bannerPic'])):?>
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[0]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
+                                       <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>">
+                                        <?php else:?>
+                                             <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                        <?php endif;?>
                                     </div>
-                                    <div class="am-u-sm-4">
-                                        <div class="wx_type_img">
-                                         <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple" >
-                                          <!-- 图片实时预览 -->
-                                          <?php if(isset($banner[1]['bannerPic'])):?>
-                                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[1]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                           <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>">
-                                            <?php else:?>
-                                                 <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <?php endif;?>
-                                        </div>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    </div>
-                                    <div class="am-u-sm-4">
-                                        <div class="wx_type_img">
-                                         <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                          <!-- 图片实时预览 -->
-                                          <?php if(isset($banner[2]['bannerPic'])):?>
-                                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[2]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                          <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>">
-                                            <?php else:?>
-                                                 <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <?php endif;?>
-                                        </div>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                 </div>
-                                <div class="red am-text-center father">        
-                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
-                              </div> 
-                            </div> 
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple" >
+                                      <!-- 图片实时预览 -->
+                                      <?php if(isset($banner[1]['bannerPic'])):?>
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[1]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
+                                       <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>">
+                                        <?php else:?>
+                                             <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                        <?php endif;?>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                      <!-- 图片实时预览 -->
+                                      <?php if(isset($banner[2]['bannerPic'])):?>
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[2]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
+                                      <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>">
+                                        <?php else:?>
+                                             <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                        <?php endif;?>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                            </div>
+                            <div class="red am-text-center father">        
+                              <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
+                          </div> 
+                        </div> 
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="englishName" class="am-u-sm-1 am-form-label">商品详情<span class="red">*</span>：</label>
