@@ -223,6 +223,7 @@ class SingleShop extends Default_Controller {
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             //所有商品分类
             $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+
             $data['page'] = $this->view_goodsDetail;
             $data['menu'] = array('shop','goodsList');       
             $this->load->view('template.html',$data);
