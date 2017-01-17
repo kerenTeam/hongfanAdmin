@@ -18,7 +18,7 @@ td.am-text-middle img{
 }
 .am-form-group div{
     line-height: 37px;
-} 
+}  
 .stable{
     display: inline-block !important;
     width: 45% !important;
@@ -332,8 +332,9 @@ td.am-text-middle img{
                 // console.log(data);
                 var jsondata=JSON.parse(data.currentTarget.response);
                 console.log(jsondata);
-                $('#refreshMessBox').html('<p class="am-text-center">共导入 '+jsondata.yes+'条数据，共计为 '+jsondata.yes/10+'页</p>');
-                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');    
+                $('#refreshMessBox').html('<p class="am-text-center">本次共导入'+(jsondata.yes+jsondata.error)+'条数据，成功： '+jsondata.yes+'条，失败：'+jsondata.error+'条</p>');
+                getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1'); 
+                   
             };
             xhr.send(form); 
             return true;

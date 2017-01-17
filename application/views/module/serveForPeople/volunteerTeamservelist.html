@@ -36,6 +36,9 @@ td.am-text-middle img{
     background: #F37B1D !important; 
     color: #fff !important;
 }
+.imgbox{
+    width: 100% !important;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -299,13 +302,13 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">活动缩略图 ：</label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left"><img src="<%= picImg%>"></span>
+                        <span class="am-text-left"><img class="imgbox" src="<%= picImg%>"></span>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">活动内容 ：</label>
                     <div class="am-u-sm-9">
-                      <textarea rows="5" type="text"><%= content%></textarea>
+                      <textarea rows="5" class="am-u-sm-12"><%= content%></textarea>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
