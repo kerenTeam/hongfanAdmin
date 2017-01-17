@@ -23,7 +23,7 @@
     }
     .addStyle:hover{
         cursor: pointer;
-    }
+    } 
     table tbody tr td,table thead tr th{
         font-weight: normal;
     }
@@ -776,7 +776,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 alert("最多只能录入四个属性");
                 return false;
             }else{
-                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">包装</option><option value="2">版本</option><option value="3">套餐</option><option value="4">内存</option><option value="5">容量</option><option value="6">净含量</option><option value="7">口味</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="'+kflag+'" type="button" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</button><button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button></div></div>');
+                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="'+kflag+'" type="button" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</button><button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button></div></div>');
                     $('.addNewPropertv').css('display','none');
                     kflag++;
                     return true;    
