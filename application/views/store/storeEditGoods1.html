@@ -504,6 +504,9 @@ $('#dispostage').click(function(){
         }
         addPropertytdcopy.push(addPropertytdco);
     }
+    for(var j=0;j<$('.propertystock').length;j++) {
+        totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
+    }
     addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
     var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
     document.getElementById('showproporty').innerHTML = html;
