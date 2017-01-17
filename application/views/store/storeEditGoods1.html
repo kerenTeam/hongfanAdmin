@@ -155,75 +155,6 @@
                                 </div>
                                 
                             </div>
-                            <?php $param = json_decode($goods['parameter'],true);?>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label for="englishName" class="am-u-sm-3 am-form-label">添加属性：</label>
-                                <div class="tableContainer">
-                                    <?php if(!empty($param)):?>
-                                    <?php foreach($param as $v):?>
-                                    <table class="addProperty">
-                                        <thead>
-                                            <th>属性名称</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyBody">
-                                            <td class="propertyName"><input type="text" value="<?php echo $v['parameter_name'];?>"></td>
-                                            <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                            <table class="addPropertyContent">
-                                                <thead>
-                                                    <th>属性值</th>
-                                                    <th>附加值</th>
-                                                    <th>库存</th>
-                                                    <th>&nbsp;</th>
-                                                </thead>
-                                                <tbody class="addPropertyTr">
-                                                 <?php foreach($v['child_value'] as $child):?>
-                                                    <tr class="addPropertytr">
-                                                   
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['child_parameter_name'];?>" ></td>
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['equivalence'];?>"></td>
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['Inventory'];?>"></td>
-                                                        <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                                    
-                                                    </tr>
-                                                    <?php endforeach;?>
-                                                </tbody>
-                                            </table>
-                                        </tbody>
-                                    </table>
-                                    <?php endforeach;?>
-                                    <?php else:?>
-                                    <table class="addProperty">
-                                        <thead>
-                                            <th>属性名称</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyBody">
-                                            <td class="propertyName"><input type="text" ></td>
-                                            <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                            <table class="addPropertyContent">
-                                                <thead>
-                                                    <th>属性值</th>
-                                                    <th>附加值</th>
-                                                    <th>库存</th>
-                                                    <th>&nbsp;</th>
-                                                </thead>
-                                                <tbody class="addPropertyTr">
-                                                    <tr class="addPropertytr">
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </tbody>
-                                    </table>
-                                    <?php endif;?>
-                                    <input type="hidden" name="parameter" id='inputproperty'/>
-                                </div>
-                                <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
-                            </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
                                 <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮：</label>
                                 <div class="am-u-sm-8 am-u-end">
@@ -504,6 +435,9 @@ $('#dispostage').click(function(){
         }
         addPropertytdcopy.push(addPropertytdco);
     }
+    for(var j=0;j<$('.propertystock').length;j++) {
+        totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
+    }
     addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
     var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
     document.getElementById('showproporty').innerHTML = html;
@@ -764,6 +698,7 @@ $('#dispostage').click(function(){
             return true;
         }
     } 
+    var i=0,kflag=0,flag=1;
     //新增规格项
     $('#addNewPropertybtn').click(function () {
         if(kflag==4){
