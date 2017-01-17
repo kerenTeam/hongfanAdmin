@@ -138,6 +138,39 @@ class Store extends Default_Controller {
             //获取商品详情
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+
+            
+            //获取商品属性
+            $parent = $this->MallShop_model->get_goods_parent($id);
+            if(!empty($parent)){
+                foreach ($parent as $key => $value) {
+                    $stend['0']['name'][] = $value['stend1'];
+                    $stend['0']['value'][] = $value['value1'];
+                    $stend['1']['name'][]= $value['stend2'];
+                    $stend['1']['value'][]= $value['value2'];
+                    $stend['2']['name'][]= $value['stend3'];
+                    $stend['2']['value'][]= $value['value3'];
+                    $stend['3']['name'][] = $value['stend4'];
+                    $stend['3']['value'][] = $value['value4'];
+                }
+                foreach ($stend as $k => $v) {
+                    if($v['name'][0] == ''){
+                        unset($v);
+                    }else{
+                        $arr[$k]['name'] = array_unique($v['name']);
+                        $arr[$k]['value'] = array_unique($v['value']);
+                    }
+                }
+                $data['parent'] =$arr;
+            }else{
+                $parent = '';
+                $data['parent'] = '';
+            }
+
+             $data['shuxing'] = $parent;
+
+
+
             $data['page'] = $this->view_storeEditGoods;
             $data['menu'] = array('store','storeGoodsList');
             $this->load->view('template.html',$data);

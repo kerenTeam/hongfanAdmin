@@ -1,4 +1,5 @@
 <?php 
+
 //商家商品搜索
 function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate){
             $CI = &get_instance();
@@ -37,10 +38,8 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
             }else
             if(empty($cate) && empty($startPrice) && empty($startRepertory) && $state == '' && !empty($sear)){
 
-                 $CI->db->select('a.*, b.catname as catname');
-                 $CI->db->from('hf_mall_goods a');
-                 $CI->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
-                $query = $CI->db->where('storeid',$storeid)->where('differentiate',$differentiate)->like("title",$sear,'both')->or_like('goods_code',$sear,'both')->order_by('create_time','desc')->get();
+                 $sql = "SELECT a.*,b.catid from hf_mall_goods as a,hf_mall_category as b where a.categoryid = b.catid and storeid = '$storeid' and differentiate = '$differentiate' and concat(title, goods_code) like '%$sear%'";
+                 $query = $CI->db->query($sql);
                  $res = $query->result_array();
             }else
             if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && $state == '' && empty($sear)){

@@ -96,12 +96,12 @@ padding: 5px 6px!important;
                             <div class="am-modal-bd">
                                 <!-- 本地生活 跳蚤市场类 -->
                                 <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/add_market_goods')?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
+                                   <!--  <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
                                             <input type="text"  name='market_name' required="">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -149,7 +149,7 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <td class="am-text-middle">编号</td>
-                                    <td class="am-text-middle">超市名</td>
+                                    <!-- <td class="am-text-middle">超市名</td> -->
                                     <td class="am-text-middle">商品名</td>
                                     <td class="am-text-middle">价格</td>
                                     <td class="am-text-middle">规格</td>
@@ -162,7 +162,7 @@ padding: 5px 6px!important;
                                 <?php foreach($lists as $val):?>
                                 <tr>
                                     <td class="am-text-middle"><?php echo $val['id'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['market_name'];?></td>
+                                    <!-- <td class="am-text-middle"><?php echo $val['market_name'];?></td> -->
                                     <td class="am-text-middle"><?php echo $val['goods_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['date_price']?>/<?php echo $val['unit']?></td>
                                      <td class="am-text-middle"><?php echo $val['standard']?></td>
@@ -185,12 +185,12 @@ padding: 5px 6px!important;
                                         <div class="am-modal-bd">
                                             <!-- 本地生活 跳蚤市场类 -->
                                             <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/edit_market_data')?>' method='post' enctype='multipart/form-data'>
-                                                <div class="am-form-group am-cf">
+                                            <!--     <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
                                                     <div class="am-u-sm-9">
                                                         <input type="text" name="market_name" value="<?php echo $val['market_name']?>" minlength="4" required="">
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
                                                     <div class="am-u-sm-9">

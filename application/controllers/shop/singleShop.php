@@ -233,22 +233,32 @@ class SingleShop extends Default_Controller {
 
             //获取商品属性
             $parent = $this->MallShop_model->get_goods_parent($id);
-            foreach ($parent as $key => $value) {
-                $stend['0']['name'][] = $value['stend1'];
-                $stend['0']['value'][] = $value['value1'];
-                $stend['1']['name'][]= $value['stend2'];
-                $stend['1']['value'][]= $value['value2'];
-                $stend['2']['name'][]= $value['stend3'];
-                $stend['2']['value'][]= $value['value3'];
-                $stend['3']['name'][] = $value['stend4'];
-                $stend['3']['value'][] = $value['value4'];
+            if(!empty($parent)){
+                foreach ($parent as $key => $value) {
+                    $stend['0']['name'][] = $value['stend1'];
+                    $stend['0']['value'][] = $value['value1'];
+                    $stend['1']['name'][]= $value['stend2'];
+                    $stend['1']['value'][]= $value['value2'];
+                    $stend['2']['name'][]= $value['stend3'];
+                    $stend['2']['value'][]= $value['value3'];
+                    $stend['3']['name'][] = $value['stend4'];
+                    $stend['3']['value'][] = $value['value4'];
+                }
+                foreach ($stend as $k => $v) {
+                    if($v['name'][0] == ''){
+                        unset($v);
+                    }else{
+                        $arr[$k]['name'] = array_unique($v['name']);
+                        $arr[$k]['value'] = array_unique($v['value']);
+                    }
+                }
+                $data['parent'] =$arr;
+            }else{
+                $parent = '';
+                $data['parent'] = '';
             }
-            foreach ($stend as $k => $v) {
-                $arr[$k]['name'] = array_unique($v['name']);
-                $arr[$k]['value'] = array_unique($v['value']);
-            }
-            $data['parent'] = $arr;
 
+             $data['shuxing'] = $parent;
             $data['page'] = $this->view_goodsDetail;
             $data['menu'] = array('shop','goodsList');       
             $this->load->view('template.html',$data);
@@ -275,9 +285,11 @@ class SingleShop extends Default_Controller {
     function edit_goods(){
         if($_POST){
             $data = $this->input->post();
+            $parent = json_decode($data['parameter'],true);
+            unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
-            $i =1;
-            foreach($_FILES as $file=>$val){
+
+            for ($i=1; $i < 4; $i++) {
                 if(!empty($_FILES['img'.$i]['name'])){
                     $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
@@ -288,18 +300,33 @@ class SingleShop extends Default_Controller {
                     if(!$this->upload->do_upload('img'.$i)) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
                     }else{
+                        unset($data['img'.$i]);
                         if($i == '1'){
                             $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
                         $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
                     }
+                }else{
+                     if($i == '1'){
+                            $data['thumb'] = $data['img'.$i];
+                     }
+                     if(!empty($data['img'.$i])){
+                         $pic[]['bannerPic'] = $data['img'.$i];
+                     }
+                     unset($data['img'.$i]);
                 }
-                $i++;
              }
+
              $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
              if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
+                //刪除商品所有屬性
+                $this->MallShop_model->del_goods_prop($data['goods_id']);
+                foreach ($parent as $key => $value) {
+                    $value['g_id'] = $data['goods_id'];
+                    $this->db->insert('hf_mall_goods_property',$value);
+                }
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
              }
@@ -349,30 +376,30 @@ class SingleShop extends Default_Controller {
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
             $i =1;
-            // foreach($_FILES as $file=>$val){
-            //     if(!empty($_FILES['img'.$i]['name'])){
-            //         $config['upload_path']      = 'Upload/goods/';
-            //         $config['allowed_types']    = 'gif|jpg|png|jpeg';
-            //         $config['max_size']     = 2048;
-            //         $config['file_name'] = date('Y-m-d_His');
-            //         $this->load->library('upload', $config);
-            //         // 上传
-            //         if(!$this->upload->do_upload('img'.$i)) {
-            //            echo $this->upload->display_errors();
-            //         }else{
-            //             if($i == '1'){
-            //                 $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
-            //             }
-            //             $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-            //             }
-            //     }
-            //     $i++;
-            //  }
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'Upload/goods/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                       echo $this->upload->display_errors();
+                    }else{
+                        if($i == '1'){
+                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
+                        }
+                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
+                        }
+                }
+                $i++;
+             }
              $data['good_pic'] = json_encode($pic);
              $data['storeid'] = $this->session->businessId;
              $data['differentiate'] = '1';
             
-            $goodsid = $this->MallShop_model->add_shop_goods($data);
+             $goodsid = $this->MallShop_model->add_shop_goods($data);
              if(!empty($goodsid)){
                 foreach ($parent as $key => $value) {
                     $value['g_id'] = $goodsid;

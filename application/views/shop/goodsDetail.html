@@ -235,28 +235,95 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
+                                <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  value="<?php echo $goods['unit'];?>" />
                             </div>
                         </div>
+                        <input type="hidden" name="parameter" id='inputproperty'>
+                        <input type="hidden" name="amount" id='stockamount'>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
                             <div class="am-u-sm-11">
-                                <div class="am-u-sm-10 am-u-end addborder" >
-                                    <input type="hidden" name="parameter" id='inputproperty'>
+                                <div class="am-u-sm-10 am-u-end addborder">
+                                <?php if(!empty($parent)):?>
+                                      <input type="hidden" id="kkflagNumber" value="<?php echo count($parent);?>" />
+                                <?php foreach($parent as $k =>$val):?>
+                                    <div class="chooseSelectPart" id="chooseSelectPart<?php echo $k;?>" >
+                                        <div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;">
+                                            <select id="ruleSelect<?php echo $k;?>" data-id="<?php echo $k;?>" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}"  name="ruleSelect" onchange="showBtn(this)">
+                                                <option value="">请选择一个！</option>
+                                                <option value="0" <?php if($val['name'][0] == '尺寸'){ echo "selected";}?>>尺寸</option>
+                                                <option value="1" <?php if($val['name'][0] == '颜色'){ echo "selected";}?>>颜色</option>
+                                                <option value="2" <?php if($val['name'][0] == '包装'){ echo "selected";}?>>包装</option>
+                                                <option value="3" <?php if($val['name'][0] == '版本'){ echo "selected";}?>>版本</option>
+                                                <option value="4" <?php if($val['name'][0] == '套餐'){ echo "selected";}?>>套餐</option>
+                                                <option value="5" <?php if($val['name'][0] == '内存'){ echo "selected";}?>>内存</option>
+                                                <option value="6" <?php if($val['name'][0] == '容量'){ echo "selected";}?>>容量</option>
+                                                <option value="7" <?php if($val['name'][0] == '净含量'){ echo "selected";}?>>净含量</option>
+                                                <option value="8" <?php if($val['name'][0] == '口味'){ echo "selected";}?>>口味</option>
+                                                <option value="9" <?php if($val['name'][0] == '规格'){ echo "selected";}?>>规格</option>
+                                                <option value="10" <?php if($val['name'][0] == '尺码'){ echo "selected";}?>>尺码</option>
+                                            </select>
+                                        <div class="propertycontainer<?php echo $k;?>" style="display: block;">
+                                            <?php foreach($val['value'] as $key=>$v):?>
+                                            <span class="badgePro"><?php echo $v;?><i class="am-icon am-icon-close spanIcon" onclick="deleteProValue(this)"></i></span>
+                                            <?php endforeach;?>
+                                        </div>
+                                        <a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn<?php echo $k;?>" style="display:block;" >新增规格值<span class="am-icon-plus"></span> </a>
+                                    </div>
+                                    <div class="am-u-sm-12 addNewPropertv" id="addNewPropertv<?php echo $k;?>" style="display:none;">
+                                        <div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;">
+                                            <input type="text" id="addNewPropertValue<?php echo $k;?>" class="addNewPropertValue" name="addNewPropertValue" />
+                                        </div>
+                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="<?php echo $k;?>" type="button" id="sureAddNewPropert<?php echo $k;?>" onclick="showPropertyValue(this)">确定</button>
+                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button>
+                                    </div>
+                                </div>
+                                <?php endforeach;?>
+                                      <div class="addRule">
+                                       <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
+                                    </div>
+                            <?php else:?>   
+                                   
                                     <div class="addRule">
                                        <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
                                     </div>
+
+                            <?php endif;?>
+                              
                                 </div>
                                 <div class="am-u-sm-10 am-u-end addborder" >
                                     <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                         <thead>
                                             <tr class="addPropertyTh">
-                                                <th class="salesPrices">销售价(元)</th>
+                                            <?php if(!empty($parent)):?>
+                                            <?php foreach($parent as $k=>$v):?>
+                                              <th class="addPropertyName" id="addPropertyName<?php echo $k;?>"><?php echo $v['name'][0];?></th>
+                                            <?php endforeach;?>
+                                            <?php endif;?>
+                                              <th class="salesPrices">销售价(元)</th>
                                                 <th class="shop_id">库存</th>
                                             </tr>
                                         </thead>
                                         <tbody class="addPropertyTb">
-                                            
+                                        <?php if(!empty($shuxing)):?>
+                                        <?php foreach($shuxing as $key=>$val):?>
+                                            <tr class="addPropertyTr">
+                                                <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value1'];?></td>
+                                                   <?php if(!empty($val['value2'])):?>
+                                                <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value2'];?></td>
+                                                 <?php endif;?>
+                                                <?php if(!empty($val['value3'])):?>
+                                                <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value3'];?></td>
+                                                <?php endif;?>
+                                                <?php if(!empty($val['value4'])):?>
+                                                <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value4'];?></td>
+                                                 <?php endif;?>
+                                            <td class="propertyprice"><input type="number" value="<?php echo $val['price']?>" /></td>
+                                            <td class="propertystock"><input type="number" value="<?php echo $val['stock']?>"/></td>
+                                            </tr>
+                                        <?php endforeach;?>
+                                    <?php endif;?>
+
                                             <!-- more data -->
                                         </tbody>
                                     </table>
@@ -297,7 +364,7 @@
                             </div>
                             
                         </div>
-                        <input type="hidden"  id="respority" name="amount" min="1" required="required" />
+                      <!--   <input type="hidden"  id="respority" name="amount" min="1" required="required" /> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
@@ -305,6 +372,7 @@
                                 <input type="radio" name="goods_state" value="0" <?php if($goods['goods_state'] == "0"){echo "checked";}?> />下架
                             </div>
                         </div>
+                       
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo"  class="am-u-sm-3 am-u-end am-form-label">商品图片：</label>
                             <?php $banner = json_decode($goods['good_pic'],true);?>
@@ -315,8 +383,9 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[0]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[0]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                       <!-- <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>"> -->
+                                       <input type="hidden" name="img1" value="<?php echo $banner[0]['bannerPic'];?>">
                                         <?php else:?>
+                                           
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
                                     </div>
@@ -328,7 +397,7 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[1]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[1]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                       <!-- <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>"> -->
+                                       <input type="hidden" name="img2" value="<?php echo $banner[1]['bannerPic'];?>">
                                         <?php else:?>
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
@@ -341,7 +410,7 @@
                                       <!-- 图片实时预览 -->
                                       <?php if(isset($banner[2]['bannerPic'])):?>
                                       <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[2]['bannerPic'];?>" class="am-img-responsive cardView"> </div>
-                                      <!-- <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>"> -->
+                                      <input type="hidden" name="img3" value="<?php echo $banner[2]['bannerPic'];?>">
                                         <?php else:?>
                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
@@ -353,6 +422,7 @@
                               <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
                             </div> 
                         </div>
+                     
                         <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
                             <label for="englishName" class="am-u-sm-1 am-form-label">商品详情<span class="red">*</span>：</label>
                             <div class="am-u-sm-10 am-u-end">
@@ -779,11 +849,12 @@ $('#dispostage').click(function(){
         
         //新增规格项
         $('#addNewPropertybtn').click(function () {
+            var kflag=parseInt($('#kkflagNumber').val()) || 0;
             if(kflag==4){
                 alert("最多只能录入四个属性");
                 return false;
-            }else{
-                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="'+kflag+'" type="button" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</button><button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button></div></div>');
+            }else {
+                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option><option value="9">规格</option><option value="10">尺码</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="'+kflag+'" type="button" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</button><button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button></div></div>');
                     $('.addNewPropertv').css('display','none');
                     kflag++;
                     return true;    
@@ -813,6 +884,7 @@ $('#dispostage').click(function(){
             propertyArray.push(addPropertytd);
             
         }
+        $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
     });
 

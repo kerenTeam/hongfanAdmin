@@ -321,6 +321,12 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //刪除商品所有屬性
+    function del_goods_prop($id){
+        $where['g_id'] = $id;
+        return $this->db->where($where)->delete("hf_mall_goods_property");
+    }
+
 
 
 
