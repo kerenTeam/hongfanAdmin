@@ -184,6 +184,15 @@
 .spanIcon:hover{
     cursor: pointer;
 }
+#operateAmount,#operateRespority{
+    line-height: 30px !important;
+    height: 30px;
+    padding:0;
+}
+.batch{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -245,6 +254,16 @@
                                     <div class="addRule">
                                        <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
                                     </div>
+                                </div>
+                                <div class="am-u-sm-10 am-u-end batch">
+                                    <label for="" class="am-u-sm-2 am-form-label">批量操作：</label>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateAmount" />
+                                    </div>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateRespority" />
+                                    </div>
+                                    <button class="am-u-sm-1 am-u-end am-btn am-btn-primary am-btn-xs" id="batchOperation" type="button">批量操作</button>
                                 </div>
                                 <div class="am-u-sm-10 am-u-end addborder" >
                                     <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
@@ -803,16 +822,25 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             addPropertytd.value2=value2;
             addPropertytd.value3=value3;
             addPropertytd.value4=value4;
-            addPropertytd.price=price;
-            addPropertytd.stock=stock;
+            addPropertytd.price=parseInt(price);
+            addPropertytd.stock=parseInt(stock);
 
             totalrespority+=parseInt(addPropertytd.stock);
             propertyArray.push(addPropertytd);
             
         }
+        $('#inputproperty').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
     });
 
+    //批量操作的js
+    $('#batchOperation').click(function () {
+        var operateAmount=$('#operateAmount').val(),operateRespority=$('#operateRespority').val();
+        for(var i=0;i<$('.propertyprice').length;i++) {
+            $('.propertyprice').eq(i).find('input').val(operateAmount);
+            $('.propertystock').eq(i).find('input').val(operateRespority);
+        }
+    })
         
         
 

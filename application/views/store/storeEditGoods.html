@@ -185,7 +185,16 @@
 .spanIcon:hover{
     cursor: pointer;
 }
-    
+
+#operateAmount,#operateRespority{
+    line-height: 30px !important;
+    height: 30px;
+    padding:0;
+}
+.batch{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -270,12 +279,30 @@
                                         </div>
                                         <a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn<?php echo $k;?>" style="display:block;" >新增规格值<span class="am-icon-plus"></span> </a>
                                     </div>
-                                    <div class="am-u-sm-12 addNewPropertv" id="addNewPropertv<?php echo $k;?>" style="display:none;">
-                                        <div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;">
-                                            <input type="text" id="addNewPropertValue<?php echo $k;?>" class="addNewPropertValue" name="addNewPropertValue" />
+
+                                    <div class="am-u-sm-10 am-u-end batch">
+                                        <label for="" class="am-u-sm-2 am-form-label">批量操作：</label>
+                                        <div class="am-u-sm-3 am-text-middle">
+                                            <input type="number" name="" id="operateAmount" />
                                         </div>
-                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="<?php echo $k;?>" type="button" id="sureAddNewPropert<?php echo $k;?>" onclick="showPropertyValue(this)">确定</button>
-                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button>
+                                        <div class="am-u-sm-3 am-text-middle">
+                                            <input type="number" name="" id="operateRespority" />
+                                        </div>
+                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-primary am-btn-xs" id="batchOperation" type="button">批量操作</button>
+                                    </div>
+                                    <div class="am-u-sm-10 am-u-end addborder" >
+                                        <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                            <thead>
+                                                <tr class="addPropertyTh">
+                                                    <th class="salesPrices">销售价(元)</th>
+                                                    <th class="shop_id">库存</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="addPropertyTb">
+                                                
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <?php endforeach;?>
