@@ -97,6 +97,93 @@
        #showgoodsDetail img{
         width:100%;
     }
+    .addborder{
+        border: 1px solid #dcdcdc;
+        padding: 2.0rem 1.5rem;
+        margin-bottom: 10px;
+    }
+    .addborder input,.addborder button.am-btn-default,.addborder select,.addborder select#ruleSelect option{
+        padding:0;margin:0;
+        height:28px !important;line-height: 28px !important;
+        font-size: 14px !important;
+        padding-left:10px;
+    }
+    .addborder div{
+        padding-bottom: 0.25rem;
+    }
+    .inline_input{
+        width:85% !important;
+        float:left;
+    }
+    .inline_icon{
+        display: inline-block !important;
+        text-align: right;
+        width: 15% !important;
+        padding:0;
+        margin:0;
+        float:right;
+    }
+    .addRule{
+        clear: both;
+        padding-left: 10px;
+    }
+    .newpropertyvbtn{
+        background: #fff;
+        color: #0e90d2;
+        border: hidden;
+        padding:0;
+        margin: 10px 0;
+        float: left;
+    }
+.newpropertyvbtn:hover{
+    background: #fff;
+    color: #0e90d2;
+    border: hidden;
+}
+
+.selectList{
+    position: relative;
+}
+.selectList select,.selectList button{
+    width:90%;
+}
+.selectList .closeIcon{
+    position: absolute;
+    right: 5%;
+    top:5%;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border:1px solid #fff;
+    background: rgba(255,255,255,0.6);
+    float:right;
+}
+.closeIcon:hover{
+    cursor: pointer;
+}
+.propertycontainer0,.propertycontainer1,.propertycontainer2,.propertycontainer3{
+    margin:10px 0 0 0;
+}
+.badgePro{
+    display: inline-block;
+    margin-right: 20px;
+    padding: 2px 10px;
+    background: #ccc;
+    border: 1px solid #f1f1f1;
+    position: relative;
+}
+.spanIcon{
+    position: absolute;
+    top:-8px;
+    right:-5px;
+    font-size: 10px;
+    color: #f00 !important;
+
+}
+.spanIcon:hover{
+    cursor: pointer;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -152,77 +239,8 @@
                                 </div>
                                 
                             </div>
-                            <?php $param = json_decode($goods['parameter'],true);?>
                             <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                <label for="englishName" class="am-u-sm-3 am-form-label">添加属性：</label>
-                                <div class="tableContainer">
-                                    <?php if(!empty($param)):?>
-                                    <?php foreach($param as $v):?>
-                                    <table class="addProperty">
-                                        <thead>
-                                            <th>属性名称</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyBody">
-                                            <td class="propertyName"><input type="text" value="<?php echo $v['parameter_name'];?>"></td>
-                                            <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                            <table class="addPropertyContent">
-                                                <thead>
-                                                    <th>属性值</th>
-                                                    <th>附加值</th>
-                                                    <th>库存</th>
-                                                    <th>&nbsp;</th>
-                                                </thead>
-                                                <tbody class="addPropertyTr">
-                                                 <?php foreach($v['child_value'] as $child):?>
-                                                    <tr class="addPropertytr">
-                                                   
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['child_parameter_name'];?>" ></td>
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['equivalence'];?>"></td>
-                                                        <td class="propertyValue"><input type="text" value="<?php echo $child['Inventory'];?>"></td>
-                                                        <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                                    
-                                                    </tr>
-                                                    <?php endforeach;?>
-                                                </tbody>
-                                            </table>
-                                        </tbody>
-                                    </table>
-                                    <?php endforeach;?>
-                                    <?php else:?>
-                                    <table class="addProperty">
-                                        <thead>
-                                            <th>属性名称</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyBody">
-                                            <td class="propertyName"><input type="text" ></td>
-                                            <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                            <table class="addPropertyContent">
-                                                <thead>
-                                                    <th>属性值</th>
-                                                    <th>附加值</th>
-                                                    <th>库存</th>
-                                                    <th>&nbsp;</th>
-                                                </thead>
-                                                <tbody class="addPropertyTr">
-                                                    <tr class="addPropertytr">
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><input type="text" ></td>
-                                                        <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </tbody>
-                                    </table>
-                                    <?php endif;?>
-                                    <input type="hidden" name="parameter" id='inputproperty'/>
-                                </div>
-                                <!-- <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button> -->
-                            </div>
-                            <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6"> -->
-                                <!-- <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
+                                <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
                                 </div>
@@ -246,12 +264,12 @@
                                             </thead>
                                             <tbody class="addPropertyTb">
                                                 
-                                                
+                                                <!-- more data -->
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                                 <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮：</label>
                                 <div class="am-u-sm-8 am-u-end">
@@ -513,6 +531,9 @@ $('#dispostage').click(function(){
         }
         addPropertytdcopy.push(addPropertytdco);
     }
+    for(var j=0;j<$('.propertystock').length;j++) {
+        totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
+    }
     addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
     var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
     document.getElementById('showproporty').innerHTML = html;
@@ -586,7 +607,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
             for(var i=0;i<lenpro0;i++){
                 var propertyValue0=$('.propertycontainer0').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
         }
         if(!lenpro0 && lenpro1 && !lenpro2 && !lenpro3) {
@@ -594,7 +615,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
             for(var i=0;i<lenpro1;i++){
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && lenpro2 && !lenpro3) {
@@ -602,7 +623,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
             for(var i=0;i<lenpro2;i++){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && !lenpro2 && lenpro3) {
@@ -610,7 +631,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3 +'</th>');
             for(var i=0;i<lenpro3;i++){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(lenpro0 && lenpro1 && !lenpro2 && !lenpro3){
@@ -622,7 +643,7 @@ $('#dispostage').click(function(){
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -634,7 +655,7 @@ $('#dispostage').click(function(){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -646,7 +667,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -658,7 +679,7 @@ $('#dispostage').click(function(){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -670,7 +691,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -682,7 +703,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro2;j++){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -697,7 +718,7 @@ $('#dispostage').click(function(){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -713,7 +734,7 @@ $('#dispostage').click(function(){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -729,7 +750,7 @@ $('#dispostage').click(function(){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -745,7 +766,7 @@ $('#dispostage').click(function(){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro1;j++){
                         var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -765,7 +786,7 @@ $('#dispostage').click(function(){
                         var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                         for(var j=0;j<lenpro0;j++){
                             var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                         }
                     }
                 }
@@ -773,6 +794,7 @@ $('#dispostage').click(function(){
             return true;
         }
     } 
+    var i=0,kflag=0,flag=1;
     //新增规格项
     $('#addNewPropertybtn').click(function () {
         if(kflag==4){
@@ -791,8 +813,8 @@ $('#dispostage').click(function(){
             
         for(var i=0;i<$('.addPropertyTr').length;i++){ 
             var value1=$('.addPropertyTr').eq(i).find('.property').eq('0').text(),value2=$('.addPropertyTr').eq(i).find('.property').eq('1').text(),value3=$('.addPropertyTr').eq(i).find('.property').eq('2').text(),value4=$('.addPropertyTr').eq(i).find('.property').eq('3').text();
-            var price=$('.addPropertyTr').eq(i).find('.propertyprice').text();
-            var stock=$('.addPropertyTr').eq(i).find('.propertystock').text();
+            var price=$('.addPropertyTr').eq(i).find('.propertyprice input').val();
+            var stock=$('.addPropertyTr').eq(i).find('.propertystock input').val();
             var addPropertytd={};
             addPropertytd.stend1=stend1;
             addPropertytd.stend2=stend2;
