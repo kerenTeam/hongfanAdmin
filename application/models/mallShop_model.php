@@ -23,6 +23,7 @@ class MallShop_model extends CI_Model
     public $shop_activity = "hf_system_activity";
       //推荐商品，或商家
     public $store_goods = "hf_shop_active_store_goods";
+
     function __construct()
     {
         parent::__construct();
@@ -311,6 +312,17 @@ class MallShop_model extends CI_Model
         $this->db->insert($this->shop_goods,$data);
         return $this->db->insert_id();
     }
+
+
+    //获取商品属性
+    function get_goods_parent($id){
+        $where['g_id'] = $id;
+        $query = $this->db->where($where)->get('hf_mall_goods_property');
+        return $query->result_array();
+    }
+
+
+
 
 }
 

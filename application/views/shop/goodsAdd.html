@@ -1,6 +1,6 @@
  
 <style type="text/css">
-  #preview{
+  #preview{ 
         width:150px !important;
     }
     #preview #imghead,#preview img{
@@ -365,8 +365,8 @@
 
                     <div class="am-form-group am-text-center">
                         <a data-am-modal="{target: '#goodMessage'}" id="eyeDetail" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-eye"></span> 点击预览</a>
-                     <!--    <button class="am-btn am-btn-secondary" type="button" id='addProperty'>提交</button> -->
-                        <button class="am-btn am-btn-secondary" type="submit" id='addProperty'>提交</button>
+                      <!-- <button class="am-btn am-btn-secondary" type="button" >提交</button> -->
+                        <button class="am-btn am-btn-secondary" type="submit" id='addProperty' >提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
 
@@ -499,6 +499,12 @@
             }
             addPropertytdcopy.push(addPropertytdco);
         }
+
+        for(var j=0;j<$('.propertystock').length;j++) {
+            totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
+        }
+
+
         addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
         var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
         document.getElementById('showproporty').innerHTML = html;
@@ -595,7 +601,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
             for(var i=0;i<lenpro0;i++){
                 var propertyValue0=$('.propertycontainer0').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
         }
         if(!lenpro0 && lenpro1 && !lenpro2 && !lenpro3) {
@@ -603,7 +609,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
             for(var i=0;i<lenpro1;i++){
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && lenpro2 && !lenpro3) {
@@ -611,7 +617,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
             for(var i=0;i<lenpro2;i++){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && !lenpro2 && lenpro3) {
@@ -619,7 +625,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3 +'</th>');
             for(var i=0;i<lenpro3;i++){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
             }
             return true;
         }else if(lenpro0 && lenpro1 && !lenpro2 && !lenpro3){
@@ -631,7 +637,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -643,7 +649,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -655,7 +661,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -667,7 +673,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -679,7 +685,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true; 
@@ -691,7 +697,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro2;j++){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                 }
             }
             return true;
@@ -706,7 +712,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -722,7 +728,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -738,7 +744,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -754,7 +760,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro1;j++){
                         var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                     }
                 }
             }
@@ -774,7 +780,7 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
                         var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                         for(var j=0;j<lenpro0;j++){
                             var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
                         }
                     }
                 }
@@ -808,8 +814,8 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             
         for(var i=0;i<$('.addPropertyTr').length;i++){ 
             var value1=$('.addPropertyTr').eq(i).find('.property').eq('0').text(),value2=$('.addPropertyTr').eq(i).find('.property').eq('1').text(),value3=$('.addPropertyTr').eq(i).find('.property').eq('2').text(),value4=$('.addPropertyTr').eq(i).find('.property').eq('3').text();
-            var price=$('.addPropertyTr').eq(i).find('.propertyprice').text();
-            var stock=$('.addPropertyTr').eq(i).find('.propertystock').text();
+            var price=$('.addPropertyTr').eq(i).find('.propertyprice input').val();
+            var stock=$('.addPropertyTr').eq(i).find('.propertystock input').val();
             var addPropertytd={};
             addPropertytd.stend1=stend1;
             addPropertytd.stend2=stend2;
