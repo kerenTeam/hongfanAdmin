@@ -103,7 +103,8 @@ class MallShop_model extends CI_Model
     }
     //新增商品
     function add_shop_goods($data){
-        return $this->db->insert($this->shop_goods,$data);
+         $this->db->insert($this->shop_goods,$data);
+         return $this->db->insert_id();
     }
     //根据id返会商品详情
     function get_goodsInfo($id){

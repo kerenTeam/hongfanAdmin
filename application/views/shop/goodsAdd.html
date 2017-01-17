@@ -23,7 +23,7 @@
     }
     .addStyle:hover{
         cursor: pointer;
-    }
+    } 
     table tbody tr td,table thead tr th{
         font-weight: normal;
     }
@@ -97,6 +97,93 @@
     #showgoodsDetail img{
         width:100%;
     }
+    .addborder{
+        border: 1px solid #dcdcdc;
+        padding: 2.0rem 1.5rem;
+        margin-bottom: 10px;
+    }
+    .addborder input,.addborder button.am-btn-default,.addborder select,.addborder select#ruleSelect option{
+        padding:0;margin:0;
+        height:28px !important;line-height: 28px !important;
+        font-size: 14px !important;
+        padding-left:10px;
+    }
+    .addborder div{
+        padding-bottom: 0.25rem;
+    }
+    .inline_input{
+        width:85% !important;
+        float:left;
+    }
+    .inline_icon{
+        display: inline-block !important;
+        text-align: right;
+        width: 15% !important;
+        padding:0;
+        margin:0;
+        float:right;
+    }
+    .addRule{
+        clear: both;
+        padding-left: 10px;
+    }
+    .newpropertyvbtn{
+        background: #fff;
+        color: #0e90d2;
+        border: hidden;
+        padding:0;
+        margin: 10px 0;
+        float: left;
+    }
+.newpropertyvbtn:hover{
+    background: #fff;
+    color: #0e90d2;
+    border: hidden;
+}
+
+.selectList{
+    position: relative;
+}
+.selectList select,.selectList button{
+    width:90%;
+}
+.selectList .closeIcon{
+    position: absolute;
+    right: 5%;
+    top:5%;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border:1px solid #fff;
+    background: rgba(255,255,255,0.6);
+    float:right;
+}
+.closeIcon:hover{
+    cursor: pointer;
+}
+.propertycontainer0,.propertycontainer1,.propertycontainer2,.propertycontainer3{
+    margin:10px 0 0 0;
+}
+.badgePro{
+    display: inline-block;
+    margin-right: 20px;
+    padding: 2px 10px;
+    background: #ccc;
+    border: 1px solid #f1f1f1;
+    position: relative;
+}
+.spanIcon{
+    position: absolute;
+    top:-8px;
+    right:-5px;
+    font-size: 10px;
+    color: #f00 !important;
+
+}
+.spanIcon:hover{
+    cursor: pointer;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -118,8 +205,8 @@
                         <div class="widget-title  am-cf">商品基础信息</div>
                     </div>
                     <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">                                        
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">                                        
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodName" class="am-u-sm-3 am-form-label">商品名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
                                 <input type="text" id="goodName" name='title' required="required" onblur="validate(this,2,50,1)" />  
@@ -128,7 +215,7 @@
                             <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodPrice" class="am-u-sm-3 am-form-label">商品价格<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
                                 <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" name="price" required="required" min="1" onblur="validate(this,2,20,2)" /> 
@@ -137,115 +224,84 @@
                             <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                          
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">商品品牌：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="text" name='brand' id="goodBrand"  />
                             </div>
                             
                         </div>
-                        
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="englishName" class="am-u-sm-3 am-form-label">添加属性：</label>
-                            <div class="am-u-sm-9 tableContainer">
-                                <table class="addProperty">
-                                <thead>
-                                    <th>属性名称</th>
-                                    <th>&nbsp;</th>
-                                </thead>
-                                <tbody class="addPropertyBody">
-                                    <td class="propertyName"><input type="text"></td>
-                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                    <table class="addPropertyContent">
-                                        <thead>
-                                            <th>属性值</th>
-                                            <th>附加值</th>
-                                            <th>库存</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyTr">
-                                            <tr class="addPropertytr">
-                                                <td class="propertyValue"><input type="text" ></td>
-                                                <td class="propertyValue"><input type="text"></td>
-                                                <td class="propertyValue"><input type="text" ></td>
-                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tbody>
-                            </table>
-                           <input type="hidden" name="parameter" id='inputproperty'>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                            <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
+                            <div class="am-u-sm-11">
+                                <div class="am-u-sm-10 am-u-end addborder" >
+                                    <input type="hidden" name="parameter" id='inputproperty'>
+                                    <div class="addRule">
+                                       <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
+                                    </div>
+                                </div>
+                                <div class="am-u-sm-10 am-u-end addborder" >
+                                    <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                        <thead>
+                                            <tr class="addPropertyTh">
+                                                <th class="salesPrices">销售价(元)</th>
+                                                <th class="shop_id">库存</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="addPropertyTb">
+                                            
+                                            <!-- more data -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end"><input type="radio" name="cod" value="1" id="dispostage" />是
                             <input type="radio" name="cod" id="postage" value="0"/>否</div>
                             
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 postageNumber" >
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 postageNumber" >
                             <label for="englishName" class="am-u-sm-3 am-form-label">请输入运费<span class="red">*</span>：</label>
                             <div class="am-u-sm-8"><input type="number"  id="postageNum" name="postage" min="1" onblur="validate(this,2,10,3)" /></div>
                             <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
-                       <!--  <div class="am-form-group">
-                            <label for="oneType">货到付款：</label>
-                            <select id="oneType" required="required" name="cod">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="1">支持货到付款</option>
-                                <option value="0">不支持货到付款</option>
-                            </select>
-                        </div> -->
-                        
-                    </div>
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                        <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
-                                <option value=''>请选择一个！</option>
-                                <?php foreach($cates as $val):?>
-                                <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
-                                <?php endforeach;?>
-                            </select>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
+                                    <option value=''>请选择一个！</option>
+                                    <?php foreach($cates as $val):?>
+                                    <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                                    <?php endforeach;?>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondSort" style="display: none;">
-                        <label class="am-u-sm-3 am-form-label">商品二级分类<span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
-                            
-                            </select>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondSort" style="display: none;">
+                            <label class="am-u-sm-3 am-form-label">商品二级分类<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <select id="secondSortSelect" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
+                                
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                      <!--   <div class="am-form-group"> 
-                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
-                            <input type="radio" name="recommend" value="1"/>是
-                            <input type="radio" name="recommend" value="0"/>否
-                        </div> -->
-                        <input type="hidden"  id="respority" name="amount" min="1" required="required" />    
-                           
-                     <!--    <?php if($this->session->users['gid'] != 2):?>
-                        <div class="am-form-group">
-                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
-                            <select id="oneType" required="required" name='auditing_state'>
-                                <option value="">-=请选择一项=-</option>
-                                <option value="1">通过审核</option>
-                                <option value="0">待审核</option>
-                                <option value="2">未通过</option>
-                            </select>
-
-                        </div> 
-                        <?php endif;?> -->
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <input type="hidden"  id="respority" name="amount" min="1" required="required" />
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                                 <input type="radio" name="goods_state" value="1"/>上架
                                 <input type="radio" name="goods_state" value="0"/>下架
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo" class="am-u-sm-3 am-form-label am-u-end">商品图片：</label>
                             <div class="am-u-sm-12">
                                 <div class="am-u-sm-4">
@@ -277,9 +333,6 @@
                               <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；不超过三张，最大支持2M</small> 
                           </div> 
                         </div>
-                        
-                    </div>
-                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg"> 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="englishName" class="am-u-sm-1 am-form-label">商品详情<span class="red">*</span>：</label>
                             <div class="am-u-sm-10 am-u-end">
@@ -288,11 +341,12 @@
                                 </div>  
                             </div>                
                         </div>
-                    </div>
+                    </div>          
                 </div>
 
                     <div class="am-form-group am-text-center">
                         <a data-am-modal="{target: '#goodMessage'}" id="eyeDetail" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-eye"></span> 点击预览</a>
+                     <!--    <button class="am-btn am-btn-secondary" type="button" id='addProperty'>提交</button> -->
                         <button class="am-btn am-btn-secondary" type="submit" id='addProperty'>提交</button>
                         <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
                     </div>
@@ -368,17 +422,17 @@
     <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 </body>
 <script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
     }
-}
 
   $(function() {
       var startDate = new Date(2014, 11, 20);
@@ -408,29 +462,27 @@ function validate(obj,minlen,maxlen,i){
 
       //点击预览商品详情
       $('#eyeDetail').click(function() {
-        var propertyArray=[],totalrespority=0;
-        for(var i=0;i<$('.addPropertyBody').length;i++){
-            var arrayPropertyName={},addPropertyBody={};
-            var parameter_name=$('.addPropertyBody').eq(i).find('input').val();
-            arrayPropertyName.parameter_name=parameter_name;    
-            arrayPropertyName.child_value=[];
-            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
-            for(var j=0;j<addPropertytr.length;j++){
-                var td=addPropertytr.eq(j).find('td');
-                var addPropertytd={};
-                addPropertytd.parameter_name=parameter_name;
-                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
-                addPropertytd.equivalence=td.eq('1').find('input').val();
-                addPropertytd.Inventory=td.eq('2').find('input').val();
-                totalrespority+=parseInt(addPropertytd.Inventory);
-                arrayPropertyName.child_value.push(addPropertytd);
+        document.getElementById('showproporty').innerHTML="";
+        var totalrespority=0,addPropertytdcopy=[];
+        var stand1=$('#ruleSelect0 option:selected').val(),stand2=$('#ruleSelect1 option:selected').val(),stand3=$('#ruleSelect2 option:selected').val(),stand4=$('#ruleSelect3 option:selected').val();
+        for(var i=0;i<$('.ruleSelect').length;i++) {
+            if($('#ruleSelect'+i+' option:selected').val()!=""){
+                var addPropertytdco={};
+                addPropertytdco.stend=$('#ruleSelect'+i+' option:selected').html();
+                // console.log(addPropertytdco = addPropertytdco.stend);
+                addPropertytdco.stend_value=[];
+                var daiti=$('.propertycontainer'+ i);
+                for(var j=0;j<daiti.find('span').length;j++){
+                    var addPropertyc={};
+                    addPropertyc.stend_value=daiti.find('span').eq(j).text();
+                    addPropertytdco.stend_value.push(addPropertyc);
+                }
             }
-            propertyArray.push(arrayPropertyName);
+            addPropertytdcopy.push(addPropertytdco);
         }
-        // console.log(propertyArray);
-        var html = template("showproportyModal",{propertyArray:propertyArray});
+        addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
+        var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
         document.getElementById('showproporty').innerHTML = html;
-
         var picSrc=$('#goodsBanner').html();
         var goodName=$('#goodName').val();
         var goodPrice=$('#goodPrice').val();
@@ -471,56 +523,300 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
-var i=1;
+var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
   
-//实例化编辑器
-  var ue = UE.getEditor('editor');
+    //实例化编辑器
+    var ue = UE.getEditor('editor'),firstFlag=1,secondFlag=1; 
+    function showfun(obj) {
+        $(obj).parents('.chooseSelectPart').find('.addNewPropertv').css('display','block');
+    }
+    function showBtn(obj){
+        var kk=$(obj).attr('data-id') ;
+        if($(this).find('option:selected').val()=="") {
+            alert("请选择合法的规格项");
+            return false; 
+        }else{
 
- //添加属性名称的设置
-    $('.createMoreName').click(function(){   
-        i++;
-        $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody class="addPropertyBody"><td class="propertyName"><input type="text" ></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr class="addPropertytr"><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><input type="text" ></td><td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore'+ i +'"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
-        //添加属性值的设置
-
-        $('.createMore'+i).click(function(){
-           $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-        });    
-    })
-    //添加属性值的设置
-    $('.createMore1').click(function(){
-       $('<tr class="addPropertytr"><td><input type="text" ></td><td><input type="text" ></td><td><input type="text" ></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-    });
-
-    //添加属性
-    $('#addProperty').click(function(){
-        var propertyArray=[],totalrespority=0;
-        for(var i=0;i<$('.addPropertyBody').length;i++){
-            var arrayPropertyName={},addPropertyBody={};
-            var parameter_name=$('.addPropertyBody').eq(i).find('input').val();
-            arrayPropertyName.parameter_name=parameter_name;    
-            arrayPropertyName.child_value=[];
-            var addPropertytr=$('.addPropertyContent').eq(i).find('.addPropertytr')
-            for(var j=0;j<addPropertytr.length;j++){
-                var td=addPropertytr.eq(j).find('td');
-                var addPropertytd={};
-                addPropertytd.parameter_name=parameter_name;
-                addPropertytd.child_parameter_name=td.eq('0').find('input').val();
-                addPropertytd.equivalence=td.eq('1').find('input').val();
-                addPropertytd.Inventory=td.eq('2').find('input').val();
-                totalrespority+=parseInt(addPropertytd.Inventory);
-                arrayPropertyName.child_value.push(addPropertytd);
-            }
-            propertyArray.push(arrayPropertyName);
+            $(obj).siblings().css('display','block');
+            console.log($('#propertycontainer'+kk).find('span'));
+            $('.propertycontainer'+kk).find('span.badgePro').remove();
+            // property=$(obj).find('option:selected').html();
+            $('.addPropertyName').remove();
+            $('.addPropertyTb').find('tr').remove();
+            updateTable (); 
+            return true;
         }
-        $("#inputproperty").val(JSON.stringify(propertyArray));
-        $('#respority').val(totalrespority);
-       // console.log(JSON.stringify(propertyArray));
-    });
+    }
+    function deleteProValue(obj){
+        $(obj).parent('.badgePro').remove();
+        $('.addPropertyName').remove();
+        $('.addPropertyTb').find('tr').remove();
+        updateTable (); 
+    }
+    function showPropertyValue(obj) {
+        var sureAddNewPropert=$(obj).parents('.addNewPropertv').find('.addNewPropertValue').val(),kk=$(obj).attr('data-id');
+        // console.log(kk);  
+        $('.propertycontainer'+kk).append('<span class="badgePro">'+ sureAddNewPropert +'<i class="am-icon am-icon-close spanIcon" onclick="deleteProValue(this)"></i></span>')
+        $('.addPropertyName').remove();
+        $('.addPropertyTb').find('tr').remove();
+        $(obj).parents('.addNewPropertv').css('display','none'); 
+        $(obj).parents('.addNewPropertv').find('.addNewPropertValue').val("");      
+        updateTable ();   
+        
+    }
+
+
+
+    //更新表格内容的js函数
+    function updateTable () {
+        var lenpro0=$('.propertycontainer0').find('span').length,lenpro1=$('.propertycontainer1').find('span').length,lenpro2=$('.propertycontainer2').find('span').length,lenpro3=$('.propertycontainer3').find('span').length;
+        console.log(lenpro3+"  "+lenpro2+"  "+lenpro1+"  "+lenpro0);
+        if(lenpro0 && !lenpro1 && !lenpro2 && !lenpro3) {
+            var property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var i=0;i<lenpro0;i++){
+                var propertyValue0=$('.propertycontainer0').find('span').eq(i).text();
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+            }
+        }
+        if(!lenpro0 && lenpro1 && !lenpro2 && !lenpro3) {
+            var property1=$('#ruleSelect1 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            for(var i=0;i<lenpro1;i++){
+                var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+            }
+            return true;
+        }else if(!lenpro0 && !lenpro1 && lenpro2 && !lenpro3) {
+            var property2=$('#ruleSelect2 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            for(var i=0;i<lenpro2;i++){
+                var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+            }
+            return true;
+        }else if(!lenpro0 && !lenpro1 && !lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3 +'</th>');
+            for(var i=0;i<lenpro3;i++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+            }
+            return true;
+        }else if(lenpro0 && lenpro1 && !lenpro2 && !lenpro3){
+            var property1=$('#ruleSelect1 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            console.log(property1);
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var i=0;i<lenpro1;i++){
+                var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
+                for(var j=0;j<lenpro0;j++){
+                    var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true;
+        }else if(lenpro0 && !lenpro1 && lenpro2 && !lenpro3){
+            var property2=$('#ruleSelect2 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var i=0;i<lenpro2;i++){
+                var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
+                for(var j=0;j<lenpro0;j++){
+                    var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true;
+        }else if(lenpro0 && !lenpro1 && !lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var i=0;i<lenpro3;i++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
+                for(var j=0;j<lenpro0;j++){
+                    var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true; 
+        }else if(!lenpro0 && lenpro1 && lenpro2 && !lenpro3) {
+            var property2=$('#ruleSelect2 option:selected').html(),property1=$('#ruleSelect1 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            for(var i=0;i<lenpro2;i++){
+                var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
+                for(var j=0;j<lenpro1;j++){
+                    var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true; 
+        }else if(!lenpro0 && lenpro1 && !lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property1=$('#ruleSelect1 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            for(var i=0;i<lenpro3;i++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
+                for(var j=0;j<lenpro1;j++){
+                    var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true; 
+        }else if(!lenpro0 && !lenpro1 && lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property2=$('#ruleSelect2 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            for(var i=0;i<lenpro3;i++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
+                for(var j=0;j<lenpro2;j++){
+                    var propertyValue2=$('.propertycontainer2').find('span').eq(j).text();
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                }
+            }
+            return true;
+        }else if(lenpro0 && lenpro1 && lenpro2 && !lenpro3) {
+            var property2=$('#ruleSelect2 option:selected').html(),property1=$('#ruleSelect1 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var k=0;k<lenpro2;k++){
+                var propertyValue2=$('.propertycontainer2').find('span').eq(k).text();
+                for(var i=0;i<lenpro1;i++){
+                    var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
+                    for(var j=0;j<lenpro0;j++){
+                        var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    }
+                }
+            }
+            return true;
+        }else if(lenpro0 && lenpro1 && !lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property1=$('#ruleSelect1 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var k=0;k<lenpro3;k++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(k).text();
+                for(var i=0;i<lenpro1;i++){
+                    var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
+                    for(var j=0;j<lenpro0;j++){
+                        var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    }
+                }
+            }
+            return true;
+        }else if(lenpro0 && !lenpro1 && lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property2=$('#ruleSelect2 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+            for(var k=0;k<lenpro3;k++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(k).text();
+                for(var i=0;i<lenpro2;i++){
+                    var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
+                    for(var j=0;j<lenpro0;j++){
+                        var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    }
+                }
+            }
+            return true;
+        }else if(!lenpro0 && lenpro1 && lenpro2 && lenpro3) {
+            var property3=$('#ruleSelect3 option:selected').html(),property2=$('#ruleSelect2 option:selected').html(),property1=$('#ruleSelect1 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            for(var k=0;k<lenpro3;k++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(k).text();
+                for(var i=0;i<lenpro2;i++){
+                    var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
+                    for(var j=0;j<lenpro1;j++){
+                        var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                    }
+                }
+            }
+            return true;
+        }else if(lenpro0 && lenpro1 && lenpro2 && lenpro3) {
+            var property1=$('#ruleSelect1 option:selected').html(),property3=$('#ruleSelect3 option:selected').html(),property2=$('#ruleSelect2 option:selected').html(),property0=$('#ruleSelect0 option:selected').html();
+            $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
+            $('.addPropertyName').eq('0').before('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
+
+            for(var hhd=0;hhd<lenpro3;hhd++){
+                var propertyValue3=$('.propertycontainer3').find('span').eq(hhd).text();
+                for(var k=0;k<lenpro2;k++){
+                    var propertyValue2=$('.propertycontainer2').find('span').eq(k).text();
+                    for(var i=0;i<lenpro1;i++){
+                        var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
+                        for(var j=0;j<lenpro0;j++){
+                            var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
+                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice">3000</td><td class="propertystock">400</td></tr>');
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+
+
 
     $(document).ready(function(){
-        //根据一级业态的内容来控制二级业态的显示
+        var i=0,kflag=0,flag=1;
+        
+        //新增规格项
+        $('#addNewPropertybtn').click(function () {
+            if(kflag==4){
+                alert("最多只能录入四个属性");
+                return false;
+            }else{
+                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><button class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="'+kflag+'" type="button" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</button><button class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs">取消</button></div></div>');
+                    $('.addNewPropertv').css('display','none');
+                    kflag++;
+                    return true;    
+            }
+        });
+        
+    //添加属性
+    $('#addProperty').click(function(){
+        var propertyArray=[],totalrespority=0,stend1=$('#addPropertyName0').text(),stend2=$('#addPropertyName1').text(),stend3=$('#addPropertyName2').text(),stend4=$('#addPropertyName3').text();
+            
+        for(var i=0;i<$('.addPropertyTr').length;i++){ 
+            var value1=$('.addPropertyTr').eq(i).find('.property').eq('0').text(),value2=$('.addPropertyTr').eq(i).find('.property').eq('1').text(),value3=$('.addPropertyTr').eq(i).find('.property').eq('2').text(),value4=$('.addPropertyTr').eq(i).find('.property').eq('3').text();
+            var price=$('.addPropertyTr').eq(i).find('.propertyprice').text();
+            var stock=$('.addPropertyTr').eq(i).find('.propertystock').text();
+            var addPropertytd={};
+            addPropertytd.stend1=stend1;
+            addPropertytd.stend2=stend2;
+            addPropertytd.stend3=stend3;
+            addPropertytd.stend4=stend4;
+            addPropertytd.value1=value1;
+            addPropertytd.value2=value2;
+            addPropertytd.value3=value3;
+            addPropertytd.value4=value4;
+            addPropertytd.price=price;
+            addPropertytd.stock=stock;
 
-         $('#firstSort').change(function(){
+            totalrespority+=parseInt(addPropertytd.stock);
+            propertyArray.push(addPropertytd);
+            
+        }
+        $('#inputproperty').val(JSON.stringify(propertyArray));
+    });
+
+        
+        
+
+
+
+        //根据一级业态的内容来控制二级业态的显示
+        $('#firstSort').change(function(){
             //根据一级业态的内容来控制二级业态的显示
             var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
             $.ajax({
@@ -607,12 +903,12 @@ function previewImage1(file) {
 
 </script>
 <script type="text/html" id="showproportyModal">
-<%for(var i=0;i<propertyArray.length;i++) {%>
+<%for(var i=0;i<addPropertytdcopy.length;i++) {%>
     <div>
-        <p class="big-word1"><%= propertyArray[i].parameter_name%></p>
+        <p class="big-word1"><%= addPropertytdcopy[i].stend%></p>
         <p>
-        <%for(var j=0;j<propertyArray[i].child_value.length;j++) {%>
-            <span class="badgeTips"><%= propertyArray[i].child_value[j].child_parameter_name%></span>
+        <%for(var j=0;j<addPropertytdcopy[i].stend_value.length;j++) {%>
+            <span class="badgeTips"><%= addPropertytdcopy[i].stend_value[j].stend_value%></span>
         <%}%>
         </p>
     </div>
