@@ -8,7 +8,7 @@
     .scrollspy-nav{
         display: inline-block;
         color:#19a7f0 !important;
-    } 
+    }  
     #goodsComments .am-u-sm-12{
         background:#fff;
     }  
@@ -185,7 +185,15 @@
 .spanIcon:hover{
     cursor: pointer;
 }
-    
+ #operateAmount,#operateRespority{
+    line-height: 30px !important;
+    height: 30px;
+    padding:0;
+}
+.batch{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}   
 </style>
 
 <!-- 内容区域 -->
@@ -246,6 +254,16 @@
                                     <div class="addRule">
                                        <button type="button" class="am-btn am-btn-primary am-btn-xs" id="addNewPropertybtn">新增规格项<span class="am-icon-plus"></span> </button>
                                     </div>
+                                </div>
+                                <div class="am-u-sm-10 am-u-end batch">
+                                    <label for="" class="am-u-sm-2 am-form-label">批量操作：</label>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateAmount" />
+                                    </div>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateRespority" />
+                                    </div>
+                                    <button class="am-u-sm-1 am-u-end am-btn am-btn-primary am-btn-xs" id="batchOperation" type="button">批量操作</button>
                                 </div>
                                 <div class="am-u-sm-10 am-u-end addborder" >
                                     <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
