@@ -73,7 +73,7 @@ padding: 5px 6px!important;
                                           <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
                                     </div>
                                     <!-- <a href="<?php echo site_url('module/LocalLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a> -->
-                                    <a href="upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
+                                    <a href="Upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a>
                                 </div>
                             </div>
                         </div>
@@ -262,8 +262,8 @@ padding: 5px 6px!important;
                 console.log(data);
                  var jsondata=JSON.parse(data.currentTarget.response);
  console.log(jsondata);
-                 // alert("导入成功！成功"+jsondata.yes+'条');
-                 // location.reload();
+                 alert("导入成功！成功"+jsondata.yes+'条');
+                  location.reload();
             
             };
             xhr.send(form); 

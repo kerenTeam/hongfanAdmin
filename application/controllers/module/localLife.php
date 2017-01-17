@@ -681,14 +681,12 @@ class LocalLife extends Default_Controller {
 		if($_POST){
 			$data = $this->input->post();
 			$data['date'] = date('Y-m-d H:i:s');
-
+			$data['marketid'] = $this->session->users['user_id'];
 			if($this->Module_model->add_market_data($data)){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}else{
 				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}
-
-
 		}else{
 			$this->load->view('404.html');
 		}
