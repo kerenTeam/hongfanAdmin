@@ -266,5 +266,18 @@ class Module_model extends CI_Model{
 		return $this->db->where($where)->delete($this->market_data);
 	}
 
+	//返回某个超市的商品
+	function get_market_list($id){
+		$where['marketid'] = $id;
+		$query = $this->db->where($where)->get($this->market_data);
+		return $query->result_array();
+	}
+	function get_market_list_page($id,$off,$page){
+		 $sql = "select * FROM hf_local_market_data where marketid = '$id' ORDER BY date desc limit $page,$off";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+
 
 }

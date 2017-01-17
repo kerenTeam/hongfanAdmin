@@ -12,6 +12,7 @@ class LocalLife extends Default_Controller {
     public $view_serviceList = "module/localLife/serviceList.html";
     //本地服务 信息详情
     public $view_serviceInfo = "module/localLife/serviceInfo.html";
+    public $view_marketList = "module/localLife/marketList.html";
 
 
     function __construct()
@@ -626,6 +627,102 @@ class LocalLife extends Default_Controller {
 			$this->load->view('404.html');
 		}
 	}
+
+	//超市比价
+	function market_data(){
+		$userid = $this->session->users['user_id'];
+			//条数
+			$config['per_page'] = 10;
+			//获取页码
+			$current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+			//var_dump($current_page);
+				//配置
+			$config['base_url'] = site_url('/module/LocalLife/market_data');
+			//分页配置
+			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+			$config['full_tag_close'] = '</ul>';
+			$config['first_tag_open'] = '<li>';
+			$config['first_tag_close'] = '</li>';
+			$config['prev_tag_open'] = '<li>';
+			$config['prev_tag_close'] = '</li>';
+			$config['next_tag_open'] = '<li>';
+			$config['next_tag_close'] = '</li>';
+			$config['cur_tag_open'] = '<li class="am-active"><a>';
+			$config['cur_tag_close'] = '</a></li>';
+			$config['last_tag_open'] = '<li>';
+			$config['last_tag_close'] = '</li>';
+			$config['num_tag_open'] = '<li>';
+			$config['num_tag_close'] = '</li>';
+			$config['first_link']= '首页';
+			$config['next_link']= '下一页';
+			$config['prev_link']= '上一页';
+			$config['last_link']= '末页';
+				
+
+			$list = $this->Module_model->get_market_list($userid);
+			$config['total_rows'] = count($list);
+						//分页数据
+			$listpage = $this->Module_model->get_market_list_page($userid,$config['per_page'],$current_page);
+						
+			$this->load->library('pagination');//加载ci pagination类
+			$this->pagination->initialize($config);
+			$data = array('name'=>'超市比价','lists'=>$listpage,'pages' => $this->pagination->create_links());
+			//视图
+
+            $data['page'] = $this->view_marketList;
+            $data['menu'] = array('localLife','localLife');
+            $this->load->view('template.html',$data);
+		
+	}
+
+
+	//新增超市比价
+	function add_market_goods(){
+		if($_POST){
+			$data = $this->input->post();
+			$data['date'] = date('Y-m-d H:i:s');
+
+			if($this->Module_model->add_market_data($data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}
+
+
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//删除超市比价商品
+	function del_market_data(){
+		$id = intval($this->uri->segment(4));
+		if($id == 0){
+			$this->load->view('404.html');
+		}else{
+			if($this->Module_model->del_market_data($id)){
+					echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}else{
+					echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}
+		}
+	}
+
+	//编辑超市比价
+	function edit_market_data(){
+		if($_POST){
+			$data = $this->input->post();
+			if($this->Module_model->edit_market_info($data['id'],$data)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
+			}
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+
 	//新增超市比价
 	function add_market_data(){
 		if($_POST){
@@ -647,8 +744,10 @@ class LocalLife extends Default_Controller {
 
 	//导入超市比价
 	function send_market_data(){
+		  $yes = array();
+	      $error = array();
 		  $name = date('Y-m-d');
-		  $inputFileName = "./Upload/xls/" .$name .'.xls';
+		  $inputFileName = "Upload/xls/" .$name .'.xls';
 	      move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
 	        //引入类库
 	      $this->load->library('excel');
@@ -666,27 +765,41 @@ class LocalLife extends Default_Controller {
 	          }
 	        }
 	          
-	          $PHPExcel = $PHPReader->load($inputFileName);
-	          $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
-	          $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
-	          $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
-	          $erp_orders_id = array();  //声明数组
-	          for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
-	            $data['market_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
-	            $data['goods_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
-	            $data['date_price'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
-	            $data['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
-	            $data['date'] = date('Y-m-d H:i:s');
-	            $data['import_user'] = $this->session->users['user_id'];
-	            if($data['market_name'] == NULL){
-	                exit;
-	            }
+	         $PHPExcel = $PHPReader->load($inputFileName);
+	         $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+	         $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+	         $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+	         $erp_orders_id = array();  //声明数组
+	         for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
+	            $data[$currentRow]['market_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+	            $data[$currentRow]['goods_name'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取B列的值
+	          $price = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+	          if(empty($price)){
+	          		$error[] = $currentRow;
+	          }else{
+	          	  $data[$currentRow]['date_price'] = $price;
+	          }
+	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
+	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
+	            $data[$currentRow]['date'] = date('Y-m-d H:i:s');
+	            $data[$currentRow]['import_user'] = $this->session->users['user_id'];
+	            $data[$currentRow]['marketid'] = $this->session->users['user_id'];
 	            //插入数据库
 	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
-	            $import =  $this->db->insert('hf_local_market_data',$data);
-                 unlink($inputFileName); 
+	           
 	         }
-	     //删除临时文件
+	         //删除临时文件
+	       
+	         foreach ($data as $key => $value) {
+	         	if($this->Module_model->add_market_data($value)){
+	         		$yes[] = $key;
+	         	}else{
+					$error[] = $key;
+	         	}
+	         }
+	         $ret = array('yes'=>count($yes),'error'=>count($error),'errorlist'=>$error);
+	         echo json_encode($ret);
+	         unlink($inputFileName);
 	   
 	}
 	//导出超市比价
