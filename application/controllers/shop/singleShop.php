@@ -218,17 +218,36 @@ class SingleShop extends Default_Controller {
     }
     //商品详情
     function goodsDetail(){
-       $store_id = $this->session->businessId;
-           if(empty($store_id)){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
         }else{
+
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             //所有商品分类
             $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+
+            //获取商品属性
+            $parent = $this->MallShop_model->get_goods_parent($id);
+            foreach ($parent as $key => $value) {
+                $stend['0']['name'][] = $value['stend1'];
+                $stend['0']['value'][] = $value['value1'];
+                $stend['1']['name'][]= $value['stend2'];
+                $stend['1']['value'][]= $value['value2'];
+                $stend['2']['name'][]= $value['stend3'];
+                $stend['2']['value'][]= $value['value3'];
+                $stend['3']['name'][] = $value['stend4'];
+                $stend['3']['value'][] = $value['value4'];
+            }
+            foreach ($stend as $k => $v) {
+                $arr[$k]['name'] = array_unique($v['name']);
+                $arr[$k]['value'] = array_unique($v['value']);
+            }
+            $data['parent'] = $arr;
 
             $data['page'] = $this->view_goodsDetail;
             $data['menu'] = array('shop','goodsList');       
@@ -327,7 +346,7 @@ class SingleShop extends Default_Controller {
         if($_POST){
             $data= $this->input->post();
             $parent = json_decode($data['parameter'],true);
-           unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
+            unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
             $i =1;
             // foreach($_FILES as $file=>$val){
@@ -354,8 +373,6 @@ class SingleShop extends Default_Controller {
              $data['differentiate'] = '1';
             
             $goodsid = $this->MallShop_model->add_shop_goods($data);
-
-
              if(!empty($goodsid)){
                 foreach ($parent as $key => $value) {
                     $value['g_id'] = $goodsid;
@@ -608,12 +625,12 @@ class SingleShop extends Default_Controller {
         } 
     }
     //获取商品属性
-    function get_goods_parent(){
-        $goodsid = '702';
-        $query = $this->db->where('g_id',$goodsid)->get('hf_mall_goods_property');
-        $res = $query->result_array();
-        var_dump(json_encode($res,JSON_UNESCAPED_UNICODE));
-    }
+    // function get_goods_parent(){
+    //     $goodsid = '702';
+    //     $query = $this->db->where('g_id',$goodsid)->get('hf_mall_goods_property');
+    //     $res = $query->result_array();
+    //     var_dump(json_encode($res,JSON_UNESCAPED_UNICODE));
+    // }
 
 
     //商品删除
