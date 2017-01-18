@@ -193,6 +193,9 @@
     margin-bottom: 10px;
     font-size: 1.2rem;
 }
+td input{
+    padding:0 !important;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -836,7 +839,14 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
         $('#inputproperty').val(JSON.stringify(propertyArray));
     });
 
-        
+    //批量操作的js
+    $('#batchOperation').click(function () {
+        var operateAmount=$('#operateAmount').val(),operateRespority=$('#operateRespority').val();
+        for(var i=0;i<$('.propertyprice').length;i++) {
+            $('.propertyprice').eq(i).find('input').val(operateAmount);
+            $('.propertystock').eq(i).find('input').val(operateRespority);
+        }
+    });  
         
 
 
