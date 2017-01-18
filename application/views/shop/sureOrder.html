@@ -61,13 +61,16 @@
                     <div class="widget-title  am-cf">订单操作</div>
                 </div>
                 <div class="widget-body am-fr">
-                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
+                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">当前操作：</label>
                             <div class="am-u-sm-9">
                                <p class="red">修改订单</p> 
                             </div>
-                        </div>                         
+                        </div>        
+                        <?php 
+                            $orderinfo = json_decode($order['goods_data'],true);
+                        ?>                 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">订单单号：</label>
                             <div class="am-u-sm-9">
@@ -77,66 +80,77 @@
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">商品名称：</label>
                             <div class="am-u-sm-9">
-                               韩版上装
+                                <?php echo $orderinfo['goodsData'][0]['goodsName'];?>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">商品图片：</label>
                             <div class="am-u-sm-9">
-                                <img class="tableImg" src="assets/img/a5.png">
+                                <img class="tableImg" src="<?php echo $orderinfo['goodsData'][0]['goodsImg'];?>">
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">买家：</label>
                             <div class="am-u-sm-9">
-                                1234
+                                <?php echo user_name($order['buyer']);?>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">买家联系方式：</label>
                             <div class="am-u-sm-9">
-                                18227587543
+                                 <?php echo $orderinfo['sendAddress']['phoneNow'];?>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">买家留言：</label>
                             <div class="am-u-sm-9">
-                                无
+                                <?php echo $orderinfo['sendAddress']['people'];?>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">下单时间：</label>
                             <div class="am-u-sm-9">
-                                2016/12/10 10:25
+                               <?php echo $order['create_time'];?>
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">商品单价：</label>
                             <div class="am-u-sm-9">
-                                ￥<input type="number" value="320" name="" >
+                                ￥<?php echo $orderinfo['totalMoney'];?>
+                                <!-- ￥<input type="number" value="320" name="" > -->
                             </div>
                         </div>
 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label">附加名称：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" value="" name="" placeholder="例如运费、退款、收费等" >
+                                 <?php if(!empty($order['fee_name'])):?>
+                                <?php echo $order['fee_name'];?>
+                                 <?php else:?>
+                                <input type="text"  name="fee_name" placeholder="例如运费、退款、收费等" >
+                            <?php endif;?>
                             </div>
                         </div>
+
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">附加名称：</label>
+                            <label for="user-email" class="am-u-sm-3 am-form-label">附加值：</label>
                             <div class="am-u-sm-9">
-                                ￥<input type="number" value="" name="" placeholder="可以为负值" >
+                            <?php if($order['fee'] != '0'):?>
+                                ￥<?php echo $order['fee'];?>
+                            <?php else:?>
+                                ￥<input type="text" name="fee" placeholder="可以为负值" >
+                            <?php endif;?>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+               <!--          <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="user-email" class="am-u-sm-3 am-form-label"></label>
                             <div class="am-u-sm-9">
                                <input type="checkbox" name="">同时确认订单
                             </div>
-                        </div>
+                        </div> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                            <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
+                            <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
+                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
                             <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                         </div>
                     </form>

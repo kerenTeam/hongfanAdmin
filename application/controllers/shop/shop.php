@@ -16,12 +16,17 @@ class Shop extends Default_Controller {
     public $view_EditShop = "shop/editShop.html";
     //达人探店
     public $view_findshop = "moll/findshop.html";
+    //新增商场商家
+    public $view_add_store = "moll/addstore.html";
+    //编辑商场商家
+    public $view_edit_store = "moll/editstore.html";
 
     function __construct()
     {
         parent::__construct();
         //model
         $this->load->model('Shop_model');
+        $this->load->model('MallShop_model');
     }
 
     //商家 列表主页
@@ -161,7 +166,7 @@ class Shop extends Default_Controller {
     function add_market_shop(){
         $data['type'] = '1';
         $data['yetai'] = $this->Shop_model->store_type_level(); 
-        $data['page'] = $this->view_addShop;
+        $data['page'] = $this->view_add_store;
         $data['menu'] = array('moll','marketBusiness');
         $this->load->view('template.html',$data);
     }
@@ -176,6 +181,113 @@ class Shop extends Default_Controller {
         $this->load->view('template.html',$data);
        
     }
+
+    //编辑商场商家
+    function edit_store(){
+        $id = intval($this->uri->segment(4));
+        if($id  == '0'){
+            $this->db->view('404,html');
+        }else{
+             $store = $this->MallShop_model->get_basess_info($id);
+             //获取商家登录账户
+             $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
+             $data['busin'] = $store; 
+             //返回所有一级业态
+             $data['yetai'] = $this->Shop_model->store_type_level();
+
+             $data['page'] = $this->view_edit_store;
+             $data['menu'] = array('store','shopList');       
+             $this->load->view('template.html',$data);
+         }
+    }
+    // 编辑商场商家
+    function edit_store_info(){
+        if($_POST){
+            $data = $this->input->post();
+            $pic = array();
+            $i =1;
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'Upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+                    }else{
+                        unset($data['img'.$i]);
+                        if($i == 1){
+                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
+                        }else{
+                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
+                        }
+                    }
+                }else{
+                    if($i == 1){
+                        $data['logo'] = $data['img'.$i];
+                    }else{
+                        $data['pic'] = $data['img'.$i];
+                    }
+                    unset($data['img'.$i]);
+                }
+                $i++;
+             }
+            if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
+                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
+                   // echo "23";
+            }else{
+                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+            
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+ 
+
+
+    //新增场内商家
+    function add_storeInfo(){
+        if($_POST){
+            $data = $this->input->post();
+            $pic = array();
+            $i =1;
+            foreach($_FILES as $file=>$val){
+                if(!empty($_FILES['img'.$i]['name'])){
+                    $config['upload_path']      = 'Upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img'.$i)) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_store')."'</script>";exit;
+                    }else{
+                        unset($data['img'.$i]);
+                        if($i == 1){
+                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
+                        }else{
+                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
+                        }
+                    }
+                }
+                $i++;
+             }
+        
+             if($this->Shop_model->add_store($data)){
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
+               // echo "23";
+             }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/add_store')."'</script>";exit;
+             }
+        }else{
+            $this->db->view('404.html');
+        }
+    }
+
+
     //新增商家操作
     function add_shop_store(){
         if($_POST){

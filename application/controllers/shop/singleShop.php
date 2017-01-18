@@ -84,7 +84,7 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //获取商家信息
-       $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+        $store = $this->MallShop_model->get_basess_info($this->session->businessId);
         //获取商家登录账户
         $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
        
@@ -1130,8 +1130,8 @@ class SingleShop extends Default_Controller {
     }
     //商家订单编辑
     function shopEditOrder(){
-             $store_id = $this->session->businessId;
-           if(empty($store_id)){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         $id = intval($this->uri->segment(4));
@@ -1159,8 +1159,24 @@ class SingleShop extends Default_Controller {
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);
         }
-      
     }
+
+    //修改订单细腻
+    function edit_store_order(){
+        if($_POST){
+            $data = $this->input->post();
+            if($this->MallShop_model->edit_order_state($data['order_id'],$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopOrder')."';</script>";exit;
+            }else{
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/sureOrder'.$data['order_id'])."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
     //订单搜索
     function order_search(){     
         if($_POST){

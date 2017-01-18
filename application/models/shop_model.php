@@ -37,6 +37,11 @@ class Shop_model extends CI_Model
         return $this->db->where($where)->update($this->goods,$data);
     }
 
+    //新增店铺
+    function add_store($data){
+        return $this->db->insert($this->shop_store,$data);
+    }
+
 
     //删除店铺
     function del_shop_store($id){
