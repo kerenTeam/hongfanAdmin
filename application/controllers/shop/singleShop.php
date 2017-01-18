@@ -307,10 +307,10 @@ class SingleShop extends Default_Controller {
                         $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
                     }
                 }else{
-                     if($i == '1'){
-                            $data['thumb'] = $data['img'.$i];
-                     }
                      if(!empty($data['img'.$i])){
+                         if($i == '1'){
+                                $data['thumb'] = $data['img'.$i];
+                         }
                          $pic[]['bannerPic'] = $data['img'.$i];
                      }
                      unset($data['img'.$i]);
