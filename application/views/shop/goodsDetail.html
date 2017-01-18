@@ -193,7 +193,10 @@
 .batch{
     margin-bottom: 10px;
     font-size: 1.2rem;
-}   
+} 
+td input{
+    padding:0 !important;
+}  
 </style>
 
 <!-- 内容区域 -->
@@ -905,7 +908,14 @@ $('#dispostage').click(function(){
         $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
     });
-
+    //批量操作的js
+    $('#batchOperation').click(function () {
+        var operateAmount=$('#operateAmount').val(),operateRespority=$('#operateRespority').val();
+        for(var i=0;i<$('.propertyprice').length;i++) {
+            $('.propertyprice').eq(i).find('input').val(operateAmount);
+            $('.propertystock').eq(i).find('input').val(operateRespority);
+        }
+    });
     $(document).ready(function(){
         //根据一级业态的内容来控制二级业态的显示
         var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
