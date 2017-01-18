@@ -36,6 +36,17 @@ class Shop_model extends CI_Model
         $where['store_id'] = $id;
         return $this->db->where($where)->delete($this->shop_store);
     }
+
+    //删除店铺下所有商品
+    function del_store_goods($id){
+        $where['storeid'] = $id;
+        return $this->db->where($where)->delete($this->goods);
+    }
+    //删除登陆账户
+    function del_shop_member($id){
+        $where['user_id'] = $id;
+        return $this->db->where($where)->delete($this->member);
+    }
   
     //获取顶级业态
     function store_type_level(){
@@ -145,7 +156,6 @@ class Shop_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->update($this->store_goods,$data);
     }
-    
 
 
 
