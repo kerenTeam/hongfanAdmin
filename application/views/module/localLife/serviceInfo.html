@@ -53,7 +53,7 @@ width:50%;
                                     <input type="text" placeholder="请输入标题" name='name' value='<?php echo $info['name'];?>' minlength="4" required="">
                                 </div>
                             </div>
-							 <div class="am-form-group am-cf">
+							<div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
                                  <div class="am-u-sm-9">
                                     <textarea class="am-validate" rows='4' name='content' placeholder="如:空调·热水器·洗衣机类维修" id="myue" required><?php echo $info['content'];?></textarea>
@@ -64,7 +64,13 @@ width:50%;
                                 <div class="am-u-sm-9">
                                     <input type="text" placeholder="如：邻水xxxx街道" name='service_cope' value='<?php echo $info['service_cope'];?>' required>
                                 </div>
-                            </div>  
+                            </div>
+                            <div class="am-form-group am-cf">
+                                <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
+                                <div class="am-u-sm-9">
+                                    <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                </div>
+                            </div>    
 							<div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
@@ -271,6 +277,12 @@ width:50%;
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                        </div>
+                                    </div> 
+                                    <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
                                             <input type="radio" class="am-inline" name='isbusiness' value='1' <?php if($info['isbusiness'] == 1){echo "checked";}?> >商家
@@ -411,6 +423,12 @@ width:50%;
                                             <input type="text" name="phone" value="<?php echo $info['phone']?>" class="js-pattern-mobile" placeholder="输入手机号" required>
                                         </div>
                                     </div>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                        </div>
+                                    </div> 
                                      <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
