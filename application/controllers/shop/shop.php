@@ -126,10 +126,17 @@ class Shop extends Default_Controller {
     function del_shop_store(){
         if($_POST){
             $id = $_POST['id'];
-            if($this->Shop_model->del_shop_store($id)){
-                echo "1";
-            }else{
-                echo "2";
+              $store = $this->Shop_model->get_store_Info($id);
+            //删除商品
+            if($this->Shop_model->del_store_goods($id)){
+                //删除商家
+                if($this->Shop_model->del_shop_store($id)){
+                    //删除登陆账户
+                    $this->Shop_model->del_shop_member($store['business_id']);
+                    echo "1";
+                }else{
+                    echo "2";
+                }
             }
         }else{
             echo "2";
