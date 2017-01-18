@@ -1069,8 +1069,8 @@ class SingleShop extends Default_Controller {
 
     //商家订单管理
     function shopOrder(){
-         $store_id = $this->session->businessId;
-           if(empty($store_id)){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         $data['storeid'] = $this->session->businessId;

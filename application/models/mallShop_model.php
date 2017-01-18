@@ -134,7 +134,7 @@ class MallShop_model extends CI_Model
     //返回商家订单列表
     function get_store_orders($storeid){
 
-        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = $storeid";
+        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid'";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
