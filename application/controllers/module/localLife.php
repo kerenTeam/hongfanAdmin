@@ -616,7 +616,6 @@ class LocalLife extends Default_Controller {
 					break;
 			}
 
-            
 			if($isOk){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
 			}else{

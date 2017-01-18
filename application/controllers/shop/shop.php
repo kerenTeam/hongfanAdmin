@@ -100,18 +100,26 @@ class Shop extends Default_Controller {
             switch ($action) {
                 case '1':
                     $data['state'] = '1';
-                    if($this->Shop_model->edit_shop_state($id,$data)){
-                        echo "1";
-                    }else{
-                        echo "2";
+                    $arr['goods_state'] = '1';
+                    //修改商家商品信息
+                    if($this->Shop_model->edit_goods_state($id,$arr)){
+                        if($this->Shop_model->edit_shop_state($id,$data)){
+                            echo "1";
+                        }else{
+                            echo "2";
+                        }
                     }
                     break;
                 case '2':
                     $data['state'] = '0';
-                    if($this->Shop_model->edit_shop_state($id,$data)){
-                        echo "1";
-                    }else{
-                        echo "2";
+                         $arr['goods_state'] = '1';
+                    //修改商家商品信息
+                    if($this->Shop_model->edit_goods_state($id,$arr)){
+                        if($this->Shop_model->edit_shop_state($id,$data)){
+                            echo "1";
+                        }else{
+                            echo "2";
+                        }
                     }
                     break;
                 default:

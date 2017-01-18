@@ -31,6 +31,13 @@ class Shop_model extends CI_Model
         $where['store_id'] = $id;
         return $this->db->where($where)->update($this->shop_store,$data);
     }
+    //修改店铺商品状态
+    function edit_goods_state($id,$data){
+        $where['storeid'] = $id;
+        return $this->db->where($where)->update($this->goods,$data);
+    }
+
+
     //删除店铺
     function del_shop_store($id){
         $where['store_id'] = $id;
