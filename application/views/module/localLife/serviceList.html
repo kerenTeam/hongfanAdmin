@@ -94,57 +94,73 @@ padding: 5px 6px!important;
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/LocalLife/add_service')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-8">
 											<input type='hidden' name='type_name' value="<?php echo $id;?>" />	
-                                            <input type="text" placeholder="请输入标题,不超过十四个字符" name='name' minlength="2" maxlength="14" required>
+                                            <input type="text" placeholder="请输入标题,2-15个字符" name='name' minlength="2" maxlength="15" required onblur="validate(this,2,15,1)">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                  
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <textarea rows='4' type="text" placeholder="如:空调·热水器·洗衣机类维修" name='content' required></textarea>
+                                        <div class="am-u-sm-8">
+                                            <textarea rows='4' type="text" minlength="2" maxlength="500" placeholder="如:空调·热水器·洗衣机类维修,2-500个字符" name='content' required onblur="validate(this,2,500,2)"></textarea>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" placeholder="请输入评分" name='star' min="1"  required>
+                                        <div class="am-u-sm-8">
+                                            <input type="number" onblur="validate1(this,1,1,3)" placeholder="请输入评分,1-5之间的数字" name='star' min="1" max="5" minlength="1" maxlength="1" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">服务范围 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" placeholder="如：邻水xxxx街道" name='service_cope' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" onblur="validate(this,2,40,4)" placeholder="如：邻水xxxx街道,2-40个字符" minlength="2" maxlength="40" name='service_cope' required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" placeholder="8:00-18:00" name='open_time' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" placeholder="例如：8:00-18:00" onblur="validate(this,2,15,5)" name='open_time' required minlength="2" maxlength="15">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" maxlength="15" minlength="2" name='link_man' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" placeholder="请输入联系人，2-10个字符" onblur="validate(this,2,10,6)" maxlength="10" minlength="2" name='link_man' required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="tel" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="tel" name="phone" onblur="validate(this,11,12,7)" class="js-pattern-mobile" placeholder="输入合法的手机号" minlength="11" maxlength="12" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='address' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='address' required placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,8)" minlength="2" maxlength=50">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-9 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
                                               <!-- 图片实时预览 -->
@@ -174,7 +190,7 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-9">
+                                         <div class="am-u-sm-8 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
@@ -311,37 +327,45 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 房产资讯类类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('/module/LocalLife/add_houst')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('/module/LocalLife/add_houst')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-8">
 											<input type='hidden' name='type_id' value='<?php echo $id;?>'/>
-                                            <input type="text" placeholder="请输入标题" name='name' minlength="4" required="">
+                                            <input type="text" placeholder="请输入标题,2-15个字符" onblur="validate(this,2,15,9)" name='name' minlength="2" maxlength="15" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">户型 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='house_layout' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='house_layout' placeholder="请输入户型，2-20个字符" onblur="validate(this,2,20,10)" required minlength="2" maxlength="20">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
 									<div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">小区名称 </label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='quarters' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='quarters' placeholder="请输入小区名称,2-20个字符" onblur="validate(this,2,20,11)" required minlength="2" maxlength="20">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">小区地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='area_address' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='area_address' placeholder="请输入小区地址，2-50个字符" onblur="validate(this,2,50,12)" required minlength="2" maxlength="50">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">房屋类型<span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <select name='house_type' required>
+                                        <div class="am-u-sm-8">
+                                            <select name='house_type' required onchange="validate(this,1,20,13)">
                                                 <option value="">-=请选择一项=-</option>
                                                 <option value="二手房">二手房</option>
                                                 <option value="新房">新房</option>
@@ -351,47 +375,61 @@ padding: 5px 6px!important;
                                                 <option value="其他">其他</option>
                                             </select>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips13" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips13" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">中介名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='intermediary_name' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='intermediary_name' placeholder="请输入中介名称，2-15个字符" required onblur="validate(this,2,15,14)" minlength="2" maxlength="15">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips14" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips14" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">中介地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='address' placeholder="如：邻水xxxx街道" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='address' onblur="validate(this,2,50,15)" placeholder="如：邻水xxxx街道,2-50个字符" required minlength="2" maxlength="50">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips15" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips15" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                    
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name="phone" class="js-pattern-mobile" placeholder="输入手机号" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="tel" onblur="validate(this,11,12,16)" name="phone" class="js-pattern-mobile" placeholder="输入合法的手机号" required minlength="11" maxlength="12">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips16" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips16" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">面积(平米) <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='house_area'  required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='house_area' placeholder="请输入面积，2-10个字符" onblur="validate(this,2,10,17)" minlength="2" maxlength="10" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips17"  style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips17" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">售价(元/平米) <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='avg_price' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='avg_price' placeholder="请输入平均售价,2-10个字符" onblur="validate(this,2,10,18)" minlength="2" maxlength="10" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips18" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips18" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
 									<div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">总售价 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='price' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='price' required placeholder="请输入总售价，2-10个字符" onblur="validate(this,2,10,19)" minlength="2" maxlength="10">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips19" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips19" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-9 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
                                               <!-- 图片实时预览 -->
@@ -421,7 +459,7 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-9">
+                                         <div class="am-u-sm-8 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
@@ -434,15 +472,19 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">房屋简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <textarea class="am-validate" name="content" id="myue" rows="5" required></textarea>
+                                        <div class="am-u-sm-8">
+                                            <textarea class="am-validate" placeholder="请输入房屋简介，2-500个字符" onblur="validate(this,2,500,20)" minlength="2" maxlength="500" name="content" id="myue" rows="5" required></textarea>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips20" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips20" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                        <div class="am-u-sm-8">
+                                            <input type="number" placeholder="请输入评分,1-5之间的数字" onblur="validate1(this,1,1,21)" name='star' min="1" minlength="1" maxlength="1" required max="5">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips21" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips21" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
@@ -546,54 +588,66 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/localLife/add_market');?>" method='post' enctype='multipart/form-data' >
+                                <form class="am-form tpl-form-line-form" data-am-validator action="<?php echo site_url('/module/localLife/add_market');?>" method='post' enctype='multipart/form-data' >
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" placeholder="请输入标题" name='title'  minlength="4" required="">
+                                        <div class="am-u-sm-8">
+                                            <input type="text" placeholder="请输入宝贝名，2-15个字符" onblur="validate(this,2,15,22)" name='title'  minlength="2" maxlength="15" required="">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips22" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips22" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">售价 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text"  name='price' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text"  name='price' placeholder="请输入售价，2-10个字符" onblur="validate(this,2,10,23)" minlength="2" maxlength="10" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips23" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips23" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">新旧 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text"  name='colour' placeholder="如：9成新" required>
+                                        <label class="am-u-sm-3 am-form-label">新旧程度 <span class="red">*</span></label>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" onblur="validate(this,2,10,24)" name='colour' placeholder="如：9成新，2-10个字符" minlength="2" maxlength="10" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips24" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips24" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <select name='type' required>
+                                        <div class="am-u-sm-8">
+                                            <select name='type' required onblur="validate(this,1,15,25)">
                                                 <option value="">-=请选择一项=-</option>
                                                 <?php foreach($type as $v):?>
                                                 <option value="<?php echo $v['tagid'];?>"><?php echo $v['tag'];?></option>
                                                 <?php endforeach;?>
                                             </select>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips25" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips25" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='address'  placeholder="如：邻水xxxx街道" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='address' minlength="2" maxlength="50" onblur="validate(this,2,50,26)" placeholder="如：邻水xxxx街道,2-50个字符" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips26" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips26" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                   
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name="phone"  class="js-pattern-mobile" placeholder="输入手机号" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="tel" name="phone" minlength="11" maxlength="12" onblur="validate(this,11,12,27)" class="js-pattern-mobile" placeholder="输入合法的手机号" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips27" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips27" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                 
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-8 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
                                               <!-- 图片实时预览 -->
@@ -602,7 +656,7 @@ padding: 5px 6px!important;
                                             </div>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>
-                                        <div class="am-u-sm-9 am-fr">
+                                        <div class="am-u-sm-8 am-fr">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                               <!-- 图片实时预览 -->
@@ -611,7 +665,7 @@ padding: 5px 6px!important;
                                             </div>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                         </div>
-                                        <div class="am-u-sm-9 am-fr">
+                                        <div class="am-u-sm-8 am-fr">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
                                               <!-- 图片实时预览 -->
@@ -623,7 +677,7 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-9">
+                                         <div class="am-u-sm-8 am-u-end">
                                             <div class="wx_type_img">
                                              <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
@@ -636,15 +690,19 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <textarea class="am-validate" name="content" id="myue" rows="5" required></textarea>
+                                        <div class="am-u-sm-8">
+                                            <textarea class="am-validate" onblur="validate(this,2,500,28)" minlength="2" maxlength="500" placeholder="请输入简介，2-500个字符" name="content" id="myue" rows="5" required></textarea>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips28" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips28" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                        <div class="am-u-sm-8">
+                                            <input type="number" onblur="validate1(this,1,1,29)" placeholder="请输入评分，1-5之间的数字" name='star' minlength="1" maxlength="1" min="1" max="5" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips29" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips29" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
@@ -866,37 +924,47 @@ padding: 5px 6px!important;
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/add_market_data')?>' method='post' enctype='multipart/form-data'>
+                                <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('module/LocalLife/add_market_data')?>' method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
+                                        <div class="am-u-sm-8">
                                             <input type="hidden" name="id" value="<?php echo $id;?>">
-                                            <input type="text"  name='market_name' required="">
+                                            <input type="text"  name='market_name' required placeholder="请输入超市名，2-15个字符" onblur="validate(this,2,15,30)" minlength="2" maxlength="15">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips30" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips30" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='goods_name' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='goods_name' onblur="validate(this,2,15,31)" minlength="2" maxlength="15" placeholder="请输入商品名，2-15个字符" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips31" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips31" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" name='date_price' required>
+                                        <div class="am-u-sm-8">
+                                            <input type="number" name='date_price' minlength="2" maxlength="10" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,32)" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips32" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips32" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">单位 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="text" name='unit' placeholder="斤、瓶、两" required>
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name='unit' onblur="validate(this,2,10,33)" placeholder="斤、瓶、两，2-10个字符" required minlength="2" maxlength="10">
                                         </div>
+                                        <small class="am-u-sm-1 red redtips33" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips33" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9">
-                                            <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                        <div class="am-u-sm-8">
+                                            <input type="number" onblur="validate1(this,1,1,34)" placeholder="请输入评分,1-5之间的数字" name='star' min="1"  max="5" minlength="1" maxlength="1" required>
                                         </div>
+                                        <small class="am-u-sm-1 red redtips34" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips34" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
@@ -953,38 +1021,48 @@ padding: 5px 6px!important;
                                         <div class="am-modal-hd">编辑</div>
                                         <div class="am-modal-bd">
                                             <!-- 本地生活 跳蚤市场类 -->
-                                            <form class="am-form tpl-form-line-form" action='<?php echo site_url('module/LocalLife/edit_service')?>' method='post' enctype='multipart/form-data'>
+                                            <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('module/LocalLife/edit_service')?>' method='post' enctype='multipart/form-data'>
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-9">
+                                                    <div class="am-u-sm-8">
                                                         <input type="hidden" name="type_id" value="<?php echo $typeid;?>">
                                                         <input type="hidden" name="cate" value="<?php echo $id;?>">
-                                                        <input type="text" name="market_name" value="<?php echo $val['market_name']?>" minlength="4" required="">
+                                                        <input type="text" name="market_name" value="<?php echo $val['market_name']?>" placeholder="请输入超市名，2-15个字符" minlength="2" maxlength="15" required onblur="validate(this,2,15,35)">
                                                     </div>
+                                                    <small class="am-u-sm-1 red redtips35" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips35" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div>
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="text" name="goods_name" value="<?php echo $val['goods_name']?>" required>
+                                                    <div class="am-u-sm-8">
+                                                        <input type="text" name="goods_name" minlength="2" maxlength="15" placeholder="请输入商品名，2-15个字符" value="<?php echo $val['goods_name']?>" onblur="validate(this,2,15,36)" required>
                                                     </div>
+                                                    <small class="am-u-sm-1 red redtips36" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips36" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div>
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="text" value="<?php echo $val['date_price']?>" name="date_price" required>
+                                                    <div class="am-u-sm-8">
+                                                        <input type="text" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,37)" minlength="2" maxlength="10" value="<?php echo $val['date_price']?>" name="date_price" required>
                                                     </div>
+                                                    <small class="am-u-sm-1 red redtips37" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips37" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div>   
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">单位 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="text" value="<?php echo $val['unit']?>" name='unit' placeholder='斤、瓶、两' required>
+                                                    <div class="am-u-sm-8">
+                                                        <input type="text" value="<?php echo $val['unit']?>" name='unit' placeholder='如斤、瓶、两,2-10个字符' minlength="2" maxlength="10" onblur="validate(this,2,10,38)" required>
                                                     </div>
+                                                    <small class="am-u-sm-1 red redtips38" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips38" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div>
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-9">
-                                                        <input type="number" placeholder="请输入评分" name='' min="1"  required>
+                                                    <div class="am-u-sm-8">
+                                                        <input type="number" onblur="validate1(this,1,1,39)" placeholder="请输入评分,1-5之间的数字" name='star' minlength="1" maxlength="1" min="1"  required max="5">
                                                     </div>
+                                                    <small class="am-u-sm-1 red redtips39" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips39" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div> 
                                                 <div class="am-form-group am-btn-group-xs">
                                                     <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
@@ -1021,6 +1099,28 @@ padding: 5px 6px!important;
 </div>
 </div>
 <script type="text/javascript">
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
+    }
+    function validate1(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen || parseInt(content)>5 || parseInt(content)<1){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
+    }
+
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
