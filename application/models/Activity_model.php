@@ -94,6 +94,13 @@ class Activity_model extends CI_Model
     }
 
 
+    //获取一见钟情活动列表
+    function get_love_list(){
+        $query = $this->db->order_by('create_time','desc')->get($this->marriage);
+        return $query->result_array();
+    }
+
+
 }
 
 
