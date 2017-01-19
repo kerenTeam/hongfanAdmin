@@ -877,10 +877,10 @@ $('#dispostage').click(function(){
 
 
         var i=0,kflag=0,flag=1;
-        
+        var kflag=parseInt($('#kkflagNumber').val()) || 0;
         //新增规格项
         $('#addNewPropertybtn').click(function () {
-            var kflag=parseInt($('#kkflagNumber').val()) || 0;
+            
             if(kflag==4){
                 alert("最多只能录入四个属性");
                 return false;
