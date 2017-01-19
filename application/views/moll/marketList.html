@@ -269,7 +269,7 @@ var flag=0;
                         document.getElementById('shopList').innerHTML = thisDate(obj.curr);
                         $('.editShop').click(function(){//编辑商家信息
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/Shop/editShop/" + dataId + "');?>");
+                            $(this).attr("href","<?php echo site_url('/shop/Shop/edit_store/" + dataId + "');?>");
                         });
                          $('.manageShop').click(function(){//管理商家信息
                             var dataId=$(this).attr('data-id');
@@ -421,7 +421,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="shopModal">
-    <tr class="trClass" id="trClass<%= store_id%>" data-id="<%= store_id%>">
+    <tr class="trClass<%= store_id%>" id="trClass<%= store_id%>" data-id="<%= store_id%>">
         <td class="am-text-middle" ><input type="checkbox" data-id="<%= store_id%>" class="commentBox" name="commentBox"></td>
         <td>宏帆广场</td>
         <td class="am-text-middle"><%= store_id%></td>
