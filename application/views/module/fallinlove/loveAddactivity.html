@@ -38,7 +38,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/module/Fallinlove/add_love_activity');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">新增活动</div>
@@ -65,10 +65,10 @@
                                     </div>
                                     <div class="am-g">
                                       <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="star_time" value="" /><span id="my-startDate">2014-12-20</span>
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="start_time"  /><span id="my-startDate"></span>
                                       </div>
                                       <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time"  /><span id="my-endDate"></span>
                                       </div>
                                     </div>
                                 </div>
@@ -76,19 +76,20 @@
                              <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">活动时间<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">活动时间</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                                     <input type="text" id="doc-vld-name-1" name="times" minlength="2" placeholder="请输入活动时间" required="required" />
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">活动人数限制<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
                                     <select name="persons_limit" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value=>输入查找/选择</option>
-                                        <option value="20人以下">20人以下</option>
-                                        <option value="20-50人">20-50人</option>
-                                        <option value="50-100人">50-100人</option>
-                                        <option value="100-200人">100-200人</option>
-                                        <option value="200-500人">200-500人</option>
+                                        <option value=''>输入查找/选择</option>
+                                        <option value="20">20人以下</option>
+                                        <option value="50">50人以下</option>
+                                        <option value="100">100人以下</option>
+                                        <option value="200">200人以下</option>
+                                        <option value="500">500人以下</option>
+                                        <option value="1000">1000人以下</option>
                                     </select>
                                 </div>
                             </div>
@@ -99,9 +100,9 @@
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
-                                <label class="am-u-sm-3 am-text-right">资费情况<span class="red">*</span>：</label>
+                                <label class="am-u-sm-3 am-text-right">报名费用<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
-                                    <input type="text"  id="postageNum" name="charge" required="required" />
+                                    <input type="text"  id="postageNum" name="charge" placeholder="免费输入0即可" required="required" />
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -116,8 +117,8 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="cancle">新增</button>
-                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset" id='cancle'>取消</button> 
                     </div>
 
                 </div>
@@ -148,6 +149,8 @@
           $alert.hide();
           startDate = new Date(event.date);
           $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+
         }
         $(this).datepicker('close');
       });
@@ -160,6 +163,7 @@
           $alert.hide();
           endDate = new Date(event.date);
           $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
         }
         $(this).datepicker('close');
       });

@@ -915,7 +915,7 @@ class SingleShop extends Default_Controller {
         //获取所有优惠劵
         $data['coupon'] = $this->MallShop_model->get_store_coupon($this->session->businessId);
         $data['page'] = $this->view_shopAddActivity;
-        $data['menu'] = array('activity','shopAddActivity');
+        $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
     }
     //新增活动操作

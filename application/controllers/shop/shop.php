@@ -196,7 +196,7 @@ class Shop extends Default_Controller {
              $data['yetai'] = $this->Shop_model->store_type_level();
 
              $data['page'] = $this->view_edit_store;
-             $data['menu'] = array('store','shopList');       
+             $data['menu'] = array('moll','marketBusiness');       
              $this->load->view('template.html',$data);
          }
     }

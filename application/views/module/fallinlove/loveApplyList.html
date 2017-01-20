@@ -80,14 +80,14 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="helpGroupList">
-                                <tr class="trClass" data-id="">
+                            <!--     <tr class="trClass" data-id="">
 							        <td class="am-text-middle">S154561</td>
 							        <td class="am-text-middle">遇见命中的他</td>
 							        <td class="am-text-middle">夏目</td>
 							        <td class="am-text-middle">女</td>
 							        <td class="am-text-middle">20</td>
 							        <td class="am-text-middle">1924854561215</td>
-							    </tr>
+							    </tr> -->
                                 <!-- more data -->
                                 
                             </tbody>
@@ -173,87 +173,12 @@ td.am-text-middle img{
                             $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");                     
                         }
                         
-                        //回复某个服务
-                        $('.response').click(function(){
-                            var serveId=$(this).attr('data-id'),user_id=$('this').attr('data_id');
-                            var content=document.getElementsByClassName('content'+serveId)[0].value;
-                            console.log(content);
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/serveForPeople/serveForPeople/reply_help_request');?>',
-                                data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
-                                success: function(data){
-                                    console.log(data);
-                                    if(data==1){
-                                        $('#re'+dataId).modal('close');
-                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-                                    }else{
-                                        alert("操作失败！");
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                }
-                            });
-                            
-                        });
-                        //单个帮帮服务删除
-                        $('.sureDelete').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            var array=[]; 
-                            array[0]=deleteId;
-                            array=JSON.stringify(array);
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
-                                data: 'id='+array,
-                                success: function(data){
-                                    if(data==1){
-                                        $('#trClass'+deleteId).remove();
-                                    }else{
-                                        alert("操作失败！");
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                }
-                            });
-                            
-                        });
-                        
-                        //多个帮帮服务删除
-                        $('.deleteAll').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            var array=[];
-                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
-                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-                            }
-                            array=JSON.stringify(array);
-                            $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
-                                    data: 'id='+array,
-                                    success: function(data){
-                                        if(data==1){
-                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            
-                        });
+      
                         
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关服务信息！</td><td></td></tr>').appendTo("#helpGroupList");
+                $('<tr><td colspan="12" class="am-text-center">暂无相关信息！</td><td></td></tr>').appendTo("#helpGroupList");
             }
 
             
@@ -265,10 +190,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/module/FallinloveApplyList/$id');?>','default=1');
+    getList('<?php echo site_url('/module/Fallinlove/get_activity_user');?>','id=<?php echo $activity_id;?>');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/module/FallinloveApplyList/$id');?>','default=1');
+        getList('<?php echo site_url('/module/Fallinlove/get_activity_user');?>','default=<?php echo $activity_id;?>');
     });
     //点击搜索
     $('.searchGoods').click(function(){

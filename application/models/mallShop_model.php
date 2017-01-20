@@ -235,7 +235,7 @@ class MallShop_model extends CI_Model
 
     //返回所有订单
     function get_order_list(){
-        $this->db->select('a.*,b.store_name,c.username');
+        $this->db->select('a.*,b.store_name,c.username,c.nickname');
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
