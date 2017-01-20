@@ -15,7 +15,7 @@ td.am-text-middle img{
 .am-u-sm6{
     width:60px !important;
     margin:0;
-}
+} 
 .am-form-group div{
     line-height: 37px;
 }
@@ -314,7 +314,13 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= order_id%></td>
         <td class="am-text-middle"><%= goods_data.totalNum%></td>
         <td class="am-text-middle"><%= goods_data.totalMoney%></td>
-        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle">
+        <%if(username) {%>
+        <%= username%>
+        <%} else {%>
+        <%= nickname%>
+        <%}%>
+        </td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <%if(updatetime=="0" || !updatetime) {%>

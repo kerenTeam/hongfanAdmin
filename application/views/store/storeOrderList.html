@@ -286,11 +286,17 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= order_id%></td>
         <td class="am-text-middle"><%= goods_data.totalNum%></td>
         <td class="am-text-middle"><%= amount%></td>
-        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle">
+        <%if(username) {%>
+        <%= username%>
+        <%} else {%>
+        <%= nickname%>
+        <%}%>
+        </td>
         <td class="am-text-middle"><%= store_name%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
-        <%if(updatetime) {%>
+        <%if(updatetime=="0" || !updatetime) {%>
             <%= updatetime%>
         <%} else {%>
             <%= create_time%>

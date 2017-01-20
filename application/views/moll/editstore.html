@@ -82,7 +82,8 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
                         <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <select name="subcommercial_type_name" id="secondYetaiSelect" required>
+                            <select name="subcommercial_type_name" data-id="<?php echo $busin['subcommercial_type_name']?>" id="secondYetaiSelect" >
+                            <option value="">-=请选择一项=-</option>
                             </select> 
                         </div> 
                     </div>
@@ -292,9 +293,10 @@
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
     $(document).ready(function(){
-            //根据一级业态的内容来控制二级业态的显示
+        //根据一级业态的内容来控制二级业态的显示
         var commercial_type_name=$('#commercial_type_name option:selected').val(),str='',sttr='';
-        $("#secondYeTaiSelect").html('<option value="">-=请选择一项=-</option>');
+        var secondDefault = $("#secondYetaiSelect").attr('data-id');
+        $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
         $.ajax({
             type:'post',
             url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
@@ -304,18 +306,23 @@
                 if(jsonData){
                     if(jsonData==2){
                         
-                           $('#secondYeTai').css('display','none');
-                           $("#secondYeTaiSelect").removeAttr("required"); 
+                           $('#secondYetai').css('display','none');
+                           $("#secondYetaiSelect").removeAttr("required"); 
                     } else {
                         console.log(jsonData);
                         for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            if(jsonData[i].id==secondDefault){
+
+                                str='<option selected value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            }else{
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            }
                             sttr=sttr+str;
                         }
                         console.log(sttr);
-                        $('#secondYeTai').css('display','block');
+                        $('#secondYetai').css('display','block');
                         $("#secondYetaiSelect").attr("required","required"); 
-                        $("#secondYeTaiSelect").append(sttr);
+                        $("#secondYetaiSelect").append(sttr);
                     }
                     
                 }else{
@@ -333,25 +340,26 @@
       $('#commercial_type_name').change(function(){
         //根据一级业态的内容来控制二级业态的显示
         var commercial_type_name=$('#commercial_type_name option:selected').val(),str='',sttr='';
-        $("#secondYeTaiSelect").html('<option value="">-=请选择一项=-</option>');
+        $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
         $.ajax({
             type:'post',
             url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
             data: 'gid='+ commercial_type_name,
             success: function(data){   
                 var jsonData=eval(data);
+
                 // console.log(jsonData);
                 if(jsonData){
                     if(jsonData==2){
-                           $('#secondYeTai').css('display','none');
-                           $("#secondYeTaiSelect").removeAttr("required"); 
+                           $('#secondYetai').css('display','none');
+                           $("#secondYetaiSelect").removeAttr("required"); 
                     } else {
                         for(var i=0;i<jsonData.length;i++){
                             str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
                             sttr=sttr+str;
                         }
                         console.log(sttr);
-                        $('#secondYeTai').css('display','block'); 
+                        $('#secondYetai').css('display','block'); 
                         $("#secondYetaiSelect").append(sttr);
                     }
                     
