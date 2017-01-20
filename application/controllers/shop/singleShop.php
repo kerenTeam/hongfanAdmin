@@ -1189,8 +1189,6 @@ class SingleShop extends Default_Controller {
         }
     }
 
-
-
     //订单搜索
     function order_search(){     
         if($_POST){
