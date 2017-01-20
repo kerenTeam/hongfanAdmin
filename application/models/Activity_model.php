@@ -11,6 +11,8 @@ class Activity_model extends CI_Model
     public $activity = "hf_system_activity";
     //一键钟情表
     public $marriage = "hf_local_marriage";
+    //一见钟情参与表
+    public $marriage_join = "hf_local_marriage_join";
 
     function __construct()
     {
@@ -97,6 +99,37 @@ class Activity_model extends CI_Model
     //获取一见钟情活动列表
     function get_love_list(){
         $query = $this->db->order_by('create_time','desc')->get($this->marriage);
+        return $query->result_array();
+    }
+
+    //新增一键钟情活动
+    function add_love_activity($data){
+        return $this->db->insert($this->marriage,$data);
+    }
+
+    //删除一见钟情
+    function del_love_activity($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->marriage);
+    }
+
+    //获取一键钟情活动详情
+    function get_loveactivity_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->marriage);
+        return $query->row_array();
+    }
+
+    //编辑
+    function edit_love_activity($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->marriage,$data);
+    }
+
+    //返回报名详情
+    function get_activity_users($id){
+        $where['marriage_id'] = $id;
+        $query  = $this->db->where($where)->get($this->marriage_join);
         return $query->result_array();
     }
 
