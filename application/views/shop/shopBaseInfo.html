@@ -101,7 +101,7 @@
                         <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <select name="subcommercial_type_name"  id="secondYetaiSelect" onchange="validate(this,1,20,6)">
-                                <option value="">-=请选择一项=-</option>
+                                
                             </select> 
                         </div>
                         <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
@@ -322,15 +322,23 @@
                 success: function(data){   
                     var jsonData=eval(data);
                     console.log(jsonData);
-                    if(data!=2){
-                        
-                        for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                            sttr=sttr+str;
+                    $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>'); 
+                    if(data){
+                        if(data==2){
+                           $('#secondYetai').css('display','none');
+                            $("#secondYetaiSelect").removeAttr("required"); 
+                            return;
+                        } else {
+                            for(var i=0;i<jsonData.length;i++){
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                                sttr=sttr+str;
+                            }
+                            console.log(sttr);
+                            $('#secondYetai').css('display','block');
+                            $("#secondYetaiSelect").append(sttr);
+                            $("#secondYetaiSelect").attr("required","required"); 
                         }
-                        console.log(sttr);
-                        $('#secondYetai').css('display','block');
-                        $("#secondYetaiSelect").append(sttr);
+                       
                     }else{
                         $('#secondYetai').css('display','none');
                         $("#secondYetaiSelect").removeAttr("required");
@@ -351,17 +359,24 @@
                 url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
                 data: 'gid='+ firstYetai,
                 success: function(data){ 
-                    $("#secondYetaiSelect").html("");  
+                    $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');  
                     var jsonData=eval(data);
-                    console.log(jsonData);
-                    if(data!=2){    
-                        for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                            sttr=sttr+str;
-                        }
-                        console.log(sttr);
-                        $('#secondYetai').css('display','block');
-                        $("#secondYetaiSelect").append(sttr);
+                    if(data){ 
+                        if(data==2){
+                           $('#secondYetai').css('display','none');
+                            $("#secondYetaiSelect").removeAttr("required"); 
+                            return;
+                        }  else {
+                            for(var i=0;i<jsonData.length;i++){
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                                sttr=sttr+str;
+                            }
+                            console.log(sttr);
+                            $('#secondYetai').css('display','block');
+                            $("#secondYetaiSelect").attr("required","required"); 
+                            $("#secondYetaiSelect").append(sttr);
+                        } 
+                        
                     }else{
                         $('#secondYetai').css('display','none');
                         $("#secondYetaiSelect").removeAttr("required");
