@@ -23,6 +23,16 @@ function user_name($user_id){
     return $name['username'];
 }
 
+//获取用户别名
+function nick_name($userid){
+        $CI = &get_instance();
+        $sql = "SELECT nickname FROM hf_user_member where user_id = '$userid'";
+        $query = $CI->db->query($sql);
+        $name = $query->row_array();
+        return $name['nickname'];
+}
+
+
 // //返回商品分类名称
 // function goods_cate_name($id){
 //     $CI = &get_instance();

@@ -20,10 +20,6 @@ class Fallinlove extends Default_Controller {
         parent::__construct();
         $this->load->model('Activity_model');
     }
-
-
-
-
     //一键钟情 活动列表
     function loveactivityList()
     {
@@ -67,6 +63,17 @@ class Fallinlove extends Default_Controller {
         $data['menu'] = array('fallinlove','loveAddactivity');
         $this->load->view('template.html',$data);
     }
+
+    //新增一键钟情活动
+    function add_love_activity(){
+        if($_POST){
+            
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
     //一键钟情 报名情况列表
     function loveApplyList()
     {
