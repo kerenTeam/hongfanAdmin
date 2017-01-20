@@ -189,7 +189,7 @@
                     <div class="am-form-group am-text-center">
                         <input type="hidden" name="store_id" value="<?php echo $store['store_id'];?>">
                         <input type="hidden" name="store_distinction" value="<?php echo $store['store_distinction'];?>">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        <button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> <button class="am-btn am-btn-secondary" type="submit">提交</button>
                     </div>
                 </div>
             </form>
@@ -323,4 +323,9 @@ function validate(obj,minlen,maxlen,i){
             }
         });
     });
+
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
 </script>

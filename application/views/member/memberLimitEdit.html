@@ -53,7 +53,7 @@ color: black;
                     <?php endforeach;?>
                  
                     <div class="am-form-group am-btn-group-xs am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" >
-                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                        <button type="reset" id="cancle" class="am-btn am-btn-default">取消</button>
                         <input type="hidden" name="gid" value="<?php echo $group['gid'];?>">
                         <button type="submit" class="am-btn am-btn-secondary">保存</button>
                     </div>
@@ -100,4 +100,8 @@ $('#submit').click(function(){
         return true;
     }
 })
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
 </script>

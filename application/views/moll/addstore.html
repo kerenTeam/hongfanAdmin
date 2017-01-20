@@ -332,6 +332,10 @@
         });
     });
 
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
     //点击保存按钮作验证
     $('#submit').click(function(){
         if($('#startBusinessTime').val()==""){
