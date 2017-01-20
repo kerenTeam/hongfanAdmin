@@ -28,11 +28,22 @@ td.am-text-middle img{
 .linkWord{
     width: 10% !important;
 }
-.conResponse{
+.detailId{
     border: 1px solid #F37B1D !important;
     color: #F37B1D !important;
 }
-.conResponse:hover{
+.detailId:hover{
+    background: #F37B1D !important; 
+    color: #fff !important;
+}
+.imgBox{
+    width: 100px;
+}
+.signUpMess{
+    border: 1px solid #F37B1D !important;
+    color: #F37B1D !important;
+}
+.signUpMess:hover{
     background: #F37B1D !important; 
     color: #fff !important;
 }
@@ -109,41 +120,16 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox"></th>
                                     <th class="shop_id">编号 </th>
+                                    <th class="moll_name">缩略图 </th>
                                     <th class="moll_name">活动名称 </th>
-                                    <th class="moll_name">活动分类 </th>
                                     <th class="shop_id">活动人数</th>
                                     <th class="shop_id">活动时间</th>
-                                    <th class="moll_name">活动地点</th>
                                     <th class="shop_id">资费情况</th>
                                     <th class="shop_id">已报名人数</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="helpGroupList">
-                                <tr class="trClass" data-id="">
-							        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="" name="commentBox"></td>
-							        <td class="am-text-middle">S154561</td>
-							        <td class="am-text-middle">遇见命中的他</td>
-							        <td class="am-text-middle">化妆舞会</td>
-							        <td class="am-text-middle">20</td>
-							        <td class="am-text-middle">2016.01.21-2016.01.30</td>
-							        <td class="am-text-middle">宏帆广场</td>
-							        <td class="am-text-middle">免费</td>
-							        <td class="am-text-middle">20</td>
-							        <td class="am-text-middle">
-							            <div class="tpl-table-black-operation">
-							                <a data-id="" class="bangServeDetail" href="<?php echo site_url().'/module/fallinlove/loveEditactivity';?>">
-							                    <i class="am-icon-pencil"></i> 编辑详情
-							                </a>
-							                <a data-id="" href="<?php echo site_url().'/module/fallinlove/loveApplyList';?>" class="conResponse">
-							                    <i class="am-icon-eye"></i> 报名情况
-							                </a>
-							                <a data-id="" class="tpl-table-black-operation-del tpl-del">
-							                    <i class="am-icon-trash"></i> 删除
-							                </a>
-							            </div>
-							        </td>
-							    </tr>
                                 <!-- more data -->
                                 
                             </tbody>
@@ -186,7 +172,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            
+            console.log(res);
             if(res!=2){
                 nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -196,7 +182,7 @@ td.am-text-middle img{
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        // listData+= template('storeGoodsModal',res[i]);
+                        listData+= template('storeGoodsModal',res[i]);
                      }
                     console.log(res);
                     return listData;
@@ -206,7 +192,7 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        // document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('helpGroupList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
                          $('.tablecheck').click(function() {
                             if(flag==0){
@@ -222,39 +208,17 @@ td.am-text-middle img{
                                flag=0;
                             }
                         });
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id'),detailId=$('.bangServeDetail').eq(i).attr('data-id'),reDataId=$('.conResponse').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            $('.bangServeDetail').eq(i).attr("data-am-modal","{target: '#detail"+ detailId +"'}");
-                            $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");                     
-                        }
-                        
-                        //回复某个服务
-                        $('.response').click(function(){
-                            var serveId=$(this).attr('data-id'),user_id=$('this').attr('data_id');
-                            var content=document.getElementsByClassName('content'+serveId)[0].value;
-                            console.log(content);
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/serveForPeople/serveForPeople/reply_help_request');?>',
-                                data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
-                                success: function(data){
-                                    console.log(data);
-                                    if(data==1){
-                                        $('#re'+dataId).modal('close');
-                                        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-                                    }else{
-                                        alert("操作失败！");
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                }
-                            });
-                            
+                        $('.signUpMess').click(function(){//查看报名情况
+                            var dataId=$(this).attr('data-id');
+                            // $(this).attr("href","<?php echo site_url().'/module/FallinloveApplyList/"+ dataId +");?>");
                         });
-                        //单个帮帮服务删除
+                         
+                        for(var i=0;i<$('.tpl-del').length;i++){
+                            var dataId=$('.tpl-del').eq(i).attr('data-id'),detailId=$('.bangServeDetail').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+                            $('.editloveActivity').eq(i).attr("data-am-modal","{target: '#detail"+ detailId +"'}");                     
+                        }
+                        //单个一见钟情删除
                         $('.sureDelete').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[]; 
@@ -266,7 +230,7 @@ td.am-text-middle img{
                                 data: 'id='+array,
                                 success: function(data){
                                     if(data==1){
-                                        $('#trClass'+deleteId).remove();
+                                        getList('<?php echo site_url('/module/Fallinlove/get_loveactivity');?>','default=1');
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -279,7 +243,7 @@ td.am-text-middle img{
                             
                         });
                         
-                        //多个帮帮服务删除
+                        //多个一见钟情活动删除
                         $('.deleteAll').click(function(){
                             var deleteId=$(this).attr('data-id');
                             var array=[];
@@ -293,7 +257,7 @@ td.am-text-middle img{
                                     data: 'id='+array,
                                     success: function(data){
                                         if(data==1){
-                                            getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+                                            getList('<?php echo site_url('/module/Fallinlove/get_loveactivity');?>','default=1');
                                         }else{
                                             alert("操作失败！");
                                         }
@@ -309,7 +273,10 @@ td.am-text-middle img{
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关服务信息！</td><td></td></tr>').appendTo("#helpGroupList");
+                $('#shopGoodsList').find('tr').remove();
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#helpGroupList');
             }
 
             
@@ -321,16 +288,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+    getList('<?php echo site_url('/module/Fallinlove/get_loveactivity');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-    });
-    //点击搜索
-    $('.searchGoods').click(function(){
-        var helpgroupName=$('#helpgroupName').val(),askhelpName=$('#askhelpName').val(),source_state=$('#source_state option:selected').val(),searchKey=$('#searchKey').val();
-        console.log('username='+helpgroupName+'&helpname='+askhelpName+'&state='+source_state+'&sear='+searchKey);
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/search_request');?>','username='+helpgroupName+'&helpname='+askhelpName+'&state='+source_state+'&sear='+searchKey);
+        getList('<?php echo site_url('/module/Fallinlove/get_loveactivity');?>','default=1');
     });
 })
 </script>
@@ -339,30 +300,20 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= username%></td>
-        <td class="am-text-middle"><%= content%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle"><%= phone%></td>
-        <td class="am-text-middle"><%= name%></td>
-        <td class="am-text-middle">
-        <%if(state=="1"){%>
-            已帮助
-        <%}else{%>
-            待帮助
-        <%}%>
-        </td>
+        <td class="am-text-middle"><img src="<%= url%>" class="imgBox" /></td>
+        <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%= persons_limit%></td>
+        <td class="am-text-middle"><%= start_time%>-<%= end_time%></td>
+        <td class="am-text-middle"><%= charge%></td>
+        <td class="am-text-middle">暂无</td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="bangServeDetail">
-                    <i class="am-icon-info-circle"></i> 查看详情
+                <a data-id="<%= id%>" class="editloveActivity">
+                    <i class="am-icon-pencil"></i> 编辑详情
                 </a>
-                <%if(state=="1"){%>
-                
-                <%}else{%>
-                <a data-id="<%= id%>"  class="conResponse">
-                    <i class="am-icon-pencil"></i> 给予答复
+                <a data-id="<%= id%>"  class="signUpMess">
+                    <i class="am-icon-eye"></i> 报名情况
                 </a>
-                <%}%>
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>

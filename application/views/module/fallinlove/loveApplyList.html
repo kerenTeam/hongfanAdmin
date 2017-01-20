@@ -130,7 +130,7 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = eval(result);
-            
+            console.log(res);
             if(res!=2){
                 nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -265,10 +265,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+    getList('<?php echo site_url('/module/FallinloveApplyList/$id');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+        getList('<?php echo site_url('/module/FallinloveApplyList/$id');?>','default=1');
     });
     //点击搜索
     $('.searchGoods').click(function(){
