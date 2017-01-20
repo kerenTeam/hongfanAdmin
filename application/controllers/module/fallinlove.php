@@ -20,10 +20,6 @@ class Fallinlove extends Default_Controller {
         parent::__construct();
         $this->load->model('Activity_model');
     }
-
-
-
-
     //一键钟情 活动列表
     function loveactivityList()
     {
