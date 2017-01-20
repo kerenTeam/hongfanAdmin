@@ -250,7 +250,7 @@ td.am-text-middle img{
                             
                         });
                         //删除订单的AJAX请求
-                        $('.sureDeliver').click(function(){
+                        $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
                             $.ajax({
                                 type:'post',
@@ -258,7 +258,7 @@ td.am-text-middle img{
                                 data: 'order_id='+dataId,
                                 success: function(data){
                                     if(data==1){ 
-                                        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
+                                        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                         
                                         alert("操作成功！");
 
                                     }else{

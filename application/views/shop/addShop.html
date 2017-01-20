@@ -264,6 +264,7 @@ $(document).ready(function(){
     $('#firstYetai').change(function(){
         //根据一级业态的内容来控制二级业态的显示
         var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
+        $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
         $.ajax({
             type:'post',
             url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
@@ -271,17 +272,26 @@ $(document).ready(function(){
             success: function(data){   
                 var jsonData=eval(data);
                 console.log(jsonData);
+
                 if(data){
-                    
-                    for(var i=0;i<jsonData.length;i++){
-                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                        sttr=sttr+str;
+                    if(data==2){
+                           $('#secondYetai').css('display','none');
+                            $("#secondYetaiSelect").removeAttr("required"); 
+                            return;
+                    } else {
+                        for(var i=0;i<jsonData.length;i++){
+                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            sttr=sttr+str;
+                        }
+                        // console.log(sttr);
+                        $("#secondYetaiSelect").attr("required","required"); 
+                        $('#secondYetai').css('display','block');
+                        $("#secondYetaiSelect").append(sttr);
                     }
-                    console.log(sttr);
-                    $('#secondYetai').css('display','block');
-                    $("#secondYetaiSelect").append(sttr);
+                    
                 }else{
-                    alert("操作失败，请检查网络设置！");
+                    $('#secondYetai').css('display','none');
+                    $("#secondYetaiSelect").removeAttr("required");
                 }
                 
             },

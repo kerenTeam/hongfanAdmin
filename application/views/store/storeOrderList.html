@@ -134,7 +134,7 @@ td.am-text-middle img{
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="shopOrderList">
+                            <tbody id="storeOrderList">
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -189,7 +189,7 @@ td.am-text-middle img{
         success: function(result){         
             var res = eval(result);
             for(var i=0;i<res.length;i++){
-                res[i].goods_data=eval(res[i].goods_data);
+                res[i].goods_data=JSON.parse(res[i].goods_data);
             }
             console.log(res);
             if(res!=2){
@@ -211,19 +211,45 @@ td.am-text-middle img{
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('shopOrderList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('storeOrderList').innerHTML = thisDate(obj.curr);
                         $('.editOrder').click(function(){//查看订单信息
                             var dataId=$(this).attr('data-id');
                             $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
-                        });                      
-                        for(var i=0;i<$('.deliverOrder').length;i++){
-                            var dataId=$('.deliverOrder').eq(i).attr('data-id');
-                            $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                      
+                        });
+                        for(var i=0;i<$('.tpl-del').length;i++){
+                            var dataId=$('.tpl-del').eq(i).attr('data-id');
+                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
                         }
+                        //删除订单的AJAX请求
+                        $('.sureDelete').click(function(){
+                            var dataId=$(this).attr('data-id');
+                            $.ajax({
+                                type:'post',
+                                url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
+                                data: 'order_id='+dataId,
+                                success: function(data){
+                                    if(data==1){ 
+                                        getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+                                        alert("操作成功！");
+                                    }else{
+                                        alert("操作失败！");
+                                    }
+                                },
+                                error:function(xhr,type,errorThrown){
+                                    alert("操作失败，请检查网络设置！");
+                                }
+                            });
+                        
+                        });
+
+
                     }
                 })
             }else{
-                $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopOrderList");
+                $('#shopGoodsList').find('tr').remove();
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#storeOrderList');
             }
 
             
@@ -258,12 +284,18 @@ $(document).ready(function(){
 <script type="text/html" id="shopOrderModal">   
     <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
         <td class="am-text-middle"><%= order_id%></td>
-        <td class="am-text-middle"><%= goods_data[0].totalNum%></td>
+        <td class="am-text-middle"><%= goods_data.totalNum%></td>
         <td class="am-text-middle"><%= amount%></td>
         <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle"><%= store_name%></td>
         <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle">
+        <%if(updatetime) {%>
+            <%= updatetime%>
+        <%} else {%>
+            <%= create_time%>
+        <%}%>
+        </td>
         <%if(order_status==1) {%>
             <td class="am-text-middle red">
                 未支付
@@ -307,8 +339,23 @@ $(document).ready(function(){
                 <a data-id="<%= order_id%>" class="editOrder">
                     <i class="am-icon-eye"></i> 查看详情
                 </a>
+                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
             </div>
         </td>
     </tr>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= order_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= order_id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
 </script>
 

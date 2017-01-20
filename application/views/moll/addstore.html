@@ -26,7 +26,7 @@
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">商家基础信息</div>
                 </div>
-                <div class="widget-body  am-fr">
+                <div class="widget-body  am-fr"> 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label class="am-u-sm-3 am-form-label">商场名 <span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
@@ -36,7 +36,7 @@
                     <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label name="barnd_name" class="am-u-sm-3 am-form-label">经营品牌：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <input type="text" name="barnd_name" minlength="2" maxlength="20" placeholder="请输入2-20个字符" required onblur="validate(this,2,20,1)" />
+                            <input type="text" name="barnd_name" minlength="2" maxlength="20" placeholder="请输入2-20个字符" onblur="validate(this,0,20,1)" />
                         </div>
                         <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
@@ -83,9 +83,9 @@
                         <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
-                        <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态：</label>
+                        <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <select name="subcommercial_type_name" id="secondYetaiSelect">
+                            <select name="subcommercial_type_name" id="secondYetaiSelect" required>
                                 <option value="">-=请选择一项=-</option>
                             </select> 
                         </div>
@@ -290,32 +290,7 @@
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
     $(document).ready(function(){
-            //根据一级业态的内容来控制二级业态的显示
-            var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
-                data: 'gid='+ firstYetai,
-                success: function(data){   
-                    var jsonData=eval(data);
-                    console.log(jsonData);
-                    if(data){
-                        for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                            sttr=sttr+str;
-                        }
-                        console.log(sttr);
-                        $('#secondYetai').css('display','none');
-                        $("#secondYetaiSelect").append(sttr);
-                    }else{
-                        $('#secondYetai').css('display','none');
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
+           
 
 
          $('#firstYetai').change(function(){
@@ -326,19 +301,28 @@
                 url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
                 data: 'gid='+ firstYetai,
                 success: function(data){ 
-                    $("#secondYetaiSelect").html("");  
                     var jsonData=eval(data);
-                    console.log(jsonData);
-                    if(data!=2){    
-                        for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                            sttr=sttr+str;
+                    $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
+                    if(jsonData){ 
+                        if(jsonData==2){
+                            console.log(jsonData);
+                            alert($('#secondYeTai'));
+                           $('#secondYeTai').css('height','0px');
+                           $("#secondYeTaiSelect").removeAttr("required"); 
+                        } else { 
+                            for(var i=0;i<jsonData.length;i++){
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                                sttr=sttr+str;
+                            }
+                            console.log(sttr);
+                            $('#secondYetai').css('display','block');
+                            $("#secondYeTaiSelect").attr("required","required"); 
+                            $("#secondYetaiSelect").append(sttr);
                         }
-                        console.log(sttr);
-                        $('#secondYetai').css('display','block');
-                        $("#secondYetaiSelect").append(sttr);
+                        
                     }else{
                          $('#secondYetai').css('display','none');
+                         $("#secondYetaiSelect").removeAttr("required");
                     }
                     
                 },
