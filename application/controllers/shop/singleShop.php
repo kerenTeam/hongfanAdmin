@@ -1175,6 +1175,20 @@ class SingleShop extends Default_Controller {
         }
     }
 
+    //删除订单
+    function del_store_order(){
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            if($this->MallShop_model->del_store_order($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }
+    }
+
 
 
     //订单搜索
