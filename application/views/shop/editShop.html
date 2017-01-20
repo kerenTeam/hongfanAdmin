@@ -84,7 +84,7 @@
                              <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondYeTai" style="display: none;">
                                 <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <select id="secondYeTaiSelect" name="subcommercial_type_name" >
+                                    <select id="secondYeTaiSelect" data-id="<?php echo $store['subcommercial_type_name']?>" name="subcommercial_type_name" >
                                     <option value="">-=请选择一项=-</option>
                                     </select>
                                 </div>
@@ -244,6 +244,7 @@ function validate(obj,minlen,maxlen,i){
 
       //根据一级业态的内容来控制二级业态的显示
         var commercial_type_name=$('#commercial_type_name option:selected').val(),str='',sttr='';
+        var secondDefault = $("#secondYeTaiSelect").attr('data-id');
         $("#secondYeTaiSelect").html('<option value="">-=请选择一项=-</option>');
         $.ajax({
             type:'post',
@@ -258,7 +259,13 @@ function validate(obj,minlen,maxlen,i){
                            $("#secondYeTaiSelect").removeAttr("required"); 
                     } else {
                         for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            if(jsonData[i].id==secondDefault){
+
+                                str='<option selected value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            }else{
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            }
+                            
                             sttr=sttr+str;
                         }
                         $('#secondYeTai').css('display','block');
@@ -267,7 +274,8 @@ function validate(obj,minlen,maxlen,i){
                     }
                     
                 }else{
-                    alert("操作失败，请检查网络设置！");
+                    $('#secondYetai').css('display','none');
+                    $("#secondYetaiSelect").removeAttr("required");
                 }
                 
             },

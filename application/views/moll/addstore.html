@@ -305,10 +305,9 @@
                     $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
                     if(jsonData){ 
                         if(jsonData==2){
-                            console.log(jsonData);
-                            alert($('#secondYeTai'));
-                           $('#secondYeTai').css('height','0px');
-                           $("#secondYeTaiSelect").removeAttr("required"); 
+                            // console.log(jsonData);
+                           $('#secondYetai').css('display','none');
+                           $("#secondYetaiSelect").removeAttr("required"); 
                         } else { 
                             for(var i=0;i<jsonData.length;i++){
                                 str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
@@ -316,7 +315,7 @@
                             }
                             console.log(sttr);
                             $('#secondYetai').css('display','block');
-                            $("#secondYeTaiSelect").attr("required","required"); 
+                            $("#secondYetaiSelect").attr("required","required"); 
                             $("#secondYetaiSelect").append(sttr);
                         }
                         
