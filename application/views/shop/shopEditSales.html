@@ -26,7 +26,7 @@
 }
 .linkWord{
     width: 5% !important;
-}
+} 
 .am-selected{
 width: 100%!important;
 }
@@ -106,13 +106,13 @@ padding: 5px 6px!important;
                             <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
                               <p>开始日期应小于结束日期！</p>
                             </div>
-                            <div class="am-g">
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="<?php echo $coupon['begin_date'];?>" /><span id="my-startDate"><?php echo $coupon['begin_date'];?></span>
-                                <small class="red redtips" style="display: none">请先选择结束日期</small>
-                              </div>
+                            <div class="am-g"> 
                               <div class="am-u-sm-6">
                                 <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="<?php echo $coupon['end_date'];?>" /><span id="my-endDate"><?php echo $coupon['end_date'];?></span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="<?php echo $coupon['begin_date'];?>" /><span id="my-startDate"><?php echo $coupon['begin_date'];?></span>
+                                <!-- <small class="red redtips" style="display: none">请先选择结束日期</small> -->
                               </div>
                             </div>
                         </div>

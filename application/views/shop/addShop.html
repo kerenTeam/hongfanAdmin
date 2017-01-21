@@ -1,7 +1,7 @@
 <style type="text/css">
     input{
         display: inline-block !important;
-    } 
+    }  
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -105,6 +105,22 @@
                                 <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="" class="am-u-sm-3 am-form-label">手机号<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="tel"  name="phone" value="" class="am-form-field tpl-form-no-bg" placeholder="请输入手机号" required onblur="validate(this,11,11,12)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label for="" class="am-u-sm-3 am-form-label">座机号<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="tel"  name="" value="" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" required onblur="validate(this,7,12,13)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips13" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips13" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
                         </div>
                         <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -188,7 +204,7 @@
                                    <input type="number" name="qq" placeholder="请输入QQ号码" id="QQ" min="1" /> 
                                 </div>  
                             </div>
-                           
+                            
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
                                 <div class="am-u-sm-8 am-u-end">
