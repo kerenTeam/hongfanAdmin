@@ -1194,87 +1194,58 @@ class SingleShop extends Default_Controller {
         if($_POST){
             $storeid = $_POST['storeid'];
             $state = $_POST['state'];
-            $startMoney = $_POST['startPrice'];
-            $endMoney = $_POST['endPrice'];
+            // $startMoney = $_POST['startPrice'];
+            // $endMoney = $_POST['endPrice'];
             $date = $_POST['date'];
             // $orderid = $_POST['orderid'];
             $username = $_POST['username'];
             // $sear = $_POST['sear'];
             $result = '';
-            if(!empty($state) && empty($startMoney) && empty($date) && empty($username)){
-                $where = array('seller'=>$storeid,"order_status"=>$state);
-                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+            if(!empty($state) &&  empty($date) && empty($username)){
+                // $where = array('seller'=>$storeid,"order_status"=>$state);
+                $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and order_status = '$state' order by create_time desc";
+                $query = $this->db->query($sql);
+                 $result = $query->result_array();
+            }else   if(empty($state) &&  !empty($date) && empty($username)){
+                     $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid'  and a.create_time  like '%$date%'  order by create_time desc";
+                $query = $this->db->query($sql);
                  $result = $query->result_array();
             }else 
-            if(empty($state) && !empty($startMoney) && empty($date) && empty($username)){
-                echo "23";
-                $query = $this->db->where('seller',$storeid)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else 
-            if(empty($state) && empty($startMoney) && !empty($date) && empty($username)){
-                $where = array('seller'=>$storeid,'create_time'=>$date);
-                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            // if(empty($state) && empty($startMoney) && empty($date) &&  empty($username)){
-            //     $where = array('seller'=>$storeid,'order_id'=>$orderid);
-            //     $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
-             //$result = $query->result_array();
-            // }else
-            if(empty($state) && empty($startMoney) && empty($date) && !empty($username)){
+            if(empty($state) && empty($date) && !empty($username)){
                 $user = $this->Shop_model->get_user_id($username);
-                $where = array('seller'=>$storeid,'buyer'=>$user['user_id']);
-                $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_mall_order');
+                $userid = $user['user_id'];
+                $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and  buyer = '$userid' order by create_time desc";
+                $query = $this->db->query($sql);
                  $result = $query->result_array();
-            }else
-            if(!empty($state) && !empty($startMoney) && empty($date) && empty($username)){
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            if(!empty($state) && empty($startMoney) && !empty($date) && empty($username)){
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            if (!empty($state) && empty($startMoney) && empty($date) && !empty($username)) {
-                 $user = $this->Shop_model->get_user_id($username);
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('buyer',$user['user_id'])->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            if(empty($state) && !empty($startMoney) && !empty($date) && empty($username)){
-                 $query = $this->db->where('seller',$storeid)->where('create_time',$date)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
-                  $result = $query->result_array();
-            }else
-            if(empty($state) && !empty($startMoney) && empty($date) && !empty($username)){
-                  $user = $this->Shop_model->get_user_id($username);
-                $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            if(empty($state) && empty($startMoney) && !empty($date) && !empty($username)){
-                $user = $this->Shop_model->get_user_id($username);
-                  $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
+            }else if(!empty($state) && empty($date) && !empty($username)){
+                    $user = $this->Shop_model->get_user_id($username);
+                   $userid = $user['user_id'];
+                   $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and order_status = '$state' and  buyer = '$userid' order by create_time desc";
+                  $query = $this->db->query($sql);
                    $result = $query->result_array();
-            }else
-            if(!empty($state) && !empty($startMoney) && !empty($date) && empty($username)){
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('create_time',$date)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
-            }else
-            if(!empty($state) && !empty($startMoney) && empty($date) && !empty($username)){
-                 $user = $this->Shop_model->get_user_id($username);
-                  $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('order_status',$state)->where('amount>=',$startMoney)->where('amount<=',$endMoney)->order_by('create_time','desc')->get('hf_mall_order');
+            }else if(!empty($state) && !empty($date) && empty($username)){
+                   $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and order_status = '$state'   and a.create_time  like '%$date%'   order by create_time desc";
+                   $query = $this->db->query($sql);
                    $result = $query->result_array();
-            }else
-            if(empty($state) && !empty($startMoney) && !empty($date) && !empty($username)){
-                 $user = $this->Shop_model->get_user_id($username);
-                  $query = $this->db->where('seller',$storeid)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
+            }else if(empty($state) && !empty($date) && !empty($username)){
+                   $user = $this->Shop_model->get_user_id($username);
+                   $userid = $user['user_id'];
+                   $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and a.create_time like '%$date%' and  buyer = '$userid' order by create_time desc";
+                   $query = $this->db->query($sql);
                    $result = $query->result_array();
-            }else 
-            if(!empty($state) && !empty($startMoney) && !empty($date) && !empty($username)){
-                $user = $this->Shop_model->get_user_id($username);
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->where('buyer',$user['user_id'])->where('amount>=',$startMoney)->where('amount<=',$endMoney)->where('create_time',$date)->order_by('create_time','desc')->get('hf_mall_order');
-                 $result = $query->result_array();
+            }else if(!empty($state) && !empty($date) && !empty($username)){
+                   $user = $this->Shop_model->get_user_id($username);
+                   $userid = $user['user_id'];
+                   $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' and order_status = '$state' and a.create_time like '%$date%' and  buyer = '$userid' order by create_time desc";
+                   $query = $this->db->query($sql);
+                   $result = $query->result_array();
+            }else{
+                    $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid' order by create_time desc";
+                   $query = $this->db->query($sql);
+                   $result = $query->result_array();
             }
+          
 
-           
             if(empty($result)){
                 echo '2';
             }else{
