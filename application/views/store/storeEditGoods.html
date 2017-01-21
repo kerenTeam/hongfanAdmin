@@ -226,7 +226,7 @@ td input{
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodName" class="am-u-sm-3 am-form-label">货号<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="text" id="goodNumber" name='goods_code' required="required"  readonly />  
+                                <input type="text" id="goodNumber" name='goods_code' required="required"  value="<?php echo $goods['goods_code'];?>" />  
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -257,8 +257,14 @@ td input{
                                 <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  value="<?php echo $goods['unit'];?>" />
                             </div>
                         </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount']?>" readonly />
+                            </div>
+                        </div>
                         <input type="hidden" name="parameter" id='inputproperty'>
-                        <input type="hidden" name="amount" id='stockamount'>
+                        <!-- <input type="hidden" name="amount" id='stockamount'> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
                             <div class="am-u-sm-11">

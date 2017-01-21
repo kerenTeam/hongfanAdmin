@@ -185,9 +185,9 @@ class LocalLife extends Default_Controller {
 				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
 				//视图
 
-                $data['page'] = $this->view_serviceList;
-                $data['menu'] = array('localLife','service');
-                $this->load->view('template.html',$data);
+			                $data['page'] = $this->view_serviceList;
+			                $data['menu'] = array('localLife','service');
+			                $this->load->view('template.html',$data);
 			}
         }
     }
@@ -287,7 +287,7 @@ class LocalLife extends Default_Controller {
     function serviceInfo()
     {
 		$id=intval($this->uri->segment(4));
-        $type=intval($this->uri->segment(5));
+                        $type=intval($this->uri->segment(5));
 		$cateid=intval($this->uri->segment(6));
 	   
 		if($id == 0 || $type == 0){
@@ -481,7 +481,9 @@ class LocalLife extends Default_Controller {
 	//编辑
 	function edit_service(){
 		if($_POST){
+			$cateid = $this->input->post('cateid');
 			$data = $this->input->post();
+			unset($data['cateid']);
 			$pic = array();
 			switch($data['type_id']){
 				case '1':
@@ -617,9 +619,9 @@ class LocalLife extends Default_Controller {
 			}
 
 			if($isOk){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type.'/'.$cateid)."'</script>";exit;
 			}else{
-				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type.'/'.$cateid)."'</script>";exit;
 			}
 
 		}else{

@@ -128,8 +128,8 @@ class Activity_model extends CI_Model
 
     //返回报名详情
     function get_activity_users($id){
-        $where['marriage_id'] = $id;
-        $query  = $this->db->where($where)->get($this->marriage_join);
+       $sql = "SELECT `a`.*, `b`.`username`,b.nickname FROM `hf_local_marriage_join` `a` LEFT JOIN `hf_user_member` `b` ON `b`.`user_id` = `a`.`userid` WHERE `marriage_id` = '$id'";
+       $query = $this->db->query($sql);
         return $query->result_array();
     }
 

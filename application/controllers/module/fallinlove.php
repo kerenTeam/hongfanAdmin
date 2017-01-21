@@ -23,7 +23,7 @@ class Fallinlove extends Default_Controller {
     function loveactivityList()
     {
         $data['page'] = $this->view_loveactivityList;
-        $data['menu'] = array('fallinlove','loveactivityList');
+        $data['menu'] = array('localLife','loveactivityList');
         $this->load->view('template.html',$data);
     }
 

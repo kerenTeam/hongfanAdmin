@@ -221,9 +221,9 @@ td input{
                     <div class="widget-body  am-fr">
                     <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">     
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodName" class="am-u-sm-3 am-form-label">货号<span class="red">*</span>：</label>
+                            <label for="goodName" class="am-u-sm-3 am-form-label">货号：</label>
                             <div class="am-u-sm-8">
-                                <input type="text" id="goodNumber" name='goods_code' required="required" onblur="validate(this,2,20,0)"/>  
+                                <input type="text" id="goodNumber" name='goods_code' onblur="validate(this,2,20,0)"/>  
                             </div>
                             <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
@@ -259,6 +259,14 @@ td input{
                                 <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
                             </div>
                         </div>
+                        <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存：</label>
+                            <div class="am-u-sm-8 am-u-end">
+
+                                <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  />
+                            </div>
+                        </div> -->
+                        <input type="hidden"  id="stockamount" name="amount" readonly />
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                             <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
                             <div class="am-u-sm-11">
@@ -326,7 +334,7 @@ td input{
                                 </select>
                             </div>
                         </div>
-                        <input type="hidden"  id="stockamount" name="amount"/>
+                        
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
