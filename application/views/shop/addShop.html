@@ -206,7 +206,7 @@
 
                     <div class="am-form-group am-text-center">
                         <input type="hidden" name="store_distinction" value="<?php echo $type;?>">
-                        <button class="am-btn am-btn-default" type="reset">重置</button> <button class="am-btn am-btn-secondary" id="submit" type="submit">添加</button>
+                        <button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> <button class="am-btn am-btn-secondary" id="submit" type="submit">添加</button>
                     </div>
                 </div>
             </form>
@@ -229,6 +229,10 @@ function validate(obj,minlen,maxlen,i){
         $('.blacktips'+ i).css('display','inline-block');
     }
 }
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
 
   $(function() {
     var startDate = new Date(2014, 11, 20);
@@ -314,5 +318,8 @@ $(document).ready(function(){
         }
     });
 
+ 
+
 })
+
 </script>

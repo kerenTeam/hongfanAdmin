@@ -191,7 +191,7 @@ td.am-text-middle img{
             for(var i=0;i<res.length;i++){
                 res[i].goods_data=JSON.parse(res[i].goods_data);
             }
-            console.log(res);
+            // console.log(res);
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -225,9 +225,10 @@ td.am-text-middle img{
                             var dataId=$(this).attr('data-id');
                             $.ajax({
                                 type:'post',
-                                url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
-                                data: 'order_id='+dataId,
+                                url:'<?php echo site_url('/shop/singleShop/del_store_order');?>',
+                                data: 'id='+dataId,
                                 success: function(data){
+                                    console.log(data);
                                     if(data==1){ 
                                         getList('<?php echo site_url('store/store/Order_page');?>','default=1');
                                         alert("操作成功！");
@@ -249,7 +250,7 @@ td.am-text-middle img{
                 $('#shopGoodsList').find('tr').remove();
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#storeOrderList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#storeOrderList');
             }
 
             

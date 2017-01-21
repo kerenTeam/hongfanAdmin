@@ -8,7 +8,7 @@
     }
     .widget{
         font-color:#000 !;
-    }  
+    }   
    
     .postageNumber{
         display: none;
@@ -219,11 +219,19 @@ td input{
                         <div class="widget-title  am-cf">商品基础信息</div>
                     </div>
                     <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">                                        
+                    <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">     
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodName" class="am-u-sm-3 am-form-label">货号<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8">
+                                <input type="text" id="goodNumber" name='goods_code' required="required" onblur="validate(this,2,20,0)"/>  
+                            </div>
+                            <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>                                   
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodName" class="am-u-sm-3 am-form-label">商品名称<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
-                                <input type="text" id="goodName" name='title' required="required" onblur="validate(this,2,50,1)" />  
+                                <input type="text" id="goodName" name='title' required="required"  />  
                             </div>
                             <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
@@ -535,7 +543,7 @@ td input{
   });
 //点击取消返回上一页
   $('#cancle').click(function(){
-    history.go(-1);
+    history.go(0);
   });
 
   //点击进行运费设置

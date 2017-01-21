@@ -214,10 +214,18 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">联系电话<span class="red">*</span>：</label>
                         <div class="am-u-sm-8">
-                            <input type="tel"  name="phone" value="<?php echo $busin['phone']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入联系电话" required  />
+                            <input type="tel"  name="phone" value="<?php echo $busin['phone']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入手机号" required onblur="validate(this,11,11,9)" />
                         </div>
                         <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">座机<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8">
+                            <input type="tel"  name="" value="<?php echo $busin['phone']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" required onblur="validate(this,7,12,0)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
@@ -312,6 +320,10 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+   //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
     $(document).ready(function(){
             //根据一级业态的内容来控制二级业态的显示
             var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
@@ -411,5 +423,7 @@
             $('.blacktips'+ i).css('display','inline-block');
         }
     }
+    
+
 
 </script>

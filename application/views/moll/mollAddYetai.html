@@ -113,7 +113,7 @@
 
                     <div class="am-form-group am-text-center">
                         <button class="am-btn am-btn-secondary" type="submit">添加</button>
-                        <button class="am-btn am-btn-default" type="reset">重置</button> 
+                        <button class="am-btn am-btn-default" type="reset" id="cancle">重置</button> 
                     </div>
                 </div>
             </form>
@@ -158,5 +158,8 @@
     });
         
     });
-
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
 </script>
