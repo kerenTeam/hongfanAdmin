@@ -72,12 +72,13 @@ td.am-text-middle img{
                             <thead>
                                 <tr>
                                     <th class="shop_id">编号 </th>
-                                    <th class="moll_name">活动名称 </th>
+                                    <th class="moll_name">用户名 </th>
                                     <th class="moll_name">报名人姓名 </th>
                                     <th class="moll_name">性别</th>
                                     <th class="shop_id">年龄</th>
                                     <th class="shop_id">联系方式</th>
-                                    <th class="shop_id">操作</th>
+                                    <th class="shop_id">缴费情况</th>
+                                    <!-- <th class="shop_id">操作</th> -->
                                 </tr>
                             </thead>
                             <tbody id="helpGroupList">
@@ -202,18 +203,13 @@ $(document).ready(function(){
 
     <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= title%></td>
+
+        <td class="am-text-middle"><%if(username){%><%= username%><%}else{%><%= nickname%><%}%></td>
         <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle"><%= gender%></td>
         <td class="am-text-middle"><%= age%></td>
         <td class="am-text-middle"><%= mobileno%></td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除报名
-                </a>
-            </div>
-        </td>
+        <td class="am-text-middle"><%if(state == '0'){%>未支付<%}else{%>已支付<%}%></td>
     </tr>
      <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id%>">
         <div class="am-modal-dialog">
