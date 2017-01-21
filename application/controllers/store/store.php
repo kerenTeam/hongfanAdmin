@@ -371,9 +371,8 @@ class Store extends Default_Controller {
     //订单搜索
     function order_search(){
         if($_POST){
+
             $state = $_POST['order_status'];
-            $startPrice = trim($_POST['startPrice']);
-            $endPrice = trim($_POST['endPrice']);
             $buyer = trim($_POST['buyer']);
             $seller = trim($_POST['seller']);
             $time = trim($_POST['create_time']);
@@ -393,7 +392,8 @@ class Store extends Default_Controller {
             }else{
                 $seller = '';
             }
-            $list = order_search($state,$startPrice,$endPrice,$buyer,$seller,$time);
+
+            $list = order_search($state,$buyer,$seller,$time);
             if(empty($list)){
                 echo "2";
             }else{

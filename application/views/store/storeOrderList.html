@@ -73,14 +73,14 @@ td.am-text-middle img{
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+<!--                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">交易总额:</label>
                         <div class="am-u-sm-9">
                             <input type="number" class="stable" id="startPrice" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
                             <input type="number" class="stable" id="endPrice" name="endPrice" min="1"  />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">商家:</label>
                         <div class="am-u-sm-9 am-u-end">
@@ -186,12 +186,13 @@ td.am-text-middle img{
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
-            var res = JSON.parse(result);
+        success: function(result){   
+        // console.log(result);      
+            var res = eval(result);
             for(var i=0;i<res.length;i++){
                 res[i].goods_data=JSON.parse(res[i].goods_data);
             }
-            // console.log(res);
+             console.log(res);
             if(res!=2){
                 var nums = 10; //每页出现的数量
                 var pages = Math.ceil(res.length/nums); //得到总页数
@@ -275,8 +276,8 @@ $(document).ready(function(){
             alert("交易总额必须是一个范围！");
             return false;
         }else{
-         // console.log('order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time"+create_time);
-         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time"+create_time);
+          console.log('order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time="+create_time);
+         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"&seller="+ seller +"&create_time="+create_time);
             return true;
         }
         
