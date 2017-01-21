@@ -133,7 +133,7 @@ class MallShop_model extends CI_Model
 
     //返回商家订单列表
     function get_store_orders($storeid){
-        $sql = "SELECT a.order_id,a.order_UUID,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and seller = '$storeid'";
+        $sql = "SELECT a.order_id,a.order_UUID,a.order_type,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where order_type = '1' and a.buyer = b.user_id and seller = '$storeid'";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -239,7 +239,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->get();
+        $query = $this->db->where('order_type','1')->get();
         return $query->result_array();
     }
 
