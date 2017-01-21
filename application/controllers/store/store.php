@@ -393,7 +393,7 @@ class Store extends Default_Controller {
                 $seller = '';
             }
 
-            $list = order_search($state,$buyer,$seller,$time);
+            $list = order_search($state,$buyer,$seller,$time,'1');
             if(empty($list)){
                 echo "2";
             }else{

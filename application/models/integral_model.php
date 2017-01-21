@@ -10,6 +10,8 @@ class Integral_model extends CI_Model
     public $shop_cates = 'hf_mall_category';
     //积分规则表
     public $integral_rule = "hf_system_integral";
+    //订单表
+    public $order = "hf_mall_order";
     
     function __construct()
     {
@@ -71,6 +73,13 @@ class Integral_model extends CI_Model
     function edit_integral_rule($id,$data){
         $where['id'] = $id;
         return $this->db->where($where)->update($this->integral_rule,$data);
+    }
+
+    //返回爱购订单
+    function get_love_order(){
+        $where['order_type'] = '2';
+        $query = $this->db->where($where)->get($this->order);
+        return $query->result_array();
     }
 
 

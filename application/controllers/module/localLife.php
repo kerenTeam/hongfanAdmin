@@ -771,15 +771,16 @@ class LocalLife extends Default_Controller {
 	         $erp_orders_id = array();  //声明数组
 	         for($currentRow = 2;$currentRow <= $allRow;$currentRow++){
 	            $data[$currentRow]['goods_name'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取A列的值
+	            $data[$currentRow]['orginal_price'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取A列的值
 	            // $data[$currentRow]['goods_name'] = $PHPExcecurrentRow)->getValue();//获取B列的值l->getActiveSheet()->getCell("B".$
-	          $price = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取c列的值
-	          if(empty($price)){
+	            $price = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值
+	            if(empty($price)){
 	          		$error[] = $currentRow;
-	          }else{
+	            }else{
 	          	  $data[$currentRow]['date_price'] = $price;
-	          }
-	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue();//获取c列的值 
-	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
+	            }
+	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
+	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
 	            $data[$currentRow]['date'] = date('Y-m-d H:i:s');
 	            $data[$currentRow]['import_user'] = $this->session->users['user_id'];
 	            $data[$currentRow]['marketid'] = $this->session->users['user_id'];

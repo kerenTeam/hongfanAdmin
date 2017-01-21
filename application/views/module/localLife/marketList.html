@@ -108,6 +108,12 @@ padding: 5px 6px!important;
                                             <input type="text" name='goods_name' required>
                                         </div>
                                     </div>
+                                        <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">原价 <span class="red">*</span></label>
+                                        <div class="am-u-sm-9">
+                                            <input type="float" name='orginal_price' required>
+                                        </div>
+                                    </div> 
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
@@ -151,7 +157,8 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle">编号</td>
                                     <!-- <td class="am-text-middle">超市名</td> -->
                                     <td class="am-text-middle">商品名</td>
-                                    <td class="am-text-middle">价格</td>
+                                    <td class="am-text-middle">原价</td>
+                                    <td class="am-text-middle">现价</td>
                                     <td class="am-text-middle">规格</td>
                                     <td>创建时间</td>
                                     <td>操作</td>
@@ -164,6 +171,7 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['id'];?></td>
                                     <!-- <td class="am-text-middle"><?php echo $val['market_name'];?></td> -->
                                     <td class="am-text-middle"><?php echo $val['goods_name'];?></td>
+                                    <td class="am-text-middle"><?php echo $val['orginal_price'];?>/<?php echo $val['unit'];?></td>
                                     <td class="am-text-middle"><?php echo $val['date_price']?>/<?php echo $val['unit']?></td>
                                      <td class="am-text-middle"><?php echo $val['standard']?></td>
                                     <td class="am-text-middle"><?php echo $val['date'];?></td>
@@ -197,6 +205,12 @@ padding: 5px 6px!important;
                                                         <input type="text" name="goods_name" value="<?php echo $val['goods_name']?>" required>
                                                     </div>
                                                 </div>
+                                                <div class="am-form-group am-cf">
+                                                    <label class="am-u-sm-3 am-form-label">原价 <span class="red">*</span></label>
+                                                    <div class="am-u-sm-9">
+                                                        <input type="float" name='orginal_price' value="<?php echo $val['orginal_price']?>" required>
+                                                    </div>
+                                                </div> 
                                                 <div class="am-form-group am-cf">
                                                     <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
                                                     <div class="am-u-sm-9">

@@ -46,6 +46,22 @@ class LoveToGo extends Default_Controller
         $data['menu'] = array('loveToGo','loveToGoOrderList');
         $this->load->view('template.html',$data);
     }
+
+    //f返回爱购 订单列表
+    function ret_loveTogo_order(){
+        if($_POST){
+            $list = $this->Integral_model->get_love_order();
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+    
+
     //爱购 本地商品详情
     function loveToGogoodLocalDetail(){
         if(!$_GET){
