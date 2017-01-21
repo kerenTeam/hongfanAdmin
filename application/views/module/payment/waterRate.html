@@ -130,7 +130,7 @@ padding: 5px 6px!important;
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="commentList">
+                            <tbody id="dataList">
                                 
                                 <!-- more data -->
                             </tbody>
@@ -170,7 +170,7 @@ padding: 5px 6px!important;
                     var listData = '' , last = curr*nums - 1;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
-                        listData+= template('commentListModal',res[i]);
+                        listData+= template('dataListModal',res[i]);
                      }
                     
                     return listData;
@@ -180,7 +180,7 @@ padding: 5px 6px!important;
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('commentList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('dataList').innerHTML = thisDate(obj.curr);
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                       
@@ -212,12 +212,11 @@ padding: 5px 6px!important;
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
+                $('#dataList').find('tr').remove();
+                $('#paging_list').html("");
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关缴费记录！</p></td></tr>').appendTo('#commentList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关缴费记录！</p></td></tr>').appendTo('#dataList');
             }
 
             
@@ -236,7 +235,7 @@ $(document).ready(function(){
     });
 })
 </script>
-<script type="text/html" id="commentListModal">
+<script type="text/html" id="dataListModal">
     <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>

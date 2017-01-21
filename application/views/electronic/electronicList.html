@@ -170,9 +170,8 @@ td img{
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
+                $('#electronicList').find('tr').remove();
+                $('#paging_list').html("");
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关优惠券信息！</p></td></tr>').appendTo('#electronicList');

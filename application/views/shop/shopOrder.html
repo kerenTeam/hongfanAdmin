@@ -275,6 +275,7 @@ td.am-text-middle img{
                 })
             }else{
                 $('#shopOrderList').find('tr.trClass').remove();
+                $('#paging_list').html("");
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#shopOrderList');
@@ -301,7 +302,7 @@ $(document).ready(function(){
             alert("交易总额必须是一个范围！");
             return false;
         }else{
-          //  console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
+           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
          getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
             return true;
         }

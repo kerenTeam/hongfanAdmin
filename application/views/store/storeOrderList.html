@@ -76,15 +76,15 @@ td.am-text-middle img{
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">交易总额:</label>
                         <div class="am-u-sm-9">
-                            <input type="number" class="stable" id="startMoney" name="startPrice" min="1"  />
+                            <input type="number" class="stable" id="startPrice" name="startPrice" min="1"  />
                             <span class="linkWord">至</span>
-                            <input type="number" class="stable" id="endMoney" name="endPrice" min="1"  />
+                            <input type="number" class="stable" id="endPrice" name="endPrice" min="1"  />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">商家:</label>
                         <div class="am-u-sm-9 am-u-end">
-                            <input type="text" id="seller" name="username" />
+                            <input type="text" id="seller" name="" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
@@ -187,7 +187,7 @@ td.am-text-middle img{
         url:dataurl,
         data: data,
         success: function(result){         
-            var res = eval(result);
+            var res = JSON.parse(result);
             for(var i=0;i<res.length;i++){
                 res[i].goods_data=JSON.parse(res[i].goods_data);
             }
@@ -248,6 +248,7 @@ td.am-text-middle img{
                 })
             }else{
                 $('#storeOrderList').find('tr').remove();
+                $('#paging_list').html("");
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#storeOrderList');
@@ -269,13 +270,13 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(),orderDate=$('#orderDate').val();
-        if((startMoney=="" && endMoney!="") || (startMoney!="" && endMoney=="") ){
+        var orderState=$('#orderState option:selected').val(),startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),buyer=$('#buyer').val(),seller=$('#seller').val(),create_time=$('#orderDate').val();
+        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="") ){
             alert("交易总额必须是一个范围！");
             return false;
         }else{
-         
-         getList('<?php echo site_url('/shop/singleShop/order_search');?>','state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
+         // console.log('order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time"+create_time);
+         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time"+create_time);
             return true;
         }
         

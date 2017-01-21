@@ -150,6 +150,10 @@ padding: 5px 6px!important;
                     }
                 })
             }else{
+                $("#shopActivityList").find('tr').remove();
+                $('#paging_list').html("");
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
                 $('<tr><td colspan="12" class="am-text-center">暂无帮帮团成员信息！</td><td></td></tr>').appendTo("#shopActivityList");
             }
 

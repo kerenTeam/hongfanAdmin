@@ -257,6 +257,10 @@ td.am-text-middle img{
                     }
                 })
             }else{
+                $("#shopOrderList").find('tr').remove();
+                $('#paging_list').html("");
+                $('.dataNumber').html("");
+                $('.pageNumber').html("");
                 $('<tr><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#shopOrderList");
             }
 

@@ -133,7 +133,7 @@ padding: 5px 6px!important;
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="commentList">
+                            <tbody id="dataList">
                                 
                                 <!-- more data -->
                             </tbody>
@@ -188,7 +188,7 @@ padding: 5px 6px!important;
                     last = last >= res.length ? (res.length-1) : last;
                      for(var i = (curr*nums - nums); i <= last; i++){
                         res[i].comment_pic=eval(res[i].comment_pic);
-                        listData+= template('commentListModal',res[i]);
+                        listData+= template('dataListModal',res[i]);
                      }
                     
                     return listData;
@@ -198,7 +198,7 @@ padding: 5px 6px!important;
                     cont: 'paging_list',
                     pages: pages,
                     jump: function(obj){
-                        document.getElementById('commentList').innerHTML = thisDate(obj.curr);
+                        document.getElementById('dataList').innerHTML = thisDate(obj.curr);
                         //点击选中所有
                         $('.tablecheck').click(function() {
                             if(flag==0){
@@ -337,12 +337,11 @@ padding: 5px 6px!important;
                     }
                 })
             }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
-                }
+                $('#dataList').find('tr').remove();
+                $('#paging_list').html("");
                 $('.dataNumber').html("");
                 $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#commentList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#dataList');
             }
 
             
@@ -361,7 +360,7 @@ $(document).ready(function(){
     });
 })
 </script>
-<script type="text/html" id="commentListModal">
+<script type="text/html" id="dataListModal">
     <tr class="trClass" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
