@@ -117,9 +117,9 @@ td.am-text-middle img{
                 </div>
             </div>
         </div>
-        <div class="am-modal-footer">
-            <a class="am-modal-btn" type="am-btn am-btn-default" data-am-modal-cancel>取消</a>
-            <a class="am-modal-btn" id="sureExport" type="am-btn am-btn-primary"  data-am-modal-confirm>确定</a>
+        <div class="am-modal-footer" style="margin-top: 10px;">
+            <a class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel style="margin-right: 50px;">取消</a>
+            <a class="am-btn am-btn-primary am-btn-xs" id="sureExport" type="submit"  >确定</a>
         </div>
     </div>
 </div>
@@ -129,12 +129,14 @@ td.am-text-middle img{
   function changeFunction(obj) {
     var single=obj.value;
     if(obj.checked){
-        $('#sureExport').attr("href",'<?php echo site_url("/shop/shop/dowload_store/'+ single +'");?>');
+        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveTogo/dowload_love_order/'+ single +'");?>');
     }else{
         // $('#sureExport').removeAttr("href");
     }
   }
-  
+  $('#sureExport').click(function(){
+    $('#exportModal').modal('close');
+  })
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
