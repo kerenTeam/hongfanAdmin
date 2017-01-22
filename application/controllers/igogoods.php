@@ -16,6 +16,7 @@ class Igogoods extends CI_Controller
 
     function goods_list(){
         //
+         echo "1";
         set_time_limit(0);
         $query = $this->db->where('differentiate','3')->get('hf_mall_goods');
         $list = $query->result_array();
@@ -24,7 +25,7 @@ class Igogoods extends CI_Controller
         }
         //获取本地的列表
          $num = '10';
-         for ($i=1; $i < 6; $i++) { 
+         for ($i=1; $i < 50; $i++) { 
            $post_data = array(  
             'appkey' => IGOAPPKEY,  
             'appsecret' => IGOAPPSECRET,
