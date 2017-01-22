@@ -184,7 +184,7 @@
                         cont: 'paging_list1',
                         pages: pages,
                         jump: function(obj){
-                            // document.getElementById('integralRecord').innerHTML = thisDate(obj.curr);                
+                            document.getElementById('integralRecord').innerHTML = thisDate(obj.curr);                
                         }
                     })
                 }else{
@@ -192,7 +192,7 @@
                     $('#paging_list1').html("");
                     $('.dataNumber1').html("");
                     $('.pageNumber1').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#integralRecord');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关积分记录！</p></td></tr>').appendTo('#integralRecord');
                 }
                 
             },
@@ -235,7 +235,7 @@
                     $('#paging_list').html("");
                     $('.dataNumber').html("");
                     $('.pageNumber').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#userAddressList');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无用户地址信息！</p></td></tr>').appendTo('#userAddressList');
                 }
                 
             },
@@ -251,7 +251,7 @@
             data: data,
             success: function(result){    
                 var res = eval(result);
-                // console.log(res);  
+                console.log(res);  
                 if(res!=3){
                     var nums = 10; //每页出现的数量
                     var pages = Math.ceil(res.length/nums); //得到总页数
@@ -267,7 +267,7 @@
                     };
                     //调用分页
                     laypage({
-                        cont: 'paging_list1',
+                        cont: 'paging_list3',
                         pages: pages,
                         jump: function(obj){
                             document.getElementById('memberMessList').innerHTML = thisDate(obj.curr);                
@@ -275,10 +275,10 @@
                     })
                 }else{
                     $('#memberMessList').find('tr').remove();
-                    $('#paging_list').html("");
-                    $('.dataNumber').html("");
-                    $('.pageNumber').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#memberMessList');
+                    $('#paging_list3').html("");
+                    $('.dataNumber3').html("");
+                    $('.pageNumber3').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无会员信息！</p></td></tr>').appendTo('#memberMessList');
                 }
                 
             },
@@ -289,116 +289,49 @@
     }
     $(document).ready(function(){
         //会员消息
-        // getList2('<?php echo site_url("/member/Member/ret_user_message");?>','userid=<?php echo $userinfo["user_id"];?>');
+        getList2('<?php echo site_url("/member/Member/ret_user_message");?>','userid=<?php echo $userinfo["user_id"];?>');
         //积分记录
         getList('<?php echo site_url("/member/Member/ret_user_intergral");?>','userid=<?php echo $userinfo["user_id"];?>');
         //用户地址
-        // getList2('<?php echo site_url("/member/Member/ret_user_address");?>','userid=<?php echo $userinfo["user_id"];?>');
+        getList1('<?php echo site_url("/member/Member/ret_user_address");?>','userid=<?php echo $userinfo["user_id"];?>');
     })
 </script>
 <script type="text/html" id="integralRecordModal">
-    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
-        <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= goods_code%></td>
-        <td class="am-text-middle"><%= catname%></td>
-        <td class="am-text-middle"><%= title%></td>
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= notice%></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle"><%= intergral_float%></td>
     </tr>
 </script>
 <script type="text/html" id="userAddressListModal">
-    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
-        <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= goods_code%></td>
-        <td class="am-text-middle"><%= catname%></td>
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= person%></td>
+        <td class="am-text-middle"><%= phone%></td>
         <td class="am-text-middle">
-        <%if(thumb) {%>
-            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
-        <%}else {%>
-            暂无图片
-        <%}%>
-        </td>
-        <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><%= orders%></td>
-        <td class="am-text-middle"><%= sales%></td>
-        <td class="am-text-middle">
-        <%if(goods_state=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1" selected="selected">上架</option>
-                <option value="0">下架</option>
-            </select>
+        <%if(postcode) {%>
+        <%= postcode%>
         <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1">上架</option>
-                <option value="0" selected="selected">下架</option>
-            </select>
+        暂无
         <%}%>
         </td>
+        <td class="am-text-middle"><%= address%></td>
+        <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
-        <%if(update_time) {%>
-            <span><%= update_time%></span>
-        <%}else {%>
-            <span><%= create_time%></span>
-        <%}%>
-        </td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= goods_id%>" class="editGoods">
-                    <i class="am-icon-pencil"></i> 编辑
-                </a>
-                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
+        <%if(state=="1") {%>
+        是
+        <%}else{%>
+        否
+        <%}%>    
         </td>
     </tr>
 </script>
 <script type="text/html" id="memberMessListModal">
-    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
-        <td class="am-text-middle"><%= goods_id%></td>
-        <td class="am-text-middle"><%= goods_code%></td>
-        <td class="am-text-middle"><%= catname%></td>
-        <td class="am-text-middle">
-        <%if(thumb) {%>
-            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
-        <%}else {%>
-            暂无图片
-        <%}%>
-        </td>
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><%= orders%></td>
-        <td class="am-text-middle"><%= sales%></td>
-        <td class="am-text-middle">
-        <%if(goods_state=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1" selected="selected">上架</option>
-                <option value="0">下架</option>
-            </select>
-        <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1">上架</option>
-                <option value="0" selected="selected">下架</option>
-            </select>
-        <%}%>
-        </td>
-        <td class="am-text-middle">
-        <%if(update_time) {%>
-            <span><%= update_time%></span>
-        <%}else {%>
-            <span><%= create_time%></span>
-        <%}%>
-        </td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= goods_id%>" class="editGoods">
-                    <i class="am-icon-pencil"></i> 编辑
-                </a>
-                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
+        <td class="am-text-middle"><%= content%></td>
+        <td class="am-text-middle"><%= create_time%></td>
     </tr>
 </script>
