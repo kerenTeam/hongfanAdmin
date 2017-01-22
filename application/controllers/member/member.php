@@ -199,7 +199,7 @@ class Member extends Default_Controller {
                     //消息记录
             $list= $this->user_model->get_user_address('hf_user_message',$id);
             if(empty($list)){
-                echo "2";
+                echo "3";
             }else{
                 echo json_encode($list);
             }
@@ -214,7 +214,7 @@ class Member extends Default_Controller {
             $id = $_POST['userid'];
             $list = $this->user_model->get_user_address('hf_user_intergral',$id);
             if(empty($list)){
-                echo "2";
+                echo "3";
             }else{
                 echo json_encode($list);
             }
@@ -229,7 +229,7 @@ class Member extends Default_Controller {
                 $id = $_POST['userid'];
                 $list = $this->user_model->get_user_address('hf_user_address',$id);
                 if(empty($list)){
-                    echo "2";
+                    echo "3";
                 }else{
                     echo json_encode($list);
                 }
