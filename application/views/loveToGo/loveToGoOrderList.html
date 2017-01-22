@@ -110,7 +110,7 @@ td.am-text-middle img{
             <div class="am-form-group am-cf">
                 <div class="am-u-sm-6 am-text-center">
                     <input type="radio" class="am-inline exportRadio"  name='exportRadio' value='1' onchange="changeFunction(this)">
-                    导出今日订单
+                    导出今日已支付订单
                 </div>
                 <div class="am-u-sm-6 am-text-center">
                     <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有订单
@@ -130,7 +130,7 @@ td.am-text-middle img{
   function changeFunction(obj) {
     var single=obj.value;
     if(obj.checked){
-        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveTogo/dowload_love_order/'+ single +'");?>');
+        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveToGo/dowload_love_order/'+ single +'");?>');
     }else{
         // $('#sureExport').removeAttr("href");
     }
@@ -226,10 +226,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-     getList('<?php echo site_url('igo/LoveTogo/ret_loveTogo_order');?>','default=1');
+     getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('igo/LoveTogo/ret_loveTogo_order');?>','default=1');
+        getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1');
     });
     //点击搜索
     $('.searchOrder').click(function(){

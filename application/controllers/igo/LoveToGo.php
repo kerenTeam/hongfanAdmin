@@ -61,7 +61,7 @@ class LoveToGo extends Default_Controller
             echo "2";
         }
     }
-    
+
 
     //爱购 本地商品详情
     function loveToGogoodLocalDetail(){

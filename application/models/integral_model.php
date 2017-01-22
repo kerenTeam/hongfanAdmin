@@ -88,7 +88,7 @@ class Integral_model extends CI_Model
     //返回今天所有的订单
     function get_love_newOrder($date){
             $where['order_type'] = '2';
-            $query = $this->db->where($where)->like('create_time',$date,'both')->order_by('create_time','asc')->get($this->order);
+            $query = $this->db->where($where)->where('order_status','2')->like('create_time',$date,'both')->order_by('create_time','asc')->get($this->order);
             return $query->result_array();
     }
 

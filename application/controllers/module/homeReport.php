@@ -57,7 +57,7 @@ class HomeReport extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'Upload/adver';
+                $config['upload_path']      = 'Upload/news';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -66,7 +66,7 @@ class HomeReport extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
                 } else {
-                    $data['pic'] =  '/Upload/adver/'.$this->upload->data('file_name');
+                    $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
             if($this->System_model->add_notice($data)){
@@ -86,7 +86,7 @@ class HomeReport extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'Upload/adver';
+                $config['upload_path']      = 'Upload/news';
                 $config['allowed_types']    = 'gif|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
@@ -95,7 +95,7 @@ class HomeReport extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
                 } else {
-                    $data['pic'] =  '/Upload/adver/'.$this->upload->data('file_name');
+                    $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
             if($this->System_model->edit_notice($data['id'],$data)){
