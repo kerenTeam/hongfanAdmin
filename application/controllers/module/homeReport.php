@@ -10,6 +10,8 @@ class HomeReport extends Default_Controller {
     public $view_homeReport = "module/homeReport/homeReport.html";
     //本地生活 家乡报道 编辑新闻
     public $view_homeReportEdit = "module/homeReport/homeReportEdit.html";
+    //本地生活 家乡报道 新增新闻
+    public $view_homeReportAdd = "module/homeReport/homeReportAdd.html";
     function __construct()
     {
         parent::__construct();
@@ -27,6 +29,13 @@ class HomeReport extends Default_Controller {
     {
         $data['page'] = $this->view_homeReportEdit;
         $data['menu'] = array('localLife','homeReport');
+        $this->load->view('template.html',$data);
+    }
+     //本地生活 家乡报道 新增新闻
+    function homeReportAdd()
+    {
+        $data['page'] = $this->view_homeReportAdd;
+        $data['menu'] = array('systemSet','homeReportAdd');
         $this->load->view('template.html',$data);
     }
     //返回所有公告
