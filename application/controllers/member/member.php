@@ -190,7 +190,52 @@ class Member extends Default_Controller {
             $data['menu'] = array('member','memberList');
             $this->load->view('template.html',$data);
         }
+    }
 
+    //返回用户消息
+    function ret_user_message(){
+        if($_POST){
+            $id = $_POST['userid'];
+                    //消息记录
+            $list= $this->user_model->get_user_address('hf_user_message',$id);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //返回用户积分记录
+    function ret_user_intergral(){
+        if($_POST){
+            $id = $_POST['userid'];
+            $list = $this->user_model->get_user_address('hf_user_intergral',$id);
+            if(empty($list)){
+                echo "2";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //返回用户地址
+    function ret_user_address(){
+        if($_POST){
+                $id = $_POST['userid'];
+                $list = $this->user_model->get_user_address('hf_user_address',$id);
+                if(empty($list)){
+                    echo "2";
+                }else{
+                    echo json_encode($list);
+                }
+        }else{
+            echo "2";
+        }
     }
 
     //会员搜索
