@@ -19,14 +19,14 @@ class HomeReport extends Default_Controller {
     function index()
     {
         $data['page'] = $this->view_homeReport;
-        $data['menu'] = array('systemSet','homeReport');
+        $data['menu'] = array('localLife','homeReport');
         $this->load->view('template.html',$data);
     }
     //本地生活 家乡报道 编辑新闻
     function homeReportEdit()
     {
         $data['page'] = $this->view_homeReportEdit;
-        $data['menu'] = array('systemSet','homeReportEdit');
+        $data['menu'] = array('localLife','homeReport');
         $this->load->view('template.html',$data);
     }
     //返回所有公告

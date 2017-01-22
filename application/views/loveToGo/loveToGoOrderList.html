@@ -105,7 +105,7 @@ td.am-text-middle img{
 </div>
 <div class="am-modal am-modal-confirm" tabindex="-1" id="exportModal">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-hd">导出提示</div>
         <div class="am-modal-bd" style="width:100%;">
             <div class="am-form-group am-cf">
                 <div class="am-u-sm-6 am-text-center">
@@ -119,7 +119,7 @@ td.am-text-middle img{
         </div>
         <div class="am-modal-footer">
             <a class="am-modal-btn" type="am-btn am-btn-default" data-am-modal-cancel>取消</a>
-            <a class="am-modal-btn" id="sureExport" type="am-btn am-btn-primary"  data-am-modal-confirm>确定</a>
+            <a class="am-modal-btn" id="sureExport" type="am-btn am-btn-primary">确定</a>
         </div>
     </div>
 </div>
@@ -129,7 +129,7 @@ td.am-text-middle img{
   function changeFunction(obj) {
     var single=obj.value;
     if(obj.checked){
-        $('#sureExport').attr("href",'<?php echo site_url("/shop/shop/dowload_store/'+ single +'");?>');
+        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveTogo/dowload_love_order/'+ single +'");?>');
     }else{
         // $('#sureExport').removeAttr("href");
     }

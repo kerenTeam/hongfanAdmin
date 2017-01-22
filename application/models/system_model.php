@@ -14,7 +14,7 @@ class System_model extends CI_Model
     //广告
     public $adver = "hf_ads";
     //系统公告
-    public $notice = "hf_system_notice";
+    public $report = "hf_local_hometown_reports";
 
     function __construct()
     {
@@ -112,22 +112,22 @@ class System_model extends CI_Model
 
     //返回所有系统公告
     function get_notice_list(){
-        $query = $this->db->get($this->notice);
+        $query = $this->db->order_by('create_time','asc')->get($this->report);
         return $query->result_array();
     }
     //删除系统公告
     function del_notice($id){
         $where['id'] = $id;
-        return $this->db->where($where)->delete($this->notice);
+        return $this->db->where($where)->delete($this->report);
     }
     //新增系统公告
     function add_notice($data){
-        return $this->db->insert($this->notice,$data);
+        return $this->db->insert($this->report,$data);
     }
     //编辑系统公告
     function edit_notice($id,$data){
         $where['id'] = $id;
-        return $this->db->where($where)->update($this->notice,$data);
+        return $this->db->where($where)->update($this->report,$data);
     }
 
 
