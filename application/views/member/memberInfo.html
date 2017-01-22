@@ -81,37 +81,14 @@
                             <th>积分</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <?php if(!empty($inter)){?>
-                        <?php foreach($inter as $key=>$v):?>
-                        <tr class="gradeX">
-                            <td><?php echo $key+1;?></td>
-                            <td><?php echo $v['notice']?></td>
-                            <td><?php echo $v['create_time'];?></td>
-                            <td>
-                                <?php echo $v['intergral'];?>
-                            </td>
-                        </tr>
-                        <?php endforeach;?>
-                    <?php }else{?>
-                        <th colspan="5" style="text-align:center;">暂时没有记录</th>
-                       <?php }?>
-                        <!-- more data -->
+                    <tbody id="integralRecord">
                     </tbody>
                 </table>
                 <!-- 分页 -->
-                <div class="am-u-lg-12 am-cf">
-                    <div class="am-fr">
-                        <ul class="am-pagination tpl-pagination">
-                            <li class="am-disabled"><a href="#">«</a></li>
-                            <li class="am-active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list1">
                     </div>
+                    <p>共<span class="dataNumber1"></span>条数据，共<span class="pageNumber1"></span>页</p>
                 </div>
             </div>
         </div>
@@ -140,37 +117,14 @@
                             <th>是否默认</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <?php if(!empty($address)){?>
-                        <?php foreach($address as $k=>$v):?>
-                        <tr class="gradeX">
-                            <td><?php echo $k+1;?></td>
-                            <td><?php echo $v['person']?></td>
-                            <td><?php echo $v['phone'];?></td>
-                            <td><?php echo $v['postcode'];?></td>
-                            <td><?php echo $v['province'];echo $v['city'];echo $v['area'];echo $v['address'];?></td>
-                            <td><?php echo $v['create_time'];?></td>
-                            <td><?php if($v['state'] == 1){echo "是";}else{echo "否";}?></td>
-                        </tr>
-                    <?php endforeach;?>
-                    <?php }else{?>
-                        <th colspan="7" style="text-align:center;">暂无地址记录</th>
-                    <?php }?>
+                    <tbody id="userAddressList">
                     </tbody>
                 </table>
                 <!-- 分页 -->
-                <div class="am-u-lg-12 am-cf">
-                    <div class="am-fr">
-                        <ul class="am-pagination tpl-pagination">
-                            <li class="am-disabled"><a href="#">«</a></li>
-                            <li class="am-active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">»</a></li>
-                        </ul>
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list2">
                     </div>
+                    <p>共<span class="dataNumber2"></span>条数据，共<span class="pageNumber2"></span>页</p>
                 </div>
             </div>
         </div>
@@ -194,37 +148,14 @@
                             <th>发布时间</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    <?php if(!empty($message)){?>
-                        <?php foreach($message as $k=>$v):?>
-                        <tr class="gradeX">
-                            <td><?php echo $k+1;?></td>
-                            <!--<td><?php echo user_name($v['sender']);?></td>-->
-                            <td><?php echo $v['title'];?></td>
-                            <td><?php echo $v['content'];?></td>
-                            <td><?php echo $v['create_time'];?></td>
-                        </tr>
-                        <?php endforeach;?>
-                    <?php }else{?>
-                        <th colspan="5" style="text-align:center;">暂无消息记录</th>
-                    <?php }?>
-
-                        <!-- more data -->
+                    <tbody id="memberMessList">
                     </tbody>
                 </table>
-                 <div class="am-u-lg-12 am-cf">
-                        <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div>
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list3">
                     </div>
+                    <p>共<span class="dataNumber3"></span>条数据，共<span class="pageNumber3"></span>页</p>
+                </div>
             </div>
         </div>
     </div>
@@ -232,3 +163,249 @@
 </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //异步刷新的ajax请求   
+    function getList(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber1').html(res.length);
+                    $('.pageNumber1').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('integralRecordModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list1',
+                        pages: pages,
+                        jump: function(obj){
+                            // document.getElementById('integralRecord').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#integralRecord').find('tr').remove();
+                    $('#paging_list1').html("");
+                    $('.dataNumber1').html("");
+                    $('.pageNumber1').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#integralRecord');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    function getList1(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                // console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber2').html(res.length);
+                    $('.pageNumber2').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('userAddressListModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list1',
+                        pages: pages,
+                        jump: function(obj){
+                            document.getElementById('userAddressList').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#userAddressList').find('tr').remove();
+                    $('#paging_list').html("");
+                    $('.dataNumber').html("");
+                    $('.pageNumber').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#userAddressList');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    function getList2(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                // console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber3').html(res.length);
+                    $('.pageNumber3').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('memberMessListModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list1',
+                        pages: pages,
+                        jump: function(obj){
+                            document.getElementById('memberMessList').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#memberMessList').find('tr').remove();
+                    $('#paging_list').html("");
+                    $('.dataNumber').html("");
+                    $('.pageNumber').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#memberMessList');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    $(document).ready(function(){
+        //会员消息
+        // getList2('<?php echo site_url("/member/Member/ret_user_message");?>','userid=<?php echo $userinfo["user_id"];?>');
+        //积分记录
+        getList('<?php echo site_url("/member/Member/ret_user_intergral");?>','userid=<?php echo $userinfo["user_id"];?>');
+        //用户地址
+        // getList2('<?php echo site_url("/member/Member/ret_user_address");?>','userid=<?php echo $userinfo["user_id"];?>');
+    })
+</script>
+<script type="text/html" id="integralRecordModal">
+    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
+        <td class="am-text-middle"><%= goods_id%></td>
+        <td class="am-text-middle"><%= goods_code%></td>
+        <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle"><%= title%></td>
+    </tr>
+</script>
+<script type="text/html" id="userAddressListModal">
+    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
+        <td class="am-text-middle"><%= goods_id%></td>
+        <td class="am-text-middle"><%= goods_code%></td>
+        <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle">
+        <%if(thumb) {%>
+            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
+        <%}else {%>
+            暂无图片
+        <%}%>
+        </td>
+        <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%= orders%></td>
+        <td class="am-text-middle"><%= sales%></td>
+        <td class="am-text-middle">
+        <%if(goods_state=="1"){%>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">上架</option>
+                <option value="0">下架</option>
+            </select>
+        <%}else{%>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">上架</option>
+                <option value="0" selected="selected">下架</option>
+            </select>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+        <%if(update_time) {%>
+            <span><%= update_time%></span>
+        <%}else {%>
+            <span><%= create_time%></span>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= goods_id%>" class="editGoods">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="memberMessListModal">
+    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
+        <td class="am-text-middle"><%= goods_id%></td>
+        <td class="am-text-middle"><%= goods_code%></td>
+        <td class="am-text-middle"><%= catname%></td>
+        <td class="am-text-middle">
+        <%if(thumb) {%>
+            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
+        <%}else {%>
+            暂无图片
+        <%}%>
+        </td>
+        <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%= orders%></td>
+        <td class="am-text-middle"><%= sales%></td>
+        <td class="am-text-middle">
+        <%if(goods_state=="1"){%>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">上架</option>
+                <option value="0">下架</option>
+            </select>
+        <%}else{%>
+            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">上架</option>
+                <option value="0" selected="selected">下架</option>
+            </select>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+        <%if(update_time) {%>
+            <span><%= update_time%></span>
+        <%}else {%>
+            <span><%= create_time%></span>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= goods_id%>" class="editGoods">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+</script>
