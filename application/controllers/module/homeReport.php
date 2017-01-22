@@ -8,7 +8,8 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 class HomeReport extends Default_Controller {
     //本地生活 家乡报道
     public $view_homeReport = "module/homeReport/homeReport.html";
-
+    //本地生活 家乡报道 编辑新闻
+    public $view_homeReportEdit = "module/homeReport/homeReportEdit.html";
     function __construct()
     {
         parent::__construct();
@@ -21,7 +22,13 @@ class HomeReport extends Default_Controller {
         $data['menu'] = array('systemSet','homeReport');
         $this->load->view('template.html',$data);
     }
-
+    //本地生活 家乡报道 编辑新闻
+    function homeReportEdit()
+    {
+        $data['page'] = $this->view_homeReportEdit;
+        $data['menu'] = array('systemSet','homeReportEdit');
+        $this->load->view('template.html',$data);
+    }
     //返回所有公告
     function get_notice_list(){
         if($_POST){
