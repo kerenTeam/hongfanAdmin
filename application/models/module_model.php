@@ -278,6 +278,15 @@ class Module_model extends CI_Model{
 		return $query->result_array();
 	}
 
+	//返回免责声明
+	function get_disclaimer(){
+		$query = $this->db->where('id','1')->get('hf_local_disclaimer');
+		return $query->row_array();
+	}
+	//修改免责声明
+	function edit_disclaimer($id,$data){
+	    return $this->db->where("id",$id)->update('hf_local_disclaimer',$data);
+	}
 
 
 }

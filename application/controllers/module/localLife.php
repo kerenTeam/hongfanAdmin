@@ -26,11 +26,28 @@ class LocalLife extends Default_Controller {
     {
         //获取本地列表
         $data['cates'] = $this->Module_model->get_cates('本地生活');
+        //获取免责声明
+        $data['disclaimer'] = $this->Module_model->get_disclaimer();
         //视图界面
         $data['page'] = $this->view_localLifeList;
         $data['menu'] = array('localLife','service');
         $this->load->view('template.html',$data);
     }
+    //修改免责声明
+    function edit_disclaimer(){
+    	if($_POST){
+    		$data = $this->input->post();
+    		if($this->Module_model->edit_disclaimer($data['id'],$data)){
+    			echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";exit;
+    		}else{
+    			echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";exit;
+        		}
+    	}else{
+    		$this->load->view('404.html');
+    	}
+    }
+
+
     //新增分类操作
     function add_cates(){
         if($_POST){

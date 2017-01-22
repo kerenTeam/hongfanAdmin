@@ -13,7 +13,8 @@ class ServeForPeople extends Default_Controller
 	public $view_addhelpgroup = 'module/serveForPeople/addhelpgroup.html';
 	public $view_edithelpgroup = 'module/serveForPeople/edithelpgroup.html';
 	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
-    public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
+            public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
+            public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
 	function __construct()
 	{
 		 parent::__construct();
@@ -34,8 +35,7 @@ class ServeForPeople extends Default_Controller
         $this->load->view('template.html',$data);
     }
     function helper_time(){
-        //获取团队信息
-        $data['team'] = $this->Service_model->get_team_info();
+     
         // var_dump($team);
         $plateid = $this->user_model->group_permiss($this->session->users['gid']);
         $data['plateid'] = json_decode($plateid,true);
@@ -47,13 +47,20 @@ class ServeForPeople extends Default_Controller
 
 
 
-	//为民服务  邻水帮帮团成员列表
+    //为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
-
+    //为民服务  义工团队信息
+    function volunteerTeamserveMess(){
+       //获取团队信息
+        $data['team'] = $this->Service_model->get_team_info();
+        $data['page'] = $this->view_volunteerTeamserveMess;
+        $data['menu'] = array('localLife','serveForPeople');
+        $this->load->view('template.html',$data);
+    }
     //获取成员列表
     function helpUser_list(){
         if($_POST){
