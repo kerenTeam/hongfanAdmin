@@ -72,50 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <!--新增新闻模态框开始-->
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="addAccount">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增新闻</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地报道 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/module/HomeReport/add_notice");?>' method='post' data-am-validator >
-                                    <div class="am-form-group am-cf ">
-                                        <label class="am-u-sm-3 am-form-label">新闻名称<span class="red">*</span>:</label>
-                                        <div class="am-u-sm-8">  
-                                            <input type="text" class="am-form-field" placeholder="请输入2-15个字符" name='title' minlength="2" maxlength="5" required onblur="validate(this,2,15,1)" />
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label for="" class="am-u-sm-3 am-form-label">新闻缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-form-icon am-form-feedback am-cf ">
-                                        <label class="am-u-sm-3 am-form-label">新闻内容<span class="red">*</span>:</label>
-                                        <div class="am-u-sm-8 am-u-end">
-                                            <div id="editorContent">
-                                                <textarea id="editor" type="text/plain" name='content'></textarea>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-secondary">新增</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!--新增新闻模态框结束-->
+
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
@@ -123,6 +80,7 @@
                                     <th class="moll_name">编号</th>
                                     <th class="shop_id">新闻名称 </th>
                                     <th class="shop_id">新闻缩略图 </th>
+                                    <th class="shop_id">点赞数 </th>
                                     <th class="shop_name">发布时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -194,7 +152,7 @@ function validate(obj,minlen,maxlen,i){
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editReport').eq(i).attr('data-id');
                             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            $('.editReport').eq(i).attr("href","<?php echo site_url().'/module/HomeReport/homeReportEdit';?>");                        
+                            $('.editReport').eq(i).attr("href","<?php echo site_url().'/module/HomeReport/homeReportEdit/"+edDataId+"';?>");                        
                         }
 
                         //删除管理员帐户
@@ -203,7 +161,7 @@ function validate(obj,minlen,maxlen,i){
                             $.ajax({
                                 type:'post',
                                 url:'<?php echo site_url('/module/HomeReport/del_notice');?>',
-                                data: 'goodsid='+dataId,
+                                data: 'id='+dataId,
                                 success: function(data){
                                     if(data==1){
                                         $('.trClass'+dataId).remove();
@@ -217,57 +175,6 @@ function validate(obj,minlen,maxlen,i){
                                 }
                             });
                         });
-                        //上传头像
-                        var picArray=[' '];
-                        for(var i=0;i<$('.imgUp').length;i++){
-                            $('.imgUp').eq(i).change(function() {
-                                var dataId=$(this).attr('data-id');                              
-                                if(this.files[0] && this.files){
-                                    picArray[0]=this.files[0];
-                                    var reader = new FileReader();
-                                    reader.readAsDataURL(this.files[0]);
-                                    reader.onload = function(e) {
-                                        var str='<img class="picimg" src="'+this.result+'"/>';
-                                        document.getElementsByClassName('preview'+dataId)[0].innerHTML=str;
-                                    } 
-                                    // console.log(picArray);
-                                    
-                                }
-                            });
-                            //删除图片
-                            $(".deleteImg").click(function(){  
-                                $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');  
-                            });
-
-                            //账号类型管理
-                            var name=$('.account_type_name'),jsondata={};
-                            //保存管理员账号信息
-                            for(var i=0;i<$('.sureSave').length;i++){
-                                $('.sureSave').eq(i).click(function(){
-                                var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/systemSet/edit_admin_user');?>";//上传文件的后台地址;
-                                var title=document.getElementsByClassName('title'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value;
-                                console.log(title+content+picArray[0]);
-                                formD.append('id',dataId);
-                                formD.append('title',title);
-                                formD.append('content',content);
-                                formD.append('picArray',picArray[0]);
-                                 //实例化XMLHttpRequest对象
-                                var xhr=new XMLHttpRequest();
-                                xhr.open('post',FileController,true);
-                                xhr.send(formD);
-                                xhr.onreadystatechange = function(){
-                                    if (xhr.readyState===4) {  
-                                        if (xhr.status===200) {
-                                             alert("保存成功！");
-                                            $('#ed'+dataId).modal('close');
-                                            getList('<?php echo site_url('/module/HomeReport/get_notice_list');?>','default=1');
-                                        }
-                                    }
-                                }  
-                            });
-                            }
-                            
-                        }                        
                     }
                 })
             }else{
@@ -307,6 +214,7 @@ $(document).ready(function(){
             暂无
             <%}%>
         </td>
+        <td class="am-text-middle"><%= red_heart%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

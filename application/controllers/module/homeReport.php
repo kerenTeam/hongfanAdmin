@@ -27,15 +27,21 @@ class HomeReport extends Default_Controller {
     //本地生活 家乡报道 编辑新闻
     function homeReportEdit()
     {
-        $data['page'] = $this->view_homeReportEdit;
-        $data['menu'] = array('localLife','homeReport');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['info'] = $this->System_model->get_notice_info($id);
+            $data['page'] = $this->view_homeReportEdit;
+            $data['menu'] = array('localLife','homeReport');
+            $this->load->view('template.html',$data);
+        }
     }
      //本地生活 家乡报道 新增新闻
     function homeReportAdd()
     {
         $data['page'] = $this->view_homeReportAdd;
-        $data['menu'] = array('systemSet','homeReportAdd');
+        $data['menu'] = array('localLife','homeReport');
         $this->load->view('template.html',$data);
     }
     //返回所有公告
@@ -69,11 +75,13 @@ class HomeReport extends Default_Controller {
                     $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
+            $data['userid'] = $this->session->users['user_id'];
             if($this->System_model->add_notice($data)){
+
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/HomeReport/homeReportAdd')."'</script>";
                     exit; 
             }
         }else{
@@ -98,6 +106,7 @@ class HomeReport extends Default_Controller {
                     $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
+            $data['userid'] = $this->session->users['user_id'];
             if($this->System_model->edit_notice($data['id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
@@ -117,6 +126,8 @@ class HomeReport extends Default_Controller {
             if(empty($id)){
                 echo "2";
             }else{
+                $news= $this->System_model->get_notice_info($id);
+                   @unlink($news['pic']);
                 if($this->System_model->del_notice($id)){
                     echo "1";
                 }else{

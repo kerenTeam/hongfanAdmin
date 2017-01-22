@@ -79,7 +79,7 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活
             <a href="<?php echo site_url().'/module/HomeReport/index';?>" style="font-size:18px;">家乡报道</a>  
-            <small><a href="<?php echo site_url().'/module/HomeReport/homeReportEdit';?>" style="font-size:16px;">编辑新闻</a></small>
+            <small>编辑新闻</small>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_adver');?>" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/module/HomeReport/edit_notice');?>" method="post" enctype="multipart/form-data" >
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">编辑新闻</div>
@@ -97,7 +97,7 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">新闻标题<span class="red">*</span>：</label>
                                  <div class="am-u-sm-6 am-u-end">
-                                   <input type="text" name="title" placeholder="请输入2-10个字符" value="" required onblur="validate(this,2,10,1)" />
+                                   <input type="text" name="title" placeholder="请输入2-50个字符" value="<?php echo $info['title'];?>" required onblur="validate(this,2,50,1)" />
                                 </div>
                                 <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
@@ -105,11 +105,20 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">新闻缩略图<span class="red">*</span>：</label>
                                  <div class="am-u-sm-6 am-u-end">
+                                    <?php if(empty($info['pic'])):?>
                                     <div class="wx_type_img">
                                      <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                     </div>
+                                <?php else:?>
+                                     <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" value="<?php echo $info['pic'];?>" name='pic' />
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $info['pic']?>" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                <?php endif;?>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                     <small class="red">广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
                                    </small> 
@@ -119,7 +128,7 @@
                                 <label class="am-u-sm-3 am-text-right">新闻详情<span class="red">*</span>：</label>
                                 <div class="am-u-sm-6 am-u-end">
                                     <div>
-                                        <script id="editor" type="text/plain" name="content"></script>
+                                        <script id="editor" type="text/plain" name="content"><?php echo $info['content'];?></script>
                                     </div>
                                 </div>                            
                             </div>
@@ -127,7 +136,7 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type="hidden" name="id" value="" />
+                        <input type="hidden" name="id" value="<?php echo $info['id'];?>" />
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" id="cancle" type="reset">取消</button> 
                     </div>

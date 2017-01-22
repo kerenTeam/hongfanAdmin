@@ -112,7 +112,7 @@ class System_model extends CI_Model
 
     //返回所有系统公告
     function get_notice_list(){
-        $query = $this->db->order_by('create_time','asc')->get($this->report);
+        $query = $this->db->order_by('create_time','desc')->get($this->report);
         return $query->result_array();
     }
     //删除系统公告
@@ -128,6 +128,13 @@ class System_model extends CI_Model
     function edit_notice($id,$data){
         $where['id'] = $id;
         return $this->db->where($where)->update($this->report,$data);
+    }
+
+    //返回编辑新闻内容
+    function get_notice_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->report);
+        return $query->row_array();
     }
 
 
