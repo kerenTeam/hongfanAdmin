@@ -78,11 +78,11 @@
                             <div class="am-modal-hd">新增新闻</div>
                             <div class="am-modal-bd">
                                 <!-- 本地报道 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' data-am-validator >
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/module/HomeReport/add_notice");?>' method='post' data-am-validator >
                                     <div class="am-form-group am-cf ">
                                         <label class="am-u-sm-3 am-form-label">新闻名称<span class="red">*</span>:</label>
                                         <div class="am-u-sm-8">  
-                                            <input type="text" class="am-form-field" placeholder="请输入2-15个字符" name='nickname' minlength="2" maxlength="5" required onblur="validate(this,2,15,1)" />
+                                            <input type="text" class="am-form-field" placeholder="请输入2-15个字符" name='title' minlength="2" maxlength="5" required onblur="validate(this,2,15,1)" />
                                         </div>
                                         <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
@@ -91,7 +91,7 @@
                                         <label for="" class="am-u-sm-3 am-form-label">新闻缩略图 <span class="red">*</span></label>
                                          <div class="am-u-sm-8 am-u-end">
                                             <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                               <!-- 图片实时预览 -->
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                             </div>

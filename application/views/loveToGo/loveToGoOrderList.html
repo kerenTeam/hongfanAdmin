@@ -105,18 +105,19 @@ td.am-text-middle img{
 </div>
 <div class="am-modal am-modal-confirm" tabindex="-1" id="exportModal">
     <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-hd">导出提示</div>
         <div class="am-modal-bd" style="width:100%;">
             <div class="am-form-group am-cf">
                 <div class="am-u-sm-6 am-text-center">
                     <input type="radio" class="am-inline exportRadio"  name='exportRadio' value='1' onchange="changeFunction(this)">
-                    导出今日订单
+                    导出今日已支付订单
                 </div>
                 <div class="am-u-sm-6 am-text-center">
                     <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有订单
                 </div>
             </div>
         </div>
+
         <div class="am-modal-footer" style="margin-top: 10px;">
             <a class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel style="margin-right: 50px;">取消</a>
             <a class="am-btn am-btn-primary am-btn-xs" id="sureExport" type="submit"  >确定</a>
@@ -129,7 +130,7 @@ td.am-text-middle img{
   function changeFunction(obj) {
     var single=obj.value;
     if(obj.checked){
-        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveTogo/dowload_love_order/'+ single +'");?>');
+        $('#sureExport').attr("href",'<?php echo site_url("/igo/LoveToGo/dowload_love_order/'+ single +'");?>');
     }else{
         // $('#sureExport').removeAttr("href");
     }
@@ -225,10 +226,10 @@ td.am-text-middle img{
 }
 $(document).ready(function(){
     //加载列表数数据
-     getList('<?php echo site_url('igo/LoveTogo/ret_loveTogo_order');?>','default=1');
+     getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('igo/LoveTogo/ret_loveTogo_order');?>','default=1');
+        getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1');
     });
     //点击搜索
     $('.searchOrder').click(function(){
