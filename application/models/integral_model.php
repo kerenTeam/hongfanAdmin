@@ -81,8 +81,15 @@ class Integral_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_mall_order a');
         $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
-        $query = $this->db->where($where)->get();
+        $query = $this->db->where($where)->order_by('create_time','asc')->get();
         return $query->result_array();
+    }
+
+    //返回今天所有的订单
+    function get_love_newOrder($date){
+            $where['order_type'] = '2';
+            $query = $this->db->where($where)->like('create_time',$date,'both')->order_by('create_time','asc')->get($this->order);
+            return $query->result_array();
     }
 
 
