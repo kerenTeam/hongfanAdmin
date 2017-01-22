@@ -50,6 +50,7 @@ class LoveToGo extends Default_Controller
     //f返回爱购 订单列表
     function ret_loveTogo_order(){
         if($_POST){
+            
             $list = $this->Integral_model->get_love_order();
             if(empty($list)){
                 echo "2";
