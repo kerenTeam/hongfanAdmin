@@ -16,7 +16,7 @@ class Igogoods extends CI_Controller
 
     function goods_list(){
         //
-         echo "1";
+        echo "1";
         set_time_limit(0);
         $query = $this->db->where('differentiate','3')->get('hf_mall_goods');
         $list = $query->result_array();
