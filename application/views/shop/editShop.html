@@ -81,14 +81,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondYeTai" style="display: none;">
+                         <!--    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="secondYeTai" style="display: none;">
                                 <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8 am-u-end">
                                     <select id="secondYeTaiSelect" data-id="<?php echo $store['subcommercial_type_name']?>" name="subcommercial_type_name" >
                                     <option value="">-=请选择一项=-</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="" class="am-u-sm-3 am-form-label">手机号<span class="red">*</span>：</label>
                                 <div class="am-u-sm-8">
@@ -148,16 +148,7 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label for="floor_name" class="am-u-sm-3 am-form-label">所在楼层 ：</label>
                                 <div class="am-u-sm-8 am-u-end">
-                                    <select id="floor_name" name="floor_name" >
-                                         <option value="">-=请选择一项=-</option>
-                                        <option value="B3" <?php if($store['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
-                                        <option value="B2" <?php if($store['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
-                                        <option value="B1" <?php if($store['floor_name'] == 'B1'){echo "selected";}?>>B1</option>
-                                        <option value="F1" <?php if($store['floor_name'] == 'F1'){echo "selected";}?>>F1</option>
-                                        <option value="F2" <?php if($store['floor_name'] == 'F2'){echo "selected";}?>>F2</option>
-                                        <option value="F3" <?php if($store['floor_name'] == 'F3'){echo "selected";}?>>F3</option>
-                                        <option value="F4" <?php if($store['floor_name'] == 'F4'){echo "selected";}?>>F4</option>
-                                    </select>
+                                   <input type="text" name="floor_name" placeholder="例如：宏帆广场1层" value="<?php echo $store['floor_name'];?>"   />
                                 </div>
                             </div>
                              <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
