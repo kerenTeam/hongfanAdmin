@@ -699,6 +699,8 @@ class LocalLife extends Default_Controller {
 		if($_POST){
 			$data = $this->input->post();
 			$data['date'] = date('Y-m-d H:i:s');
+			$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+			$data['market_name'] = $market_name['username'];
 			$data['marketid'] = $this->session->users['user_id'];
 			if($this->Module_model->add_market_data($data)){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
@@ -728,6 +730,7 @@ class LocalLife extends Default_Controller {
 	function edit_market_data(){
 		if($_POST){
 			$data = $this->input->post();
+
 			if($this->Module_model->edit_market_info($data['id'],$data)){
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}else{
@@ -799,8 +802,11 @@ class LocalLife extends Default_Controller {
 	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
 	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
 	            $data[$currentRow]['date'] = date('Y-m-d H:i:s');
+	            	$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+	             $data[$currentRow]['market_name'] = $market_name['username'];
 	            $data[$currentRow]['import_user'] = $this->session->users['user_id'];
 	            $data[$currentRow]['marketid'] = $this->session->users['user_id'];
+
 	            //插入数据库
 	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
 	            if(empty($data[$currentRow]['goods_name'])){

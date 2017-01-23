@@ -83,6 +83,20 @@ class LoveToGo extends Default_Controller
         }
     }
 
+    //删除 爱购商品
+    function del_love_goods(){
+            if($_POST){
+                $id = $_POST['goodsid'];    
+                if($this->Integral_model->del_love_goods($id)){
+                    echo "1";
+                }else{
+                    echo "2";
+                }
+            }else{
+                echo '2';
+            }
+    }
+
 
     //爱g购订单导出
     function dowload_love_order(){
