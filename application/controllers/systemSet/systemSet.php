@@ -123,10 +123,15 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = 'Upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = '/Upload/headPic/'.$this->upload->data('file_name');
                 }
             }
             $data['nickname'] = trim($_POST['nickname']);
+            $password = trim($_POST['password']);
+            if(!empty($password)){
+              $data['password'] = md5($password);
+            }
+
             $data['gid'] = $_POST['group_name'];
             if($this->System_model->edit_admin_user($id,$data)){
                 echo "1";
