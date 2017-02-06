@@ -376,6 +376,20 @@ class Store extends Default_Controller {
         }
     }
 
+    //删除订单
+    function del_Order(){
+        if($_POST){
+            $id = $_POST['id'];
+            if($this->MallShop_model->del_store_order($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //订单搜索
     function order_search(){
         if($_POST){

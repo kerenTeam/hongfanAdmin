@@ -243,6 +243,13 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    function del_store_order($id){
+        $where['order_id'] = $id;
+        return $this->db->where($where)->delete($this->shop_order);
+    }
+
+
+
     //获取所有活动
     function get_activity_list($storeid){
         $query = $this->db->where('storeid',$storeid)->get($this->shop_activity);

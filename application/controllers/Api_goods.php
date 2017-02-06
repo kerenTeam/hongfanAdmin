@@ -31,8 +31,10 @@ class Api_goods extends CI_Controller
                     if($v['name'][0] == ''){
                         unset($v);
                     }else{
+                    	
 	                     $arr[$k]['name'] = array_merge(array_unique($v['name']));
 	                     $arr[$k]['value'] = array_merge(array_unique($v['value']));
+            
                     }
                 }
                 $data[]['parent'] =$arr;

@@ -221,9 +221,11 @@
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">座机号：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <input type="tel"  name="" value="<?php echo $busin['tel']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" />
+                        <div class="am-u-sm-8">
+                            <input type="tel"  name="" value="<?php echo $busin['tel']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" onblur="validate(this,7,12,0)" />
                         </div>
+                        <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>

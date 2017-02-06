@@ -41,9 +41,12 @@ class MarketActivity extends Default_Controller {
     //新增商场活动
     function marketAddActivity(){
 
-         //获取商场所有优惠劵
-         $time = date('Y-m-d');
+        //获取商场所有优惠劵
+        $time = date('Y-m-d');
+
          $data['coupon'] = $this->Activity_model->get_coupon_list($time);
+
+
          $data['page']= $this->view_marketAddActivity;
          $data['menu'] = array('marketActivity','marketAddActivity');
          $this->load->view('template.html',$data);

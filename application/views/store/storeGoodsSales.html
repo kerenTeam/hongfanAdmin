@@ -30,7 +30,7 @@ h4.am-panel-title{
         width: 350px !important;
     }
 </style>
- 
+
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
     <div class="container-fluid am-cf">
@@ -98,19 +98,19 @@ h4.am-panel-title{
                                                         </td>
                                                     </tr>
                                                     <?php foreach($val['goods'] as $v):?>
-                                                    <tr class="trClass<?php echo $val['id'].$v['goods_id'];?>" data-id="<?php echo $v['goods_id'];?>">
+                                                    <tr class="trClass<?php echo $v['goods_id'];?>" data-id="<?php echo $v['goods_id'];?>">
                                                         <td class="am-text-middle"><?php echo $v['goods_id'];?></td>
                                                         <td class="am-text-middle"><?php echo $v['title'];?></td>
                                                         <td class="am-text-middle"><img class="imgbox" src="<?php echo $v['thumb'];?>"></td>
                                                         <td class="am-text-middle">
                                                             <div class="tpl-table-black-operation">
-                                                                <a data-id="<?php echo $v['goods_id'];?>" class="tpl-table-black-operation-del tpl-del" data-am-modal="{target:'#<?php echo $val['id'].$v['goods_id'];?>'}" >
+                                                                <a data-id="<?php echo $v['goods_id'];?>" class="tpl-table-black-operation-del tpl-del" data-am-modal="{target:'#<?php echo $v['goods_id'];?>'}" >
                                                                     <i class="am-icon-trash"></i>移除该商品
                                                                 </a>
                                                             </div>
                                                         </td>
                                                     </tr>
-                                            <div class="am-modal am-modal-confirm" tabindex="-1" id="<?php echo $val['id'].$v['goods_id'];?>">
+                                            <div class="am-modal am-modal-confirm" tabindex="-1" id="<?php echo $v['goods_id'];?>">
                                             <div class="am-modal-dialog">
                                                 <div class="am-modal-hd">删除提示</div>
                                                 <div class="am-modal-bd">
@@ -260,7 +260,7 @@ function findPreview(parent) {
                     success: function(data){
                         if(data==1){
                             alert('成功');
-                            $('.trClass'+id+goodsId).remove();
+                            $('.trClass'+goodsId).remove();
                 
                         }else{
                             alert("操作失败！");
@@ -272,6 +272,8 @@ function findPreview(parent) {
                         alert("操作失败，请检查网络设置！");
                     }
                 });
+          
+        
     });
 
 </script>
