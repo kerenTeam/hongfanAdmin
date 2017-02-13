@@ -93,9 +93,12 @@ class LocalLife extends Default_Controller {
                     exit;
                 } else {
                     $icon[]['picImg'] =  '/Upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] = json_encode($icon);
                 }
             }
-            $data['icon'] = json_encode($icon);
+            // var_dumP($data);
+            // exit;
+      
     
             if($this->Module_model->edit_cates($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
