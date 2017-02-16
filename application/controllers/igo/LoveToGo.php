@@ -87,6 +87,14 @@ class LoveToGo extends Default_Controller
     function del_love_goods(){
             if($_POST){
                 $id = $_POST['goodsid'];    
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个爱购商品。商品id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 if($this->Integral_model->del_love_goods($id)){
                     echo "1";
                 }else{
@@ -175,6 +183,16 @@ class LoveToGo extends Default_Controller
                    
                 }
             }
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了爱购商品订单信息",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             $filename = 'ImportOrder.xls'; //save our workbook as this file name
 
             header('Content-Type: application/vnd.ms-excel'); //mime type

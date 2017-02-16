@@ -109,6 +109,14 @@ class Shop extends Default_Controller {
                     //修改商家商品信息
                     if($this->Shop_model->edit_goods_state($id,$arr)){
                         if($this->Shop_model->edit_shop_state($id,$data)){
+                            //日志
+                            $log = array(
+                                'userid'=>$_SESSION['users']['user_id'],  
+                                "content" => $_SESSION['users']['username']."修改了一个商家状态为正常,商家id是".$id,
+                                "create_time" => date('Y-m-d H:i:s'),
+                                "userip" => get_client_ip(),
+                            );
+                            $this->db->insert('hf_system_journal',$log);
                             echo "1";
                         }else{
                             echo "2";
@@ -121,6 +129,14 @@ class Shop extends Default_Controller {
                     //修改商家商品信息
                     if($this->Shop_model->edit_goods_state($id,$arr)){
                         if($this->Shop_model->edit_shop_state($id,$data)){
+                             //日志
+                            $log = array(
+                                'userid'=>$_SESSION['users']['user_id'],  
+                                "content" => $_SESSION['users']['username']."修改了一个商家状态为冻结，包括该商家下所有商品,商家id是".$id,
+                                "create_time" => date('Y-m-d H:i:s'),
+                                "userip" => get_client_ip(),
+                            );
+                            $this->db->insert('hf_system_journal',$log);
                             echo "1";
                         }else{
                             echo "2";
@@ -144,6 +160,14 @@ class Shop extends Default_Controller {
             if($this->Shop_model->del_store_goods($id)){
                 //删除商家
                 if($this->Shop_model->del_shop_store($id)){
+                     //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个商家,商家id是".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     //删除登陆账户
                     $this->Shop_model->del_shop_member($store['business_id']);
                     echo "1";
@@ -235,6 +259,14 @@ class Shop extends Default_Controller {
                 $i++;
              }
             if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
+                     //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个商家,商家id是".$id.",商家名称是：".$data['store_name'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                    echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
                    // echo "23";
             }else{
@@ -277,6 +309,14 @@ class Shop extends Default_Controller {
              }
         
              if($this->Shop_model->add_store($data)){
+                   //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个场内商家,商家名称是：".$data['store_name'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
                // echo "23";
              }else{
@@ -312,12 +352,28 @@ class Shop extends Default_Controller {
                 unset($data['password'],$data['username']);
                 if($data['store_distinction'] == '2'){
                     if($this->Shop_model->add_store_info($data)){
+                            //日志
+                            $log = array(
+                                'userid'=>$_SESSION['users']['user_id'],  
+                                "content" => $_SESSION['users']['username']."新增了一个电商商家,商家名称是：".$data['store_name'],
+                                "create_time" => date('Y-m-d H:i:s'),
+                                "userip" => get_client_ip(),
+                            );
+                            $this->db->insert('hf_system_journal',$log);
                          echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/index')."'</script>";exit;
                     }else{
                         echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit;
                     }
                 }else{
                     if($this->Shop_model->add_store_info($data)){
+                         //日志
+                            $log = array(
+                                'userid'=>$_SESSION['users']['user_id'],  
+                                "content" => $_SESSION['users']['username']."新增了一个电商商家,商家名称是：".$data['store_name'],
+                                "create_time" => date('Y-m-d H:i:s'),
+                                "userip" => get_client_ip(),
+                            );
+                            $this->db->insert('hf_system_journal',$log);
                          echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
                     }else{
                         echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
@@ -367,6 +423,14 @@ class Shop extends Default_Controller {
                 //修改登录账户
             if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
                 if($this->Shop_model->edit_store_info($data['store_id'],$data)){
+                     //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个电商商家,商家id是：".$data['store_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     if($data['store_distinction'] == '2'){
                      echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/index')."'</script>";exit;
                     }else{
@@ -423,6 +487,13 @@ class Shop extends Default_Controller {
             $arr = array_unique(array_merge($store_id,$stores));
             $data['store_list'] = implode(',',$arr);
             if($this->Shop_model->edit_salse($id,$data)){
+                   $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个推荐商家,id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -450,6 +521,13 @@ class Shop extends Default_Controller {
                 }
                 $data['store_list'] = implode(',',$store);
                 if($this->Shop_model->edit_salse($id,$data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个推荐商家,id是：".$storeid,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "2";
@@ -480,6 +558,13 @@ class Shop extends Default_Controller {
             }
            
             if($this->Shop_model->edit_salse($data['id'],$data)){
+                  $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了一个推荐商家详情,id是：".$data['id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/findshop')."';</script>";exit;
             }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/findshop')."';</script>";exit;
@@ -531,7 +616,7 @@ class Shop extends Default_Controller {
                 $data['business_hours'] = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取d列的值
              
                 $type_name = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取d列的值
-                $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
+                // $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
                 $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue());//获取d列的值
                 $data['create_time'] = date('Y-m-d');
                 $data['send_userid'] = $this->session->users['user_id'];
@@ -546,12 +631,12 @@ class Shop extends Default_Controller {
                     $type = array('type_name'=>$type_name);
                     $commercial_type_name = $this->Shop_model->add_store_type($type);
                 }
-                //判断二级业态是否存在
-                $subcommercial_type_name = $this->Shop_model->get_store_type_id(trim($type_tow_name),$commercial_type_name);
-                if($subcommercial_type_name == NULL){
-                    $comm = array('type_name'=>$type_tow_name,'gid'=>$commercial_type_name);
-                    $subcommercial_type_name = $this->Shop_model->add_store_type($comm);
-                }
+                // //判断二级业态是否存在
+                // $subcommercial_type_name = $this->Shop_model->get_store_type_id(trim($type_tow_name),$commercial_type_name);
+                // if($subcommercial_type_name == NULL){
+                //     $comm = array('type_name'=>$type_tow_name,'gid'=>$commercial_type_name);
+                //     $subcommercial_type_name = $this->Shop_model->add_store_type($comm);
+                // }
                 //新增商家用户账号
                 $arr['username'] = trim($username);
                 $arr['password'] = md5('123456');
@@ -570,6 +655,17 @@ class Shop extends Default_Controller {
                     $data['business_id'] = $userid;
                     $data['subcommercial_type_name'] = $subcommercial_type_name;
                     $data['commercial_type_name'] = $commercial_type_name;
+
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."导入了商家信息",
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+
+
+
                     $import =  $this->db->insert('hf_shop_store',$data); 
                 }
 
@@ -643,6 +739,15 @@ class Shop extends Default_Controller {
             header('Content-Type: application/vnd.ms-excel'); //mime type
             header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
             header('Cache-Control: max-age=0'); //no cache
+
+             $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了商家信息",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
 
             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
             $objWriter->save('php://output');

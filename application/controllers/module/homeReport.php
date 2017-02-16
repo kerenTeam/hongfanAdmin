@@ -77,6 +77,14 @@ class HomeReport extends Default_Controller {
             }
             $data['userid'] = $this->session->users['user_id'];
             if($this->System_model->add_notice($data)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个系统公告。公告名称是".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
 
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
@@ -108,6 +116,14 @@ class HomeReport extends Default_Controller {
             }
             $data['userid'] = $this->session->users['user_id'];
             if($this->System_model->edit_notice($data['id'],$data)){
+                   //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个系统公告。公告名称是".$data['name'].",公告id是：".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/HomeReport/index')."'</script>";
                     exit;
             }else{
@@ -129,6 +145,14 @@ class HomeReport extends Default_Controller {
                 $news= $this->System_model->get_notice_info($id);
                    @unlink($news['pic']);
                 if($this->System_model->del_notice($id)){
+                    //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个系统公告。公告id是：".$data['id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "2";

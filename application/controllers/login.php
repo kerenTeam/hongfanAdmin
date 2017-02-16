@@ -10,7 +10,9 @@ class Login extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        date_default_timezone_set("Asia/Shanghai");
         $this->load->model('Member_model','m_model');
+        $this->load->helper('default_helper');
     }
     //管理员登陆界面
     function index(){
@@ -65,6 +67,14 @@ class Login extends CI_Controller {
                                 $a['error'] = '你没有权限登录！';
                                 $this->load->view('login.html',$a);
                             }
+                            $data = array(
+                                "userid" => $user['user_id'],
+                                "content" => $user['username']."登录了！",
+                                "create_time" => date('Y-m-d H:i:s'),
+                                "userip" => get_client_ip(),
+                                "login_address" => GetIpLookup(get_client_ip()),
+                            );
+                            $this->db->insert('hf_system_journal',$data);
                             redirect( site_url('/Admin/index') );
                            break;
                    }

@@ -41,12 +41,9 @@ class MarketActivity extends Default_Controller {
     //新增商场活动
     function marketAddActivity(){
 
-        //获取商场所有优惠劵
-        $time = date('Y-m-d');
-
+         //获取商场所有优惠劵
+         $time = date('Y-m-d');
          $data['coupon'] = $this->Activity_model->get_coupon_list($time);
-
-
          $data['page']= $this->view_marketAddActivity;
          $data['menu'] = array('marketActivity','marketAddActivity');
          $this->load->view('template.html',$data);
@@ -84,6 +81,17 @@ class MarketActivity extends Default_Controller {
                 $data['couponid'] = '';
              }
 
+
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."新增了一个活动，活动名称是".$data['title'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             if($this->Activity_model->add_activity($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/marketActivity/MarketActivity/activity')."'</script>";exit;
             }else{
@@ -120,6 +128,8 @@ class MarketActivity extends Default_Controller {
             }
             $data['coupon'] = $coupon;
             $data['info'] = $info;
+
+          
 
              $data['page']= $this->view_marketEditActivity;
              $data['menu'] = array('marketActivity','activity');
@@ -159,6 +169,16 @@ class MarketActivity extends Default_Controller {
             }else{
                 $data['couponid'] = '';
             }
+
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."编辑了一个活动，活动id是".$data['id'].",活动名称是".$data['title'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
             if($this->Activity_model->edit_activity_info($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/marketActivity/MarketActivity/activity')."'</script>";exit;
             }else{
@@ -179,6 +199,16 @@ class MarketActivity extends Default_Controller {
                 echo "2";exit;
             }
             $info = $this->Activity_model->get_activity_info($id);
+
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."删除了一个活动，活动id是".$id.",活动名称是".$info['title'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
             if($this->Activity_model->del_Activity($id)){
                 @unlink($info['picImg']);
                 echo "1";

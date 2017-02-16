@@ -164,6 +164,14 @@ class SingleShop extends Default_Controller {
              }
             if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
                  if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
+                    //日志
+                     $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了商家基础信息，商家名称是：".$data['store_name'].",商家id是：".$data['store_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                    echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                    // echo "23";
                  }else{
@@ -208,6 +216,14 @@ class SingleShop extends Default_Controller {
             $data['goods_state'] = $_POST['state'];
             $goods_id = $_POST['goodsid'];
             if($this->MallShop_model->edit_goods_state($goods_id,$data)){
+               //日志
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了商品上下架状态，商品id是：".$goods_id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -326,6 +342,14 @@ class SingleShop extends Default_Controller {
                     $value['g_id'] = $data['goods_id'];
                     $this->db->insert('hf_mall_goods_property',$value);
                 }
+                  //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了商品信息，商品id是：".$data['goods_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
@@ -405,6 +429,14 @@ class SingleShop extends Default_Controller {
                     $value['g_id'] = $goodsid;
                     $this->db->insert('hf_mall_goods_property',$value);
                 }
+                    //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了商品信息，商品名称是：".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/goodsList')."'</script>";exit;
              }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/goodsAdd')."'</script>";exit;
@@ -647,6 +679,14 @@ class SingleShop extends Default_Controller {
                 }
             }
            $ret = array('yes'=>count($yes),'error'=>count($error),'yeslist'=>$yes,'errorlist'=>$error);
+           //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导入了商品信息，导入成功".$ret['yes']."条，失败".$ret['error']."条，失败条目：".implode(',',$ret['errorlist']),
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
            echo json_encode($ret);
            unlink($inputFileName);
         } 
@@ -665,6 +705,13 @@ class SingleShop extends Default_Controller {
         if($_POST){
             $id = $_POST['goodsid'];
             if($this->MallShop_model->del_goods($id)){
+                  $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."删除一个商品，商品id是：".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";

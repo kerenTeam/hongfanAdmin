@@ -129,6 +129,13 @@ class Payment extends Default_Controller
                 echo "2";
             }else{
                 if($this->Payment_model->del_qianmi_order($id)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个千米订单，订单id是".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "2";

@@ -102,8 +102,20 @@ class Member extends Default_Controller {
                 echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".site_url('/member/Member/addMember')."'</script>";
                 exit;
             }
+
+           
+
+
             //插入
             if($this->user_model->add_user_member($data)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个普通用户。用户名是".$data['username'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
@@ -138,8 +150,21 @@ class Member extends Default_Controller {
     function edit_userinfo(){
         if($_POST){
             $data = $this->input->post();
-            $data['password'] = md5($this->input->post('password'));
+            if(!empty($this->input->post('password'))){
+                $data['password'] = md5($this->input->post('password'));
+            }
+            
+
+
             if($this->user_model->edit_userinfo($data['user_id'],$data)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个普通用户。用户名是".$data['username']."用户id是：".$data['user_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
@@ -156,13 +181,21 @@ class Member extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-           
+          
             //自己不能删除
             if($id == $this->session->users['user_id']){
                 echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }
             if($this->user_model->del_member($id)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个普通用户。用户id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }else{
@@ -349,6 +382,14 @@ class Member extends Default_Controller {
             }
             //操作数据库
             if($this->user_model->edit_cards($data['id'],$data)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个会员卡。会员卡名是".$data['name']."会员卡Id是:".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
@@ -367,6 +408,15 @@ class Member extends Default_Controller {
             $this->load->view('404.html');
         }else{
             if($this->user_model->del_cards($id)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个会员卡。会员卡Id是:".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
@@ -408,6 +458,15 @@ class Member extends Default_Controller {
                 }
             }
             if($this->user_model->add_cards($data)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个会员卡。会员卡名是".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberCard')."'</script>";
                 exit;
             }else{
@@ -442,6 +501,14 @@ class Member extends Default_Controller {
     		}
     		$arr = array('state'=>$state);
     		if($this->user_model->edit_state($id,$arr)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."屏蔽了一个会员。会员id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
 				exit;
     		}else{
