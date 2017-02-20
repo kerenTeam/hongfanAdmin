@@ -8,7 +8,7 @@
     .scrollspy-nav{
         display: inline-block;
         color:#19a7f0 !important;
-    } 
+    }  
     #goodsComments .am-u-sm-12{
         background:#fff;
     }   
@@ -27,7 +27,7 @@
     } 
     .addStyle:hover{
         cursor: pointer;
-    }
+    } 
     table tbody tr td,table thead tr th{
         font-weight: normal;
     }
@@ -187,7 +187,7 @@
 .spanIcon:hover{
     cursor: pointer;
 }
-#operateAmount,#operateRespority{
+ #operateAmount,#operateRespority{
     line-height: 30px !important;
     height: 30px;
     padding:0;
@@ -195,10 +195,10 @@
 .batch{
     margin-bottom: 10px;
     font-size: 1.2rem;
-}
+} 
 td input{
     padding:0 !important;
-}
+}  
 </style>
 
 <!-- 内容区域 -->
@@ -215,7 +215,7 @@ td input{
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/singleShop/edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/store/Store/store_edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">商品基础信息                   
@@ -226,7 +226,7 @@ td input{
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodName" class="am-u-sm-3 am-form-label">货号<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="text" id="goodNumber" name='goods_code' required="required"  value="<?php echo $goods['goods_code'];?>" />  
+                                <input type="text" id="goodNumber" name='goods_code' value="<?php echo $goods['goods_code'];?>" />  
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -251,22 +251,30 @@ td input{
                                 <input type="text" id="englishName"  value="<?php echo $goods['brand'];?>" name="brand"/>
                             </div> 
                         </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="englishName" class="am-u-sm-3 am-form-label">已售数量：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="number" name="sales" value="<?php echo $goods['sales']?>" min='0'/>
+                            </div>
+                        </div>
+                       
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位<span class="red">*</span>：</label>
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="text" name='unit' id="unit" placeholder="例如：个、件、箱、套"  value="<?php echo $goods['unit'];?>" />
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存：</label>
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存(下方自动计算)：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount']?>" readonly />
+                                <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount'];?>" readonly />
                             </div>
                         </div>
+
                         <input type="hidden" name="parameter" id='inputproperty'>
                         <!-- <input type="hidden" name="amount" id='stockamount'> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="englishName" class="am-u-sm-1 am-form-label">添加属性：</label>
+                            <label for="englishName" class="am-u-sm-1 am-form-label">添加属性<span class="red">*</span>：</label>
                             <div class="am-u-sm-11">
                                 <div class="am-u-sm-10 am-u-end addborder">
                                 <?php if(!empty($parent)):?>
@@ -295,30 +303,13 @@ td input{
                                         </div>
                                         <a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn<?php echo $k;?>" style="display:block;" >新增规格值<span class="am-icon-plus"></span> </a>
                                     </div>
-
-                                    <!-- <div class="am-u-sm-10 am-u-end batch">
-                                        <div class="am-u-sm-2"></div>
-                                        <label for="" class="am-u-sm3 am-form-label">批量操作：</label>
-                                        <div class="am-u-sm-3 am-text-middle">
-                                            <input type="number" name="" id="operateAmount" placeholder="销售价的批量添加" />
+                                    <div class="am-u-sm-12 addNewPropertv" id="addNewPropertv<?php echo $k;?>" style="display:none;">
+                                        <div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;">
+                                            <input type="text" id="addNewPropertValue<?php echo $k;?>" class="addNewPropertValue" name="addNewPropertValue" />
                                         </div>
-                                        <div class="am-u-sm-3 am-text-middle">
-                                            <input type="number" name="" id="operateRespority" placeholder="库存的批量添加"  />
-                                        </div>
-                                        <button class="am-u-sm-1 am-u-end am-btn am-btn-primary am-btn-xs" id="batchOperation" type="button">批量操作</button>
-                                    </div> -->
-                                  <!--   <div class="am-u-sm-10 am-u-end addborder" >
-                                        <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                                            <thead>
-                                                <tr class="addPropertyTh">
-                                                    <th class="salesPrices">销售价(元)</th>
-                                                    <th class="shop_id">库存</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="addPropertyTb">
-                                            </tbody>
-                                        </table>
-                                    </div> -->
+                                        <a class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" data-id="<?php echo $k;?>" id="sureAddNewPropert<?php echo $k;?>" onclick="showPropertyValue(this)">确定</a>
+                                        <a  data-id="<?php echo $k;?>" id="cancleAddNewPropert<?php echo $k;?>" class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs canclePropertyValue" onclick="canclePropertyValue(this)">取消</a>
+                                    </div>
                                 </div>
                                 <?php endforeach;?>
                                       <div class="addRule">
@@ -333,6 +324,16 @@ td input{
                             <?php endif;?>
                               
                                 </div>
+                                <!-- <div class="am-u-sm-10 am-u-end batch">
+                                    <label for="" class="am-u-sm-2 am-form-label">批量操作：</label>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateAmount" />
+                                    </div>
+                                    <div class="am-u-sm-3 am-text-middle">
+                                        <input type="number" name="" id="operateRespority" />
+                                    </div>
+                                    <button class="am-u-sm-1 am-u-end am-btn am-btn-primary am-btn-xs" id="batchOperation" type="button">批量操作</button>
+                                </div> -->
                                 <div class="am-u-sm-10 am-u-end addborder" >
                                     <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                         <thead>
@@ -360,8 +361,8 @@ td input{
                                                 <?php if(!empty($val['value4'])):?>
                                                 <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value4'];?></td>
                                                  <?php endif;?>
-                                            <td class="propertyprice"><input type="number" value="<?php echo $val['price']?>" /></td>
-                                            <td class="propertystock"><input type="number" value="<?php echo $val['stock']?>"/></td>
+                                            <td class="propertyprice"><input type="number" value="<?php echo $val['price']?>" min="0"/></td>
+                                            <td class="propertystock"><input type="number" value="<?php echo $val['stock']?>" min='0'/></td>
                                             </tr>
                                         <?php endforeach;?>
                                     <?php endif;?>
@@ -414,7 +415,7 @@ td input{
                                 <input type="radio" name="goods_state" value="0" <?php if($goods['goods_state'] == "0"){echo "checked";}?> />下架
                             </div>
                         </div>
-                       
+
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo"  class="am-u-sm-3 am-u-end am-form-label">商品图片：</label>
                             <?php $banner = json_decode($goods['good_pic'],true);?>
@@ -650,7 +651,7 @@ $('#dispostage').click(function(){
 
     //实例化编辑器
     var ue = UE.getEditor('editor'),firstFlag=1,secondFlag=1; 
-    //显示属性选择的下拉菜单
+    //显示属性的下拉选框
     function showfun(obj) {
         $(obj).parents('.chooseSelectPart').find('.addNewPropertv').css('display','block');
     }
@@ -904,7 +905,7 @@ $('#dispostage').click(function(){
                 alert("最多只能录入四个属性");
                 return false;
             }else {
-                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option><option value="9">规格</option><option value="10">尺码</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><a data-id="'+ kflag +'" class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</a><a data-id="'+ kflag +'" id="cancleAddNewPropert'+ kflag +'" onclick="canclePropertyValue(this)" class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs" >取消</a></div></div>');
+                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option><option value="9">规格</option><option value="10">尺码</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><a data-id="'+ kflag +'" class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</a><a data-id="'+ kflag +'" id="cancleAddNewPropert'+ kflag +'" onclick="canclePropertyValue(this)" class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs" >取消</a></div></div></div>');
                     $('.addNewPropertv').css('display','none');
                     kflag++;
                     return true;    
@@ -937,7 +938,6 @@ $('#dispostage').click(function(){
         $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
     });
-
     //批量操作的js
     $('#batchOperation').click(function () {
         var operateAmount=$('#operateAmount').val(),operateRespority=$('#operateRespority').val();
@@ -946,8 +946,6 @@ $('#dispostage').click(function(){
             $('.propertystock').eq(i).find('input').val(operateRespority);
         }
     });
-
-
     $(document).ready(function(){
         //根据一级业态的内容来控制二级业态的显示
         var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';

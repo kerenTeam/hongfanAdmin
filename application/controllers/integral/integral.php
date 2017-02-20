@@ -46,6 +46,17 @@ class Integral extends Default_Controller
          if($_POST){
             $data['goods_state'] = $_POST['state'];
             $goods_id = $_POST['goodsid'];
+
+             //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."修改了积分商品的状态。商品id是".$goods_id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             if($this->Integral_model->edit_goods_state($goods_id,$data)){
                 echo "1";
             }else{
@@ -59,6 +70,17 @@ class Integral extends Default_Controller
     function del_goods(){
         if($_POST){
             $id = $_POST['goodsid'];
+
+             //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."删除了积分商品。商品id是".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             if($this->Integral_model->del_goods($id)){
                 echo "1";
             }else{
@@ -102,6 +124,17 @@ class Integral extends Default_Controller
                 }
                 $i++;
              }
+               //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."新增了积分商品。商品名称是".$data['title'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
+
              $data['good_pic'] = json_encode($pic);
              $data['differentiate'] = '2';
              if($this->Integral_model->add_shop_goods($data)){
@@ -190,6 +223,17 @@ class Integral extends Default_Controller
                 }
                 $i++;
              }
+
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."编辑了积分商品。商品id是".$data['goods_id'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
              $data['good_pic'] = json_encode($pic);
              if($this->Integral_model->edit_goods($data['goods_id'],$data)){
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/integral/Integral/integralList')."'</script>";exit;
@@ -235,6 +279,17 @@ class Integral extends Default_Controller
         if($_POST){
             $id = $_POST['id'];
             $data['integral'] = $_POST['integral'];
+
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."修改了积分规则。规则id是".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             if($this->Integral_model->edit_integral_rule($id,$data)){
                 echo "1";
             }else{

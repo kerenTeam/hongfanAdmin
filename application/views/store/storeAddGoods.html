@@ -186,7 +186,7 @@
 
                     <div class="am-form-group am-text-center">
                         <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
-                        <button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
                     </div>
 
                 </div>
@@ -234,7 +234,7 @@
 
 //点击取消返回上一页
   $('#cancle').click(function(){
-    history.go(0);
+    history.go(-1);
   });
  //点击进行运费设置
 $('#postage').click(function(){

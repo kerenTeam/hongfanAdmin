@@ -143,7 +143,7 @@
                                     <!--<td class="am-text-middle"><input type="checkbox"></td>-->
                                     <td class="am-text-middle"><?php echo $v['name'];?></td>
                                     <td class="am-text-middle"><?php echo $v['sort'];?></td>
-                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市比价";break; }?></td>
+                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市特价类";break; }?></td>
                                     <?php $icon = json_decode($v['icon'],true); ?>
                                     <td class="am-text-middle"><img class="am-imgContainer" src="<?php echo $icon[0]['picImg'];?>" ></td>
                                     <td class="am-text-middle"><input type="color" value="<?php echo $v['icon_color'];?>" disabled="disabled"/></td>
@@ -183,7 +183,7 @@
                                                                 <option value="1" <?php if($v['typeid'] ==1){echo "selected";}?>>普通信息类</option>
                                                                 <option value="2" <?php if($v['typeid'] ==2){echo "selected";}?>>房产信息类</option>
                                                                 <option value="3" <?php if($v['typeid'] ==3){echo "selected";}?>>法律咨询类</option>
-                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option> <option value="5" <?php if($v['typeid'] ==5){echo "selected";}?>>超市比价类</option>
+                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option> <option value="5" <?php if($v['typeid'] ==5){echo "selected";}?>>超市特价类</option>
                                                             </select>
                                                         </div>
                                                       </div>
@@ -205,11 +205,11 @@
                                                             <div class="am-u-sm-10">
                                                                 <div class="wx_type_img">
                                                                  <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
-                                                                    <?php if(empty($v['icon'])):?>
+                                                                    <?php if(empty( $icon[0]['picImg'])):?>
                                                                   <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                                     <?php else:?>
-                                                                    <input type="hidden" name="icon" value="<?php echo $v['icon'];?>" />
-                                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $v['icon'];?>" class="am-img-responsive cardView"> </div>
+                                                                  
+                                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo  $icon[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                                     <?php endif;?>
                                                                   <div class="am-text-xs">点击选择图片</div>
                                                                 </div>

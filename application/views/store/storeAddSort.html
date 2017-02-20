@@ -79,9 +79,9 @@
                                 <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div> 
-                            <div class="am-form-group am-cf" style="display: none;">
+                            <div class="am-form-group am-cf">
                                 <label for="doc-vld-name-1" >ICON背景色 <span class="red">*</span>: </label>
-                                <input type="color" name="icon_color" id="doc-ipt-3" min="1" value="#fff" required>
+                                <input type="color" name="icon_color" id="doc-ipt-3" min="1" required>
                                     
                             </div>
                             <div class="am-form-group">
@@ -149,7 +149,7 @@
   });
 //点击取消返回上一页
   $('#cancle').click(function(){
-    history.go(0);
+    history.go(-1);
   });
 //表单验证函数
 function validate(obj,minlen,maxlen,i){

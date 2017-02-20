@@ -27,13 +27,20 @@
                 <div class="row am-cf">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
                         <div class="tpl-user-card am-text-center widget-body-lg">
+                        <?php if(!empty($_SESSION['users']['avatar'])):?>
+                            <div class="achievement-subheading" style="width:200px;height:200px;border-radius: 100%;overflow:hidden;margin-left:30%;margin-top: 10%;">
+                                 <img style="width:200px;height:200px;" src="<?php echo $_SESSION['users']['avatar'];?>">
+                            </div>
+                            
+                          <?php endif;?>
                             <div class="tpl-user-card-title">
-                                禁言小张
+                                欢迎<?php echo $_SESSION['users']['username'];?>登录宏帆后台管理系统
                             </div>
                             <div class="achievement-subheading">
-                                普通管理员
-                            </div>
-                            <img class="achievement-image" src="assets/img/user07.png" alt="">
+                                您总共登录&nbsp;<b style="color: red;"><?php echo $loginNum;?></b>&nbsp;次，上次登录时间是：<?php echo $lastTime['create_time'];?><br/>
+                            上次登录ip为：<?php echo $lastTime['userip'];?>&nbsp;&nbsp;&nbsp;&nbsp; 登录地址是：<?php echo $lastTime['login_address'];?>
+                            </div>  
+                        
                         </div>
                     </div>
 

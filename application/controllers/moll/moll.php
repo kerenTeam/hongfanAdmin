@@ -104,6 +104,14 @@ class Moll extends Default_Controller {
                 }
             }
             if($this->Moll_model->add_storetype($data)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个业态，业态名称是".$data['type_name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/moll/Moll/mollyetaiList')."'</script>";exit;
             }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/Moll/mollAddYetai/')."'</script>";exit;
@@ -150,6 +158,14 @@ class Moll extends Default_Controller {
                 }
             }
             if($this->Moll_model->edit_storeYetai($data['id'],$data)){
+                  //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个业态，业态名称是".$data['type_name'].",业态id是：".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/moll/Moll/mollyetaiList')."'</script>";exit;
             }else{
                   echo "<script>alert('操作失败！');window.location.href='".site_url('/moll/Moll/mollEditYetai/'.$data['id'])."'</script>";
@@ -169,6 +185,14 @@ class Moll extends Default_Controller {
                 case '1':
                     $data['state'] = '1';
                     if($this->Moll_model->edit_storeYetai($id,$data)){
+                        //日志
+                        $log = array(
+                            'userid'=>$_SESSION['users']['user_id'],  
+                            "content" => $_SESSION['users']['username']."修改了一个业态状态，状态修改为正常，业态id是：".$id,
+                            "create_time" => date('Y-m-d H:i:s'),
+                            "userip" => get_client_ip(),
+                        );
+                         $this->db->insert('hf_system_journal',$log);
                         echo "1";
                     }else{
                         echo "2";
@@ -178,6 +202,14 @@ class Moll extends Default_Controller {
                 case '2':
                     $data['state'] = '0';
                     if($this->Moll_model->edit_storeYetai($id,$data)){
+                            //日志
+                        $log = array(
+                            'userid'=>$_SESSION['users']['user_id'],  
+                            "content" => $_SESSION['users']['username']."修改了一个业态状态，状态修改为冻结，业态id是：".$id,
+                            "create_time" => date('Y-m-d H:i:s'),
+                            "userip" => get_client_ip(),
+                        );
+                         $this->db->insert('hf_system_journal',$log);
                         echo "1";
                     }else{
                         echo "2";
@@ -192,6 +224,13 @@ class Moll extends Default_Controller {
         if($_POST){
             $id = $_POST['id'];
             if($this->Moll_model->del_storeType($id)){
+                  $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个业态状态，业态id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo '2';
@@ -311,6 +350,13 @@ class Moll extends Default_Controller {
             }
 
             if($this->Moll_model->edit_mollInfo($data)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了商场简介",
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！！');window.location.href='".site_url('/moll/Moll/mollBrief')."'</script>";
                         exit;
             }else{

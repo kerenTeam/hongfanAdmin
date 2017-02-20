@@ -179,10 +179,12 @@ class Store extends Default_Controller {
     //编辑商品操作
     function store_edit_goods(){
         if($_POST){
-               $data = $this->input->post();
+            $data = $this->input->post();
+            $parent = json_decode($data['parameter'],true);
+            unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
-            $i =1;
-            foreach($_FILES as $file=>$val){
+
+            for ($i=1; $i < 4; $i++) {
                 if(!empty($_FILES['img'.$i]['name'])){
                     $config['upload_path']      = 'Upload/goods/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
@@ -191,29 +193,35 @@ class Store extends Default_Controller {
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeEditGoods/'.$data['id'])."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
                     }else{
+                        unset($data['img'.$i]);
                         if($i == '1'){
                             $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
                         }
                         $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-                        unset($data['img'.$i]);
                     }
                 }else{
-                    if($i == '1'){
-                            $data['thumb'] = $data['img'.$i];
-                    }
-                      if(!empty($data['img'.$i])){
-                     $pic[]['bannerPic'] = $data['img'.$i];
+                     if(!empty($data['img'.$i])){
+                         if($i == '1'){
+                                $data['thumb'] = $data['img'.$i];
+                         }
+                         $pic[]['bannerPic'] = $data['img'.$i];
                      }
                      unset($data['img'.$i]);
                 }
-                $i++;
              }
+
              $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
              if($this->MallShop_model->edit_goods($data['goods_id'],$data)){
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
+                //刪除商品所有屬性
+                $this->MallShop_model->del_goods_prop($data['goods_id']);
+                foreach ($parent as $key => $value) {
+                    $value['g_id'] = $data['goods_id'];
+                    $this->db->insert('hf_mall_goods_property',$value);
+                }
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
              }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeEditGoods/'.$data['id'])."'</script>";exit;
              }
@@ -365,6 +373,20 @@ class Store extends Default_Controller {
              $this->load->view('template.html',$data);
         }else{
             $this->load->view('404.html');
+        }
+    }
+
+    //删除订单
+    function del_Order(){
+        if($_POST){
+            $id = $_POST['id'];
+            if($this->MallShop_model->del_store_order($id)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
         }
     }
 

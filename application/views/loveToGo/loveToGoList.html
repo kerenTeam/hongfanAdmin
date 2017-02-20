@@ -157,11 +157,12 @@ var flag=0;
                             var dataId=$(this).attr('data-id');
                             $.ajax({
                                 type:'post',
-                                url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                                url:'<?php echo site_url('/igo/loveToGo/del_love_goods/');?>',
                                 data: 'goodsid='+dataId,
                                 success: function(data){
+                                    console.log(data);
                                     if(data==1){                                           
-                                        $('#trClass'+deleteId).remove();
+                                        $('#trClass'+dataId).remove();
                                     }else{
                                         alert("操作失败！");
                                     }
@@ -201,7 +202,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="igoListModal">
-    <tr class="trClass" id="trClass<%= open_iid%>" data-id="<%= open_iid%>">
+    <tr class="trClass<%= open_iid%>" id="trClass<%= open_iid%>" data-id="<%= open_iid%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= open_iid%>" name="commentBox"></td>
         <td class="am-text-middle"><%= open_iid%></td>
         <td class="am-text-middle">

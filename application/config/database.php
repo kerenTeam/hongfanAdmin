@@ -75,15 +75,24 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	// 'hostname' => '120.77.53.20',
-	// 'username' => 'hijimysql',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
 	// 'password' => 'hijimysql',
+<<<<<<< HEAD
 	// 'database' => 'hijimysql',
 	// 'hostname' => '211.149.195.183',
 	// 'username' => 'hiji',
 	// 'password' => 'hiji',
 	// 'database' => 'hiji',
     'hostname' => '127.0.0.1',
+=======
+	// 'database' => 'hiji',
+	// 'hostname' => '211.149.195.183',
+	// 'username' => 'hiji',
+	// 'password' => 'hiji',
+	// 'database' => 'hiji',
+	'hostname' => '127.0.0.1',
+>>>>>>> 40494b895961c3f7262f84e5b774b16296e0e27f
 	'username' => 'root',
 	'password' => 'root',
 	'database' => 'hiji',

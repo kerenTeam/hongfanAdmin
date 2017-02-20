@@ -92,6 +92,12 @@ class Integral_model extends CI_Model
             return $query->result_array();
     }
 
+    //删除爱购商品
+    function del_love_goods($id){
+        $where['open_iid'] = $id;
+        return $this->db->where($where)->delete($this->shop_goods);
+    }
+
 
 }
 

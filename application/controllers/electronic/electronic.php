@@ -41,7 +41,7 @@ class Electronic extends Default_Controller {
     //新增electronic
     function addElectronic(){
         //获取优惠劵类型
-        $data['type'] = $this->Activity_model->get_coupon_type();
+         $data['type'] = $this->Activity_model->get_coupon_type();
          $data['page']= $this->view_addElectronic;
          $data['menu'] = array('electronic','electronicList');
          $this->load->view('template.html',$data);
@@ -60,6 +60,15 @@ class Electronic extends Default_Controller {
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."新增了一个优惠卷。优惠卷名称是".$data['name'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+            //
             if($this->Activity_model->add_electronic($data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";exit;
             }else{
@@ -100,6 +109,14 @@ class Electronic extends Default_Controller {
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."编辑了一个优惠卷。优惠卷id是".$data['id'].',优惠卷名称是'.$data['name'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
             if($this->Activity_model->edit_electronic($data['id'],$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";
             }else{
@@ -118,6 +135,14 @@ class Electronic extends Default_Controller {
             if(empty($id)){ 
                 echo "2";exit;
             }
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."删除了一个优惠卷。优惠卷id是".$data['id'],
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
             if($this->Activity_model->del_coupon($id)){
                 echo "1";
             }else{

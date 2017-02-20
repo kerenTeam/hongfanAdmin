@@ -34,8 +34,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading">Banner管理  <span class="am-icon-home page-header-heading-icon"> 
-            <a href="<?php echo site_url().'/systemSet/systemSet/bannerList';?>">Banner列表</a></span><small>/编辑Banner</small></div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon">
+            <a href="<?php echo site_url().'/systemSet/systemSet/bannerList';?>">Banner列表</a></span>&nbsp;&nbsp;<small>编辑Banner</small></div>
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@
                             <div class="am-form-group">
                                 <label for="user-weibo">图片：</label>
                                 <div class="wx_type_img">
-                                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" multiple="multiple" >
                                           <!-- 图片实时预览 -->
                                           <input type="hidden" name="bannerPic" value="<?php echo $banner['bannerPic'];?>">
                                           <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner['bannerPic'];?>" class="am-img-responsive cardView"> </div>
@@ -71,7 +71,7 @@
                             </div>
                             <div class="am-form-group">
                                 <label for="englishName">跳转地址 ：</label>
-                                <input type="url" id="" name="url" value="<?php echo $banner['url'];?>" required onblur="validate(this,2,30,2)" />
+                                <input type="url" id="" name="url" value="<?php echo $banner['url'];?>" placeholder='以http://开头'/>
                                 <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>

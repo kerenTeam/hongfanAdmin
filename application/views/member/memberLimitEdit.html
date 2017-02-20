@@ -31,9 +31,8 @@ color: black;
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                         <label for="user-name" class="am-u-sm-3 am-form-label black">权限名</label>
                         <div class="am-u-sm-6 am-u-end">
-                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" value="<?php echo $group['group_name']?>" required onblur="validate(this)" />
-                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
+                            <input type="text" name="group_name" class="tpl-form-input" id="user-name" placeholder="请输入权限名" minlength="2" maxlength="10" value="<?php echo $group['group_name']?>" required>
+                            <small class="black">建议在2-10字以内</small>
                         </div>
                     </div>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
@@ -46,14 +45,14 @@ color: black;
                         <label for="user-phone" class="am-u-sm-3 am-form-label black" required><?php echo $val['name'];?>:</label>
                         <div class="am-u-sm-6 am-u-end" style="padding-top:5px;">
                             <?php foreach($val['check'] as $v):?>
-                            <div class="am-u-sm-3 am-u-end"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>"<?php if($v['true'] == 1){echo "checked";}?> /><?php echo $v['name'];?></div>
+                            <div class="am-u-sm-2"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>"<?php if($v['true'] == 1){echo "checked";}?> /><?php echo $v['name'];?></div>
                             <?php endforeach;?>
                         </div>
                     </div>
                     <?php endforeach;?>
                  
                     <div class="am-form-group am-btn-group-xs am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" >
-                        <button type="reset" id="cancle" class="am-btn am-btn-default">取消</button>
+                        <button type="reset" class="am-btn am-btn-default">重置</button>
                         <input type="hidden" name="gid" value="<?php echo $group['gid'];?>">
                         <button type="submit" class="am-btn am-btn-secondary">保存</button>
                     </div>
@@ -65,19 +64,6 @@ color: black;
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-
-//表单验证函数
-function validate(obj){
-    var content=obj.value;
-    if(content.length<2 || content.length>10){
-        $('.blacktips').css('display','none');
-        $('.redtips').css('display','block');
-    }else{
-        $('.redtips').css('display','none');
-        $('.blacktips').css('display','block');
-    }
-}
-
 $(function(){
 $('.secondLimit').css("display","none");
 $('.firstLimit').on('change',function(){
@@ -100,8 +86,4 @@ $('#submit').click(function(){
         return true;
     }
 })
-//点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(0);
-  });
 </script>

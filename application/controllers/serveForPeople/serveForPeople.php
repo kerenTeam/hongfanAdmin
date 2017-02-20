@@ -81,6 +81,14 @@ class ServeForPeople extends Default_Controller
             $data['recommend'] = $_POST['state'];
             $id = $_POST['id'];
             if($this->Service_model->edit_helpuser_state($id,$data)){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了帮帮团成员状态为推荐，帮帮团成员id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -97,6 +105,14 @@ class ServeForPeople extends Default_Controller
                 echo "2";exit;
             }
             if($this->Service_model->del_help_user($id)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个帮帮团成员，帮帮团成员id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -117,6 +133,14 @@ class ServeForPeople extends Default_Controller
                 $res = $this->Service_model->del_help_user($v);
             }
             if($res){
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."批量删除了帮帮团成员，帮帮团成员id是：".implode(’,‘,$arr),
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -212,6 +236,14 @@ class ServeForPeople extends Default_Controller
                 $data['headPic'] = '';
             } 
             $import =  $this->db->insert('hf_service_help_user',$data); 
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导入了帮帮团成员",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
           }
        }else{
             $this->load->view('404.html');
@@ -268,6 +300,14 @@ class ServeForPeople extends Default_Controller
                $res = $this->Service_model->del_help_request($value);
             }
             if($res){
+              //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."批量删除了服务请求，帮帮团成员id是：".implode(’,‘,$arr),
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo '2';
@@ -294,6 +334,14 @@ class ServeForPeople extends Default_Controller
             $arr['sender'] = $this->session->users['user_id'];
             if($this->Service_model->edit_help_request($id,$data)){
                 if($this->Service_model->add_user_message($arr)){
+                         //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."回复了服务请求，回复内容：".$content.'回复请求id是：'.$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "1";
@@ -353,6 +401,14 @@ class ServeForPeople extends Default_Controller
             }
             $data['competency'] = json_encode(explode("&",$data['competency']));
             if($this->Service_model->add_help_user($data)){
+                     //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个帮帮团成员，成员名称是：".$data['name'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/addhelpgroup')."'</script>";exit;
@@ -393,6 +449,14 @@ class ServeForPeople extends Default_Controller
             $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
             if($this->Service_model->edit_help_user($id,$data))
             {
+                 //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个帮帮团成员，成员名称是：".$data['name'].",成员id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "1";
             } else{
                 echo "2";
@@ -459,6 +523,16 @@ class ServeForPeople extends Default_Controller
             header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
             header('Cache-Control: max-age=0'); //no cache
 
+
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了所有请求信息！",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
             $objWriter->save('php://output');
         }else{
@@ -491,6 +565,13 @@ class ServeForPeople extends Default_Controller
                    }     
             }
             if($this->Service_model->edit_team_info($data['id'],$data)){
+                   $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了义工团队信息",
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
             }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
@@ -518,6 +599,13 @@ class ServeForPeople extends Default_Controller
                    }     
             }
             if($this->Service_model->add_volunteer_activities($data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."发布了一个义工团队活动，活动名称是：".$data['title'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                   echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamservelist')."'</script>";exit;
             }else{
                   echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
@@ -553,6 +641,13 @@ class ServeForPeople extends Default_Controller
                 $res = $this->Service_model->del_volunter_activivies($v);
             }
             if($res){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."批量删除了义工团队活动，活动id是：".implode(',',$arr),
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -569,6 +664,13 @@ class ServeForPeople extends Default_Controller
                 echo "2";exit;
             }
             if($this->Service_model->del_volunter_activivies($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了义工团队活动，活动id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";

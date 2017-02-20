@@ -23,16 +23,6 @@ function user_name($user_id){
     return $name['username'];
 }
 
-//获取用户别名
-function nick_name($userid){
-        $CI = &get_instance();
-        $sql = "SELECT nickname FROM hf_user_member where user_id = '$userid'";
-        $query = $CI->db->query($sql);
-        $name = $query->row_array();
-        return $name['nickname'];
-}
-
-
 // //返回商品分类名称
 // function goods_cate_name($id){
 //     $CI = &get_instance();
@@ -105,10 +95,12 @@ function generate_promotion_code($code){
 //模拟post
 function curl_post($url, $post){
     $options = array(
-        CURLOPT_RETURNTRANSFER =>true,
-        CURLOPT_HEADER =>false,
-        CURLOPT_POST =>true,
-        CURLOPT_POSTFIELDS => $post,
+    CURLOPT_RETURNTRANSFER =>true,
+    CURLOPT_HEADER =>false,
+    CURLOPT_POST =>true,
+  
+    CURLOPT_POSTFIELDS => $post,
+
     );
     $ch = curl_init($url);
     curl_setopt_array($ch, $options);
@@ -117,38 +109,5 @@ function curl_post($url, $post){
     return $result;
 }
 
-//返回ip
-function get_client_ip() {
-    $ip = $_SERVER['REMOTE_ADDR'];
-    if (isset($_SERVER['HTTP_CLIENT_IP']) && preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $_SERVER['HTTP_CLIENT_IP'])) {
-        $ip = $_SERVER['HTTP_CLIENT_IP'];
-    } elseif(isset($_SERVER['HTTP_X_FORWARDED_FOR']) AND preg_match_all('#\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}#s', $_SERVER['HTTP_X_FORWARDED_FOR'], $matches)) {
-        foreach ($matches[0] AS $xip) {
-            if (!preg_match('#^(10|172\.16|192\.168)\.#', $xip)) {
-                $ip = $xip;
-                break;
-            }
-        }
-    }
-    return $ip;
-}
-//根据ip返回所在地址
-function GetIpLookup($ip = ''){  
-    if(empty($ip)){  
-        $ip = GetIp();  
-    }  
-    $res = @file_get_contents('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js&ip=' . $ip);  
-    if(empty($res)){ return false; }  
-    $jsonMatches = array();  
-    preg_match('#\{.+?\}#', $res, $jsonMatches);  
-    if(!isset($jsonMatches[0])){ return false; }  
-    $json = json_decode($jsonMatches[0], true);  
-    if(isset($json['ret']) && $json['ret'] == 1){  
-        $json['ip'] = $ip;  
-        unset($json['ret']);  
-    }else{  
-        return false;  
-    }  
-    return $json['city'];  
-}  
+
  ?>

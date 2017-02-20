@@ -38,6 +38,7 @@ class LocalLife extends Default_Controller {
     	if($_POST){
     		$data = $this->input->post();
     		if($this->Module_model->edit_disclaimer($data['id'],$data)){
+
     			echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";exit;
     		}else{
     			echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";exit;
@@ -67,6 +68,14 @@ class LocalLife extends Default_Controller {
             }
             $data['c_id'] = '本地生活';
             if($this->Module_model->add_cates($data)){
+            	//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."新增了一个本地生活分类,分类名称是".$data['name'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }else{
@@ -93,11 +102,22 @@ class LocalLife extends Default_Controller {
                     exit;
                 } else {
                     $icon[]['picImg'] =  '/Upload/icon/'.$this->upload->data('file_name');
+                    $data['icon'] = json_encode($icon);
                 }
             }
-            $data['icon'] = json_encode($icon);
+            // var_dumP($data);
+            // exit;
+      
     
             if($this->Module_model->edit_cates($data['id'],$data)){
+            	//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."编辑了一个本地生活分类,分类名称是".$data['name']."分类id是：".$data['id'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
                 exit;
             }else{
@@ -118,32 +138,32 @@ class LocalLife extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-			//条数
-			$config['per_page'] = 5;
-			//获取页码
-			$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
-			//var_dump($current_page);
-				//配置
-			$config['base_url'] = site_url('/module/LocalLife/serviceList/'.$id);
-			//分页配置
-			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-			$config['full_tag_close'] = '</ul>';
-			$config['first_tag_open'] = '<li>';
-			$config['first_tag_close'] = '</li>';
-			$config['prev_tag_open'] = '<li>';
-			$config['prev_tag_close'] = '</li>';
-			$config['next_tag_open'] = '<li>';
-			$config['next_tag_close'] = '</li>';
-			$config['cur_tag_open'] = '<li class="am-active"><a>';
-			$config['cur_tag_close'] = '</a></li>';
-			$config['last_tag_open'] = '<li>';
-			$config['last_tag_close'] = '</li>';
-			$config['num_tag_open'] = '<li>';
-			$config['num_tag_close'] = '</li>';
-			$config['first_link']= '首页';
-			$config['next_link']= '下一页';
-			$config['prev_link']= '上一页';
-			$config['last_link']= '末页';
+	//条数
+	$config['per_page'] = 10;
+	//获取页码
+	$current_page=intval($this->uri->segment(5));//index.php 后数第4个/
+	//var_dump($current_page);
+		//配置
+	$config['base_url'] = site_url('/module/LocalLife/serviceList/'.$id);
+	//分页配置
+	$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+	$config['full_tag_close'] = '</ul>';
+	$config['first_tag_open'] = '<li>';
+	$config['first_tag_close'] = '</li>';
+	$config['prev_tag_open'] = '<li>';
+	$config['prev_tag_close'] = '</li>';
+	$config['next_tag_open'] = '<li>';
+	$config['next_tag_close'] = '</li>';
+	$config['cur_tag_open'] = '<li class="am-active"><a>';
+	$config['cur_tag_close'] = '</a></li>';
+	$config['last_tag_open'] = '<li>';
+	$config['last_tag_close'] = '</li>';
+	$config['num_tag_open'] = '<li>';
+	$config['num_tag_close'] = '</li>';
+	$config['first_link']= '首页';
+	$config['next_link']= '下一页';
+	$config['prev_link']= '上一页';
+	$config['last_link']= '末页';
 				
 			
             //获取分类信息
@@ -351,18 +371,60 @@ class LocalLife extends Default_Controller {
 			switch($type){
 				case '1':
 					$info = $this->Module_model->del_service($id);
+					if($info){
+						//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."删除了一个普通信息,信息id是".$id,
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					}
 					break;
 				case '2':
+
 					$info = $this->Module_model->del_houst($id);
+					if($info){
+						//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."删除了一个房产信息,信息id是".$id,
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					}
 					break;
 				case '3':
 					$info = $this->Module_model->del_mark($id);
+					if($info){
+						//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."删除了一个二手信息,信息id是".$id,
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					}
 					break;
 				case '5':
 					$info = $this->Module_model->del_market_data($id);
+					if($info){
+						//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."删除了一个超市比价信息,信息id是".$id,
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					}
 					break;
 			}
 			if($info){
+
 				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
 			}else{
 				 echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
@@ -402,6 +464,16 @@ class LocalLife extends Default_Controller {
 			 $data['logo'] = json_encode($logo);
              $data['userid'] = $this->session->users['user_id'];
 			 if($this->Module_model->add_service($data)){
+
+				//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."新增了一个普通信息,信息名称是".$data['name'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
+					
 				 echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
 			 }else{
 				 echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
@@ -444,6 +516,15 @@ class LocalLife extends Default_Controller {
 			 $id = $data['type_id'];
 			 unset($data['type_id']);
 			 if($this->Module_model->add_houst($data)){
+			 		//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."新增了一个房产信息,信息名称是".$data['name'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
+
 				  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
 			 }else{
 				  echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
@@ -487,6 +568,14 @@ class LocalLife extends Default_Controller {
 			unset($data['id']);
 
 			if($this->Module_model->add_market($data)){
+					//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."新增了一个二手信息,信息名称是".$data['title'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$type)."'</script>";exit;
 			}else{
 				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$type)."'</script>";exit;
@@ -540,6 +629,16 @@ class LocalLife extends Default_Controller {
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
 					 $isOk = $this->Module_model->edit_service($data['id'],$data);
+					 if($isOk){
+					 	//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."编辑了一个普通信息,信息名称是".$data['name']."，信息id是：".$data['id'],
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					 }
 					break;
 					//房产
 				case '2':
@@ -581,6 +680,16 @@ class LocalLife extends Default_Controller {
 					 $type = $data['type_id'];
 					 unset($data['type_id']);
 			 		$isOk = $this->Module_model->edit_houst($data['id'],$data);
+			 		 if($isOk){
+					 	//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."编辑了一个房产信息,信息名称是".$data['name']."，信息id是：".$data['id'],
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					 }
 					break;
 					//二手市场
 				case '3':
@@ -620,6 +729,17 @@ class LocalLife extends Default_Controller {
 					$type = $data['type_id'];
 					unset($data['type_id']);
 					$isOk = $this->Module_model->edit_markinfo($data['id'],$data);
+						if($isOk){
+					 	//日志
+			            $log = array(
+			                'userid'=>$_SESSION['users']['user_id'],  
+			                "content" => $_SESSION['users']['username']."编辑了一个二手信息,信息名称是".$data['title']."，信息id是：".$data['id'],
+			                "create_time" => date('Y-m-d H:i:s'),
+			                "userip" => get_client_ip(),
+			            );
+			            $this->db->insert('hf_system_journal',$log);
+					 }
+
 					break;
 					//超市比价
 				case '5':
@@ -628,6 +748,14 @@ class LocalLife extends Default_Controller {
 						$data['date'] = date('Y-m-d H:i:s');
 						unset($data['type_id'],$data['cate']);
 						if($this->Module_model->edit_market_info($data['id'],$data)){
+							//日志
+				            $log = array(
+				                'userid'=>$_SESSION['users']['user_id'],  
+				                "content" => $_SESSION['users']['username']."编辑了一个超市特价信息,信息名称是".$data['name']."，信息id是：".$data['id'],
+				                "create_time" => date('Y-m-d H:i:s'),
+				                "userip" => get_client_ip(),
+				            );
+				            $this->db->insert('hf_system_journal',$log);
 							echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
 						}else{
 							echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
@@ -699,8 +827,18 @@ class LocalLife extends Default_Controller {
 		if($_POST){
 			$data = $this->input->post();
 			$data['date'] = date('Y-m-d H:i:s');
+			$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+			$data['market_name'] = $market_name['username'];
 			$data['marketid'] = $this->session->users['user_id'];
 			if($this->Module_model->add_market_data($data)){
+				//日志
+	            $log = array(
+	                'userid'=>$_SESSION['users']['user_id'],  
+	                "content" => $_SESSION['users']['username']."新增了一个超市特价信息,信息名称是".$data['goods_name'],
+	                "create_time" => date('Y-m-d H:i:s'),
+	                "userip" => get_client_ip(),
+	            );
+	            $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}else{
 				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
@@ -717,6 +855,14 @@ class LocalLife extends Default_Controller {
 			$this->load->view('404.html');
 		}else{
 			if($this->Module_model->del_market_data($id)){
+					//日志
+		            $log = array(
+		                'userid'=>$_SESSION['users']['user_id'],  
+		                "content" => $_SESSION['users']['username']."删除了一个超市特价信息,信息名称是".$data['goods_name'].",信息id是：".$id,
+		                "create_time" => date('Y-m-d H:i:s'),
+		                "userip" => get_client_ip(),
+		            );
+		            $this->db->insert('hf_system_journal',$log);
 					echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}else{
 					echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
@@ -728,7 +874,16 @@ class LocalLife extends Default_Controller {
 	function edit_market_data(){
 		if($_POST){
 			$data = $this->input->post();
+
 			if($this->Module_model->edit_market_info($data['id'],$data)){
+					//日志
+		            $log = array(
+		                'userid'=>$_SESSION['users']['user_id'],  
+		                "content" => $_SESSION['users']['username']."编辑了一个超市特价信息,信息id是：".$id,
+		                "create_time" => date('Y-m-d H:i:s'),
+		                "userip" => get_client_ip(),
+		            );
+		            $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}else{
 				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
@@ -749,6 +904,14 @@ class LocalLife extends Default_Controller {
 			// var_dumP($data);
 			// exit;
 			if($this->Module_model->add_market_data($data)){
+				//日志
+		            $log = array(
+		                'userid'=>$_SESSION['users']['user_id'],  
+		                "content" => $_SESSION['users']['username']."新增了一个超市特价信息,信息名称是：".$data['goods_name'],
+		                "create_time" => date('Y-m-d H:i:s'),
+		                "userip" => get_client_ip(),
+		            );
+		            $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
 			}else{
 				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
@@ -799,8 +962,11 @@ class LocalLife extends Default_Controller {
 	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
 	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
 	            $data[$currentRow]['date'] = date('Y-m-d H:i:s');
+	            	$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+	             $data[$currentRow]['market_name'] = $market_name['username'];
 	            $data[$currentRow]['import_user'] = $this->session->users['user_id'];
 	            $data[$currentRow]['marketid'] = $this->session->users['user_id'];
+
 	            //插入数据库
 	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);
 	            if(empty($data[$currentRow]['goods_name'])){
@@ -809,7 +975,6 @@ class LocalLife extends Default_Controller {
 	           
 	         }
 	         //删除临时文件
-	       
 	         foreach ($data as $key => $value) {
 	         	if($this->Module_model->add_market_data($value)){
 	         		$yes[] = $key;
@@ -818,6 +983,15 @@ class LocalLife extends Default_Controller {
 	         	}
 	         }
 	         $ret = array('yes'=>count($yes),'error'=>count($error),'errorlist'=>$error);
+	         //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导入了超市特价信息,信息导入成功：".$ret['yes']."条，导入失败".$ret['error'].'条，错误条数：'.implode(',',$ret['errorlist']),
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
 	         echo json_encode($ret);
 	         unlink($inputFileName);
 	   
@@ -868,6 +1042,14 @@ class LocalLife extends Default_Controller {
 	        header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
 	        header('Cache-Control: max-age=0'); //no cache
 
+	           //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了超市特价信息",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
 	        $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 	        $objWriter->save('php://output');
 		}

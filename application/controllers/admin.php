@@ -14,13 +14,24 @@ class Admin extends Default_Controller
 	}
 
 	function index(){
+
         unset($_SESSION['businessId']);
+        //获取用户登录次数
+        $query = $this->db->where('userid',$_SESSION['users']['user_id'])->where('login_address !=','')->order_by('create_time','desc')->get('hf_system_journal');
+        $login = $query->result_array();
+        $data['loginNum'] = count($login);
+        $data['lastTime'] = $login[0];
+
+
         $data['page'] = "index.html";
         $data['menu'] = array('index','index');
  		$this->load->view('template.html',$data);
 	}
+
+
 }
 
 
 
 ?>
+	

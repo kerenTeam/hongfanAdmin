@@ -65,12 +65,11 @@
                                     </div>
                                     <div class="am-g">
                                       <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time"  /><span id="my-endDate"></span>
-                                      </div>
-                                      <div class="am-u-sm-6">
                                         <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="start_time"  /><span id="my-startDate"></span>
                                       </div>
-                                      
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time"  /><span id="my-endDate"></span>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +171,7 @@
 
 //点击取消返回上一页
   $('#cancle').click(function(){
-    history.go(0);
+    history.go(-1);
   });
 
  //删除图片

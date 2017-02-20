@@ -226,7 +226,7 @@ td.am-text-middle img{
                             var dataId=$(this).attr('data-id');
                             $.ajax({
                                 type:'post',
-                                url:'<?php echo site_url('/shop/singleShop/del_store_order');?>',
+                                url:'<?php echo site_url('/store/Store/del_Order');?>',
                                 data: 'id='+dataId,
                                 success: function(data){
                                     console.log(data);
@@ -288,7 +288,7 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
         <td class="am-text-middle"><%= order_id%></td>
         <td class="am-text-middle"><%= goods_data.totalNum%></td>
-        <td class="am-text-middle"><%= amount%></td>
+        <td class="am-text-middle"><%= goods_data.totalMoney%></td>
         <td class="am-text-middle">
         <%if(username) {%>
         <%= username%>

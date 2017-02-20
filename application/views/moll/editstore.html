@@ -79,14 +79,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
+                <!--     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
                         <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <select name="subcommercial_type_name" data-id="<?php echo $busin['subcommercial_type_name']?>" id="secondYetaiSelect" >
                             <option value="">-=请选择一项=-</option>
                             </select> 
                         </div> 
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="store_type" class="am-u-sm-3 am-form-label">商家类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
@@ -251,17 +251,7 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" >
-                                <option value="B3" <?php if($busin['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
-                                <option value="B2" <?php if($busin['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
-                                <option value="B1" <?php if($busin['floor_name'] == 'B1'){echo "selected";}?>>B1</option>
-                                <option value="F1" <?php if($busin['floor_name'] == 'F1'){echo "selected";}?>>F1</option>
-                                <option value="F2" <?php if($busin['floor_name'] == 'F2'){echo "selected";}?>>F2</option>
-                                <option value="F3" <?php if($busin['floor_name'] == 'F3'){echo "selected";}?>>F3</option>
-                                <option value="F4" <?php if($busin['floor_name'] == 'F4'){echo "selected";}?>>F4</option>
-                                <option value="F5" <?php if($busin['floor_name'] == 'F5'){echo "selected";}?>>F5</option>
-                                <option value="F6" <?php if($busin['floor_name'] == 'F6'){echo "selected";}?>>F6</option>
-                            </select>
+                            <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"  value="<?php echo $busin['floor_name'];?>" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">

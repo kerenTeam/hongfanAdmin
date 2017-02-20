@@ -44,7 +44,7 @@ class Fallinlove extends Default_Controller {
         }
     }
 
-    //一键钟情 编辑活动详情
+    //一键钟情 编辑活动详情 
     function loveEditactivity()
     {
         $id = intval($this->uri->segment(4));
@@ -56,7 +56,7 @@ class Fallinlove extends Default_Controller {
             $data['menu'] = array('fallinlove','loveEditactivity');
             $this->load->view('template.html',$data);
         }
-    }
+    }   
     //一键钟情 新增活动
     function loveAddactivity()
     {
