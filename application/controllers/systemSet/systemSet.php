@@ -630,9 +630,36 @@ class SystemSet extends Default_Controller {
 
     //APP版本管理
     function app_version(){
-            $data['page'] = $this->view_appversion;
-            $data['menu'] = array('systemSet','version');
-            $this->load->view('template.html',$data);
+        //获取已有的APP版本信息
+
+        $data['page'] = $this->view_appversion;
+        $data['menu'] = array('systemSet','version');
+        $this->load->view('template.html',$data);
+    }
+
+    //返回版本
+    function getVersion(){
+        if($_POST){
+              $app = $this->System_model->get_app_version();
+              if($app){
+                echo json_encode($app);
+              }else{
+                echo "2";
+              }
+        }else{
+            echo "2";
+        }
+    }
+
+    //修改版本
+    function edit_app_version(){
+        if($_POST){
+            file_put_contents('text.log', json_encode($_POST));
+            
+
+        }else{
+            echo "2";
+        }
     }
 
 
