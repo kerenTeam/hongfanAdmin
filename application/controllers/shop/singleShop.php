@@ -720,7 +720,7 @@ class SingleShop extends Default_Controller {
             echo "2";
         }
     }
-
+ 
     //商品搜索
     function search_goods(){
         $store_id = $this->session->businessId;
@@ -793,6 +793,13 @@ class SingleShop extends Default_Controller {
             $id = $_POST['commentid'];
             $data['state'] = $_POST['state'];
             if($this->MallShop_model->edit_comment_state($id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个评论，评论id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -814,6 +821,13 @@ class SingleShop extends Default_Controller {
             }
 
             if($a){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."批量删除了评论，评论id是：".implode(',', $comment),
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo '1';
             }else{
                 echo '2';
@@ -828,6 +842,13 @@ class SingleShop extends Default_Controller {
             $commentid = $_POST["commentid"];
             $a = $this->MallShop_model->del_store_comment($commentid);
             if($a){
+                  $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个评论，评论id是：".$commentid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo '1';
             }else{
                 echo '2';
@@ -876,6 +897,13 @@ class SingleShop extends Default_Controller {
           
             $data['storeid'] = $this->session->businessId;
             if($this->MallShop_model->add_coupon($data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个商家优惠卷，优惠卷名称是：".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopSalesList')."'</script>";
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopAddSales')."'</script>";
@@ -913,6 +941,13 @@ class SingleShop extends Default_Controller {
                 }
             }
             if($this->MallShop_model->edit_coupon($data['id'],$data)){
+                  $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个商家优惠卷，优惠卷名称是：".$data['title'].",优惠卷id是：".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopSalesList')."'</script>";
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopEditSales/').$data['id']."'</script>";
@@ -941,6 +976,13 @@ class SingleShop extends Default_Controller {
         if($_POST){
             $id = $_POST['id'];
             if($this->MallShop_model->del_coupon($id)){
+                  $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个商家优惠卷，优惠卷id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -998,6 +1040,13 @@ class SingleShop extends Default_Controller {
              }
             $data['storeid'] = $this->session->businessId;
             if($this->MallShop_model->add_activity($data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个活动，活动名称是：".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";exit;
@@ -1067,6 +1116,13 @@ class SingleShop extends Default_Controller {
                 $data['couponid'] = '';
             }
             if($this->MallShop_model->edit_activity_info($data['id'],$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个活动，活动名称是：".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopActivityList')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.herf='".site_url('/shop/SingleShop/shopEditActivity/'.$data['id'])."'</script>";exit;
@@ -1083,6 +1139,13 @@ class SingleShop extends Default_Controller {
                 echo "2";exit;
             }
             if($this->MallShop_model->del_Activity($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个活动，活动id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -1149,7 +1212,15 @@ class SingleShop extends Default_Controller {
             $data['order_status'] = $_POST['state'];
             $data['updatetime'] = date('Y-m-d His');
             $orderid = $_POST['orderid'];
+      
             if($this->MallShop_model->edit_order_state($orderid,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个订单状态，订单id是：".$orderid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -1167,6 +1238,13 @@ class SingleShop extends Default_Controller {
             $data['updatetime'] = date("Y-m-d His");
             $orderid= $_POST['orderid'];
             if($this->MallShop_model->edit_order_state($orderid,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."提交了一个物流信息，订单id是：".$orderid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -1213,6 +1291,13 @@ class SingleShop extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if($this->MallShop_model->edit_order_state($data['order_id'],$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个订单信息，订单id是：".$data['order_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopOrder')."';</script>";exit;
             }else{
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/sureOrder'.$data['order_id'])."'</script>";exit;
@@ -1228,7 +1313,15 @@ class SingleShop extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
+
             if($this->MallShop_model->del_store_order($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个订单信息，订单id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";

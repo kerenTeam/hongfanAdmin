@@ -157,9 +157,9 @@ td.am-text-middle img{
                                     <th class="moll_name">一级分类 </th>
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">所属店铺 </th>
-                                    <th class="brand">订单 </th>
-                                    <th class="shop_block">月销量 </th>                            
+                                    <th class="shop_type">所属店铺 </th>   
+                                    <th class="shop_type">实时库存 </th>   
+                                    <th class="shop_type">商品价格 </th>   
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">是否推荐</th>
                                     <th class="shop_block">变更时间</th>
@@ -514,8 +514,8 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= title%></td>
         <td class="am-text-middle"><%= store_name%></td>
-        <td class="am-text-middle"><%= orders%></td>
-        <td class="am-text-middle"><%= sales%></td>
+        <td class="am-text-middle"><%= amount%></td>
+        <td class="am-text-middle"><%= price%></td>
         <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>

@@ -92,12 +92,19 @@ class Store extends Default_Controller {
             $recommend = $_POST['state'];
             $data['recommend'] = $recommend;
             if($this->MallShop_model->edit_goods_state($goods_id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."推荐了一个商品信息到首页，商品id是：".$goods_id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
             }
         }else{
-            echo "2";
+            echo "2";   
         }
     }
 
@@ -221,6 +228,13 @@ class Store extends Default_Controller {
                     $value['g_id'] = $data['goods_id'];
                     $this->db->insert('hf_mall_goods_property',$value);
                 }
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个商品信息，商品id是：".$data['goods_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
              }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeEditGoods/'.$data['id'])."'</script>";exit;
@@ -265,6 +279,13 @@ class Store extends Default_Controller {
                 }
             }
             if($this->MallShop_model->add_store_cate($data)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."添加了一个商品分类，分类名称是：".$data['catname'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo  "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSort')."'</script>";
             }else{
                 echo  "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeAddSort')."'</script>";
@@ -306,6 +327,13 @@ class Store extends Default_Controller {
                 }
             }
             if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."添加了一个商品分类，分类名称是：".$data['catname'].",分类id是：".$data['catid'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSort')."'</script>";
              }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeEditSort/'.$data['catid'])."'</script>";
@@ -320,6 +348,13 @@ class Store extends Default_Controller {
         if($_POST){
             $id = $_POST['id'];
             if($this->MallShop_model->del_store_cate($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个商品分类，分类id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -381,6 +416,13 @@ class Store extends Default_Controller {
         if($_POST){
             $id = $_POST['id'];
             if($this->MallShop_model->del_store_order($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个订单信息，订单id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -458,7 +500,14 @@ class Store extends Default_Controller {
                    }
                 }
                 $data['goods_list'] = implode(',',$goods);
-                if($this->MallShop_model->edit_salse($id,$data)){
+                    if($this->MallShop_model->edit_salse($id,$data)){
+                           $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了id为".$id."的展销商品，商品id是".$goodsid,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "2";
@@ -479,14 +528,23 @@ class Store extends Default_Controller {
             $arr = array_unique(array_merge($goodsid,$goods));
             $data['goods_list'] = implode(',',$arr);
             if($this->MallShop_model->edit_salse($id,$data)){
+                  if($this->MallShop_model->edit_salse($id,$data)){
+                           $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了id为".$id."的展销商品，商品id是".$data['goods_list'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
-                echo "2";
+                echo "2"; 
             }
         }else{
             echo "2";
         }
      }
+ }
 
      //新增展销
      function add_sales(){
@@ -510,6 +568,14 @@ class Store extends Default_Controller {
             $data['picImg'] = json_encode($img);
             $data['type'] = '1';
             if($this->MallShop_model->add_sales($data)){
+                 if($this->MallShop_model->edit_salse($id,$data)){
+                           $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个展销信息，展销名称是：".$data['title'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
@@ -518,6 +584,7 @@ class Store extends Default_Controller {
             echo '2';
         }
      }
+    }
 
     //展销图片修改
     function edit_sales_img(){
@@ -537,6 +604,13 @@ class Store extends Default_Controller {
         }
         $data['picImg'] = json_encode($img);
         if($this->MallShop_model->edit_salse($id,$data)){
+             $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."修改了一个商品展销信息图片，展销id是：".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
             echo "1";exit;
         }else{
             echo "2";exit;
@@ -549,5 +623,36 @@ class Store extends Default_Controller {
          $data['menu'] = array('store','storeDeliveryList');
          $this->load->view('template.html',$data);
      }
+
+
+     //返回排序后的商品信息
+     function get_sort_goods(){
+        if($_POST){
+            $sort = $_POST['sort'];
+            switch ($sort) {
+                //按更新时间排序
+                case '1':
+                    # code...
+                    break;   
+                //按时间排序
+                case '2':
+                    # code...
+                    break;   
+                 //按时间排序
+                case '1':
+                    # code...
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }else{
+            echo "2";
+        }
+     }
+
+
+
 }
 
