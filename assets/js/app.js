@@ -7,25 +7,12 @@ $(function() {
             pageData[key]();
         }
     }
-    //     // 判断用户是否已有自己选择的模板风格
-    //    if(storageLoad('SelcetColor')){
-    //      $('body').attr('class',storageLoad('SelcetColor').Color)
-    //    }else{
-    //        storageSave(saveSelectColor);
-    //        $('body').attr('class','theme-black')
-    //    }
-
     autoLeftNav();
     $(window).resize(function() {
         autoLeftNav();
         console.log($(window).width())
     });
 
-    //    if(storageLoad('SelcetColor')){
-
-    //     }else{
-    //       storageSave(saveSelectColor);
-    //     }
 })
 
 
@@ -398,4 +385,7 @@ $(".deleteImg").click(function(){
 $('#cancle').click(function(){
     history.go(-1);
 });
+
+
+
 

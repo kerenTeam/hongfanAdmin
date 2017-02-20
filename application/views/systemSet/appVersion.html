@@ -1,1 +1,190 @@
-ewrtyu
+<style type="text/css">
+    td img{
+        width: 100px;
+        height: 100px;
+    }
+    .deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+    }
+     .clickUp{
+        display: inline-block;
+        float: left;
+        margin-left: 80px;
+        width:100px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+    }
+
+ .preview{
+        height:150px !important;
+    }
+    .preview #imghead,#preview img{
+        
+        height:140px;
+    }
+    select.account_type_name{
+        border: none;
+        border-bottom: 1px solid #c2cad8;
+        font-size: 14px;
+        color: #555;
+        padding-left: 0;
+    }
+    label.am-form-label{
+        font-weight: normal;
+    }
+</style>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">app版本管理</a>
+            <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear:both;">当前app版本信息管理</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="moll_name">版本号</th>
+                                    <th class="shop_name">版本地址 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountList">
+                                <tr class="trClass" id="trClass">
+                                <td class="am-text-middle"><input type="text" name="versionNum" id="versionNum" /></td>
+                                <td class="am-text-middle">http：//www.baidu.com</td>
+                                <td class="am-text-middle">
+                                    <a class="wx_type_img am-inline" >
+                                         <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
+                                          <!-- 图片实时预览 -->
+                                          <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新安装包</button>
+                                    </a>
+                                </td>
+                            </tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+
+var flag=1,tag=1,str='';
+    //异步刷新的ajax请求   
+    function getList(dataurl,data){
+        $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){         
+            var res = eval(result);
+            console.log(res);
+            if(res!=2){
+                var nums = 10; //每页出现的数量
+                var pages = Math.ceil(res.length/nums); //得到总页数
+                $('.dataNumber').html(res.length);
+                $('.pageNumber').html(pages);
+                for(var i = 0; i < res.length; i++){
+                    listData += template('accountListModal',res[i]);
+                }
+                document.getElementById('accountList').innerHTML = listData;
+            }else{
+                $('#accountList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
+            }
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+        }
+    });
+}
+//导入数据
+function uploadFiles(){
+    var versionNum = document.getElementById('versionNum').value;//获取版本号
+    var id='';
+    var fileObj = document.getElementsByClassName('fileUpLoad')[0].files[0];//获取安装包对象
+   // console.log(fileObj.name.split('.')[1]);
+    var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
+    if(fileObj.name.split('.')[1]=='apk'){
+        $('#refreshModal').modal();
+        var form=new FormData();
+        form.append('versionNum',fileObj);
+        form.append('file',fileObj); //安装包对象
+        //实例化XMLHttpRequest对象
+        var xhr=new XMLHttpRequest();
+        xhr.open('post',FileController,true);
+        xhr.onload=function(data){
+            // console.log(data);
+            var jsondata=JSON.parse(data.currentTarget.response);
+            console.log(jsondata);
+            $('#refreshMessBox').html('更新安装包成功！');
+            getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1'); 
+               
+        };
+        xhr.send(form); 
+        return true;
+    }else{
+        alert("上传安装包的格式错误！");
+        return false;
+    }
+    
+}
+$(document).ready(function(){
+    //加载列表数数据
+    getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+
+})
+</script>
+<script type="text/html" id="accountListModal">
+    <tr class="trClass" id="trClass" >
+        <td class="am-text-middle"><%= user_id%></td>
+        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= user_id%>" class="editAccount">
+                    <i class="am-icon-pencil"></i> 
+                </a>
+            </div>
+        </td>
+    </tr>
+</script>
