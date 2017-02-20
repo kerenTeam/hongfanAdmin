@@ -126,7 +126,7 @@ var flag=1,tag=1,str='';
                 for(var i = 0; i < res.length; i++){
                     listData += template('accountListModal',res[i]);
                 }
-                document.getElementById('accountList').innerHTML = listData;
+                // document.getElementById('accountList').innerHTML = listData;
             }else{
                 $('#accountList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
@@ -171,7 +171,7 @@ function uploadFiles(){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+    getList('<?php echo site_url('systemSet/SystemSet/getVersion');?>','default=1');
 
 })
 </script>
