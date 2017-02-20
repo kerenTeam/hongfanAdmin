@@ -629,23 +629,37 @@ class Store extends Default_Controller {
      function get_sort_goods(){
         if($_POST){
             $sort = $_POST['sort'];
+            $list = '';
             switch ($sort) {
-                //按更新时间排序
+                //按最近时间排序
                 case '1':
-                    # code...
+                    $list = $this->MallShop_model->get_goods_time("desc");
                     break;   
-                //按时间排序
+                //按时间倒叙排序
                 case '2':
-                    # code...
+                    $list = $this->MallShop_model->get_goods_time("asc");
                     break;   
-                 //按时间排序
-                case '1':
-                    # code...
+                 //按库存多到少排序
+                case '3':
+                    $list = $this->MallShop_model->get_goods_amout("desc");
                     break;
-                
-                default:
-                    # code...
+                 //按库存少到多排序
+                case '4':
+                     $list = $this->MallShop_model->get_goods_amout("asc");
                     break;
+                 //按价格从高到低排序
+                case '5':
+                    $list = $this->MallShop_model->get_goods_price("desc");
+                    break;
+                 //按价格从低到高排序
+                case '6':
+                    $list = $this->MallShop_model->get_goods_price("asc");
+                    break;
+            }
+            if(empty($list)){
+                echo "3";
+            }else{
+                echo json_encode($list);
             }
         }else{
             echo "2";
