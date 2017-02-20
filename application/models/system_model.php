@@ -15,6 +15,8 @@ class System_model extends CI_Model
     public $adver = "hf_ads";
     //系统公告
     public $report = "hf_local_hometown_reports";
+    //app版本
+    public $version = "hf_system_version";
 
     function __construct()
     {
@@ -137,6 +139,17 @@ class System_model extends CI_Model
         return $query->row_array();
     }
 
+    //返回app版本
+    function get_app_version(){
+        $query = $this->db->order_by('create_time','desc')->get($this->version);
+        return $query->row_array();
+    }
+
+    //修改App版本
+    function edit_app_version($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->version,$data);
+    }
 
 }
 

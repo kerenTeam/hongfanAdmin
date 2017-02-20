@@ -84,8 +84,6 @@ $db['default'] = array(
 	// 'username' => 'hiji',
 	// 'password' => 'hiji',
 	// 'database' => 'hiji',
-
-
 	'hostname' => '192.168.199.175',
 	'username' => 'hiji',
 	'password' => 'hiji',
