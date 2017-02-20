@@ -71,17 +71,7 @@
                                 </tr>
                             </thead>
                             <tbody id="accountList">
-                                <tr class="trClass" id="trClass">
-                                <td class="am-text-middle"><input type="text" name="versionNum" id="versionNum" /></td>
-                                <td class="am-text-middle">http：//www.baidu.com</td>
-                                <td class="am-text-middle">
-                                    <a class="wx_type_img am-inline" >
-                                         <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
-                                          <!-- 图片实时预览 -->
-                                          <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新安装包</button>
-                                    </a>
-                                </td>
-                            </tr>
+                                
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -116,17 +106,11 @@ var flag=1,tag=1,str='';
         url:dataurl,
         data: data,
         success: function(result){         
-            var res = eval(result);
+            var res = JSON.parse(result);
             console.log(res);
             if(res!=2){
-                var nums = 10; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                for(var i = 0; i < res.length; i++){
-                    listData += template('accountListModal',res[i]);
-                }
-                // document.getElementById('accountList').innerHTML = listData;
+                listData = template('accountListModal', res);
+                document.getElementById('accountList').innerHTML = listData;
             }else{
                 $('#accountList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
@@ -141,10 +125,10 @@ var flag=1,tag=1,str='';
 //导入数据
 function uploadFiles(){
     var versionNum = document.getElementById('versionNum').value;//获取版本号
-    var id='';
+    var id='1';
     var fileObj = document.getElementsByClassName('fileUpLoad')[0].files[0];//获取安装包对象
    // console.log(fileObj.name.split('.')[1]);
-    var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
+    var FileController="<?php echo site_url('systemSet/SystemSet/edit_app_version');?>";//上传文件的后台地址
     if(fileObj.name.split('.')[1]=='apk'){
         $('#refreshModal').modal();
         var form=new FormData();
@@ -158,8 +142,7 @@ function uploadFiles(){
             var jsondata=JSON.parse(data.currentTarget.response);
             console.log(jsondata);
             $('#refreshMessBox').html('更新安装包成功！');
-            getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1'); 
-               
+            getList('<?php echo site_url('systemSet/SystemSet/getVersion');?>','default=1');
         };
         xhr.send(form); 
         return true;
@@ -177,14 +160,21 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="accountListModal">
     <tr class="trClass" id="trClass" >
-        <td class="am-text-middle"><%= user_id%></td>
-        <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= user_id%>" class="editAccount">
-                    <i class="am-icon-pencil"></i> 
-                </a>
-            </div>
+            <input type="text" name="versionNum" value="<%= versionNum%>" id="versionNum" />
+        </td>
+        <td class="am-text-middle">
+        <%if(path_url) {%>
+        <%= path_url%>
+        <%}else {%>
+        暂无
+        <%}%>  
+        </td>
+        <td class="am-text-middle">
+            <a class="wx_type_img am-inline" >
+             <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
+              <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新安装包</button>
+            </a>
         </td>
     </tr>
 </script>
