@@ -25,6 +25,8 @@ class SystemSet extends Default_Controller {
     public $view_addBanner = "banner/addBanner.html";  
     // banner 编辑
     public $view_editBanner = "banner/editBanner.html";
+    //App版本管理
+    public $view_appversion = 'systemSet/appVersion.html';
 
     //系统设置 广告管理
     public $view_adverManage = 'systemSet/adverManage.html';
@@ -625,5 +627,15 @@ class SystemSet extends Default_Controller {
             }
          }
     }
+
+    //APP版本管理
+    function app_version(){
+            $data['page'] = $this->view_appversion;
+            $data['menu'] = array('systemSet','version');
+            $this->load->view('template.html',$data);
+    }
+
+
+
 }
 
