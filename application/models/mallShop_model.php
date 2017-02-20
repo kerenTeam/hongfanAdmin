@@ -333,6 +333,34 @@ class MallShop_model extends CI_Model
         return $this->db->where($where)->delete("hf_mall_goods_property");
     }
 
+    //根据商品更新时间排序
+    function get_goods_time($time){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('differentiate','1')->order_by("a.create_time",$time)->get();
+        return $query->result_array();
+    }
+
+    //返回商品库存数排序
+    function get_goods_amout($sort){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('differentiate','1')->order_by("a.amount",$sort)->get();
+        return $query->result_array();
+    } 
+    //返回商品库存数排序
+    function get_goods_price($sort){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('differentiate','1')->order_by("a.price",$sort)->get();
+        return $query->result_array();
+    }
 
 
 

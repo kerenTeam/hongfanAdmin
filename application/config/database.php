@@ -84,12 +84,9 @@ $db['default'] = array(
 	// 'username' => 'hiji',
 	// 'password' => 'hiji',
 	// 'database' => 'hiji',
-	// 'hostname' => '211.149.195.183',
-	// 'username' => 'hiji',
-	// 'password' => 'hiji',
-	// 'database' => 'hiji',
-	'hostname' => '127.0.0.1',
 
+
+	'hostname' => '127.0.0.1',
 	'username' => 'root',
 	'password' => 'root',
 	'database' => 'hiji',

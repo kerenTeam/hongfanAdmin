@@ -25,6 +25,8 @@ class SystemSet extends Default_Controller {
     public $view_addBanner = "banner/addBanner.html";  
     // banner 编辑
     public $view_editBanner = "banner/editBanner.html";
+    //App版本管理
+    public $view_appversion = 'systemSet/appVersion.html';
 
     //系统设置 广告管理
     public $view_adverManage = 'systemSet/adverManage.html';
@@ -80,6 +82,13 @@ class SystemSet extends Default_Controller {
             }
             $data['password'] = md5($data['password']);
             if($this->System_model->add_admin_user($data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个管理员，管理员名称是：".$data['username'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
              }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
@@ -134,6 +143,13 @@ class SystemSet extends Default_Controller {
 
             $data['gid'] = $_POST['group_name'];
             if($this->System_model->edit_admin_user($id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个管理员，管理员名称是：".$data['username'].",管理员id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -152,6 +168,13 @@ class SystemSet extends Default_Controller {
                 echo "2";exit;
             }else{
                 if($this->System_model->del_admin_user($id)){
+                     $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个管理员，管理员id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "1";
                 }else{
                     echo "2";
@@ -205,6 +228,13 @@ class SystemSet extends Default_Controller {
                 }
             }
             if($this->System_model->edit_adver($data['id'],$data)){
+                   $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个广告内容，广告id是：".$data['id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/adverManage')."'</script>";
             }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/'.$data['id'])."'</script>";
@@ -262,6 +292,13 @@ class SystemSet extends Default_Controller {
             $json = json_encode($data,JSON_UNESCAPED_UNICODE);
             $arr= array('system_value'=>$json);
             if($this->System_model->edit_WebSystem($arr)){
+                $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了网站信息",
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
             }else{
                  echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
@@ -331,6 +368,13 @@ class SystemSet extends Default_Controller {
              }
             $data['group_permission'] = json_encode(array_merge($k,$arr));
             if($this->user_model->add_group($data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个权限组，权限组名称是：".$data['group_name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
@@ -354,6 +398,13 @@ class SystemSet extends Default_Controller {
              }
             $data['group_permission'] = json_encode(array_merge($k,$arr));
             if($this->user_model->edit_group($id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个权限组，权限组名称是：".$data['group_name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
              }else{
                  echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
@@ -371,6 +422,13 @@ class SystemSet extends Default_Controller {
             $data['gid'] = '0';
             if($this->user_model->edit_admin_user($id,$data)){
                 if($this->user_model->del_group($id)){
+                       $log = array(
+                            'userid'=>$_SESSION['users']['user_id'],  
+                            "content" => $_SESSION['users']['username']."删除了一个权限组，权限组id是：".$id,
+                            "create_time" => date('Y-m-d H:i:s'),
+                            "userip" => get_client_ip(),
+                        );
+                        $this->db->insert('hf_system_journal',$log);
                      echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
                 }else{
                       echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
@@ -446,6 +504,13 @@ class SystemSet extends Default_Controller {
                 $arr = array('banner'=>$json);
             }
             if($this->System_model->edit_banner($id,$arr)){
+                   $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个banner，banner id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
             }else{
                  echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$id)."'</script>";exit;
@@ -502,6 +567,13 @@ class SystemSet extends Default_Controller {
                   $json = json_encode($bannerPic);
                   $arr = array('banner'=>$json);
                 if($this->System_model->edit_banner($id,$arr)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个banner，banner id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
                      echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/editBanner/'.$id.'/'.$num)."'</script>";exit;
@@ -527,6 +599,13 @@ class SystemSet extends Default_Controller {
                 $json = json_encode(array_merge($bannerpic));
                 $arr = array('banner'=>$json);
                 if($this->System_model->edit_banner($id,$arr)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个banner，banner id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
                      echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
@@ -534,6 +613,13 @@ class SystemSet extends Default_Controller {
             }else{
                 $arr = array('banner'=>'');
                 if($this->System_model->edit_banner($id,$arr)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了banner id是".$id."的所有banner，banner id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                     echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
                 }else{
                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
@@ -541,5 +627,15 @@ class SystemSet extends Default_Controller {
             }
          }
     }
+
+    //APP版本管理
+    function app_version(){
+            $data['page'] = $this->view_appversion;
+            $data['menu'] = array('systemSet','version');
+            $this->load->view('template.html',$data);
+    }
+
+
+
 }
 
