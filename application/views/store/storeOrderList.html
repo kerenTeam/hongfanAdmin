@@ -54,7 +54,12 @@ td.am-text-middle img{
         -webkit-user-select: none;
         -moz-user-select: none;
     }
-   #page_navigation span {
+    #jumpNum{
+        width: 70px;
+        height: 30px;
+        line-height: 30px;
+    }
+   #page_navigation span,#jumpNum {
         display: inline-block !important; 
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -181,7 +186,7 @@ td.am-text-middle img{
                             <div id="page_navigation"></div>
 
                             <div id="jumpBox">
-                                跳转到<input type="number" id="jumpNum" name="" />页 <input type="button" value="确定" class="jumpBtn" >
+                                跳转到<input type="number" id="jumpNum" min="1" name="" />页 <input type="button" value="确定" class="am-btn-secondary jumpBtn" >
                             </div>
                         </div>
                         <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
@@ -227,16 +232,13 @@ td.am-text-middle img{
     *js分页
     *
     */
-
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
         $('.page_link').eq(page_num).addClass('active_page');
-        
-
         $("#dataList").children('tr').css("display","none");
-        var start_page=parseInt(10)*parseInt(page_num);
-        var end_page=parseInt(10)*parseInt(page_num+1);
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page=page_num;
         localStorage.setItem('storeOrderList', page_num);
@@ -259,7 +261,7 @@ td.am-text-middle img{
         }
     }
     //异步刷新的ajax请求   
-    function getList(dataurl,data){
+    function getList(dataurl,data,changeIndex){
         $.ajax({
         type:'post',
         url:dataurl,
@@ -270,17 +272,18 @@ td.am-text-middle img{
              console.log(res);
             if(res!=2){
                 var listData = '';; //每页出现的数量
-                var pages = Math.ceil(res.length/10); //得到总页数
+                var pages = Math.ceil(res.length/15); //得到总页数
+                if(pages==1){
+                    $('#jumpBox').css('display','none');
+                }
+
                 $('.dataNumber').html(res.length);
                 $('.pageNumber').html(pages);
                 for(var i = 0; i < res.length; i++){
-                    // res[i].goods_data=JSON.parse(res[i].goods_data);
                     listData+= template('dataModal',res[i]);
                  }
-                console.log(pages);
                 document.getElementById('dataList').innerHTML = listData;
-                $('#current_page').val(0);
-                $('#show_per_page').val(10);
+                $('#current_page').val(15);
                 var navigation_html= '<span class="previous_link" onclick="previous()">上一页</span><span class="page_link active_page" onclick="go_to_page(' + 0 + ')" >' + 1 +'</span>';//动态创建上一页按钮
                 var current_link=0;   //当前点击的页数
                 for(var i=1;i<pages;i++){//创建所有页码的a标签
@@ -289,10 +292,22 @@ td.am-text-middle img{
                 navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
                 $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
                 $('#dataList').children('tr').css('display','none');
-                $('#dataList').children('tr').slice(0,10).css('display','');
+                $('#dataList').children('tr').slice(0,15).css('display','');
+                if(changeIndex==0){
+
+                }else{
+                   go_to_page(changeIndex); 
+                }
                 $('.jumpBtn').click(function () {
                     var jumpNum = parseInt(document.getElementById('jumpNum').value);
-                    go_to_page(jumpNum-1);
+                    if(jumpNum>pages) {
+                        alert('您当前输入的页数大于总页数！');
+                        return false;
+                    }else {
+                        go_to_page(jumpNum-1);
+                        return true;
+                    }
+                    
                 })
                      
             }else{
@@ -311,11 +326,10 @@ td.am-text-middle img{
     });
 }
 $(document).ready(function(){
-    localStorage.setItem('storeOrderList', 0);  
     //加载列表数数据
-    var storeOrderList = localStorage.getItem('storeOrderList');
+    var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
     alert(storeOrderList);
-    getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+    getList('<?php echo site_url('store/store/Order_page');?>','default=1',storeOrderList);
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('store/store/Order_page');?>','default=1');

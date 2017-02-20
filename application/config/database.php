@@ -86,9 +86,9 @@ $db['default'] = array(
 	// 'database' => 'hiji',
 
 
-	'hostname' => '127.0.0.1',
-	'username' => 'root',
-	'password' => 'root',
+	'hostname' => '192.168.199.175',
+	'username' => 'hiji',
+	'password' => 'hiji',
 	'database' => 'hiji',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => 'hf_',
