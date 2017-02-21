@@ -1,42 +1,42 @@
  
 <style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
-}
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-}
-.am-u-sm6{
-    width:50px !important;
-    margin:0;
-}
-.am-form-group div{
-    line-height: 37px;
-}  
-.stable{
-    display: inline-block !important;
-    width: 45% !important;
-}
-.linkWord{
-    width: 10% !important;
-}
+    .am-selected {
+        width: 100%!important;
+    }
+    .table-check {
+        width: 30px;
+    }
+    .hf-dropdown {
+        font-size: 12px!important;
+        padding: 5px 6px!important;
+    } 
+    td.am-text-middle img {
+        width:80px;
+    }
+    .am-u-sm6{
+        width:50px !important;
+        margin:0;
+    }
+    .am-form-group div {
+        line-height: 37px;
+    }   
+    .stable {
+        display: inline-block !important;
+        width: 45% !important;
+    }
+    .linkWord {
+        width: 10% !important;
+    }
 
-.goodsState,.recommend{
-    width: 100px;
-    background: #15b5ac;
-    border-radius: 5px;
-    border: 1px solid #15b5ac;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
-}
+    .goodsState,.recommend {
+        width: 80px;
+        background: #15b5ac;
+        border-radius: 5px;
+        border: 1px solid #15b5ac;
+        padding:5px 5px;
+        color: #fff;
+        text-align: center;
+    }
 
     .goodsState option,.recommend option{
         background: #fff;
@@ -48,6 +48,10 @@ td.am-text-middle img{
     }
     .goodsState option[selected="selected"],.recommend option[selected="selected"]{
         background: #15b5ac;
+    }
+    table tbody tr td:nth-child(5) {
+        max-width: 300px;
+        white-space: normal;
     }
 </style>
 
@@ -91,16 +95,6 @@ td.am-text-middle img{
                         </select>
                         </div>
                     </div>
-                  <!--   <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsState" class="am-form-label am-u-sm-4">是否推荐:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsState" name="goodsState">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">是</option>
-                            <option value="0">否</option>
-                        </select>
-                        </div>
-                    </div> -->
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜索:</label>
                         <div class="am-u-sm-8">
@@ -240,7 +234,7 @@ td.am-text-middle img{
 <script type="text/javascript">
 
     //实例化编辑器
-    var ue = UE.getEditor('editor'),flag=0;
+    var ue = UE.getEditor('editor'),flag=0,$storeGoodsList=0;
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
@@ -256,7 +250,8 @@ td.am-text-middle img{
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page=page_num;
-        localStorage.setItem('storeGoodsList', page_num);
+        localStorage.setItem('storeGoodsList', current_page);
+        $storeGoodsList = parseInt(localStorage.getItem('storeGoodsList'));
     }
 
     //点击上一页的函数
@@ -281,16 +276,171 @@ td.am-text-middle img{
             $(this).attr("href","<?php echo site_url('store/store/storeEditGoods/" + dataId + "');?>");
         });
         // //商品上下架
-        // for(var i=0;i<$('.tpl-del').length;i++){
-        //     var dataId=$('.tpl-del').eq(i).attr('data-id');
-        //     $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-        //     if($('.goodsState option:selected').eq(i).val()=="0"){
-        //         $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
-        //     }   
-        //     if($('.recommend option:selected').eq(i).val()=="0"){
-        //         $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});  
-        //     }                          
-        // }
+        for(var i=0; i<$('.tpl-del').length; i++) {
+            var dataId = $('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+            if($('.goodsState').eq(i).val()=="0"){
+                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            } 
+            if($('.recommend').eq(i).val()=="0"){
+                $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            }                         
+        }
+
+        //更改商品的状态
+        $('.goodsState').change(function(){
+            var dataId=$(this).attr('data-id');
+            if($(this).find('option:selected').val()=="1"){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                    data: 'goodsid='+ dataId+'&state=1',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                    data: 'goodsid='+ dataId+'&state=0',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            }
+            
+            
+        });
+        //推荐商品
+        $('.recommend').change(function(){
+            var dataId=$(this).attr('data-id');
+            if($(this).find('option:selected').val()=="1"){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+                    data: 'goodsid='+ dataId+'&state=1',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+                    data: 'goodsid='+ dataId+'&state=0',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        } 
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            }
+            
+            
+        });
+        //删除商品的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                data: 'goodsid='+dataId,
+                success: function(data){
+                    if(data==1){                                           
+                      getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+            
+            //
+            $('#add_sales').click(function(){
+                var array=[];
+                for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                    
+                    array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                }
+                if(array == ''){
+                    alert('你还没有选择商品！');
+                    return false;
+                }else{
+                    goodsid=JSON.stringify(array);
+                    $("#goodsid").val(goodsid);
+
+                }
+            });
+    
+        });
+        //加入达人推荐的ajax请求
+        $('#add_sales_goods').click(function(){
+            var array=[];
+            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                
+                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+            }
+            if(array == ''){
+                alert('你还没有选择商品！');
+            }else{
+                goodsid=JSON.stringify(array);
+              //  console.log(goodsid);
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/store/Store/add_sales_goods');?>',
+                    data: 'goodsid='+goodsid+'&id='+'<?php echo $saleid;?>',
+                    success: function(data){
+                        if(data==1){
+                            alert('加入成功');
+                           window.location.href='<?php echo site_url("/store/Store/storeGoodsSales");?>';
+                        }else{
+                            alert("操作失败！");
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+            }
+        });
+        
     }
     //异步刷新的ajax请求   
     function getList(dataurl,data,changeIndex){
@@ -321,13 +471,9 @@ td.am-text-middle img{
                     }
                     navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
                     $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
-                    $('#dataList').children('tr').css('display','none');
-                    $('#dataList').children('tr').slice(0,15).css('display','');
-                    if(changeIndex==0){
 
-                    }else{
-                       go_to_page(changeIndex); 
-                    }
+                    go_to_page(changeIndex);
+
                     $('.jumpBtn').click(function () {
                         var jumpNum = parseInt(document.getElementById('jumpNum').value);
                         if(jumpNum>pages) {
@@ -339,6 +485,7 @@ td.am-text-middle img{
                         }
                         
                     });
+                     
                     otherFunction();
                     
                     
@@ -359,9 +506,24 @@ td.am-text-middle img{
     }
 $(document).ready(function(){
     //加载列表数数据
-    var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1',storeOrderList);
-    go_to_page(storeOrderList); 
+    getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1', $storeGoodsList);
+     
+    //点击选中所有
+    $('.tablecheck').click(function() {
+        var start_page=parseInt(15)*parseInt($storeGoodsList);
+        var end_page=parseInt(15)*parseInt($storeGoodsList+1);
+        if(flag==0){
+          for(var i = start_page; i < end_page; i++) {
+            document.getElementsByClassName('commentBox')[i].checked=true;
+          }  
+          flag=1;
+        }else{
+           for(var i = start_page; i < end_page; i++) {
+            document.getElementsByClassName('commentBox')[i].checked=false;
+            }
+           flag=0;
+        }
+    });
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
@@ -405,13 +567,13 @@ $(document).ready(function(){
         <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+            <select class="goodsState" name="goodsState" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1" selected="selected">上架</option>
                 <option value="0">下架</option>
             </select>
         <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+            <select class="goodsState" name="goodsState" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1">上架</option>
                 <option value="0" selected="selected">下架</option>
@@ -420,13 +582,13 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle">
         <%if(recommend=="1"){%>
-            <select id="" class="recommend" name="recommend" data-id="<%= goods_id%>">
+            <select class="recommend" name="recommend" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1" selected="selected">是</option>
                 <option value="0">否</option>
             </select>
         <%}else{%>
-            <select id="" class="recommend" name="recommend" data-id="<%= goods_id%>">
+            <select class="recommend" name="recommend" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1">是</option>
                 <option value="0" selected="selected">否</option>
