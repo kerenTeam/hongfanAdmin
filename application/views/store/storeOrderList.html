@@ -152,6 +152,7 @@ td.am-text-middle img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+  var $storeOrderList = 0;
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -189,7 +190,8 @@ td.am-text-middle img{
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page=page_num;
-        localStorage.setItem('storeOrderList', page_num);
+        localStorage.setItem('storeOrderList', current_page);
+        $storeOrderList =  localStorage.setItem('storeOrderList', current_page);
     }
 
     //点击上一页的函数
@@ -274,12 +276,11 @@ td.am-text-middle img{
     }
 $(document).ready(function(){
     //加载列表数数据
-    var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    getList('<?php echo site_url('store/store/Order_page');?>','default=1', storeOrderList);
+    getList('<?php echo site_url('store/store/Order_page');?>','default=1', $storeOrderList);
     go_to_page(storeOrderList); 
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('store/store/Order_page');?>','default=1', storeOrderList);
+        getList('<?php echo site_url('store/store/Order_page');?>','default=1', $storeOrderList);
     });
     //点击搜索
     $('.searchOrder').click(function(){

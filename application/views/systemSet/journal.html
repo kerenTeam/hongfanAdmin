@@ -107,6 +107,7 @@ td.am-text-middle img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+  var $journal = 0; 
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -143,34 +144,34 @@ td.am-text-middle img{
         var start_page=parseInt(15)*parseInt(page_num);
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-        current_page=page_num;
-        localStorage.setItem('storeOrderList', page_num);
+        current_page = page_num;
+        localStorage.setItem('journal', current_page);
+        $journal = localStorage.setItem('journal', current_page);
     }
 
     //点击上一页的函数
-    function previous(){
+    function previous() {
         new_page = current_page-1;
         console.log(new_page);
-        if($('.active_page').prev('.page_link').length==true){
+        if($('.active_page').prev('.page_link').length==true) {
             go_to_page(new_page);
         }
     }
 
     //点击下一页的函数
-    function next(){
+    function next() {
         new_page = current_page+1;
-        if($('.active_page').next('.page_link').length==true){
+        if($('.active_page').next('.page_link').length==true) {
             go_to_page(new_page);
         }
     }
     //异步刷新的ajax请求   
-    function getList(dataurl,data,changeIndex){
+    function getList(dataurl,data,changeIndex) {
         $.ajax({
             type:'post',
             url:dataurl,
             data: data,
-            success: function(result){   
-                // console.log(result);      
+            success: function(result) {        
                 var res = eval(result);
                  console.log(res);
                 if(res!=2){
@@ -229,26 +230,13 @@ td.am-text-middle img{
             }
         });
     }
+    
 $(document).ready(function(){
     //加载列表数数据
-    var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1',storeOrderList);
+    getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', $journal);
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', storeOrderList);
-    });
-    //点击搜索
-    $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),buyer=$('#buyer').val(),seller=$('#seller').val(),create_time=$('#orderDate').val();
-        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="") ){
-            alert("交易总额必须是一个范围！");
-            return false;
-        }else{
-          console.log('order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"$seller="+ seller +"&create_time="+create_time);
-         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ orderState +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&buyer='+ buyer +"&seller="+ seller +"&create_time="+create_time);
-            return true;
-        }
-        
+        getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', $journal);
     });
 })
 </script>

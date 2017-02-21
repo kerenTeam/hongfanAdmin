@@ -1,0 +1,150 @@
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+color: #333;
+}
+
+.widget-body-lg {
+    min-height:800px;
+}
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
+}
+
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimit';?>" style="font-size: 18px;">权限管理
+            </a>  
+            <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row am-cf">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 widget-margin-bottom-lg ">
+            <div class="tpl-user-card am-text-center widget-body-lg">
+                <div class="tpl-user-card-title">
+                    新增权限组
+                </div>
+                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                        <label for="user-name" class="am-u-sm-2 am-form-label black">权限组名:</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" name="group_name" class="tpl-form-input" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
+                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required>权限勾选:</label>  
+                    </div>
+                    <?php foreach($module as $val):?>
+                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:20px;">
+                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required><?php echo $val['name'];?>:</label>
+                        <div class="am-u-sm-10 am-text-left" style="padding-top:5px;font-size: 14px;">
+                        <?php foreach($module_list as $v):?>
+                            <?php if($v['m_id'] == $val['modular_id']):?>
+                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>" /><?php echo $v['name']?></div>
+                        <?php endif;?>
+                        <?php endforeach;?>
+                        </div>
+                    </div>
+                    <?php endforeach;?>
+                  
+                    <div class="am-form-group am-btn-group-xs">
+                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-7 widget-margin-bottom-lg">
+            <div class="widget am-cf widget-body-lg">
+                <div class="widget-body  am-fr">
+                    <div class="am-scrollable-horizontal ">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
+                            <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>权限组名</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($group)):?>
+                                <?php foreach($group as $k=>$v):?>
+                                <tr class="gradeX">
+                                    <td><?php echo $k+1;?></td>
+                                    <td><?php echo $v['group_name'];?></td>
+                                    <td><?php echo $v['create_time'];?></td>
+                                    <td>
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit/'.$v['gid'];?>">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a href="<?php echo site_url('/systemSet/systemSet/del_group/'.$v['gid']);?>" class="tpl-table-black-operation-del" onClick="return confirm('删除后，权限下的所有用户权限会清零。确定删除?');" >
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- 编辑模态框 -->
+                                <?php endforeach;?>
+                                <?php else:?>
+                                    <th colspan="4" style="text-align: center;">暂无！ </th>
+                                <?php endif;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+//表单验证函数
+function validate(obj){
+    var content=obj.value;
+    if(content.length<2 || content.length>10){
+        $('.blacktips').css('display','none');
+        $('.redtips').css('display','block');
+    }else{
+        $('.redtips').css('display','none');
+        $('.blacktips').css('display','block');
+    }
+}
+
+$(function(){
+    $('.secondLimit').css("display","none");
+        $('.firstLimit').on('change',function(){
+        var firstLimit = this.value;
+        //alert(firstLimit);
+        $('.secondLimit').each(function(){
+            var id=$(this).attr("id");
+            if(firstLimit==id){
+            $('#'+firstLimit).css("display","block");
+            }
+        })
+    });
+    
+})
+//点击保存按钮作验证
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+});
+</script>

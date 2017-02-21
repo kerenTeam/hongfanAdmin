@@ -10,6 +10,14 @@ color: #333;
 .theme-white .tpl-user-card-title {
     font-size: 20px;
 }
+::-webkit-scrollbar {
+    width: 0!important;
+    opacity: 1!important;
+}
+.am-btn-group-xs a {
+    display: inline-block;
+    margin-right: 10px;
+}
 
 </style>
 <!-- 菜单 -->
@@ -28,79 +36,43 @@ color: #333;
 </div>
 <div class="row-content am-cf">
     <div class="row am-cf">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 widget-margin-bottom-lg ">
-            <div class="tpl-user-card am-text-center widget-body-lg">
-                <div class="tpl-user-card-title">
-                    新增权限组
-                </div>
-                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-name" class="am-u-sm-2 am-form-label black">权限组名:</label>
-                        <div class="am-u-sm-10">
-                            <input type="text" name="group_name" class="tpl-form-input" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
-                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required>权限勾选:</label>  
-                    </div>
-                    <?php foreach($module as $val):?>
-                    <div class="am-form-group am-cf am-form-icon am-form-feedback" style="padding-left:20px;">
-                        <label for="user-phone" class="am-u-sm-2 am-form-label black" required><?php echo $val['name'];?>:</label>
-                        <div class="am-u-sm-10 am-text-left" style="padding-top:5px;font-size: 14px;">
-                        <?php foreach($module_list as $v):?>
-                            <?php if($v['m_id'] == $val['modular_id']):?>
-                            <div class="am-u-sm-4 am-u-end"><input type="checkbox" name="group_permission[<?php echo $v['m_id'];?>][]" value="<?php echo $v['modular_id']?>" /><?php echo $v['name']?></div>
-                        <?php endif;?>
-                        <?php endforeach;?>
-                        </div>
-                    </div>
-                    <?php endforeach;?>
-                  
-                    <div class="am-form-group am-btn-group-xs">
-                        <button type="reset" class="am-btn am-btn-default">重置</button>
-                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-7 widget-margin-bottom-lg">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 widget-margin-bottom-lg">
             <div class="widget am-cf widget-body-lg">
                 <div class="widget-body  am-fr">
-                    <div class="am-scrollable-horizontal ">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black " id="example-r">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <a id="add_rule" data-am-modal="{target:'#addRule'}" class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 添加权限</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th>编号</th>
-                                    <th>权限组名</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
+                                    <th>权限名 </th>
+                                    <th>权限 </th>
+                                    <th>操作 </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <?php if(!empty($group)):?>
-                                <?php foreach($group as $k=>$v):?>
-                                <tr class="gradeX">
-                                    <td><?php echo $k+1;?></td>
-                                    <td><?php echo $v['group_name'];?></td>
-                                    <td><?php echo $v['create_time'];?></td>
-                                    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/systemSet/systemSet/memberLimitEdit/'.$v['gid'];?>">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="<?php echo site_url('/systemSet/systemSet/del_group/'.$v['gid']);?>" class="tpl-table-black-operation-del" onClick="return confirm('删除后，权限下的所有用户权限会清零。确定删除?');" >
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
+                            <tbody id="dataList">
+                                <tr class="trClass" id="trClass" data-id="">
+                                    <td class="am-text-middle">├─ 测试权限</td>
+                                    <td class="am-text-middle">Test/index/index</td>
+                                    <td class="am-text-middle">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a id="add_rule1" data-am-modal="{target:'#addRule'}" class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 添加子权限</a>
+
+                                                <a id="edit_rule" data-am-modal="{target:'#editRule'}" class="am-btn am-btn-warning"><span class="am-icon-edit"></span> 修改</a>
+
+                                                <a id="delete_rule" data-am-modal="{target:'#deleteRule'}" class="am-btn am-btn-danger"><span class="am-icon-edit"></span> 删除</a>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
-                                <!-- 编辑模态框 -->
-                                <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="4" style="text-align: center;">暂无！ </th>
-                                <?php endif;?>
                             </tbody>
                         </table>
                     </div>
@@ -110,20 +82,101 @@ color: #333;
     </div>
 </div>
 </div>
+<!--添加权限开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="addRule" >
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">添加权限</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/add_sales');?>" method="post" enctype='multipart/form-data' data-am-validator>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">权限名 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="title" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">权限 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="title" required minlength="2" maxlength="15" onblur="validate(this,2,15,1)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-secondary">提交</button>
+                </div>
+            </form>   
+        </div>
+        
+    </div>
+</div>
+<!--添加权限结束-->
+<!--编辑权限开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="editRule">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">编辑权限</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/add_sales');?>" method="post" enctype='multipart/form-data' data-am-validator>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">权限名 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="title" required minlength="2" maxlength="15" onblur="validate(this,2,15,2)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">权限 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="title" required minlength="2" maxlength="15" onblur="validate(this,2,15,3)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-warning">修改</button>
+                </div>
+            </form>   
+        </div>
+        
+    </div>
+</div>
+<!--编辑权限结束-->
+<!--删除权限开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="deleteRule">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定要删除这条记录吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn sureDelete" data-id="" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<!--删除权限结束-->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
 //表单验证函数
-function validate(obj){
+function validate(obj,minlen,maxlen,i){
     var content=obj.value;
-    if(content.length<2 || content.length>10){
-        $('.blacktips').css('display','none');
-        $('.redtips').css('display','block');
+    if(content.length < minlen || content.length > maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
     }else{
-        $('.redtips').css('display','none');
-        $('.blacktips').css('display','block');
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
     }
 }
-
 $(function(){
     $('.secondLimit').css("display","none");
         $('.firstLimit').on('change',function(){

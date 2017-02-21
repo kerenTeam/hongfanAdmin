@@ -44,6 +44,9 @@
     .sureSave {
         margin-right: 20px;
     }
+    .tpl-table-black-operation{
+        display: none;
+    }
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -103,19 +106,6 @@
                                 </tr>
                             </thead>
                             <tbody id="dataList">
-                                <tr class="trClass1" id="trClass1" >
-                                    <td class="am-text-middle">首页</td>
-                                    <td class="am-text-middle" class="tipsBox">
-                                        <span>温馨提示：因该版本的app现正处于完善阶段，不足之处烦请谅解！</span>
-                                        <textarea class="am-form-field" style="display: none;" placeholder="请输入温馨提示，不超过五十个字"></textarea>
-                                    </td>
-                                    <td class="am-text-middle">
-                                        <button data-id="" class="am-btn am-btn-warning am-btn-xs editWarmTips" onclick="editWarmTips(this)">
-                                            <i class="am-icon-pencil"></i> 修改
-                                        </button>
-                                    </td>
-                                </tr>
-                                <!-- more data -->
                             </tbody>
                         </table>
                     </div>
@@ -145,48 +135,44 @@ function validate(obj,minlen,maxlen,i){
 function editWarmTips(obj) {
     var tipsBox = $(obj).parent('td').prevUntil('.tipsBox');
     var content = tipsBox.html();
-    var edit = '<textarea class="am-form-field" placeholder="请输入温馨提示，">' + content +'</textarea>',
-    options = '<div class="tpl-table-black-operation"><a data-id="" onclick="saveTips(this, 1)" class="sureSave"> 确定</a>   <a data-id="" class="tpl-table-black-operation-del sureCancle" onclick="saveTips(this, 0)"> 取消</a></div>';
     $(obj).parents('.trClass1').find('span').css('display', 'none');
     $(obj).parents('.trClass1').find('textarea').css('display', '');
-    $(obj).parent('td')[0].innerHTML = options;
+    $(obj).siblings('div.tpl-table-black-operation').css('display', 'block');
+    $(obj).css('display', 'none');
 }
 
 //保存温馨提示的内容
 function saveTips(obj, index) {
    
     var tipsBox1 = $(obj).parents('.trClass1').find('textarea');
-    var eidtcontent = tipsBox1.val();
+    var eidtcontent = tipsBox1.val(),id = $(obj).attr("data-id");
+    console.log(eidtcontent);
+    if(index == "1") {
+        $.ajax({
+            type: 'post',
+            url: '<?php echo site_url('systemSet/SystemSet/edit_prompt');?>',
+            data: 'id='+ id + '&content='+ eidtcontent,
+            success: function(result){         
+                var res = JSON.parse(result);
+                console.log(res);
+                if(res != 1){
+                    alert("操作失败，请重试！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }  
     $(obj).parents('.trClass1').find('textarea').css('display', 'none');
     $(obj).parents('.trClass1').find('span').html(eidtcontent).css('display', '');
-    var edit = '<button data-id="" class="am-btn am-btn-warning am-btn-xs editWarmTips" onclick="editWarmTips(this)"><i class="am-icon-pencil"></i> 修改</button>';
-    $(obj).parents('td').html("").append(edit);
-     
-    
-    // $.ajax({
-    //     type:'post',
-    //     url:dataurl,
-    //     data: data,
-    //     success: function(result){         
-    //         var res = JSON.parse(result);
-    //         // console.log(res);
-    //         if(res!=2){
-    //             listData = template('accountListModal', res);
-    //             document.getElementById('accountList').innerHTML = listData;
-    //         }else{
-    //             $('#accountList').find('tr').remove();
-    //             $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
-    //         }
-            
-    //     },
-    //     error:function(xhr,type,errorThrown){
-    //         alert("网络状况不佳，请稍后重试！");
-    //     }
-    // });
+    $(obj).siblings('button').css('display', 'block');
+    $(obj).css('display', 'none');
 }
 
 
-var flag=1,tag=1,str='';
+var flag=1,tag=1,str='',listData1='';
     //异步刷新的ajax请求   
     function getList(dataurl,data, index){
         $.ajax({
@@ -201,8 +187,13 @@ var flag=1,tag=1,str='';
                     listData = template('accountListModal', res);
                     document.getElementById('accountList').innerHTML = listData;
                 }else {
-                    listData1 = template('dataModal', res);
-                    // document.getElementById('dataList').innerHTML = listData1;
+                    for(var i = 0; i < res.length; i++) {
+                        listData1 += template('dataModal', res[i]);
+                    }
+                    document.getElementById('dataList').innerHTML = listData1;
+                    for(var i = 0; i < $('.imgUpload').length; i++) {
+                        $('.imgUpload').eq(i).attr('onChange','uploadFiles()');
+                    }
                 }
                 
             }else{
@@ -277,22 +268,25 @@ $(document).ready(function(){
     </tr>
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" id="trClass" >
+    <tr class="trClass1">
         <td class="am-text-middle">
-            <input type="text" name="versionNum" value="<%= versionNum%>" id="versionNum" />
-        </td>
-        <td class="am-text-middle">
-        <%if(path_url) {%>
-        <%= path_url%>
+        <%if(module_id == "1") {%>
+            首页
+        <%}else if(module_id == "2") {%>
+            优品汇
         <%}else {%>
-        暂无
+            土特产
         <%}%>  
         </td>
         <td class="am-text-middle">
-            <a class="wx_type_img am-inline" >
-             <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
-              <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新安装包</button>
-            </a>
+            <span><%= content%></span>
+            <textarea class="am-form-field" style="display: none;" placeholder="请输入温馨提示，不超过五十个字"><%= content%></textarea>
+        </td>
+        <td class="am-text-middle">
+            <button data-id="" class="am-btn am-btn-warning am-btn-xs editWarmTips" onclick="editWarmTips(this)">
+                <i class="am-icon-pencil"></i> 修改
+            </button>
+            <div class="tpl-table-black-operation"><a data-id="<%= id%>" onclick="saveTips(this, 1)" class="sureSave"> 确定</a>   <a class="tpl-table-black-operation-del sureCancle" onclick="saveTips(this, 0)"> 取消</a></div>
         </td>
     </tr>
 </script>
