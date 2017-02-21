@@ -102,7 +102,7 @@
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="accountList">
+                            <tbody id="dataList">
                                 <tr class="trClass1" id="trClass1" >
                                     <td class="am-text-middle">首页</td>
                                     <td class="am-text-middle" class="tipsBox">
@@ -188,17 +188,23 @@ function saveTips(obj, index) {
 
 var flag=1,tag=1,str='';
     //异步刷新的ajax请求   
-    function getList(dataurl,data){
+    function getList(dataurl,data, index){
         $.ajax({
         type:'post',
         url:dataurl,
         data: data,
         success: function(result){         
             var res = JSON.parse(result);
-            // console.log(res);
+            console.log(res);
             if(res!=2){
-                listData = template('accountListModal', res);
-                document.getElementById('accountList').innerHTML = listData;
+                if(index == "1") {
+                    listData = template('accountListModal', res);
+                    document.getElementById('accountList').innerHTML = listData;
+                }else {
+                    listData1 = template('dataModal', res);
+                    // document.getElementById('dataList').innerHTML = listData1;
+                }
+                
             }else{
                 $('#accountList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
@@ -245,12 +251,32 @@ function uploadFiles(){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('systemSet/SystemSet/getVersion');?>','default=1');
+    getList('<?php echo site_url('systemSet/SystemSet/getVersion');?>','default=1', 1);
 
-
+    getList('<?php echo site_url('systemSet/SystemSet/get_prompt');?>','default=1', 0);
 })
 </script>
 <script type="text/html" id="accountListModal">
+    <tr class="trClass" id="trClass" >
+        <td class="am-text-middle">
+            <input type="text" name="versionNum" value="<%= versionNum%>" id="versionNum" />
+        </td>
+        <td class="am-text-middle">
+        <%if(path_url) {%>
+        <%= path_url%>
+        <%}else {%>
+        暂无
+        <%}%>  
+        </td>
+        <td class="am-text-middle">
+            <a class="wx_type_img am-inline" >
+             <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
+              <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新安装包</button>
+            </a>
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="dataModal">
     <tr class="trClass" id="trClass" >
         <td class="am-text-middle">
             <input type="text" name="versionNum" value="<%= versionNum%>" id="versionNum" />

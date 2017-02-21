@@ -381,7 +381,7 @@
                 data: 'goodsid='+dataId,
                 success: function(data){
                     if(data==1){                                           
-                      getList('<?php echo site_url('/shop/singleShop/store_goods_list');?>','default=1');
+                      getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1', $storeGoodsList);
                     }else{
                         alert("操作失败！");
                     }
@@ -527,7 +527,7 @@ $(document).ready(function(){
     });
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('store/store/storeGoods_page');?>','default=1');
+        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1', $storeGoodsList);
 
     });
     //点击搜索

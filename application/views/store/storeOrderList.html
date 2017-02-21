@@ -275,11 +275,11 @@ td.am-text-middle img{
 $(document).ready(function(){
     //加载列表数数据
     var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    getList('<?php echo site_url('store/store/Order_page');?>','default=1',storeOrderList);
+    getList('<?php echo site_url('store/store/Order_page');?>','default=1', storeOrderList);
     go_to_page(storeOrderList); 
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+        getList('<?php echo site_url('store/store/Order_page');?>','default=1', storeOrderList);
     });
     //点击搜索
     $('.searchOrder').click(function(){

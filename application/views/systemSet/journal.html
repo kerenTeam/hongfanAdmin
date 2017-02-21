@@ -232,10 +232,10 @@ td.am-text-middle img{
 $(document).ready(function(){
     //加载列表数数据
     var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    // getList('<?php echo site_url('store/store/Order_page');?>','default=1',storeOrderList);
+    getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1',storeOrderList);
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+        getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', storeOrderList);
     });
     //点击搜索
     $('.searchOrder').click(function(){
@@ -253,18 +253,12 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">   
-    <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
-        <td class="am-text-middle"><%= order_id%></td>
-        <td class="am-text-middle"><%= goods_data.totalNum%></td>
-        <td class="am-text-middle"><%= goods_data.totalMoney%></td>
-        <td class="am-text-middle">
-        <%if(username) {%>
-        <%= username%>
-        <%} else {%>
-        <%= nickname%>
-        <%}%>
-        </td>
-        <td class="am-text-middle"><%= store_name%></td>
+    <tr class="trClass">
+        <td class="am-text-middle"><%= userip%></td>
+        <td class="am-text-middle"><%= login_address%></td>
+        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle"><%= content%></td>
+        <td class="am-text-middle"><%= create_time%></td>
     </tr>
 </script>
 
