@@ -19,7 +19,7 @@ td.am-text-middle img{
 .stable{
     display: inline-block !important;
     width: 45% !important;
-}
+} 
 .linkWord{
     width: 10% !important;
 }
@@ -214,10 +214,9 @@ td.am-text-middle img{
             type:'post',
             url:dataurl,
             data: data,
-            success: function(result){   
-                // console.log(result);      
+            success: function(result){     
                 var res = eval(result);
-                 console.log(res);
+                console.log(res);
                 if(res!=2){
                     var listData = ''; //每页出现的数量
                     var pages = Math.ceil(res.length/15); //得到总页数
@@ -238,8 +237,9 @@ td.am-text-middle img{
                     }
                     navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
                     $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
-                    $('#dataList').children('tr').css('display','none');
-                    $('#dataList').children('tr').slice(0,15).css('display','');
+                    
+                    go_to_page(changeIndex); 
+                    $('.linkGroup').css('display','block');
                     if(changeIndex==0){
 
                     }else{

@@ -391,7 +391,7 @@
                     alert("操作失败，请检查网络设置！");
                 }
             });
-            
+
             //
             $('#add_sales').click(function(){
                 var array=[];
@@ -473,7 +473,8 @@
                     $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
 
                     go_to_page(changeIndex);
-
+                    $('.linkGroup').css('display','block');
+                    
                     $('.jumpBtn').click(function () {
                         var jumpNum = parseInt(document.getElementById('jumpNum').value);
                         if(jumpNum>pages) {
