@@ -180,11 +180,6 @@ td.am-text-middle img{
         $(this).datepicker('close');
       });
   });
-  /*
-    *
-    *js分页
-    *
-    */
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -216,73 +211,72 @@ td.am-text-middle img{
     //异步刷新的ajax请求   
     function getList(dataurl,data,changeIndex){
         $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){   
-            // console.log(result);      
-            var res = eval(result);
-             console.log(res);
-            if(res!=2){
-                var listData = '';; //每页出现的数量
-                var pages = Math.ceil(res.length/15); //得到总页数
-                if(pages==1){
-                    $('#jumpBox').css('display','none');
-                }
-
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                for(var i = 0; i < res.length; i++){
-                    listData+= template('dataModal',res[i]);
-                 }
-                document.getElementById('dataList').innerHTML = listData;
-                $('#current_page').val(15);
-                var navigation_html= '<span class="previous_link" onclick="previous()">上一页</span><span class="page_link active_page" onclick="go_to_page(' + 0 + ')" >' + 1 +'</span>';//动态创建上一页按钮
-                var current_link=0;   //当前点击的页数
-                for(var i=1;i<pages;i++){//创建所有页码的a标签
-                    navigation_html += '<span class="page_link" onclick="go_to_page(' + i + ')" >' + (i + 1 )+'</span>';
-                }
-                navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
-                $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
-                $('#dataList').children('tr').css('display','none');
-                $('#dataList').children('tr').slice(0,15).css('display','');
-                if(changeIndex==0){
-
-                }else{
-                   go_to_page(changeIndex); 
-                }
-                $('.jumpBtn').click(function () {
-                    var jumpNum = parseInt(document.getElementById('jumpNum').value);
-                    if(jumpNum>pages) {
-                        alert('您当前输入的页数大于总页数！');
-                        return false;
-                    }else {
-                        go_to_page(jumpNum-1);
-                        return true;
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){   
+                // console.log(result);      
+                var res = eval(result);
+                 console.log(res);
+                if(res!=2){
+                    var listData = ''; //每页出现的数量
+                    var pages = Math.ceil(res.length/15); //得到总页数
+                    if(pages==1){
+                        $('#jumpBox').css('display','none');
                     }
-                    
-                })
-                     
-            }else{
-                $('#dataList').find('tr').remove();
-                $('#linkGroup').html("");
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
-            }
+                    $('.dataNumber').html(res.length);
+                    $('.pageNumber').html(pages);
+                    for(var i = 0; i < res.length; i++){
+                        listData+= template('dataModal',res[i]);
+                     }
+                    document.getElementById('dataList').innerHTML = listData;
+                    $('#current_page').val(15);
+                    var navigation_html= '<span class="previous_link" onclick="previous()">上一页</span><span class="page_link active_page" onclick="go_to_page(' + 0 + ')" >' + 1 +'</span>';//动态创建上一页按钮
+                    var current_link=0;   //当前点击的页数
+                    for(var i=1;i<pages;i++){//创建所有页码的a标签
+                        navigation_html += '<span class="page_link" onclick="go_to_page(' + i + ')" >' + (i + 1 )+'</span>';
+                    }
+                    navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
+                    $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
+                    $('#dataList').children('tr').css('display','none');
+                    $('#dataList').children('tr').slice(0,15).css('display','');
+                    if(changeIndex==0){
 
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-        }
-    });
-}
+                    }else{
+                       go_to_page(changeIndex); 
+                    }
+                    $('.jumpBtn').click(function () {
+                        var jumpNum = parseInt(document.getElementById('jumpNum').value);
+                        if(jumpNum>pages) {
+                            alert('您当前输入的页数大于总页数！');
+                            return false;
+                        }else {
+                            go_to_page(jumpNum-1);
+                            return true;
+                        }
+                        
+                    })
+                         
+                }else{
+                    $('#dataList').find('tr').remove();
+                    $('#linkGroup').html("");
+                    $('.dataNumber').html("");
+                    $('.pageNumber').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                }
+
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
 $(document).ready(function(){
     //加载列表数数据
     var storeOrderList = parseInt(localStorage.getItem('storeOrderList'));
-    alert(storeOrderList);
     getList('<?php echo site_url('store/store/Order_page');?>','default=1',storeOrderList);
+    go_to_page(storeOrderList); 
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('store/store/Order_page');?>','default=1');

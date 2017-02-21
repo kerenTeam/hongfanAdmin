@@ -38,8 +38,11 @@
         color: #555;
         padding-left: 0;
     }
-    label.am-form-label{
+    label.am-form-label {
         font-weight: normal;
+    }
+    .sureSave {
+        margin-right: 20px;
     }
 </style>
 <!-- 内容区域 -->
@@ -48,7 +51,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">app版本管理</a>
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">app信息管理</a>
             <small></small></div>
         </div>
     </div>
@@ -58,20 +61,60 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">当前app版本信息管理</div>
+                    <div class="widget-title  am-cf" style="clear:both;">app版本信息管理</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="moll_name">版本号</th>
-                                    <th class="shop_name">版本地址 </th>
+                                    <th>版本号</th>
+                                    <th>版本地址 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="accountList">
                                 
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear:both;">app温馨提示管理</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>所属模块</th>
+                                    <th>提示内容 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountList">
+                                <tr class="trClass1" id="trClass1" >
+                                    <td class="am-text-middle">首页</td>
+                                    <td class="am-text-middle" class="tipsBox">
+                                        <span>温馨提示：因该版本的app现正处于完善阶段，不足之处烦请谅解！</span>
+                                        <textarea class="am-form-field" style="display: none;" placeholder="请输入温馨提示，不超过五十个字"></textarea>
+                                    </td>
+                                    <td class="am-text-middle">
+                                        <button data-id="" class="am-btn am-btn-warning am-btn-xs editWarmTips" onclick="editWarmTips(this)">
+                                            <i class="am-icon-pencil"></i> 修改
+                                        </button>
+                                    </td>
+                                </tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -97,6 +140,51 @@ function validate(obj,minlen,maxlen,i){
         $('.blacktips'+ i).css('display','inline-block');
     }
 }
+
+//编辑温馨提示的内容
+function editWarmTips(obj) {
+    var tipsBox = $(obj).parent('td').prevUntil('.tipsBox');
+    var content = tipsBox.html();
+    var edit = '<textarea class="am-form-field" placeholder="请输入温馨提示，">' + content +'</textarea>',
+    options = '<div class="tpl-table-black-operation"><a data-id="" onclick="saveTips(this, 1)" class="sureSave"> 确定</a>   <a data-id="" class="tpl-table-black-operation-del sureCancle" onclick="saveTips(this, 0)"> 取消</a></div>';
+    $(obj).parents('.trClass1').find('span').css('display', 'none');
+    $(obj).parents('.trClass1').find('textarea').css('display', '');
+    $(obj).parent('td')[0].innerHTML = options;
+}
+
+//保存温馨提示的内容
+function saveTips(obj, index) {
+   
+    var tipsBox1 = $(obj).parents('.trClass1').find('textarea');
+    var eidtcontent = tipsBox1.val();
+    $(obj).parents('.trClass1').find('textarea').css('display', 'none');
+    $(obj).parents('.trClass1').find('span').html(eidtcontent).css('display', '');
+    var edit = '<button data-id="" class="am-btn am-btn-warning am-btn-xs editWarmTips" onclick="editWarmTips(this)"><i class="am-icon-pencil"></i> 修改</button>';
+    $(obj).parents('td').html("").append(edit);
+     
+    
+    // $.ajax({
+    //     type:'post',
+    //     url:dataurl,
+    //     data: data,
+    //     success: function(result){         
+    //         var res = JSON.parse(result);
+    //         // console.log(res);
+    //         if(res!=2){
+    //             listData = template('accountListModal', res);
+    //             document.getElementById('accountList').innerHTML = listData;
+    //         }else{
+    //             $('#accountList').find('tr').remove();
+    //             $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员账号信息！</p></td></tr>').appendTo('#accountList');
+    //         }
+            
+    //     },
+    //     error:function(xhr,type,errorThrown){
+    //         alert("网络状况不佳，请稍后重试！");
+    //     }
+    // });
+}
+
 
 var flag=1,tag=1,str='';
     //异步刷新的ajax请求   
@@ -158,6 +246,7 @@ function uploadFiles(){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('systemSet/SystemSet/getVersion');?>','default=1');
+
 
 })
 </script>
