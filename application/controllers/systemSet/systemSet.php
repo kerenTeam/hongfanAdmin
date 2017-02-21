@@ -32,6 +32,11 @@ class SystemSet extends Default_Controller {
     public $view_adverManage = 'systemSet/adverManage.html';
     //系统设置 广告管理
     public $view_adverEdit = 'systemSet/adverEdit.html';
+
+    //系统日志
+    public $view_system_journal = "systemSet/journal.html";
+
+
     function __construct()
     {
         parent::__construct();
@@ -672,6 +677,27 @@ class SystemSet extends Default_Controller {
                 break;
             }
 
+        }else{
+            echo "2";
+        }
+    }
+
+    //系统日志
+    function journal_list(){
+        $data['page'] = $this->view_system_journal;
+        $data['menu'] = array('systemSet','journal');
+        $this->load->view('template.html',$data);
+    }
+
+    //返回系统日志列表
+    function get_system_journal(){
+        if($_POST){
+            $list = $this->System_model->get_journal();
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
         }else{
             echo "2";
         }
