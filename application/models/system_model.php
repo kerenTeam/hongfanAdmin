@@ -151,6 +151,13 @@ class System_model extends CI_Model
         return $this->db->where($where)->update($this->version,$data);
     }
 
+    //返回系统日志
+    function get_journal(){
+        $sql = "SELECT a.*,b.user_id,b.username,b.nickname from hf_system_journal as a, hf_user_member as b where a.userid = b.user_id order by create_time desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
 }
 
 

@@ -31,11 +31,11 @@ color: #333;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-5 widget-margin-bottom-lg ">
             <div class="tpl-user-card am-text-center widget-body-lg">
                 <div class="tpl-user-card-title">
-                    新增权限
+                    新增权限组
                 </div>
                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/systemSet/systemSet/add_member_group');?>" method='post' data-am-validator>
                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                        <label for="user-name" class="am-u-sm-2 am-form-label black">权限名:</label>
+                        <label for="user-name" class="am-u-sm-2 am-form-label black">权限组名:</label>
                         <div class="am-u-sm-10">
                             <input type="text" name="group_name" class="tpl-form-input" id="limit-name" value="" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
                             <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
@@ -73,7 +73,7 @@ color: #333;
                             <thead>
                                 <tr>
                                     <th>编号</th>
-                                    <th>权限名</th>
+                                    <th>权限组名</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
