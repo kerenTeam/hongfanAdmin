@@ -682,6 +682,35 @@ class SystemSet extends Default_Controller {
         }
     }
 
+    //返回APP温馨提示
+    function get_prompt(){
+        if($_POST){
+            $list = $this->System_model->get_prompt();
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //修改温馨提示
+    function edit_prompt(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data['content'] = $this->input->post('content');
+            if($this->System_model->edit_prompt($id,$data)){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //系统日志
     function journal_list(){
         $data['page'] = $this->view_system_journal;
