@@ -13,6 +13,9 @@ class SystemSet extends Default_Controller {
     public $view_memberLimitEdit = 'member/memberLimitEdit.html';
     //后台管理员账号管理
     public $view_admin_user = 'systemSet/accountManage.html';
+    //角色管理 
+    public $view_roleManage = 'systemSet/roleManage.html';
+
     //支付账号管理
     public $view_paymanage = 'systemSet/apliyManage.html';
     //其他管理
@@ -54,6 +57,16 @@ class SystemSet extends Default_Controller {
          $data['menu'] = array('systemSet','systemSet');
     	 $this->load->view('template.html',$data);
     }
+
+    //系统设置 角色管理
+    function roleManage()
+    {
+        //获取角色管理
+         $data['page'] = $this->view_roleManage;
+         $data['menu'] = array('systemSet','roleManage');
+         $this->load->view('template.html',$data);
+    }
+
     //获取管理员列表
     function adminUserList(){
         if($_POST){

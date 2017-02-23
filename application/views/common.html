@@ -48,162 +48,110 @@
 
 
      /*分页部分的css样式*/
-    .linkGroup {
-        width: 100%;
-        height:60px;
-        margin: 0 auto;
-        text-align: center;
-        display: none;
-    } 
-    #page_navigation{
-        max-width: 600px;
-        line-height: 28px;
-        margin-top: 12px;
-        margin-right: 20px;
-        display: inline-block;
-        vertical-align: middle;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap; 
-        -webkit-user-select: none;
-        -moz-user-select: none;
-    }
-
-    #page_navigation span,#jumpNum {
-        display: inline-block !important; 
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        box-sizing: border-box;
-        border: 1px solid #19a7f0;
-        color: #19a7f0;
-        text-decoration:none;
-        margin: 0 5px;
-        padding: 0 10px;
-    }
-    #jumpNum {
-        width: 70px;
-        height: 28px;
-        line-height: 28px;
-        padding: 0;
-        font-size: 14px;
-    }
-    #jumpBox {
-        display: inline-block;
-    }
-    .jumpBtn {
-        margin-left: 20px;
-        height: 30px;
-        line-height: 28px;
-    }
-    .active_page{
-        background: #19a7f0;
-        color: #fff !important;
-    }
     .current {
         background: #1fb5ac;
         color: #fff;
     }
-.pagebox {
-    width: 100%;
-    padding-left: 25%;
-    margin: 0 auto;
-}
-#Pagination {
-  float: left;
-  overflow: hidden;
-}
-#Pagination .pagination {
-  height: 40px;
-  text-align: right;
-  font-family: \u5b8b\u4f53,Arial;
-}
-#Pagination .pagination a,
-#Pagination .pagination span {
-  float: left;
-  display: inline;
-  padding: 11px 13px;
-  border: 1px solid #e6e6e6;
-  border-right: none;
-  background: #f6f6f6;
-  color: #666666;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 14px;
-  cursor: pointer;
-}
-#Pagination .pagination .current {
-  background: #1fb5ac;
-  color: #fff;
-}
-#Pagination .pagination .prev,
-#Pagination .pagination .next {
-  float: left;
-  padding: 11px 13px;
-  border: 1px solid #e6e6e6;
-  background: #f6f6f6;
-  color: #666666;
-  cursor: pointer;
-}
-#Pagination .pagination .prev i,
-#Pagination .pagination .next i {
-  display: inline-block;
-  width: 4px;
-  height: 11px;
-  margin-right: 5px;
-}
-#Pagination .pagination .prev {
-  border-right: none;
-}
-#Pagination .pagination .prev i {
-  background-position: -144px -1px;
-  *background-position: -144px -4px;
-}
-#Pagination .pagination .next i {
-  background-position: -156px -1px;
-  *background-position: -156px -4px;
-}
-#Pagination .pagination .pagination-break {
-  padding: 11px 5px;
-  border: none;
-  border-left: 1px solid #e6e6e6;
-  background: none;
-  cursor: default;
-}
-.searchPage {
-  float: left;
-  padding: 8px 0;
-}
-.searchPage .page-sum {
-  padding: 11px 13px;
-  color: #999999;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 16px;
-}
-.searchPage .page-go {
-  padding: 6px 0;
-  color: #999999;
-  font-family: \u5b8b\u4f53,Arial;
-  font-size: 16px;
-  padding: 10px 0\9;
-  *padding: 6px 0;
-}
-.searchPage .page-go input {
-  width: 50px;
-  height: 30px;
-  margin: 0 5px;
-  padding: 2px 5px;
-  border: 1px solid #ccc;
-}
-.searchPage .page-btn {
-  margin: 9px 0 5px 5px;
-  padding: 5px 10px;
-  background: #1fb5ac;
-  border-radius: 2px;
-  color: #ffffff;
-  font-family: Arial, 'Microsoft YaHei';
-  font-size: 16px;
-  text-decoration: none;
-}
-
+    .pagebox {
+        width: 100%;
+        padding-left: 25%;
+        margin: 0 auto;
+    }
+    #Pagination {
+      float: left;
+      overflow: hidden;
+    }
+    #Pagination .pagination {
+      height: 40px;
+      text-align: right;
+      font-family: \u5b8b\u4f53,Arial;
+    }
+    #Pagination .pagination a,
+    #Pagination .pagination span {
+      float: left;
+      display: inline;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      border-right: none;
+      background: #f6f6f6;
+      color: #666666;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #Pagination .pagination .current {
+      background: #1fb5ac;
+      color: #fff;
+    }
+    #Pagination .pagination .prev,
+    #Pagination .pagination .next {
+      float: left;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      background: #f6f6f6;
+      color: #666666;
+      cursor: pointer;
+    }
+    #Pagination .pagination .prev i,
+    #Pagination .pagination .next i {
+      display: inline-block;
+      width: 4px;
+      height: 11px;
+      margin-right: 5px;
+    }
+    #Pagination .pagination .prev {
+      border-right: none;
+    }
+    #Pagination .pagination .prev i {
+      background-position: -144px -1px;
+      *background-position: -144px -4px;
+    }
+    #Pagination .pagination .next i {
+      background-position: -156px -1px;
+      *background-position: -156px -4px;
+    }
+    #Pagination .pagination .pagination-break {
+      padding: 11px 5px;
+      border: none;
+      border-left: 1px solid #e6e6e6;
+      background: none;
+      cursor: default;
+    }
+    .searchPage {
+      float: left;
+      padding: 8px 0;
+    }
+    .searchPage .page-sum {
+      padding: 11px 13px;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+    }
+    .searchPage .page-go {
+      padding: 6px 0;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+      padding: 10px 0\9;
+      *padding: 6px 0;
+    }
+    .searchPage .page-go input {
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      padding: 2px 5px;
+      border: 1px solid #ccc;
+    }
+    .searchPage .page-btn {
+      margin: 9px 0 5px 5px;
+      padding: 5px 10px;
+      background: #1fb5ac;
+      border-radius: 2px;
+      color: #ffffff;
+      font-family: Arial, 'Microsoft YaHei';
+      font-size: 16px;
+      text-decoration: none;
+    }
 
     </style>
     <script src="assets/js/jquery.min.js"></script>
@@ -213,6 +161,7 @@
 
 <body data-type="index">
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/jquery.pagination.js"></script>
     <div class="am-g tpl-g">
         <!-- 头部 -->
         <header>
@@ -227,13 +176,6 @@
                     <span>
                 </span>
                 </div>
-                <!-- 搜索 -->
-               <!--  <div class="am-fl tpl-header-search">
-                    <form class="tpl-header-search-form" action="javascript:;">
-                        <button class="tpl-header-search-btn am-icon-search"></button>
-                        <input class="tpl-header-search-box" type="text" placeholder="搜索内容...">
-                    </form>
-                </div> -->
                 <!-- 其它功能-->
                 <div class="am-fr tpl-header-navbar">
                     <ul>
@@ -241,112 +183,7 @@
                         <li class="am-text-sm tpl-header-navbar-welcome">
                             <a href="javascript:;">欢迎你, <span><?php echo $this->session->users['username'];?></span> </a>
                         </li>
-                        <!-- 新邮件 -->
-                    <!--     <li class="am-dropdown tpl-dropdown" data-am-dropdown>
-                            <a href="javascript:;" class="am-dropdown-toggle tpl-dropdown-toggle" data-am-dropdown-toggle>
-                                <i class="am-icon-envelope"></i>
-                                <span class="am-badge am-badge-success am-round item-feed-badge">4</span>
-                            </a>
-                            <!-- 弹出列表 -->
-                      <!--       <ul class="am-dropdown-content tpl-dropdown-content">
-                                <li class="tpl-dropdown-menu-messages">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
-                                        <div class="menu-messages-ico">
-                                            <img src="assets/img/user04.png" alt="">
-                                        </div>
-                                        <div class="menu-messages-time">
-                                            3小时前
-                                        </div>
-                                        <div class="menu-messages-content">
-                                            <div class="menu-messages-content-title">
-                                                <i class="am-icon-circle-o am-text-success"></i>
-                                                <span>夕风色</span>
-                                            </div>
-                                            <div class="am-text-truncate"> Amaze UI 的诞生，依托于 GitHub 及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </div>
-                                            <div class="menu-messages-content-time">2016-09-21 下午 16:40</div>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li class="tpl-dropdown-menu-messages">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
-                                        <div class="menu-messages-ico">
-                                            <img src="assets/img/user02.png" alt="">
-                                        </div>
-                                        <div class="menu-messages-time">
-                                            5天前
-                                        </div>
-                                        <div class="menu-messages-content">
-                                            <div class="menu-messages-content-title">
-                                                <i class="am-icon-circle-o am-text-warning"></i>
-                                                <span> 管理员小张</span>
-                                            </div>
-                                            <div class="am-text-truncate"> 为了能最准确的传达所描述的问题， 建议你在反馈时附上演示，方便我们理解。 </div>
-                                            <div class="menu-messages-content-time">2016-09-16 上午 09:23</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="tpl-dropdown-menu-messages">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-messages-item am-cf">
-                                        <i class="am-icon-circle-o"></i> 进入列表…
-                                    </a>
-                                </li>
-                            </ul> -->
-                        <!-- </li> -->
-
-                        <!-- 新提示 -->
-                        <!-- <li class="am-dropdown" data-am-dropdown> -->
-                     <!--        <a href="javascript:;" class="am-dropdown-toggle" data-am-dropdown-toggle>
-                                <i class="am-icon-bell"></i>
-                                <span class="am-badge am-badge-warning am-round item-feed-badge">5</span>
-                            </a> -->
-
-                            <!-- 弹出列表 -->
-                           <!--  <ul class="am-dropdown-content tpl-dropdown-content">
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-line-chart"></i>
-                                            <span> 有6笔新的销售订单</span>
-                                        </div>
-                                        <div class="tpl-dropdown-menu-notifications-time">
-                                            12分钟前
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-star"></i>
-                                            <span> 有3个来自人事部的消息</span>
-                                        </div>
-                                        <div class="tpl-dropdown-menu-notifications-time">
-                                            30分钟前
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <div class="tpl-dropdown-menu-notifications-title">
-                                            <i class="am-icon-folder-o"></i>
-                                            <span> 上午开会记录存档</span>
-                                        </div>
-                                        <div class="tpl-dropdown-menu-notifications-time">
-                                            1天前
-                                        </div>
-                                    </a>
-                                </li>
-
-
-                                <li class="tpl-dropdown-menu-notifications">
-                                    <a href="javascript:;" class="tpl-dropdown-menu-notifications-item am-cf">
-                                        <i class="am-icon-bell"></i> 进入列表…
-                                    </a>
-                                </li>
-                            </ul> -->
-                        <!-- </li> -->
-
-                        <!-- 退出 -->
+                        
                         <li class="am-text-sm">
                             <a href="<?php echo site_url('login/loginOut?action=O');?>">
                                 <span class="am-icon-sign-out"></span> 退出
@@ -357,21 +194,6 @@
             </div>
 
         </header>
-        <!-- 风格切换 -->
-       <!--  <div class="tpl-skiner">
-            <div class="tpl-skiner-toggle am-icon-cog">
-            </div>
-            <div class="tpl-skiner-content">
-                <div class="tpl-skiner-content-title">
-                    选择主题
-                </div>
-                <div class="tpl-skiner-content-bar">
-                    <span class="skiner-color skiner-white" data-color="theme-white"></span>
-                    <span class="skiner-color skiner-black" data-color="theme-black"></span>
-                </div>
-            </div>
-        </div> -->
-        <!-- 侧边导航栏 -->
         <div class="left-sidebar">
             <!-- 用户信息 -->
             <div class="tpl-sidebar-user-panel">
@@ -387,7 +209,6 @@
               <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
               <?php echo $this->session->users['username'];?>
                 </span>
-                    <!-- <a href="javascript:;" class="tpl-user-panel-action-link"> <span class="am-icon-pencil"></span> 账号设置</a> -->
                 </div>
             </div>
 

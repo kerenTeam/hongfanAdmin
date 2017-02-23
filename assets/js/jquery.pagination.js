@@ -12,7 +12,7 @@
 
  (function($){
  	var maxxNum=0;
- 	var $huancun = parseInt(localStorage.getItem('storeGoodsList')) || 0;
+ 	var $huancun = parseInt(sessionStorage.getItem('storeGoodsList')) || 0, pageflag = 0;
 
 
 

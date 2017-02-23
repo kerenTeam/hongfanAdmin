@@ -53,6 +53,9 @@
         max-width: 300px;
         white-space: normal;
     }
+    .am-icon-sort {
+        cursor: pointer;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -151,16 +154,16 @@
                                     <th class="shop_id">图片 </th>
                                     <th class="shop_name">商品名 </th>
                                     <th class="shop_type">所属店铺 </th>   
-                                    <th class="shop_type">实时库存 </th>   
-                                    <th class="shop_type">商品价格 </th>   
+                                    <th class="shop_type">实时库存<i class="am-icon am-icon-sort" onclick="storeEditGoods(1)"></i> </th>   
+                                    <th class="shop_type">商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>   
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">是否推荐</th>
-                                    <th class="shop_block">变更时间</th>
+                                    <th class="shop_block">变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="dataList">
-                                
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
 
                                 <!-- more data -->
                             </tbody>
@@ -236,7 +239,6 @@
 </div>
 <!--加入达人推荐的弹窗结束-->
 <script src="assets/js/artTemplate-native.js"></script>
-<script src="assets/laypage/laypage.js"></script>
 <script src="assets/js/jquery.pagination.js"></script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
@@ -244,8 +246,8 @@
 <script type="text/javascript">
 
     //实例化编辑器
-    var ue = UE.getEditor('editor'),flag=0,current_page=0,total_page=0;
-    var $storeGoodsList = parseInt(localStorage.getItem('storeGoodsList')) || 0;
+    var ue = UE.getEditor('editor'),flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
+    var $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList')) || 0;
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
@@ -261,9 +263,9 @@
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page=page_num;
-        localStorage.setItem('storeGoodsList', current_page);
-        //加载列表数数据
-        getList('<?php echo site_url('store/Store/store_goods_page');?>', current_page, 15);
+        sessionStorage.setItem('storeGoodsList', current_page);
+        $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList'));
+        
     }
 
     //点击上一页的函数
@@ -403,7 +405,7 @@
                 data: 'goodsid='+dataId,
                 success: function(data){
                     if(data==1){                                           
-                      getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1', $storeGoodsList);
+                      getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
                     }else{
                         alert("操作失败！");
                     }
@@ -414,25 +416,24 @@
                 }
             });
 
-            
-        });
-        //
-        $('#add_sales').click(function(){
-            var array=[];
-            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
-                
-                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-            }
-            if(array == ''){
-                alert('你还没有选择商品！');
-                return false;
-            }else{
-                goodsid=JSON.stringify(array);
-                $("#goodsid").val(goodsid);
+            //
+            $('#add_sales').click(function(){
+                var array=[];
+                for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                    
+                    array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+                }
+                if(array == ''){
+                    alert('你还没有选择商品！');
+                    return false;
+                }else{
+                    goodsid=JSON.stringify(array);
+                    $("#goodsid").val(goodsid);
 
-            }
+                }
+            });
+    
         });
-
         //加入达人推荐的ajax请求
         $('#add_sales_goods').click(function(){
             var array=[];
@@ -463,29 +464,40 @@
                 });
             }
         });
+        
     }
     //异步刷新的ajax请求   
-    function getList(dataurl, page, number) {
-        $('.pagebox').css('display','none');
+    function getList(dataurl,data){
         $.ajax({
             type:'post',
             url:dataurl,
-            data: 'page='+ page +'&number='+ number,
+            data: data,
             success: function(result){     
                 var res = eval(result);
                  console.log(res);
                 if(res!=2){
                     var listData = ''; //每页出现的数量
                     total_page = Math.ceil(res.length/15); //得到总页数
-                    
-                    $('.dataNumber').html(res.length);
-                    $('.pageNumber').html(total_page);
                     for(var i = 0; i < res.length; i++){
                         listData+= template('dataModal',res[i]);
                      }
-                    document.getElementById('dataList').innerHTML = listData;                                  
+                    document.getElementById('dataList').innerHTML = listData;
+                    if(pageflag) {
+                        go_to_page($storeGoodsList);
+                        var opts={};opts.current_page = $storeGoodsList;
+                        $("#Pagination").pagination(total_page, opts);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
+                    // console.log($storeGoodsList);                              
                     otherFunction();
-                    $('.pagebox').css('display','block');
+                    
                     
                 }else{
                     $('#dataList').find('tr').remove();
@@ -499,16 +511,40 @@
             }
         });
     }
-$(document).ready(function(){
-    go_to_page($storeGoodsList);
-    for(var i=0; i < $('.pagination a').length; i++) {
-        $('.pagination a').eq(i).removeClass('current');
-        if($('.pagination a').eq(i).text() == $storeGoodsList) {
-            $('.pagination a').eq(i).addClass('current').focus();
+    //商品数据的分类函数
+    function storeEditGoods(arg1) {
+        if(arg1 == 1) {
+            if(storageFlag) {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=3');
+                storageFlag=0;
+            } else {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=4');
+                storageFlag=1;
+            }
+            
+        } else if(arg1 == 3) {
+            if(priceFlag) {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=5');
+                priceFlag=0;
+            } else {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=6');
+                priceFlag=1;
+            }
+        } else {
+            if(timeFlag) {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=1');
+                timeFlag=0;
+            } else {
+                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=2');
+                timeFlag=1;
+            }
         }
     }
-
+$(document).ready(function(){
     
+
+    //加载列表数数据
+    getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
      
     //点击选中所有
     $('.tablecheck').click(function() {
