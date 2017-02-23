@@ -69,10 +69,14 @@ class Store extends Default_Controller {
             $page = $this->input->post('page');//页码
             $off = $this->input->post('number');//条数
             $goods_list = $this->MallShop_model->get_goodslist_page($page,$off);
+            $data = array(
+                'total' => count($this->MallShop_model->get_goodslist()),
+                'goods' => $goods_list,
+                );
             if(empty($goods_list)){
                 echo "2";
             }else{
-                echo json_encode($goods_list,JSON_UNESCAPED_UNICODE);
+                echo json_encode($data,JSON_UNESCAPED_UNICODE);
             }
         }else{
             echo "2";
