@@ -48,19 +48,32 @@ class Login extends CI_Controller {
                         default:
                            $plateid = $this->m_model->group_permiss($this->session->users['gid']);
                            $plateid = json_decode($plateid,true);
+
                            if(!empty($plateid)){
-                                foreach ($plateid as $key => $value) {
-                                  $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
-                                  $menu[] = $query->row_array();
-                                }
-                                $arr = array();
-                                foreach ($menu as $key => $value) {
-                                    if($value['m_id'] == 0){
-                                      $arr[$value['modular_id']]['value'] = $value;
-                                    }else{
-                                       $arr[$value['m_id']]['chick'][] = $value;
+                                if(in_array('0',$plateid,true)){
+                                    $query = $this->db->where('m_id','0')->order_by('modular_id','asc')->get('hf_system_modular');
+                                    $model= $query->result_array();
+                                    $arr = array();
+                                    foreach ($model as $key => $value) {
+                                        $arr[$key]['value'] =  $value;
+                                        $query2 = $this->db->where('m_id',$value['modular_id'])->get('hf_system_modular');
+                                        $arr[$key]['chick'] = $query2->result_array();
+                                    }
+                                }else{
+                                    foreach ($plateid as $key => $value) {
+                                      $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
+                                      $menu[] = $query->row_array();
+                                    }
+                                    $arr = array();
+                                    foreach ($menu as $key => $value) {
+                                        if($value['m_id'] == 0){
+                                          $arr[$value['modular_id']]['value'] = $value;
+                                        }else{
+                                           $arr[$value['m_id']]['chick'][] = $value;
+                                        }
                                     }
                                 }
+ 
                                 $json = json_encode($arr);
                                 $this->session->set_userdata('menu',$json);
                             }else{

@@ -11,6 +11,8 @@ class LoveToGo extends Default_Controller
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
 	public $view_loveToGoOrderList = 'loveToGo/loveToGoOrderList.html';
+    //爱购分类
+    public $view_loveToGoCates = "loveToGo/loveToGoCates.html";
     function __construct()
 	{
 		 parent::__construct();
@@ -30,6 +32,14 @@ class LoveToGo extends Default_Controller
         }else{
             echo "2";
         }
+    }
+
+    //爱购分类
+    function loveToGoCates(){
+
+        $data['page'] = $this->view_loveToGoCates;
+        $data['menu'] = array('loveToGo','loveToGoCates');
+        $this->load->view('template.html',$data);
     }
    
     //爱购 商品列表
