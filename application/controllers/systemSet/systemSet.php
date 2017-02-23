@@ -316,18 +316,46 @@ class SystemSet extends Default_Controller {
       //权限管理
     function memberLimit(){
         //返回所有权限  
-        $data['group'] = $this->user_model->get_user_group($this->session->users['gid']);
-        //所有模块 
-        $query = $this->db->where('m_id','0')->get('hf_system_modular');
-        $data['module'] = $query->result_array();  
-        $query1 = $this->db->where('m_id !=','0')->get('hf_system_modular');
-        $data['module_list'] = $query1->result_array();
-
+        $query = $this->db->get('hf_system_modular');
+        $arr = $query->result_array();
+        //返回整理好的数组
+        $data['modular'] = subtree($arr);
+        // echo "<pre>";
+        // // $data['modular'] = tree($arr);
+        // foreach($data['modular'] as $v) {
+        //     echo str_repeat(' |- ',$v['lev']),$v['name'],'<br />';  //str_repeat — 重复一个字符串
+        // }
+        // var_dump($data);
+        // exit;
         $data['page'] = $this->view_memberLimit;
         $data['menu'] = array('systemSet','memberLimit');
         $this->load->view('template.html',$data);
     }
-    //权限编辑
+
+    //添加权限
+    function add_Authority(){
+        if($_POST){
+            $data = $this->input->post();
+            if($this->db->insert('hf_system_modular',$data)){
+                echo "<script>alert('添加成功！');window.location.href='".site_url('systemSet/SystemSet/memberLimit')."'</script>";exit;
+            }else{
+                echo "<script>alert('添加失败！');window.location.href='".site_url('systemSet/SystemSet/memberLimit')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    //编辑权限
+    function edit_Authority(){
+        if($_POST){
+            
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+    //权限用户组编辑
     function memberLimitEdit(){
         $id = intval($this->uri->segment(4));
         if($id == 0){

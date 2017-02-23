@@ -151,4 +151,19 @@ function GetIpLookup($ip = ''){
     }  
     return $json['city'];  
 }  
+
+//递归数组，返回无限级分类树1
+function subtree($arr,$id=0,$lev=1) {
+    $subs = array(); // 子孙数组
+    foreach($arr as $v) {
+        if($v['m_id'] == $id) {
+            $v['lev'] = $lev;
+            $subs[] = $v; // 举例说找到array('id'=>1,'name'=>'安徽','parent'=>0),
+            $subs = array_merge($subs,subtree($arr,$v['modular_id'],$lev+1));
+        }
+    }
+    return $subs;
+}
+
+
  ?>

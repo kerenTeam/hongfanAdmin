@@ -233,6 +233,16 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //返回分页商品列表
+    function get_goodslist_page($page,$off){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('differentiate','1')->order_by("a.create_time",'desc')->limit($off,$page)->get();
+        return $query->result_array();
+    }
+
     //返回所有订单
     function get_order_list(){
         $this->db->select('a.*,b.store_name,c.username,c.nickname');

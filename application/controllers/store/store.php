@@ -63,6 +63,23 @@ class Store extends Default_Controller {
             echo "2";
         }
     }
+    //根据分页返回商品数据
+    function store_goods_page(){
+        if($_POST){
+            $page = $this->input->post('page');//页码
+            $off = $this->input->post('number');//条数
+            $goods_list = $this->MallShop_model->get_goodslist_page($page,$off);
+            if(empty($goods_list)){
+                echo "2";
+            }else{
+                echo json_encode($goods_list,JSON_UNESCAPED_UNICODE);
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //搜索商品
     function goods_search(){
         if($_POST){
