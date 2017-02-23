@@ -361,9 +361,31 @@ class SystemSet extends Default_Controller {
     //编辑权限
     function edit_Authority(){
         if($_POST){
-            
+             $data = $this->input->post();
+             $id = $this->input->post('id');
+             unset($data['id']);
+             if($this->db->where("modular_id",$id)->update('hf_system_modular',$data)){
+                echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
+             }else{
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
+
+             }
         }else{
             $this->load->view('404.html');
+        }
+    }
+
+    //删除权限
+    function del_Authority(){
+        if($_POST){
+            $id = $this->input->post('id');
+            if($this->db->where('modular_id',$id)->delete('hf_system_modular')){
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
         }
     }
 
