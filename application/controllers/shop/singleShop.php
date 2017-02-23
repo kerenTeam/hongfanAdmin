@@ -210,6 +210,10 @@ class SingleShop extends Default_Controller {
             echo "2";
         }
     }
+
+
+
+
     //修改商品上下架状态
     function edit_goods_state(){
          if($_POST){
