@@ -239,7 +239,6 @@
 </div>
 <!--加入达人推荐的弹窗结束-->
 <script src="assets/js/artTemplate-native.js"></script>
-<script src="assets/js/jquery.pagination.js"></script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -271,11 +270,11 @@
     //点击上一页的函数
     function previous(){
         if($('.current').length>1) {
-            new_page = parseInt($('.current').eq(1).html());
+            new_page = parseInt($('.current').eq(0).html()) - 2;
         }else {
-            new_page = parseInt($('.current').html());
+            new_page = parseInt($('.current').html()) - 2;
         }
-        if(new_page != 1) {
+        if(new_page >= 0) {
             go_to_page(new_page);
         }
     }

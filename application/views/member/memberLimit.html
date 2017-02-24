@@ -71,7 +71,7 @@ color: #333;
                                                 <div class="am-btn-group am-btn-group-xs">
                                                     <a id="add_rule1" data-am-modal="{target:'#addRule<?php echo $val['modular_id']?>'}"  class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 添加子权限</a>
                                                     <a id="edit_rule" data-am-modal="{target:'#editRule<?php echo $val['modular_id'];?>'}" class="am-btn am-btn-warning"><span class="am-icon-edit"></span> 修改</a>
-                                                    <a id="delete_rule" data-am-modal="{target:'#deleteRule<?php echo $val['modular_id'];?>'}" class="am-btn am-btn-danger"><span class="am-icon-edit"></span> 删除</a>
+                                                    <a id="delete_rule" data-am-modal="{target:'#deleteRule<?php echo $val['modular_id'];?>'}" class="am-btn am-btn-danger"><span class="am-icon-trash"></span> 删除</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -81,7 +81,7 @@ color: #333;
                                         <div class="am-modal-dialog">
                                             <div class="am-modal-hd">添加权限</div>
                                             <div class="am-modal-bd">
-                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/add_Authority');?>" method="post" enctype='multipart/form-data'>
+                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/add_Authority');?>" method="post" enctype='multipart/form-data' data-am-validator>
                                                     <div class="am-form-group am-cf">
                                                         <label class="am-u-sm-3 am-form-label">权限名 ：</label>
                                                         <div class="am-u-sm-8 am-u-end">
@@ -105,7 +105,7 @@ color: #333;
                                                         <button type="submit" class="am-btn am-btn-secondary">提交</button>
                                                     </div>
                                                 </form>   
-                                            </div>
+                                            </div> 
                                             
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@ color: #333;
                                         <div class="am-modal-dialog">
                                             <div class="am-modal-hd">编辑权限</div>
                                             <div class="am-modal-bd">
-                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/edit_Authority');?>" method="post" enctype='multipart/form-data'>
+                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/edit_Authority');?>" method="post" enctype='multipart/form-data' data-am-validator>
                                                     <div class="am-form-group am-cf">
                                                         <label class="am-u-sm-3 am-form-label">权限名 ：</label>
                                                         <div class="am-u-sm-8 am-u-end">
@@ -150,7 +150,7 @@ color: #333;
                                         <div class="am-modal-dialog">
                                             <div class="am-modal-hd">删除提示</div>
                                             <div class="am-modal-bd">
-                                                <p class="black">你，确定要删除这条记录吗？</p>
+                                                <p class="black">你，确定要删除该权限吗？</p>
                                             </div>
                                             <div class="am-modal-footer">
                                                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
