@@ -1,1 +1,211 @@
-dsfg
+<style type="text/css" media="screen">
+.am-selected{
+    width: 100%!important;
+} 
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+td.am-text-middle img{
+    width:80px;
+}
+.am-u-sm6{
+    width:60px !important;
+    margin:0;
+}
+.am-form-group div{
+    line-height: 37px;
+}
+.tpl-del{
+    border: 1px solid #ff0000 !important;
+    color: #ff0000 !important;
+}
+.refresh{
+    cursor: pointer;
+}
+
+.pagebox {
+        width: 100%;
+        padding-left: 37%;
+        margin: 0 auto;
+}
+
+label {
+    font-weight: normal;
+    font-size: 16px;
+}
+#searchKey {
+    height: 28px;
+}
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>优品汇 &nbsp;&nbsp;<a href="<?php echo site_url().'/LoveToGo/loveToGoCates';?>" style="font-size:16px;">商品分类</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">分类搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">分类搜索:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" id="searchKey" placeholder="请输入搜素的关键字">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-9 am-u-md-9 am-u-lg-9 am-text-left">
+                        <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">分类列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>分类编号</th>
+                                    <th>分类名 </th>
+                                    <th>更新时间 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataList">
+                                <tr class="trClass" id="trClass" data-id="">
+                                    <td class="am-text-middle">1</td>
+                                    <td class="am-text-middle">├服装</td>
+                                    <td class="am-text-middle">2015-01-25 10:12:20</td>
+                                    <td class="am-text-middle">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a  data-am-modal="{target:'#addSort'}"  class="am-btn am-btn-secondary add_sort"><span class="am-icon-plus"></span> 添加子权限</a>
+                                                <a data-am-modal="{target:'#editSort'}" class="am-btn am-btn-warning edit_sort"><span class="am-icon-edit"></span> 修改</a>
+                                                <a data-am-modal="{target:'#deleteSort'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <tr class="trClass" id="trClass>" data-id="">
+                                    <td class="am-text-middle">2</td>
+                                    <td class="am-text-middle">│&nbsp;&nbsp; └─  男装</td>
+                                    <td class="am-text-middle">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a  data-am-modal="{target:'#addSort'}"  class="am-btn am-btn-secondary add_sort"><span class="am-icon-plus"></span> 添加子权限</a>
+                                                <a data-am-modal="{target:'#editSort'}" class="am-btn am-btn-warning edit_sort"><span class="am-icon-edit"></span> 修改</a>
+                                                <a data-am-modal="{target:'#deleteSort'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr> 
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--添加子分类开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="addSort" >
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">添加子分类</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form" method="post" enctype='multipart/form-data' data-am-validator>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">分类名 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <input type="hidden" name="m_id" value="">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-secondary">提交</button>
+                </div>
+            </form>   
+        </div>
+        
+    </div>
+</div>
+<!--添加子分类结束-->
+
+<!--编辑分类开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="editSort">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">编辑分类</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">分类名 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,1)" value="" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <input type="hidden" name="id" value="">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-secondary">保存</button>
+                </div>
+            </form>      
+        </div>
+        
+    </div>
+</div>
+<!--编辑分类结束-->
+<!--删除分类开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="deleteSort">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定要删除该分类吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn sureDelete" data-id="" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<!--删除分类结束-->
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script src="assets/js/artTemplate-native.js"></script>
+
+<script type="text/javascript">
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length < minlen || content.length > maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+$(document).ready(function(){
+   
+})
+</script>

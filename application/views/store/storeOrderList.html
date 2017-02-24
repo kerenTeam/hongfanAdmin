@@ -206,9 +206,12 @@ td.am-text-middle img{
 
     //点击上一页的函数
     function previous(){
-        new_page = current_page-1;
-        console.log(new_page);
-        if($('.active_page').prev('.page_link').length==true){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
             go_to_page(new_page);
         }
     }
