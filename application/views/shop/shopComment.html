@@ -123,27 +123,41 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox" /></th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="shop_name">用户 </th>
-                                    <th class="shop_name">评论商品名</th>
-                                    <th class="shop_type">评论内容 </th>
-                                    <th class="shop_type">回复内容 </th>
+                                    <th>编号 </th>
+                                    <th>用户 </th>
+                                    <th>评论商品名</th>
+                                    <th>评论内容 </th>
+                                    <th>回复内容 </th>
                                     <th>创建时间</th>
                                     <th>回复状态</th>
                                     <th>评论状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="commentList">
-                                
+                            <tbody id="dataList">
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a>2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,8 +181,194 @@ padding: 5px 6px!important;
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-    var deleteArray=[],nums=0,flag=0;
+    var deleteArray=[],nums=0,flag=0,total_page=0,pageflag = 1, $shopComment = parseInt(sessionStorage.getItem('shopComment')) || 0;
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page=page_num;
+        sessionStorage.setItem('shopComment', current_page);
+        $shopComment = parseInt(sessionStorage.getItem('shopComment'));
+        
+    }
 
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(argu){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(1).html());
+        }else {
+            new_page = parseInt($('.current').html());
+        }     
+        if(new_page < argu){   
+            console.log(new_page + ' ' + argu);
+            go_to_page(new_page);
+        }
+    }
+    //一些操作函数
+    function someOptions() {
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var id=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
+            if($('.commentState option:selected').eq(i).val()=="隐藏"){
+                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+            }
+            var reid=$('.commendResponse').eq(i).attr('data-id');
+            $('.commendResponse').eq(i).attr("data-am-modal","{target: '#re"+ id +"'}"); 
+            var editid=$('.editComment').eq(i).attr('data-id'); 
+            $('.editComment').eq(i).attr("data-am-modal","{target: '#co"+ id +"'}"); 
+
+        }
+        //更改评论的状态
+        $('.commentState').change(function(){
+            var id=$(this).attr('data-id');
+            if($(this).find('option:selected').val()=="显示"){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
+                    data: 'goodsid='+ id+'&state=1',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
+                    data: 'goodsid='+ id+'&state=0',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            }
+            
+            
+        });
+
+        //单个评论删除的AJAX请求
+        $('.sureDelete').click(function(){
+            var deleteId=$(this).attr('data-id');
+            deleteArray[0]= deleteId;  
+            deleteArray=eval(deleteArray);
+            console.log(deleteArray);                        
+            for(var i=0;i<$('.trClass').length;i++){
+                if($('table tbody tr').eq(i).attr('data-id')==id){
+                    $.ajax({
+                        type:'post',
+                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                        data: 'commentid='+deleteArray,
+                        success: function(data){
+                            alert(data);
+                            if(data==1){                                           
+                                for(var i=0;i<$('.trClass').length;i++){
+                                    if($('.trClass').eq(i).attr('data-id')==id){
+                                        $('.trClass').eq(i).remove();
+                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+                                    }
+                                }
+                            }else{
+                                alert("操作失败！");
+                            }
+                            
+                        },
+                        error:function(xhr,type,errorThrown){
+                            alert("操作失败，请检查网络设置！");
+                        }
+                    });
+                }
+            }
+            
+        });
+        
+        //多个评论删除的AJAX请求
+        $('.deleteAll').click(function(){
+            var deleteId=$(this).attr('data-id');
+            var array=[];
+           // alert($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
+            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                
+                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+            }
+            
+            deleteArray=JSON.stringify(array);
+            $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/del_comment');?>',
+                    data: 'commentid='+deleteArray,
+                    success: function(data){
+                        console.log(data);
+                        if(data==1){
+                            getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+            
+        });
+        //回复评论的AJAX请求
+        // $('.sureComment').click(function(){
+        //     var id=$(this).attr('data-id');
+        //     for(var i=0;i<$('.trClass').length;i++){
+        //         if($('table tbody tr').eq(i).attr('data-id')==id){
+        //             var contentText=$('#contentText').val();
+        //             $.ajax({
+        //                 type:'post',
+        //                 url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+        //                 data: 'goodsid='+contentText,
+        //                 success: function(data){
+        //                     if(data==1){                                           
+        //                         $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
+        //                     }else{
+        //                         alert("操作失败！");
+        //                     }
+                            
+        //                 },
+        //                 error:function(xhr,type,errorThrown){
+        //                     alert("操作失败，请检查网络设置！");
+        //                 }
+        //             });
+        //         }
+        //     }
+            
+        // });
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -179,197 +379,29 @@ padding: 5px 6px!important;
             var res = eval(result);
             // console.log(res);
             if(res!=2){
-                nums = 10; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                var thisDate = function(curr){
-                    var listData = '' , last = curr*nums - 1;
-                    last = last >= res.length ? (res.length-1) : last;
-                     for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].comment_pic=eval(res[i].comment_pic);
-                        listData+= template('commentListModal',res[i]);
-                     }
+                var listData = ''; //每页出现的数量
+                total_page = Math.ceil(res.length/15); //得到总页数
+                for(var i = 0; i < res.length; i++){
+                    listData+= template('dataModal',res[i]);
+                 }
+                document.getElementById('dataList').innerHTML = listData;
+                if(pageflag) {
+                    go_to_page($goodsList);
+                    var opts={};opts.current_page = $goodsList;
+                    $("#Pagination").pagination(total_page, opts);
+                    pageflag = 0;
+                } else {
+                    $("#Pagination").pagination(total_page);
+                    go_to_page(0);
                     
-                    return listData;
-                };
-                //调用分页
-                laypage({
-                    cont: 'paging_list',
-                    pages: pages,
-                    jump: function(obj){
-                        document.getElementById('commentList').innerHTML = thisDate(obj.curr);
-                        //点击选中所有
-                         $('.tablecheck').click(function() {
-                            if(flag==0){
-                              for(var i=0;i<$('.commentBox').length;i++) {
-                                document.getElementsByClassName('commentBox')[i].checked=true;
-                              }  
-                              flag=1;
-                            }else{
-                               for(var i=0;i<$('.commentBox').length;i++) {
-                                // $('.commentBox').eq(i).attr('checked',false);
-                                document.getElementsByClassName('commentBox')[i].checked=false;
-                                }
-                               flag=0;
-                            }
-                        });
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var id=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ id +"'}");
-                            if($('.commentState option:selected').eq(i).val()=="隐藏"){
-                                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-                            }
-                            var reid=$('.commendResponse').eq(i).attr('data-id');
-                            $('.commendResponse').eq(i).attr("data-am-modal","{target: '#re"+ id +"'}"); 
-                            var editid=$('.editComment').eq(i).attr('data-id'); 
-                            $('.editComment').eq(i).attr("data-am-modal","{target: '#co"+ id +"'}"); 
-
-                        }
-                        //更改评论的状态
-                        $('.commentState').change(function(){
-                            var id=$(this).attr('data-id');
-                            if($(this).find('option:selected').val()=="显示"){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                                    data: 'goodsid='+ id+'&state=1',
-                                    success: function(data){
-                                        if(data==1){
-    
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                                    data: 'goodsid='+ id+'&state=0',
-                                    success: function(data){
-                                        if(data==1){
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
-                            }
-                            
-                            
-                        });
-
-                        //单个商品删除的AJAX请求
-                        $('.sureDelete').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            deleteArray[0]= deleteId;  
-                            deleteArray=eval(deleteArray);
-                            console.log(deleteArray);                        
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('table tbody tr').eq(i).attr('data-id')==id){
-                                    $.ajax({
-                                        type:'post',
-                                        url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
-                                        data: 'commentid='+deleteArray,
-                                        success: function(data){
-                                            alert(data);
-                                            if(data==1){                                           
-                                                for(var i=0;i<$('.trClass').length;i++){
-                                                    if($('.trClass').eq(i).attr('data-id')==id){
-                                                        $('.trClass').eq(i).remove();
-                                                        getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                                    }
-                                                }
-                                            }else{
-                                                alert("操作失败！");
-                                            }
-                                            
-                                        },
-                                        error:function(xhr,type,errorThrown){
-                                            alert("操作失败，请检查网络设置！");
-                                        }
-                                    });
-                                }
-                            }
-                            
-                        });
-                        
-                        //多个商品删除的AJAX请求
-                        $('.deleteAll').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            var array=[];
-                           // alert($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
-                            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
-                                
-                                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-                            }
-                            
-                            deleteArray=JSON.stringify(array);
-                            $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/del_comment');?>',
-                                    data: 'commentid='+deleteArray,
-                                    success: function(data){
-                                        console.log(data);
-                                        if(data==1){
-                                            getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                        
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            
-                        });
-                        //回复评论的AJAX请求
-                        // $('.sureComment').click(function(){
-                        //     var id=$(this).attr('data-id');
-                        //     for(var i=0;i<$('.trClass').length;i++){
-                        //         if($('table tbody tr').eq(i).attr('data-id')==id){
-                        //             var contentText=$('#contentText').val();
-                        //             $.ajax({
-                        //                 type:'post',
-                        //                 url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                        //                 data: 'goodsid='+contentText,
-                        //                 success: function(data){
-                        //                     if(data==1){                                           
-                        //                         $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
-                        //                     }else{
-                        //                         alert("操作失败！");
-                        //                     }
-                                            
-                        //                 },
-                        //                 error:function(xhr,type,errorThrown){
-                        //                     alert("操作失败，请检查网络设置！");
-                        //                 }
-                        //             });
-                        //         }
-                        //     }
-                            
-                        // });
-                        
-                    }
-                })
-            }else{
-                for(var i=0;i<$('.trClass').length;i++){
-                    $('.trClass').eq(i).remove();
                 }
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#commentList');
+                if(total_page < 5) {
+                    $('.searchPage').css('display', 'none');
+                }
+                someOptions();
+            }else{
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
             }
 
             
@@ -382,15 +414,35 @@ padding: 5px 6px!important;
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
+    //点击选中所有
+    $('.tablecheck').click(function() {
+        var start_page=parseInt(15)*parseInt($shopComment);
+        var end_page=parseInt(15)*parseInt($shopComment+1);
+        if(flag==0){
+          for(var i = start_page; i < end_page; i++) {
+            if(document.getElementsByClassName('commentBox')[i]){
+                document.getElementsByClassName('commentBox')[i].checked=true;
+            }        
+          }   
+          flag=1;
+        }else{
+            for(var i = start_page; i < end_page; i++) {
+                if(document.getElementsByClassName('commentBox')[i]){
+                    document.getElementsByClassName('commentBox')[i].checked=false;
+                }        
+            }
+           flag=0;
+        }
+    });
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('/shop/singleShop/comment_list');?>','default=1');
     });
 })
 </script>
-<script type="text/html" id="commentListModal">
+<script type="text/html" id="dataModal">
     <tr class="trClass" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" data-id="<%= id%>" name="commentBox"></td>
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= username%></td>
         <td class="am-text-middle goodsName" width="100"><%= title%></td>

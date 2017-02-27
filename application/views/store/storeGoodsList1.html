@@ -257,7 +257,7 @@
     //点击上一页的函数
     function previous(){
         new_page = current_page-1;
-        console.log(new_page);
+        // console.log(new_page);
         if($('.active_page').prev('.page_link').length==true){
             go_to_page(new_page);
         }
@@ -399,6 +399,7 @@
                     
                     array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
                 }
+                console.log(array);
                 if(array == ''){
                     alert('你还没有选择商品！');
                     return false;
@@ -450,7 +451,7 @@
             data: data,
             success: function(result){     
                 var res = eval(result);
-                 console.log(res);
+                 // console.log(res);
                 if(res!=2){
                     var listData = ''; //每页出现的数量
                     var pages = Math.ceil(res.length/15); //得到总页数
@@ -541,7 +542,7 @@ $(document).ready(function(){
             alert("库存必须是一个范围！");
             return false;
         }else{
-            console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+            // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
              getList('<?php echo site_url('store/store/goods_search');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
         

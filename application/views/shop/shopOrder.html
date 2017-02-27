@@ -112,25 +112,39 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id">订单编号 </th>
-                                    <th class="moll_name">商品数量 </th>
-                                    <th class="shop_id">订单金额 </th>
-                                    <th class="shop_yetai">买家 </th>
-                                    <!-- <th class="shop_yetai">下单时间 </th> -->
-                                    <th class="brand">更新时间</th>
-                                    <th class="shop_block">订单状态 </th>
+                                    <th>订单编号 </th>
+                                    <th>商品数量 </th>
+                                    <th>订单金额 </th>
+                                    <th>买家 </th>
+                                    <th>更新时间</th>
+                                    <th>订单状态 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="shopOrderList">
+                            <tbody id="dataList">
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a>2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,32 +154,33 @@ td.am-text-middle img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <!--确认发货的提示框-->
-      <div class="am-modal am-modal-confirm" tabindex="-1" id="express">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">输入发货信息</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url()?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type='hidden' name='type_name' value="<?php echo $id;?>" />  
-                                            <input type="text" placeholder="请输入标题,2-15个字符" name='name' minlength="2" maxlength="15" required onblur="validate(this,2,15,1)">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                 
-                                
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+<div class="am-modal am-modal-confirm" tabindex="-1" id="express">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">输入发货信息</div>
+        <div class="am-modal-bd">
+            <!-- 本地生活 信息展示类 -->
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url()?>' method='post' enctype='multipart/form-data'>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
+                    <div class="am-u-sm-8">
+                        <input type='hidden' name='type_name' value="<?php echo $id;?>" />  
+                        <input type="text" placeholder="请输入标题,2-15个字符" name='name' minlength="2" maxlength="15" required onblur="validate(this,2,15,1)">
                     </div>
+                    <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+             
+            
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-danger">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+    var total_page=0,pageflag = 1, $shopOrder = parseInt(sessionStorage.getItem('shopOrder')) || 0;
     //导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
@@ -190,6 +205,94 @@ td.am-text-middle img{
         }
         
     }
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page=page_num;
+        sessionStorage.setItem('shopOrder', current_page);
+        $shopOrder = parseInt(sessionStorage.getItem('shopOrder'));
+        
+    }
+
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(argu){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(1).html());
+        }else {
+            new_page = parseInt($('.current').html());
+        }     
+        if(new_page < argu){   
+            console.log(new_page + ' ' + argu);
+            go_to_page(new_page);
+        }
+    }
+    //一些操作函数
+    function someOptions() {
+        $('.editOrder').click(function(){//查看订单信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/shop/singleShop/sureOrder/" + dataId + "');?>");
+        });
+         $('.modifyOrder').click(function(){//修改订单信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopEditOrder/" + dataId + "');?>");
+        });
+        
+        for(var i=0;i<$('.deliverOrder').length;i++){
+            var dataId=$('.deliverOrder').eq(i).attr('data-id');
+            $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                        
+        }
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
+        }
+        //确认发货的AJAX请求
+        $('.sureDeliver').click(function(){
+            var dataId=$(this).attr('data-id');
+            var send_type= $('#send_type'+dataId).val();
+            var send_no=$('#send_no'+dataId).val();
+
+            if(send_type && send_no){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
+                    data: 'send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId,
+                    success: function(data){
+                        if(data==1){ 
+                            getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
+                            alert("操作成功！");
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+            }else{
+                alert("请正确填写发货信息！");
+                return false;
+            }
+            
+        });
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -198,107 +301,33 @@ td.am-text-middle img{
         data: data,
         success: function(result){         
             var res = JSON.parse(result);
-            console.log(res);
-            for(var i=0;i<res.length;i++){
-                res[i].goods_data=JSON.parse(res[i].goods_data);
-            }
+            // console.log(res);
             if(res!=2){
-                var nums = 10; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                var thisDate = function(curr){
-                    var listData = '' , last = curr*nums - 1;
-                    last = last >= res.length ? (res.length-1) : last;
-                     for(var i = (curr*nums - nums); i <= last; i++){
-                        listData+= template('shopOrderModal',res[i]);
-                     }
+                var listData = ''; //每页出现的数量
+                total_page = Math.ceil(res.length/15); //得到总页数
+                for(var i = 0; i < res.length; i++){
+                    res[i].goods_data=JSON.parse(res[i].goods_data);
+                    listData+= template('dataModal',res[i]);
+                 }
+                document.getElementById('dataList').innerHTML = listData;
+                if(pageflag) {
+                    go_to_page($shopOrder);
+                    var opts={};opts.current_page = $shopOrder;
+                    $("#Pagination").pagination(total_page, opts);
+                    pageflag = 0;
+                } else {
+                    $("#Pagination").pagination(total_page);
+                    go_to_page(0);
                     
-                    return listData;
-                };
-                //调用分页
-                laypage({
-                    cont: 'paging_list',
-                    pages: pages,
-                    jump: function(obj){
-                        document.getElementById('shopOrderList').innerHTML = thisDate(obj.curr);
-                        $('.editOrder').click(function(){//查看订单信息
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/sureOrder/" + dataId + "');?>");
-                        });
-                         $('.modifyOrder').click(function(){//修改订单信息
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopEditOrder/" + dataId + "');?>");
-                        });
-                        
-                        for(var i=0;i<$('.deliverOrder').length;i++){
-                            var dataId=$('.deliverOrder').eq(i).attr('data-id');
-                            $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                        
-                        }
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
-                        }
-                        //确认发货的AJAX请求
-                        $('.sureDeliver').click(function(){
-                            var dataId=$(this).attr('data-id');
-                            var send_type= $('#send_type'+dataId).val();
-                            var send_no=$('#send_no'+dataId).val();
+                }
+                if(total_page < 5) {
+                    $('.searchPage').css('display', 'none');
+                }
+                someOptions();
 
-                            if(send_type && send_no){
-                                $.ajax({
-                                    type:'post',
-                                    url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
-                                    data: 'send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId,
-                                    success: function(data){
-                                        if(data==1){ 
-                                            getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
-                                            alert("操作成功！");
-
-                                        }else{
-                                            alert("操作失败！");
-                                        }
-                                    },
-                                    error:function(xhr,type,errorThrown){
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                });
-                            }else{
-                                alert("请正确填写发货信息！");
-                                return false;
-                            }
-                            
-                        });
-                        //删除订单的AJAX请求
-                        // $('.sureDelete').click(function(){
-                        //     var dataId=$(this).attr('data-id');
-                        //     $.ajax({
-                        //         type:'post',
-                        //         url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
-                        //         data: 'order_id='+dataId,
-                        //         success: function(data){
-                        //             if(data==1){ 
-                        //                 getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                         
-                        //                 alert("操作成功！");
-
-                        //             }else{
-                        //                 alert("操作失败！");
-                        //             }
-                        //         },
-                        //         error:function(xhr,type,errorThrown){
-                        //             alert("操作失败，请检查网络设置！");
-                        //         }
-                        //     });
-                        
-                        // });
-                    }
-                })
             }else{
-                $('#shopOrderList').find('tr.trClass').remove();
-                $('#paging_list').html("");
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#shopOrderList');
+                $('#dataList').find('tr.trClass').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
             }
 
             
@@ -330,7 +359,7 @@ $(document).ready(function(){
     });
 })
 </script>
-<script type="text/html" id="shopOrderModal">   
+<script type="text/html" id="dataModal">   
     <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
         <td class="am-text-middle"><%= order_id%></td>
         <td class="am-text-middle"><%= goods_data.totalNum%></td>
