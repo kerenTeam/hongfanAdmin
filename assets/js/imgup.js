@@ -5,6 +5,8 @@ function previewImage(file) {
   var div = findPreview(file.parentNode);
 
   if (file.files && file.files[0]) {
+    picArray[0]=file.files[0];
+    console.log(picArray);
     div.innerHTML = '<img id=imghead>';
     //var img = document.getElementById('imghead');
     var img = div.lastChild;

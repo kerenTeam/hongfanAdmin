@@ -1,0 +1,202 @@
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+color: #333;
+}
+
+.widget-body-lg {
+    min-height:800px;
+}
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
+}
+::-webkit-scrollbar {
+    width: 0!important;
+    opacity: 1!important;
+}
+.am-btn-group-xs a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+     
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置 -
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size: 18px;">管理员账号管理
+            </a> - 
+            <small>  <a href="<?php echo site_url().'/systemSet/systemSet/roleManage';?>" style="font-size: 18px;">角色管理
+            </a></small>- 
+            <small>分配权限
+            </small></div>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row am-cf">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 widget-margin-bottom-lg">
+            <div class="widget am-cf widget-body-lg">
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <a id="save_edit"  class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 提交</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>权限名 </th>
+                                    <th>权限 </th>
+                                    <th class="tablecheck"><input type="checkbox" name='group[]' value="0"/ >全部选择</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataList">
+                                <?php foreach($modular as $key=>$val):?>
+                                    <tr class="trClass" id="trClass<?php echo $val['modular_id']?>" data-id="">
+                                        <?php if($val['m_id'] == '0'):?>
+                                        <td class="am-text-middle">├<?php echo $val['name']?></td>
+                                    <?php else:?>
+                                        <td class="am-text-middle">│
+                                        <?php echo str_repeat(' &nbsp;&nbsp; ',$val['lev']),' └─  '.$val['name'];?></td>
+                                    <?php endif;?>
+                                        <td class="am-text-middle"><?php echo $val['controller'];?></td>
+                                      
+                                        <td class="am-text-middle">
+                                            <input type="checkbox" data-id="<?php echo $val['modular_id']?>" class="commentBox" name="commentBox" <?php if($val['true'] == 1){echo "checked";}?>>
+                                            </td>
+                                     </tr>
+                                    
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+var flag = 0 ;
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length < minlen || content.length > maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+$(function(){
+    $('.secondLimit').css("display","none");
+        $('.firstLimit').on('change',function(){
+        var firstLimit = this.value;
+        //alert(firstLimit);
+        $('.secondLimit').each(function(){
+            var id=$(this).attr("id");
+            if(firstLimit==id){
+            $('#'+firstLimit).css("display","block");
+            }
+        })
+    });
+    
+})
+
+//点击选中所有
+    $('.tablecheck').click(function() {
+        var len = document.getElementsByClassName('commentBox').length;
+        if(flag==0){
+          for(var i = 0; i < len; i++) {
+            document.getElementsByClassName('commentBox')[i].checked=true;
+          }  
+          flag=1;
+        }else{
+           for(var i = 0; i < len; i++) {
+            document.getElementsByClassName('commentBox')[i].checked=false;
+            }
+           flag=0;
+        }
+    });
+
+
+//加入达人推荐的ajax请求
+$('#save_edit').click(function(){
+    var array=[];
+    for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){   
+        array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+    }
+    if(array == ''){
+        alert('你还没有选择权限！');
+    }else{
+        goodsid=JSON.stringify(array);
+        console.log(goodsid);
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/systemSet/SystemSet/add_allot_group');?>',
+            data: 'goodsid='+goodsid+'&id='+<?php echo $gid;?>,
+            success: function(data){
+                if(data==1){
+                    alert('分配成功');
+                   window.location.href='<?php echo site_url("/systemSet/SystemSet/roleManage");?>';
+                }else{
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+    }
+});
+$('.sureDelete').click(function(){
+    var dataId = $(this).attr('data-id');
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('/systemSet/SystemSet/del_Authority');?>',
+        data: 'id='+ dataId,
+        success: function(data){
+            if(data==1){
+                 $("#trClass"+dataId).remove(); 
+            }else{
+                alert("操作失败！");
+            }
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+    });
+});
+
+
+//点击保存按钮作验证
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+});
+</script>

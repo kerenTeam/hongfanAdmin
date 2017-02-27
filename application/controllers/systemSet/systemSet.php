@@ -60,14 +60,17 @@ class SystemSet extends Default_Controller {
 
     //系统设置 角色管理
     function roleManage()
-    {
-        //获取角色管理
-         $data['page'] = $this->view_roleManage;
-         $data['menu'] = array('systemSet','roleManage');
-         $this->load->view('template.html',$data);
+    {   
+     
+        //所有角色
+        $data['group'] = $this->System_model->get_member_group();
+
+        $data['page'] = $this->view_roleManage;
+        $data['menu'] = array('systemSet','systemSet');
+        $this->load->view('template.html',$data);
     }
 
-    //获取管理员列表
+    //获取管理用户列表
     function adminUserList(){
         if($_POST){
             $user = $this->System_model->get_admin_user();
@@ -80,7 +83,7 @@ class SystemSet extends Default_Controller {
             echo "2";
         }
     }
-    //新增管理操作
+    //新增管理用户操作
     function add_admin_user(){
         if($_POST){
             $data = $this->input->post();
@@ -115,7 +118,7 @@ class SystemSet extends Default_Controller {
             $this->load->view('404.html');
         }
     }
-    //返回管理员类别
+    //返回角色
     function admin_user_group(){
         if($_POST){
              $group= $this->System_model->get_member_group();
@@ -204,7 +207,6 @@ class SystemSet extends Default_Controller {
     }
 
 
-
     //系统设置 广告管理
     function adverManage(){
         //返回所有广告
@@ -266,20 +268,20 @@ class SystemSet extends Default_Controller {
 
 
 
-    //系统设置 支付账号管理
-    function apliyManage(){
-         $data['page'] = $this->view_paymanage;
-         $data['menu'] = array('systemSet','apliyManage');
-    	 $this->load->view('template.html',$data);
-    }
+    // //系统设置 支付账号管理
+    // function apliyManage(){
+    //      $data['page'] = $this->view_paymanage;
+    //      $data['menu'] = array('systemSet','apliyManage');
+    // 	 $this->load->view('template.html',$data);
+    // }
 
     
-    //系统设置 其他管理
-    function other(){
-     $data['page'] = $this->view_other;
-     $data['menu'] = array('systemSet','other');
-     $this->load->view('template.html',$data);
-    }
+    // //系统设置 其他管理
+    // function other(){
+    //  $data['page'] = $this->view_other;
+    //  $data['menu'] = array('systemSet','other');
+    //  $this->load->view('template.html',$data);
+    // }
     //系统设置 网站信息管理
     function webMessage(){
         //获取web设置
@@ -333,13 +335,7 @@ class SystemSet extends Default_Controller {
         $arr = $query->result_array();
         //返回整理好的数组
         $data['modular'] = subtree($arr);
-        // echo "<pre>";
-        // // $data['modular'] = tree($arr);
-        // foreach($data['modular'] as $v) {
-        //     echo str_repeat(' |- ',$v['lev']),$v['name'],'<br />';  //str_repeat — 重复一个字符串
-        // }
-        // var_dump($data);
-        // exit;
+
         $data['page'] = $this->view_memberLimit;
         $data['menu'] = array('systemSet','memberLimit');
         $this->load->view('template.html',$data);
@@ -350,6 +346,13 @@ class SystemSet extends Default_Controller {
         if($_POST){
             $data = $this->input->post();
             if($this->db->insert('hf_system_modular',$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个权限，权限组名称是：".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('添加成功！');window.location.href='".site_url('systemSet/SystemSet/memberLimit')."'</script>";exit;
             }else{
                 echo "<script>alert('添加失败！');window.location.href='".site_url('systemSet/SystemSet/memberLimit')."'</script>";exit;
@@ -365,6 +368,13 @@ class SystemSet extends Default_Controller {
              $id = $this->input->post('id');
              unset($data['id']);
              if($this->db->where("modular_id",$id)->update('hf_system_modular',$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个权限，权限id是：".$id."权限组名称是：".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
              }else{
                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
@@ -380,6 +390,13 @@ class SystemSet extends Default_Controller {
         if($_POST){
             $id = $this->input->post('id');
             if($this->db->where('modular_id',$id)->delete('hf_system_modular')){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个权限，权限id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
@@ -390,123 +407,118 @@ class SystemSet extends Default_Controller {
     }
 
 
-    //权限用户组编辑
+    //角色编辑
     function memberLimitEdit(){
-        $id = intval($this->uri->segment(4));
-        if($id == 0){
-            $this->load->view('404.html');
-        }else{
-            //获取详情
-            $group = $this->user_model->get_group_info($id);
-            $group_permission = json_decode($group['group_permission'],true);
-       
-            //获取所有模块
-            $query = $this->db->where('m_id','0')->get('hf_system_modular');
-            $modular = $query->result_array();
-            foreach ($modular as $key => $value) {
-                $a = $this->System_model->get_modular($value['modular_id']);
-                foreach ($a as $k => $v) {
-                   if(in_array($v['modular_id'],$group_permission)){
-                         $a[$k]['true'] = '1';
-                   }else{
-                        $a[$k]['true'] = '0';
-                   }
-                }
-                $modular[$key]['check'] = $a;
+        if($_POST){
+            $data['group_name'] = trim($this->input->post('group_name'));
+            $id = $this->input->post('gid');
+            if($this->user_model->edit_group($id,$data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了一个角色，角色id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('systemSet/SystemSet/roleManage')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('systemSet/SystemSet/roleManage')."'</script>";exit;
+
             }
-            $data['group'] = $group;
-      
-            $data['module_list'] = $modular;
-            $data['page'] = $this->view_memberLimitEdit;
-            $data['menu'] = array('systemSet','memberLimitEdit');
-            $this->load->view('template.html',$data);
+        }else{
+            $this->load->view('404.html');
         }
     }
 
-    //新增权限
+    //新增角色
     function add_member_group(){
         if($_POST){
              $data['group_name'] = $this->input->post('group_name');
-             $group_permission = $this->input->post('group_permission');
-             foreach ($group_permission as $key => $value) {
-                $k[] = (string)$key; 
-                foreach ($value as $v) {
-                    $arr[]  = $v;
-                }
-             }
-            $data['group_permission'] = json_encode(array_merge($k,$arr));
             if($this->user_model->add_group($data)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."新增了一个权限组，权限组名称是：".$data['group_name'],
+                    "content" => $_SESSION['users']['username']."新增了一个角色，角色名称是：".$data['group_name'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
                 $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
+                echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/roleManage')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
+                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/roleManage')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
-        }
-    }
-    
-    //编辑权限
-    function edit_member_group(){
-        if($_POST){
-            $id = $this->input->post('gid');
-            $data['group_name'] = $this->input->post('group_name');
-            $group_permission = $this->input->post('group_permission');
-             foreach ($group_permission as $key => $value) {
-                $k[] = (string)$key; 
-                foreach ($value as $v) {
-                    $arr[]  = $v;
-                }
-             }
-            $data['group_permission'] = json_encode(array_merge($k,$arr));
-            if($this->user_model->edit_group($id,$data)){
-                $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个权限组，权限组名称是：".$data['group_name'],
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                 echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
-             }else{
-                 echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
-             }
-        }else{
-            $this->load->view('404.html');
-        }
-    }
-    //删除权限
-    function del_group(){
-        $id=intval($this->uri->segment(4));
-        if($id == 0){
-            $this->load->view('404.html');
-        }else{
-            $data['gid'] = '0';
-            if($this->user_model->edit_admin_user($id,$data)){
-                if($this->user_model->del_group($id)){
-                       $log = array(
-                            'userid'=>$_SESSION['users']['user_id'],  
-                            "content" => $_SESSION['users']['username']."删除了一个权限组，权限组id是：".$id,
-                            "create_time" => date('Y-m-d H:i:s'),
-                            "userip" => get_client_ip(),
-                        );
-                        $this->db->insert('hf_system_journal',$log);
-                     echo "<script>alert('操作成功!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
-                }else{
-                      echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
-                }
-            }else{
-                echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/memberLimit')."'</script>";exit;
-            }
         }
     }
 
+    //删除角色
+    function del_group(){
+        if($_POST){
+            $id = $this->input->post('gid');
+            if($this->user_model->del_group($id)){
+                   $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个角色，角色id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                    echo "1";
+            }else{
+                    echo "2";
+            }
+            
+        }else{
+            echo "2";
+        }
+    }
+
+    //给角色分配权限
+    function allot_group(){
+        $type = $this->uri->segment('4');
+        if($type == 'Authority'){
+            $gid = $this->uri->segment('5');
+            $data['gid'] = $gid;
+            //获取角色权限
+            $group = $this->user_model->get_group_info($gid);
+            $group_permission = json_decode($group['group_permission'],true);
+
+            $query = $this->db->get('hf_system_modular');
+            $arr = $query->result_array();
+            //返回整理好的数组
+            $data['modular'] = subtree($arr,$group_permission);
+
+            $data['page'] = 'systemSet/allot_group.html';
+            $data['menu'] = array('systemSet','systemSet');
+            $this->load->view('template.html',$data);
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    //角色分配权限操作
+    function add_allot_group(){
+        if($_POST){
+            $data['group_permission'] = $this->input->post('goodsid');
+            $id = $this->input->post('id');
+         
+            if($this->user_model->edit_group($id,$data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了一个角色的权限，角色id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
      //banner列表
     function bannerList(){
