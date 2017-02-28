@@ -18,8 +18,15 @@ class LoveToGo extends Default_Controller
 		 parent::__construct();
          $this->load->model('Integral_model');
 
-	}
-    //获取远程爱购商品列表
+	}   
+    //爱购 商品列表
+    function loveToGoList(){
+
+        $data['page'] = $this->view_loveToGoList;
+        $data['menu'] = array('loveToGo','loveToGoList');
+        $this->load->view('template.html',$data);
+    }
+    //获取爱购商品列表
     function get_remote_goods(){
         if($_POST){
             $page = $_POST['page'];
@@ -34,21 +41,71 @@ class LoveToGo extends Default_Controller
         }
     }
 
+    //更新爱购分裂
+    function up_igo_cates(){
+        $data = array(
+            'appkey' => IGOAPPKEY,  
+            'appsecret' => IGOAPPSECRET,
+        );
+        $post = curl_post(IGOCATEAPIURL, $data);  
+        $goods = json_decode($post,true);
+        $cate = json_decode($goods['data'],true);
+         $this->db->where('type','2')->delete('hf_mall_category');
+       
+        $y = igoCate($cate);
+        if($y == 1){
+             //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."更新了爱购商品分类",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+            echo "<script>alert('更新成功！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";exit;
+        }else{
+            echo "<script>alert('更新失败！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";exit;
+ 
+        }
+
+    }
+
     //爱购分类
     function loveToGoCates(){
 
+        $cates = $this->Integral_model->get_goods_cates('2');
+        $data['cates'] = igo_cate_list($cates);
         $data['page'] = $this->view_loveToGoCates;
         $data['menu'] = array('loveToGo','loveToGoCates');
         $this->load->view('template.html',$data);
     }
-   
-    //爱购 商品列表
-    function loveToGoList(){
 
-        $data['page'] = $this->view_loveToGoList;
-        $data['menu'] = array('loveToGo','loveToGoList');
-        $this->load->view('template.html',$data);
+    //删除爱购分类
+    function del_igo_cate(){
+        if($_POST){
+            $id = $this->input->post('id');
+            if($this->db->where('catid',$id)->delete('hf_mall_category')){
+                    //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个爱购分类，分类id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+
+
+
+        }else{
+            echo "2";
+        }
     }
+
+
     //爱购 订单列表
     function loveToGoOrderList(){
 

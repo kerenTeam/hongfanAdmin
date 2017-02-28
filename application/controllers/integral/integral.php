@@ -23,7 +23,7 @@ class Integral extends Default_Controller
     }
     //积分列表
     function integralList(){
-        $data['cates'] = $this->Integral_model->get_goods_cates();
+        $data['cates'] = $this->Integral_model->get_goods_cates('1');
         $data['page'] = $this->view_integralList;
         $data['menu'] = array('integral','integralList');
         $this->load->view('template.html',$data);
@@ -93,7 +93,7 @@ class Integral extends Default_Controller
     //新增商品
     function integralAddGoods(){
           //所有商品分类
-        $data['cates'] = $this->Integral_model->get_goods_cates();
+        $data['cates'] = $this->Integral_model->get_goods_cates('1');
 
         $data['page'] = $this->view_integralAddGoods;
         $data['menu'] = array('integral','integralList');
@@ -183,7 +183,7 @@ class Integral extends Default_Controller
         }else{
             $data['goods'] = $this->Integral_model->get_goodsInfo($id);
             //所有商品分类
-            $data['cates'] = $this->Integral_model->get_goods_cates();
+            $data['cates'] = $this->Integral_model->get_goods_cates('1');
             $data['page'] = $this->view_integralEditGoods;
             $data['menu'] = array('integral','integralList');
             $this->load->view('template.html',$data);

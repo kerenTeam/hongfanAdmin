@@ -42,7 +42,7 @@ class Login extends CI_Controller {
                    $this->session->set_userdata('users',$user);
                     // 判断用户分组
                    switch ($user['gid']){
-                       case 2:
+                        case 2:
                            redirect( site_url('shop/SingleShop/shopAdmin') );
                            break;
                         default:
@@ -64,16 +64,23 @@ class Login extends CI_Controller {
                                       $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
                                       $menu[] = $query->row_array();
                                     }
+
                                     $arr = array();
                                     foreach ($menu as $key => $value) {
                                         if($value['m_id'] == 0){
                                           $arr[$value['modular_id']]['value'] = $value;
                                         }else{
-                                           $arr[$value['m_id']]['chick'][] = $value;
+                                            $query = $this->db->where('modular_id',$value['m_id'])->get('hf_system_modular');
+                                            $modular = $query->row_array();
+                                            if($modular['m_id'] == 0){
+                                                $arr[$value['m_id']]['chick'][] = $value;
+                                            }else{
+                                                unset($menu[$key]);
+                                            }
                                         }
                                     }
                                 }
- 
+          
                                 $json = json_encode($arr);
                                 $this->session->set_userdata('menu',$json);
                             }else{

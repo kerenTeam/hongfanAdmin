@@ -19,8 +19,8 @@ class Integral_model extends CI_Model
     }
 
      //返回商品分类列表
-    function get_goods_cates(){
-        $query = $this->db->order_by('sort','asc')->get($this->shop_cates);
+    function get_goods_cates($cate){
+        $query = $this->db->where('type',$cate)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
     //积分商城
