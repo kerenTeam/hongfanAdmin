@@ -82,7 +82,7 @@
 			}
 			else if(appendopts.text == '<i></i>上一页'){
 
-				lnk = $("<a onclick='previous(0);'>" + appendopts.text + "</a>")
+				lnk = $("<a onclick='previous();'>" + appendopts.text + "</a>")
 					.attr('href', this.opts.link_to.replace(/__id__/,page_id));
 			}else {
 				lnk = $("<a onclick='next(" + maxxNum +");'>" + appendopts.text + "</a>")
