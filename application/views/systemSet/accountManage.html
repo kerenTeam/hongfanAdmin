@@ -219,6 +219,10 @@ var flag=1,tag=1,str='';
                         //删除管理员帐户
                         $('.sureDelete').click(function(){
                             var dataId=$(this).attr('data-id');
+                            if(dataId == 1){
+                                alert('后台超级管理员，不能删除');
+                                return false;
+                            }
                             $.ajax({
                                 type:'post',
                                 url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',

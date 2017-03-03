@@ -152,7 +152,7 @@ function GetIpLookup($ip = ''){
     return $json['city'];  
 }  
 
-//递归数组，返回无限级分类树1
+//递归数组，返回权限无限级分类树1
 function subtree($arr,$a = '',$id=0,$lev=1) {
     $subs = array(); // 子孙数组
     foreach($arr as $k=>$v) {
@@ -172,5 +172,48 @@ function subtree($arr,$a = '',$id=0,$lev=1) {
     return $subs;
 }
 
+//爱购分类
+function igoCate($data,$parentid=''){
+    $CI = &get_instance();
+    foreach ($data as $key => $value) {
+        if(!empty($value['cate_name'])){
+            if($parentid ==''){
+                $a = '0';
+            }else{
+                $a = $parentid;
+            }
+            $cate = array(
+                'catname'=>$value['cate_name'],
+                'catid'=>$value['cate_id'],
+                'type'=>'2',
+                'parentid'=>$a,
+            );
+           $ret =  $CI->db->insert('hf_mall_category',$cate);
+            if(!empty($value['sub_cate'])){
+               igoCate($value['sub_cate'],$value['cate_id']);
+            }
+        }
+    }
+    if($ret){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+
+//递归数组，返回爱购分类 无限级分类树1
+function igo_cate_list($arr,$id=0,$lev=1) {
+    $subs = array(); // 子孙数组
+    foreach($arr as $k=>$v) {
+      
+        if($v['parentid'] == $id) {
+            $v['lev'] = $lev;
+            $subs[] = $v; // 举例说找到array('id'=>1,'name'=>'安徽','parent'=>0),
+            $subs = array_merge($subs,igo_cate_list($arr,$v['catid'],$lev+1));
+        }
+    }
+    return $subs;
+}
 
  ?>
