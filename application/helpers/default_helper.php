@@ -188,7 +188,7 @@ function igoCate($data,$parentid=''){
                 'type'=>'2',
                 'parentid'=>$a,
             );
-           $ret =  $CI->db->insert('hf_mall_category',$cate);
+           $ret =  $CI->db->insert('hf_mall_category_igo',$cate);
             if(!empty($value['sub_cate'])){
                igoCate($value['sub_cate'],$value['cate_id']);
             }

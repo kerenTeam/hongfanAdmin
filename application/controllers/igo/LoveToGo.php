@@ -50,7 +50,7 @@ class LoveToGo extends Default_Controller
         $post = curl_post(IGOCATEAPIURL, $data);  
         $goods = json_decode($post,true);
         $cate = json_decode($goods['data'],true);
-         $this->db->where('type','2')->delete('hf_mall_category');
+        $this->db->where('type','2')->delete('hf_mall_category');
        
         $y = igoCate($cate);
         if($y == 1){
@@ -73,7 +73,7 @@ class LoveToGo extends Default_Controller
     //爱购分类
     function loveToGoCates(){
 
-        $cates = $this->Integral_model->get_goods_cates('2');
+        $cates = $this->Integral_model->ret_igo_cates();
         $data['cates'] = igo_cate_list($cates);
         $data['page'] = $this->view_loveToGoCates;
         $data['menu'] = array('loveToGo','loveToGoCates');

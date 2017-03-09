@@ -8,6 +8,8 @@ class Integral_model extends CI_Model
     public $shop_goods = 'hf_mall_goods';
     //分类表
     public $shop_cates = 'hf_mall_category';
+    //爱购分类
+    public $igo_cates = 'hf_mall_category_igo';
     //积分规则表
     public $integral_rule = "hf_system_integral";
     //订单表
@@ -21,6 +23,11 @@ class Integral_model extends CI_Model
      //返回商品分类列表
     function get_goods_cates($cate){
         $query = $this->db->where('type',$cate)->order_by('sort','asc')->get($this->shop_cates);
+        return $query->result_array();
+    }
+    //返回igo商品分类
+    function ret_igo_cates(){
+        $query = $this->db->order_by('sort','asc')->get($this->igo_cates);
         return $query->result_array();
     }
     //积分商城

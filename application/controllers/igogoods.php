@@ -18,10 +18,10 @@ class Igogoods extends CI_Controller
         //
       echo "1";
         set_time_limit(0);
-        $query = $this->db->where('differentiate','3')->get('hf_mall_goods');
+        $query = $this->db->get('hf_mall_goods_igo');
         $list = $query->result_array();
         if(!empty($list)){
-          $this->db->where('differentiate','3')->delete('hf_mall_goods');
+          $this->db->delete('hf_mall_goods_igo');
         }
         //获取本地的列表
          $num = '10';
@@ -41,7 +41,7 @@ class Igogoods extends CI_Controller
                 $val['thumb'] = str_replace('./','/',$pic[0]);
                 $val['differentiate'] = '3';
                 unset($val['commission_start_time'],$val['commission_end_time'],$val['pic_url']);
-                $this->db->insert('hf_mall_goods',$val);
+                $this->db->insert('hf_mall_goods_igo',$val);
                 sleep(2);
            }  
         }
