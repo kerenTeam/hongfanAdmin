@@ -47,11 +47,29 @@ class Find_model extends CI_Model
         $where['cate_id'] = $id;
         return $this->db->where($where)->delete($this->category);
     }
+
     //返回标签列表
     function get_find_tags(){
         $query = $this->db->order_by('create_time','desc')->get($this->tags);
         return $query->result_array();
     }
+
+    //新增标签
+    function add_find_tags($data){
+        return $this->db->insert($this->tags,$data);
+    }
+
+    //编辑标签
+    function edit_find_tags($id,$data){
+        $where['tag_id'] = $id;
+        return $this->db->where($where)->update($this->tags,$data);
+    }
+    //删除标签
+    function del_find_tags($id){
+        $where['tag_id'] = $id;
+        return $this->db->where($where)->delete($this->tags);
+    }
+
     
     
 

@@ -10,6 +10,8 @@ class Find extends Default_Controller {
 	public $view_content = "find/findContent.html";
     //新增帖子
     public $view_addService = "find/findAddService.html";
+    //编辑帖子
+    public $view_editService = "find/findEditService.html";
 	//分类列表
 	public $view_cates = 'find/findCates.html';
 	//标签列表
@@ -42,8 +44,14 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
+    //编辑帖子界面
+    function editFindService(){
 
-    //修改帖子
+        $data['page'] = $this->view_editService;
+        $data['menu'] = array('find','findContent');
+ 		$this->load->view('template.html',$data);
+    }
+    //修改帖子操作
     function edit_service(){
         if($_POST){
             $data = $this->input->post();
@@ -269,7 +277,8 @@ class Find extends Default_Controller {
     //新增标签操作
     function add_find_tags(){
         if($_POST){
-
+            $data = $this->input->post();
+            
         }else{
             $this->load->view('404.html');
         }
@@ -277,7 +286,7 @@ class Find extends Default_Controller {
 
     //编辑标签操作
     function edit_find_tags(){
-        
+
     }
 
 
