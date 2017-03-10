@@ -1,0 +1,79 @@
+
+/*********************************发现板块************************************/
+
+说明：
+@name:Api名称  
+@type：传值方式   
+@parameter:传的参数，default='1'是默认，picArray是文件   
+@return：返回数据，json是正常返回，1是成功，2是请求方式错误，3是失败    
+@url：Api地址
+
+#帖子列表
+/**
+ * @name	    帖子列表
+ * @type	    post
+ * @parameter	default='1'
+ * @Return		json/2/3
+ * @url		    <?php echo site_url('/find/Find/ret_find_service');?>
+*/
+
+#修改帖子界面地址
+/**
+ * @name	    修改帖子界面地址
+ * @type	    
+ * @parameter	
+ * @Return		
+ * @url		    <?php echo site_url('/find/Find/editFindService');?>
+*/
+
+#修改帖子
+/**
+ * @name	    修改帖子
+ * @type	    post
+ * @parameter	find_id='',content='',picArray=''
+ * @Return		1/2/3
+ * @url		    <?php echo site_url('/find/Find/edit_service');?>
+*/
+
+#删除帖子
+/**
+ * @name	    删除帖子
+ * @type	    post
+ * @parameter	find_id=''
+ * @Return		1/2/3
+ * @url		    <?php echo site_url('/find/Find/del_sercive');?>
+*/
+
+#发现板块分类列表
+/**
+ * @name	    发现板块分类列表
+ * @type	    post
+ * @parameter	default='1'
+ * @Return		json/2/3
+ * @url		    <?php echo site_url('/find/Find/ret_find_cates');?>
+*/
+
+#编辑分类
+/**
+ * @name	    编辑分类
+ * @type	    post
+ * @parameter	cate_name=''，cate_id=''
+ * @Return		1/2/3
+ * @url		    <?php echo site_url('/find/Find/edit_find_cates');?>
+*/
+
+
+#删除分类
+/**
+ * @name	    删除分类
+ * @type	    post
+ * @parameter	cate_id=''
+ * @Return		1/2/3
+ * @url		    <?php echo site_url('/find/Find/del_find_cates');?>
+*/
+
+
+
+
+
+
