@@ -96,6 +96,7 @@ label {
                                 <tr>  
                                     <th>编号</th>
                                     <th>缩略图 </th>
+                                    <th>发帖内容 </th>
                                     <th>发帖时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -221,7 +222,7 @@ function otherFunction() {
                 alert("网络状况不佳，请稍后重试！");
             }
         });
-    });
+    }); 
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -291,6 +292,7 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
+          <td class="am-text-middle"><%= content%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

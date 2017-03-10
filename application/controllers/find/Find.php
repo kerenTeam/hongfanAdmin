@@ -115,6 +115,11 @@ class Find extends Default_Controller {
     }
     //新增帖子界面
     function addService(){
+        //获取所有分类
+        $data['cates'] = $this->Find_model->get_find_cates();
+        //获取热门标签
+        $data['tags'] = $this->Find_model->get_hot_tags();
+
 
         $data['page'] = $this->view_addService;
         $data['menu'] = array('find','findContent');
@@ -140,6 +145,8 @@ class Find extends Default_Controller {
                     $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
                 }
             }
+            var_dump($data);
+            exit;
             $id =$this->find_model->add_find_service($data); 
             if($id){
                 // 日志

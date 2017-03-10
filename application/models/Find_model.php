@@ -54,10 +54,18 @@ class Find_model extends CI_Model
         return $query->result_array();
     }
 
+    //返回热门标签
+    function get_hot_tags(){
+          $query = $this->db->order_by('usage','desc')->limit('20')->get($this->tags);
+          return $query->result_array();
+    }
+
     //新增标签
     function add_find_tags($data){
         return $this->db->insert($this->tags,$data);
     }
+
+    
 
     //编辑标签
     function edit_find_tags($id,$data){
