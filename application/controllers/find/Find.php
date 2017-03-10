@@ -251,6 +251,33 @@ class Find extends CI_Controller {
  		$this->load->view('template.html',$data);
     }
 
+    //返回标签列表
+    function ret_find_tags(){
+        if($_POST){
+            $list = $this->Find_model->get_find_tags();
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //新增标签操作
+    function add_find_tags(){
+        if($_POST){
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //编辑标签操作
+    function edit_find_tags(){
+        
+    }
 
 
 
