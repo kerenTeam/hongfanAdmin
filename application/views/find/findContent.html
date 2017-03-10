@@ -42,6 +42,10 @@ td.am-text-middle img{
 label {
 	font-size: 14px !important;
 }
+.imgbox {
+    width: 100px;
+    height: 100px;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -92,26 +96,12 @@ label {
                                 <tr>  
                                     <th>编号</th>
                                     <th>缩略图 </th>
-                                    <th>标题 </th>
-                                    <th>更新时间 </th>
+                                    <th>发帖时间 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody id="dataList">
-                                <tr class="trClass" id="trClass" data-id="">
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle"><img src="assets/img/a5.png" /></td>
-                                    <td class="am-text-middle">美容彩妆会场，惺惺惜惺惺想</td>
-                                    <td class="am-text-middle">2015-01-25 10:12:20</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                <a data-am-modal="{target:'#edit_content'}" class="am-btn am-btn-warning edit_content"><span class="am-icon-edit"></span> 修改</a>
-                                                <a data-am-modal="{target:'#delete_content'}" class="am-btn am-btn-danger delete_content"><span class="am-icon-trash"></span> 删除</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr> 
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -287,43 +277,32 @@ function validate(obj,minlen,maxlen,i){
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
+    getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
-    });
-    //点击搜索
-    $('.searchSort').click(function(){
-        var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
     });
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= catid%>">
-        <td class="am-text-middle"><%= catid%></td>
-        <td class="am-text-middle"><%= catname%></td>
-        <%if(icon) {%>
+    <tr class="trClass" data-id="<%= find_id%>">
+        <td class="am-text-middle"><%= find_id%></td>
         <td class="am-text-middle">
-            <img src="<%= icon%>" class="am-img-responsive" alt=""/>
+            <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
-        <%} else {%>
-        <td class="am-text-middle">
-            
-        </td>
-        <%}%>
+        <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a  data-id="<%= catid%>" class="editSort">
+                <a  data-id="<%= find_id%>" class="editSort">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
-                <a data-id="<%= catid%>" class="tpl-del">
+                <a data-id="<%= find_id%>" class="tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= catid%>">
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= find_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -331,7 +310,7 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= catid%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= find_id%>" data-am-modal-confirm>确定</span>
             </div>
         </div>
     </div>
