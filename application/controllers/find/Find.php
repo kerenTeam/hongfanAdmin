@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-//require_once(APPPATH.'controllers/Default_Controller.php');
+require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -200,12 +200,13 @@ class Find extends CI_Controller {
     //编辑分类操作
     function edit_find_cates(){
          if($_POST){
-            $data = $this->input->post();
-            if($this->Find_model->edit_find_cates($data['cate_id'],$data)){
-                  // 日志
+            $id = $this->input->post('cate_id');
+            $data['cate_name'] = $this->input->post('cate_name');
+            if($this->Find_model->edit_find_cates($id,$data)){
+                // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个发现板块的分类，分类id是：".$data['cate_id'],
+                    "content" => $_SESSION['users']['username']."编辑了一个发现板块的分类，分类id是：".$id,
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
