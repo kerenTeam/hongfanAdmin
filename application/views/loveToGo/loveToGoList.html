@@ -12,7 +12,7 @@ padding: 5px 6px!important;
 }
 td.am-text-middle img{
     width:80px;
-}
+} 
 .am-u-sm6{
     width:50px !important;
     margin:0;
@@ -66,25 +66,39 @@ td.am-text-middle img{
                             <thead> 
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox" /></th>
-                                    <th class="shop_id">商品编号 </th>
-                                    <th class="moll_name">缩略图 </th>
-                                    <th class="shop_id">商品名称 </th>
-                                    <th class="shop_name">商品价格</th>
-                                    <th class="shop_yetai">佣金 </th>
-                                    <th class="brand">佣金比例</th>
+                                    <th>商品编号 </th>
+                                    <th>缩略图 </th>
+                                    <th>商品名称 </th>
+                                    <th>商品价格</th>
+                                    <th>佣金 </th>
+                                    <th>佣金比例</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="igoList">
+                            <tbody id="dataList">
                                 <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,7 +110,93 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-var flag=0;
+    var flag=0, current_page=0,total_page=0,pageflag = 1, $loveToGoList = parseInt(sessionStorage.getItem('loveToGoList')) || 0;;
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page=page_num;
+        sessionStorage.setItem('loveToGoList', current_page);
+        $loveToGoList = parseInt(sessionStorage.getItem('loveToGoList'));
+        
+    }
+
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(argu){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(1).html());
+        }else {
+            new_page = parseInt($('.current').html());
+        }
+        if(new_page < argu){
+            go_to_page(new_page);
+        }
+    }
+    function otherFunction() {
+        $('.editGoods').click(function(){//查看商品详情
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/igo/loveToGo/loveToGogoodLocalDetail?openid=" + dataId + "');?>");
+        });
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+            if($('.goodsState option:selected').eq(i).val()=="0"){
+                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+            }                          
+        }
+        //点击选中所有
+        $('.tablecheck').click(function() {
+            if(flag==0){
+              for(var i=0;i<$('.commentBox').length;i++) {
+                document.getElementsByClassName('commentBox')[i].checked=true;
+              }  
+              flag=1;
+            }else{
+               for(var i=0;i<$('.commentBox').length;i++) {
+                document.getElementsByClassName('commentBox')[i].checked=false;
+                }
+               flag=0;
+            }
+        });
+
+        //删除商品的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/igo/loveToGo/del_love_goods/');?>',
+                data: 'goodsid='+dataId,
+                success: function(data){
+                    console.log(data);
+                    if(data==1){                                           
+                        $('#trClass'+dataId).remove();
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        });
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -106,85 +206,30 @@ var flag=0;
         success: function(result){         
             var res = eval(result);    
             if(res!=2){
-                var nums = 15; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                var thisDate = function(curr){
-                    var listData = '' , last = curr*nums - 1;
-                    last = last >= res.length ? (res.length-1) : last;
-                     for(var i = (curr*nums - nums); i <= last; i++){
-                        listData+= template('igoListModal',res[i]);
-                     }
+                var listData = ''; //每页出现的数量
+                total_page = Math.ceil(res.length/15); //得到总页数
+                for(var i = 0; i < res.length; i++){
+                    listData+= template('dataModal',res[i]);
+                 }
+                document.getElementById('dataList').innerHTML = listData;
+                if(pageflag) {
+                    go_to_page($loveToGoList);
+                    var opts={};opts.current_page = $loveToGoList;
+                    $("#Pagination").pagination(total_page, opts);
+                    pageflag = 0;
+                } else {
+                    $("#Pagination").pagination(total_page);
+                    go_to_page(0);
                     
-                    return listData;
-                };
-                // console.log(res);
-                //调用分页
-                laypage({
-                    cont: 'paging_list',
-                    pages: pages,
-                    jump: function(obj){
-                        document.getElementById('igoList').innerHTML = thisDate(obj.curr);
-                        $('.editGoods').click(function(){//查看商品详情
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/igo/loveToGo/loveToGogoodLocalDetail?openid=" + dataId + "');?>");
-                        });
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-                            if($('.goodsState option:selected').eq(i).val()=="0"){
-                                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-                            }                          
-                        }
-                        //点击选中所有
-                        $('.tablecheck').click(function() {
-                            if(flag==0){
-                              for(var i=0;i<$('.commentBox').length;i++) {
-                                document.getElementsByClassName('commentBox')[i].checked=true;
-                              }  
-                              flag=1;
-                            }else{
-                               for(var i=0;i<$('.commentBox').length;i++) {
-                                document.getElementsByClassName('commentBox')[i].checked=false;
-                                }
-                               flag=0;
-                            }
-                        });
-
-                        //删除商品的AJAX请求
-                        $('.sureDelete').click(function(){
-                            var dataId=$(this).attr('data-id');
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/igo/loveToGo/del_love_goods/');?>',
-                                data: 'goodsid='+dataId,
-                                success: function(data){
-                                    console.log(data);
-                                    if(data==1){                                           
-                                        $('#trClass'+dataId).remove();
-                                    }else{
-                                        alert("操作失败！");
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                }
-                                    });
-                        });
-                        
-                    }
-                })
+                }
+                if(total_page < 5) {
+                    $('.searchPage').css('display', 'none');
+                }                             
+                otherFunction();    
             }else{
-                $('#igoList').find('tr').remove();
-                $('#paging_list').html("");
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center">暂无相关商品信息！</td><td></td></tr>').appendTo("#igoList");
-            }
-
-            
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+            }  
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
@@ -201,7 +246,7 @@ $(document).ready(function(){
 
 })
 </script>
-<script type="text/html" id="igoListModal">
+<script type="text/html" id="dataModal">
     <tr class="trClass<%= open_iid%>" id="trClass<%= open_iid%>" data-id="<%= open_iid%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= open_iid%>" name="commentBox"></td>
         <td class="am-text-middle"><%= open_iid%></td>

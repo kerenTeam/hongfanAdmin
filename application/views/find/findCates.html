@@ -231,7 +231,7 @@ function otherOperation() {
         var dataId = $(this).attr("data-id");
         $.ajax({
             type:'post',
-            url: ' <?php echo site_url('/find/Find/del_find_cates');?>',
+            url: '<?php echo site_url('/find/Find/del_find_cates');?>',
             data: 'cate_id='+ dataId,
             success: function(result){         
                 var res = eval(result);
