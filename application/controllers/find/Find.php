@@ -218,6 +218,7 @@ class Find extends Default_Controller {
          if($_POST){
             $id = $this->input->post('cate_id');
             $data['cate_name'] = $this->input->post('cate_name');
+            $data['sort'] = $this->input->post('sort');
             if($this->Find_model->edit_find_cates($id,$data)){
                 // 日志
                 $log = array(
@@ -286,7 +287,19 @@ class Find extends Default_Controller {
     function add_find_tags(){
         if($_POST){
             $data = $this->input->post();
-            
+            if($this->Find_model->add_find_tags($data)){
+                // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个发现板块的标签，标签名称是：".$data['tagName'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findTags')."'</script>";exit;
+            }else{  
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findTags')."'</script>";exit;
+            }
         }else{
             $this->load->view('404.html');
         }
@@ -294,7 +307,46 @@ class Find extends Default_Controller {
 
     //编辑标签操作
     function edit_find_tags(){
+        if($_POST){
+            $data = $this->input->post();
+            if($this->Find_model->edit_find_tags($data['tagid'],$data)){
+                  // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个发现板块的标签，标签名称是：".$data['tagName']."，标签id是：".$data['tagid'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
+    //删除标签
+    function del_find_tags(){
+        if($_POST){
+            $id = $this->input->post('tagid');
+            if($this->Find_model->del_find_tags($id)){
+                  // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个发现板块的标签，标签id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
     }
 
 

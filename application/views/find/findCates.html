@@ -211,18 +211,19 @@ function otherOperation() {
     }
     //编辑分类
     $('.sureSave').click(function () {
-        var dataId = $(this).attr("data-id"),cateName = $('.name' + dataId).val();
+        var dataId = $(this).attr("data-id"),cateName = $('.name' + dataId).val();sort = $('.sort'+dataId).val();
+
         $.ajax({
             type:'post',
-            url: '<?php echo site_url('/find/Find/edit_find_cates');?>',
-            data: 'cate_name='+ cateName +'&cate_id='+ dataId,
+            url: "<?php echo site_url('/find/Find/edit_find_cates');?>",
+            data: 'cate_name='+ cateName +'&cate_id='+ dataId +"&sort="+sort,
             success: function(result){         
                 var res = eval(result);
                 if(res == 1){
                     alert("修改成功！");
                     $('#edit'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList('<?php echo site_url('/find/Find/ret_find_cates');?>','default=1');
+                    getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
