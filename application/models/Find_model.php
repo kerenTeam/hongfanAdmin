@@ -43,6 +43,11 @@ class Find_model extends CI_Model
         return $query->result_array();
     }
 
+    //分类关键字搜索
+    function find_cates_search($data){
+        $query = $this->db->like('cate_name',$data,'both')->order_by('create_time','desc')->get($this->category);
+        return $query->result_array();
+    }
 
     //根据分类id 返回分类名称
     function ret_cate_name($id){
@@ -70,6 +75,12 @@ class Find_model extends CI_Model
     //返回标签列表
     function get_find_tags(){
         $query = $this->db->order_by('create_time','desc')->get($this->tags);
+        return $query->result_array();
+    }
+    
+    //标签关键字搜索
+    function find_tags_search($data){
+        $query = $this->db->like('tagName',$data,'both')->order_by('create_time','desc')->get($this->tags);
         return $query->result_array();
     }
 
