@@ -30,7 +30,7 @@ class Find_model extends CI_Model
 
     //返回分类列表
     function get_find_cates(){
-        $query = $this->db->order_by('sort','desc')->get($this->category);
+        $query = $this->db->order_by('sort','asc')->get($this->category);
         return $query->result_array();
     }
     //新增分类

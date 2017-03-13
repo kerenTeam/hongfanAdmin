@@ -194,11 +194,12 @@ class Find extends Default_Controller {
     function add_find_cates(){
         if($_POST){
             $data = $this->input->post();
+            $data['create_time'] = date('Y-m-d H:i:s');
             if($this->Find_model->add_find_cates($data)){
                  // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."新增了一个发现板块的分类，分类名称是：".$data['cateName'],
+                    "content" => $_SESSION['users']['username']."新增了一个发现板块的分类，分类名称是：".$data['cate_name'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );

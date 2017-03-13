@@ -89,6 +89,7 @@ td.am-text-middle img{
                                 <tr> 
                                     <th>分类编号</th>
                                     <th>分类名 </th>
+                                    <th>排序 </th>
                                     <th>创建时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -129,18 +130,24 @@ td.am-text-middle img{
     <div class="am-modal-dialog">
         <div class="am-modal-hd">新增分类</div>
         <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
+            <form class="am-form tpl-form-line-form" action="<?php echo site_url('find/Find/add_find_cates');?>"  data-am-validator method="post" enctype='multipart/form-data'>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">分类名 ：</label>
                     <div class="am-u-sm-8 am-u-end">
-                        <input type="text" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,1)" value="" />
-                        
+                        <input type="text" name="cate_name" required minlength="2" maxlength="15" onblur="validate(this,2,15,1)" />
+                    </div>
+                    <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                 <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">排序 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="number" name="sort" value="100" min="1"  required minlength="1"  maxlength="3" onblur="validate(this,1,3,1)" />
                     </div>
                     <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                     <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                 </div>
                 <div class="am-form-group am-btn-group-xs">
-                    <input type="hidden" name="id" value="">
                     <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
                     <button type="submit" class="am-btn am-btn-secondary">保存</button>
                 </div>
@@ -318,6 +325,7 @@ $(document).ready(function(){
     <tr class="trClass" data-id="<%= cate_id%>">
         <td class="am-text-middle"><%= cate_id%></td>
         <td class="am-text-middle"><%= cate_name%></td>
+        <td class="am-text-middle"><%= sort%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
@@ -356,6 +364,16 @@ $(document).ready(function(){
                         <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-form-label">排序 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="name" class="sort<%= cate_id%>" min="1" required minlength="1" maxlength="2" onblur="validate(this,1,2,0)" value="<%= sort%>" />
+                            
+                        </div>
+                        <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+
                     <div class="am-form-group am-btn-group-xs">
                         <input type="hidden" name="id" value="">
                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
