@@ -210,7 +210,21 @@ class Find extends CI_Controller {
         }else{
             echo "2";
         }
+    }
 
+    //分类搜所
+    function search_find_cates(){
+        if($_POST){
+            $sear = $this->input->post('search');
+            $list = $this->Find_model->find_cates_search($sear);
+            if(empty($list)){
+                echo "3";
+            }else{
+                echo json_encode($list);
+            }
+        }else{
+            echo "2";
+        }
     }
 
     //新增分类操作
@@ -296,11 +310,26 @@ class Find extends CI_Controller {
     function ret_find_tags(){
         if($_POST){
             $list = $this->Find_model->get_find_tags();
-            // if($list){
-            //     echo json_encode($list);
-            // }else{
-            //     echo "3";
-            // }
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    
+    //标签搜索
+    function search_find_tags(){
+        if($_POST){
+            $sear = $this->input->post('search');
+            $list = $this->Find_model->find_tags_search($sear);
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
         }else{
             echo "2";
         }
