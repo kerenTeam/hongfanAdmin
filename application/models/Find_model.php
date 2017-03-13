@@ -2,9 +2,9 @@
 // 发现板块
 class Find_model extends CI_Model
 {
-    public $find = "hf_find_service";//帖子表
-    public $category = "hf_find_category";//分类表
-    public $tags = "hf_find_tags";//标签表
+    public $find = "hf_friend_news";//帖子表
+    public $category = "hf_friend_news_category";//分类表
+    public $tags = "hf_friend_news_tags";//标签表
 
     //返回帖子列表
     function get_find_service(){
