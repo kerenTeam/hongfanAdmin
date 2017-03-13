@@ -80,6 +80,31 @@
     .badegs:hover {
         cursor: pointer;
      }
+     #tieContent {
+        margin: 10px 5px;
+     }
+     .blue {
+        padding: 2px 8px;
+        color: #fff;
+        background: #1fb5ac;
+        position: relative;
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 14px;
+     }
+     .smalldelete {
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        font-size: 10px;
+        position: absolute;
+        top: -10px;
+        right: -8px;
+        color: #636363;
+     }
+     .smalldelete:hover {
+        cursor: pointer;
+     }
 </style>
 
 <!-- 内容区域 -->
@@ -133,16 +158,19 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">内容详情<span class="red">*</span>：</label>
                                 <div class="am-u-sm-6 am-u-end">
-                                    <textarea id="tieContent" name="content"></textarea>
+                                    <textarea rows="8" name="content"></textarea>
                                 </div> 
                                 <div class="am-u-sm-9">
+                                    <div class="tagsBox" id="tieContent">
+                                        标签：&nbsp;&nbsp;
+                                    </div>
                                     点击添加标签：
-                                            <?php foreach($tags as $val):?>
-                                                <span class="badegs" data-id="<?php echo $val['tag_id']?>"><?php echo $val['tagName'];?></span>
+                                    <?php foreach($tags as $val):?>
+                                        <span class="badegs" data-id="<?php echo $val['tag_id']?>"><?php echo $val['tagName'];?></span>
 
-                                                <?php endforeach;?>
-                                               
-                                                <input type="hidden" id="tagsArray" value="" name="tagsid" />   
+                                        <?php endforeach;?>
+                                       
+                                        <input type="hidden" id="tagsArray" value="" name="tagsid" />   
                                 </div>
                                                             
                             </div>
@@ -164,7 +192,7 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-    var array = [];
+    var array = [], picArray=[];
     //删除图片
     $(".deleteImg").click(function(){
         
@@ -180,10 +208,16 @@
   $('.badegs').click(function () {
       var text = $(this).html(), tagid = $(this).attr("data-id");
       array.push(tagid);
-      document.getElementById('tieContent').innerHTML += '#'+ text +"#&nbsp;&nbsp;";
+      var obj = document.getElementById('tieContent');
+      $('<span class="blue">#'+ text +'#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="' + tagid + '"></i></span>').appendTo("#tieContent");
       $('#tagsArray').val(array);
   });
-
+  //点击删除标签
+  function deleteTags(obj) {
+    var deleteId = $(obj).attr('data-id');
+    array.splice($.inArray(deleteId, array), 1);
+    $(obj).parent('span').remove();
+  }
 </script>
 </body>
 </html>

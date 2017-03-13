@@ -69,7 +69,42 @@
         color:#fff;
         font-size:16px;
     }
-
+    .badegs {
+        display: inline-block;
+        color: #96a0aa;
+        background: #ddd;
+        padding: 2px 5px;
+        margin: 5px 5px;
+        font-size: 14px;
+    }
+    .badegs:hover {
+        cursor: pointer;
+     }
+     #tieContent {
+        margin: 10px 5px;
+     }
+     .blue {
+        padding: 2px 8px;
+        color: #fff;
+        background: #1fb5ac;
+        position: relative;
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 14px;
+     }
+     .smalldelete {
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        font-size: 10px;
+        position: absolute;
+        top: -10px;
+        right: -8px;
+        color: #636363;
+     }
+     .smalldelete:hover {
+        cursor: pointer;
+     }
 </style>
 
 <!-- 内容区域 -->
@@ -122,9 +157,12 @@
                                 <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                     <label class="am-u-sm-3 am-text-right">内容详情<span class="red">*</span>：</label>
                                     <div class="am-u-sm-6 am-u-end">
-                                        <textarea id="tieContent"></textarea>
-                                    </div> 
+                                        <textarea rows="8" name="content"></textarea>
+                                    </div>
                                     <div class="am-u-sm-9">
+                                        <div class="tagsBox" id="tieContent">
+                                            标签：&nbsp;&nbsp;
+                                        </div>
                                         点击添加标签：<span class="badegs" data-id="1">标签一</span>
                                                     <span class="badegs" data-id="2">标签一</span>
                                                     <span class="badegs" data-id="3">标签一</span>
@@ -167,13 +205,20 @@
     history.go(-1);
   });
 
-//点击添加标签
+  //点击添加标签
   $('.badegs').click(function () {
       var text = $(this).html(), tagid = $(this).attr("data-id");
       array.push(tagid);
-      document.getElementById('tieContent').innerHTML += '#'+ text +"#&nbsp;&nbsp;";
+      var obj = document.getElementById('tieContent');
+      $('<span class="blue">#'+ text +'#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="' + tagid + '"></i></span>').appendTo("#tieContent");
       $('#tagsArray').val(array);
   });
+  //点击删除标签
+  function deleteTags(obj) {
+    var deleteId = $(obj).attr('data-id');
+    array.splice($.inArray(deleteId, array), 1);
+    $(obj).parent('span').remove();
+  }
 
 </script>
 </body>
