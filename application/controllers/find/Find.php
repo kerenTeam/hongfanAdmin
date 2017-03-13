@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends Default_Controller {
+class Find extends CI_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -35,6 +35,13 @@ class Find extends Default_Controller {
     function ret_find_service(){
         if($_POST){
             $list = $this->Find_model->get_find_service();
+            foreach($list as $key=>$val){
+                if(empty($val['categoryid'])){
+                    $list[$key]['cate_name'] = "还没有归类,请编辑归类!";
+                }else{
+                    $list[$key]['cate_name'] = $this->Find_model->ret_cate_name($val['categoryid']);
+                }
+            }
             if(!empty($list)){
                 echo json_encode($list);
             }else{
@@ -287,6 +294,7 @@ class Find extends Default_Controller {
     function add_find_tags(){
         if($_POST){
             $data = $this->input->post();
+            $data['create_time'] = date('Y-m-d H:i:s');
             if($this->Find_model->add_find_tags($data)){
                 // 日志
                 $log = array(

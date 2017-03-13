@@ -8,6 +8,7 @@ class Find_model extends CI_Model
 
     //返回帖子列表
     function get_find_service(){
+
         $query = $this->db->order_by('create_time','desc')->get($this->find);
         return $query->result_array();
     }
@@ -33,6 +34,15 @@ class Find_model extends CI_Model
         $query = $this->db->order_by('sort','asc')->get($this->category);
         return $query->result_array();
     }
+
+    //根据分类id 返回分类名称
+    function ret_cate_name($id){
+        $where['cate_id'] = $id;
+        $query = $this->db->where($where)->get($this->category);
+        $row = $query->row_array();
+        return $row['cate_name'];
+    }
+
     //新增分类
     function add_find_cates($data){
         return $this->db->insert($this->category,$data);
@@ -59,14 +69,10 @@ class Find_model extends CI_Model
           $query = $this->db->order_by('usage','desc')->limit('20')->get($this->tags);
           return $query->result_array();
     }
-
     //新增标签
     function add_find_tags($data){
         return $this->db->insert($this->tags,$data);
     }
-
-    
-
     //编辑标签
     function edit_find_tags($id,$data){
         $where['tag_id'] = $id;
