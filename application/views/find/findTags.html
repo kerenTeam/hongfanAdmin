@@ -94,19 +94,7 @@ td.am-text-middle img{
                                 </tr>
                             </thead>
                             <tbody id="dataList">
-                                <tr class="trClass" id="trClass" data-id="">
-                                    <td class="am-text-middle">1</td>
-                                    <td class="am-text-middle">推荐</td>
-                                    <td class="am-text-middle">2015-01-25 10:12:20</td>
-                                    <td class="am-text-middle">
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                <a data-am-modal="{target:'#edit_tags'}" class="am-btn am-btn-warning edit_tags"><span class="am-icon-edit"></span> 修改</a>
-                                                <a data-am-modal="{target:'#delete_tags'}" class="am-btn am-btn-danger delete_tags"><span class="am-icon-trash"></span> 删除</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr> 
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
                                 <!-- more data -->
                             </tbody>
                         </table>
@@ -141,24 +129,6 @@ td.am-text-middle img{
         
     </div>
 </div>
-<!--新增标签结束-->
-<!--编辑标签开始-->
-
-<!--编辑标签结束-->
-<!--删除标签开始-->
-<div class="am-modal am-modal-confirm" tabindex="-1" id="delete_tags">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
-        <div class="am-modal-bd">
-            <p class="black">你，确定要删除该标签吗？</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn sureDelete" data-id="" data-am-modal-confirm>确定</span>
-        </div>
-    </div>
-</div>
-<!--删除标签结束-->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/js/artTemplate-native.js"></script>
 
@@ -206,27 +176,54 @@ function next(argu){
 }
 function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
-        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
-        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>");    
+        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.edit_tags').eq(i).attr('data-id');
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+        $('.edit_tags').eq(i).attr("data-am-modal","{target: '#edit"+ dataId +"'}");    
     }
-    //删除帖子
+    //编辑标签
+    $('.sureSave').click(function () {
+        var dataId = $(this).attr("data-id");
+        var tagName = $(this).parent('.am-form-group').siblings(".am-form-group").find('input').val();
+        console.log(tagName);
+        $.ajax({
+            type:'post',
+            url: '<?php echo site_url('/find/Find/edit_find_tags');?>',
+            data: 'tag_id='+ dataId + '&tagName=' +tagName,
+            success: function(result){ 
+            console.log(result);        
+                var res = eval(result);
+                if(res == 1){
+                    getList('<?php echo site_url('/find/Find/ret_find_tags');?>','default=1');
+                    
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
+                $('#edit'+dataId).fadeOut();
+                $('.am-dimmer').removeClass('am-active');
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    });
+    //删除标签
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
         $.ajax({
             type:'post',
-            url: '<?php echo site_url('/find/Find/del_sercive');?>',
-            data: 'find_id='+ dataId,
-            success: function(result){         
+            url: '<?php echo site_url('/find/Find/del_find_tags');?>',
+            data: 'tagid='+ dataId,
+            success: function(result){    
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
-                    $('#de'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList('<?php echo site_url('/find/Find/ret_find_tags');?>','default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
+                $('#de'+dataId).fadeOut();
+                $('.am-dimmer').removeClass('am-active');
                 
             },
             error:function(xhr,type,errorThrown){
@@ -243,7 +240,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(result);
+            console.log(res);
             if(res != 2){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -299,44 +296,28 @@ $(document).ready(function(){
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        getList('<?php echo site_url('/find/Find/search_find_tags');?>','search='+keywords);
     });
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= catid%>">
-        <td class="am-text-middle"><%= catid%></td>
-        <td class="am-text-middle"><%= catname%></td>
-        <%if(icon) {%>
-        <td class="am-text-middle">
-            <img src="<%= icon%>" class="am-img-responsive" alt=""/>
-        </td>
-        <%} else {%>
-        <td class="am-text-middle">
-            
-        </td>
-        <%}%>
-        <td class="am-text-middle"><input type="color" value="<%= icon_color%>" name="" /></td>
-        <td class="am-text-middle"><%= letter%></td>
-        <%if(parentid==0) {%>
-        <td class="am-text-middle">--</td>
-        <%} else {%>
-        <td class="am-text-middle"><%= parentid%></td>
-        <%}%>
-        <td class="am-text-middle"><%= sort%></td>
+    <tr class="trClass" data-id="<%= tag_id%>">
+        <td class="am-text-middle"><%= tag_id%></td>
+        <td class="am-text-middle"><%= tagName%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a  data-id="<%= catid%>" class="editSort">
-                    <i class="am-icon-pencil"></i> 编辑
+                <a  data-id="<%= tag_id%>" class="edit_tags">
+                    <i class="am-icon-pencil"></i> 编辑 
                 </a>
-                <a data-id="<%= catid%>" class="tpl-del">
+                &nbsp;&nbsp;
+                <a data-id="<%= tag_id%>" class="tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="edit_tags">
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<%= tag_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">编辑标签</div>
             <div class="am-modal-bd">
@@ -344,7 +325,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">标签名 ：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <input type="text" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="" />
+                            <input type="text" id="name<%= tag_id%>" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="<%= tagName%>" />
                             
                         </div>
                         <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
@@ -353,14 +334,14 @@ $(document).ready(function(){
                     <div class="am-form-group am-btn-group-xs">
                         <input type="hidden" name="id" value="">
                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                        <button type="submit" class="am-btn am-btn-secondary">保存</button>
+                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-id="<%= tag_id%>" data-am-modal-confirm>保存</button>
                     </div>
                 </form>      
             </div>
             
         </div>
     </div>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= catid%>">
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= tag_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -368,7 +349,7 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= catid%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= tag_id%>" data-am-modal-confirm>确定</span>
             </div>
         </div>
     </div>

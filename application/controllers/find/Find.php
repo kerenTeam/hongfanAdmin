@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -362,11 +362,11 @@ class Find extends CI_Controller {
     function edit_find_tags(){
         if($_POST){
             $data = $this->input->post();
-            if($this->Find_model->edit_find_tags($data['tagid'],$data)){
+            if($this->Find_model->edit_find_tags($data['tag_id'],$data)){
                   // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了一个发现板块的标签，标签名称是：".$data['tagName']."，标签id是：".$data['tagid'],
+                    "content" => $_SESSION['users']['username']."修改了一个发现板块的标签，标签名称是：".$data['tagName']."，标签id是：".$data['tag_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );

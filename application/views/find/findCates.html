@@ -319,6 +319,11 @@ $(document).ready(function(){
     $('.refresh').click(function(){
         getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
     });
+    //点击搜索
+    $('.searchSort').click(function(){
+        var keywords=$('#searchKey').val();
+        getList('<?php echo site_url('/find/Find/search_find_cates');?>','search='+keywords);
+    });
 })
 </script>
 <script type="text/html" id="dataModal">
