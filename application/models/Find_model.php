@@ -74,7 +74,7 @@ class Find_model extends CI_Model
 
     //返回标签列表
     function get_find_tags(){
-        $query = $this->db->order_by('create_time','desc')->get($this->tags);
+        $query = $this->db->get($this->tags);
         return $query->result_array();
     }
     

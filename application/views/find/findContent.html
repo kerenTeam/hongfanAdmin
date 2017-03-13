@@ -46,6 +46,10 @@ label {
     width: 100px;
     height: 100px;
 }
+.read-more a {
+    color: #1fb5ac;
+}
+
 </style>
 
 <!-- 内容区域 -->
@@ -98,7 +102,7 @@ label {
                                     <th>缩略图 </th>
                                     <th>分类 </th>
                                     <th>发布用户 </th>
-                                    <th width="400">发帖内容 </th>
+                                    <th width="450">发帖内容 </th>
                                     <th>发帖时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -225,7 +229,8 @@ function otherFunction() {
                 alert("网络状况不佳，请稍后重试！");
             }
         });
-    }); 
+    });
+    
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -245,7 +250,6 @@ function getList(dataurl,data){
                 if(pageflag) {
                     var opts={};
                     opts.current_page = $findContent;
-                    console.log($findContent);
                     $("#Pagination").pagination(total_page, opts);
                     go_to_page($findContent);
                 } else {
@@ -260,9 +264,7 @@ function getList(dataurl,data){
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
-            }
-
-            
+            }         
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
@@ -295,6 +297,9 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
+<<<<<<< HEAD
+          <td class="am-text-middle"><div class="contenttext"><%= content%> <span class="read-more"></span></span></div></td>
+=======
          <td class="am-text-middle"><%= cate_name%></td>
          <% if(username){%>
          <td class="am-text-middle"><%= username%></td>
@@ -302,6 +307,7 @@ $(document).ready(function(){
          <td class="am-text-middle"><%= nickname%></td>
          <%}%>
           <td class="am-text-middle"><%= content%></td>
+>>>>>>> 190a6bc7bd02d997070208803df95cb0af0768a3
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
