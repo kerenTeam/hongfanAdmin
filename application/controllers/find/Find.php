@@ -53,10 +53,22 @@ class Find extends CI_Controller {
     }
     //编辑帖子界面
     function editFindService(){
-
-        $data['page'] = $this->view_editService;
-        $data['menu'] = array('find','findContent');
- 		$this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        //获取要编辑的数据
+        $news = $this->Find_model->ret_find_content($id);
+        if(empty($news)){
+            $this->load->view('404.html');
+        }else{
+            //获取所有分类
+            $data['cates'] = $this->Find_model->get_find_cates();
+            //获取热门标签
+            $data['tags'] = $this->Find_model->get_hot_tags();
+         
+            $data['news'] = $news;
+            $data['page'] = $this->view_editService;
+            $data['menu'] = array('find','findContent');
+            $this->load->view('template.html',$data);
+         }
     }
     //修改帖子操作
     function edit_service(){
@@ -102,11 +114,13 @@ class Find extends CI_Controller {
             if(empty($id)){
                echo "3";
             }else{
+                $pic = $this->Find_model->ret_find_content($id);
+                @unlink(substr($pic['pic'],'1'));
                 if($this->Find_model->del_find_service($id)){
                       // 日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."删除了一个帖子，帖子id是：".$data['find_id'],
+                        "content" => $_SESSION['users']['username']."删除了一个帖子，帖子id是：".$id,
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
@@ -152,9 +166,11 @@ class Find extends CI_Controller {
                     $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
                 }
             }
-            var_dump($data);
-            exit;
-            $id =$this->find_model->add_find_service($data); 
+            $data['tags'] = str_replace(',','|||',$data['tags']);
+            $data['userid'] = $_SESSION['users']['user_id'];
+            $data['create_time'] = date('Y_m-d H:i:s');
+
+            $id =$this->Find_model->add_find_service($data); 
             if($id){
                 // 日志
                 $log = array(

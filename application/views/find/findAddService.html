@@ -123,7 +123,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/find/');?>" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/find/Find/add_find_service');?>" method="post" enctype="multipart/form-data" >
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">新增帖子</div>
@@ -133,7 +133,7 @@
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">帖子分类<span class="red">*</span>：</label>
                                 <div class="am-u-sm-6 am-u-end">
-                                    <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='cate_id'>
+                                    <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
                                         <option value=''>请选择一个！</option>
                                         <?php foreach($cates as $val):?>
                                         <option value="<?php echo $val['cate_id'];?>"><?php echo $val['cate_name'];?></option>
@@ -170,7 +170,7 @@
 
                                         <?php endforeach;?>
                                        
-                                        <input type="hidden" id="tagsArray" value="" name="tagsid" />   
+                                        <input type="hidden" id="tagsArray" value="" name="tags" />   
                                 </div>
                                                             
                             </div>
@@ -178,7 +178,6 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type="hidden" name="id" value="" />
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>

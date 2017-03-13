@@ -96,6 +96,8 @@ label {
                                 <tr>  
                                     <th>编号</th>
                                     <th>缩略图 </th>
+                                    <th>分类 </th>
+                                    <th>发布用户 </th>
                                     <th width="400">发帖内容 </th>
                                     <th>发帖时间 </th>
                                     <th>操作</th>
@@ -204,15 +206,16 @@ function otherFunction() {
         var dataId = $(this).attr("data-id");
         $.ajax({
             type:'post',
-            url: '<?php echo site_url('/find/Find/del_sercive');?>',
+            url: "<?php echo site_url('/find/Find/del_sercive');?>",
             data: 'find_id='+ dataId,
-            success: function(result){         
+            success: function(result){    
+                console.log(result);     
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
                     $('#de'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -288,24 +291,30 @@ $(document).ready(function(){
 </script>
 <script type="text/html" id="dataModal">
     <tr class="trClass" data-id="<%= find_id%>">
-        <td class="am-text-middle"><%= find_id%></td>
+        <td class="am-text-middle"><%= news_id%></td>
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
+         <td class="am-text-middle"><%= cate_name%></td>
+         <% if(username){%>
+         <td class="am-text-middle"><%= username%></td>
+         <%}else{%>
+         <td class="am-text-middle"><%= nickname%></td>
+         <%}%>
           <td class="am-text-middle"><%= content%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a  data-id="<%= find_id%>" class="editContent">
+                <a  data-id="<%= news_id%>" class="editContent">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
-                <a data-id="<%= find_id%>" class="tpl-del">
+                <a data-id="<%= news_id%>" class="tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= find_id%>">
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= news_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -313,7 +322,7 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= find_id%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= news_id%>" data-am-modal-confirm>确定</span>
             </div>
         </div>
     </div>

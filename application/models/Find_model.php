@@ -8,18 +8,20 @@ class Find_model extends CI_Model
 
     //返回帖子列表
     function get_find_service(){
-
-        $query = $this->db->order_by('create_time','desc')->get($this->find);
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news as a');
+        $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $this->db->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
     //修改帖子状态
     function edit_find_service($id,$data){
-        $where['find_id'] = $id;
+        $where['news_id'] = $id;
         return $this->db->where($where)->update($this->find,$data);
     }
     //删除帖子
     function del_find_service($id){
-        $where['find_id'] = $id;
+        $where['news_id'] = $id;
         return $this->db->where($where)->delete($this->find);
     }
 
@@ -28,12 +30,19 @@ class Find_model extends CI_Model
         $this->db->insert($this->find,$data);
         return $this->db->insert_id();
     }
+    //根据id返回帖子
+    function ret_find_content($id){
+        $where['news_id'] = $id;
+        $query = $this->db->where($where)->get($this->find);
+        return  $query->row_array();
+    }
 
     //返回分类列表
     function get_find_cates(){
         $query = $this->db->order_by('sort','asc')->get($this->category);
         return $query->result_array();
     }
+
 
     //根据分类id 返回分类名称
     function ret_cate_name($id){
