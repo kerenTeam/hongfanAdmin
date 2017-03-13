@@ -310,11 +310,11 @@ class Find extends CI_Controller {
     function ret_find_tags(){
         if($_POST){
             $list = $this->Find_model->get_find_tags();
-            // if($list){
-            //     echo json_encode($list);
-            // }else{
-            //     echo "3";
-            // }
+            if($list){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
         }else{
             echo "2";
         }
