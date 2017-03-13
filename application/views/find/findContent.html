@@ -32,9 +32,7 @@ td.am-text-middle img{
         padding-left: 20%;
         margin: 0 auto;
     }
-#searchKey {
-	height: 28px;
-}
+
 .am-btn-group-xs a {
     display: inline-block;
     margin-right: 10px;
@@ -71,12 +69,21 @@ label {
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">帖子搜索:</label>
+                        <label for="source_state" class="am-u-sm-4 am-form-label">分类搜索:</label>
                         <div class="am-u-sm-8">
-                            <input type="text" id="searchKey" placeholder="请输入搜素的关键字">
+                            <select id="goodsType" name="cateid">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="0">帖子分类</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-9 am-u-md-9 am-u-lg-9 am-text-left">
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜素:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" class="" placeholder="请输入搜素的关键字" id="searchKey" name="sear" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6 am-text-left">
                         <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
                     </div>
                 </form>
@@ -102,7 +109,7 @@ label {
                                     <th>缩略图 </th>
                                     <th>分类 </th>
                                     <th>发布用户 </th>
-                                    <th width="450">发帖内容 </th>
+                                    <th width="400">发帖内容 </th>
                                     <th>发帖时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -297,9 +304,6 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
-<<<<<<< HEAD
-          <td class="am-text-middle"><div class="contenttext"><%= content%> <span class="read-more"></span></span></div></td>
-=======
          <td class="am-text-middle"><%= cate_name%></td>
          <% if(username){%>
          <td class="am-text-middle"><%= username%></td>
@@ -307,7 +311,6 @@ $(document).ready(function(){
          <td class="am-text-middle"><%= nickname%></td>
          <%}%>
           <td class="am-text-middle"><%= content%></td>
->>>>>>> 190a6bc7bd02d997070208803df95cb0af0768a3
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

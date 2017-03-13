@@ -243,7 +243,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(res);
+            console.log(result);
             if(res != 2){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
