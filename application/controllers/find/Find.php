@@ -5,9 +5,11 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 *   发现板块
 */
 class Find extends Default_Controller {
-
+ 
 	//文章；列表
 	public $view_content = "find/findContent.html";
+    //帖子评论列表
+    public $view_comment = "find/findComment.html";
     //新增帖子
     public $view_addService = "find/findAddService.html";
     //编辑帖子
@@ -30,6 +32,12 @@ class Find extends Default_Controller {
         $data['page'] = $this->view_content;
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
+    }
+    //评论列表 
+    function findComment(){
+
+        $data['page'] = $this->view_comment;
+        $data['menu'] = array('find','findComment');
     }
     //返回帖子列表
     function ret_find_service(){

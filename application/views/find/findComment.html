@@ -47,11 +47,7 @@ label {
 .read-more a {
     color: #1fb5ac;
 }
-.checkComment {
-    border: 1px solid #e0690c !important;
-    padding: 5px 6px !important;
-    color: #e0690c !important;
-}
+
 </style>
 
 <!-- 内容区域 -->
@@ -59,7 +55,7 @@ label {
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findContent';?>" style="font-size:16px;">发现 帖子</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findComment';?>" style="font-size:16px;">发现 帖子评论</a>
             </div>
         </div>
     </div>
@@ -69,18 +65,9 @@ label {
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">帖子搜索</div>
+                    <div class="widget-title  am-cf">帖子评论</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">分类搜索:</label>
-                        <div class="am-u-sm-8">
-                            <select id="goodsType" name="cateid">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="0">帖子分类</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜素:</label>
                         <div class="am-u-sm-8">
@@ -92,7 +79,7 @@ label {
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">帖子列表</div>
+                    <div class="widget-title  am-cf">帖子评论列表</div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -110,11 +97,11 @@ label {
                             <thead>
                                 <tr>  
                                     <th>编号</th>
-                                    <th>缩略图 </th>
-                                    <th>分类 </th>
+                                    <th>评论帖子 </th>
                                     <th>发布用户 </th>
-                                    <th width="400">发帖内容 </th>
-                                    <th>发帖时间 </th>
+                                    <th>评论内容 </th>
+                                    <th>评论用户 </th>
+                                    <th>评论时间 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -169,7 +156,7 @@ label {
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/js/artTemplate-native.js"></script>
 <script type="text/javascript">
-var total_page = 0,pageflag = 1,current_page=0,$findContent = parseInt(sessionStorage.getItem('findContent')) || 0;
+var total_page = 0,pageflag = 1,current_page=0,$findComment = parseInt(sessionStorage.getItem('findComment')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -179,8 +166,8 @@ function go_to_page(page_num){
     var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
-    sessionStorage.setItem('findContent', current_page);
-    $findContent = parseInt(sessionStorage.getItem('findContent'));
+    sessionStorage.setItem('findComment', current_page);
+    $findComment = parseInt(sessionStorage.getItem('findComment'));
     
 }
 
@@ -214,8 +201,7 @@ function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
-        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>");
-        $('.checkComment').eq(i).attr("href","<?php echo site_url().'/find/Find/findComment';?>")  
+        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>");    
     }
     //删除帖子
     $('.sureDelete').click(function () {
@@ -261,9 +247,9 @@ function getList(dataurl,data){
                 document.getElementById('dataList').innerHTML = listData;
                 if(pageflag) {
                     var opts={};
-                    opts.current_page = $findContent;
+                    opts.current_page = $findComment;
                     $("#Pagination").pagination(total_page, opts);
-                    go_to_page($findContent);
+                    go_to_page($findComment);
                 } else {
                     $("#Pagination").pagination(total_page);
                     go_to_page(0);
@@ -319,9 +305,6 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a  data-id="<%= news_id%>" class="checkComment">
-                    <i class="am-icon-pencil"></i> 查看评论
-                </a>
                 <a  data-id="<%= news_id%>" class="editContent">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
