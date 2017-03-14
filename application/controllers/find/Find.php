@@ -8,6 +8,8 @@ class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
+    //帖子评论列表
+    public $view_comment = "find/findComment.html";
     //新增帖子
     public $view_addService = "find/findAddService.html";
     //编辑帖子
@@ -30,6 +32,13 @@ class Find extends Default_Controller {
         $data['page'] = $this->view_content;
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
+    }
+    //评论列表 
+    function findComment(){
+
+        $data['page'] = $this->view_comment;
+        $data['menu'] = array('find','findComment');
+        $this->load->view('template.html',$data);
     }
     //返回帖子列表
     function ret_find_service(){
@@ -390,11 +399,11 @@ class Find extends Default_Controller {
     function edit_find_tags(){
         if($_POST){
             $data = $this->input->post();
-            if($this->Find_model->edit_find_tags($data['tagid'],$data)){
+            if($this->Find_model->edit_find_tags($data['tag_id'],$data)){
                   // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了一个发现板块的标签，标签名称是：".$data['tagName']."，标签id是：".$data['tagid'],
+                    "content" => $_SESSION['users']['username']."修改了一个发现板块的标签，标签名称是：".$data['tagName']."，标签id是：".$data['tag_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
