@@ -5,6 +5,7 @@ class Find_model extends CI_Model
     public $find = "hf_friend_news";//帖子表
     public $category = "hf_friend_news_category";//分类表
     public $tags = "hf_friend_news_tags";//标签表
+    public $news_tag = "hf_friend_news_tag";//帖子的标签表
 
     //返回帖子列表
     function get_find_service(){
@@ -19,6 +20,12 @@ class Find_model extends CI_Model
         $where['news_id'] = $id;
         return $this->db->where($where)->update($this->find,$data);
     }
+    //删除帖子已有的标签
+    function del_news_tags($id){
+        $where['news_id'] = $id;
+        return $this->db->where($where)->delete($this->news_tag);
+    }
+
     //删除帖子
     function del_find_service($id){
         $where['news_id'] = $id;
@@ -30,11 +37,22 @@ class Find_model extends CI_Model
         $this->db->insert($this->find,$data);
         return $this->db->insert_id();
     }
+
+    //帖子标签新增
+    function add_news_tag($data){
+        return $this->db->insert($this->news_tag,$data);
+    }
     //根据id返回帖子
     function ret_find_content($id){
         $where['news_id'] = $id;
         $query = $this->db->where($where)->get($this->find);
         return  $query->row_array();
+    }
+    //根据帖子id返回帖子标签
+    function ret_news_tag($id){
+        $where['news_id'] = $id;
+        $query = $this->db->where($where)->get($this->news_tag);
+        return $query->result_array();
     }
 
     //返回分类列表

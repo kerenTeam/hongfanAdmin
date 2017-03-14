@@ -123,7 +123,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/find/Find/edit_service');?>" method="post" enctype="multipart/form-data" >
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">编辑帖子</div>
@@ -145,14 +145,14 @@
                                     <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                         <div class="wx_type_img">
-                                            <?php if(empty($news['pic'])):?>
-                                            <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                            <!-- 图片实时预览 -->
-                                            <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <?php else:?>
-                                                <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                                            <?php if(!empty($news['pic'])):?>
+                                                <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $news['pic'];?>" class="am-img-responsive cardView"> </div>
+                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php $pic = json_decode($news['pic'],true); echo $pic['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                            <?php else:?>
+                                                <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" required>
+                                                <!-- 图片实时预览 -->
+                                                <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                             <?php endif;?>
                                         </div>
                                         <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
@@ -168,11 +168,12 @@
                                     <div class="am-u-sm-9">
                                         <div class="tagsBox" id="tieContent">
                                             标签：&nbsp;&nbsp;
-                                            <?php $a = explode('|||',$news['tags']);
-                                                foreach($a as $v){
+                                            <?php
+                                                $tag = '';
+                                                foreach($news_tag as $k=>$v){
+                                                    $tag[$k] = $v['tag_id']; 
                                             ?>
-                                            <span class="blue">#<?php echo $v;?>#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="<?php echo $v;?>"></i></span>
-
+                                            <span class="blue">#<?php echo ret_find_tagName($v['tag_id']);?>#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="<?php echo $v['tag_id'];?>"></i></span>
                                             <?php }?>
                                         
                                         </div>
@@ -180,7 +181,11 @@
                                         <?php foreach($tags as $val):?>
                                         <span class="badegs" data-id="<?php echo $val['tag_id']?>"><?php echo $val['tagName'];?></span>
                                         <?php endforeach;?>
-                                        <input type="hidden" id="tagsArray" value="<?php echo str_replace('|||',',',$news['tags']);?>" name="tags" />   
+                                        <?php if(!empty($tag)):?>
+                                        <input type="hidden" id="tagsArray" value="<?php echo implode(',',$tag);?>" name="tags" />   
+                                        <?php else:?>
+                                        <input type="hidden" id="tagsArray" value="" name="tags" />   
+                                        <?php endif;?>
                                     </div>
                                                                 
                                 </div>
@@ -188,7 +193,8 @@
                             </div>
 
                             <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <input type="hidden" name="id" value="" />
+                                <input type="hidden" name="news_id" value="<?php echo $news['news_id']?>" />
+                                <input type="hidden" name='userid' value="<?php echo $news['userid'];?>">
                                 <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >保存</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>

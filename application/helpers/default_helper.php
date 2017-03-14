@@ -216,4 +216,13 @@ function igo_cate_list($arr,$id=0,$lev=1) {
     return $subs;
 }
 
+//返回发现模块标签名称
+function ret_find_tagName($tag_id){
+       $CI = &get_instance();
+       $where['tag_id'] = $tag_id;
+       $query = $CI->db->where($where)->get('hf_friend_news_tags');
+       $res = $query->row_array();
+       return $res['tagName'];
+}
+
  ?>

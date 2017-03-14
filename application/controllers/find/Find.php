@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -63,7 +63,9 @@ class Find extends CI_Controller {
             $data['cates'] = $this->Find_model->get_find_cates();
             //获取热门标签
             $data['tags'] = $this->Find_model->get_hot_tags();
-         
+            //获取帖子标签
+            $data['news_tag'] = $this->Find_model->ret_news_tag($id);
+          
             $data['news'] = $news;
             $data['page'] = $this->view_editService;
             $data['menu'] = array('find','findContent');
@@ -85,21 +87,36 @@ class Find extends CI_Controller {
                     echo "3";
                     exit;
                 } else{
-                    $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                    $pic['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
+                    $data['pic']= json_encode($pic);
                 }
             }
-            if($this->Find_model->edit_find_service($data['find_id'],$data)){
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
+            if($this->Find_model->edit_find_service($data['news_id'],$data)){
+                //删除所有已有的标签
+                $this->Find_model->del_news_tags($data['news_id']);
+                //新增帖子标签
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $data['news_id'],
+                        'tag_id' => $v,
+                        'create_time'=> date('Y-m-d H:i:s'),
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个帖子，帖子id是：".$data['find_id'],
+                    "content" => $_SESSION['users']['username']."编辑了一个帖子，帖子id是：".$data['news_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
                 $this->db->insert('hf_system_journal',$log);
-                echo "1";
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
             }else{
-                echo "3";
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
             }
 
         }else{
@@ -163,15 +180,26 @@ class Find extends CI_Controller {
                     echo "3";
                     exit;
                 } else{
-                    $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                     $pic['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
+                    $data['pic']= json_encode($pic);
                 }
             }
-            $data['tags'] = str_replace(',','|||',$data['tags']);
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
             $data['userid'] = $_SESSION['users']['user_id'];
             $data['create_time'] = date('Y_m-d H:i:s');
 
             $id =$this->Find_model->add_find_service($data); 
             if($id){
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $id,
+                        'tag_id' => $v,
+                        'create_time'=> $data['create_time'],
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
