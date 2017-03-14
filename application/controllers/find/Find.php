@@ -96,7 +96,7 @@ class Find extends Default_Controller {
                     echo "3";
                     exit;
                 } else{
-                    $pic['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
+                    $pic[0]['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
                     $data['pic']= json_encode($pic);
                 }
             }
@@ -189,7 +189,7 @@ class Find extends Default_Controller {
                     echo "3";
                     exit;
                 } else{
-                     $pic['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
+                     $pic[0]['picImg'] = '/Upload/find/'.$this->upload->data('file_name');
                     $data['pic']= json_encode($pic);
                 }
             }

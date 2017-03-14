@@ -135,8 +135,13 @@
                                     <div class="am-u-sm-6 am-u-end">
                                          <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
                                             <option value=''>请选择一个！</option>
+                                            
                                             <?php foreach($cates as $val):?>
+                                            <?php if(!empty($news['categoryid'])):?>
                                             <option value="<?php echo $val['cate_id'];?>" <?php if($val['cate_id'] == $news['categoryid']){echo "selected";}?>><?php echo $val['cate_name'];?></option>
+                                           <?php else:?>
+                                            <option value="<?php echo $val['cate_id'];?>"><?php echo $val['cate_name'];?></option>
+                                           <?php endif;?>
                                             <?php endforeach;?>
                                          </select>
                                     </div>
@@ -148,7 +153,7 @@
                                             <?php if(!empty($news['pic'])):?>
                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
                                                 <!-- 图片实时预览 -->
-                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php $pic = json_decode($news['pic'],true); echo $pic['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <div id="preview"> <img style="border-radius: 3px;" src="<?php $pic = json_decode($news['pic'],true); echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                             <?php else:?>
                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" required>
                                                 <!-- 图片实时预览 -->
