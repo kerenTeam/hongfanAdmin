@@ -254,7 +254,7 @@ function getList(dataurl,data){
             var res = eval(result);
             if(res != 2){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
+                total_page = Math.ceil(res.length/8); //得到总页数
                 for(var i = 0; i < res.length; i++){
                     listData += template('dataModal',res[i]);
                 }

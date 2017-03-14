@@ -37,7 +37,7 @@ class Find extends Default_Controller {
     function findComment(){
 
         $data['page'] = $this->view_comment;
-        $data['menu'] = array('find','findComment');
+        $data['menu'] = array('find','findContent');
         $this->load->view('template.html',$data);
     }
     //返回帖子列表
