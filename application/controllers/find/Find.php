@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends Default_Controller {
+class Find extends CI_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -33,12 +33,70 @@ class Find extends Default_Controller {
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
     }
+
+    //帖子搜索
+    function search_find_service(){
+        if($_POST){
+            $cateid = $this->input->post('cate_id');
+            $sear = $this->input->post('search');
+            $list = '';
+            //判断条件
+            if(!empty($cateid) && empty($sear)){
+                $list = $this->Find_model->get_find_cate_service($cateid);
+            }else if(empty($cateid) && !empty($sear)){
+                $list = $this->Find_model->get_find_sear_service($sear);
+            }else if(!empty($cateid) && !empty($sear)){
+                $list = $this->Find_model->get_find_service_search($cateid,$sear);
+            }
+
+            if(!empty($list)){
+                //获取分类名
+                 foreach($list as $key=>$val){
+                        if(empty($val['categoryid'])){
+                            $list[$key]['cate_name'] = "还没有归类,请编辑归类!";
+                        }else{
+                            $list[$key]['cate_name'] = $this->Find_model->ret_cate_name($val['categoryid']);
+                        }
+                 }
+                 echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //评论列表 
     function findComment(){
-
-        $data['page'] = $this->view_comment;
-        $data['menu'] = array('find','findContent');
-        $this->load->view('template.html',$data);
+        $newsid = intval($this->uri->segment(4));
+        if($newsid == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['news_id'] = $newsid;
+            $data['page'] = $this->view_comment;
+            $data['menu'] = array('find','findContent');
+            $this->load->view('template.html',$data);
+        }
+    }
+    //返回评论列表
+    function ret_find_service_comment(){
+        if($_POST){
+            $newsid = $this->input->post('news_id');
+            if(!empty($newsid)){
+                $list = $this->Find_model->get_find_service_comment($newsid);
+                if(!empty($list)){
+                    echo json_encode($list);
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
     }
     //返回帖子列表
     function ret_find_service(){
@@ -143,6 +201,8 @@ class Find extends Default_Controller {
                 $pic = $this->Find_model->ret_find_content($id);
                 @unlink(substr($pic['pic'],'1'));
                 if($this->Find_model->del_find_service($id)){
+                    //删除所有已有的标签
+                    $this->Find_model->del_news_tags($id);
                       // 日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  

@@ -6,6 +6,7 @@ class Find_model extends CI_Model
     public $category = "hf_friend_news_category";//分类表
     public $tags = "hf_friend_news_tags";//标签表
     public $news_tag = "hf_friend_news_tag";//帖子的标签表
+    public $news_comment = "hf_friend_news_commit";//帖子的评论表
 
     //返回帖子列表
     function get_find_service(){
@@ -15,6 +16,33 @@ class Find_model extends CI_Model
         $query = $this->db->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
+
+    //根据分类返回帖子
+    function get_find_cate_service($id){
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news as a');
+        $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $this->db->where('categoryid',$id)->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+    //根据关键字返回帖子
+    function get_find_sear_service($sear){
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news as a');
+        $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $this->db->like('content',$sear,'both')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+    //根据分类和关键字返回帖子
+    
+    function get_find_service_search($id,$sear){
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news as a');
+        $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $this->db->like('content',$sear,'both')->where('categoryid',$id)->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+
     //修改帖子状态
     function edit_find_service($id,$data){
         $where['news_id'] = $id;
@@ -122,6 +150,17 @@ class Find_model extends CI_Model
         return $this->db->where($where)->delete($this->tags);
     }
 
+    //返回帖子的所有评论
+    function get_find_service_comment($id){
+        $where['friend_news_id'] = $id;
+        $query = $this->db->where($where)->get($this->news_comment);
+        return $query->result_array();
+    }
+    //修改评论状态
+    function edit_find_service_comment($id,$data){
+         $where['id'] = $id;
+         return $this->db->where($where)->update($this->news_comment,$data);
+    }
     
     
 
