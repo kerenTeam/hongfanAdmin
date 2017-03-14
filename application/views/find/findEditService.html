@@ -90,6 +90,7 @@
         position: relative;
         display: inline-block;
         margin-right: 10px;
+        margin-bottom: 10px;
         font-size: 14px;
      }
      .smalldelete {
@@ -179,7 +180,7 @@
                                         </div>
                                         点击添加标签：  
                                         <?php foreach($tags as $val):?>
-                                        <span class="badegs" data-id="<?php echo $val['tag_id']?>"><?php echo $val['tagName'];?></span>
+                                        <span class="badegs" data-role="1" id="badges<?php echo $val['tag_id']?>" data-id="<?php echo $val['tag_id']?>"><?php echo $val['tagName'];?></span>
                                         <?php endforeach;?>
                                         <?php if(!empty($tag)):?>
                                         <input type="hidden" id="tagsArray" value="<?php echo implode(',',$tag);?>" name="tags" />   
@@ -208,7 +209,11 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-    var array = [];
+    var array = [], picArray=[], tagFlag = 1;
+    var tagSign = $('#tagsArray').val();
+    if(tagSign) {
+        array.push(tagSign);
+    }
     //删除图片
     $(".deleteImg").click(function(){
         
@@ -223,17 +228,22 @@
 
   //点击添加标签
   $('.badegs').click(function () {
-      var text = $(this).html(), tagid = $(this).attr("data-id");
+      var text = $(this).html(), tagid = $(this).attr("data-id"), role = $(this).attr("data-role");
       array.push(tagid);
-      var obj = document.getElementById('tieContent');
-      $('<span class="blue">#'+ text +'#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="' + tagid + '"></i></span>').appendTo("#tieContent");
-      $('#tagsArray').val(array);
+      if(role == "1") {
+        var obj = document.getElementById('tieContent');
+        $('<span class="blue">#'+ text +'#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="' + tagid + '"></i></span>').appendTo("#tieContent");
+        $('#tagsArray').val(array);
+        $(this).attr("data-role", "0");
+      }
   });
   //点击删除标签
   function deleteTags(obj) {
     var deleteId = $(obj).attr('data-id');
     array.splice($.inArray(deleteId, array), 1);
+    $('#tagsArray').val(array);
     $(obj).parent('span').remove();
+    $("#badges"+deleteId).attr("data-role", "1");
   }
 
 </script>
