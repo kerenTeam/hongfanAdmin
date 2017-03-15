@@ -146,6 +146,26 @@ class Find extends Default_Controller {
         }
     }
 
+    //评论搜索
+    function search_find_comment(){
+        if($_POST){
+            $id = $this->input->post('news_id');
+            $sear = $this->input->post('search');
+            if(!emtpy($sear)){
+                $list = $this->Find_model->find_comment_search($id,$sear);
+                if(!empty($list)){
+                    echo json_encode($list);
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //返回帖子列表
     function ret_find_service(){
         if($_POST){

@@ -175,6 +175,15 @@ class Find_model extends CI_Model
         $query= $this->db->where($where)->get($this->news_comment);
         return $query->row_array();
     }
+    //评论搜索
+    function find_comment_search($id,$sear){
+        $where['friend_news_id'] = $id;
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news_commit as a');
+        $this->db->join('hf_user_member as b','a.from_user_id = b.user_id','left');
+        $query= $this->db->where($where)->like('content',$sear,'both')->get();
+        return $query->result_array();
+    }
     
     
 
