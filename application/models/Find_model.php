@@ -13,7 +13,7 @@ class Find_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_friend_news as a');
         $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
-        $query = $this->db->order_by('a.create_time','desc')->get();
+        $query = $this->db->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
 

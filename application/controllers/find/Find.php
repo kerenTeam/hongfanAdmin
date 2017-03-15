@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -28,7 +28,7 @@ class Find extends CI_Controller {
 
     //文章列表	
 	function findContent(){
-
+        $data['cates'] = $this->Find_model->get_find_cates();
         $data['page'] = $this->view_content;
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
@@ -48,7 +48,6 @@ class Find extends CI_Controller {
             }else if(!empty($cateid) && !empty($sear)){
                 $list = $this->Find_model->get_find_service_search($cateid,$sear);
             }
-
             if(!empty($list)){
                 //获取分类名
                  foreach($list as $key=>$val){
