@@ -99,7 +99,7 @@ label {
                                     <th>编号</th>
                                     <th>评论帖子 </th>
                                     <th>发布用户 </th>
-                                    <th>评论内容 </th>
+                                    <th width="350">评论内容 </th>
                                     <th>评论用户 </th>
                                     <th>评论时间 </th>
                                     <th>操作</th>
@@ -209,7 +209,7 @@ function otherFunction() {
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/find/Find/del_sercive');?>",
-            data: 'find_id='+ dataId,
+            data: 'id='+ dataId,
             success: function(result){    
                 console.log(result);     
                 var res = eval(result);
@@ -239,6 +239,7 @@ function getList(dataurl,data){
         success: function(result){         
             var res = eval(result);
             if(res != 2){
+                console.log(res);
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
@@ -282,7 +283,7 @@ function validate(obj,minlen,maxlen,i){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
+    getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
     //刷新页面
     $('.refresh').click(function(){
         getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
@@ -290,19 +291,15 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= find_id%>">
-        <td class="am-text-middle"><%= news_id%></td>
+    <tr class="trClass" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id %></td>
         <td class="am-text-middle">
-            <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
+            <%= friend_news_id %>
         </td>
-         <td class="am-text-middle"><%= cate_name%></td>
-         <% if(username){%>
-         <td class="am-text-middle"><%= username%></td>
-         <%}else{%>
-         <td class="am-text-middle"><%= nickname%></td>
-         <%}%>
-          <td class="am-text-middle"><%= content%></td>
-        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle"><%= to_user_id%></td>
+        <td class="am-text-middle"><%= content%></td>
+        <td class="am-text-middle"><%= to_user_id%></td>
+        <td class="am-text-middle"><%= create_time_as%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a  data-id="<%= news_id%>" class="editContent">
@@ -312,7 +309,7 @@ $(document).ready(function(){
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
-        </td>
+        </td> 
     </tr>
     <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= news_id%>">
         <div class="am-modal-dialog">

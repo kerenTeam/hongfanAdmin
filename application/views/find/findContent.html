@@ -214,10 +214,10 @@ function next(argu){
 }
 function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
-        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id');
+        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id'), checkId =$('.checkComment').eq(i).attr('data-id') ;
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
-        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>");
-        $('.checkComment').eq(i).attr("href","<?php echo site_url().'/find/Find/findComment';?>")  
+        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + editId + "';?>");
+        $('.checkComment').eq(i).attr("href","<?php echo site_url().'/find/Find/findComment/" + checkId + "';?>");  
     }
     //删除帖子
     $('.sureDelete').click(function () {
@@ -306,7 +306,7 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= find_id%>">
+    <tr class="trClass" data-id="<%= news_id%>">
         <td class="am-text-middle"><%= news_id%></td>
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
