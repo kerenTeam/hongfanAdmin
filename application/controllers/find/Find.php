@@ -66,7 +66,6 @@ class Find extends Default_Controller {
         }
     }
 
-
     //评论列表 
     function findComment(){
         $newsid = intval($this->uri->segment(4));
@@ -97,6 +96,56 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
+    //修改帖子评论
+    function edit_service_comment(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data['state'] = $this->input->post('state');
+            $comment = $this->Find_model->get_find_comment($id);
+            if($this->Find_model->edit_find_service_comment($id,$data)){
+                  // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个帖子评论状态，帖子编号是".$comment['friend_news_id'].",评论id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+    //删除帖子评论
+    function del_service_comment(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $comment = $this->Find_model->get_find_comment($id);
+            if(!empty($comment)){
+                if($this->Find_model->del_find_service_comment($id)){
+                    // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个帖子评论，评论id是：".$id.",帖子遍号是：".$comment['friend_news_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    echo "1";
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //返回帖子列表
     function ret_find_service(){
         if($_POST){
