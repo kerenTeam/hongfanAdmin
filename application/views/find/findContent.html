@@ -77,7 +77,9 @@ label {
                         <div class="am-u-sm-8">
                             <select id="goodsType" name="cateid">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="0">帖子分类</option>
+                                <?php foreach($cates as $val):?>
+                                <option value="<?php echo $val['cate_id'];?>"><?php echo $val['cate_name'];?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>
@@ -296,10 +298,10 @@ function validate(obj,minlen,maxlen,i){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
+    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
+        getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     });
 })
 </script>

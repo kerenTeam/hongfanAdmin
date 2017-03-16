@@ -13,7 +13,7 @@ class Find_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_friend_news as a');
         $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
-        $query = $this->db->order_by('a.create_time','desc')->get();
+        $query = $this->db->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
 
@@ -153,13 +153,36 @@ class Find_model extends CI_Model
     //返回帖子的所有评论
     function get_find_service_comment($id){
         $where['friend_news_id'] = $id;
-        $query = $this->db->where($where)->get($this->news_comment);
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news_commit as a');
+        $this->db->join('hf_user_member as b','a.from_user_id = b.user_id','left');
+        $query = $this->db->where($where)->get();
         return $query->result_array();
     }
     //修改评论状态
     function edit_find_service_comment($id,$data){
          $where['id'] = $id;
          return $this->db->where($where)->update($this->news_comment,$data);
+    }
+    //删除评论
+    function del_find_service_comment($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->news_comment);
+    }
+    //根据id 返回评论
+    function get_find_comment($id){
+        $where['id'] = $id;
+        $query= $this->db->where($where)->get($this->news_comment);
+        return $query->row_array();
+    }
+    //评论搜索
+    function find_comment_search($id,$sear){
+        $where['friend_news_id'] = $id;
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news_commit as a');
+        $this->db->join('hf_user_member as b','a.from_user_id = b.user_id','left');
+        $query= $this->db->where($where)->like('content',$sear,'both')->get();
+        return $query->result_array();
     }
     
     

@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -28,7 +28,7 @@ class Find extends CI_Controller {
 
     //文章列表	
 	function findContent(){
-
+        $data['cates'] = $this->Find_model->get_find_cates();
         $data['page'] = $this->view_content;
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
@@ -48,7 +48,6 @@ class Find extends CI_Controller {
             }else if(!empty($cateid) && !empty($sear)){
                 $list = $this->Find_model->get_find_service_search($cateid,$sear);
             }
-
             if(!empty($list)){
                 //获取分类名
                  foreach($list as $key=>$val){
@@ -66,7 +65,6 @@ class Find extends CI_Controller {
             echo "2";
         }
     }
-
 
     //评论列表 
     function findComment(){
@@ -98,6 +96,76 @@ class Find extends CI_Controller {
             echo "2";
         }
     }
+    //修改帖子评论
+    function edit_service_comment(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data['state'] = $this->input->post('state');
+            $comment = $this->Find_model->get_find_comment($id);
+            if($this->Find_model->edit_find_service_comment($id,$data)){
+                  // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个帖子评论状态，帖子编号是".$comment['friend_news_id'].",评论id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+    //删除帖子评论
+    function del_service_comment(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $comment = $this->Find_model->get_find_comment($id);
+            if(!empty($comment)){
+                if($this->Find_model->del_find_service_comment($id)){
+                    // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."删除了一个帖子评论，评论id是：".$id.",帖子遍号是：".$comment['friend_news_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    echo "1";
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //评论搜索
+    function search_find_comment(){
+        if($_POST){
+            $id = $this->input->post('news_id');
+            $sear = $this->input->post('search');
+            if(!emtpy($sear)){
+                $list = $this->Find_model->find_comment_search($id,$sear);
+                if(!empty($list)){
+                    echo json_encode($list);
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
     //返回帖子列表
     function ret_find_service(){
         if($_POST){
