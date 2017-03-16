@@ -48,6 +48,26 @@ label {
     color: #1fb5ac;
 }
 
+.commentState {
+    background: #15b5ac;
+    border-radius: 5px;
+    border: 1px solid #15b5ac;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+
+.commentState option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+}
+.commentState option[selected="selected"] {
+    background: #15b5ac;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -74,7 +94,7 @@ label {
                             <input type="text" class="" placeholder="请输入搜素的关键字" id="searchKey" name="sear" />
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6 am-text-left">
+                    <div class="am-form-group am-u-sm-3 am-u-md-3 am-u-lg-3 am-u-end am-text-left">
                         <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
                     </div>
                 </form>
@@ -102,6 +122,7 @@ label {
                                     <th width="350">评论内容 </th>
                                     <th>评论用户 </th>
                                     <th>评论时间 </th>
+                                    <th>评论状态 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -201,14 +222,17 @@ function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
-        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>");    
+        $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + dataId + "';?>"); 
+        if($('.commentState option:selected').eq(i).val()=="0"){
+                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+        }     
     }
-    //删除帖子
+    //删除评论
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
         $.ajax({
             type:'post',
-            url: "<?php echo site_url('/find/Find/del_sercive');?>",
+            url: "<?php echo site_url('/find/Find/del_service_comment');?>",
             data: 'id='+ dataId,
             success: function(result){    
                 console.log(result);     
@@ -217,7 +241,7 @@ function otherFunction() {
                     alert("删除成功！");
                     $('#de'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                    getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -227,6 +251,48 @@ function otherFunction() {
                 alert("网络状况不佳，请稍后重试！");
             }
         });
+    });
+    //更改评论的状态
+    $('.commentState').change(function(){
+        var dataId=$(this).attr('data-id');
+        if($(this).find('option:selected').val()=="1"){
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/find/Find/edit_service_comment');?>',
+                data: 'id='+ dataId+'&state=1',
+                success: function(data){
+                    if(data==1){
+
+                    }else{
+                        alert("操作失败！");
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+            $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+        }else{
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/find/Find/edit_service_comment');?>',
+                data: 'id='+ dataId+'&state=0',
+                success: function(data){
+                    if(data==1){
+
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+            $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+        }
+        
+        
     });
     
 }
@@ -238,7 +304,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            if(res != 2){
+            if(res != 2 && res != 3){
                 console.log(res);
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -246,6 +312,7 @@ function getList(dataurl,data){
                     listData += template('dataModal',res[i]);
                 }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     var opts={};
                     opts.current_page = $findComment;
@@ -263,6 +330,7 @@ function getList(dataurl,data){
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }         
         },
         error:function(xhr,type,errorThrown){
@@ -280,13 +348,19 @@ function validate(obj,minlen,maxlen,i){
         $('.redtips'+ i).css('display','none');
         $('.blacktips'+ i).css('display','inline-block');
     }
-}
+} 
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/find/Find/ret_find_service');?>','default=1');
+        getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
+    });
+    //点击搜索
+    $('.searchSort').click(function(){
+        var keywords=$('#searchKey').val();
+        console.log('news_id=<?php echo $news_id;?>&search=' +keywords);
+        getList('<?php echo site_url('/find/Find/search_find_comment');?>', 'news_id=<?php echo $news_id;?>&search=' +keywords);
     });
 });
 
@@ -302,6 +376,21 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= content%></td>
         <td class="am-text-middle"><%= to_user_id%></td>
         <td class="am-text-middle"><%= create_time_as%></td>
+        <td class="am-text-middle">
+        <%if(state=="1"){%>
+            <select id="" class="commentState" name="commentState" data-id="<%= id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">显示</option>
+                <option value="0">隐藏</option>
+            </select>
+        <%}else{%>
+            <select id="" class="commentState" name="commentState" data-id="<%= id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">显示</option>
+                <option value="0" selected="selected">隐藏</option>
+            </select>
+        <%}%>
+        </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a  data-id="<%= news_id%>" class="editContent">

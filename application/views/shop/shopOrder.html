@@ -194,8 +194,7 @@ td.am-text-middle img{
             xhr.open('post',FileController,true);
             xhr.onload=function(){
                 alert("导入成功！");
-                location.reload();
-            
+                location.reload();     
             };
             xhr.send(form); 
             return true;
@@ -302,7 +301,7 @@ td.am-text-middle img{
         success: function(result){         
             var res = JSON.parse(result);
             // console.log(res);
-            if(res!=2){
+            if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
@@ -310,6 +309,7 @@ td.am-text-middle img{
                     listData+= template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($shopOrder);
                     var opts={};opts.current_page = $shopOrder;
@@ -328,12 +328,16 @@ td.am-text-middle img{
             }else{
                 $('#dataList').find('tr.trClass').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }
 
             
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr.trClass').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }

@@ -22,7 +22,7 @@ class Find_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_friend_news as a');
         $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
-        $query = $this->db->where('categoryid',$id)->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('categoryid',$id)->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
     //根据关键字返回帖子
@@ -30,7 +30,7 @@ class Find_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_friend_news as a');
         $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
-        $query = $this->db->like('content',$sear,'both')->order_by('a.create_time','desc')->get();
+        $query = $this->db->like('content',$sear,'both')->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
     //根据分类和关键字返回帖子
@@ -39,7 +39,7 @@ class Find_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_friend_news as a');
         $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
-        $query = $this->db->like('content',$sear,'both')->where('categoryid',$id)->order_by('a.create_time','desc')->get();
+        $query = $this->db->like('content',$sear,'both')->where('a.categoryid',$id)->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
 

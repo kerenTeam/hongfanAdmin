@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends Default_Controller {
+class Find extends CI_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -48,6 +48,7 @@ class Find extends Default_Controller {
             }else if(!empty($cateid) && !empty($sear)){
                 $list = $this->Find_model->get_find_service_search($cateid,$sear);
             }
+
             if(!empty($list)){
                 //获取分类名
                  foreach($list as $key=>$val){
@@ -151,7 +152,7 @@ class Find extends Default_Controller {
         if($_POST){
             $id = $this->input->post('news_id');
             $sear = $this->input->post('search');
-            if(!emtpy($sear)){
+            if(!empty($sear)){
                 $list = $this->Find_model->find_comment_search($id,$sear);
                 if(!empty($list)){
                     echo json_encode($list);

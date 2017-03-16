@@ -274,6 +274,7 @@ function getList(dataurl,data){
                     listData += template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($findCates);
                     var opts={};
@@ -292,6 +293,7 @@ function getList(dataurl,data){
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }
 
             
