@@ -1,3 +1,4 @@
+var picArray = [];
 function previewImage(file) {
   var MAXWIDTH = 350;
   var MAXHEIGHT = 249;
