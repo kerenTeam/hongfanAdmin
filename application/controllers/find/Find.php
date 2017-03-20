@@ -18,6 +18,8 @@ class Find extends CI_Controller {
 	public $view_cates = 'find/findCates.html';
 	//标签列表
 	public $view_tags = 'find/findTags.html';
+    //活动专题
+    public $view_findSpecial = 'find/findSpecial.html';
 
 
     function __construct()
@@ -568,6 +570,15 @@ class Find extends CI_Controller {
         }
     }
 
+
+    //发现活动列表
+    function findSpecial(){
+        
+    	$data['page'] = $this->view_findSpecial;
+        $data['menu'] = array('find','findSpecial');
+ 		$this->load->view('template.html',$data);
+    }
+    
 
 
 
