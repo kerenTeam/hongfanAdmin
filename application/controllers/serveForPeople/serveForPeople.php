@@ -13,8 +13,10 @@ class ServeForPeople extends Default_Controller
 	public $view_addhelpgroup = 'module/serveForPeople/addhelpgroup.html';
 	public $view_edithelpgroup = 'module/serveForPeople/edithelpgroup.html';
 	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
-            public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
-            public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
+    public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
+    public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
+    public $view_lawyergrouplist = 'module/serveForPeople/lawyergrouplist.html';
+    public $view_lawyergroupservelist = 'module/serveForPeople/lawyergroupservelist.html';
 	function __construct()
 	{
 		 parent::__construct();
@@ -680,6 +682,18 @@ class ServeForPeople extends Default_Controller
         }
     }
 
+     //为民服务  邻水律师团 成员列表
+    function lawyergrouplist(){
+        $data['page'] = $this->view_lawyergrouplist;
+        $data['menu'] = array('localLife','lawyergrouplist');
+        $this->load->view('template.html',$data);
+    }
+     //为民服务  邻水律师团 服务列表
+    function lawyergroupservelist(){
+        $data['page'] = $this->view_lawyergroupservelist;
+        $data['menu'] = array('localLife','lawyergroupservelist');
+        $this->load->view('template.html',$data);
+    }
 
 
 }

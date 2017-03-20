@@ -21,6 +21,14 @@
         color: #ffffff;
         min-height: 174px;
     }
+    .theme-white .widget-lawyer {
+        padding: 12px 17px;
+        border: 1px solid #ba55d3;
+        border-top: 2px solid #ba55d3;
+        background: #ba55d3;
+        color: #ffffff;
+        min-height: 174px;
+    }
     .deleteImg{
         display:inline-block;
         width:60px;
@@ -123,6 +131,30 @@ body.view{
                 </div>
             </div>
         <?php endif;?>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
+                <div class="widget widget-lawyer am-cf">
+                    <div class="widget-statistic-header">
+                        为民服务
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            律师团
+                        </div>
+                        <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergrouplist';?>" class="am-btn am-btn-secondary am-btn-xs">
+                              <i class="am-icon-user"></i>&nbsp;成员信息
+                         </a>
+                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergroupservelist';?>" class="am-btn am-btn-success am-btn-xs">
+                              <i class="am-icon-coffee"></i>&nbsp;服务信息
+                         </a>
+                        <div class="widget-statistic-description am-fr">
+                            
+                            <!-- 现共有<strong>390</strong> 个人获得过帮助 -->
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -173,10 +205,3 @@ body.view{
 </div>
 <!-- 为民服务 义工团队活动 结束 -->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
-    //实例化编辑器
-    var ue = UE.getEditor('editor');
-</script>
