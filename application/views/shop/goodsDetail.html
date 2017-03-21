@@ -258,11 +258,18 @@ td input{
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">物品重量：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="number" name='weight' id="weight" placeholder="/kg" value="<?php echo $goods['weight'];?>" />
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount'];?>" readonly />
                             </div>
                         </div>
+
                         <input type="hidden" name="parameter" id='inputproperty'>
                         <!-- <input type="hidden" name="amount" id='stockamount'> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -366,19 +373,27 @@ td input{
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
-                            <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮：</label>
+                            <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="radio" name='postage' <?php if(empty($goods['postage'])){echo "checked='checked'";}?> id="dispostage" />是
                                 <input type="radio" id="postage" <?php if(!empty($goods['postage'])){echo "checked";}?> name='postage'/>否
                             </div>
                         </div>
                         <div  <?php if(!empty($goods['postage'])){echo "style='display:block;'";}else{echo "style='display:none';";}?> class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 postageNumber"  >
-                            <label for="englishName" class="am-u-sm-3 am-form-label">请输入运费<span class="red">*</span>：</label>
-                            <div class="am-u-sm-8">
-                                <input type="number"  id="postageNum" value="<?php echo $goods['postage'];?>" name="postage" required="required" min="1" onblur="validate(this,2,20,3)" />
+                              <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 " >
+                                <label for="englishName" class="am-u-sm-3 am-form-label">选择快递公司<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select id="expressCompany" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='postage'>
+                                        <option value=''>请选择一个！</option>
+                                        <?php foreach($express as $val):?>
+                                        <option value="<?php echo $val['express_id'];?>" <?php if($val['express_id'] == $goods['postage']){echo "selected";}?>><?php echo $val['expressName'];?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                                <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
