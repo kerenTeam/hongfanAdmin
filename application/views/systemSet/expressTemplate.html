@@ -89,59 +89,61 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/add_express');?>" method="post" enctype="multipart/form-data" >
-                        <div class="widget am-cf">
-                            <div class="widget-head am-cf">
-                                <div class="widget-title  am-cf">编辑模板</div>
-                            </div>
-                            <div class="widget-body">
-                                <div class="memberInfo padding-horizontal-lg">
-                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                        <label class="am-u-sm-3 am-text-right">快递公司<span class="red">*</span>：</label>
-                                         <div class="am-u-sm-9 am-u-end">
-                                           <input type="text" name="expressName" id="expressCompany" placeholder="请输入快递公司">
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                        <label class="am-u-sm-3 am-text-right">基础运费(/kg)<span class="red">*</span>：</label>
-                                         <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="basicsPrice" id="baseFee" placeholder="请输入基础运费(3kg以内)">
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                        <label class="am-u-sm-3 am-text-right">基础重量(kg)<span class="red">*</span>：</label>
-                                         <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="basicsKg" id="baseWeight" placeholder="请输入超出加价的最低重量">
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                        <label class="am-u-sm-3 am-text-right">超出附加运费(/kg)<span class="red">*</span>：</label>
-                                         <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="beyondPrice" id="extraFee" placeholder="请输入超出附加运费">
-                                        </div>
-                                    </div>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">新增运费模板</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg">
+                            <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <label class="am-u-sm-3 am-text-right">快递公司<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                   <input type="text" name="expressName" id="expressCompany" placeholder="请输入快递公司">
+                                </div>
+                            </div> 
+                            <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <label class="am-u-sm-3 am-text-right">基础运费(/kg)<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                   <input type="number" name="basicsPrice" id="baseFee" placeholder="请输入基础运费(3kg以内)">
                                 </div>
                             </div>
-
-                            <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <button class="am-btn am-btn-secondary am-btn-xs sureAddExpress" type="submit"  >确定</button>
-                                <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                            <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <label class="am-u-sm-3 am-text-right">基础重量(kg)<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                   <input type="number" name="basicsKg" id="baseWeight" placeholder="请输入超出加价的最低重量">
+                                </div>
                             </div>
-
+                            <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <label class="am-u-sm-3 am-text-right">超出附加运费(/kg)<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                   <input type="number" name="beyondPrice" id="extraFee" placeholder="请输入超出附加运费">
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <button class="am-btn am-btn-secondary am-btn-xs sureAddExpress" type="submit"  >确定</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                    </div>
+
+                </div>
             </form>
         </div>
+    </div>
+    <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
                 <thead>
                     <tr>
+                        <th>编号</th>
                         <th>快递公司</th>
-                        <th>基础运费(/kg)</th>
-                        <th>基础重量(kg)</th>
-                        <th>超出附加运费(/kg)</th>
+                        <th>运费规则</th>
+                        <th>超出附加运费(元/kg)</th>
                         <th>操作</th>
                     </tr>
                 </thead>
-                <tbody id="expressTable">
+                <tbody id="dataList">
                     <tr class="even gradeC">
                         <td>顺丰</td>
                         <td>23</td>
@@ -163,7 +165,6 @@
             </table>
         </div>
     </div>
-
 </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
@@ -182,11 +183,229 @@
 //添加运费模板
 $('.sureAddExpress').click(function () {
     var expressCompany = $('#expressCompany').val(), baseFee = $('#baseFee').val(), baseWeight = $('#baseWeight').val(), extraFee = $('#extraFee').val();
-    $('<tr class="even gradeC"><td>' + expressCompany + '</td><td>' + baseFee + '</td><td>' + baseWeight + '</td><td>'+ extraFee + '</td></tr>').appendTo($('#expressTable'));
-})
+    $('<tr class="even gradeC"><td>' + expressCompany + '</td><td>' + baseFee + '</td><td>' + baseWeight + '</td><td>'+ extraFee + '</td></tr>').appendTo($('#dataList'));
+});
  
+var total_page = 0,pageflag = 1,flag = 0,current_page=0,$expressTemplate = parseInt(sessionStorage.getItem('expressTemplate')) || 0;
+//点击前往某一页的函数
+function go_to_page(page_num){
+    $('.page_link').removeClass('active_page');
+    $('.page_link').eq(page_num).addClass('active_page');
+    $("#dataList").children('tr').css("display","none");
+    var start_page=parseInt(15)*parseInt(page_num);
+    var end_page=parseInt(15)*parseInt(page_num+1);
+    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+    current_page=page_num;
+    sessionStorage.setItem('expressTemplate', current_page);
+    $expressTemplate = parseInt(sessionStorage.getItem('expressTemplate'));
+    
+}
 
+//点击上一页的函数
+function previous(){
+    if($('.current').length>1) {
+        new_page = parseInt($('.current').eq(0).html()) - 2;
+    }else {
+        new_page = parseInt($('.current').html()) - 2;
+    }
+    if(new_page >= 0) {
+        go_to_page(new_page);
+    }
+}
 
+//点击下一页的函数
+function next(argu){
+    if($('.current').length>1) {
+        new_page = parseInt($('.current').eq(1).html());
+    }else {
+        new_page = parseInt($('.current').html());
+    } 
+    if(new_page < argu){   
+        console.log(new_page + ' ' + argu);
+        go_to_page(new_page);
+    }
+}
+function otherOperation() {
+    for(var i=0;i<$('.tpl-del').length;i++){
+        var dataId=$('.tpl-del').eq(i).attr('data-id'),editId=$('.editExpress').eq(i).attr('data-id');
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+        $('.editExpress').eq(i).attr("data-am-modal","{target: '#edit"+ editId +"'}");                 
+    }
+    
+    //编辑运费模板
+    $('.sureSaveEx').click(function(){
+        var express_id=$(this).attr('data-id');
+        var expressName = document.getElementById('expressName' + express_id).value,
+        basicsPrice = document.getElementById('basicsPrice' + express_id).value,
+        basicsKg = document.getElementById('basicsKg' + express_id).value,
+        beyondPrice = document.getElementById('beyondPrice' + express_id).value;
+        console.log('express_id='+ express_id + '&expressName='+ expressName +'&basicsPrice='+ basicsPrice +'&basicsKg=' + basicsKg + '&beyondPrice='+beyondPrice);
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/systemSet/SystemSet/edit_express');?>',
+            data: 'express_id='+ express_id + '&expressName='+ expressName +'&basicsPrice='+ basicsPrice +'&basicsKg=' + basicsKg + '&beyondPrice='+beyondPrice,
+            success: function(data){
+                console.log(data);
+                if(data==1){
+                    $('#edit'+dataId).modal('close');
+                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+                }else{
+                    alert("操作失败！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+        
+    });
+    //删除运费模板
+    $('.sureDelete').click(function(){
+        var deleteId=$(this).attr('data-id');
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/systemSet/SystemSet/del_express');?>',
+            data: 'express_id='+deleteId,
+            success: function(data){
+                if(data==1){
+                    $('#'+dataId).modal('close');
+                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+                }else{
+                    alert("操作失败！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+        
+    });
+}
+//异步刷新的ajax请求 
+function getList(dataurl,data){
+    $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){         
+            var res = eval(result);
+            console.log(res);
+            if(res != 2 && res != 3){
+                var listData = ''; //每页出现的数量
+                total_page = Math.ceil(res.length/15); //得到总页数
+                for(var i = 0; i < res.length; i++){
+                    listData += template('dataModal',res[i]);
+                 }
+                document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
+                if(pageflag) {
+                    go_to_page($expressTemplate);
+                    var opts={};
+                    opts.current_page = $expressTemplate;
+                    $("#Pagination").pagination(total_page, opts);
+                    pageflag = 0;
+                } else {
+                    $("#Pagination").pagination(total_page);
+                    go_to_page(0);
+                    
+                }
+                if(total_page < 5) {
+                    $('.searchPage').css('display', 'none');
+                }
+                otherOperation();
+            }else{
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
+            }
+
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
+        }
+    });
+}
+$(document).ready(function(){
+    //加载列表数数据
+    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+});
+
+</script>
+<script type="text/html" id="dataModal">
+    <tr class="trClass" id="trClass<%= express_id%>" data-id="<%= express_id%>">
+        <td class="am-text-middle"><%= express_id %></td>
+        <td class="am-text-middle"><%= expressName %></td>
+        <td class="am-text-middle"><%= basicsPrice %>元/kg (<%= basicsKg %> kg以内)</td>
+        <td class="am-text-middle"><%= beyondPrice%></td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= express_id%>" class="editExpress">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+                <a data-id="<%= express_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= express_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= express_id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<%= express_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">编辑运费模板</div>
+            <div class="am-modal-bd">
+                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-4 am-form-label">快递公司 ：</label>
+                    <div class="am-u-sm-8">
+                        <input type="text" name="" id="expressName<%= express_id%>" placeholder="请输入快递公司" value="<%= expressName %>">
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-4 am-form-label">基础运费(元/kg) ：</label>
+                    <div class="am-u-sm-8">
+                        <input type="text" name="" id="basicsPrice<%= express_id%>" placeholder="请输入基础运费(/kg)" value="<%= basicsPrice %>">
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-4 am-form-label">基础重量(kg) ：</label>
+                    <div class="am-u-sm-8">
+                        <input type="text" name="" id="basicsKg<%= express_id%>" placeholder="请输入基础重量(kg)" value="<%= basicsKg %>">
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-4 am-form-label">超出附加运费(元/kg) ：</label>
+                    <div class="am-u-sm-8">
+                        <input type="text" name="" id="beyondPrice<%= express_id%>" placeholder="请输入超出附加运费(/kg)" value="<%= beyondPrice %>">
+                    </div>
+                </div>
+            </form>
+                
+            </div>
+            <div class="am-modal-footer">
+                <div class="am-modal-footer">
+                    <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                    <span class="am-modal-btn sureSaveEx" data-id="<%= express_id%>" data-am-modal-confirm>保存</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
 </body>
 </html>
