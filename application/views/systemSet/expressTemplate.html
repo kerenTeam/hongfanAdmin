@@ -1,0 +1,193 @@
+<style type="text/css" media="screen">
+    .am-selected{
+        width: 100%!important;
+    }
+    .table-check{
+        width: 30px;
+    } 
+    .hf-dropdown{
+        font-size: 12px!important;
+    padding: 5px 6px!important;
+    }
+ #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+    label{
+        font-weight: normal;
+    }
+    .am-list>li {
+        border: none;
+    }
+    .quan{
+        width: 280px;
+        height: 80px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #f43b41;
+        color:#fff;
+    }
+    a.quan:hover{
+        color:#fff;
+    }
+    .quan div {
+        height: 50px;
+        line-height: 50px;
+        display: inline-block;
+        vertical-align:middle;
+        font-size:30px;
+    }
+    .quan div p {
+        padding:0;
+        margin:0;
+        color:#ccc;
+        height:20px;
+        line-height: 20px;
+        font-size:10px;
+    }
+    .quan div p:first-child{
+        color:#fff;
+        font-size:16px;
+    }
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商家管理
+            <a href="<?php echo site_url().'/systemSet/SystemSet/adverManage';?>" style="font-size: 18px;">运费模板
+            </a>  
+            <!--<small><a href="<?php echo site_url().'/systemSet/SystemSet/adverEdit';?>">编辑广告详情</a></small>-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="post" enctype="multipart/form-data" >
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">编辑模板</div>
+                            </div>
+                            <div class="widget-body">
+                                <div class="memberInfo padding-horizontal-lg">
+                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                        <label class="am-u-sm-3 am-text-right">快递公司<span class="red">*</span>：</label>
+                                         <div class="am-u-sm-9 am-u-end">
+                                           <input type="text" name="express" id="expressCompany" placeholder="请输入快递公司">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                        <label class="am-u-sm-3 am-text-right">基础运费(/kg)<span class="red">*</span>：</label>
+                                         <div class="am-u-sm-9 am-u-end">
+                                           <input type="number" name="baseweight" id="baseFee" placeholder="请输入基础运费(3kg以内)">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                        <label class="am-u-sm-3 am-text-right">基础重量(kg)<span class="red">*</span>：</label>
+                                         <div class="am-u-sm-9 am-u-end">
+                                           <input type="number" name="title" id="baseWeight" placeholder="请输入超出加价的最低重量">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                        <label class="am-u-sm-3 am-text-right">超出附加运费(/kg)<span class="red">*</span>：</label>
+                                         <div class="am-u-sm-9 am-u-end">
+                                           <input type="number" name="title" id="extraFee" placeholder="请输入超出附加运费">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                                <input type="hidden" name="id" value="" />
+                                <button class="am-btn am-btn-secondary am-btn-xs sureAddExpress" type="button"  >确定</button>
+                                <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                            </div>
+
+                        </div>
+            </form>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black " id="example-r">
+                <thead>
+                    <tr>
+                        <th>快递公司</th>
+                        <th>基础运费(/kg)</th>
+                        <th>基础重量(kg)</th>
+                        <th>超出附加运费(/kg)</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="expressTable">
+                    <tr class="even gradeC">
+                        <td>顺丰</td>
+                        <td>23</td>
+                        <td>3</td>
+                        <td>5</td>
+                        <td>
+                            <div class="tpl-table-black-operation">
+                                <a data-id="" class="editGoods">
+                                    <i class="am-icon-pencil"></i> 修改
+                                </a>
+                                <a data-id="" class="tpl-table-black-operation-del tpl-del">
+                                    <i class="am-icon-trash"></i> 删除
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- more data -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+//添加运费模板
+$('.sureAddExpress').click(function () {
+    var expressCompany = $('#expressCompany').val(), baseFee = $('#baseFee').val(), baseWeight = $('#baseWeight').val(), extraFee = $('#extraFee').val();
+    $('<tr class="even gradeC"><td>' + expressCompany + '</td><td>' + baseFee + '</td><td>' + baseWeight + '</td><td>'+ extraFee + '</td></tr>').appendTo($('#expressTable'));
+})
+ 
+
+
+</script>
+</body>
+</html>

@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Find extends CI_Controller {
+class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
@@ -243,7 +243,7 @@ class Find extends CI_Controller {
                         'userid'=> $data['userid'],
                         'news_id' => $data['news_id'],
                         'tag_id' => $v,
-                        'create_time'=> date('Y-m-d H:i:s'),
+                        'create_news_tag_time'=> date('Y-m-d H:i:s'),
                     );
                     $this->Find_model->add_news_tag($arr);
                 }
@@ -330,7 +330,7 @@ class Find extends CI_Controller {
             $tags = explode(',',$data['tags']);
             unset($data['tags']);
             $data['userid'] = $_SESSION['users']['user_id'];
-            $data['create_time'] = date('Y_m-d H:i:s');
+            $data['create_news_time'] = date('Y_m-d H:i:s');
 
             $id =$this->Find_model->add_find_service($data); 
             if($id){
@@ -339,7 +339,7 @@ class Find extends CI_Controller {
                         'userid'=> $data['userid'],
                         'news_id' => $id,
                         'tag_id' => $v,
-                        'create_time'=> $data['create_time'],
+                        'create_news_tag_time'=> $data['create_news_time'],
                     );
                     $this->Find_model->add_news_tag($arr);
                 }

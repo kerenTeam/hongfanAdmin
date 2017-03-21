@@ -309,12 +309,39 @@ td input{
                             <input type="radio" name="cod" id="postage" value="0"/>否</div>
                             
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 postageNumber" >
-                            <label for="englishName" class="am-u-sm-3 am-form-label">请输入运费<span class="red">*</span>：</label>
-                            <div class="am-u-sm-8"><input type="number"  id="postageNum" name="postage" min="1" onblur="validate(this,2,10,3)" /></div>
-                            <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                        <div class="postageNumber">
+                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 " >
+                                <label for="englishName" class="am-u-sm-3 am-form-label">选择快递公司<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <select id="expressCompany" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='express'>
+                                        <option value=''>请选择一个！</option>
+                                        <option value="1">顺丰快递</option>
+                                        <option value="1">顺丰快递</option>
+                                        <option value="1">顺丰快递</option>
+
+                                    </select>
+                                </div>
+                                <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 " >
+                                <label for="englishName" class="am-u-sm-3 am-form-label">基础费用<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="number"  id="postageNum" name="postage" min="1" onblur="validate(this,2,10,3)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 " >
+                                <label for="englishName" class="am-u-sm-3 am-form-label">附加费用（超出）<span class="red">*</span>：</label>
+                                <div class="am-u-sm-8">
+                                    <input type="number"  id="postageNum" name="postage" min="1" onblur="validate(this,2,10,3)" />
+                                </div>
+                                <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
                         </div>
+                        
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">

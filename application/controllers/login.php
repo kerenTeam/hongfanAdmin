@@ -50,36 +50,38 @@ class Login extends CI_Controller {
                            $plateid = json_decode($plateid,true);
 
                            if(!empty($plateid)){
-                                if(in_array('0',$plateid,true)){
-                                    $query = $this->db->where('m_id','0')->order_by('modular_id','asc')->get('hf_system_modular');
-                                    $model= $query->result_array();
-                                    $arr = array();
-                                    foreach ($model as $key => $value) {
-                                        $arr[$key]['value'] =  $value;
-                                        $query2 = $this->db->where('m_id',$value['modular_id'])->get('hf_system_modular');
-                                        $arr[$key]['chick'] = $query2->result_array();
-                                    }
-                                }else{
+                                // if(in_array('0',$plateid,true)){
+                                //     $query = $this->db->where('m_id','0')->order_by('modular_id','asc')->get('hf_system_modular');
+                                //     $model= $query->result_array();
+                                //     $arr = array();
+                                //     foreach ($model as $key => $value) {
+                                //         $arr[$key]['value'] =  $value;
+                                //         $query2 = $this->db->where('m_id',$value['modular_id'])->get('hf_system_modular');
+                                //         $arr[$key]['chick'] = $query2->result_array();
+                                //     }
+                                // }else{
                                     foreach ($plateid as $key => $value) {
                                       $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
                                       $menu[] = $query->row_array();
                                     }
-
                                     $arr = array();
                                     foreach ($menu as $key => $value) {
-                                        if($value['m_id'] == 0){
-                                          $arr[$value['modular_id']]['value'] = $value;
-                                        }else{
-                                            $query = $this->db->where('modular_id',$value['m_id'])->get('hf_system_modular');
-                                            $modular = $query->row_array();
-                                            if($modular['m_id'] == 0){
-                                                $arr[$value['m_id']]['chick'][] = $value;
+           
+                                        if(!empty($value)){
+                                            if($value['m_id'] == 0){
+                                            $arr[$value['modular_id']]['value'] = $value;
                                             }else{
-                                                unset($menu[$key]);
+                                                $query = $this->db->where('modular_id',$value['m_id'])->get('hf_system_modular');
+                                                $modular = $query->row_array();
+                                                if($modular['m_id'] == 0){
+                                                    $arr[$value['m_id']]['chick'][] = $value;
+                                                }else{
+                                                    unset($menu[$key]);
+                                                }
                                             }
                                         }
                                     }
-                                }
+                                // }
           
                                 $json = json_encode($arr);
                                 $this->session->set_userdata('menu',$json);
@@ -87,6 +89,9 @@ class Login extends CI_Controller {
                                 $a['error'] = '你没有权限登录！';
                                 $this->load->view('login.html',$a);
                             }
+                          
+                            // var_dump($arr);
+                            // exit;
                             $data = array(
                                 "userid" => $user['user_id'],
                                 "content" => $user['username']."登录了！",

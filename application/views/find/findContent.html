@@ -252,13 +252,35 @@ function getList(dataurl,data){
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){ 
             var res = eval(result);
-            console.log(res);
+             console.log(res);
+           
+           
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/8); //得到总页数
                 for(var i = 0; i < res.length; i++){
+                    //  res[i].pic = JSON.parse(res[i].pic[0].picImg);
+
+                    if(res[i].pic.indexOf('http')>-1){
+                        res[i].pic =  res[i].pic;
+                    }else{
+                        if(JSON.parse(res[i].pic).length){
+                            res[i].pic = JSON.parse(res[i].pic)[0].picImg;
+                        }else{
+                            res[i].pic = '';
+                        }
+                    }
+                    console.log(res[i].pic);
+                    
+                    // if(JSON.parse(res[i].pic).length){
+                        // res[i].pic = JSON.parse(res[i].pic)[0].picImg;
+                    // }else{
+                        // res[i].pic = '';
+                    // }
+                    
+
                     listData += template('dataModal',res[i]);
                 }
                 document.getElementById('dataList').innerHTML = listData;

@@ -35,11 +35,13 @@ class SystemSet extends Default_Controller {
     public $view_adverManage = 'systemSet/adverManage.html';
     //系统设置 广告管理
     public $view_adverEdit = 'systemSet/adverEdit.html';
+    
 
     //系统日志
     public $view_system_journal = "systemSet/journal.html";
 
-
+    //运费模板
+    public $view_express = "systemSet/expressTemplate.html";
     function __construct()
     {
         parent::__construct();
@@ -807,6 +809,15 @@ class SystemSet extends Default_Controller {
         }
     }
 
+
+    //运费模板
+    function expressTemplate(){
+        
+        $data['page'] = $this->view_express;
+        $data['menu'] = array('systemSet','expressTemplate');
+        $this->load->view('template.html',$data);
+    }
+    //返回
 
 
 }
