@@ -88,7 +88,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/add_express');?>" method="post" enctype="multipart/form-data" >
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">编辑模板</div>
@@ -98,33 +98,32 @@
                                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
                                         <label class="am-u-sm-3 am-text-right">快递公司<span class="red">*</span>：</label>
                                          <div class="am-u-sm-9 am-u-end">
-                                           <input type="text" name="express" id="expressCompany" placeholder="请输入快递公司">
+                                           <input type="text" name="expressName" id="expressCompany" placeholder="请输入快递公司">
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
                                         <label class="am-u-sm-3 am-text-right">基础运费(/kg)<span class="red">*</span>：</label>
                                          <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="baseweight" id="baseFee" placeholder="请输入基础运费(3kg以内)">
+                                           <input type="number" name="basicsPrice" id="baseFee" placeholder="请输入基础运费(3kg以内)">
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
                                         <label class="am-u-sm-3 am-text-right">基础重量(kg)<span class="red">*</span>：</label>
                                          <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="title" id="baseWeight" placeholder="请输入超出加价的最低重量">
+                                           <input type="number" name="basicsKg" id="baseWeight" placeholder="请输入超出加价的最低重量">
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
                                         <label class="am-u-sm-3 am-text-right">超出附加运费(/kg)<span class="red">*</span>：</label>
                                          <div class="am-u-sm-9 am-u-end">
-                                           <input type="number" name="title" id="extraFee" placeholder="请输入超出附加运费">
+                                           <input type="number" name="beyondPrice" id="extraFee" placeholder="请输入超出附加运费">
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                                <input type="hidden" name="id" value="" />
-                                <button class="am-btn am-btn-secondary am-btn-xs sureAddExpress" type="button"  >确定</button>
+                                <button class="am-btn am-btn-secondary am-btn-xs sureAddExpress" type="submit"  >确定</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>
 

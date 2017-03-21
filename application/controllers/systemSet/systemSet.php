@@ -817,8 +817,82 @@ class SystemSet extends Default_Controller {
         $data['menu'] = array('systemSet','expressTemplate');
         $this->load->view('template.html',$data);
     }
-    //返回
+    //返回运费模板
+    function ret_express_list(){
+        if($_POST){
+            $list = $this->System_model->get_express_temp();
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
+    //新增运费模板
+    function add_express(){
+        if($_POST){
+            $data = $this->input->post();
+            $data['create_time'] = date('Y-m-d H:i:s');
+            if($this->System_model->add_express_temp($data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个快递模板 快递公司名称是".$data['expressName'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/expressTemplate')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/expressTemplate')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //编辑运费模板
+    function edit_express(){
+        if($_POST){
+            $data = $this->input->post();
+            if($this->System_model->edit_express_temp($data['express_id'],$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个快递模板 快递公司名称是".$data['expressName'].",模板id是".$data['express_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //删除快递模板
+    function del_express(){
+        if($_POST){
+            $id = $this->input->post('express_id');
+            if($this->System_model->del_express_temp($id)){
+                  $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."编辑了一个快递模板,模板id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 }
 

@@ -17,7 +17,8 @@ class System_model extends CI_Model
     public $report = "hf_local_hometown_reports";
     //app版本
     public $version = "hf_system_version";
-
+    //运费模板
+    public $express = "hf_mall_goods_express";
     function __construct()
     {
        parent::__construct();
@@ -168,6 +169,27 @@ class System_model extends CI_Model
         $sql = "SELECT a.*,b.user_id,b.username,b.nickname from hf_system_journal as a, hf_user_member as b where a.userid = b.user_id order by create_time desc";
         $query = $this->db->query($sql);
         return $query->result_array();
+    }
+
+    //返回运费模板
+    function get_express_temp(){
+        $query = $this->db->get($this->express);
+        return $query->result_array();
+    }
+    //新增运费模板
+    function add_express_temp($data){
+        return $this->db->insert($this->express,$data);
+    }
+    //编辑运费模板
+    function edit_express_temp($id,$data){
+        $where['express_id'] = $id;
+        return $this->db->where($where)->update($this->express,$data);
+    }
+
+    //删除运费模板
+    function del_express_temp($id){
+        $where['express_id'] = $id;
+        return $this->db->where($where)->delete($this->express);
     }
 
 
