@@ -11,7 +11,7 @@
         text-align: center;
         color: #666;
         font-size: 1.2rem;
-    }
+    } 
      .clickUp{
         display: inline-block;
         float: left;
@@ -41,7 +41,27 @@
     textarea{
         width: 100%;
     }
+    .reportState {
+        width: 120px;
+        background: #15b5ac;
+        border-radius: 5px;
+        border: 1px solid #15b5ac;
+        padding:5px 5px;
+        color: #fff;
+        text-align: center;
+    }
 
+    .reportState option {
+        background: #fff;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding:2px 0px;
+        color: #000;
+        text-align: center;
+    } 
+    .reportState option[selected="selected"] {
+        background: #15b5ac;
+    }
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -79,11 +99,12 @@
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="moll_name">编号</th>
-                                    <th class="shop_id">新闻名称 </th>
-                                    <th class="shop_id">新闻缩略图 </th>
-                                    <th class="shop_id">点赞数 </th>
-                                    <th class="shop_name">发布时间 </th>
+                                    <th>编号</th>
+                                    <th>新闻名称 </th>
+                                    <th>新闻缩略图 </th>
+                                    <th>点赞数 </th>
+                                    <th>发布时间 </th>
+                                    <th>推荐到首页 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -164,8 +185,42 @@ function otherOperation() {
     for(var i=0;i<$('.tpl-del').length;i++){
         var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editReport').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-        $('.editReport').eq(i).attr("href","<?php echo site_url().'/module/HomeReport/homeReportEdit/"+edDataId+"';?>");                        
+        $('.editReport').eq(i).attr("href","<?php echo site_url().'/module/HomeReport/homeReportEdit/"+edDataId+"';?>"); 
+        if($('.reportState').eq(i).val()=="0"){
+            $('.reportState').eq(i).css({'background':' #e0690c','border':'1px solid #e0690c'});
+        } else if($('.reportState').eq(i).val()=="1"){
+            $('.reportState').eq(i).css({'background':' #23abf0','border':'1px solid #23abf0'});
+        }
+                                
     }
+    //是否推荐到首页
+    $('.reportState').change(function(){
+        var dataId=$(this).attr('data-id'), state = $(this).find('option:selected').val(); 
+ 
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/module/HomeReport/edit_notice_state');?>',
+            data: 'id='+ dataId+'&state='+ state,
+            success: function(data){
+                if(data==1){
+                     
+                }else{
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+        console.log(state);
+        if(state == "1") {
+            $(this).css({'background':' #23abf0','border':'1px solid #23abf0'});
+        }else if(state == "2") {
+            $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'});
+        } else {
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }    
+    });
 
     //删除管理员帐户
     $('.sureDelete').click(function(){
@@ -254,6 +309,30 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= red_heart%></td>
         <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle">
+        <%if(state=="0"){%>
+            <select class="reportState" name="reportState" data-id="<%= id %>">
+                <option value="">-=请选择一项=-</option>
+                <option value="0" selected="selected">不显示</option>
+                <option value="1">显示</option>
+                <option value="2">首页滚动显示</option>
+            </select>
+        <%}else if(state=="1") {%>
+            <select class="reportState" name="reportState" data-id="<%= id %>">
+                <option value="">-=请选择一项=-</option>
+                <option value="0">不显示</option>
+                <option value="1" selected="selected">显示</option>
+                <option value="2">首页滚动显示</option>
+            </select>
+        <% } else { %>
+            <select class="reportState" name="reportState" data-id="<%= id %>">
+                <option value="">-=请选择一项=-</option>
+                <option value="0">不显示</option>
+                <option value="1" >显示</option>
+                <option value="2" selected="selected">首页滚动显示</option>
+            </select>
+        <%}%>
+        </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="editReport">
