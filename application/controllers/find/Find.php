@@ -581,10 +581,24 @@ class Find extends Default_Controller {
         $data['menu'] = array('find','findSpecial');
  		$this->load->view('template.html',$data);
     }
+
+    //返回专题活动列表
+    function ret_findSpecial_list(){
+        if($_POST){
+            $type = $this->input->post('type');
+            $list = $this->Find_model->get_find_special($type);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
     
     //活动专题 新增
     function findAddSpecial(){
-        
         $data['page'] = $this->view_findAddSpecial;
         $data['menu'] = array('find','findAddSpecial');
         $this->load->view('template.html',$data);
@@ -595,6 +609,8 @@ class Find extends Default_Controller {
         $data['menu'] = array('find','findEditSpecial');
         $this->load->view('template.html',$data);
     }
+
+
 
 
 

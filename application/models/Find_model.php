@@ -7,6 +7,8 @@ class Find_model extends CI_Model
     public $tags = "hf_friend_news_tags";//标签表
     public $news_tag = "hf_friend_news_tag";//帖子的标签表
     public $news_comment = "hf_friend_news_commit";//帖子的评论表
+    public $findSpecial = "hf_friend_news_activity";//发现的活动或专题
+
 
     //返回帖子列表
     function get_find_service(){
@@ -185,7 +187,29 @@ class Find_model extends CI_Model
         return $query->result_array();
     }
     
+    //返回活动或专题列表
+    function get_find_special($type){
+        $where['act_id'] = $type;
+        $query = $this->db->where($where)->get($this->findSpecial);
+        return $query->result_array();
+    }
     
+    //新增发现活动或专题
+    function add_find_special($data){
+        return $this->db->insert($this->findSpecial,$data);
+    }
+
+    //编辑发现活动或专题
+    function edit_find_special($id,$data){
+        $where['q_id'] = $id;
+        return $this->db->where($where)->update($this->findSpecial,$data);
+    }
+    //删除发现活动或专题
+    function del_find_special($id){
+        $where['q_id'] = $id;
+        return $this->db->where($where)->delete($this->findSpecial);
+    }
+   
 
 
 }
