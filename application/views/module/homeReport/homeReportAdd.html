@@ -103,6 +103,17 @@
                                 <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">新闻分类<span class="red">*</span>：</label>
+                              <div class="am-u-sm-6 am-u-end">
+                                    <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='cateid'>
+                                        <option value=''>请选择一个！</option>
+                                        <?php foreach($cates as $val):?>
+                                        <option value="<?php echo $val['cate_id'];?>"><?php echo $val['name'];?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">新闻缩略图<span class="red">*</span>：</label>
                                  <div class="am-u-sm-6 am-u-end">
                                     <div class="wx_type_img">

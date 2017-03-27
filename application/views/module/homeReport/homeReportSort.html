@@ -135,11 +135,11 @@
     <div class="am-modal-dialog">
         <div class="am-modal-hd">新增分类</div>
         <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form" action="<?php echo site_url('find/Find/add_find_cates');?>"  data-am-validator method="post" enctype='multipart/form-data'>
+            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/HomeReport/add_homeReport_cates');?>"  data-am-validator method="post" enctype='multipart/form-data'>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">分类名 ：</label>
                     <div class="am-u-sm-8 am-u-end">
-                        <input type="text" name="cate_name" required minlength="2" maxlength="15" onblur="validate(this,2,15,3)" />
+                        <input type="text" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,3)" />
                     </div>
                     <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                     <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>

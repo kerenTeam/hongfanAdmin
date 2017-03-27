@@ -13,12 +13,15 @@ class System_model extends CI_Model
     public $system = "hf_system";
     //广告
     public $adver = "hf_ads";
-    //系统公告
+    //家乡话
     public $report = "hf_local_hometown_reports";
     //app版本
     public $version = "hf_system_version";
     //运费模板
     public $express = "hf_mall_goods_express";
+    //家乡话分类
+    public $report_cates = "hf_local_hometown_reports_cates";
+
     function __construct()
     {
        parent::__construct();
@@ -132,6 +135,11 @@ class System_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->update($this->report,$data);
     }
+    //修改家乡话状态
+    function edit_notice_state($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->report,$data);
+    }
 
     //返回编辑新闻内容
     function get_notice_info($id){
@@ -190,6 +198,27 @@ class System_model extends CI_Model
     function del_express_temp($id){
         $where['express_id'] = $id;
         return $this->db->where($where)->delete($this->express);
+    }
+
+    //返回家乡话 分类
+    function get_reportCates(){
+        $query = $this->db->order_by("sort","desc")->get($this->report_cates);
+        return $query->result_array();
+    }
+    //新增家乡话分类
+    function add_reportCates($data){
+        return $this->db->insert($this->report_cates,$data);
+    }
+
+    //编辑家乡话分类
+    function edit_report_cates($id,$data){
+        $where['cate_id'] = $id;
+        return $this->db->where($where)->update($this->report_cates,$data);
+    }
+    //删除家乡话分类
+    function del_report_cates(){
+        $where['cate_id'] = $id;
+        return $this->db->where($where)->delete($this->report_cates,$data);
     }
 
 
