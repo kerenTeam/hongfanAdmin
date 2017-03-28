@@ -137,6 +137,7 @@ padding: 5px 6px!important;
                                     <?php if(!empty($find)):?>
                                         <a id="add_store" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
                                     <?php endif;?>
+                                    <a id="" href="test1.html" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
                                 </div>
                             </div>
                         </div>
@@ -237,6 +238,136 @@ padding: 5px 6px!important;
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     var total_page=0,pageflag = 1, $shopList = parseInt(sessionStorage.getItem('shopList')) || 0;
+    function otherFunction() {
+        $('.editShop').click(function(){//编辑商家信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/shop/shop/editShop/" + dataId + "');?>");
+        });
+        $('.manageShop').click(function(){//管理商家信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/shop/singleShop/shopAdmin/" + dataId + "');?>");
+        });
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+            if($('.shopState option:selected').eq(i).val()=="0"){
+                $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            }                          
+        }
+        //点击选中所有
+        $('.tablecheck').click(function() {
+            var start_page=parseInt(15)*parseInt($shopList);
+            var end_page=parseInt(15)*parseInt($shopList+1);
+            if(flag==0){
+              for(var i = start_page; i < end_page; i++) {
+                if(document.getElementsByClassName('commentBox')[i]){
+                    document.getElementsByClassName('commentBox')[i].checked=true;
+                }        
+              }  
+              flag=1;
+            }else{
+               for(var i = start_page; i < end_page; i++) {
+                if(document.getElementsByClassName('commentBox')[i]){
+                    document.getElementsByClassName('commentBox')[i].checked=false;
+                }  
+               }
+               flag=0;
+            }
+        });
+        //更改商家的状态
+        $('.shopState').change(function(){
+            var dataId=$(this).attr('data-id');
+            if($(this).find('option:selected').val()=="1"){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
+                    data: 'id='+ dataId+'&state=1',
+                    success: function(data){
+                        if(data==1){
+                            
+                        }else{
+                            alert("操作失败！");
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    } 
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
+                    data: 'id='+ dataId+'&state=2',
+                    success: function(data){
+                        if(data==1){
+
+                        }else{
+                            alert("操作失败！");
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            }
+            
+            
+        });
+        //加入达人推荐的ajax请求
+        $('#add_store').click(function(){
+            var array=[];
+            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+                
+                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+            }
+            if(array == ''){
+                alert('你还没有选择商品！');
+            }else{
+                storeid=JSON.stringify(array);
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/Shop/add_find_store');?>',
+                    data: 'storeid='+storeid+'&id='+'<?php echo $find;?>',
+                    success: function(data){
+                        if(data==1){
+                            alert('加入成功');
+                            window.location.href='<?php echo site_url("/shop/Shop/findshop");?>';
+                        }else{
+                            alert("操作失败！");
+                        }
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+            }
+        });
+
+
+        //删除商家的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/shop/del_shop_store');?>',
+                data: 'id='+dataId,
+                success: function(data){
+                    if(data==1){
+                        $('#trClass'+dataId).remove();
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+            
+        });
+    }
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -338,6 +469,7 @@ padding: 5px 6px!important;
                 if(total_page < 5) {
                     $('.searchPage').css('display', 'none');
                 }
+                otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商家信息！</p></td></tr>').appendTo('#dataList');
@@ -361,26 +493,7 @@ $(document).ready(function(){
     $('.refresh').click(function(){
         getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
     });
-    //点击选中所有
-    $('.tablecheck').click(function() {
-        var start_page=parseInt(15)*parseInt($shopList);
-        var end_page=parseInt(15)*parseInt($shopList+1);
-        if(flag==0){
-          for(var i = start_page; i < end_page; i++) {
-            if(document.getElementsByClassName('commentBox')[i]){
-                document.getElementsByClassName('commentBox')[i].checked=true;
-            }        
-          }  
-          flag=1;
-        }else{
-           for(var i = start_page; i < end_page; i++) {
-            if(document.getElementsByClassName('commentBox')[i]){
-                document.getElementsByClassName('commentBox')[i].checked=false;
-            }  
-           }
-           flag=0;
-        }
-    });
+    
     //点击搜索
     $('.searchShop').click(function(){
         var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),berth=$('#berth').val(),keywords=$('#keywords').val();
