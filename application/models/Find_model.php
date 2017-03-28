@@ -186,6 +186,12 @@ class Find_model extends CI_Model
         $query= $this->db->where($where)->like('content',$sear,'both')->get();
         return $query->result_array();
     }
+
+    //返回活动主题
+    function ret_find_activity(){
+        $query = $this->db->get('hf_friend_news_activity_group');
+        return $query->result_array();
+    }
     
     //返回活动或专题列表
     function get_find_special($type){
