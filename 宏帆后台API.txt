@@ -258,7 +258,18 @@
 /**
  * @name	    返回专题活动列表
  * @type	    post
- * @parameter	type='' //1活动  2专题
+ * @parameter	type='<?php echo $type;?>' //1活动  2专题
  * @Return		1/2/3
  * @url		    <?php echo site_url('/find/Find/ret_findSpecial_list');?>
 */
+
+#删除专题活动
+/**
+ * @name	    删除专题活动  //提示如果删除会把这个专题下的所有帖子全部删除
+ * @type	    post
+ * @parameter	q_id='' 
+ * @Return		1/2/3
+ * @url		    <?php echo site_url('/find/Find/del_findSpecial');?>
+*/
+
+
