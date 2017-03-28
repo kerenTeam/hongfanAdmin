@@ -5,30 +5,36 @@
         border: 1px solid #fff;
         border-radius: 5px;
      }
-     .theme-white .widget-water {
-        padding: 12px 17px;
-        border: 1px solid #77bde2;
-        border-top: 2px solid #77bde2;
-        background: #77bde2;
+    
+    .theme-white .widget-primar, .theme-white .widget-elec {
+        padding: 10px 10px;
         color: #ffffff;
         min-height: 174px;
+        
     }
-    .theme-white .widget-elec {
-        padding: 12px 17px;
-        border: 1px solid #c77eb5;
-        border-top: 2px solid #c77eb5;
-        background: #c77eb5;
-        color: #ffffff;
-        min-height: 174px;
+	.theme-white .widget-primar .widget-statistic-header, .theme-white .widget-elec .widget-statistic-header {
+        padding-top: 200px; 
+        position: relative;
     }
-    .theme-white .widget-lawyer {
-        padding: 12px 17px;
-        border: 1px solid #ba55d3;
-        border-top: 2px solid #ba55d3;
-        background: #ba55d3;
-        color: #ffffff;
-        min-height: 174px;
+    .theme-white .widget-elec img.imgbg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
     }
+    .theme-white .widget-primar img.imgbg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     .deleteImg{
         display:inline-block;
         width:60px;
@@ -40,7 +46,8 @@
         border:  1px solid #ddd;
     }
     .theme-white .widget-statistic-value{
-        font-size: 30px;
+        font-size: 25px;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.8);
     }
     #preview img{
         width: 200px;
@@ -75,15 +82,15 @@ body.view{
 
     <div class="row-content am-cf">
         <div class="row  am-cf">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                <div class="widget widget-primary am-cf">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4" >
+                <div class="widget widget-primar am-cf">
+                	
                     <div class="widget-statistic-header">
-                        发现
+                        <a href="<?php echo site_url().'/find/Find/findSpecial';?>"><img class="imgbg" src="assets/img/a5.png"></a>
+                        <div class="widget-statistic-value">发现专题</div>
                     </div>
                     <div class="widget-statistic-body">
-                        <div class="widget-statistic-value">
-                            发现专题
-                        </div>
+                        
                         <a  class="am-btn am-btn-secondary am-btn-xs" data-am-modal="{target : '#findSpecial'}">
                               <i class="am-icon-user"></i>&nbsp;编辑专题
                          </a>
@@ -94,15 +101,16 @@ body.view{
                     </div>
                 </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 am-u-end">
                 <div class="widget widget-elec am-cf">
+                    
                     <div class="widget-statistic-header">
-                        发现
+                        <a href="<?php echo site_url().'/find/Find/findSpecial';?>"><img class="imgbg" src="assets/img/a5.png"></a>
+                        <div class="widget-statistic-value">发现活动</div>
+                        
                     </div>
                     <div class="widget-statistic-body">
-                        <div class="widget-statistic-value">
-                            发现活动
-                        </div>
+                        
                         <a data-am-modal="{target : '#findActivity'}" class="am-btn am-btn-secondary am-btn-xs">
                               <i class="am-icon-user"></i>&nbsp;编辑活动
                          </a>
