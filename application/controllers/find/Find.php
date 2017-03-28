@@ -577,6 +577,7 @@ class Find extends Default_Controller {
 
     //返回活动专题icon
     function findActivity(){
+        $data['activity'] = $this->Find_mdoel->ret_find_activity();
         
         $data['page'] = $this->view_findActivity;
         $data['menu'] = array('find','findActivity');
