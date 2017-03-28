@@ -24,6 +24,8 @@ class Find extends Default_Controller {
     public $view_findAddSpecial = 'find/findAddSpecial.html';
     //活动 编辑
     public $view_findEditSpecial = 'find/findEditSpecial.html';
+    //活动专题编辑
+    public $view_findActivity = "find/findActivity.html";
 
     function __construct()
     {
@@ -573,12 +575,19 @@ class Find extends Default_Controller {
         }
     }
 
-
+    //返回活动专题icon
+    function findActivity(){
+        
+        $data['page'] = $this->view_findActivity;
+        $data['menu'] = array('find','findActivity');
+ 		$this->load->view('template.html',$data);
+    }
+    
     //发现专题 列表
     function findSpecial(){
         
     	$data['page'] = $this->view_findSpecial;
-        $data['menu'] = array('find','findSpecial');
+        $data['menu'] = array('find','findActivity');
  		$this->load->view('template.html',$data);
     }
 
@@ -596,17 +605,22 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
-    
+
     //活动专题 新增
     function findAddSpecial(){
+
         $data['page'] = $this->view_findAddSpecial;
-        $data['menu'] = array('find','findAddSpecial');
+        $data['menu'] = array('find','findActivity');
         $this->load->view('template.html',$data);
     }
+
+    //新增操作
+
+
     //活动专题 编辑
     function findEditSpecial(){      
         $data['page'] = $this->view_findEditSpecial;
-        $data['menu'] = array('find','findEditSpecial');
+        $data['menu'] = array('find','findActivity');
         $this->load->view('template.html',$data);
     }
 
