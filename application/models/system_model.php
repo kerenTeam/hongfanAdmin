@@ -216,9 +216,9 @@ class System_model extends CI_Model
         return $this->db->where($where)->update($this->report_cates,$data);
     }
     //删除家乡话分类
-    function del_report_cates(){
+    function del_report_cates($id){
         $where['cate_id'] = $id;
-        return $this->db->where($where)->delete($this->report_cates,$data);
+        return $this->db->where($where)->delete($this->report_cates);
     }
 
 

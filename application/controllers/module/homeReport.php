@@ -269,7 +269,7 @@ class HomeReport extends Default_Controller {
             echo "2";
         }
     }
-    //删除家乡报道份额里
+    //删除家乡报道分类
     function del_homeReport_Cates(){
         if($_POST){
             $id = $this->input->post('cate_id');

@@ -92,7 +92,7 @@
                                 <td class="am-text-middle">2016-10-25 10:33</td>
                                 <td class="am-text-middle">
                                     <div class="tpl-table-black-operation">
-                                        <a class="editReport" data-am-modal="{target: '#edit_cates'}">
+                                        <a class="editSort" data-am-modal="{target: '#edit_cates'}">
                                             <i class="am-icon-pencil"></i> 编辑
                                         </a>
                                         <a class="tpl-table-black-operation-del tpl-del" >
@@ -242,7 +242,7 @@ function next(argu){
 function otherOperation() {
     for(var i=0; i<$('.tpl-del').length; i++) {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
         $('.editSort').eq(i).attr("data-am-modal","{target: '#edit"+ dataId +"'}");                         
     }
     //编辑分类
@@ -251,15 +251,15 @@ function otherOperation() {
 
         $.ajax({
             type:'post',
-            url: "<?php echo site_url('/find/Find/edit_find_cates');?>",
-            data: 'cate_name='+ cateName +'&cate_id='+ dataId +"&sort="+sort,
+            url: "<?php echo site_url('/module/HomeReport/edit_homeReport_Cates');?>",
+            data: 'cate_id='+ dataId +'&name='+ cateName +"&sort="+sort,
             success: function(result){         
                 var res = eval(result);
                 if(res == 1){
                     alert("修改成功！");
                     $('#edit'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
+                    getList("<?php echo site_url('/module/HomeReport/ret_homeReportSort_cates');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -273,17 +273,19 @@ function otherOperation() {
     //删除分类
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
+        console.log(dataId);
         $.ajax({
             type:'post',
-            url: "<?php echo site_url('/find/Find/del_find_cates');?>",
+            url: "<?php echo site_url('/module/HomeReport/del_homeReport_Cates');?>",
             data: 'cate_id='+ dataId,
             success: function(result){         
                 var res = eval(result);
+                console.log(res);
                 if(res == 1){
                     alert("删除成功！");
-                    $('#edit'+dataId).fadeOut();
+                    $('#'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
+                    getList("<?php echo site_url('/module/HomeReport/ret_homeReportSort_cates');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -303,6 +305,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
+            console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -352,43 +355,31 @@ function validate(obj,minlen,maxlen,i){
 }
 $(document).ready(function(){
     //加载列表数数据
-    // getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
+    getList("<?php echo site_url('/module/HomeReport/ret_homeReportSort_cates');?>",'default=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
-    });
-    //点击搜索
-    $('.searchSort').click(function(){
-        var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/find/Find/search_find_cates');?>','search='+keywords);
+         getList("<?php echo site_url('/module/HomeReport/ret_homeReportSort_cates');?>",'default=1');
     });
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass<%= id%>" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle">
-            <%if(pic) {%>
-            <img src="<%= pic%>" class="am-img-responsive" alt=""/>
-            <%}else {%>
-            暂无
-            <%}%>
-        </td>
-        <td class="am-text-middle"><%= red_heart%></td>
+    <tr class="trClass<%= cate_id %>" data-id="<%= cate_id %>">
+        <td class="am-text-middle"><%= cate_id %></td>
+        <td class="am-text-middle"><%= name %></td>
+        <td class="am-text-middle"><%= sort %></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="editReport">
+                <a data-id="<%= cate_id %>" class="editSort">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
-                <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
+                <a data-id="<%= cate_id %>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
-    </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id%>">
+    </tr> 
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= cate_id %>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
@@ -396,8 +387,42 @@ $(document).ready(function(){
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= id%>" data-am-modal-confirm>确定</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= cate_id %>" data-am-modal-confirm>确定</span>
             </div>
+        </div>
+    </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<%= cate_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">编辑分类</div>
+            <div class="am-modal-bd">
+                <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-form-label">分类名 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="name" class="name<%= cate_id%>" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="<%= name%>" />
+                            
+                        </div>
+                        <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-form-label">排序 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="name" class="sort<%= cate_id%>" min="1" required minlength="1" maxlength="2" onblur="validate(this,1,2,1)" value="<%= sort%>" />
+                            
+                        </div>
+                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+
+                    <div class="am-form-group am-btn-group-xs">
+                        <input type="hidden" name="id" value="">
+                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-id="<%= cate_id%>">保存</button>
+                    </div>
+                </form>      
+            </div>
+            
         </div>
     </div>
 </script>
