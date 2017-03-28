@@ -192,6 +192,11 @@ class Find_model extends CI_Model
         $query = $this->db->get('hf_friend_news_activity_group');
         return $query->result_array();
     }
+    //编辑活动主题
+    function edit_findActivity($id,$data){
+        $where['act_id'] = $id;
+        return $this->db->where($where)->update("hf_friend_news_activity_group",$data);
+    }
     
     //返回活动或专题列表
     function get_find_special($type){
@@ -204,6 +209,12 @@ class Find_model extends CI_Model
     function add_find_special($data){
         return $this->db->insert($this->findSpecial,$data);
     }
+    //返回要编辑的活动或专题
+    function ret_findActSpecial($id){
+        $where['q_id'] = $id;
+        $query = $this->db->where($where)->get($this->findSpecial);
+        return $query->row_array();
+    }
 
     //编辑发现活动或专题
     function edit_find_special($id,$data){
@@ -214,6 +225,11 @@ class Find_model extends CI_Model
     function del_find_special($id){
         $where['q_id'] = $id;
         return $this->db->where($where)->delete($this->findSpecial);
+    }
+    //删除该活动或专题下的所有帖子
+    function del_find_special_server($id){
+        $where['q_id'] = $id;
+        return $this->db->where($where)->delete($this->find);
     }
    
 

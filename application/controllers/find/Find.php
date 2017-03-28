@@ -577,19 +577,66 @@ class Find extends Default_Controller {
 
     //返回活动专题icon
     function findActivity(){
-        $data['activity'] = $this->Find_mdoel->ret_find_activity();
+        $data['activity'] = $this->Find_model->ret_find_activity();
         
         $data['page'] = $this->view_findActivity;
         $data['menu'] = array('find','findActivity');
  		$this->load->view('template.html',$data);
     }
+    //编辑活动专题icon
+    function edit_findActivity(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/find';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href=''".site_url('/find/Find/findActivity')."'</script>";
+                    exit;
+                } else{
+                     $data['act_pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                }
+            }
+            if($data['act_id'] == 1){
+                $title = "活动";
+            }else{
+                $title = "专题";
+            }
+            if($this->Find_model->edit_findActivity($data['act_id'],$data)){
+                    // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了".$title."icon，更改后名称为：".$data['act_name'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                  echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findActivity')."'</script>"; exit;
+                   
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findActivity')."'</script>";
+                    exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
     
     //发现专题 列表
     function findSpecial(){
-        
-    	$data['page'] = $this->view_findSpecial;
-        $data['menu'] = array('find','findActivity');
- 		$this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['type'] = $id;
+            $data['page'] = $this->view_findSpecial;
+            $data['menu'] = array('find','findActivity');
+            $this->load->view('template.html',$data);
+        }
     }
 
     //返回专题活动列表
@@ -609,20 +656,136 @@ class Find extends Default_Controller {
 
     //活动专题 新增
     function findAddSpecial(){
-
-        $data['page'] = $this->view_findAddSpecial;
-        $data['menu'] = array('find','findActivity');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['type'] = $id;
+            $data['page'] = $this->view_findAddSpecial;
+            $data['menu'] = array('find','findActivity');
+            $this->load->view('template.html',$data);
+        }
     }
 
-    //新增操作
+    //活动专题 新增操作
+    function add_findSpecial(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/find';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/find/Find/findAddSpecial/'.$data['act_id'])."'</script>";
+                    exit;
+                } else{
+                     $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                }
+            }
+            if($this->Find_model->add_find_special($data)){
+                if($data['act_id'] == 1){
+                    $title = "活动";
+                }else{
+                    $title = "专题";
+                }
+                // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个".$title."，名称是：".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findSpecial/'.$data['act_id'])."'</script>";
+                    exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findAddSpecial/'.$data['act_id'])."'</script>";
+                    exit;
+            }            
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 
 
     //活动专题 编辑
     function findEditSpecial(){      
-        $data['page'] = $this->view_findEditSpecial;
-        $data['menu'] = array('find','findActivity');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['info'] = $list = $this->Find_model->ret_findActSpecial($id);
+            $data['page'] = $this->view_findEditSpecial;
+            $data['menu'] = array('find','findActivity');
+            $this->load->view('template.html',$data);
+        }
+    }
+    //活动专题 编辑操作
+    function edit_find_special(){
+        if($_POST){
+            $data = $this->input->post();
+            $act = $list = $this->Find_model->ret_findActSpecial($data['q_id']);
+         
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/find';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/find/Find/findEditSpecial/'.$data['q_id'])."'</script>";
+                    exit;
+                } else{
+                     unlink(substr($act['pic'],1));
+                     $data['pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                }
+            }
+            if($this->Find_model->edit_find_special($data['q_id'],$data)){
+                    if($act['act_id'] == 1){
+                        $title = "活动";
+                    }else{
+                        $title = "专题";
+                    }
+                    // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个".$title."，名称是：".$data['title'].',id是：'.$data['q_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findSpecial/'.$act['act_id'])."'</script>";
+                    exit;
+            }else{
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findEditSpecial/'.$data['q_id'])."'</script>";
+                    exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //删除活动或专题
+    function del_findSpecial(){
+        if($_POST){
+            $id = $this->input->post('q_id');
+            if($this->Find_model->del_find_special($id)){
+                if($this->Find_model->del_find_special_server($id)){
+                    echo "1";
+                }else{
+                    echo "3";
+                }
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
     }
 
 

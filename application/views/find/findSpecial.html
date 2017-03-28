@@ -54,7 +54,8 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findSpecial';?>" style="font-size:16px;">发现 专题活动</a>
+            <div class="page-header-heading">
+                <span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">发现 专题活动</a>
             </div>
         </div>
     </div>
@@ -64,14 +65,18 @@ td.am-text-middle img{
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">发现 专题活动列表</div>
+                    <?php if($type == 1):?>
+                    <div class="widget-title  am-cf">发现 -> 活动列表</div>
+                    <?php else:?>
+                         <div class="widget-title  am-cf">发现 专题列表</div>
+                    <?php endif;?>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/find/Find/findAddSpecial';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/find/Find/findAddSpecial/'.$type;?>"><span class="am-icon-plus"></span> 新增</a></button>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +102,7 @@ td.am-text-middle img{
                                     <td class="am-text-middle">活动</td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a class="editloveActivity" href="<?php echo site_url().'/find/Find/findEditSpecial';?>">
+                                            <a class="editloveActivity" href="<?php echo site_url().'/find/Find/findEditSpecial/9';?>">
                                                 <i class="am-icon-pencil"></i> 编辑详情
                                             </a>
                                             <a class="tpl-table-black-operation-del tpl-del">

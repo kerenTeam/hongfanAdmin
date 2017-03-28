@@ -28,8 +28,8 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findSpecial';?>" style="font-size:16px;">专题活动</a>
-            <small><a href="<?php echo site_url().'/find/Find/findAddSpecial';?>">编辑 专题 || 活动</a></small>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">专题活动</a>
+            <small><a href="<?php echo site_url().'/find/Find/findSpecial/'.$info['act_id'];?>">编辑 专题 || 活动</a></small>
             </div>
         </div>
     </div>
@@ -37,47 +37,50 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/module/Fallinlove/add_love_activity');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/find/Find/edit_find_special');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">新增 专题 || 活动</div>
+                        <?php if($info['act_id'] == 1):?>
+                        <div class="widget-title  am-cf">编辑 活动</div>
+                        <?php else:?>
+                        <div class="widget-title  am-cf">编辑 专题</div>
+                        <?php endif;?>
                     </div>
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg">
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" id="doc-vld-name-1" name="title" minlength="2" placeholder="请输入名称" required="required" />
+                                    <input type="text" id="doc-vld-name-1" name="title" value="<?php echo $info['title'];?>" minlength="2" placeholder="请输入名称" required="required" />
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
                                     <div class="am-u-sm-9 am-u-end">
+                                    <?php if(!empty($info['pic'])):?>
                                     <div class="wx_type_img">
+                                        <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
+                                        <!-- 图片实时预览 -->
+                                        <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $info['pic'];?>" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <?php else:?>
+                                     <div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
+                                     </div>
+                                    <?php endif;?>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                     <small class="red">提示：需注意制作的广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
                                     </small> 
                                 </div>
                             </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">类型<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <select name="persons_limit" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value=''>输入查找/选择</option>
-                                        <option value="1">专题</option>
-                                        <option value="0">活动</option>
-                                    </select>
-                                </div>
-                            </div>
+                        
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                 <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
                                     <div>
-                                        <script id="editor" name='content' type="text/plain"></script>
+                                        <script id="editor" name='described' type="text/plain"><?php echo $info['described'];?></script>
                                     </div>
                                 </div>                            
                             </div>
@@ -85,6 +88,7 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <input type="hidden" name="q_id" value="<?php echo $info['q_id'];?>">
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset" id='cancle'>取消</button> 
                     </div>
