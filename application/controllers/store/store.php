@@ -44,7 +44,7 @@ class Store extends Default_Controller {
         }else{
             $data['saleid'] = $id;
         }
-        $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+        $data['cates'] = $this->MallShop_model->get_cates_parent('0');
         $data['page'] = $this->view_storeGoodsList;
         $data['menu'] = array('store','storeGoodsList');
         $this->load->view('template.html',$data);
