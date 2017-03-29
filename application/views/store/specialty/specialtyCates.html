@@ -40,7 +40,7 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsSort';?>" style="font-size:16px;">商品分类</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@ td.am-text-middle img{
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/Specialty/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                   <!--   <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
                                     <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
                                     <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
@@ -223,15 +223,15 @@ function getList(dataurl,data){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
+    getList('<?php echo site_url('/store/specialty/ret_specialty_cate');?>','id=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
+        getList('<?php echo site_url('/store/specialty/ret_specialty_cate');?>','id=1');
     });
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        getList('<?php echo site_url('/store/specialty/search_cate');?>','sear='+keywords);
     });
 })
 </script>

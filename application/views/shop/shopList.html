@@ -87,21 +87,7 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">楼层</label>
-                        <div class="am-u-sm-9" id="floorNumber">
-                            <select id="source_state">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="B3">B3</option>
-                                <option value="B2">B2</option>
-                                <option value="B1">B1</option>
-                                <option value="F1">F1</option>
-                                <option value="F2">F2</option>
-                                <option value="F3">F3</option>
-                                <option value="F4">F4</option>
-                            </select>
-                        </div>
-                    </div>
+              
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="source_state" class="am-u-sm-3 am-form-label">铺号</label>
                         <div class="am-u-sm-9">
@@ -151,7 +137,6 @@ padding: 5px 6px!important;
                                     <th class="shop_name">商铺名称 </th>
                                     <th class="shop_type">商铺类型 </th>
                                     <th class="brand">品牌 </th>
-                                    <th class="shop_block">街区 </th>
                                     <th class="floor_shopId">楼层/铺位号 </th>
                                     <th>创建时间</th>
                                     <th>状态</th>
@@ -383,9 +368,9 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchShop').click(function(){
-        var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),berth=$('#berth').val(),keywords=$('#keywords').val();
+        var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),berth=$('#berth').val(),keywords=$('#keywords').val();
         // console.log('yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
-       getList('<?php echo site_url('/shop/shop/search_store');?>','yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
+       getList('<?php echo site_url('/shop/shop/search_store');?>','yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ '' +'&berth='+ berth +'&sear='+keywords);
     });
 })
 </script>
@@ -395,9 +380,14 @@ $(document).ready(function(){
         <td>宏帆广场</td>
         <td class="am-text-middle"><%= store_id%></td>
         <td class="am-text-middle"><%= store_name%></td>
-        <td class="am-text-middle"><%= store_type%></td>
+        <% if(store_type == 1){ %>
+        <td class="am-text-middle">电商</td>
+        <%}else if(store_type == 2){%>
+        <td class="am-text-middle">特色馆</td>
+        <%}else{%>
+        <td class="am-text-middle"> </td>
+        <%}%>
         <td class="am-text-middle"><%= barnd_name%></td>
-        <td class="am-text-middle"><%= block_name%></td>
         <td class="am-text-middle"><%= floor_name%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle">

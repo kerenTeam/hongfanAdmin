@@ -139,7 +139,7 @@ class Store extends Default_Controller {
     //返回商品分类列表
     function goods_cates(){
         if($_POST){
-            $catelist = $this->MallShop_model->get_goods_cates_list();
+            $catelist = $this->MallShop_model->get_goods_cates_list('1');
             echo json_encode($catelist);
         }else{
             echo "2";
@@ -274,7 +274,7 @@ class Store extends Default_Controller {
     //添加分类
     function storeAddSort(){
         //获取顶级分类
-         $data['cates'] = $this->MallShop_model->get_cate_level();
+         $data['cates'] = $this->MallShop_model->get_cate_level('1');
 
          $data['page'] = $this->view_storeAddSort;
          $data['menu'] = array('store','storeGoodsSort');
@@ -284,7 +284,7 @@ class Store extends Default_Controller {
     function add_store_cate(){
         if($_POST){
             $data = $this->input->post();
-
+            $data['type'] = '1';
             if(!empty($_FILES['icon']['tmp_name'])){
                 $config['upload_path']      = 'Upload/icon';
                 $config['allowed_types']    = 'jpg|png|jpeg';
@@ -322,7 +322,7 @@ class Store extends Default_Controller {
             $this->load->view('404.html');
          }else{
              //获取顶级分类
-             $data['cates'] = $this->MallShop_model->get_cate_level();
+             $data['cates'] = $this->MallShop_model->get_cate_level('1');
              $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
              $data['page'] = $this->view_storeEditSort;
              $data['menu'] = array('store','storeGoodsSort');
@@ -350,7 +350,7 @@ class Store extends Default_Controller {
             if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."添加了一个商品分类，分类名称是：".$data['catname'].",分类id是：".$data['catid'],
+                    "content" => $_SESSION['users']['username']."编辑了一个商品分类，分类名称是：".$data['catname'].",分类id是：".$data['catid'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
@@ -388,7 +388,7 @@ class Store extends Default_Controller {
     function search_cate(){
         if($_POST){
             $sear = $_POST['sear'];
-            $cates = $this->MallShop_model->search_cates($sear);
+            $cates = $this->MallShop_model->search_cates($sear,'1');
             echo json_encode($cates);
         }else{
             echo "2";

@@ -30,19 +30,20 @@ class MallShop_model extends CI_Model
     }
 
     //返回商品分类列表
-    function get_goods_cates($parentid){
-        $query = $this->db->where('parentid',$parentid)->order_by('sort','asc')->get($this->shop_cates);
+    function get_goods_cates($parentid,$type){
+        $query = $this->db->where('parentid',$parentid)->where('type',$type)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     } 
     //返回所有分类
-    function get_goods_cates_list(){
-        $query = $this->db->order_by('sort','asc')->get($this->shop_cates);
+    function get_goods_cates_list($id){
+        $where['type'] = $id;
+        $query = $this->db->where($where)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
     //获取顶级分类
-    function get_cate_level(){
+    function get_cate_level($type){
         $where['parentid'] = '0';
-        $query = $this->db->where($where)->order_by('sort','asc')->get($this->shop_cates);
+        $query = $this->db->where($where)->where('type',$type)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     }
     //根据名称返回分类
@@ -78,8 +79,9 @@ class MallShop_model extends CI_Model
         return $this->db->where($where)->update($this->shop_cates,$data);
     }
     //分类搜索
-    function search_cates($sear){
-        $query = $this->db->like('catname',$sear,'both')->get($this->shop_cates);
+    function search_cates($sear,$type){
+        $where['type'] = $type;
+        $query = $this->db->where($where)->like('catname',$sear,'both')->get($this->shop_cates);
         return $query->result_array();
     }
     //返会商家店铺

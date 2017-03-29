@@ -1,0 +1,166 @@
+<style type="text/css">
+    #preview #imghead,#preview img{
+        height:100%;
+    }
+        #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display: inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:1px solid #ddd;
+    }
+     .deleteImg:hover{
+        cursor: pointer;
+     }
+    .addpadding{
+        margin-left:10%;
+    }
+    
+    .widget-title{
+        font-size:18px;
+        color:#000;
+    }
+</style>
+
+
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/Specialty/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
+            <small><a href="<?php echo site_url().'/store/Specialty/storeAddSort';?>">新增分类</a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/store/Specialty/add_store_cate');?>" method="post" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">特色馆分类添加</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                            <div class="am-form-group am-form-icon am-form-feedback">
+                                <label for="oneType">上级分类 <span class="red">*</span>：</label>
+                                <select id="oneType" required name="parentid" onblur="validate(this,2,20,1)" >
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="0">--</option>
+                                    <?php foreach($cates as $val):?>
+                                    <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
+                                    <?php endforeach;?>
+                                </select>
+                                <small class="red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-form-icon am-form-feedback">
+                                <label for="doc-vld-name-1">分类名称 <span class="red">*</span>：</label>
+                                <input type="text" name="catname" id="doc-vld-name-1" minlength="2" maxlength="15" placeholder="请输入商品分类名称" required onblur="validate(this,2,15,2)"  />
+                                <small class="red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>  
+                            <div class="am-form-group am-form-icon am-form-feedback">
+                                <label for="doc-vld-name-1">字母索引 <span class="red">*</span>：</label>
+                                <input type="text" name="letter" id="doc-vld-name-1" minlength="2" maxlength="15" placeholder="请输入字母索引" required onblur="validate(this,2,15,3)"  />
+                                <small class="red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div> 
+                            <div class="am-form-group am-cf">
+                                <label for="doc-vld-name-1" >ICON背景色 <span class="red">*</span>: </label>
+                                <input type="color" name="icon_color" id="doc-ipt-3" min="1" required>
+                                    
+                            </div>
+                            <div class="am-form-group">
+                         
+                                <label for="user-weibo">ICON<span class="red">*</span>：</label>
+                                <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="icon" onchange="previewImage(this)" class="upload-add">
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                       <br />
+                                </div>
+                                <div class="am-text-center father">
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                            </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-name-1">排序 <span class="red">*</span>：</label>
+                                <input type="number" name="sort" id="doc-vld-name-1" value="100" min="1" required />
+                            </div> 
+                        </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">添加</button>
+                        <button class="am-btn am-btn-default" type="reset" id="cancle">取消</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+  
+</script>
