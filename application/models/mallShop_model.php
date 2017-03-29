@@ -34,6 +34,11 @@ class MallShop_model extends CI_Model
         $query = $this->db->where('parentid',$parentid)->where('type',$type)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     } 
+       //返回商品分类列表
+    function get_cates_parent($parentid){
+        $query = $this->db->where('parentid',$parentid)->order_by('sort','asc')->get($this->shop_cates);
+        return $query->result_array();
+    } 
     //返回所有分类
     function get_goods_cates_list($id){
         $where['type'] = $id;
