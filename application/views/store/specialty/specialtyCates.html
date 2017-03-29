@@ -40,7 +40,7 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/Specialty/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
             </div>
         </div>
     </div>
@@ -131,6 +131,46 @@ td.am-text-middle img{
 
 <script type="text/javascript">
 var total_page = 0,pageflag = 1,current_page=0,$storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort')) || 0;
+function otherFunction() {
+    $('.editSort').click(function(){//编辑分类信息
+        var dataId=$(this).attr('data-id');
+        $(this).attr("href","<?php echo site_url('/store/Specialty/storeEditSort/" + dataId + "');?>");
+    });
+    for(var i=0;i<$('.tpl-del').length;i++){
+        var dataId=$('.tpl-del').eq(i).attr('data-id');
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+    }
+    $('.sureDelete').click(function(){
+        var dataId=$(this).attr('data-id');
+        for(var i=0;i<$('.trClass').length;i++){
+            if($('table tbody tr').eq(i).attr('data-id')==dataId){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/store/Specialty/del_store_cate');?>',
+                    data: 'id='+dataId,
+                    success: function(data){
+                        if(data==1){
+                            for(var i=0;i<$('.trClass').length;i++){
+                                if($('.trClass').eq(i).attr('data-id')==dataId){
+                                    $('.trClass').eq(i).remove();
+                                    getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
+                                }
+                            }
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                getList();
+            }
+        }
+        
+    })
+}
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -203,7 +243,7 @@ function getList(dataurl,data){
                 if(total_page < 5) {
                     $('.searchPage').css('display', 'none');
                 }
-                
+                otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
@@ -223,15 +263,15 @@ function getList(dataurl,data){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/store/specialty/ret_specialty_cate');?>','id=1');
+    getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
     //刷新页面
     $('.refresh').click(function(){
-        getList('<?php echo site_url('/store/specialty/ret_specialty_cate');?>','id=1');
+        getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
     });
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/specialty/search_cate');?>','sear='+keywords);
+        getList('<?php echo site_url('/store/Specialty/search_cate');?>','sear='+keywords);
     });
 })
 </script>

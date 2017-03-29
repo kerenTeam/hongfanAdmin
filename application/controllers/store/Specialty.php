@@ -88,7 +88,7 @@ class Specialty extends Default_Controller {
             $this->load->view('404.html');
          }else{
              //获取特色馆顶级分类
-             $data['cates'] = $this->MallShop_model->get_cate_level('2');
+             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
              $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
              $data['page'] = $this->view_specialtyEditCates;
              $data['menu'] = array('store','specialtyCate');
