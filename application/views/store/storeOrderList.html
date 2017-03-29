@@ -223,6 +223,38 @@ td.am-text-middle img {
             go_to_page(new_page);
         }
     }
+    function otherFunction() {
+        $('.editOrder').click(function(){//查看订单信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
+        });
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
+        }
+        //删除订单的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/del_Order');?>',
+                data: 'id='+dataId,
+                success: function(data){
+                    console.log(data);
+                    if(data==1){ 
+                        getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+                        alert("操作成功！");
+                    }else{
+                        alert("操作失败！");
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        
+        });
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data,changeIndex){
         $.ajax({
@@ -231,7 +263,7 @@ td.am-text-middle img {
             data: data,
             success: function(result){     
                 var res = eval(result);
-                console.log(res);
+                // console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     var total_page = Math.ceil(res.length/15); //得到总页数
@@ -253,7 +285,7 @@ td.am-text-middle img {
                     if(total_page < 5) {
                         $('.searchPage').css('display', 'none');
                     }
-                    console.log($storeOrderList);
+                    otherFunction();
                          
                 }else{
                     $('#dataList').find('tr').remove();

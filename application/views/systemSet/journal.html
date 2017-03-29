@@ -38,7 +38,111 @@ td.am-text-middle img{
 }
 
 
-    
+   /*分页部分的css样式*/
+    .current {
+        background: #1fb5ac;
+        color: #fff;
+    }
+    .pagebox {
+        width: 100%;
+        padding-left: 25%;
+        margin: 0 auto;
+    }
+    #Pagination {
+      float: left;
+      overflow: hidden;
+    }
+    #Pagination .pagination {
+      height: 40px;
+      text-align: right;
+      font-family: \u5b8b\u4f53,Arial;
+    }
+    #Pagination .pagination a,
+    #Pagination .pagination span {
+      float: left;
+      display: inline;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      border-right: none;
+      background: #f6f6f6;
+      color: #666666;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #Pagination .pagination .current {
+      background: #1fb5ac;
+      color: #fff;
+    }
+    #Pagination .pagination .prev,
+    #Pagination .pagination .next {
+      float: left;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      background: #f6f6f6;
+      color: #666666;
+      cursor: pointer;
+    }
+    #Pagination .pagination .prev i,
+    #Pagination .pagination .next i {
+      display: inline-block;
+      width: 4px;
+      height: 11px;
+      margin-right: 5px;
+    }
+    #Pagination .pagination .prev {
+      border-right: none;
+    }
+    #Pagination .pagination .prev i {
+      background-position: -144px -1px;
+      *background-position: -144px -4px;
+    }
+    #Pagination .pagination .next i {
+      background-position: -156px -1px;
+      *background-position: -156px -4px;
+    }
+    #Pagination .pagination .pagination-break {
+      padding: 11px 5px;
+      border: none;
+      border-left: 1px solid #e6e6e6;
+      background: none;
+      cursor: default;
+    }
+    .searchPage {
+      float: left;
+      padding: 8px 0;
+    }
+    .searchPage .page-sum {
+      padding: 11px 13px;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+    }
+    .searchPage .page-go {
+      padding: 6px 0;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+      padding: 10px 0\9;
+      *padding: 6px 0;
+    }
+    .searchPage .page-go input {
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      padding: 2px 5px;
+      border: 1px solid #ccc;
+    }
+    .searchPage .page-btn {
+      margin: 9px 0 5px 5px;
+      padding: 5px 10px;
+      background: #1fb5ac;
+      border-radius: 2px;
+      color: #ffffff;
+      font-family: Arial, 'Microsoft YaHei';
+      font-size: 16px;
+      text-decoration: none;
+    } 
 
 </style>
 
@@ -89,15 +193,24 @@ td.am-text-middle img{
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="linkGroup">             
-                            <div id="page_navigation"></div>
-
-                            <div id="jumpBox">
-                                跳转到<input type="number" id="jumpNum" min="1" name="" />页 <input type="button" value="确定" class="am-btn-secondary jumpBtn" >
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
                             </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -107,7 +220,7 @@ td.am-text-middle img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-  var $journal = 0; 
+  var pageflag = 1,$journal = parseInt(sessionStorage.getItem('journal')) || 0,total_page=0;
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -173,54 +286,32 @@ td.am-text-middle img{
             data: data,
             success: function(result) {        
                 var res = eval(result);
-                 console.log(res);
-                if(res!=2){
+                // console.log(res);
+                if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
-                    var pages = Math.ceil(res.length/15); //得到总页数
-                    if(pages==1){
-                        $('#jumpBox').css('display','none');
-                    }
-                    $('.dataNumber').html(res.length);
-                    $('.pageNumber').html(pages);
+                    var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         listData+= template('dataModal',res[i]);
                      }
                     document.getElementById('dataList').innerHTML = listData;
-                    $('#current_page').val(15);
-                    var navigation_html= '<span class="previous_link" onclick="previous()">上一页</span><span class="page_link active_page" onclick="go_to_page(' + 0 + ')" >' + 1 +'</span>';//动态创建上一页按钮
-                    var current_link=0;   //当前点击的页数
-                    for(var i=1;i<pages;i++){//创建所有页码的a标签
-                        navigation_html += '<span class="page_link" onclick="go_to_page(' + i + ')" >' + (i + 1 )+'</span>';
-                    }
-                    navigation_html += '<span class="next_link" onclick="next()">下一页</span>'
-                    $('#page_navigation').html(navigation_html);        //动态创建的页码放入该div中
-                    go_to_page(changeIndex); 
-
-                    $('.linkGroup').css('display','block');
-
-                    if(changeIndex==0){
-
-                    }else{
-                       go_to_page(changeIndex); 
-                    }
-                    $('.jumpBtn').click(function () {
-                        var jumpNum = parseInt(document.getElementById('jumpNum').value);
-                        if(jumpNum>pages) {
-                            alert('您当前输入的页数大于总页数！');
-                            return false;
-                        }else {
-                            go_to_page(jumpNum-1);
-                            return true;
-                        }
+                    $('.pagebox').css('display', 'block');
+                    if(pageflag) {
+                        go_to_page($journal);
+                        var opts={};opts.current_page = $journal;
+                        $("#Pagination").pagination(total_page, opts);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
                         
-                    })
-                         
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }else{
                     $('#dataList').find('tr').remove();
-                    $('#linkGroup').html("");
-                    $('.dataNumber').html("");
-                    $('.pageNumber').html("");
                     $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                    $('.pagebox').css('display', 'none');
                 }
 
                 
