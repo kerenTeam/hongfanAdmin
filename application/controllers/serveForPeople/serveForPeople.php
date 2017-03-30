@@ -283,7 +283,8 @@ class ServeForPeople extends Default_Controller
     //服务请求列表
     function help_request_list(){
          if($_POST){
-            $requert = $this->Service_model->get_requert();
+             $type = $this->input->post('default');
+            $requert = $this->Service_model->get_requert($type);
             if(empty($requert)){
                 echo "2";
             }else{
@@ -692,12 +693,6 @@ class ServeForPeople extends Default_Controller
         $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
-     //为民服务  邻水律师团 服务列表
-    function lawyergroupservelist(){
-        $data['page'] = $this->view_lawyergroupservelist;
-        $data['menu'] = array('localLife','serveForPeople');
-        $this->load->view('template.html',$data);
-    }
 
     //新增 律师团成员
     function add_lawyerfroup_user(){
@@ -788,6 +783,33 @@ class ServeForPeople extends Default_Controller
             $this->load->view('404.html');
         }
     }
+
+    //律师团搜索
+    function search_lawyerGroupUser(){
+        if($_POST){
+            $sear = $this->input->post('name');
+            if(!empty($sear)){
+                $list = $this->Service_model->search_lawergroup($sear);
+            }else{
+                $list = $this->Service_model->get_help_user('2');
+            }
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
+        }else{
+           echo "3";
+        }
+    }
+
+         //为民服务  邻水律师团 服务列表
+    function lawyergroupservelist(){
+        $data['page'] = $this->view_lawyergroupservelist;
+        $data['menu'] = array('localLife','serveForPeople');
+        $this->load->view('template.html',$data);
+    }
+
 
 
 

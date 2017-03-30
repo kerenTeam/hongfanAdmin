@@ -35,12 +35,12 @@ class Service_model extends CI_Model
         return $this->db->where($where)->delete($this->service_user);
     }
     //返回请求列表
-    function get_requert(){
+    function get_requert($type){
         $this->db->select('a.*,b.username,b.phone,c.name');
         $this->db->from('hf_service_request as a');
         $this->db->join('hf_user_member as b','a.user_id = b.user_id','left');
         $this->db->join('hf_service_help_user as c','a.helper_id = c.helper_id','left');
-        $query = $this->db->get();
+        $query = $this->db->where('a.case_type',$type)->get();
         return $query->result_array();
     }
     //删除服务请求
@@ -110,6 +110,14 @@ class Service_model extends CI_Model
         $where['id'] = $id;
         return $this->db->where($where)->delete($this->team_activity);
     }
+
+    //搜索律师团成员
+    function search_lawergroup($sear){
+        $where['profession_type'] = '2';
+        $query = $this->db->where($where)->like('name',$sear,'both')->get($this->service_user);
+        return $query->result_array();
+    }
+    
 }
 
 
