@@ -17,6 +17,9 @@ class ServeForPeople extends Default_Controller
     public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
     public $view_lawyergrouplist = 'module/serveForPeople/lawyergrouplist.html';
     public $view_lawyergroupservelist = 'module/serveForPeople/lawyergroupservelist.html';
+    //新增 律师团成员
+    public $viwe_lawyergroupAddUser = "module/serveForPeople/lawyergroupAddUser.html";
+
 	function __construct()
 	{
 		 parent::__construct();
@@ -47,8 +50,6 @@ class ServeForPeople extends Default_Controller
         $this->load->view('template.html',$data);
     }
 
-
-
     //为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
@@ -67,7 +68,8 @@ class ServeForPeople extends Default_Controller
     function helpUser_list(){
         if($_POST){
             //h获取列表
-            $users = $this->Service_model->get_help_user();
+            $type = $this->input->post('default');
+            $users = $this->Service_model->get_help_user($type);
             if(empty($users)){
                 echo "2";
             }else{
@@ -230,6 +232,7 @@ class ServeForPeople extends Default_Controller
             $data['info'] = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取c列的值
             $data['competency'] = json_encode(explode('&',$com),JSON_UNESCAPED_UNICODE);
             $data['import_userid'] = $this->session->users['user_id'];
+            $data['profession_type'] = '1';
 
                //缩略图
             if(isset($arr['D'.$currentRow])){
@@ -401,6 +404,7 @@ class ServeForPeople extends Default_Controller
                         $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
+            $data['profession_type'] = '1';
             $data['competency'] = json_encode(explode("&",$data['competency']));
             if($this->Service_model->add_help_user($data)){
                      //日志
@@ -685,15 +689,109 @@ class ServeForPeople extends Default_Controller
      //为民服务  邻水律师团 成员列表
     function lawyergrouplist(){
         $data['page'] = $this->view_lawyergrouplist;
-        $data['menu'] = array('localLife','lawyergrouplist');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
      //为民服务  邻水律师团 服务列表
     function lawyergroupservelist(){
         $data['page'] = $this->view_lawyergroupservelist;
-        $data['menu'] = array('localLife','lawyergroupservelist');
+        $data['menu'] = array('localLife','serveForPeople');
         $this->load->view('template.html',$data);
     }
+
+    //新增 律师团成员
+    function add_lawyerfroup_user(){
+        
+        $data['page'] = $this->viwe_lawyergroupAddUser;
+        $data['menu'] = array('localLife','serveForPeople');
+        $this->load->view('template.html',$data);
+    }
+
+    //新增操作
+    function add_lawyerfroupUser(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                    $config['upload_path']      = 'Upload/headPic/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/add_lawyerfroup_user')."'</script>";exit;
+                    }else{
+                      
+                        $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                   }     
+            }
+            $data['profession_type'] = '2';
+            $data['competency'] = json_encode(explode("&",$data['competency']),JSON_UNESCAPED_UNICODE);
+            if($this->Service_model->add_help_user($data)){
+                     //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."新增了一个律师团成员，成员名称是：".$data['name'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/lawyergrouplist')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/add_lawyerfroup_user')."'</script>";exit;
+            }
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
+    //编辑 律师团成员操作
+    function edit_lawyergroupUser(){
+        if($_POST){ 
+            $data = $this->input->post();
+            if(!empty($_FILES['picArray']['name'])){
+                    $config['upload_path']      = 'Upload/headPic/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('picArray')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
+                    }else{
+                      
+                        $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                   }     
+            }
+            $id = $data['id'];
+            unset($data['picArray'],$data['id']);
+            $con = mb_substr($data['competency'], 0, -1);
+            $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
+            if($this->Service_model->edit_help_user($id,$data))
+            {
+                 //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个律师团成员，成员名称是：".$data['name'].",成员id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            } else{
+                echo "2";
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
+
 
 
 }

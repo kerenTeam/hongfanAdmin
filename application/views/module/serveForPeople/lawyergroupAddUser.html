@@ -1,0 +1,129 @@
+ <style type="text/css">
+
+    #preview #imghead,#preview img{
+     width:140px !important;
+    }
+.postageNumber{
+        display: none;
+    } 
+</style>  
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>为民服务 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/ServeForPeople/lawyergrouplist';?>" style="font-size:16px;">律师团</a>
+                <small><a href="<?php echo site_url().'/serveForPeople/ServeForPeople/add_lawyerfroup_user';?>">新增律师团成员</a></small></div>
+            </div>
+        </div>
+    </div>
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+                <form class="am-form tpl-form-line-form"  action="<?php echo site_url('/serveForPeople/ServeForPeople/add_lawyerfroupUser');?>" method="post" enctype='multipart/form-data'>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
+                            <div class="am-u-sm-9">
+                                <input type="text" placeholder="姓名" class="name" name='name' minlength="2" required="">
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <div class="wx_type_img">
+                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview" class="preview">
+                                        <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
+                                      </div>
+                                </div>
+                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">评分<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="number" name='star' class="star" min="0" max="5" required>
+                            </div>
+                        </div> 
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">学历<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name='education' class="education"  required>
+                            </div>
+                        </div> 
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="number" name='age' class="age"  required>
+                            </div>
+                        </div>  
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name='sex' class="age"  required>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name='occupation' class="job"  required>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
+                            <div class="am-u-sm-9">
+                                <input type="tel"  class="phone" name='phone' required>
+                            </div>
+                        </div>            
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
+                            <div class="am-u-sm-9">                     
+                                <input type="text" name='competency' class="content" placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" required />
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
+                            <div class="am-u-sm-9">
+                                <select class="am-u-sm-12 state" name="recommend" data-id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                    <option >-=请选择一项=-</option>
+                                    <option value="1">是</option>
+                                    <option value="0"  selected="selected">否</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-cf am-text-center">
+                            <button class="am-btn am-btn-xs am-btn-secondary" type="submit" id='addProperty'>新增</button>
+                            <button class="am-btn am-btn-xs am-btn-default" type="reset" id="cancle">取消</button> 
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+</body>
+<script type="text/javascript">
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+ //点击进行运费设置
+$('#postage').click(function(){
+    $('.postageNumber').css('display','block');
+
+});
+//点击取消运费设置
+$('#dispostage').click(function(){
+    $('.postageNumber').css('display','none');
+});
+ //删除图片
+$(".deleteImg").click(function(){
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).siblings('.wx_type_img').find('input').val("");
+    $(this).siblings('.wx_type_img').find('input').files="";
+});
+
+
+</script>

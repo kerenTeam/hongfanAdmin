@@ -19,8 +19,9 @@ class Service_model extends CI_Model
     }
 
     //返回成员列表
-    function get_help_user(){
-        $query = $this->db->order_by('helper_id','desc')->get($this->service_user);
+    function get_help_user($type){
+        $where['profession_type'] = $type;
+        $query = $this->db->where($where)->order_by('helper_id','desc')->get($this->service_user);
         return $query->result_array();
     }
     //推荐

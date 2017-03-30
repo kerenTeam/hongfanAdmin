@@ -253,128 +253,128 @@ function search_help_user($name,$area,$address,$occupation,$sear){
       $CI = &get_instance();
       $res= '';
       if(!empty($name) && empty($area) && empty($address) && empty($occupation) && empty($sear)){
-            $query = $CI->db->where('name',$name)->get('hf_service_help_user');
+            $query = $CI->db->where('name',$name)->where('profession_type','1')->get('hf_service_help_user');
             $res = $query->result_array();
       }else
       if(empty($name) && !empty($area) && empty($address) && empty($occupation) && empty($sear)){
-          $query = $CI->db->where('area',$area)->get('hf_service_help_user');
+          $query = $CI->db->where('area',$area)->where('profession_type','1')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-          $query = $CI->db->where('address',$address)->get('hf_service_help_user');
+          $query = $CI->db->where('address',$address)->where('profession_type','1')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-          $query = $CI->db->where('occupation',$occupation)->get('hf_service_help_user');
+          $query = $CI->db->where('occupation',$occupation)->where('profession_type','1')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-          $query = $CI->db->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(!empty($name) && !empty($area) && empty($address) && empty($occupation) && empty($sear)){
-          $query = $CI->db->where('name',$name)->where('area',$area)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(!empty($name) && empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-          $query = $CI->db->where('name',$name)->where('address',$address)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(!empty($name) && empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-         $query = $CI->db->where('name',$name)->where('occupation',$occupation)->get('hf_service_help_user');
+         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(!empty($name) && empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('name',$name)->like('name',$sear,'both')->like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('name',$name)->like('name',$sear,'both')->like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(empty($name) && !empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-          $query = $CI->db->where('area',$area)->where('address',$address)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(empty($name) && !empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-          $query = $CI->db->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && !empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('area',$area)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-          $query = $CI->db->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-        $query = $CI->db->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+        $query = $CI->db->where('profession_type','1')->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(!empty($name) && !empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-         $query = $CI->db->where('name',$name)->where('area',$area)->where('address',$address)->get('hf_service_help_user');
+         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(!empty($name) && !empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-         $query = $CI->db->where('name',$name)->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
+         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(!empty($name) && !empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-         $query = $CI->db->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+         $query = $CI->db->where('profession_type','1')->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-          $query = $CI->db->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(empty($name) && !empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(empty($name) && empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(!empty($name) && empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-          $query = $CI->db->where('name',$name)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(!empty($name) && empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('name',$name)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && !empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('area',$area)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
       if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-          $query = $CI->db->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }else
        if(!empty($name) && !empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-            $query = $CI->db->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
+            $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
             $res = $query->result_array();
       }else
       if(!empty($name) && !empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-        $query = $CI->db->where('name',$name)->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
          $res = $query->result_array();
       }else
       if(!empty($name) && !empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
 
-        $query = $CI->db->where('name',$name)->where('area',$area)->where('occupation',$occupation)->or_like('name',$sear,'both')->or_like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
+        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('occupation',$occupation)->or_like('name',$sear,'both')->or_like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
          $res = $query->result_array();
       }else
        if(!empty($name) && empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-        $query = $CI->db->where('name',$name)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
          $res = $query->result_array();
       }else
       if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-        $query = $CI->db->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+        $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
          $res = $query->result_array();
       }else
       if(!empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-         $query = $CI->db->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
+         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
           $res = $query->result_array();
       }
       return $res;
