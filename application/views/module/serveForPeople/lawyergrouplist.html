@@ -497,9 +497,10 @@ $(document).ready(function(){
     });
     //点击搜索
     $('.searchGoods').click(function(){
-        var helpgroupName=$('#helpgroupName').val(),helpgroupArea=$('#helpgroupArea').val(),helpgroupJob=$('#helpgroupJob').val(),helpgroupAddress=$('#helpgroupAddress').val(),helpgroupkey=$('#helpgroupkey').val();
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_search');?>','name='+ helpgroupName +'&area=' + helpgroupArea +'&address='+ helpgroupAddress +'&occupation='+ helpgroupJob +'&sear='+ helpgroupkey);
-    });
+        var helpgroupName=$('#helpgroupName').val();
+        console.log(helpgroupName);
+        getList('<?php echo site_url('/serveForPeople/serveForPeople/search_lawyerGroupUser');?>','name='+ helpgroupName);
+    })
 })
 </script>
 <script type="text/html" id="dataModal">
