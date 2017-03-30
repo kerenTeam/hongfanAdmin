@@ -218,6 +218,16 @@ function next(argu){
         $(this).datepicker('close');
       });
   });
+  function otherFunction() {
+    $('.editOrder').click(function(){//查看订单信息
+        var dataId=$(this).attr('data-id');
+        $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
+    });                      
+    for(var i=0;i<$('.deliverOrder').length;i++){
+        var dataId=$('.deliverOrder').eq(i).attr('data-id');
+        $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                      
+    }
+  }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -249,7 +259,8 @@ function next(argu){
                 }
                 if(total_page < 5) {
                     $('.searchPage').css('display', 'none');
-                }                                
+                }
+                otherFunction();                                
             }else{
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
