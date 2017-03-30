@@ -23,6 +23,9 @@ width:50%;
         font-size: 1.2rem;
         margin-left: 50px;
     }
+    .am-form-group.am-cf .am-u-sm-9 {
+        float: right;
+    }
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -123,86 +126,94 @@ width:50%;
                             <div class="am-form-group am-cf">
 								<?php $banner = json_decode($info['pic'],true); $logo = json_decode($info['logo'],true);?>
                                 <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                <div class="am-u-sm-8 am-u-end">
-										<div class="wx_type_img">
-											<input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
-											<!-- 图片实时预览 -->
-                                            <?php if(isset($banner[0]['picImg'])):?>
-											<input type='hidden' name='img1' value='<?php echo $banner[0]['picImg'];?>' />
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                            <?php else:?>
-                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <?php endif;?>
-											
-										</div><span>banner1</span>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-										<?php if(isset($banner[1]['picImg'])):?>
-										<div class="wx_type_img">
-											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
-											<!-- 图片实时预览 -->
-											<input type='hidden' name='img2' value='<?php echo $banner[1]['picImg'];?>' />
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
-
-										</div><span>banner2</span>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-										<?php else:?>
-										<div class="wx_type_img">
-											<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" >
-											<!-- 图片实时预览 -->
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-
-										</div><span>banner2</span>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-										<?php endif;?>
-										<?php if(isset($banner[2]['picImg'])):?>
-										<div class="wx_type_img">
-											<input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" >
-											<!-- 图片实时预览 -->
-											<input type='hidden' name='img3' value='<?php echo $banner[2]['picImg'];?>' />
-
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
-
-										</div><span>banner3</span>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-										<?php else:?>
-										<div class="wx_type_img">
-											<input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
-											<!-- 图片实时预览 -->
-											<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-											 
-										</div><span>banner3</span>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-										<?php endif;?>
+                                <div class="am-u-sm-9">
+									<div class="wx_type_img">
+										<input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
+										<!-- 图片实时预览 -->
+                                        <?php if(isset($banner[0]['picImg'])):?>
+										<input type='hidden' name='img1' value='<?php echo $banner[0]['picImg'];?>' />
+										<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                        <?php else:?>
+                                        <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                        <?php endif;?>
+										
+									</div><span>banner1</span>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
                                 </div>
+                                <?php if(isset($banner[1]['picImg'])):?>
+                                <div class="am-u-sm-9">
+									<div class="wx_type_img">
+										<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
+										<!-- 图片实时预览 -->
+										<input type='hidden' name='img2' value='<?php echo $banner[1]['picImg'];?>' />
+										<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+
+									</div><span>banner2</span>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 	
+                                </div>
+                                <?php else:?>
+                                <div class="am-u-sm-9">
+									<div class="wx_type_img">
+										<input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" >
+										<!-- 图片实时预览 -->
+										<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+									</div><span>banner2</span>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                </div>
+								<?php endif;?>
+								<?php if(isset($banner[2]['picImg'])):?>
+                                <div class="am-u-sm-9">
+									<div class="wx_type_img">
+										<input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" >
+										<!-- 图片实时预览 -->
+										<input type='hidden' name='img3' value='<?php echo $banner[2]['picImg'];?>' />
+
+										<div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+
+									</div><span>banner3</span>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                </div>
+								<?php else:?>
+                                <div class="am-u-sm-9">
+									<div class="wx_type_img">
+										<input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
+										<!-- 图片实时预览 -->
+										<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+										 
+									</div><span>banner3</span>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 	
+                                </div>
+                                <?php endif;?>
                             </div>
                             <div class="am-form-group am-cf">
                                 <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                <div class="am-u-sm-8 am-u-end">
+                                <div class="am-u-sm-9">
 									<?php if(!empty($logo[0]['picImg'])):?>
                                     <div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                         <!-- 图片实时预览 -->
 										<input hidden='type' name='logo' value='<?php echo $logo[0]['picImg'];?>'/>	
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $logo[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                        <span class="am-text-xs">点击选择图片</span>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
-                                    </div>
+                                       
+                                    </div><span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
 									<?php else:?>
 									<div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                        <span class="am-text-xs">点击选择图片</span>
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                        
                                     </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
 									<?php endif;?>
-									</div>
+								</div>
                             </div>
                      
                             <div class="am-form-group am-text-center am-btn-group-xs">
@@ -327,65 +338,88 @@ width:50%;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8 am-u-end">
+                                        
 										<?php $banner = json_decode($info['pic'],true);?>
-											<?php if(isset($banner[0]['picImg'])):?>
+										<?php if(isset($banner[0]['picImg'])):?>
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img1' value='<?php echo $banner[0]['picImg'];?>'/>
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <span class="am-text-xs">banner1</span>
-                                            </div>
-											<?php else:?>
+                                            </div><span class="am-text-xs">banner1</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
+                                        </div>
+										<?php else:?>
+                                        <div class="am-u-sm-9">
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
                                                 <!-- 图片实时预览 -->
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <span class="am-text-xs">banner1</span>
-                                            </div>
-											<?php endif;?>
-											<?php if(isset($banner[1]['picImg'])):?>
+                                            </div><span class="am-text-xs">banner1</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
+                                        </div>
+										<?php endif;?>
+										<?php if(isset($banner[1]['picImg'])):?>
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img2' value='<?php echo $banner[1]['picImg'];?>'/>
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <span class="am-text-xs">banner2</span>
-                                            </div>
-											<?php else:?>
+                                            </div><span class="am-text-xs">banner2</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
+                                        </div>
+										<?php else:?>
+                                        <div class="am-u-sm-9">
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner2</div>
-                                            </div>
-											<?php endif;?>
-											<?php if(isset($banner[2]['picImg'])):?>
+                                            </div><div class="am-text-xs">banner2</div>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
+                                        </div>
+										<?php endif;?>
+										<?php if(isset($banner[2]['picImg'])):?>
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
 												<input type='hidden' name='img3' value='<?php echo $banner[2]['picImg'];?>'/>
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                <span class="am-text-xs">banner3</span>
-                                            </div>
-											<?php else:?>
+                                            </div><span class="am-text-xs">banner3</span>
+                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
+                                        </div> 
+										<?php else:?>
+                                        <div class="am-u-sm-9">
 											<div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                <div class="am-text-xs">banner3</div>
-                                            </div>
-											<?php endif;?>
+                                            </div><span class="am-text-xs">banner3</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            	
                                         </div>
+                                        <?php endif;?>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8 am-u-end">
-										
+                                        <?php $list_pic = json_decode($info['list_pic'],true);?>
+                                        
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                            <?php $list_pic = json_decode($info['list_pic'],true);?>
-                                            <?php if(empty($list_pic[0]['picImg'])):?>
+                                                <?php if(empty($list_pic[0]['picImg'])):?>
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
                                                 <!-- 图片实时预览 -->
                                                 <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
@@ -394,8 +428,9 @@ width:50%;
 											    <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
 												<input type='hidden' name='img4' value='<?php echo $list_pic[0]['picImg'];?>'/>
 												<?php endif;?>
-												<div class="am-text-xs">点击选择图片</div>
-                                            </div>
+											</div><span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                            
 										
                                         </div>
                                     </div>
@@ -472,14 +507,7 @@ width:50%;
                                         <small class="am-u-sm-1 red redtips25" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips25" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" onblur="validate1(this,1,1,26)" placeholder="请输入评分,1-5之间的数字" name='star' value="<?php echo $info['star'];?>" min="1" max="5" required minlength="1" maxlength="1">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips26" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips26" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
+                                   <!--  -->
                                      <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
@@ -492,61 +520,66 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
                                         <?php $banner = json_decode($info['pic'],true);?>
-                                        <div class="am-u-sm-8 am-u-end">
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
-                                                <!-- 图片实时预览 -->
                                                 <?php if(isset($banner[0]['picImg'])):?>
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                                <div id="preview"><img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                 <input type='hidden' name='img1' value="<?php echo $banner[0]['picImg'];?>" />
 	                                            <?php else:?>
-	                                           	<div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+	                                           	<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
-
                                             </div><sapn class="am-text-xs">banner1</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                        </div>
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
-                                                 <?php if(isset($banner[1]['picImg'])):?>
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <?php if(isset($banner[1]['picImg'])):?>
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                 <input type='hidden' name='img2' value="<?php echo $banner[1]['picImg'];?>" />
 	                                            <?php else:?>
-	                                            	  <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <div id="preview"><img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></div>
 	                                            <?php endif;?>
-
                                             </div><span class="am-text-xs">banner2</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                        </div>
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                   <?php if(isset($banner[2]['picImg'])):?>
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                        <input type='hidden' name='img3' value="<?php echo $banner[2]['picImg'];?>" />
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <input type='hidden' name='img3' value="<?php echo $banner[2]['picImg'];?>" />
 	                                            <?php else:?>
-	                                            	  <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
 
                                             </div><span class="am-text-xs">banner3</span>
-                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label for="imgUpload" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8 am-u-end">
+                                        <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <?php $list_pic = json_decode($info['list_pic'],true);?>
                                                 <!-- 图片实时预览 -->
                                                <?php if(!empty($list_pic[0]['picImg'])):?>
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
-                                                <div class="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                  <input type='hidden' name='list_pic' value="<?php echo $list_pic[0]['picImg'];?>" />
 	                                            <?php else:?>
                                                 <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
-	                                            <div class="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+	                                            <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
 	                                            <?php endif;?>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            </div><span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
@@ -602,10 +635,16 @@ width:50%;
         }
     }
     //删除图片
+    // $(".deleteImg").click(function(){
+        
+    //     $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    // });
+    //删除图片
     $(".deleteImg").click(function(){
-        
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        
+        $(this).siblings('.wx_type_img').eq('0').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').eq('0').find('input').val("");
+        $(this).siblings('.wx_type_img').eq('0').find('input').files="";
     });
 </script>
 </body>
