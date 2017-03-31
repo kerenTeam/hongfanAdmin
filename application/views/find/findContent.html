@@ -274,12 +274,6 @@ function getList(dataurl,data){
                     }
                     console.log(res[i].pic);
                     
-                    // if(JSON.parse(res[i].pic).length){
-                        // res[i].pic = JSON.parse(res[i].pic)[0].picImg;
-                    // }else{
-                        // res[i].pic = '';
-                    // }
-                    
 
                     listData += template('dataModal',res[i]);
                 }
@@ -355,7 +349,7 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a  data-id="<%= news_id%>" class="checkComment">
-                    <i class="am-icon-pencil"></i> 查看评论
+                    <i class="am-icon-eye"></i> 查看评论
                 </a>
                 <a  data-id="<%= news_id%>" class="editContent">
                     <i class="am-icon-pencil"></i> 编辑
