@@ -177,6 +177,8 @@ function igoCate($data,$parentid=''){
     $CI = &get_instance();
     foreach ($data as $key => $value) {
         if(!empty($value['cate_name'])){
+            $query = $CI->db->where('catid',$value['cate_id'])->get('hf_mall_category_igo');
+            $res = $query->row_array();    
             if($parentid ==''){
                 $a = '0';
             }else{
@@ -188,7 +190,12 @@ function igoCate($data,$parentid=''){
                 'type'=>'2',
                 'parentid'=>$a,
             );
-           $ret =  $CI->db->insert('hf_mall_category_igo',$cate);
+            if(!empty($res)){
+               $ret =  $CI->db->where('catid',$value['cate_id'])->update('hf_mall_category_igo',$cate);
+            }else{
+               $ret =  $CI->db->insert('hf_mall_category_igo',$cate);
+            }
+        //    $ret =  $CI->db->insert('hf_mall_category_igo',$cate);
             if(!empty($value['sub_cate'])){
                igoCate($value['sub_cate'],$value['cate_id']);
             }

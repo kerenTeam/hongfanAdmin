@@ -89,7 +89,11 @@ label {
                                     <?php else:?>
                                         <td class="am-text-middle">│<?php echo str_repeat(' &nbsp;&nbsp; ',$val['lev']),' └─  '.$val['catname'];?></td>
                                     <?php endif;?>
+                                    <?php if(!empty($val['icon'])):?>
+                                    <td class="am-text-middle"><img style="border-radius: 3px;" src="<?php echo $val['icon'];?>" class="am-img-responsive cardView"></td>
+                                    <?php else:?>
                                     <td class="am-text-middle"><img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></td>
+                                    <?php endif;?>
                                     <td class="am-text-middle"><?php echo $val['catid']?></td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">

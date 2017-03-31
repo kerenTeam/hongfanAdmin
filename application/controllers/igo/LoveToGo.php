@@ -50,9 +50,8 @@ class LoveToGo extends Default_Controller
         $post = curl_post(IGOCATEAPIURL, $data);  
         $goods = json_decode($post,true);
         $cate = json_decode($goods['data'],true);
-        $this->db->where('type','2')->delete('hf_mall_category');
-       
-        $y = igoCate($cate);
+
+        $y = igoCate($cate);  
         if($y == 1){
              //日志
             $log = array(
@@ -72,8 +71,29 @@ class LoveToGo extends Default_Controller
     //编辑爱购分类
     function edit_igo_cates(){
         if($_POST){
-            $data = $this->input->post('name');
-            var_dump($data);
+            $data['catname'] = $this->input->post('name');
+            $data['catid'] = $this->input->post('catid');
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/icon';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates/')."'</script>";
+                    exit;
+                } else{
+                     $data['icon'] = '/Upload/icon/'.$this->upload->data('file_name');
+                }
+            }
+            if($this->db->where('catid',$data['catid'])->update('hf_mall_category_igo',$data)){
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";
+                    exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";
+                    exit;
+            }
         }else{
             $this->load->view('404.html');
         }
