@@ -26,6 +26,8 @@ class Find extends Default_Controller {
     public $view_findEditSpecial = 'find/findEditSpecial.html';
     //活动专题编辑
     public $view_findActivity = "find/findActivity.html";
+    //活动 发现/专题 帖子列表
+    public $view_findNotesList = "find/findNotesList.html";
 
     function __construct()
     {
@@ -787,7 +789,13 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
-
+    //发现 发现/专题 帖子列表
+    function findNotesList(){
+        
+        $data['page'] = $this->view_findNotesList;
+        $data['menu'] = array('find','findNotesList');
+        $this->load->view('template.html',$data);
+    }
 
 
 
