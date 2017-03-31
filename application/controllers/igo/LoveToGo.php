@@ -67,8 +67,18 @@ class LoveToGo extends Default_Controller
             echo "<script>alert('更新失败！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";exit;
  
         }
-
     }
+
+    //编辑爱购分类
+    function edit_igo_cates(){
+        if($_POST){
+            $data = $this->input->post('name');
+            var_dump($data);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
 
     //爱购分类
     function loveToGoCates(){
