@@ -71,7 +71,7 @@ td.am-text-middle img{
             <div class="widget am-cf">
                 <div class="widget-head am-cf" style="clear:both;">
                     <?php if($type == 1):?>
-                    <div class="widget-title  am-cf">发现 -> 活动列表</div>
+                    <div class="widget-title  am-cf">发现  活动列表</div>
                     <?php else:?>
                          <div class="widget-title  am-cf">发现 专题列表</div>
                     <?php endif;?>
@@ -193,7 +193,7 @@ function otherFunction() {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editFind').eq(i).attr('data-id'), checkId =$('.tieziList').eq(i).attr('data-id') ;
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
         $('.editFind').eq(i).attr("data-am-modal","{target: '#edit"+ dataId +"'}");
-        $('.tieziList').eq(i).attr("href","<?php echo site_url().'/find/Find/findNotesList';?>");  
+        $('.tieziList').eq(i).attr("href","<?php echo site_url().'/find/Find/findNotesList/';?>"+dataId);  
     }
     //删除图片
     $(".deleteImg").click(function(){

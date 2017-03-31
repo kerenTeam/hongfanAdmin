@@ -300,6 +300,12 @@ class Find extends Default_Controller {
     }
     //新增帖子界面
     function addService(){
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $data['q_id'] = '';
+        }else{
+            $data['q_id'] = $id;
+        }
         //获取所有分类
         $data['cates'] = $this->Find_model->get_find_cates();
         //获取热门标签
@@ -355,11 +361,19 @@ class Find extends Default_Controller {
                     "userip" => get_client_ip(),
                 );
                 $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
+                 if(!empty($data['q_id'])){
+                    
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findNotesList/'.$data['q_id'])."'</script>";exit;
+                 }else{
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
+                 }
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
+                if(!empty($data['q_id'])){
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/addService/'.$data['q_id'])."'</script>";exit;
+                }else{
+                     echo "<script>alert('操作失败！');window.location.href='".site_url('/find/Find/findContent')."'</script>";exit;
+                }
             }
-
         }else{
             $this->load->view('404.html');
         }
@@ -792,9 +806,29 @@ class Find extends Default_Controller {
     //发现 发现/专题 帖子列表
     function findNotesList(){
         
-        $data['page'] = $this->view_findNotesList;
-        $data['menu'] = array('find','findNotesList');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['id'] = $id;
+            $data['page'] = $this->view_findNotesList;
+            $data['menu'] = array('find','findActivity');
+            $this->load->view('template.html',$data);
+        }
+    }
+    //返回活动专题帖子列表
+    function ret_findSpecial_service(){
+        if($_POST){
+            $q_id = $this->input->post('q_id');
+            $list = $this->Find_model->get_find_special_serviceList($q_id);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
     }
 
 

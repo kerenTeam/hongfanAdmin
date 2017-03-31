@@ -231,6 +231,12 @@ class Find_model extends CI_Model
         $where['q_id'] = $id;
         return $this->db->where($where)->delete($this->find);
     }
+    //返回活动专题的帖子
+    function get_find_special_serviceList($qid){
+        $where['q_id'] = $qid;
+        $query = $this->db->where($where)->order_by('create_news_time','desc')->get($this->find);
+        return $query->result_array();
+    }
    
 
 

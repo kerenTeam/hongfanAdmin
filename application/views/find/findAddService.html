@@ -179,6 +179,9 @@
                     </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <?php if(!empty($q_id)):?>
+                            <input type="hidden" name="q_id" value="<?php echo $q_id?>">
+                        <?php endif;?>
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>
