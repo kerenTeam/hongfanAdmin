@@ -318,8 +318,12 @@ function validate(obj,minlen,maxlen,i){
     }
 }
 $(document).ready(function(){
+    //获取当前页面参数
+    var href = window.location.href;
+    var index = href.split('/')[href.split('/').length-1];
+    console.log(index);
     //加载列表数数据
-    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+    // getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     //刷新页面
     $('.refresh').click(function(){
         getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
