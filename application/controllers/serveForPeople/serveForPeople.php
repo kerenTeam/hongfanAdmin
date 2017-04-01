@@ -477,6 +477,7 @@ class ServeForPeople extends Default_Controller
     //服务请求导出
     function dowload_helprequest(){
         if($_GET){
+            $type = $_GET['id'];
             $this->load->library('excel');
             //activate worksheet number 1
             $this->excel->setActiveSheetIndex(0);
@@ -502,7 +503,7 @@ class ServeForPeople extends Default_Controller
             }
             $i = 1;
             //查询数据库得到要导出的内容
-            $bookings = $this->Service_model->get_requert();
+            $bookings = $this->Service_model->get_requert($type);
             if(count($bookings) > 0)
             {
                 foreach ($bookings as $booking) {
@@ -523,14 +524,17 @@ class ServeForPeople extends Default_Controller
                     $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['reply_time']);
                 }
             }
-
-            $filename = '帮帮团服务请求.xls'; //save our workbook as this file name
+            if($id ==1){
+                $filename = '帮帮团服务请求.xls'; //save our workbook as this file name
+            }else{
+                $filename = '律师团服务请求.xls'; 
+            }
             ob_end_clean();
             header('Content-Type: application/vnd.ms-excel'); //mime type
             header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
             header('Cache-Control: max-age=0'); //no cache
 
-
+            
             $log = array(
                 'userid'=>$_SESSION['users']['user_id'],  
                 "content" => $_SESSION['users']['username']."导出了所有请求信息！",
