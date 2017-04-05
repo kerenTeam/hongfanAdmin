@@ -244,7 +244,15 @@ td input{
                             </div>
                             <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                        </div>      
+                        </div> 
+                          <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodPrice" class="am-u-sm-3 am-form-label">商品原价<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8">
+                                <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="originalprice" value="<?php echo $goods['originalprice'];?>" name="originalprice" required="required" min="1" onblur="validate(this,2,20,2)" /> 
+                            </div>
+                            <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>     
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品品牌：</label>
                             <div class="am-u-sm-8 am-u-end">
@@ -342,7 +350,7 @@ td input{
                                               <th class="addPropertyName" id="addPropertyName<?php echo $k;?>"><?php echo $v['name'][0];?></th>
                                             <?php endforeach;?>
                                             <?php endif;?>
-                                              <th class="salesPrices">销售价(元)</th>
+                                              <th class="salesPrices">差价(元)</th>
                                                 <th class="shop_id">库存</th>
                                             </tr>
                                         </thead>
@@ -360,8 +368,8 @@ td input{
                                                 <?php if(!empty($val['value4'])):?>
                                                 <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value4'];?></td>
                                                  <?php endif;?>
-                                            <td class="propertyprice"><input type="number" value="<?php echo $val['price']?>" /></td>
-                                            <td class="propertystock"><input type="number" value="<?php echo $val['stock']?>"/></td>
+                                            <td class="propertyprice"><input type="number" min="0" value="<?php echo $val['price']?>" /></td>
+                                            <td class="propertystock"><input type="number" min="0" value="<?php echo $val['stock']?>"/></td>
                                             </tr>
                                         <?php endforeach;?>
                                     <?php endif;?>
@@ -372,7 +380,7 @@ td input{
                                 </div>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
+                        <!--<div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="radio" name='postage' <?php if(empty($goods['postage'])){echo "checked='checked'";}?> id="dispostage" />是
@@ -394,7 +402,7 @@ td input{
                                 <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
                             
-                        </div>
+                        </div>-->
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">

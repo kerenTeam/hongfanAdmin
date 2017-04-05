@@ -64,10 +64,15 @@ class SingleShop extends Default_Controller {
         if($id == 0){
             //商家登录
              $storeid = $this->MallShop_model->get_store_list($this->session->users['user_id']);
-             $this->session->set_userdata('businessId',$storeid['store_id']);
-             $this->session->set_userdata('businesstype',$storeid['store_type']);
+             if(!empty($storeid)){
+                $this->session->set_userdata('businessId',$storeid['store_id']);
+                $this->session->set_userdata('businesstype',$storeid['store_type']);
+             }else{
+                redirect('admin/index');
+             }
         }else{
              $this->session->set_userdata('businessId',$id);
+
         }
         $store_id = $this->session->businessId;
         if(empty($store_id)){
@@ -288,7 +293,7 @@ class SingleShop extends Default_Controller {
                 $data['parent'] = '';
             }
               //返回快递模板
-            $data['express'] = $this->MallShop_model->get_express_temp();
+            //$data['express'] = $this->MallShop_model->get_express_temp();
 
             $data['shuxing'] = $parent;
             $data['page'] = $this->view_goodsDetail;
@@ -389,7 +394,7 @@ class SingleShop extends Default_Controller {
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
         }
         //返回快递模板
-        $data['express'] = $this->MallShop_model->get_express_temp();
+        //$data['express'] = $this->MallShop_model->get_express_temp();
 
         $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       

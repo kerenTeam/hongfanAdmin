@@ -812,15 +812,16 @@ class SystemSet extends Default_Controller {
 
     //运费模板
     function expressTemplate(){
-        
+        $data['store_id'] =  $this->session->businessId;
         $data['page'] = $this->view_express;
-        $data['menu'] = array('systemSet','expressTemplate');
+        $data['menu'] = array('shop','expressTemplate');
         $this->load->view('template.html',$data);
     }
     //返回运费模板
     function ret_express_list(){
         if($_POST){
-            $list = $this->System_model->get_express_temp();
+            $storeid =$this->input->post('storeid');
+            $list = $this->System_model->get_express_temp($storeid);
             if(!empty($list)){
                 echo json_encode($list);
             }else{
@@ -835,6 +836,7 @@ class SystemSet extends Default_Controller {
     function add_express(){
         if($_POST){
             $data = $this->input->post();
+            $data['businid'] = $this->session->businessId;
             $data['create_time'] = date('Y-m-d H:i:s');
             if($this->System_model->add_express_temp($data)){
                 $log = array(

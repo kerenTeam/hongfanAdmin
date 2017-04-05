@@ -96,27 +96,33 @@
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg">
                             <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                <label class="am-u-sm-3 am-text-right">快递公司<span class="red">*</span>：</label>
+                                <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
                                  <div class="am-u-sm-9 am-u-end">
-                                   <input type="text" name="expressName" id="expressCompany" placeholder="请输入快递公司">
+                                   <input type="text" name="expressName" id="expressCompany" placeholder="请输入名称" required>
                                 </div>
                             </div> 
                             <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                <label class="am-u-sm-3 am-text-right">基础运费(/kg)<span class="red">*</span>：</label>
-                                 <div class="am-u-sm-9 am-u-end">
-                                   <input type="number" name="basicsPrice" id="baseFee" placeholder="请输入基础运费(3kg以内)">
+                                <label class="am-u-sm-3 am-text-right">运费(元)<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-9 am-u-end"> 
+                                   <input type="number" name="basicsPrice" id="baseFee" placeholder="请输入基础运费" required>
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                <label class="am-u-sm-3 am-text-right">基础重量(kg)<span class="red">*</span>：</label>
+                                <label class="am-u-sm-3 am-text-right">首重(kg)<span class="red">*</span>：</label>
                                  <div class="am-u-sm-9 am-u-end">
-                                   <input type="number" name="basicsKg" id="baseWeight" placeholder="请输入超出加价的最低重量">
+                                   <input type="number" name="basicsKg" id="baseWeight" placeholder="请输入基础重量" required>
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
-                                <label class="am-u-sm-3 am-text-right">超出附加运费(/kg)<span class="red">*</span>：</label>
+                                <label class="am-u-sm-3 am-text-right">续费(元)：</label>
                                  <div class="am-u-sm-9 am-u-end">
-                                   <input type="number" name="beyondPrice" id="extraFee" placeholder="请输入超出附加运费">
+                                   <input type="number" name="beyondPrice" id="extraFee" placeholder="请输入续费 费用">
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                                <label class="am-u-sm-3 am-text-right">续重(kg)：</label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                   <input type="number" name="beyondKg" id="extraFee" placeholder="请输入续重 重量">
                                 </div>
                             </div>
                         </div>
@@ -137,9 +143,9 @@
                 <thead>
                     <tr>
                         <th>编号</th>
-                        <th>快递公司</th>
-                        <th>运费规则</th>
-                        <th>超出附加运费(元/kg)</th>
+                        <th>名称</th>
+                        <th>运费(元) / 首重(kg)</th>
+                        <th>续费(元) / 续重(kg)</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -248,7 +254,7 @@ function otherOperation() {
                 console.log(data);
                 if(data==1){
                     $('#edit'+dataId).modal('close');
-                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','storeid=<?php echo $store_id;?>');
                 }else{
                     alert("操作失败！");
                 }
@@ -270,7 +276,7 @@ function otherOperation() {
             success: function(data){
                 if(data==1){
                     $('#'+dataId).modal('close');
-                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+                    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','storeid=<?php echo $store_id;?>');
                 }else{
                     alert("操作失败！");
                 }
@@ -333,7 +339,7 @@ function getList(dataurl,data){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','default=1');
+    getList('<?php echo site_url('/systemSet/SystemSet/ret_express_list');?>','storeid=<?php echo $store_id;?>');
 });
 
 </script>
@@ -341,8 +347,8 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= express_id%>" data-id="<%= express_id%>">
         <td class="am-text-middle"><%= express_id %></td>
         <td class="am-text-middle"><%= expressName %></td>
-        <td class="am-text-middle"><%= basicsPrice %>元/kg (<%= basicsKg %> kg以内)</td>
-        <td class="am-text-middle"><%= beyondPrice%></td>
+        <td class="am-text-middle"><%= basicsPrice %>元/<%= basicsKg %> kg</td>
+        <td class="am-text-middle"><%= beyondPrice%>元/<%= beyondKg%> kg</td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= express_id%>" class="editExpress">
@@ -372,27 +378,33 @@ $(document).ready(function(){
             <div class="am-modal-bd">
                 <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-4 am-form-label">快递公司 ：</label>
+                    <label class="am-u-sm-4 am-form-label">名称 ：</label>
                     <div class="am-u-sm-8">
-                        <input type="text" name="" id="expressName<%= express_id%>" placeholder="请输入快递公司" value="<%= expressName %>">
+                        <input type="text" name="" id="expressName<%= express_id%>" placeholder="请输入名称" value="<%= expressName %>">
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-4 am-form-label">基础运费(元/kg) ：</label>
+                    <label class="am-u-sm-4 am-form-label">基础运费(元) ：</label>
                     <div class="am-u-sm-8">
-                        <input type="text" name="" id="basicsPrice<%= express_id%>" placeholder="请输入基础运费(/kg)" value="<%= basicsPrice %>">
+                        <input type="number" name="" id="basicsPrice<%= express_id%>" placeholder="请输入基础运费" value="<%= basicsPrice %>">
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-4 am-form-label">基础重量(kg) ：</label>
+                    <label class="am-u-sm-4 am-form-label">首重(kg) ：</label>
                     <div class="am-u-sm-8">
-                        <input type="text" name="" id="basicsKg<%= express_id%>" placeholder="请输入基础重量(kg)" value="<%= basicsKg %>">
+                        <input type="number" name="" id="basicsKg<%= express_id%>" placeholder="请输入基础重量(kg)" value="<%= basicsKg %>">
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-4 am-form-label">超出附加运费(元/kg) ：</label>
+                    <label class="am-u-sm-4 am-form-label">续费(元) ：</label>
                     <div class="am-u-sm-8">
-                        <input type="text" name="" id="beyondPrice<%= express_id%>" placeholder="请输入超出附加运费(/kg)" value="<%= beyondPrice %>">
+                        <input type="number" name="" id="beyondPrice<%= express_id%>" placeholder="请输入续费(元)" value="<%= beyondPrice %>">
+                    </div>
+                </div>
+                 <div class="am-form-group am-cf">
+                    <label class="am-u-sm-4 am-form-label">续重(kg) ：</label>
+                    <div class="am-u-sm-8">
+                        <input type="number" name="" id="beyondKg<%= express_id%>" placeholder="请输入续重(kg)" value="<%= beyondKg %>">
                     </div>
                 </div>
             </form>

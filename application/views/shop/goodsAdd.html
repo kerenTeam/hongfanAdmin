@@ -245,6 +245,14 @@ td input{
                             <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodPrice" class="am-u-sm-3 am-form-label">商品原价<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8">
+                                <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="originalprice" name="originalprice" required="required" min="1" onblur="validate(this,2,20,2)" /> 
+                            </div>
+                            <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>
                          
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">商品品牌：</label>
@@ -262,7 +270,7 @@ td input{
                          <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">物品重量：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="number" name='weight' id="weight" placeholder="/kg"  />
+                                <input type="number" name='weight' id="weight" placeholder="kg"  />
                             </div>
                         </div>
                         <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -297,7 +305,7 @@ td input{
                                     <table width="100%" id="propertyTable" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                                         <thead>
                                             <tr class="addPropertyTh">
-                                                <th class="salesPrices">销售价(元)</th>
+                                                <th class="salesPrices">差价(元)</th>
                                                 <th class="shop_id">库存</th>
                                             </tr>
                                         </thead>
@@ -309,7 +317,7 @@ td input{
                                 </div>
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
+                        <!--<div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="oneType" class="am-u-sm-3 am-form-label">是否包邮<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end"><input type="radio" name="cod" value="1" id="dispostage" />是
                             <input type="radio" name="cod" id="postage" value="0"/>否</div>
@@ -329,8 +337,7 @@ td input{
                                 <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                             </div>
-                            
-                        </div>
+                        </div>-->
                         
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>

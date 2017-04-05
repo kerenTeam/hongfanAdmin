@@ -180,8 +180,9 @@ class System_model extends CI_Model
     }
 
     //返回运费模板
-    function get_express_temp(){
-        $query = $this->db->get($this->express);
+    function get_express_temp($id){
+        $where['businid'] = $id;
+        $query = $this->db->where($where)->get($this->express);
         return $query->result_array();
     }
     //新增运费模板
