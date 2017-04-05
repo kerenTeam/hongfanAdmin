@@ -246,7 +246,7 @@ td input{
                             <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodPrice" class="am-u-sm-3 am-form-label">商品原价<span class="red">*</span>：</label>
+                            <label for="originalprice" class="am-u-sm-3 am-form-label">商品原价<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
                                 <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="originalprice" name="originalprice" required="required" min="1" onblur="validate(this,2,20,2)" /> 
                             </div>
@@ -557,17 +557,15 @@ td input{
         var picSrc=$('#goodsBanner').html();
         var goodName=$('#goodName').val();
         var goodPrice=$('#goodPrice').val();
-        var postage=document.getElementById('dispostage').checked,postageNum=$('#postageNum').val();
-        var dispostage=$('#dispostage').attr('checked');
         var editorContent= UE.getEditor('editor').getContent();
         $('#showgoodsname').html(goodName);
         $('#showgoodsprice').html('￥'+goodPrice);
         $('#showgoodsresporty').html('库存：'+totalrespority);
-        if(postage){
+        // if(postage){
             $('#showgoodspostage').html("快递：免邮");
-        }else{
-            $('#showgoodspostage').html("运费："+ postageNum +"元");
-        }
+        // }else{
+        //     $('#showgoodspostage').html("运费："+ postageNum +"元");
+        // }
         $('#showgoodsDetail').html(editorContent);
 
       });
@@ -900,42 +898,38 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             $('.propertystock').eq(i).find('input').val(operateRespority);
         }
     });  
-        
-
-
-
         //根据一级业态的内容来控制二级业态的显示
-        $('#firstSort').change(function(){
-            //根据一级业态的内容来控制二级业态的显示
-            var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
-                data: 'catid='+ firstSort,
-                success: function(data){ 
-                    $("#secondSortSelect").html("");  
-                    var jsonData=eval(data);
-                    console.log(jsonData);
-                    if(data!=2){                
-                        for(var i=0;i<jsonData.length;i++){
-                            str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
-                            sttr=sttr+str;
-                        }
-                        console.log(sttr);
+        // $('#firstSort').change(function(){
+        //     //根据一级业态的内容来控制二级业态的显示
+        //     var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
+        //     $.ajax({
+        //         type:'post',
+        //         url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
+        //         data: 'catid='+ firstSort,
+        //         success: function(data){ 
+        //             $("#secondSortSelect").html("");  
+        //             var jsonData=eval(data);
+        //             console.log(jsonData);
+        //             if(data!=2){                
+        //                 for(var i=0;i<jsonData.length;i++){
+        //                     str='<option value="'+ jsonData[i].catid +'">' + jsonData[i].catname + '</option>';
+        //                     sttr=sttr+str;
+        //                 }
+        //                 console.log(sttr);
 
-                        $('#secondSort').css('display','block');
-                        $("#secondSortSelect").attr('required');
-                        $("#secondSortSelect").append(sttr);
-                    }else{
-                        $("#secondSortSelect").removeAttr('required');
-                    }
+        //                 $('#secondSort').css('display','block');
+        //                 $("#secondSortSelect").attr('required');
+        //                 $("#secondSortSelect").append(sttr);
+        //             }else{
+        //                 $("#secondSortSelect").removeAttr('required');
+        //             }
                     
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-        });
+        //         },
+        //         error:function(xhr,type,errorThrown){
+        //             alert("操作失败，请检查网络设置！");
+        //         }
+        //     });
+        // });
     });
 
 //图片预览的商品图片
