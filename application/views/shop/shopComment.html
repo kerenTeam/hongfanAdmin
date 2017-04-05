@@ -343,31 +343,31 @@ padding: 5px 6px!important;
             
         });
         //回复评论的AJAX请求
-        // $('.sureComment').click(function(){
-        //     var id=$(this).attr('data-id');
-        //     for(var i=0;i<$('.trClass').length;i++){
-        //         if($('table tbody tr').eq(i).attr('data-id')==id){
-        //             var contentText=$('#contentText').val();
-        //             $.ajax({
-        //                 type:'post',
-        //                 url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-        //                 data: 'goodsid='+contentText,
-        //                 success: function(data){
-        //                     if(data==1){                                           
-        //                         $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
-        //                     }else{
-        //                         alert("操作失败！");
-        //                     }
+        $('.sureComment').click(function(){
+            var id=$(this).attr('data-id');
+            for(var i=0;i<$('.trClass').length;i++){
+                if($('table tbody tr').eq(i).attr('data-id')==id){
+                    var contentText=$('#contentText').val();
+                    $.ajax({
+                        type:'post',
+                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
+                        data: 'goodsid='+contentText,
+                        success: function(data){
+                            if(data==1){                                           
+                                $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
+                            }else{
+                                alert("操作失败！");
+                            }
                             
-        //                 },
-        //                 error:function(xhr,type,errorThrown){
-        //                     alert("操作失败，请检查网络设置！");
-        //                 }
-        //             });
-        //         }
-        //     }
+                        },
+                        error:function(xhr,type,errorThrown){
+                            alert("操作失败，请检查网络设置！");
+                        }
+                    });
+                }
+            }
             
-        // });
+        });
     }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -401,13 +401,17 @@ padding: 5px 6px!important;
                 someOptions();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }
 
             
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr.trClass').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none')
         }
     });
 }
