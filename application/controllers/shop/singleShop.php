@@ -408,7 +408,7 @@ class SingleShop extends Default_Controller {
             if(empty($c_id)){
                 echo "2";
             }else{
-                $date = $this->MallShop_model->get_goods_cates($c_id);
+                $date = $this->MallShop_model->get_cates_parent($c_id);
                 if(empty($date)){
                     echo "2";
                 }else{
@@ -449,7 +449,8 @@ class SingleShop extends Default_Controller {
              }
              $data['good_pic'] = json_encode($pic);
              $data['storeid'] = $this->session->businessId;
-             $data['differentiate'] = '1';
+             
+             $data['differentiate'] = '4';
             
              $goodsid = $this->MallShop_model->add_shop_goods($data);
              if(!empty($goodsid)){
