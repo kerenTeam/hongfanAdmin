@@ -28,7 +28,7 @@
         width: 10% !important;
     }
 
-    .goodsState,.recommend {
+    .goodsState,.recommend,.goodsSelect {
         width: 80px;
         background: #15b5ac;
         border-radius: 5px;
@@ -37,8 +37,14 @@
         color: #fff;
         text-align: center;
     }
-
-    .goodsState option,.recommend option{
+    .goodsSelect {
+        width: 120px;
+        padding:0 5px;
+        border-radius: 0;
+        height: 28px;
+        font-size:14px;
+    }
+    .goodsState option,.recommend option,.priceState option,.goodsSelect option{
         background: #fff;
         border-radius: 5px;
         border: 1px solid #aaa;
@@ -46,8 +52,12 @@
         color: #000;
         text-align: center;
     } 
-    .goodsState option[selected="selected"],.recommend option[selected="selected"]{
+    .goodsState option[selected="selected"],.recommend option[selected="selected"],.priceState option[selected="selected"],.goodsSelect option[selected="selected"] {
         background: #15b5ac;
+        border:1px solid #15b5ac;
+    }
+    .goodsSelectDiv {
+        margin-top: -7px;
     }
     table tbody tr td:nth-child(5) {
         max-width: 300px;
@@ -55,6 +65,11 @@
     }
     .am-icon-sort {
         cursor: pointer;
+    }
+    .editPrice {
+        border:1px solid #e0690c !important;
+        padding:5px 6px !important;
+        color: #e0690c !important;
     }
 </style>
 
@@ -139,6 +154,14 @@
                                     <a id="add_sales_goods" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-edit"></span> 加入达人推荐</a>
                                 <?php endif;?>
                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                    
+                                </div>
+                                <div class="goodsSelectDiv">
+                                    <select class="goodsSelect" name="goodsSelect">
+                                        <option value=""><i class="am-icon-sort"></i>筛选商品</option>
+                                        <option value="1">推荐商品</option>
+                                        <option value="0">特价商品</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -158,6 +181,7 @@
                                     <th class="shop_type">商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>   
                                     <th class="shop_block">商品状态</th>
                                     <th class="shop_block">是否推荐</th>
+                                    <th class="shop_block">是否特价</th>
                                     <th class="shop_block">变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th>
                                     <th>操作</th>
                                 </tr>
@@ -336,6 +360,13 @@
             });
         }
     });
+
+    if($('.goodsSelect').val()=="1"){
+        $('.goodsSelect').css({'background':'#15b5ac','border':'1px solid #15b5ac'});
+    } else {
+        $('.goodsSelect').css({'background':'#e0690c','border':'1px solid #e0690c'});
+    }
+
     function otherFunction() {
         $('.editGoods').click(function(){//编辑商品信息
             var dataId=$(this).attr('data-id');
@@ -346,11 +377,25 @@
             var dataId = $('.tpl-del').eq(i).attr('data-id');
             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
             if($('.goodsState').eq(i).val()=="0"){
-                $('.goodsState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+                $('.goodsState').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
             } 
             if($('.recommend').eq(i).val()=="0"){
-                $('.recommend').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
-            }                         
+                $('.recommend').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            }     
+            if($('.priceState').eq(i).val()=="0"){
+                $('.priceState').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            }
+            
+             if($('.goodsState').eq(i).val()=="1"){
+                $('.goodsState').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+            } 
+            if($('.recommend').eq(i).val()=="1"){
+                $('.recommend').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+            }     
+            if($('.priceState').eq(i).val()=="1"){
+                $('.priceState').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
+            }
+                                
         }
 
         //更改商品的状态
@@ -438,6 +483,50 @@
             
             
         });
+        //商品特价
+        $('.priceState').change(function(){
+            var dataId=$(this).attr('data-id');
+            if($(this).find('option:selected').val()=="1"){
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/specials_goods');?>',
+                    data: 'goodsid='+ dataId+'&specials_state=1',
+                    success: function(data){
+                        console.log(data);
+                        if(data==1){
+                            alert('操作成功');
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:'<?php echo site_url('/shop/singleShop/specials_goods');?>',
+                    data: 'goodsid='+ dataId+'&specials_state=0',
+                    success: function(data){
+                        if(data==1){
+                            alert('操作成功');
+                        }else{
+                            alert("操作失败！");
+                        }
+                        
+                    },
+                    error:function(xhr,type,errorThrown){
+                        alert("操作失败，请检查网络设置！");
+                    }
+                });
+                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            }
+            
+            
+        });
         //删除商品的AJAX请求
         $('.sureDelete').click(function(){
             var dataId=$(this).attr('data-id');
@@ -470,7 +559,6 @@
             data: data,
             success: function(result){     
                 var res = eval(result);
-                 // console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     total_page = Math.ceil(res.length/15); //得到总页数
@@ -545,7 +633,22 @@ $(document).ready(function(){
 
     //加载列表数数据
     getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
-     
+
+    //商品筛选
+    $('.goodsSelect').change(function(){
+        var dataId=$(this).attr('data-id');
+        if($(this).find('option:selected').val()=="1"){
+            //alert('12');
+            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=2');
+            $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
+        }else if($(this).find('option:selected').val()=="0"){
+            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=3');
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
+        }else{
+            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
+        }      
+    });
+
     //点击选中所有
     $('.tablecheck').click(function() {
         var start_page=parseInt(15)*parseInt($storeGoodsList);
@@ -587,7 +690,13 @@ $(document).ready(function(){
         }
         
     });
+
+
+
 })
+
+
+
 </script>
 <script type="text/html" id="dataModal">
     <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
@@ -631,6 +740,21 @@ $(document).ready(function(){
             </select>
         <%}else{%>
             <select class="recommend" name="recommend" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">是</option>
+                <option value="0" selected="selected">否</option>
+            </select>
+        <%}%>
+        </td>
+        <td class="am-text-middle">
+        <%if(specials_state =="1"){%>
+            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1" selected="selected">是</option>
+                <option value="0">否</option>
+            </select>
+        <%}else{%>
+            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1">是</option>
                 <option value="0" selected="selected">否</option>

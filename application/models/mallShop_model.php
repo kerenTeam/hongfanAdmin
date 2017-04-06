@@ -97,11 +97,11 @@ class MallShop_model extends CI_Model
     }
 
     //商家商品列表
-    function get_goods_list($storeid){
+    function get_goods_list($storeid,$type){
         $this->db->select('a.*, b.catname');
         $this->db->from('hf_mall_goods a');
         $this->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
-        $query = $this->db->where('storeid',$storeid)->where('differentiate','1')->order_by('a.goods_id','desc')->get();
+        $query = $this->db->where('storeid',$storeid)->where('differentiate',$type)->order_by('a.goods_id','desc')->get();
         return $query->result_array(); 
     }
     //商品上下架
@@ -236,10 +236,29 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->order_by("a.create_time",'desc')->get();
+        $query = $this->db->where('differentiate','1')->or_where('differentiate','4')->order_by("a.create_time",'desc')->get();
         return $query->result_array();
     }
-
+    //返回特价商品列表
+    function get_specials_goods(){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('specials_state','1')->group_start()->where('a.differentiate','1') ->or_group_start()->where('a.differentiate','4') ->group_end()->group_end()->order_by("a.create_time",'desc')->get();
+        return $query->result_array();
+    }
+    
+    //返回推荐商品列表
+    function get_remment_goods(){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('a.recommend','1')->group_start()->where('a.differentiate','1') ->or_group_start()->where('a.differentiate','4') ->group_end()->group_end()->order_by("a.create_time",'desc')->get();
+        return $query->result_array();
+    }
+    
     //返回分页商品列表
     function get_goodslist_page($page,$off){
         $this->db->select('a.*,b.store_name,c.catname');

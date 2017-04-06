@@ -208,9 +208,13 @@ class SingleShop extends Default_Controller {
     //返回商家商品列表
     function store_goods_list(){
         if($_POST){
-            //查询出商家店铺
-           $arr = $this->MallShop_model->get_goods_list($this->session->businessId);
-
+           //获取商家信息
+           $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+           if($store['store_type'] == 1){
+               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'1');
+           }else{
+               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
+           }
            if(empty($arr)){
                 echo "2";
            }else{
@@ -449,8 +453,13 @@ class SingleShop extends Default_Controller {
              }
              $data['good_pic'] = json_encode($pic);
              $data['storeid'] = $this->session->businessId;
-             
-             $data['differentiate'] = '4';
+            
+            $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+            if($store['store_type'] == 1){
+              $data['differentiate'] = '1';
+            }else{
+                $data['differentiate'] = '4';
+            }
             
              $goodsid = $this->MallShop_model->add_shop_goods($data);
              if(!empty($goodsid)){
@@ -680,6 +689,12 @@ class SingleShop extends Default_Controller {
                     $goods[$currentRow]['good_pic'] = '';
                 }
                 $goods[$currentRow]['storeid'] = $this->session->businessId;
+                $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+                if($store['store_type'] == 1){
+                     $goods[$currentRow]['differentiate'] = '1';
+                }else{
+                     $goods[$currentRow]['differentiate'] = '4';
+                }
            }
 
            //去掉空数组
@@ -772,7 +787,13 @@ class SingleShop extends Default_Controller {
             $state = $_POST['state']; 
             //关键字
             $sear = trim($_POST['sear']);
-            $differentiate = '1';
+            
+            $store = $this->MallShop_model->get_basess_info($store_id);
+            if($store['store_type'] == 1){
+                    $differentiate = '1';
+            }else{
+                    $differentiate = '4';
+            }
             $res = search_store_goods($store_id,$cate,$startPrice,$endPrice,$startRepertory,$endRepertory,$state,$sear,$differentiate);
             if(empty($res)){
                 echo '2';
@@ -1425,6 +1446,33 @@ class SingleShop extends Default_Controller {
         }
     }
 
+    //设置商品特价
+    function specials_goods(){
+        if($_POST){
+            $goodsid = $this->input->post('goodsid');
+            $data['specials_state'] = $this->input->post('specials_state');
+            if($this->MallShop_model->edit_goods($goodsid,$data)){
+                if($data['specials_state'] == 1){
+                    $title = "修改了一个商品为特价商品";
+                }else{
+                    $title = "取消了一个商品为特价商品";
+                }
+                //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username'].$title."，商品id是".$goodsid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 
 

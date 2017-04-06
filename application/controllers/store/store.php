@@ -53,7 +53,16 @@ class Store extends Default_Controller {
     function storeGoods_page(){
         if($_POST){
             //获取所有商品
-            $goods_list = $this->MallShop_model->get_goodslist();
+            $id = $this->input->post('default');
+            if($id ==2){
+                //推荐商品
+                 $goods_list = $this->MallShop_model->get_remment_goods();
+            }else if($id == 3){
+                //特价商品
+                 $goods_list = $this->MallShop_model->get_specials_goods();
+            }else{
+                $goods_list = $this->MallShop_model->get_goodslist();
+            }
             if(empty($goods_list)){
                 echo "2";
             }else{
