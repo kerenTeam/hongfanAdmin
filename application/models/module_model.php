@@ -287,6 +287,11 @@ class Module_model extends CI_Model{
 	function edit_disclaimer($id,$data){
 	    return $this->db->where("id",$id)->update('hf_local_disclaimer',$data);
 	}
-
+	//返回所有招聘信息
+	function get_recruit_list($type){
+		$where['type_name'] = $type;
+		$query = $this->db->where($where)->order_by('create_time','desc')->get($this->service);
+		return $query->result_array();
+	}
 
 }

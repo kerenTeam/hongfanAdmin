@@ -32,10 +32,10 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">本地生活列表</div>
+                    <div class="widget-title  am-cf">本地生活服务板块列表</div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!--<div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
@@ -43,14 +43,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <!--免责协议弹窗开始-->
                     <div class="am-modal am-modal-confirm" tabindex="-1" id="disclaimer">
                         <div class="am-modal-dialog">
                             <div class="am-modal-hd">免责协议</div>
                             <div class="am-modal-bd">
                                 <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/LocalLife/edit_disclaimer');?>"  method='post' enctype='multipart/form-data'>
+                                <!--<form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/LocalLife/edit_disclaimer');?>"  method='post' enctype='multipart/form-data'>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">免责协议 <span class="red">*</span>：</label>
                                         <div class="am-u-sm-8 am-u-end">
@@ -62,12 +62,12 @@
                                         <input type="hidden" name="id" value="<?php echo $disclaimer['id'];?>">
                                         <button type="submit" class="am-btn am-btn-danger">保存</button>
                                     </div>
-                                </form>
+                                </form>-->
                             </div>
                         </div>
                     </div>
                     <!--免责协议弹窗结束-->
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
+                    <!--<div class="am-modal am-modal-confirm" tabindex="-1" id="add">
                         <div class="am-modal-dialog">
                             <div class="am-modal-hd">新增</div>
                             <div class="am-modal-bd">
@@ -88,6 +88,8 @@
                                                 <option value="3">跳蚤市场</option>
                                                 <option value="4">快递上门</option>
                                                 <option value="5">超市比价</option>
+                                                <option value="6">招聘</option>
+                                                <option value="7">家乡话</option>
                                             </select>
                                         </div>
                                     </div>
@@ -122,7 +124,7 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
@@ -144,16 +146,28 @@
                                     <!--<td class="am-text-middle"><input type="checkbox"></td>-->
                                     <td class="am-text-middle"><?php echo $v['name'];?></td>
                                     <td class="am-text-middle"><?php echo $v['sort'];?></td>
-                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市特价类";break; }?></td>
+                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市特价类";break;case '6': echo "招聘信息类";break; case "7": echo "家乡话";break; }?></td>
                                     <?php $icon = json_decode($v['icon'],true); ?>
                                     <td class="am-text-middle"><img class="am-imgContainer" src="<?php echo $icon[0]['picImg'];?>" ></td>
                                     <td class="am-text-middle"><input type="color" value="<?php echo $v['icon_color'];?>" disabled="disabled"/></td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/module/localLife/serviceList/'.$v['id'];?>" class="tpl-table-black-operation-set">
+                                            <?php if($v['typeid'] == 6):?>
+                                               <!--招聘-->
+                                                <a href="<?php echo site_url().'/module/localLife/recruit_list';?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-eye" ></i> 查看
-                                            </a>
+                                                </a>
+                                            <?php elseif($v['typeid'] == 7):?>
+                                                <!--家乡话-->
+                                                <a href="<?php echo site_url().'/module/HomeReport/index';?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-eye" ></i> 查看
+                                                </a>
+                                            <?php else:?>
+                                                <a href="<?php echo site_url().'/module/localLife/serviceList/'.$v['id'];?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-eye" ></i> 查看
+                                                </a>
+                                            <?php endif;?>
                                             <a href="javascript:;" data-am-modal="{target: '#edited<?=$v['id']?>'}">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>

@@ -13,6 +13,8 @@ class LocalLife extends Default_Controller {
     //本地服务 信息详情
     public $view_serviceInfo = "module/localLife/serviceInfo.html";
     public $view_marketList = "module/localLife/marketList.html";
+	//招聘信息
+	public $view_recruit = "module/localLife/recruitList.html";
 
 
     function __construct()
@@ -1055,6 +1057,77 @@ class LocalLife extends Default_Controller {
 		}
 	}
 
+	//招聘信息
+	function recruit_list(){
+		 $data['name'] = "招聘信息";
+		 $data['page'] = $this->view_recruit;
+         $data['menu'] = array('localLife','localLife');
+         $this->load->view('template.html',$data);
+	}
 
+	//返回所有招聘信息
+	function ret_recruit_list(){
+		if($_POST){
+			$list = $this->Module_model-get_recruit_list('4');
+			if(!empty($list)){
+				echo json_encode($list);
+			}else{
+				echo "2";
+			}
+		}else{
+			echo "2";
+		}
+	}
 
+	//新增 招聘信息
+	function add_recruit(){
+		if($_POST){
+			$data = $this->input->post();
+			$title = $data['title'];
+			$data['content'] = '{"title":"'.$data['title'].'","content":"'.$data['content'].'"}';
+			unset($data['title']);
+			$data['type_name'] = "4";
+			if($this->Module_model->add_service($data)){
+				//日志
+				$log = array(
+					'userid'=>$_SESSION['users']['user_id'],  
+					"content" => $_SESSION['users']['username']."新增了一个招聘信息！信息标题是：".$title,
+					"create_time" => date('Y-m-d H:i:s'),
+					"userip" => get_client_ip(),
+				);
+				$this->db->insert('hf_system_journal',$log);
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/recruit_list')."'</script>";eixt;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/recruit_list')."'</script>";eixt;
+			}
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//编辑招聘信息
+	function edit_recruit(){
+		if($_POST){
+			$data = $this->input->post();
+			$title = $data['title'];
+			$data['content'] = '{"title":"'.$data['title'].'","content":"'.$data['content'].'"}';
+			unset($data['title']);
+			if($this->Module_model->edit_service($data['id'],$data)){
+				//日志
+				$log = array(
+					'userid'=>$_SESSION['users']['user_id'],  
+					"content" => $_SESSION['users']['username']."编辑了一个招聘信息！信息标题是：".$title.',信息id是：'.$data['id'],
+					"create_time" => date('Y-m-d H:i:s'),
+					"userip" => get_client_ip(),
+				);
+				$this->db->insert('hf_system_journal',$log);
+				echo "1";eixt;
+			}else{
+				echo "3";eixt;
+			}
+
+		}else{
+			echo "2";
+		}
+	}
 }
