@@ -198,6 +198,17 @@
 td input{
     padding:0 !important;
 }
+input.priceOne, input.priceTwo {
+        width: 50px;
+    }
+i {
+    font-style: normal;
+}
+.oldgoodPrice {
+    font-size: 14px;
+    color: #ccc;
+    text-decoration: line-through;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -209,7 +220,7 @@ td input{
             <a href="<?php echo site_url().'/shop/singleShop/goodsList';?>">商品列表</a> <small>/新增商品</small></div>
         </div>
     </div>
-</div>
+</div> 
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -366,7 +377,21 @@ td input{
                                 <input type="radio" name="goods_state" value="0"/>下架
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end" style="float: left !important;">
+                            <label for="" class="am-u-sm-3 am-form-label">满减规则<span class="red">*</span>：</label>
+                            <div class="am-u-sm-6" id="priceModelsBox">
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 
+                               <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 
+                               <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 
+                               <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                            </div>
+                            <div class="am-u-sm-1 am-u-end">
+                                <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                             <label for="user-weibo" class="am-u-sm-3 am-form-label am-u-end">商品图片：</label>
                             <div class="am-u-sm-12">
                                 <div class="am-u-sm-4">
@@ -437,8 +462,7 @@ td input{
                     <p class="small-word">商家</p>
                 </div>
             </div>
-            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price">
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4" id="showgoodsprice">￥ 2299</div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price" id="showgoodsprice">
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage">快递：免邮</div>
@@ -557,10 +581,11 @@ td input{
         document.getElementById('showproporty').innerHTML = html;
         var picSrc=$('#goodsBanner').html();
         var goodName=$('#goodName').val();
-        var goodPrice=$('#goodPrice').val();
+        var goodPrice=$('#originalprice').val();
+        var newPrice = $('#goodPrice').val();
         var editorContent= UE.getEditor('editor').getContent();
         $('#showgoodsname').html(goodName);
-        $('#showgoodsprice').html('￥'+goodPrice);
+        $('#showgoodsprice').append($('<i class="newgoodPrice"> ￥'+ newPrice +'</i>  <i class="oldgoodPrice"> ￥'+ goodPrice +'</i>'));
         $('#showgoodsresporty').html('库存：'+totalrespority);
         // if(postage){
             $('#showgoodspostage').html("快递：免邮");
@@ -572,16 +597,16 @@ td input{
       });
       
   });
-//点击取消返回上一页
+  //点击取消返回上一页
   $('#cancle').click(function(){
     history.go(0);
   });
 
   //点击进行运费设置
-$('#postage').click(function(){
-    $('.postageNumber').css('display','block');
+  $('#postage').click(function(){
+      $('.postageNumber').css('display','block');
 
-});
+  });
 //点击取消运费设置
 $('#dispostage').click(function(){
     $('.postageNumber').css('display','none');
@@ -844,9 +869,20 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             return true;
         }
     }
+    //删除满减规则
+    function deletePriceModel(obj) {
+        var parentP = $(obj).parents('p')[0];
+        parentP.remove();
+    }
     $(document).ready(function(){
         var i=0,kflag=0,flag=1;
-        
+        //添加满减规则
+        $('#addNew').click(function () {
+            $('<p> 满<input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
+
+            $('#add_rules').fadeOut('fast');
+            $('.am-dimmer').removeClass('am-active');
+        });
         //新增规格项
         $('#addNewPropertybtn').click(function () {
             if(kflag==4){
@@ -860,8 +896,10 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             }
         });
         
-    //添加属性
+
     $('#addProperty').click(function(){
+
+        //添加属性
         var propertyArray=[],totalrespority=0,stend1=$('#addPropertyName0').text(),stend2=$('#addPropertyName1').text(),stend3=$('#addPropertyName2').text(),stend4=$('#addPropertyName3').text();
             
         for(var i=0;i<$('.addPropertyTr').length;i++){ 
@@ -884,8 +922,20 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             propertyArray.push(addPropertytd);
             
         }
-         $('#stockamount').val(totalrespority);
+        $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
+        //添加满减规则
+        var manjianRule = [], priceModel = {};
+        for(var j=0;j<$('.priceOne').length;j++) {
+            if($('.priceOne').eq(i).val() && $('.priceTwo').eq(j).val()) {
+                priceModel.reachPrice = $('.priceOne').eq(j).val();
+                priceModel.reducePrice = $('.priceTwo').eq(j).val();
+                manjianRule.push(priceModel);
+            }   
+        }
+        
+        console.log(manjianRule);
+        // $('#addProperty').val(manjianRule);
         return true;
     });
 

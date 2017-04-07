@@ -198,7 +198,18 @@
 } 
 td input{
     padding:0 !important;
-}  
+}
+input.priceOne, input.priceTwo {
+        width: 50px;
+    } 
+i {
+    font-style: normal;
+}
+.oldgoodPrice {
+    font-size: 14px;
+    color: #ccc;
+    text-decoration: line-through;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -430,7 +441,17 @@ td input{
                                 <input type="radio" name="goods_state" value="0" <?php if($goods['goods_state'] == "0"){echo "checked";}?> />下架
                             </div>
                         </div>
-                       
+                       <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="" class="am-u-sm-3 am-form-label">满减规则<span class="red">*</span>：</label>
+                            <div class="am-u-sm-6" id="priceModelsBox">
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                               <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                            </div>
+                            <div class="am-u-sm-1 am-u-end">
+                                <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
+                            </div>
+                        </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="user-weibo"  class="am-u-sm-3 am-u-end am-form-label">商品图片：</label>
                             <?php $banner = json_decode($goods['good_pic'],true);?>
@@ -525,8 +546,8 @@ td input{
                     <p class="small-word">商家</p>
                 </div>
             </div>
-            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price">
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4" id="showgoodsprice">￥ <?php echo $goods['price'];?></div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left good-price" id="showgoodsprice">
+                ￥ <?php echo $goods['price'];?>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage">快递：<?php if(empty($goods['postage'])){echo "包邮";}else{echo $goods['postage'];}?></div>
@@ -572,7 +593,11 @@ function validate(obj,minlen,maxlen,i){
         $('.blacktips'+ i).css('display','inline-block');
     }
 }
-
+    //删除满减规则
+    function deletePriceModel(obj) {
+        var parentP = $(obj).parents('p')[0];
+        parentP.remove();
+    }
   $(function() {
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -639,12 +664,11 @@ function validate(obj,minlen,maxlen,i){
     document.getElementById('showproporty').innerHTML = html;
     var picSrc=$('#goodsBanner').html();
     var goodName=$('#goodName').val();
-    var goodPrice=$('#goodPrice').val();
-    // var postage=document.getElementById('dispostage').checked,postageNum=$('#postageNum').val();
-    // var dispostage=$('#dispostage').attr('checked');
+    var goodPrice=$('#originalprice').val();
+    var newPrice = $('#goodPrice').val();
     var editorContent= UE.getEditor('editor').getContent();
     $('#showgoodsname').html(goodName);
-    $('#showgoodsprice').html('￥'+goodPrice);
+    $('#showgoodsprice').append($('<i class="newgoodPrice"> ￥'+ newPrice +'</i>  <i class="oldgoodPrice"> ￥'+ goodPrice +'</i>'));
     $('#showgoodsresporty').html('库存：'+totalrespority);
     // if(postage){
         $('#showgoodspostage').html("快递：免邮");
@@ -952,6 +976,22 @@ $('#dispostage').click(function(){
         }
         $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
+
+
+        //添加满减规则
+        var manjianRule = [], priceModel = {};
+        for(var j=0;j<$('.priceOne').length;j++) {
+            if($('.priceOne').eq(i).val() && $('.priceTwo').eq(j).val()) {
+                priceModel.reachPrice = $('.priceOne').eq(j).val();
+                priceModel.reducePrice = $('.priceTwo').eq(j).val();
+                manjianRule.push(priceModel);
+            }   
+        }
+        
+        console.log(manjianRule);
+        // $('#addProperty').val(manjianRule);
+
+        return true;
     });
     //批量操作的js
     $('#batchOperation').click(function () {
@@ -962,6 +1002,13 @@ $('#dispostage').click(function(){
         }
     });
     $(document).ready(function(){
+        //添加满减规则
+        $('#addNew').click(function () {
+            $('<p> 满<input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
+
+            $('#add_rules').fadeOut('fast');
+            $('.am-dimmer').removeClass('am-active');
+        });
         //根据一级业态的内容来控制二级业态的显示
         var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
         var soncateid = '<?php echo $goods['soncategoryid'];?>';
