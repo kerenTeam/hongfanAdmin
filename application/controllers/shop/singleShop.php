@@ -125,6 +125,7 @@ class SingleShop extends Default_Controller {
         }
         if($_POST){
             $data = $this->input->post();
+       
             $arr['username'] = trim($this->input->post('username'));
             $arr['password'] =trim($this->input->post('password'));
             if(!empty($arr['password'])){
@@ -267,11 +268,11 @@ class SingleShop extends Default_Controller {
 
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             //所有商品分类
-              if($store_type == '2'){
+            //   if($store_type == '2'){
                     $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-                }else{
-                    $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-                }
+            //     }else{
+                    // $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+                // }
 
             //获取商品属性
             $parent = $this->MallShop_model->get_goods_parent($id);
