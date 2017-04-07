@@ -133,11 +133,11 @@ td.am-text-middle img {
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/shop/singleShop/goodsAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
                                     <!-- <button type="button" class="am-btn am-btn-warning"><a href="Upload/xls/import_goods.xlsx"><span class="am-icon-plus"></span> 下载导入模板</a></button> -->
-                                   <a class="wx_type_img am-inline" >
-                                         <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">
+                                   <!--<a class="wx_type_img am-inline" >
+                                         <input type="file" id="imgUpload" name="file" onchange="uploadFiles()" class="upload-add fileUpLoad">-->
                                           <!-- 图片实时预览 -->
-                                          <!-- <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button> -->
-                                    </a>
+                                           <!--<button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button> -->
+                                    <!--</a>-->
                                     <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
@@ -374,7 +374,7 @@ td.am-text-middle img {
 	//导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-       // console.log(fileObj.name.split('.')[1]);
+        console.log(fileObj);
         var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx' || fileObj.name.split('.')[1]=='xls'){
         	$('#refreshModal').modal();
@@ -384,7 +384,7 @@ td.am-text-middle img {
             var xhr=new XMLHttpRequest();
             xhr.open('post',FileController,true);
             xhr.onload=function(data){
-                // console.log(data);
+                 console.log(data);
                 var jsondata=JSON.parse(data.currentTarget.response);
                 console.log(jsondata);
                 $('#refreshMessBox').html('<p class="am-text-center">本次共导入'+(jsondata.yes+jsondata.error)+'条数据，成功： '+jsondata.yes+'条，失败：'+jsondata.error+'条</p>');
