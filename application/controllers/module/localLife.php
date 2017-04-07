@@ -1061,7 +1061,7 @@ class LocalLife extends Default_Controller {
 	function recruit_list(){
 		 $data['name'] = "招聘信息";
 		 $data['page'] = $this->view_recruit;
-         $data['menu'] = array('localLife','localLife');
+         $data['menu'] = array('localLife','service');
          $this->load->view('template.html',$data);
 	}
 

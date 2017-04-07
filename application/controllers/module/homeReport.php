@@ -25,7 +25,7 @@ class HomeReport extends Default_Controller {
     function index()
     {
         $data['page'] = $this->view_homeReport;
-        $data['menu'] = array('localLife','homeReport');
+        $data['menu'] = array('localLife','service');
         $this->load->view('template.html',$data);
     } 
     //本地生活 家乡报道 编辑新闻
@@ -39,7 +39,7 @@ class HomeReport extends Default_Controller {
         $data['cates'] = $this->System_model->get_reportCates();
             $data['info'] = $this->System_model->get_notice_info($id);
             $data['page'] = $this->view_homeReportEdit;
-            $data['menu'] = array('localLife','homeReport');
+            $data['menu'] = array('localLife','service');
             $this->load->view('template.html',$data);
         }
     }
@@ -49,7 +49,7 @@ class HomeReport extends Default_Controller {
         //返回所有家乡报道分类
         $data['cates'] = $this->System_model->get_reportCates();
         $data['page'] = $this->view_homeReportAdd;
-        $data['menu'] = array('localLife','homeReport');
+        $data['menu'] = array('localLife','service');
         $this->load->view('template.html',$data);
     }
     //返回所有公告
@@ -207,7 +207,7 @@ class HomeReport extends Default_Controller {
     function homeReportSort()
     {
         $data['page'] = $this->view_homeReportSort;
-        $data['menu'] = array('localLife','homeReport');
+        $data['menu'] = array('localLife','service');
         $this->load->view('template.html',$data);
     }
     //返回家乡报道分类
@@ -295,7 +295,7 @@ class HomeReport extends Default_Controller {
     function userFocusSort()
     {
         $data['page'] = $this->view_userFocusSort;
-        $data['menu'] = array('localLife','userFocusSort');
+        $data['menu'] = array('localLife','service');
         $this->load->view('template.html',$data);
     }
 }
