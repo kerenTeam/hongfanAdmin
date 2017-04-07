@@ -630,7 +630,9 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
     function showPropertyValue(obj) {
         var sureAddNewPropert=$(obj).parents('.addNewPropertv').find('.addNewPropertValue').val(),kk=$(obj).attr('data-id');
         console.log(kk);  
-        $('.propertycontainer'+kk).append('<span class="badgePro">'+ sureAddNewPropert +'<i class="am-icon am-icon-close spanIcon" onclick="deleteProValue(this)"></i></span>')
+        if(sureAddNewPropert) {
+            $('.propertycontainer'+kk).append('<span class="badgePro">'+ sureAddNewPropert +'<i class="am-icon am-icon-close spanIcon" onclick="deleteProValue(this)"></i></span>');
+        }
         $('.addPropertyName').remove();
         $('.addPropertyTb').find('tr').remove();
         $(obj).parents('.addNewPropertv').css('display','none'); 
@@ -842,10 +844,6 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
             return true;
         }
     }
-
-
-
-
     $(document).ready(function(){
         var i=0,kflag=0,flag=1;
         

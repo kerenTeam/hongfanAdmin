@@ -37,7 +37,7 @@
                         <label name="barnd_name" class="am-u-sm-3 am-form-label">经营品牌：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="请输入2-20个字符" required onblur="validate(this,2,20,1)" />
-                        </div>
+                        </div> 
                         <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
@@ -73,17 +73,6 @@
                         </div>
                         
                     </div>
-                    <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="open_busin" class="am-u-sm-3 am-form-label">开业时间<span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                              <input type="text" value='<?php echo $busin["open_busin"]?>' name='open_busin' class="am-form-field" id="startBusinessTime" placeholder="选择时间" readonly>
-                              <span class="am-input-group-btn am-datepicker-add-on">
-                                <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
-                              </span>
-                            </div>
-                        </div>   
-                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="commercial_type_name" class="am-u-sm-3 am-form-label">一级业态：</label>
                         <div class="am-u-sm-8 am-u-end">
@@ -114,32 +103,14 @@
                         </div>
                         <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div> 
+                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
-                        <label for="op_status" class="am-u-sm-3 am-form-label">营业状态：</label>
+                        <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
                         <div class="am-u-sm-8 am-u-end">
-                           <select id="op_status" name="op_status"  onchange="validate(this,1,20,8)">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="营业中" <?php if($busin['op_status'] == "营业中"){echo "selected";}?> >营业中</option>
-                            <option value="装修中" <?php if($busin['op_status'] == "装修中"){echo "selected";}?>>装修中</option>
-                            <option value="停止营业" <?php if($busin['op_status'] == "停止营业"){echo "selected";}?>>停止营业</option>
-                            <option value="即将营业" <?php if($busin['op_status'] == "即将营业"){echo "selected";}?>>即将营业</option>
-                          </select> 
+                            <textarea name="address"></textarea>
                         </div>
-                        <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div><!-- 
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
-                        <label class="am-u-sm-3 am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <label class="am-radio-inline">
-                                <input type="radio" value="1" name="verification" <?php if($busin['verification'] == '1'){echo "checked";}?>> 是
-                            </label>
-                            <label class="am-checkbox-inline">
-                                <input type="radio" value="0" name="verification" <?php if($busin['verification'] == '0'){echo "checked";}?>> 否
-                            </label>
-                        </div>
-                    </div> -->
+                        
+                    </div>
                 </div>
 
 
