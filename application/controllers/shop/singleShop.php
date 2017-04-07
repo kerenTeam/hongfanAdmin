@@ -213,11 +213,11 @@ class SingleShop extends Default_Controller {
         if($_POST){
            //获取商家信息
            $store = $this->MallShop_model->get_basess_info($this->session->businessId);
-           if($store['store_type'] == 1){
+        //    if($store['store_type'] == 1){
                $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'1');
-           }else{
-               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
-           }
+        //    }else{
+        //        $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
+        //    }
            if(empty($arr)){
                 echo "2";
            }else{
