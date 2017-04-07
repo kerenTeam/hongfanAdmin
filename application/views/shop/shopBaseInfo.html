@@ -73,7 +73,7 @@
                         </div>
                         
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="open_busin" class="am-u-sm-3 am-form-label">开业时间<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
@@ -83,11 +83,11 @@
                               </span>
                             </div>
                         </div>   
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="commercial_type_name" class="am-u-sm-3 am-form-label">一级业态<span class="red">*</span>：</label>
+                        <label for="commercial_type_name" class="am-u-sm-3 am-form-label">一级业态：</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <select id="firstYetai" name="commercial_type_name" required onchange="validate(this,1,20,5)">
+                            <select id="firstYetai" name="commercial_type_name" onchange="validate(this,1,20,5)">
                                 <option value="">-=请选择一项=-</option>
                                 <?php foreach($yetai as $val):?>
                                     <option value="<?php echo $val['id']?>" <?php if($val['id'] == $busin['commercial_type_name']){echo "selected";}?>><?php echo $val['type_name']?></option>
@@ -108,25 +108,17 @@
                         <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>  
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="store_type" class="am-u-sm-3 am-form-label">商家类型 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <select id="store_type" name="store_type" required onblur="validate(this,1,20,7)">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="普通" <?php if($busin['store_type'] == "普通"){echo "selected";}?>>普通</option>
-                                <option value="餐饮" <?php if($busin['store_type'] == "餐饮"){echo "selected";}?>>餐饮</option>
-                                <option value="影院" <?php if($busin['store_type'] == "影院"){echo "selected";}?>>影院</option>
-                                <option value="KTV" <?php if($busin['store_type'] == "KTV"){echo "selected";}?>>KTV</option>
-                                <option value="冰场" <?php if($busin['store_type'] == "冰场"){echo "selected";}?>>冰场</option>
-                            </select>
-                            <span class="am-form-caret"></span>
+                        <label for="store_type" class="am-u-sm-3 am-form-label">商家类型 ：</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" name="store_type" name="en_name" value="自营" readonly />
                         </div>
                         <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
                     </div> 
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="op_status" class="am-u-sm-3 am-form-label">营业状态<span class="red">*</span>：</label>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
+                        <label for="op_status" class="am-u-sm-3 am-form-label">营业状态：</label>
                         <div class="am-u-sm-8 am-u-end">
-                           <select id="op_status" name="op_status" required onchange="validate(this,1,20,8)">
+                           <select id="op_status" name="op_status"  onchange="validate(this,1,20,8)">
                             <option value="">-=请选择一项=-</option>
                             <option value="营业中" <?php if($busin['op_status'] == "营业中"){echo "selected";}?> >营业中</option>
                             <option value="装修中" <?php if($busin['op_status'] == "装修中"){echo "selected";}?>>装修中</option>
@@ -136,13 +128,7 @@
                         </div>
                         <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="area" class="am-u-sm-3 am-form-label">面积/平方米 ：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <input type="text" name="area" placeholder="例如：300.00" value="<?php echo $busin['area']?>" />
-                        </div>  
-                    </div>
+                    </div><!-- 
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
                         <label class="am-u-sm-3 am-form-label" data-am-popover="{content: '开启口令验证，用户可以在商场用口令自助验证券', trigger: 'hover focus'}">是否开启核销口令:</label>
                         <div class="am-u-sm-8 am-u-end">
@@ -153,7 +139,7 @@
                                 <input type="radio" value="0" name="verification" <?php if($busin['verification'] == '0'){echo "checked";}?>> 否
                             </label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -203,14 +189,14 @@
                               </div> 
                         </div> 
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">营业时间<span class="red">*</span>：</label>
                         <div class="am-u-sm-8">
                             <input type="text" name="business_hours" class="am-form-field tpl-form-no-bg" value="<?php echo $busin['business_hours'];?>" placeholder="例如：9:00-22:00" required onblur="validate(this,2,13,9)" />
                         </div>
                         <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
+                    </div> -->
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">手机号<span class="red">*</span>：</label>
                         <div class="am-u-sm-8">
@@ -220,92 +206,19 @@
                         <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">座机号：</label>
-                        <div class="am-u-sm-8">
-                            <input type="tel"  name="" value="<?php echo $busin['tel']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" onblur="validate(this,7,12,0)" />
-                        </div>
-                        <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
-                        <div class="am-u-sm-8 am-u-end">
-                           <input type="text" name="sina_weibo" value="<?php echo $busin['sina_weibo']?>"  class="am-form-field tpl-form-no-bg" placeholder="" >
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                           <input type="text" name="tc_weibo" value="<?php echo $busin['tc_weibo']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">微信账号： </label>
                         <div class="am-u-sm-8 am-u-end">
                            <input type="text" name="wechat" value="<?php echo $busin['wechat']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
                         </div>
                     </div>  
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号： </label>
                         <div class="am-u-sm-8 am-u-end">
                            <input type="text" name="qq" value="<?php echo $busin['qq']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label class="am-u-sm-3 am-form-label">文字简介：</label>
-                        <div class="am-u-sm-8">
-                            <textarea name="description" rows="5" cols="40" placeholder="请输入2-500个字符" required onblur="validate(this,2,500,11)">
-                               <?php echo $busin['description'];?>
-                            </textarea>
-                        </div>
-                        <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                </div>
-
-                <!--商家楼层信息-->
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear: both;">商家楼层信息</div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <select id="yetai" name="floor_name" data-am-selected="{searchBox: 1,maxHeight: 200}" >
-                                <option value="B3" <?php if($busin['floor_name'] == 'B3'){echo "selected";}?>>B3</option>
-                                <option value="B2" <?php if($busin['floor_name'] == 'B2'){echo "selected";}?>>B2</option>
-                                <option value="B1" <?php if($busin['floor_name'] == 'B1'){echo "selected";}?>>B1</option>
-                                <option value="F1" <?php if($busin['floor_name'] == 'F1'){echo "selected";}?>>F1</option>
-                                <option value="F2" <?php if($busin['floor_name'] == 'F2'){echo "selected";}?>>F2</option>
-                                <option value="F3" <?php if($busin['floor_name'] == 'F3'){echo "selected";}?>>F3</option>
-                                <option value="F4" <?php if($busin['floor_name'] == 'F4'){echo "selected";}?>>F4</option>
-                                <option value="F5" <?php if($busin['floor_name'] == 'F5'){echo "selected";}?>>F5</option>
-                                <option value="F6" <?php if($busin['floor_name'] == 'F6'){echo "selected";}?>>F6</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="user-name" class="am-u-sm-2 am-form-label">铺位号：</label>
-                        <div class="am-u-sm-7">
-                           <!--  <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value=>输入查找/选择</option>
-                                <option value="01A0">01A0</option>
-                                <option value="037B">037B</option>
-                                <option value="037A">037A</option>
-                                <option value="042B">042B</option>
-                                <option value="038A">038A</option>
-                                <option value="045B">045B</option>
-                                <option value="002">002</option>
-                                <option value="003">003</option>
-                                <option value="005">005</option>
-                            </select> -->
-                            <input type="text" name="door_no" placeholder="例如：1001" value="<?php echo $busin['door_no'];?>"  />
-                        </div>
-                       <div class="am-u-sm-3">
-                          <!--  <button type="button" class="am-btn am-btn-success am-btn-xs">
-                                <i class="am-icon-plus"></i> 添加</button> -->
-                       </div>
-                    </div>
                     <div class="am-form-group am-text-center">
                         <input type="hidden" name="store_id" value="<?php echo $busin['store_id'];?>">
                         <button type="submit" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
