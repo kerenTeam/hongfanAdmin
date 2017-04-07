@@ -72,7 +72,7 @@ class Moll extends Default_Controller {
          $data['level'] = $this->Moll_model->get_store('0');
          // 视图
          $data['page'] = $this->view_mollyetaiList;
-         $data['menu'] = array('moll','mollyetaiList');
+         $data['menu'] = array('store','mollyetaiList');
     	 $this->load->view('template.html',$data);
     }
     //新增业态
@@ -81,7 +81,7 @@ class Moll extends Default_Controller {
          $data['store'] =  $this->Moll_model->get_store('0');
 
          $data['page'] = $this->view_mollAddYetai;
-         $data['menu'] = array('moll','mollyetaiList');
+         $data['menu'] = array('store','mollyetaiList');
          $this->load->view('template.html',$data);
     }
     //新增业态操作
@@ -133,7 +133,7 @@ class Moll extends Default_Controller {
             $data['store'] =  $this->Moll_model->get_store('0');
 
              $data['page'] = $this->view_mollEditYetai;
-             $data['menu'] = array('moll','mollyetaiList');
+             $data['menu'] = array('store','mollyetaiList');
              $this->load->view('template.html',$data);
         }
     }

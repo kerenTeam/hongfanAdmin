@@ -119,8 +119,8 @@ class SingleShop extends Default_Controller {
 
     //商家基础信息操作
     function edit_busin_info(){
-            $store_id = $this->session->businessId;
-           if(empty($store_id)){
+        $store_id = $this->session->businessId;
+        if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         if($_POST){
@@ -158,12 +158,15 @@ class SingleShop extends Default_Controller {
                         }
                     }
                 }else{
-                    if($i == 1){
-                        $data['logo'] = $data['img'.$i];
-                    }else{
-                        $data['pic'] = $data['img'.$i];
+                    if(isset($data['img1'])){
+                        if($i == 1){
+                            $data['logo'] = $data['img'.$i];
+                        }else{
+                            $data['pic'] = $data['img'.$i];
+                        }
+                        unset($data['img'.$i]);
                     }
-                    unset($data['img'.$i]);
+                   
                 }
                 $i++;
              }
@@ -177,7 +180,7 @@ class SingleShop extends Default_Controller {
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
-                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                    // echo "23";
                  }else{
                     echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
@@ -195,11 +198,11 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //分类
-        if($store_type == '2'){
+        // if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-        }else{
-            $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-        }
+        // }else{
+        //     $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+        // }
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
@@ -392,11 +395,11 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //所有商品分类
-        if($store_type == '2'){
+        // if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-        }else{
-            $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-        }
+        // }else{
+        //     $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+        // }
         //返回快递模板
         //$data['express'] = $this->MallShop_model->get_express_temp();
 
