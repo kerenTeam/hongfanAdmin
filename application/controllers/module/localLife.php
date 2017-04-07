@@ -1068,7 +1068,7 @@ class LocalLife extends Default_Controller {
 	//返回所有招聘信息
 	function ret_recruit_list(){
 		if($_POST){
-			$list = $this->Module_model-get_recruit_list('4');
+			$list = $this->Module_model->get_recruit_list('4');
 			if(!empty($list)){
 				echo json_encode($list);
 			}else{
