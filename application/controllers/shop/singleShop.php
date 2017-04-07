@@ -458,11 +458,11 @@ class SingleShop extends Default_Controller {
              $data['storeid'] = $this->session->businessId;
             
             $store = $this->MallShop_model->get_basess_info($this->session->businessId);
-            if($store['store_type'] == 1){
-              $data['differentiate'] = '1';
-            }else{
-                $data['differentiate'] = '4';
-            }
+            // if($store['store_type'] == 1){
+                $data['differentiate'] = '1';
+            // }else{
+            //     $data['differentiate'] = '4';
+            // }
             
              $goodsid = $this->MallShop_model->add_shop_goods($data);
              if(!empty($goodsid)){
