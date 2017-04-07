@@ -713,50 +713,41 @@ class SystemSet extends Default_Controller {
     //APP版本管理
     function app_version(){
         //获取已有的APP版本信息
-
+        $data['app'] = $this->System_model->get_app_version();
         $data['page'] = $this->view_appversion;
         $data['menu'] = array('systemSet','version');
         $this->load->view('template.html',$data);
     }
 
-    //返回版本
-    function getVersion(){
-        if($_POST){
-              $app = $this->System_model->get_app_version();
-              if($app){
-                echo json_encode($app);
-              }else{
-                echo "2";
-              }
-        }else{
-            echo "2";
-        }
-    }
-
     //修改版本
     function edit_app_version(){
+         var_dump($_FILES);
+            exit;
         if($_POST){
             $id= $this->input->post('id');
             $data['versionNum']= $this->input->post('versionNum');
             $data['create_time'] = date('Y-m-d H:i:s');
-          
+           
             if(!empty($_FILES['file']['tmp_name'])){
-                $file_path = "Upload/code/".$_FILES["file"]['name']; 
+                $file_path = "Upload/xls/".$_FILES["file"]['name']; 
                 move_uploaded_file($_FILES["file"]["tmp_name"],  $file_path);
-                $data['path_url']= $file_path;
+                  if(!file_exists($file_path)){
+                    echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+                    exit;
+                 }
+                $data['android_path_url']= $file_path;
                 if($this->System_model->edit_app_version($id,$data)){
-                    echo "1";
+                    echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
                 }else{
-                    echo "2";
+                    echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
                 }
             }else{
-                echo "2";
-                break;
+                echo "4";
             }
-
         }else{
-            echo "2";
+            $this->load->view('404.html');
         }
+      
     }
 
     //返回APP温馨提示
