@@ -108,15 +108,26 @@
                         <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">满减规则<span class="red">*</span>：</label>
+                        <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
                         <div class="am-u-sm-6" id="priceModelsBox">
-                           <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
-                           <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
-                           <p>满 <input class="priceOne" value="200" /> 元减 <input class="priceTwo" value="10" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                            <?php if(!empty($busin['reduction_rule'])):?>
+                            <?php $rule = json_decode($busin['reduction_rule'],true);?>
+                            <?php foreach($rule as $v):?>
+                           <p>满 <input class="priceOne" value="<?php echo $v['reachPrice']?>"/> 元减 <input class="priceTwo" value="<?php echo $v['reducePrice'];?>"/> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                           <?php endforeach;?>
+                            <?php else:?>
+                           <p>满 <input class="priceOne" /> 元减 <input class="priceTwo" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
+                            <?php endif;?>
+                       
                         </div>
                         <div class="am-u-sm-1 am-u-end">
                             <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                         </div>
+                          <?php if(!empty($busin['reduction_rule'])):?>
+                        <input type="hidden" id="reduction_rule" name='reduction_rule' value="<?php echo $busin['reduction_rule'];?>">
+                          <?php else:?>
+                             <input type="hidden" id="reduction_rule" name='reduction_rule' >
+                          <?php endif;?>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
@@ -229,7 +240,7 @@
     $(document).ready(function(){
         //添加满减规则
         $('#addNew').click(function () {
-            $('<p> 满<input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
+            $('<p> 满 <input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
 
             $('#add_rules').fadeOut('fast');
             $('.am-dimmer').removeClass('am-active');
@@ -315,17 +326,21 @@
     //点击保存按钮作验证
     $('#submit').click(function(){
         //添加满减规则
-        var manjianRule = [], priceModel = {};
+        var manjianRule = [];
         for(var j=0;j<$('.priceOne').length;j++) {
-            if($('.priceOne').eq(i).val() && $('.priceTwo').eq(j).val()) {
+            if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
+                var priceModel = {}
+               // console.log($('.priceOne').eq(j).val() + '' +$('.priceTwo').eq(j).val());
                 priceModel.reachPrice = $('.priceOne').eq(j).val();
                 priceModel.reducePrice = $('.priceTwo').eq(j).val();
+                 console.log(priceModel);
                 manjianRule.push(priceModel);
             }   
         }
         
         console.log(manjianRule);
-        // $('#addProperty').val(manjianRule);
+        manjianRule=JSON.stringify(manjianRule);
+        $('#reduction_rule').val(manjianRule);
         return true;
     });
 
