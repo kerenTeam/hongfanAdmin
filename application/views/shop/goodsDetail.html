@@ -668,6 +668,7 @@ function validate(obj,minlen,maxlen,i){
     var newPrice = $('#goodPrice').val();
     var editorContent= UE.getEditor('editor').getContent();
     $('#showgoodsname').html(goodName);
+    $('#showgoodsprice').html("");
     $('#showgoodsprice').append($('<i class="newgoodPrice"> ￥'+ newPrice +'</i>  <i class="oldgoodPrice"> ￥'+ goodPrice +'</i>'));
     $('#showgoodsresporty').html('库存：'+totalrespority);
     // if(postage){
