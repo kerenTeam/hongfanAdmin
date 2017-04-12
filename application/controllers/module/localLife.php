@@ -224,9 +224,9 @@ class LocalLife extends Default_Controller {
 				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
 				//视图
 
-			                $data['page'] = $this->view_serviceList;
-			                $data['menu'] = array('localLife','service');
-			                $this->load->view('template.html',$data);
+				$data['page'] = $this->view_serviceList;
+				$data['menu'] = array('localLife',$id);
+				$this->load->view('template.html',$data);
 			}
         }
     }
@@ -326,7 +326,7 @@ class LocalLife extends Default_Controller {
     function serviceInfo()
     {
 		$id=intval($this->uri->segment(4));
-                        $type=intval($this->uri->segment(5));
+        $type=intval($this->uri->segment(5));
 		$cateid=intval($this->uri->segment(6));
 	   
 		if($id == 0 || $type == 0){
@@ -1061,7 +1061,7 @@ class LocalLife extends Default_Controller {
 	function recruit_list(){
 		 $data['name'] = "招聘信息";
 		 $data['page'] = $this->view_recruit;
-         $data['menu'] = array('localLife','service');
+         $data['menu'] = array('localLife','recruit_list');
          $this->load->view('template.html',$data);
 	}
 

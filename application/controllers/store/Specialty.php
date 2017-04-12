@@ -13,6 +13,10 @@ class Specialty extends Default_Controller {
     public $view_specialtyAddCates =  "store/specialty/specialtyAddCates.html";
     //编辑特色馆分类
     public $view_specialtyEditCates = "store/specialty/specialtyEditCates.html";
+    //天天特价商品
+    public $view_discountGoods = "store/specialty/discountGoods.html";
+    //推荐商品
+    public $view_recommendGoods = "store/specialty/recommendGoods.html";
 
     function __construct()
     {
@@ -160,6 +164,25 @@ class Specialty extends Default_Controller {
             echo "2";
         }
     }
+
+    //天天特价
+    function discountGoods(){
+        $data['page'] = $this->view_discountGoods;
+        $data['menu'] = array('store','discountGoods');
+        $this->load->view('template.html',$data);
+    }
+    //推荐商品
+    function recommendGoods(){
+     
+        $data['page'] = $this->view_recommendGoods;
+        $data['menu'] = array('store','recommendGoods');
+        $this->load->view('template.html',$data);
+    }
+
+
+
+
+
 }
 
 

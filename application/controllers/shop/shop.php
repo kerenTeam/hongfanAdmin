@@ -473,7 +473,7 @@ class Shop extends Default_Controller {
         }
         $data['find'] = $list;
         $data['page'] = $this->view_findshop;
-        $data['menu']= array('moll','findshop');
+        $data['menu']= array('store','findshop');
         $this->load->view('template.html',$data);
      }
 
