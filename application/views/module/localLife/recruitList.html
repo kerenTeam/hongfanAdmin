@@ -91,14 +91,6 @@ padding: 5px 6px!important;
                             <div class="am-modal-bd"> 
                                 <!-- 本地生活 信息展示类 -->
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/LocalLife/add_recruit')?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">公司名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" placeholder="请输入标题,2-15个字符" name='name' minlength="2" maxlength="15" required onblur="validate(this,2,15,1)">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
                                      <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">标题 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
@@ -106,15 +98,6 @@ padding: 5px 6px!important;
                                         </div>
                                         <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <textarea rows='4' type="text" minlength="2" maxlength="500" placeholder="如:空调·热水器·洗衣机类维修,2-500个字符" name='content' required onblur="validate(this,2,500,3)"></textarea>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
@@ -133,20 +116,20 @@ padding: 5px 6px!important;
                                         <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='address' required placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,6)" minlength="2" maxlength="50"/>
+                                            <input type="text" name='address' required placeholder="请输入详细地址，2-200个字符" onblur="validate(this,2,200,6)" minlength="2" maxlength="200"/>
                                         </div>
                                         <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
                                         <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>求职
                                         </div>
                                         <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >招聘
                                         </div>
                                     </div>
                                     <div class="am-form-group am-btn-group-xs">
@@ -162,13 +145,10 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th>编号</th>
-                                    <th>公司名称</th>
                                     <th>标题</th>
-                                    <th width="300">服务内容</th>
                                     <th>联系人</th>
                                     <th>联系电话</th>
-                                    <th>详细地址</th>
-                                    <th>发布人身份</th>
+                                    <th>类型</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -469,29 +449,12 @@ $(document).ready(function(){
                 <!-- 本地生活 信息展示类 -->
                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator>
                     <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">公司名称 <span class="red">*</span></label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入标题,2-15个字符" class='name<%= id %>' minlength="2" maxlength="15" value="<%= name %>" required onblur="validate(this,2,15,7)">
-                        </div>
-                        <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">标题 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
                             <input type="text" placeholder="请输入标题,2-15个字符" class='title<%= id %>' minlength="2" maxlength="15" value="<%= content.title %>" required onblur="validate(this,2,15,8)">
                         </div>
                         <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                 
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
-                        <div class="am-u-sm-8">
-                            <textarea rows='4' type="text" minlength="2" maxlength="500" placeholder="如:空调·热水器·洗衣机类维修,2-500个字符" class='content<%= id %>' required onchange="validate(this,2,500,9)"><%= content.content %></textarea>
-                        </div>
-                        <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
@@ -510,28 +473,28 @@ $(document).ready(function(){
                         <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
+                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
-                            <input type="text" class='address<%= id %>' required placeholder="请输入详细地址，2-50个字符" value="<%= address %>" onblur="validate(this,2,50,12)" minlength="2" maxlength="50"/>
+                            <input type="text" class='address<%= id %>' required placeholder="请输入详细地址，2-200个字符" value="<%= address %>" onblur="validate(this,2,200,12)" minlength="2" maxlength="50"/>
                         </div>
                         <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                     <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+                        <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
                         <% if(isbusiness == '1') { %>
                         <div class="am-u-sm-3">
-                            <input type="radio" class="am-inline" name='isbusiness' value='1' checked>商家
+                            <input type="radio" class="am-inline" name='isbusiness' value='1' checked>求职
                         </div>
                         <div class="am-u-sm-3 am-u-end">
-                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
+                            <input type="radio" class="am-inline" name='isbusiness' value="0" >招聘
                         </div>
                         <% } else { %>
                         <div class="am-u-sm-3">
-                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
+                            <input type="radio" class="am-inline" name='isbusiness' value='1'>求职
                         </div>
                         <div class="am-u-sm-3 am-u-end">
-                            <input type="radio" class="am-inline" name='isbusiness' value="0" checked >个人
+                            <input type="radio" class="am-inline" name='isbusiness' value="0" checked >招聘
                         </div>
                         <% } %>
                     </div>
