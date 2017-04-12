@@ -139,38 +139,51 @@ class SingleShop extends Default_Controller {
                  echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
             }
             $pic = array();
-            $i =1;
-            foreach($_FILES as $file=>$val){
-                if(!empty($_FILES['img'.$i]['name'])){
+         
+                if(!empty($_FILES['img1']['name'])){
                     $config['upload_path']      = 'Upload/logo/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
-                    if(!$this->upload->do_upload('img'.$i)) {
+                    if(!$this->upload->do_upload('img1')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
                     }else{
-                        unset($data['img'.$i]);
-                        if($i == 1){
-                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }else{
-                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }
+                        unset($data['img1']);
+                        $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
+                   
                     }
                 }else{
                     if(isset($data['img1'])){
-                        if($i == 1){
-                            $data['logo'] = $data['img'.$i];
-                        }else{
-                            $data['pic'] = $data['img'.$i];
-                        }
-                        unset($data['img'.$i]);
+                      
+                            $data['logo'] = $data['img1'];
+                      
+                        unset($data['img1']);
                     }
-                   
                 }
-                $i++;
-             }
+                if(!empty($_FILES['img2']['name'])){
+                    $config['upload_path']      = 'Upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img2')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
+                    }else{
+                        unset($data['img2']);
+                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
+                   
+                    }
+                }else{
+                    if(isset($data['img2'])){
+                      
+                            $data['pic'] = $data['img2'];
+                      
+                        unset($data['img2']);
+                    }
+                }
             if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
                  if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
                     //日志
