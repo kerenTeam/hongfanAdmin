@@ -335,6 +335,8 @@ class SystemSet extends Default_Controller {
         //返回所有权限  
         $query = $this->db->order_by('modular_id','asc')->get('hf_system_modular');
         $arr = $query->result_array();
+        // var_dumP($arr);
+        // exit;
         //返回整理好的数组
         $data['modular'] = subtree($arr);
 

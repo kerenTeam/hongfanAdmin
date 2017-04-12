@@ -1083,9 +1083,9 @@ class LocalLife extends Default_Controller {
 	function add_recruit(){
 		if($_POST){
 			$data = $this->input->post();
-			$title = $data['title'];
-			$data['content'] = '{"title":"'.$data['title'].'","content":"'.$data['content'].'"}';
-			unset($data['title']);
+			$title = $data['name'];
+			$data['content'] = '{"title":"'.$data['name'].'","content":"'.$data['content'].'"}';
+		//	unset($data['title']);
 			$data['type_name'] = "4";
 			if($this->Module_model->add_service($data)){
 				//日志
@@ -1109,9 +1109,8 @@ class LocalLife extends Default_Controller {
 	function edit_recruit(){
 		if($_POST){
 			$data = $this->input->post();
-			$title = $data['title'];
-			$data['content'] = '{"title":"'.$data['title'].'","content":"'.$data['content'].'"}';
-			unset($data['title']);
+			$title = $data['name'];
+			$data['content'] = '{"title":"'.$data['name'].'","content":"'.$data['content'].'"}';
 			if($this->Module_model->edit_service($data['id'],$data)){
 				//日志
 				$log = array(
