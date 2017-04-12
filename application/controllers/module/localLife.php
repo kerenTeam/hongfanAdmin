@@ -356,7 +356,7 @@ class LocalLife extends Default_Controller {
 			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
 			//视图
             $data['page'] = $this->view_serviceInfo;
-            $data['menu'] = array('localLife','service');
+            $data['menu'] = array('localLife',$cateid);
             $this->load->view('template.html',$data);
 		}
     }

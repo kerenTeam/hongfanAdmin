@@ -25,7 +25,7 @@ class Integral extends Default_Controller
     function integralList(){
         $data['cates'] = $this->Integral_model->get_goods_cates('1');
         $data['page'] = $this->view_integralList;
-        $data['menu'] = array('integral','integralList');
+        $data['menu'] = array('member','integralList');
         $this->load->view('template.html',$data);
     }
     //返回积分商品列表
@@ -96,7 +96,7 @@ class Integral extends Default_Controller
         $data['cates'] = $this->Integral_model->get_goods_cates('1');
 
         $data['page'] = $this->view_integralAddGoods;
-        $data['menu'] = array('integral','integralList');
+        $data['menu'] = array('member','integralList');
         $this->load->view('template.html',$data);
     }
 
@@ -185,7 +185,7 @@ class Integral extends Default_Controller
             //所有商品分类
             $data['cates'] = $this->Integral_model->get_goods_cates('1');
             $data['page'] = $this->view_integralEditGoods;
-            $data['menu'] = array('integral','integralList');
+            $data['menu'] = array('member','integralList');
             $this->load->view('template.html',$data);
         }
     }
@@ -248,19 +248,19 @@ class Integral extends Default_Controller
     //订单管理
     function integralOrderList(){
         $data['page'] = $this->view_integralOrderList;
-        $data['menu'] = array('integral','integralOrderList');
+        $data['menu'] = array('member','integralOrderList');
         $this->load->view('template.html',$data);
     }
     //编辑订单
     function integralOrderDetail(){
         $data['page'] = $this->view_integralOrderDetail;
-        $data['menu'] = array('integral','integralOrderList');
+        $data['menu'] = array('member','integralOrderList');
         $this->load->view('template.html',$data);
     }
     //编辑订单
     function integralOrderModify(){
         $data['page'] = $this->view_integralOrderModify;
-        $data['menu'] = array('integral','integralOrderList');
+        $data['menu'] = array('member','integralOrderList');
         $this->load->view('template.html',$data);
     }
 
@@ -271,7 +271,7 @@ class Integral extends Default_Controller
         // var_dump($inter);
         // exit;
         $data['page'] = $this->view_integralRule;
-        $data['menu'] = array('integral','integralRule');
+        $data['menu'] = array('member','integralRule');
         $this->load->view('template.html',$data);
     }
     //修改积分规则

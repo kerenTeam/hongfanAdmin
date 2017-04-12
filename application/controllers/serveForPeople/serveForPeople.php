@@ -29,31 +29,24 @@ class ServeForPeople extends Default_Controller
 
 	//为民服务 为民服务主页
     function serveForPeople(){
-        //获取团队信息
-        $data['team'] = $this->Service_model->get_team_info();
-        // var_dump($team);
-        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-        $data['plateid'] = json_decode($plateid,true);
-        // exit;
-        $data['page'] = $this->view_serveForPeople;
-        $data['menu'] = array('localLife','serveForPeople');
-        $this->load->view('template.html',$data);
+        $id  = intval($this->uri->segment('4'));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取团队信息
+            $data['team'] = $this->Service_model->get_team_info();
+            
+            $data['id']   = $id;
+            $data['page'] = $this->view_serveForPeople;
+            $data['menu'] = array('serveForPeople',$id);
+            $this->load->view('template.html',$data);
+        }
     }
-    function helper_time(){
-     
-        // var_dump($team);
-        $plateid = $this->user_model->group_permiss($this->session->users['gid']);
-        $data['plateid'] = json_decode($plateid,true);
-        // exit;
-        $data['page'] = $this->view_serveForPeople;
-        $data['menu'] = array('localLife','helper_time');
-        $this->load->view('template.html',$data);
-    }
-
+   
     //为民服务  邻水帮帮团成员列表
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','1');
         $this->load->view('template.html',$data);
     }
     //为民服务  义工团队信息
@@ -61,7 +54,7 @@ class ServeForPeople extends Default_Controller
        //获取团队信息
         $data['team'] = $this->Service_model->get_team_info();
         $data['page'] = $this->view_volunteerTeamserveMess;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','2');
         $this->load->view('template.html',$data);
     }
     //获取成员列表
@@ -162,7 +155,7 @@ class ServeForPeople extends Default_Controller
             //引入类库
             $this->load->library('excel');
             if(!file_exists($inputFileName)){
-                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/module/LocalLife/serviceList/8')."'</script>";
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/serveForPeople/serveForPeople/volunteerTeamserveMess')."'</script>";
                     exit;
             }
             //导入excel文件类型 excel2007 or excel5
@@ -277,7 +270,7 @@ class ServeForPeople extends Default_Controller
     //为民服务  邻水帮帮团服务列表
     function helpgroupservelist(){
         $data['page'] = $this->view_helpgroupservelist;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','1');
         $this->load->view('template.html',$data);
     }
     //服务请求列表
@@ -384,7 +377,7 @@ class ServeForPeople extends Default_Controller
     //为民服务  添加邻水帮帮团
     function addhelpgroup(){
         $data['page'] = $this->view_addhelpgroup;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','1');
         $this->load->view('template.html',$data);
     }
     //新增帮帮成员
@@ -429,7 +422,7 @@ class ServeForPeople extends Default_Controller
 	//为民服务  编辑邻水帮帮团
     function edithelpgroup(){
         $data['page'] = $this->view_edithelpgroup;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','1');
         $this->load->view('template.html',$data);
     }
     //编辑操作
@@ -554,7 +547,7 @@ class ServeForPeople extends Default_Controller
    //为民服务  义工团队 服务列表
     function volunteerTeamservelist(){
         $data['page'] = $this->view_volunteerTeamservelist;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','2');
         $this->load->view('template.html',$data);
     }
 
@@ -694,7 +687,7 @@ class ServeForPeople extends Default_Controller
      //为民服务  邻水律师团 成员列表
     function lawyergrouplist(){
         $data['page'] = $this->view_lawyergrouplist;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','3');
         $this->load->view('template.html',$data);
     }
 
@@ -702,7 +695,7 @@ class ServeForPeople extends Default_Controller
     function add_lawyerfroup_user(){
         
         $data['page'] = $this->viwe_lawyergroupAddUser;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','3');
         $this->load->view('template.html',$data);
     }
 
@@ -810,7 +803,7 @@ class ServeForPeople extends Default_Controller
          //为民服务  邻水律师团 服务列表
     function lawyergroupservelist(){
         $data['page'] = $this->view_lawyergroupservelist;
-        $data['menu'] = array('localLife','serveForPeople');
+        $data['menu'] = array('serveForPeople','3');
         $this->load->view('template.html',$data);
     }
 
