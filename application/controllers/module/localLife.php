@@ -1120,9 +1120,9 @@ class LocalLife extends Default_Controller {
 					"userip" => get_client_ip(),
 				);
 				$this->db->insert('hf_system_journal',$log);
-				echo "1";eixt;
+				echo "1";exit;
 			}else{
-				echo "3";eixt;
+				echo "3";exit;
 			}
 
 		}else{

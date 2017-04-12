@@ -289,19 +289,18 @@ function otherOperation() {
     //编辑招聘信息
     $('.saveRecruit').click(function () {
         var dataId = $(this).attr("data-id"),
-            title = $('.title' + dataId).val(),
-            name = $('.name' + dataId).val(),
+            name = $('.title' + dataId).val(),
             content = $('.content' + dataId).val(),  
-            address = $('.address' + dataId).val(),
+          //  address = $('.address' + dataId).val(),
             link_man = $('.link_man' + dataId).val(),
             phone = $('.phone'+dataId).val(),
             isbusiness = $('input[type=radio]:checked').val();  
-        console.log('id='+ dataId +'&title='+ title +"&name="+ name +"&content="+ content +"&address="+ address +"&link_man="+ link_man +"&phone="+ phone +"&isbusiness="+ isbusiness)
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
             data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&isbusiness="+ isbusiness,
-            success: function(result){         
+            success: function(result){       
+                console.log(result);  
                 var res = eval(result);
                 if(res == 1){
                     alert("修改成功！");
@@ -473,7 +472,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
-                            <input type="text" class='address<%= id %>' required placeholder="请输入详细地址，2-200个字符" value="<%= content.content %>" onblur="validate(this,2,200,12)" minlength="2" maxlength="50"/>
+                            <input type="text" class='content<%= id %>' required placeholder="请输入详细地址，2-200个字符" value="<%= content.content %>" onblur="validate(this,2,200,12)" minlength="2" maxlength="50"/>
                         </div>
                         <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
@@ -482,7 +481,7 @@ $(document).ready(function(){
                         <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
                         <% if(isbusiness == '1') { %>
                         <div class="am-u-sm-3">
-                            <input type="radio" class="am-inline" name='isbusiness' value='1' checked='checked' >求职
+                            <input type="radio" class="am-inline" name='isbusiness' value='1' checked >求职
                         </div>
                         <div class="am-u-sm-3 am-u-end">
                             <input type="radio" class="am-inline" name='isbusiness' value="0" >招聘
