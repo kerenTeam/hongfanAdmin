@@ -43,6 +43,10 @@ padding: 5px 6px!important;
         border: 1px solid #ff0000 !important;
         color: #ff0000 !important;
     }
+    select.am-form-field {
+        border: 1px solid #c2cad8 !important;
+        border-radius: 5px !important;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -125,12 +129,14 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
-                                        <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>求职
+                                         <div class="am-u-sm-8 am-u-end">
+                                            <select class="am-form-field isbusiness" name="isbusiness" required>
+                                                <option value="">-=请选择一项=-</option>
+                                                <option value="1">求职</option>
+                                                <option value="0">招聘</option>
+                                            </select>
                                         </div>
-                                        <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >招聘
-                                        </div>
+                        
                                     </div>
                                     <div class="am-form-group am-btn-group-xs">
                                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
@@ -290,11 +296,10 @@ function otherOperation() {
     $('.saveRecruit').click(function () {
         var dataId = $(this).attr("data-id"),
             name = $('.title' + dataId).val(),
-            content = $('.content' + dataId).val(),  
-          //  address = $('.address' + dataId).val(),
+            content = $('.content' + dataId).val(), 
             link_man = $('.link_man' + dataId).val(),
             phone = $('.phone'+dataId).val(),
-            isbusiness = $('input[type=radio]:checked').val();  
+            isbusiness = $('.isbusiness'+ dataId).val();  
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
@@ -306,7 +311,7 @@ function otherOperation() {
                     alert("修改成功！");
                     $('#edit'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
+                    getList("<?php echo site_url('/module/LocalLife/ret_recruit_list');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -317,7 +322,7 @@ function otherOperation() {
             }
         });
     });
-    //删除分类
+    //删除招聘
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
         $.ajax({
@@ -330,7 +335,7 @@ function otherOperation() {
                     alert("删除成功！");
                     $('#edit'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
+                    getList("<?php echo site_url('/module/LocalLife/ret_recruit_list');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -479,21 +484,22 @@ $(document).ready(function(){
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
-                        <% if(isbusiness == '1') { %>
-                        <div class="am-u-sm-3">
-                            <input type="radio" class="am-inline" name='isbusiness' value='1' checked >求职
+                        <div class="am-u-sm-8 am-u-end">
+                            <% if(isbusiness == '1') { %>
+                            <select class="am-form-field isbusiness<%= id %>" name="isbusiness">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1" selected="selected">求职</option>
+                                <option value="0">招聘</option>
+                            </select>
+                            <% } else { %>
+                            <select class="am-form-field isbusiness<%= id %>" name="isbusiness">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1" >求职</option>
+                                <option value="0"selected="selected" >招聘</option>
+                            </select>
+                            <% } %>
                         </div>
-                        <div class="am-u-sm-3 am-u-end">
-                            <input type="radio" class="am-inline" name='isbusiness' value="0" >招聘
-                        </div>
-                        <% } else { %>
-                        <div class="am-u-sm-3">
-                            <input type="radio" class="am-inline" name='isbusiness' value='1'>求职
-                        </div>
-                        <div class="am-u-sm-3 am-u-end">
-                            <input type="radio" class="am-inline" name='isbusiness' value="0" checked >招聘
-                        </div>
-                        <% } %>
+                        
                     </div>
                     <div class="am-form-group am-btn-group-xs">
                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
