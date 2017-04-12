@@ -212,11 +212,11 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //分类
-        // if($store_type == '2'){
+        if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-        // }else{
-        //     $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-        // }
+        }else{
+            $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+        }
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);
@@ -227,11 +227,11 @@ class SingleShop extends Default_Controller {
         if($_POST){
            //获取商家信息
            $store = $this->MallShop_model->get_basess_info($this->session->businessId);
-        //    if($store['store_type'] == 1){
+           if($store['store_type'] == 1){
                $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'1');
-        //    }else{
-        //        $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
-        //    }
+           }else{
+               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
+           }
            if(empty($arr)){
                 echo "2";
            }else{
@@ -281,11 +281,11 @@ class SingleShop extends Default_Controller {
 
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
             //所有商品分类
-            //   if($store_type == '2'){
+              if($store_type == '2'){
                     $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-            //     }else{
-                    // $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-                // }
+                }else{
+                    $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+                }
 
             //获取商品属性
             $parent = $this->MallShop_model->get_goods_parent($id);
@@ -409,11 +409,11 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //所有商品分类
-        // if($store_type == '2'){
+        if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-        // }else{
-        //     $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-        // }
+        }else{
+            $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+        }
         //返回快递模板
         //$data['express'] = $this->MallShop_model->get_express_temp();
 
@@ -472,11 +472,11 @@ class SingleShop extends Default_Controller {
              $data['storeid'] = $this->session->businessId;
             
             $store = $this->MallShop_model->get_basess_info($this->session->businessId);
-            // if($store['store_type'] == 1){
+            if($store['store_type'] == 1){
                 $data['differentiate'] = '1';
-            // }else{
-            //     $data['differentiate'] = '4';
-            // }
+            }else{
+                $data['differentiate'] = '4';
+            }
             
              $goodsid = $this->MallShop_model->add_shop_goods($data);
              if(!empty($goodsid)){
