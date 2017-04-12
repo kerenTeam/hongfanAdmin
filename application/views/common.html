@@ -153,6 +153,15 @@
       text-decoration: none;
     }
 
+    /*去掉type=number输入框的三角符号*/
+    /*火狐下*/
+    input[type="number"]{-moz-appearance:textfield;}
+    /*谷歌下*/
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button{
+        -webkit-appearance: none !important;
+        margin: 0; 
+    }
     </style>
     <script src="assets/js/jquery.min.js"></script>
 
