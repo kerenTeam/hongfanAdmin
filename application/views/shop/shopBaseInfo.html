@@ -119,7 +119,7 @@
                            <p>满 <input class="priceOne" /> 元减 <input class="priceTwo" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
                             <?php endif;?>
                        
-                        </div>
+                        </div>   
                         <div class="am-u-sm-1 am-u-end">
                             <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                         </div>
@@ -128,6 +128,16 @@
                           <?php else:?>
                              <input type="hidden" id="reduction_rule" name='reduction_rule' >
                           <?php endif;?>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="store_type" class="am-u-sm-3 am-form-label">店铺标签 ：</label>
+                        <div class="am-u-sm-6" id="shopTagsBox">
+                            <!-- <p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> --> 
+                        </div>
+                        <div class="am-u-sm-1 am-u-end">
+                            <a type="button" class="am-btn am-btn-success am-btn-xs" id="addTags">新增标签</a>
+                        </div>
+                        <input type="hidden" id="shop_tags" name='shop_tags' />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
@@ -208,8 +218,10 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号<span class="red">*</span>： </label>
                         <div class="am-u-sm-8 am-u-end">
-                           <input type="text" name="qq" value="<?php echo $busin['qq']?>"  class="am-form-field tpl-form-no-bg" placeholder="" required='required'>
+                           <input type="text" name="qq" value="<?php echo $busin['qq']?>"  class="am-form-field tpl-form-no-bg" placeholder="" required='required' onblur="validate(this,5,15,11)">
                         </div>
+                        <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
                       <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="user-phone" class="am-u-sm-3 am-form-label">归属地<span class="red">*</span>： </label>
@@ -221,7 +233,7 @@
                 <div class="widget-body  am-fr">
                     <div class="am-form-group am-text-center">
                         <input type="hidden" name="store_id" value="<?php echo $busin['store_id'];?>">
-                        <button type="submit" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                        <button type="button" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
                         <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                     </div>
                 </div>
@@ -247,47 +259,47 @@
         //添加满减规则
         $('#addNew').click(function () {
             $('<p> 满 <input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
-
-            $('#add_rules').fadeOut('fast');
-            $('.am-dimmer').removeClass('am-active');
         });
-
-            //根据一级业态的内容来控制二级业态的显示
-            var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
-                data: 'gid='+ firstYetai,
-                success: function(data){   
-                    var jsonData=eval(data);
-                    console.log(jsonData);
-                    $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>'); 
-                    if(data){
-                        if(data==2){
-                           $('#secondYetai').css('display','none');
-                            $("#secondYetaiSelect").removeAttr("required"); 
-                            return;
-                        } else {
-                            for(var i=0;i<jsonData.length;i++){
-                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
-                                sttr=sttr+str;
-                            }
-                            console.log(sttr);
-                            $('#secondYetai').css('display','block');
-                            $("#secondYetaiSelect").append(sttr);
-                            $("#secondYetaiSelect").attr("required","required"); 
+         //添加店铺标签
+        $('#addTags').click(function () {
+            $('<p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
+        });
+        //根据一级业态的内容来控制二级业态的显示
+        var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
+            data: 'gid='+ firstYetai,
+            success: function(data){   
+                var jsonData=eval(data);
+                console.log(jsonData);
+                $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>'); 
+                if(data){
+                    if(data==2){
+                       $('#secondYetai').css('display','none');
+                        $("#secondYetaiSelect").removeAttr("required"); 
+                        return;
+                    } else {
+                        for(var i=0;i<jsonData.length;i++){
+                            str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                            sttr=sttr+str;
                         }
-                       
-                    }else{
-                        $('#secondYetai').css('display','none');
-                        $("#secondYetaiSelect").removeAttr("required");
+                        console.log(sttr);
+                        $('#secondYetai').css('display','block');
+                        $("#secondYetaiSelect").append(sttr);
+                        $("#secondYetaiSelect").attr("required","required"); 
                     }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
+                   
+                }else{
+                    $('#secondYetai').css('display','none');
+                    $("#secondYetaiSelect").removeAttr("required");
                 }
-            });
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
 
 
          $('#firstYetai').change(function(){
@@ -332,14 +344,13 @@
     //点击保存按钮作验证
     $('#submit').click(function(){
         //添加满减规则
-        var manjianRule = [];
-        for(var j=0;j<$('.priceOne').length;j++) {
+        var manjianRule = [], shopTagsArray = [];
+        for(var j = 0;j < $('.priceOne').length; j++) {
             if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
                 var priceModel = {}
                // console.log($('.priceOne').eq(j).val() + '' +$('.priceTwo').eq(j).val());
                 priceModel.reachPrice = $('.priceOne').eq(j).val();
                 priceModel.reducePrice = $('.priceTwo').eq(j).val();
-                 console.log(priceModel);
                 manjianRule.push(priceModel);
             }   
         }
@@ -347,6 +358,12 @@
         console.log(manjianRule);
         manjianRule=JSON.stringify(manjianRule);
         $('#reduction_rule').val(manjianRule);
+        for(var i = 0;i < $('.shoptags').length; i++) {
+            if($('.shoptags').eq(i).val()) {
+                shopTagsArray.push($('.shoptags').eq(i).val());
+            }
+        }
+        $('#shop_tags').val(shopTagsArray);
         return true;
     });
 
