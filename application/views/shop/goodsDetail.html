@@ -235,7 +235,7 @@ i {
                     <div class="widget-body  am-fr">
                       <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodName" class="am-u-sm-3 am-form-label">货号<span class="red">*</span>：</label>
+                            <label for="goodName" class="am-u-sm-3 am-form-label">货号：</label>
                             <div class="am-u-sm-8 am-u-end">
                                 <input type="text" id="goodNumber" name='goods_code' value="<?php echo $goods['goods_code'];?>" />  
                             </div>
@@ -251,7 +251,7 @@ i {
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品价格<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
-                                <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" value="<?php echo $goods['price'];?>" onblur="validate(this,2,20,2)" min="1" name="price" required="required" />
+                                <input type="number" onmousewheel="return false;" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="goodPrice" value="<?php echo $goods['price'];?>" onblur="validate(this,2,20,2)" min="1" name="price" required="required" />
                             </div>
                             <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
@@ -259,17 +259,12 @@ i {
                           <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodPrice" class="am-u-sm-3 am-form-label">商品原价<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
-                                <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="originalprice" value="<?php echo $goods['originalprice'];?>" name="originalprice" required="required" min="1" onblur="validate(this,2,20,2)" /> 
+                                <input type="number" onmousewheel="return false;" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="originalprice" value="<?php echo $goods['originalprice'];?>" name="originalprice" required="required" min="1" onblur="validate(this,2,20,10)" /> 
                             </div>
-                            <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                            <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>     
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="englishName" class="am-u-sm-3 am-form-label">商品品牌：</label>
-                            <div class="am-u-sm-8 am-u-end">
-                                <input type="text" id="englishName"  value="<?php echo $goods['brand'];?>" name="brand"/>
-                            </div> 
-                        </div>
+                    
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位：</label>
                             <div class="am-u-sm-8 am-u-end">
@@ -279,7 +274,7 @@ i {
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">物品重量(免邮填写0)<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="number" name='weight' id="weight" placeholder="kg" value="<?php echo $goods['weight'];?>" required="required"/>
+                                <input type="number" name='weight' id="weight" placeholder="kg" value="<?php echo $goods['weight'];?>" required="required" onmousewheel="return false;" />
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -379,8 +374,8 @@ i {
                                                 <?php if(!empty($val['value4'])):?>
                                                 <td class="am-text-middle property" id="property<?php echo $key?>"><?php echo $val['value4'];?></td>
                                                  <?php endif;?>
-                                            <td class="propertyprice"><input type="number" min="0" value="<?php echo $val['Floating_price']?>" /></td>
-                                            <td class="propertystock"><input type="number" min="0" value="<?php echo $val['stock']?>"/></td>
+                                            <td class="propertyprice"><input type="number" onmousewheel="return false;"  min="0" value="<?php echo $val['Floating_price']?>" /></td>
+                                            <td class="propertystock"><input type="number" onmousewheel="return false;" min="0" value="<?php echo $val['stock']?>"/></td>
                                             </tr>
                                         <?php endforeach;?>
                                     <?php endif;?>
@@ -560,7 +555,7 @@ i {
                 ￥ <?php echo $goods['price'];?>
             </div>
             <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
-                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage">快递：<?php if(empty($goods['postage'])){echo "包邮";}else{echo $goods['postage'];}?></div>
+                <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word" id="showgoodspostage"></div>
                 <div class="am-u-lg-4 am-u-sm-4 am-u-md-4 small-word">
                     销量：<?php echo $goods['sales']?>笔
                 </div>
@@ -652,19 +647,19 @@ function validate(obj,minlen,maxlen,i){
     var totalrespority=0,addPropertytdcopy=[];
     var stand1=$('#ruleSelect0 option:selected').val(),stand2=$('#ruleSelect1 option:selected').val(),stand3=$('#ruleSelect2 option:selected').val(),stand4=$('#ruleSelect3 option:selected').val();
     for(var i=0;i<$('.ruleSelect').length;i++) {
-        if($('#ruleSelect'+i+' option:selected').val()!=""){
+        if($('#ruleSelect'+i+' option:selected').val()){
             var addPropertytdco={};
             addPropertytdco.stend=$('#ruleSelect'+i+' option:selected').html();
-            // console.log(addPropertytdco = addPropertytdco.stend);
             addPropertytdco.stend_value=[];
             var daiti=$('.propertycontainer'+ i);
             for(var j=0;j<daiti.find('span').length;j++){
                 var addPropertyc={};
                 addPropertyc.stend_value=daiti.find('span').eq(j).text();
                 addPropertytdco.stend_value.push(addPropertyc);
+             
             }
-        }
-        addPropertytdcopy.push(addPropertytdco);
+            addPropertytdcopy.push(addPropertytdco);
+        }    
     }
     for(var j=0;j<$('.propertystock').length;j++) {
         totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
@@ -678,13 +673,9 @@ function validate(obj,minlen,maxlen,i){
     var newPrice = $('#goodPrice').val();
     var editorContent= UE.getEditor('editor').getContent();
     $('#showgoodsname').html(goodName);
+    $('#showgoodsprice').html("");
     $('#showgoodsprice').append($('<i class="newgoodPrice"> ￥'+ newPrice +'</i>  <i class="oldgoodPrice"> ￥'+ goodPrice +'</i>'));
     $('#showgoodsresporty').html('库存：'+totalrespority);
-    // if(postage){
-        $('#showgoodspostage').html("快递：免邮");
-    // }else{
-    //     $('#showgoodspostage').html("运费："+ postageNum +"元");
-    // }
     $('#showgoodsDetail').html(editorContent);
 
   });
@@ -756,7 +747,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName0">'+ property0+'</th>');
             for(var i=0;i<lenpro0;i++){
                 var propertyValue0=$('.propertycontainer0').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
             }
         }
         if(!lenpro0 && lenpro1 && !lenpro2 && !lenpro3) {
@@ -764,7 +755,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName1">'+ property1+'</th>');
             for(var i=0;i<lenpro1;i++){
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && lenpro2 && !lenpro3) {
@@ -772,7 +763,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName2">'+ property2+'</th>');
             for(var i=0;i<lenpro2;i++){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
             }
             return true;
         }else if(!lenpro0 && !lenpro1 && !lenpro2 && lenpro3) {
@@ -780,7 +771,7 @@ $('#dispostage').click(function(){
             $('.addPropertyTh').prepend('<th class="addPropertyName" id="addPropertyName3">'+ property3 +'</th>');
             for(var i=0;i<lenpro3;i++){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
-                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
             }
             return true;
         }else if(lenpro0 && lenpro1 && !lenpro2 && !lenpro3){
@@ -792,7 +783,7 @@ $('#dispostage').click(function(){
                 var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true;
@@ -804,7 +795,7 @@ $('#dispostage').click(function(){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true;
@@ -816,7 +807,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro0;j++){
                     var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true; 
@@ -828,7 +819,7 @@ $('#dispostage').click(function(){
                 var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true; 
@@ -840,7 +831,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro1;j++){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true; 
@@ -852,7 +843,7 @@ $('#dispostage').click(function(){
                 var propertyValue3=$('.propertycontainer3').find('span').eq(i).text();
                 for(var j=0;j<lenpro2;j++){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(j).text();
-                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                    $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                 }
             }
             return true;
@@ -867,7 +858,7 @@ $('#dispostage').click(function(){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                     }
                 }
             }
@@ -883,7 +874,7 @@ $('#dispostage').click(function(){
                     var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                     }
                 }
             }
@@ -899,7 +890,7 @@ $('#dispostage').click(function(){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro0;j++){
                         var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                     }
                 }
             }
@@ -915,7 +906,7 @@ $('#dispostage').click(function(){
                     var propertyValue2=$('.propertycontainer2').find('span').eq(i).text();
                     for(var j=0;j<lenpro1;j++){
                         var propertyValue1=$('.propertycontainer1').find('span').eq(j).text();
-                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                        $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                     }
                 }
             }
@@ -935,7 +926,7 @@ $('#dispostage').click(function(){
                         var propertyValue1=$('.propertycontainer1').find('span').eq(i).text();
                         for(var j=0;j<lenpro0;j++){
                             var propertyValue0=$('.propertycontainer0').find('span').eq(j).text();
-                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number"  /></td><td class="propertystock"><input type="number"  /></td></tr>');
+                            $('.addPropertyTb').append('<tr class="addPropertyTr"><td class="am-text-middle property" id="property0">'+ propertyValue0 +'</td><td class="am-text-middle property" id="property1">'+ propertyValue1 +'</td><td class="am-text-middle property" id="property2">'+ propertyValue2 +'</td><td class="am-text-middle property" id="property3">'+ propertyValue3 +'</td><td class="propertyprice"><input type="number" onmousewheel="return false;" /></td><td class="propertystock"><input type="number" onmousewheel="return false;" /></td></tr>');
                         }
                     }
                 }
@@ -1106,7 +1097,6 @@ function previewImage1(file) {
   if (file.files && file.files[0]) {
     div.innerHTML = '<img id=imghead>';
     div1.innerHTML = '<img >';
-    //var img = document.getElementById('imghead');
     var img = div.lastChild,img1=div1.lastChild;
     img.onload = function() {
       var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);

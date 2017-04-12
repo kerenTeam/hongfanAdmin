@@ -206,9 +206,15 @@
                         </div>
                     </div>  
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
-                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号： </label>
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号<span class="red">*</span>： </label>
                         <div class="am-u-sm-8 am-u-end">
-                           <input type="text" name="qq" value="<?php echo $busin['qq']?>"  class="am-form-field tpl-form-no-bg" placeholder="">
+                           <input type="text" name="qq" value="<?php echo $busin['qq']?>"  class="am-form-field tpl-form-no-bg" placeholder="" required='required'>
+                        </div>
+                    </div>
+                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">归属地<span class="red">*</span>： </label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" name="address" value="<?php echo $busin['address']?>"  class="am-form-field tpl-form-no-bg" placeholder="" required='required'>
                         </div>
                     </div>
                 </div>

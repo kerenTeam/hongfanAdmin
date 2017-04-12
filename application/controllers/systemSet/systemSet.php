@@ -333,7 +333,7 @@ class SystemSet extends Default_Controller {
       //权限管理
     function memberLimit(){
         //返回所有权限  
-        $query = $this->db->get('hf_system_modular');
+        $query = $this->db->order_by('modular_id','asc')->get('hf_system_modular');
         $arr = $query->result_array();
         //返回整理好的数组
         $data['modular'] = subtree($arr);
@@ -486,7 +486,7 @@ class SystemSet extends Default_Controller {
             $group = $this->user_model->get_group_info($gid);
             $group_permission = json_decode($group['group_permission'],true);
 
-            $query = $this->db->get('hf_system_modular');
+            $query = $this->db->order_by('modular_id','asc')->get('hf_system_modular');
             $arr = $query->result_array();
             //返回整理好的数组
             $data['modular'] = subtree($arr,$group_permission);

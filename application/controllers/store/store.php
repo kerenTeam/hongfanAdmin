@@ -142,7 +142,7 @@ class Store extends Default_Controller {
     //商品分类
     function storeGoodsSort(){
          $data['page'] = $this->view_storeGoodsSort;
-         $data['menu'] = array('store','storeGoodsSort');
+         $data['menu'] = array('moll','storeGoodsSort');
          $this->load->view('template.html',$data);
     }
     //返回商品分类列表

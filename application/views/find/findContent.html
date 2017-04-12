@@ -214,7 +214,7 @@ function next(argu){
 }
 function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
-        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editSort').eq(i).attr('data-id'), checkId =$('.checkComment').eq(i).attr('data-id') ;
+        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editContent').eq(i).attr('data-id'), checkId =$('.checkComment').eq(i).attr('data-id') ;
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
         $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + editId + "';?>");
         $('.checkComment').eq(i).attr("href","<?php echo site_url().'/find/Find/findComment/" + checkId + "';?>");  

