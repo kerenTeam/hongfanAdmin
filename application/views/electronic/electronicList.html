@@ -85,9 +85,9 @@ td img{
                                     <th class="shop_name">标题 </th>
                                     <th class="shop_name">所属商家 </th>
                                     <th class="shop_type">类型 </th>
-                                    <th class="shop_yetai">有效期</th>
+                                    <th class="shop_yetai">使用期限</th>
                                     <th class="brand">领取限制</th>
-                                    <th class="brand">核销方式</th>
+                                    <!-- <th class="brand">核销方式</th> -->
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -268,13 +268,13 @@ var startDate = new Date(2014, 11, 20);
         <%}else {%>
         <td class="am-text-middle">不限制</td>
         <%}%>
-        <%if(verification=="1") {%>
+        <!-- <%if(verification=="1") {%>
         <td class="am-text-middle">不限制</td>
         <%}else if(verification=="2") {%>
         <td class="am-text-middle">在线抵用</td>
         <%}else {%>
         <td class="am-text-middle">到店核销</td>
-        <%}%>
+        <%}%> -->
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="editElectronic">
