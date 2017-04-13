@@ -45,7 +45,7 @@ class MarketActivity extends Default_Controller {
          $time = date('Y-m-d');
          $data['coupon'] = $this->Activity_model->get_coupon_list($time);
          $data['page']= $this->view_marketAddActivity;
-         $data['menu'] = array('marketActivity','marketAddActivity');
+         $data['menu'] = array('marketActivity','activity');
          $this->load->view('template.html',$data);
     }
 
