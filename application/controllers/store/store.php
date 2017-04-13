@@ -174,7 +174,8 @@ class Store extends Default_Controller {
          }else{
             //获取商品详情
             $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
-            $data['cates'] = $this->MallShop_model->get_goods_cates('0');
+
+            $data['cates'] = $this->MallShop_model->get_goods_cates_list('2');
 
             
             //获取商品属性
