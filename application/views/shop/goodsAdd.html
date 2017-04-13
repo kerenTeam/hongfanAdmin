@@ -2,7 +2,7 @@
 <style type="text/css">
   #preview{ 
         width:150px !important;
-    }
+    } 
     #preview #imghead,#preview img{
      width:140px !important;
     }
@@ -374,12 +374,12 @@ i {
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label"></label>
                             <div class="am-u-sm-9">
-                            
+                                
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
-                            <div class="am-u-sm-5" id="priceModelsBox">
+                            <div class="am-u-sm-6" id="priceModelsBox">
                                <p>满 <input class="priceOne"  /> 元减 <input class="priceTwo" /> 元 
                              <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
                             </div>
@@ -390,13 +390,20 @@ i {
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="store_type" class="am-u-sm-3 am-form-label">商品标签 ：</label>
-                            <div class="am-u-sm-5" id="shopTagsBox">
-                                <!-- <p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> --> 
+                            <div class="am-u-sm-6" id="shopTagsBox">
+                                <select id="goodTags" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='goodTags'>
+                                    <option value="">请选择一个！</option>
+                                    <option value="1">七天无理由退货</option>
+                                    <option value="2">正品保证</option>
+                                    <option value="3">原装进口</option>
+                                    <option value="4">极速退款</option>
+                                   <option value="5">如实描述</option> 
+                                </select>
                             </div>
                             <div class="am-u-sm-1 am-u-end">
                                 <a type="button" class="am-btn am-btn-success am-btn-xs" id="addTags">新增标签</a>
                             </div>
-                            <input type="hidden" id="shop_tags" name='shop_tags' />
+                            <input type="hidden" id="good_tags" name='good_tags' />
                         </div>
                         <div class="am-form-group am-u-sm-6 am-u-md-5 am-u-lg-5 am-u-end" >
                             <label for="user-weibo" class="am-u-sm-3 am-form-label am-u-end">商品图片：</label>
@@ -888,7 +895,24 @@ $(".deleteImg").click(function(){
         });
         //添加店铺标签
         $('#addTags').click(function () {
-            $('<p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
+            var value = $('#goodTags').val(), tagsName = '';
+            if(value == "1") {
+                tagsName = "七天无理由退货";
+            } else if(value == "2") {
+                tagsName = "正品保证";
+            }else if(value == "3") {
+                tagsName = "原装进口";
+            }
+            else if(value == "4") {
+                tagsName = "极速退款";
+            }
+            else if(value == "5") {
+                tagsName = "如实描述";
+            } else {
+                alert('请选择商品标签！')
+                return false;
+            }
+            $('<p><i class="am-icon-check-circle-o"><i>  '+ tagsName +'   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
         });
         //新增规格项
         $('#addNewPropertybtn').click(function () {
