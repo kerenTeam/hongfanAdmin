@@ -56,8 +56,6 @@ color: #333;
         </div>
     </div>
 </div>
-
-
 <div class="row-content am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -134,8 +132,8 @@ color: #333;
                                                                         <div class="am-form-group am-cf">
                                                                             <label class="am-u-sm-2 am-form-label">详情 ：</label>
                                                                             <div class="am-u-sm-9 am-u-end">
-                                                                              <div id="editorContent">
-                                                                                <script id="editor" type="text/plain" name='content'><?php echo $val['content'];?></script>
+                                                                              <div id="editorContent<?php echo $val['id'];?>">
+                                                                                <script id="editor<?php echo $val['id'];?>" type="text/plain" name='content'><?php echo $val['content'];?></script>
                                                                               </div>
                                                                             </div>
                                                                         </div>
@@ -215,7 +213,7 @@ function validate(obj){
 }
 
  //实例化编辑器
-var ue = UE.getEditor('editor');
+var ue4 = UE.getEditor('editor4'), ue5 = UE.getEditor('editor5');
 //删除图片
 $(".deleteImg").click(function(){      
     $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');

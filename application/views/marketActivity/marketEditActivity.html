@@ -7,9 +7,9 @@
     } 
     .hf-dropdown{
         font-size: 12px!important;
-    padding: 5px 6px!important;
+        padding: 5px 6px!important;
     }
- #preview{
+    #preview {
         height:200px !important;
     }
     #preview #imghead,#preview img{
@@ -39,7 +39,7 @@
     .am-list>li {
         border: none;
     }
-     .am-list>li.quan{
+    .am-list>li.quan{
         width: 300px;
         height: 80px;
         border-radius: 10px;
@@ -115,10 +115,10 @@
                                         <label class="am-u-sm-3 am-text-right">活动类型:<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="type" value="2" class="discount" <?php if($info['type'] == 2){echo "checked";}?> />优惠     
+                                                <input type="radio" name="type" value="1" class="discount" <?php if($info['type'] == 1){echo "checked";}?> />优惠     
                                             </div>
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="type" value="1" <?php if($info['type'] == 1){echo "checked";}?>  class="activity" />活动                                      
+                                                <input type="radio" name="type" value="2" <?php if($info['type'] == 2){echo "checked";}?>  class="activity" />活动                                      
                                             </div>
                                         </div>
                                     </div>
@@ -296,10 +296,10 @@
 
     //优惠和活动的选择
     $(".discount").click(function(){ 
-        $('#discountCard').css('display','block');       
+        $('#discountCard').css('display','none');       
     });
     $(".activity").click(function(){ 
-        $('#discountCard').css('display','none');       
+        $('#discountCard').css('display','block');       
     });   
      var clickflag=1,clickarray=[],str='';
     //优惠券选中状态

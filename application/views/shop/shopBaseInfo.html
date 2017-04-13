@@ -36,16 +36,8 @@
                            <input type="text" minlength="2" value="宏帆广场" readonly required /> 
                         </div>
                     </div>
-                    <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label name="barnd_name" class="am-u-sm-3 am-form-label">经营品牌：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="请输入2-20个字符" required onblur="validate(this,2,20,1)" />
-                        </div> 
-                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="username" class="am-u-sm-3 am-form-label">登录账户:<span class="red">*</span>：</label>
+                        <label for="username" class="am-u-sm-3 am-form-label">登录账户<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <input type="hidden" name="user_id" value="<?php echo $user['user_id'];?>">
                             <input type="text" placeholder="请输入2-15个字符"  name="username" value="<?php echo $user['username']?>" required onblur="validate(this,2,15,2)" />
@@ -62,7 +54,7 @@
                         <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small> 
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="password" class="am-u-sm-3 am-form-label">登录密码:<span class="red">*</span>：</label>
+                        <label for="password" class="am-u-sm-3 am-form-label">登录密码<span class="red">*</span>：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <input type="password"  minlength="6" maxlength="16" name="password" placeholder="******" onblur="validate(this,6,16,4)" />
                         </div>
@@ -89,7 +81,7 @@
                         <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="clear: both;display: none;">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondYetai" style="display: none;">
                         <label for="subcommercial_type_name" class="am-u-sm-3 am-form-label">二级业态：</label>
                         <div class="am-u-sm-8 am-u-end">
                             <select name="subcommercial_type_name"  id="secondYetaiSelect" onchange="validate(this,1,20,6)">
@@ -106,6 +98,20 @@
                         </div>
                         <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label name="barnd_name" class="am-u-sm-3 am-form-label">经营品牌<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="barnd_name" value="<?php echo $busin['barnd_name']?>" minlength="2" maxlength="20" placeholder="请输入2-20个字符" required onblur="validate(this,2,20,12)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label name="barnd_name" class="am-u-sm-3 am-form-label">商家扣点比例：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="barnd_name" value="" minlength="2" maxlength="20" placeholder="请输入2-20个字符" readonly />
+                        </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
@@ -128,16 +134,6 @@
                           <?php else:?>
                              <input type="hidden" id="reduction_rule" name='reduction_rule' >
                           <?php endif;?>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="store_type" class="am-u-sm-3 am-form-label">店铺标签 ：</label>
-                        <div class="am-u-sm-6" id="shopTagsBox">
-                            <!-- <p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> --> 
-                        </div>
-                        <div class="am-u-sm-1 am-u-end">
-                            <a type="button" class="am-btn am-btn-success am-btn-xs" id="addTags">新增标签</a>
-                        </div>
-                        <input type="hidden" id="shop_tags" name='shop_tags' />
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                         <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
@@ -246,9 +242,9 @@
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
    //点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(0);
-  });
+   $('#cancle').click(function(){
+     history.go(0);
+   });
 
     //删除满减规则
     function deletePriceModel(obj) {
@@ -260,10 +256,7 @@
         $('#addNew').click(function () {
             $('<p> 满 <input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
         });
-         //添加店铺标签
-        $('#addTags').click(function () {
-            $('<p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
-        });
+        
         //根据一级业态的内容来控制二级业态的显示
         var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
         $.ajax({

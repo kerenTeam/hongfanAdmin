@@ -8,7 +8,7 @@
     }
     .widget{
         font-color:#000 !;
-    }   
+    }    
    
     .postageNumber{
         display: none;
@@ -364,25 +364,41 @@ i {
                             </div>
                         </div>
                         
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品状态：<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                                 <input type="radio" name="goods_state" value="1"/>上架
                                 <input type="radio" name="goods_state" value="0"/>下架
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end" style="float: left !important;">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="englishName" class="am-u-sm-3 am-form-label"></label>
+                            <div class="am-u-sm-9">
+                            
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
-                            <div class="am-u-sm-6" id="priceModelsBox">
+                            <div class="am-u-sm-5" id="priceModelsBox">
                                <p>满 <input class="priceOne"  /> 元减 <input class="priceTwo" /> 元 
-                             
+                             <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
                             </div>
                             <div class="am-u-sm-1 am-u-end">
                                 <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                             </div>
                             <input type="hidden" id='reduction_rule' name="reduction_rule"/>
                         </div>
-                        <div class="am-form-group am-u-sm-6 am-u-md-5 am-u-lg-5 am-pull-left" style="float: left !important;">
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="store_type" class="am-u-sm-3 am-form-label">商品标签 ：</label>
+                            <div class="am-u-sm-5" id="shopTagsBox">
+                                <!-- <p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> --> 
+                            </div>
+                            <div class="am-u-sm-1 am-u-end">
+                                <a type="button" class="am-btn am-btn-success am-btn-xs" id="addTags">新增标签</a>
+                            </div>
+                            <input type="hidden" id="shop_tags" name='shop_tags' />
+                        </div>
+                        <div class="am-form-group am-u-sm-6 am-u-md-5 am-u-lg-5 am-u-end" >
                             <label for="user-weibo" class="am-u-sm-3 am-form-label am-u-end">商品图片：</label>
                             <div class="am-u-sm-12 am-u-end">
                                 <div class="am-u-sm-4">
@@ -569,7 +585,6 @@ i {
             totalrespority+=parseInt($('.propertystock').eq(j).find('input').val());
         }
 
-
         addPropertytdcopy.addPropertytdcopy=addPropertytdcopy;
         var html = template("showproportyModal",{addPropertytdcopy:addPropertytdcopy});
         document.getElementById('showproporty').innerHTML = html;
@@ -608,7 +623,7 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
-var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
+    var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
   
     //实例化编辑器
     var ue = UE.getEditor('editor'),firstFlag=1,secondFlag=1; 
@@ -864,14 +879,16 @@ var i=1,property='',flag0=1,flag1=1,flag2=1,flag3=1,time=0;
         var parentP = $(obj).parents('p')[0];
         parentP.remove();
     }
+
     $(document).ready(function(){
         var i=0,kflag=0,flag=1;
         //添加满减规则
         $('#addNew').click(function () {
             $('<p> 满<input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
-
-            $('#add_rules').fadeOut('fast');
-            $('.am-dimmer').removeClass('am-active');
+        });
+        //添加店铺标签
+        $('#addTags').click(function () {
+            $('<p><input class="shoptags" />   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
         });
         //新增规格项
         $('#addNewPropertybtn').click(function () {
