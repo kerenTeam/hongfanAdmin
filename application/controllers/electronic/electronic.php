@@ -54,12 +54,13 @@ class Electronic extends Default_Controller {
                 if(empty($data['overflowValue'])){
                     unset($data['overflowValue'],$data['cutValue']);
                 }else{
-                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
-                    $data['salerule'] = json_encode($arr);
-                    $data['coupon_amount'] = $data['cutValue'];
+                    $arr = array($data['overflowValue'],$data['cutValue']);
+                   // $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = implode(',',$arr);
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
+
             //日志
             $log = array(
                 'userid'=>$_SESSION['users']['user_id'],  
