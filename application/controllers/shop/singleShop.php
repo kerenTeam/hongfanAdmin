@@ -447,6 +447,7 @@ class SingleShop extends Default_Controller {
             $data= $this->input->post();
             $parent = json_decode($data['parameter'],true);
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
+
             $pic = array();
             $i =1;
             foreach($_FILES as $file=>$val){
