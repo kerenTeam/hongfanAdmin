@@ -14,6 +14,7 @@ class Api_goods extends CI_Controller
 
 	function get_goods_property(){
 		if($_POST){
+            
 			$goodsid = $_POST['goods_id'];
 			  $parent = $this->MallShop_model->get_goods_parent($goodsid);
               if(!empty($parent)){
