@@ -202,6 +202,21 @@ class Find extends Default_Controller {
         if($_POST){
             $id = $this->input->post('newsid');
             $data['type_name'] = $this->input->post('type');
+          
+            if(!empty($_FILES['picArray']['tmp_name'])){
+                $config['upload_path']      = 'Upload/find';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                //上传
+                if ( ! $this->upload->do_upload('picArray')) {
+                    echo "3";
+                    exit;
+                } else{
+                   $data['banner_pic'] = '/Upload/find/'.$this->upload->data('file_name');
+                }
+            }
             if($this->Find_model->edit_find_service($id,$data)){
                 // 日志
                 $log = array(
