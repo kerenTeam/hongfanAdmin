@@ -166,7 +166,7 @@
                                     <th>销量</th> 
                                     <th>商品状态</th>
                                     <th>是否特价</th>
-                                    <th>变更时间</th>
+                                    <th>排序</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -566,11 +566,9 @@ $(document).ready(function(){
         <%}%>
         </td>
         <td class="am-text-middle">
-        <%if(update_time) {%>
-            <span><%= update_time%></span>
-        <%}else {%>
-            <span><%= create_time%></span>
-        <%}%>
+       
+            <span><%= sort%></span>
+
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
