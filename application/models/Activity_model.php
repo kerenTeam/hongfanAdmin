@@ -57,10 +57,11 @@ class Activity_model extends CI_Model
 
     //返回所有活动列表
     function get_activity_list(){
-        $this->db->select('a.*,b.store_name');
-        $this->db->from('hf_system_activity as a');
-        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
-        $query = $this->db->get();
+        // $this->db->select('a.*,b.store_name');
+        // $this->db->from('hf_system_activity as a');
+        // $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        // $query = $this->db->get();
+        $query = $this->db->order_by('create_time','desc')->get($this->activity);
         return $query->result_array();
     }
 

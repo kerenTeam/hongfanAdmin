@@ -122,7 +122,7 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style="display: none">
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="discountCard" style='display: none'>
                                         <label class="am-u-sm-3 am-text-right">优惠券<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <ul class="am-list">
@@ -155,6 +155,12 @@
                                             <?php endforeach;?>
                                               
                                             </ul> 
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="store_name" style="display: none">
+                                        <label class="am-u-sm-3 am-text-right">商家名称<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称" required="required" name="store_name" />
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -270,9 +276,12 @@
         //优惠和活动的选择
         $(".discount").click(function(){ 
             $('#discountCard').css('display','none');       
+            $('#store_name').css('display','block');       
         });
         $(".activity").click(function(){ 
-            $('#discountCard').css('display','block');       
+            $('#discountCard').css('display','block'); 
+            $('#store_name').css('display','none');       
+      
         });   
          var clickflag=1,clickarray=[],str='';
         //优惠券选中状态

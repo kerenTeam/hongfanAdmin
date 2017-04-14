@@ -94,7 +94,7 @@ label {
                                     <th>分类名 </th>
                                     <th>分类LOGO </th>
                                     <th>分类编号</th>
-                                    <th>推荐到首页</th>
+                                    <th>推荐到首页(只能推荐一个)</th>
                                     <th>更新时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -102,7 +102,6 @@ label {
                             <tbody id="dataList">
                                 <?php foreach($cates as $val):?>
                                 <tr class="trClass" id="trClass<?php echo $val['catid'];?>" >
-                                   
                                     <?php if($val['parentid'] == '0'):?>
                                         <td class="am-text-middle">├<?php echo $val['catname']?></td>
                                     <?php else:?>
@@ -117,8 +116,8 @@ label {
                                     <td class="am-text-middle">
                                         <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
                                             <option value="">-=请选择一项=-</option>
-                                            <option value="1">推荐</option>
-                                            <option value="0" selected="selected" >不推荐</option>
+                                            <option value="1" <?php if($val['recommend_state'] == '1'){echo "selected";}?>>推荐</option>
+                                            <option value="0" <?php if($val['recommend_state'] == '0'){echo "selected";}?> >不推荐</option>
                                         </select>
                                     </td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
