@@ -723,8 +723,7 @@ class SystemSet extends Default_Controller {
 
     //修改版本
     function edit_app_version(){
-         var_dump($_FILES);
-            exit;
+   
         if($_POST){
             $id= $this->input->post('id');
             $data['versionNum']= $this->input->post('versionNum');
