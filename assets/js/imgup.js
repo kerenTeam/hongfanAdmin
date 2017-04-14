@@ -6,6 +6,10 @@ function previewImage(file) {
   var div = findPreview(file.parentNode);
 
   if (file.files && file.files[0]) {
+    if(file.files[0].size > 1048576) {
+      alert('图片尺寸不能超过1M');
+      return false;
+    }
     picArray[0]=file.files[0];
     div.innerHTML = '<img id=imghead>';
     //var img = document.getElementById('imghead');

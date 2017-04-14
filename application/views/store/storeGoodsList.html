@@ -28,7 +28,7 @@
         width: 10% !important;
     }
 
-    .goodsState,.recommend,.goodsSelect {
+    .goodsState,.recommend,.goodsSelect, .priceState {
         width: 80px;
         background: #15b5ac;
         border-radius: 5px;
@@ -171,18 +171,18 @@
                             <thead>
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox" />全选</th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="shop_id">商品编号 </th>
-                                    <th class="moll_name">一级分类 </th>
-                                    <th class="shop_id">图片 </th>
-                                    <th class="shop_name">商品名 </th>
-                                    <th class="shop_type">所属店铺 </th>   
-                                    <th class="shop_type">实时库存<i class="am-icon am-icon-sort" onclick="storeEditGoods(1)"></i> </th>   
-                                    <th class="shop_type">商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>   
-                                    <th class="shop_block">商品状态</th>
-                                    <th class="shop_block">是否推荐</th>
-                                    <th class="shop_block">是否特价</th>
-                                    <th class="shop_block">变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th>
+                                    <th>编号 </th>
+                                    <th>商品编号 </th>
+                                    <th>一级分类 </th>
+                                    <th>图片 </th>
+                                    <th width="280">商品名 </th>
+                                    <th>所属店铺 </th>   
+                                    <th>实时库存<i class="am-icon am-icon-sort" onclick="storeEditGoods(1)"></i> </th>   
+                                    <th>商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>   
+                                    <th>商品状态</th>
+                                    <th>是否推荐</th>
+                                    <th>是否特价</th>
+                                    <th>变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -358,9 +358,7 @@
         }
     });
 
-    if($('.goodsSelect').val()=="1"){
-        $('.goodsSelect').css({'background':'#15b5ac','border':'1px solid #15b5ac'});
-    } else {
+    if($('.goodsSelect').val()=="0"){
         $('.goodsSelect').css({'background':'#e0690c','border':'1px solid #e0690c'});
     }
 
@@ -628,9 +626,8 @@
 $(document).ready(function(){
     
 
-    //加载列表数数据
-    getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
-
+    //加载列表数数据 
+    getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');     
     //商品筛选
     $('.goodsSelect').change(function(){
         var dataId=$(this).attr('data-id');
