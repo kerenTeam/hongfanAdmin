@@ -53,6 +53,7 @@ class Electronic extends Default_Controller {
             if(isset($data['overflowValue'])){
                 if(empty($data['overflowValue'])){
                     unset($data['overflowValue'],$data['cutValue']);
+                    $data['coupon_amount'] = $data['discount'];
                 }else{
                     $arr = array($data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
@@ -60,7 +61,6 @@ class Electronic extends Default_Controller {
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
-
             //日志
             $log = array(
                 'userid'=>$_SESSION['users']['user_id'],  
@@ -103,10 +103,11 @@ class Electronic extends Default_Controller {
             if(isset($data['overflowValue'])){
                 if(empty($data['overflowValue'])){
                     unset($data['overflowValue'],$data['cutValue']);
+                    $data['coupon_amount'] = $data['discount'];
                 }else{
-                    $arr = array('overflowValue'=>$data['overflowValue'],'cutValue'=>$data['cutValue']);
-                    $data['salerule'] = json_encode($arr);
-                    $data['coupon_amount'] = $data['cutValue'];
+                    $arr = array($data['overflowValue'],$data['cutValue']);
+                   // $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = implode(',',$arr);
                     unset($data['overflowValue'],$data['cutValue']);
                 }
             }
@@ -139,7 +140,7 @@ class Electronic extends Default_Controller {
             //日志
             $log = array(
                 'userid'=>$_SESSION['users']['user_id'],  
-                "content" => $_SESSION['users']['username']."删除了一个优惠卷。优惠卷id是".$data['id'],
+                "content" => $_SESSION['users']['username']."删除了一个优惠卷。优惠卷id是".$id,
                 "create_time" => date('Y-m-d H:i:s'),
                 "userip" => get_client_ip(),
             );

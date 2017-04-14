@@ -346,7 +346,8 @@ class SingleShop extends Default_Controller {
             $parent = json_decode($data['parameter'],true);
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
-
+            var_dump($data);
+            exit;
             for ($i=1; $i < 4; $i++) {
                 if(!empty($_FILES['img'.$i]['name'])){
                     $config['upload_path']      = 'Upload/goods/';
@@ -447,6 +448,7 @@ class SingleShop extends Default_Controller {
             $data= $this->input->post();
             $parent = json_decode($data['parameter'],true);
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
+
             $pic = array();
             $i =1;
             foreach($_FILES as $file=>$val){

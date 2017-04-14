@@ -335,30 +335,10 @@
     });
 
     //点击保存按钮作验证
-    $('#submit').click(function(){
-        //添加满减规则
-        var manjianRule = [], shopTagsArray = [];
-        for(var j = 0;j < $('.priceOne').length; j++) {
-            if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
-                var priceModel = {}
-               // console.log($('.priceOne').eq(j).val() + '' +$('.priceTwo').eq(j).val());
-                priceModel.reachPrice = $('.priceOne').eq(j).val();
-                priceModel.reducePrice = $('.priceTwo').eq(j).val();
-                manjianRule.push(priceModel);
-            }   
-        }
+    // $('#submit').click(function(){
         
-        console.log(manjianRule);
-        manjianRule=JSON.stringify(manjianRule);
-        $('#reduction_rule').val(manjianRule);
-        for(var i = 0;i < $('.shoptags').length; i++) {
-            if($('.shoptags').eq(i).val()) {
-                shopTagsArray.push($('.shoptags').eq(i).val());
-            }
-        }
-        $('#shop_tags').val(shopTagsArray);
-        return true;
-    });
+    //     return true;
+    // });
 
     //表单验证函数
     function validate(obj,minlen,maxlen,i){

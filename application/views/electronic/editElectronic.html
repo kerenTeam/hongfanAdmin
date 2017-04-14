@@ -81,20 +81,20 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <?php $sale = json_decode($coupon['salerule'],true);?>
+                    <?php $sale = explode(',',$coupon['coupon_amount']);;?>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" <?php if($coupon['typeid'] == 1){echo 'style="display: block;float: left !important; "';}else{echo 'style="display: none;float: left !important;';}?> >
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
-                            <input type="number" class="stable"   id="meetMoney" name="overflowValue" min="1"  value="<?php echo $sale['overflowValue']?>"/>
+                            <input type="number" class="stable"   id="meetMoney" name="overflowValue" min="1"  value="<?php echo $sale[0]?>"/>
                             <span class="linkWord">减</span>
-                            <input type="number" class="stable"  id="reduceMoney" name="cutValue"  min="1"  value="<?php echo $sale['cutValue']?>"/>
+                            <input type="number" class="stable"  id="reduceMoney" name="cutValue"  min="1"  value="<?php echo $sale[1]?>"/>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" <?php if($coupon['typeid'] == 2){echo 'style="display: block;float: left !important; "';}else{echo 'style="display: none;float: left !important;';}?>>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" <?php if($coupon['typeid'] == 2){echo 'style="display: block;float: left !important; "';}else{echo 'style="display: none;float: left !important;"';}?>>
                         <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="discount" id="discount" value="<?php echo $coupon['discount'];?>" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" >
+                            <input type="text" name="discount" id="discount" value="<?php echo $coupon['coupon_amount'];?>" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" >
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
