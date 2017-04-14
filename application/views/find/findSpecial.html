@@ -1,27 +1,27 @@
  
 <style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
+.am-selected {
+    width: 100%!important;
 }
-.table-check{
-width: 30px;
+.table-check {
+    width: 30px;
 }
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
+.hf-dropdown {
+    font-size: 12px!important;
+    padding: 5px 6px!important;
+} 
+td.am-text-middle img {
     width:80px;
 }
-.am-u-sm6{
+.am-u-sm6 {
     width:50px !important;
     margin:0;
 } 
-.am-form-group div{
+.am-form-group div {
     line-height: 37px;
 }
 
-.stable{
+.stable {
     display: inline-block !important;
     width: 45% !important;
 }
@@ -56,7 +56,10 @@ td.am-text-middle img{
     border: 1px solid #5eb95e !important;
     color: #5eb95e !important;
 }
-
+.gray {
+    border: 1px solid #282d2f !important;
+    color: #282d2f !important;
+}
 .isRecommand:hover {
     cursor: pointer;
 }
@@ -239,7 +242,12 @@ function otherFunction() {
     });
     //推荐到发现banner
     $('.isRecommand').click(function(){
-        var dataId=$(this).attr('data-id'), banner_state = $(this).attr('dataId');
+        var dataId=$(this).attr('data-id'), banner = $(this).attr('dataId');
+        if(banner == "0") {
+            banner_state = 1;
+        } else {
+            banner_state = 0;
+        }
         console.log('q_id='+ dataId + '&banner_state='+ banner_state);
         $.ajax({ 
             type:'post',
@@ -249,7 +257,7 @@ function otherFunction() {
                 console.log(result);     
                 var res = eval(result);
                 if(res == 1){
-                    alert("删除成功！");
+                    alert("设置成功！");
                     $('#de'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
                     getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
@@ -328,12 +336,19 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= create_time %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
+                <% if(banner_state == '1') { %>
+                <a data-id="<%= q_id %>" dataId="<%= banner_state %>" class="isRecommand gray">
+                    <i class="am-icon-star-o"></i> 不推荐
+                </a>
+                <% } else { %> 
                 <a data-id="<%= q_id %>" dataId="<%= banner_state %>" class="isRecommand">
                     <i class="am-icon-star"></i> 推荐到banner
                 </a>
+                <% } %>
                 <a data-id="<%= q_id %>" class="editFind">
                     <i class="am-icon-pencil"></i> 编辑详情
                 </a>
+
                 <a data-id="<%= q_id %>"  class="tieziList">
                     <i class="am-icon-eye"></i> 帖子列表
                 </a>

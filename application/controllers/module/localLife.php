@@ -1134,7 +1134,7 @@ class LocalLife extends Default_Controller {
 	function  service_recommend(){
 		if($_POST){
 			$id = $this->input->post('id');
-			$data['iscommend'] = $this->input->psot('iscommend');
+			$data['iscommend'] = $this->input->post('iscommend');
 			if($this->Module_model->edit_service($id,$data)){
 				if($data['iscommend'] == 1){
 					$title =  "推荐";
