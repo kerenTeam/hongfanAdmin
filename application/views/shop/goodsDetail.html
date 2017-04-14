@@ -455,7 +455,7 @@ i {
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="store_type" class="am-u-sm-3 am-form-label">商品标签 ：</label>
                             <div class="am-u-sm-6" id="shopTagsBox">
-                                <select id="goodTags" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='goodTags'>
+                                <select id="goodTags" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='goodTags' multiple>
                                     <option value="">请选择一个！</option>
                                     <option value="1">七天无理由退货</option>
                                     <option value="2">正品保证</option>
@@ -1023,26 +1023,43 @@ $('#dispostage').click(function(){
         $('#addNew').click(function () {
             $('<p> 满<input class="priceOne"  /> 元减 <input class="priceTwo"  /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#priceModelsBox'));
         });
-         //添加店铺标签
+        //添加店铺标签
         $('#addTags').click(function () {
-            var value = $('#goodTags').val(), tagsName = '';
-            if(value == "1") {
-                tagsName = "七天无理由退货";
-            } else if(value == "2") {
-                tagsName = "正品保证";
-            }else if(value == "3") {
-                tagsName = "原装进口";
+
+            var value = $('#goodTags').val(), tagsName = '',j = 0;
+            for(var i = 0; i < value.length; i++) {
+                console.log($('.tagsName'+i).text());
+                if($('.tagsName'+i).text()) {
+                    alert('请勿重复添加！');
+                    return false;
+                }
+                if(value[i] == "1") {
+                    j = 1;
+                    tagsName = "七天无理由退货";
+                    
+                } else if(value[i] == "2") {
+                    j = 2;
+                    tagsName = "正品保证";
+                }else if(value[i] == "3") {
+                    j = 3;
+                    tagsName = "原装进口";
+                }
+                else if(value[i] == "4") {
+                    j = 4;
+                    tagsName = "极速退款";
+                }
+                else if(value[i] == "5") {
+                    j = 5;
+                    tagsName = "如实描述";
+                } else {
+                    alert('请选择商品标签！')
+                    return false;
+                }
+                $('<p><i class="am-icon-check-circle-o"><i class="tagsName'+ j +'">  '+ tagsName +'   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
+                 $("#goodTags").val("请选择...");
             }
-            else if(value == "4") {
-                tagsName = "极速退款";
-            }
-            else if(value == "5") {
-                tagsName = "如实描述";
-            } else {
-                alert('请选择商品标签！')
-                return false;
-            }
-            $('<p><i class="am-icon-check-circle-o"><i>  '+ tagsName +'   <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p>').appendTo($('#shopTagsBox'));
+            
+            
         });
         //根据一级业态的内容来控制二级业态的显示
         var firstSort=$('#firstSort option:selected').val(),str='',sttr='<option value="">请选择一项...</option>';
