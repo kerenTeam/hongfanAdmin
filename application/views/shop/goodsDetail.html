@@ -210,6 +210,13 @@ i {
     color: #ccc;
     text-decoration: line-through;
 }
+.tags {
+    font-size: 12px;
+    color: #999;
+}
+.tags i {
+    color: #f43a44;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -251,11 +258,11 @@ i {
                          <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="Name" class="am-u-sm-3 am-form-label">商品品牌<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
-                                <input type="text" id="Name" value="<?php echo $goods['brand'];?>" name="brand" required="required" onblur="validate(this,2,50,1)" />
+                                <input type="text" id="Name" value="<?php echo $goods['brand'];?>" name="brand" required="required" onblur="validate(this,2,20,20)" />
                             </div>
-                            <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                        </div>        
+                            <small class="am-u-sm-1 red redtips20" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips20" style="display: none;"><i class="am-icon-check"></i></small>
+                        </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="englishName" class="am-u-sm-3 am-form-label">商品价格<span class="red">*</span>：</label>
                             <div class="am-u-sm-8">
@@ -285,10 +292,16 @@ i {
                                 <input type="number" name='weight' id="weight" placeholder="kg" value="<?php echo $goods['weight'];?>" required="required" onmousewheel="return false;" />
                             </div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存：</label>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">月销量<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount'];?>" readonly />
+                                <input type="number" name='sales' id="sales" placeholder="" value="200" required="required" onmousewheel="return false;" readonly />
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">总库存<span class="red">*</span>：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="text" required id="stockamount" name="amount" value="<?php echo $goods['amount'];?>"  />
                             </div>
                         </div>
 
@@ -584,6 +597,9 @@ i {
                     库存：100件
                 </div>
             </div>
+            <div class="goodBanner am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left" id="showgoodstags">
+                
+            </div>
             <div id="showproporty" class="am-u-lg-12 am-u-sm-12 am-u-md-12 am-text-left">
                 
             </div>
@@ -699,7 +715,12 @@ function validate(obj,minlen,maxlen,i){
     $('#showgoodsprice').append($('<i class="newgoodPrice"> ￥'+ newPrice +'</i>  <i class="oldgoodPrice"> ￥'+ goodPrice +'</i>'));
     $('#showgoodsresporty').html('库存：'+totalrespority);
     $('#showgoodsDetail').html(editorContent);
-
+    var tags = $('#goodTags').val();
+    $('#showgoodstags').html("");
+    //预览标签
+    for(var i = 0; i < 3; i++) {
+        $('#showgoodstags').append('<div class="am-u-lg-4 am-u-sm-4 am-u-md-4 tags" ><i class="am-icon-check-circle-o"></i> '+ tags[i] +'</div>');
+    }
   });
  //点击进行运费设置
 $('#postage').click(function(){
