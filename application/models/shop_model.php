@@ -23,7 +23,7 @@ class Shop_model extends CI_Model
     //获取所有店铺
     function shop_list($type){
         $where['store_distinction'] = $type;
-        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->shop_store);
+        $query = $this->db->where($where)->order_by('store_id','desc')->get($this->shop_store);
         return $query->result_array();
     }
     //修改店铺状态

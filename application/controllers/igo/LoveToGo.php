@@ -110,6 +110,12 @@ class LoveToGo extends Default_Controller
         $this->load->view('template.html',$data);
     }
 
+    //推荐爱购分类首页显示
+    function loveToGoCates_recommend(){
+        
+    }
+
+
     //删除爱购分类
     function del_igo_cate(){
         if($_POST){
