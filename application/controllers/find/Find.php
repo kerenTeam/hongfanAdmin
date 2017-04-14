@@ -196,6 +196,32 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
+
+    //推荐帖子
+    function find_recommend(){
+        if($_POST){
+            $id = $this->input->post('newsid');
+            $data['type_name'] = $this->input->post('type');
+            if($this->Find_model->edit_find_service($id,$data)){
+                // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."推荐了一个帖子到首页显示，帖子id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
     //编辑帖子界面
     function editFindService(){
         $id = intval($this->uri->segment(4));
@@ -236,21 +262,21 @@ class Find extends Default_Controller {
                     $data['pic']= json_encode($pic);
                 }
             }
-            // $tags = explode(',',$data['tags']);
-            // unset($data['tags']);
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
             if($this->Find_model->edit_find_service($data['news_id'],$data)){
                 //删除所有已有的标签
-                // $this->Find_model->del_news_tags($data['news_id']);
+                $this->Find_model->del_news_tags($data['news_id']);
                 //新增帖子标签
-                // foreach($tags as $v){
-                //     $arr = array(
-                //         'userid'=> $data['userid'],
-                //         'news_id' => $data['news_id'],
-                //         'tag_id' => $v,
-                //         'create_news_tag_time'=> date('Y-m-d H:i:s'),
-                //     );
-                //     $this->Find_model->add_news_tag($arr);
-                // }
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $data['news_id'],
+                        'tag_id' => $v,
+                        'create_news_tag_time'=> date('Y-m-d H:i:s'),
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -337,22 +363,22 @@ class Find extends Default_Controller {
                     $data['pic']= json_encode($pic);
                 }
             }
-            // $tags = explode(',',$data['tags']);
-            // unset($data['tags']);
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
             $data['userid'] = $_SESSION['users']['user_id'];
             $data['create_news_time'] = date('Y_m-d H:i:s');
 
             $id =$this->Find_model->add_find_service($data); 
             if($id){
-                // foreach($tags as $v){
-                //     $arr = array(
-                //         'userid'=> $data['userid'],
-                //         'news_id' => $id,
-                //         'tag_id' => $v,
-                //         'create_news_tag_time'=> $data['create_news_time'],
-                //     );
-                //     $this->Find_model->add_news_tag($arr);
-                // }
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $id,
+                        'tag_id' => $v,
+                        'create_news_tag_time'=> $data['create_news_time'],
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -774,6 +800,7 @@ class Find extends Default_Controller {
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
+                $this->db->insert('hf_system_journal',$log);
 
                     echo "<script>alert('操作成功！');window.location.href='".site_url('/find/Find/findSpecial/'.$act['act_id'])."'</script>";
                     exit;
@@ -831,6 +858,32 @@ class Find extends Default_Controller {
         }
     }
 
+    //推荐专题到banner显示
+    function findSpecial_recommend(){
+        if($_POST){
+            $id = $this->input->post('q_id');
+            $data['banner_state'] = $this->input->post('banner_state');
+            if($this->Find_model->edit_find_special($id,$data)){
+                  
+                    // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."推荐了一个专题展示到banner,id是：".$id,
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+
+                    echo "1";
+                    exit;
+            }else{
+                  echo "3";
+                    exit;
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 
 

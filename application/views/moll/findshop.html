@@ -50,7 +50,7 @@ color: #333;
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商场管理
-            <a href="<?php echo site_url().'/shop/shop/findshop';?>" style="font-size: 18px;">达人探店
+            <a href="<?php echo site_url().'/shop/shop/findshop';?>" style="font-size: 18px;">推荐列表
             </a>  
             <small></small></div>
         </div>
@@ -61,7 +61,7 @@ color: #333;
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">达人探店列表</div>
+                        <div class="widget-title  am-cf">推荐列表</div>
                     </div>
                     <div class="widget-body  am-fr">
                         <div class="am-u-sm-12">
@@ -71,7 +71,7 @@ color: #333;
                                 <div class="am-panel am-panel-default">
                                     <div class="am-panel-hd">             
                                         <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#first<?php echo $val['id'];?>'}">
-                                            <?php if($val['type'] == '2'){echo "(达人探店)";}else{echo "(元气早餐)";}?>&nbsp;<?php echo $val['title']?><span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                            <?php if($val['type'] == '2'){echo "(达人探店)";}else{echo "(元气吃货)";}?><span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                         </h4>
                                     </div>                              
                                     <div id="first<?php echo $val['id'];?>" class="am-panel-collapse am-collapse am-in">
@@ -147,7 +147,9 @@ color: #333;
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                 
                                                     <?php foreach($val['store'] as $v):?>
+                                                    <?php if(!empty($v)):?>
                                                     <tr class="trClass<?php echo $val['id'].$v['store_id'];?>" >
                                                         <td class="am-text-middle"><?php echo $v['store_id'];?></td>
                                                         <td class="am-text-middle"><?php echo $v['store_name'];?></td>
@@ -172,6 +174,7 @@ color: #333;
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <?php endif;?>
                                                 <?php endforeach;?>
                                                 <!-- more data -->
                                                 </tbody>
