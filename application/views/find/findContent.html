@@ -265,7 +265,8 @@ function otherFunction() {
         if(picArray[0]) {
             formD.append('picArray',picArray[0]);
         } 
-        formD.append('recommandNum',recommandNum);
+        formD.append('type',recommandNum);
+        formD.append('newsid',dataId);
         //实例化XMLHttpRequest对象
         var xhr=new XMLHttpRequest();
         xhr.open('post',FileController,true);
@@ -388,7 +389,7 @@ $(document).ready(function(){
                 </a>
                 <%} else { %>
                 <a data-id="<%= news_id %>" class="noRecommand">
-                    <i class="am-icon-star"></i> 推荐到首页
+                    <i class="am-icon-star-o"></i> 推荐到首页
                 </a> 
                 <% } %>
                 <a  data-id="<%= news_id %>" class="checkComment">
