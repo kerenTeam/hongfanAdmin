@@ -4,11 +4,11 @@ function previewImage(file) {
   var MAXHEIGHT = 249;
   //var div = document.getElementById('preview');
   var div = findPreview(file.parentNode);
-  console.log(file.files[0]);
+  // console.log(file.value);
   if (file.files && file.files[0]) {
     //限制图片尺寸
     if(file.files[0].size > 819200) {
-      alert('图片尺寸不能超过1M');
+      alert('图片尺寸不能超过800kb');
       return false;
     }
     //限制图片格式
