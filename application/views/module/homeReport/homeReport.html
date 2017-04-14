@@ -62,6 +62,24 @@
     .reportState option[selected="selected"] {
         background: #15b5ac;
     }
+.isRecommand {
+    width: 85px;
+    background: #4db14d;
+    border-radius: 5px;
+    border: 1px solid #4db14d;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.isRecommand option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+} 
+
 </style>
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -105,6 +123,7 @@
                                     <th>点赞数 </th>
                                     <th>发布时间 </th>
                                     <th>新闻状态 </th>
+                                    <th>本地生活推荐 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -193,7 +212,7 @@ function otherOperation() {
         }
                                 
     }
-    //是否推荐到首页
+    //是否推荐到本地生活
     $('.reportState').change(function(){
         var dataId=$(this).attr('data-id'), state = $(this).find('option:selected').val(); 
  
@@ -241,6 +260,42 @@ function otherOperation() {
                 alert("操作失败，请检查网络设置！");
             }
         });
+    });
+
+    for(var i=0; i<$('.isRecommand').length; i++) {
+       if($('.isRecommand').eq(i).val()=="1") {
+            $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+        } else {
+            $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+    }
+    //设置首页推荐
+    $('.isRecommand').change(function(){
+        var dataId=$(this).attr('data-id'), banner_state;
+        if($(this).find('option:selected').val() == "1") {
+            banner_state = 1;
+            $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
+        } else {
+            banner_state = 0;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+        // $.ajax({
+        //     type:'post',
+        //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+        //     data: 'goodsid='+ dataId+'&state='+ banner_state,
+        //     success: function(data){
+        //         if(data==1){
+
+        //         }else{
+        //             alert("操作失败！");
+        //         }
+                
+        //     },
+        //     error:function(xhr,type,errorThrown){
+        //         alert("操作失败，请检查网络设置！");
+        //     }
+        // });
+        
     });
 }
 //异步刷新的ajax请求 
@@ -332,6 +387,13 @@ $(document).ready(function(){
                 <option value="2" selected="selected">首页滚动显示</option>
             </select>
         <%}%>
+        </td>
+        <td class="am-text-middle">
+            <select class="isRecommand" name="recommend" data-id="<%= id %>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">推荐</option>
+                <option value="0" selected="selected" >不推荐</option>
+            </select>
         </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

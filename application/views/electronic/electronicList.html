@@ -13,6 +13,11 @@ td img{
     width: 150px;
     height: 150px;
 }
+.afterSales {
+    border: 1px solid #e0690c !important;
+    color: #e0690c !important;
+}
+
 </style>
 
 <!-- 内容区域 -->
@@ -141,6 +146,10 @@ td img{
                         $('.editElectronic').click(function(){//编辑商品信息
                             var dataId=$(this).attr('data-id');
                             $(this).attr("href","<?php echo site_url('/electronic/Electronic/editElectronic/" + dataId + "');?>");
+                        });
+                        $('.afterSales').click(function(){//查看核销
+                            var dataId=$(this).attr('data-id');
+                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -277,6 +286,9 @@ var startDate = new Date(2014, 11, 20);
         <%}%> -->
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
+                <a data-id="<%= id%>" class="afterSales">
+                    <i class="am-icon-eye"></i> 查看核销信息
+                </a>
                 <a data-id="<%= id%>" class="editElectronic">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>

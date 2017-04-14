@@ -13,33 +13,50 @@ padding: 5px 6px!important;
     width:50%;
     }
 .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        border:  1px solid #ddd;
-    }
-     .clickUp{
-        display: inline-block;
-        float: left;
-        margin-left: 100px;
-    }
+    display:inline-block;
+    width:60px;
+    height:25px;
+    line-height: 25px;
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    border:  1px solid #ddd;
+}
+.clickUp{
+    display: inline-block;
+    float: left;
+    margin-left: 100px;
+}
 
- .preview{
-        height:170px !important;
-    }
-    .preview #imghead,#preview img{
-        
-        height:160px;
-    }
-    .am-modal-bd input[type='radio'] {
-        width: 50%;
-        border: none;
-    }
+.preview{
+    height:170px !important;
+}
+.preview #imghead,#preview img{
     
+    height:160px;
+}
+.am-modal-bd input[type='radio'] {
+    width: 50%;
+    border: none;
+}
+.isRecommand {
+    width: 85px;
+    background: #4db14d;
+    border-radius: 5px;
+    border: 1px solid #4db14d;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.isRecommand option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+} 
+ 
 </style>
 
 <!-- 内容区域 -->
@@ -224,12 +241,13 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th>编号</th>
-                                    <th>名称	</th>
+                                    <th>名称</th>
                                     <th>缩略图</th>
                                     <th>联系人</th>
                                     <th>联系号码</th>
                                     <th>价格</th>
                                     <th>发布人身份</th>
+                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -246,6 +264,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
                                     <td class="am-text-middle"><?php echo $val['price']?></td>
                                     <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time']?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -501,16 +526,16 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <td class="am-text-middle">编号</td>
-                                    <td class="am-text-middle">标题名</td>
-                                    <td class="am-text-middle">户型</td>
-                                    <td class="am-text-middle">房屋类型</td>
-                                    <td class="am-text-middle">所在小区</td>
-                                    <td class="am-text-middle">房屋地址</td>
-                                    <td class="am-text-middle">平均售价(元/平米)</td>
-                                    <td class="am-text-middle">中介名称</td>
-                                    <td class="am-text-middle">联系号码</td>
-                                    <td class="am-text-middle">发布人身份</td>
+                                    <th>编号</th>
+                                    <th>标题名</th>
+                                    <th>户型</th>
+                                    <th>房屋类型</th>
+                                    <th>所在小区</th>
+                                    <th>平均售价(元/平米)</th>
+                                    <th>中介名称</th>
+                                    <th>联系号码</th>
+                                    <th>发布人身份</th> 
+                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -525,11 +550,17 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['house_type'];?></td>
 
                                     <td class="am-text-middle"><?php echo $val['quarters'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['area_address'];?></td>
                                     <td class="am-text-middle"><?php echo $val['avg_price'];?></td>
                                     <td class="am-text-middle"><?php echo $val['intermediary_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
                                         <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -720,15 +751,15 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <td class="am-text-middle">编号</td>
-                                    <td class="am-text-middle">宝贝名称</td>
-                                    <td class="am-text-middle">价格</td>
-                                    <td class="am-text-middle">商品类别</td>
-                                    <td class="am-text-middle">新旧</td>
-                                    <td class="am-text-middle">地址</td>
-                                    <td class="am-text-middle">联系号码</td>
-                                    <td class="am-text-middle">发布人</td>
-                                    <td class="am-text-middle">发布人身份</td>
+                                    <th>编号</th>
+                                    <th>宝贝名称</th>
+                                    <th>价格</th>
+                                    <th>商品类别</th>
+                                    <th>新旧</th>
+                                    <th>联系号码</th>
+                                    <th>发布人</th>
+                                    <th>发布人身份</th>
+                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -742,11 +773,17 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $v['price'];?></td>
                                     <td class="am-text-middle"><?php echo $v['tag']?></td>
                                     <td class="am-text-middle"><?php echo $v['colour'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['address'];?></td>
                                     <td class="am-text-middle"><?php echo $v['phone']?></td>
                                     <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
                                     <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
                                       <td class="am-text-middle"><?php if($v['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -802,13 +839,13 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <td class="am-text-middle">编号</td>
-                                    <td class="am-text-middle">寄件用户</td>
-                                    <td class="am-text-middle">寄件人地址</td>
-                                    <td class="am-text-middle">联系人</td>
-                                    <td class="am-text-middle">联系电话</td>
-                                    <td class="am-text-middle">分类</td>
-                                    <td class="am-text-middle">备注</td>
+                                    <th>编号</th>
+                                    <th>寄件用户</th>
+                                    <th>寄件人地址</th>
+                                    <th>联系人</th>
+                                    <th>联系电话</th>
+                                    <th>分类</th>
+                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <!-- <th>操作</th> -->
                                 </tr>
@@ -824,6 +861,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $v['phone'];?></td>
                                     <td class="am-text-middle"><?php echo $v['type'];?></td>
                                     <td class="am-text-middle"><?php echo $v['other'];?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                    <!--  <td class="am-text-middle">
                                         <div class="am-dropdown" data-am-dropdown>
@@ -989,12 +1033,13 @@ padding: 5px 6px!important;
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <td class="am-text-middle">编号</td>
-                                    <td class="am-text-middle">超市名</td>
-                                    <td class="am-text-middle">商品名</td>
-                                    <td class="am-text-middle">价格</td>
-                                    <td>创建时间</td>
-                                    <td>操作</td>
+                                    <th>编号</th>
+                                    <th>超市名</th>
+                                    <th>商品名</th>
+                                    <th>价格</th>
+                                    <th>本地生活推荐</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1005,6 +1050,13 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['market_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['goods_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['date_price']?>/<?php echo $val['unit']?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $val['date'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -1155,6 +1207,43 @@ padding: 5px 6px!important;
         
     }
 
+    $(document).ready(function () {
+        for(var i=0; i<$('.isRecommand').length; i++) {
+            if($('.isRecommand').eq(i).val()=="1") {
+                $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+            } else {
+                $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+            }
+        }
+        //设置本地生活推荐
+        $('.isRecommand').change(function(){
+            var dataId=$(this).attr('data-id'), banner_state;
+            if($(this).find('option:selected').val() == "1") {
+                banner_state = 1;
+                $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
+            } else {
+                banner_state = 0;
+                $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
+            }
+            // $.ajax({
+            //     type:'post',
+            //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+            //     data: 'goodsid='+ dataId+'&state='+ banner_state,
+            //     success: function(data){
+            //         if(data==1){
+
+            //         }else{
+            //             alert("操作失败！");
+            //         }
+                    
+            //     },
+            //     error:function(xhr,type,errorThrown){
+            //         alert("操作失败，请检查网络设置！");
+            //     }
+            // });
+            
+        });
+    })
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');

@@ -40,6 +40,24 @@ label {
 #searchKey {
     height: 28px;
 }
+.isRecommand {
+    width: 85px;
+    background: #4db14d;
+    border-radius: 5px;
+    border: 1px solid #4db14d;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.isRecommand option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+} 
+
 </style>
 
 <!-- 内容区域 -->
@@ -76,6 +94,7 @@ label {
                                     <th>分类名 </th>
                                     <th>分类LOGO </th>
                                     <th>分类编号</th>
+                                    <th>推荐到首页</th>
                                     <th>更新时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -95,6 +114,13 @@ label {
                                     <td class="am-text-middle"><img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></td>
                                     <?php endif;?>
                                     <td class="am-text-middle"><?php echo $val['catid']?></td>
+                                    <td class="am-text-middle">
+                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                                            <option value="">-=请选择一项=-</option>
+                                            <option value="1">推荐</option>
+                                            <option value="0" selected="selected" >不推荐</option>
+                                        </select>
+                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="am-btn-toolbar">
@@ -211,7 +237,43 @@ $('.sureDelete').click(function(){
         }
     });
 });
+$(document).ready(function () {
+    for(var i=0; i<$('.isRecommand').length; i++) {
+        if($('.isRecommand').eq(i).val()=="1") {
+            $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+        } else {
+            $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+    }
+    //设置首页推荐
+    $('.isRecommand').change(function(){
+        var dataId=$(this).attr('data-id'), banner_state;
+        if($(this).find('option:selected').val() == "1") {
+            banner_state = 1;
+            $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
+        } else {
+            banner_state = 0;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+        // $.ajax({
+        //     type:'post',
+        //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+        //     data: 'goodsid='+ dataId+'&state='+ banner_state,
+        //     success: function(data){
+        //         if(data==1){
 
+        //         }else{
+        //             alert("操作失败！");
+        //         }
+                
+        //     },
+        //     error:function(xhr,type,errorThrown){
+        //         alert("操作失败，请检查网络设置！");
+        //     }
+        // });
+        
+    });
+})
 
 
 

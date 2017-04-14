@@ -28,7 +28,7 @@
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">专题活动</a>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">专题</a>
             <small><a href="<?php echo site_url().'/find/Find/findSpecial/'.$info['act_id'];?>">编辑 专题</a></small>
             </div>
         </div>
@@ -45,14 +45,14 @@
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg">
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
+                                <label class="am-u-sm-2 am-text-right">名称<span class="red">*</span>：</label>
+                                <div class="am-u-sm-10">
                                     <input type="text" id="doc-vld-name-1" name="title" value="<?php echo $info['title'];?>" minlength="2" placeholder="请输入名称" required="required" />
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
-                                    <div class="am-u-sm-9 am-u-end">
+                                <label class="am-u-sm-2 am-text-right">缩略图<span class="red">*</span>：</label>
+                                    <div class="am-u-sm-10 am-u-end">
                                     <?php if(!empty($info['pic'])):?>
                                     <div class="wx_type_img">
                                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
@@ -65,16 +65,16 @@
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                      </div>
-                                    <?php endif;?>
+                                    <?php endif;?> 
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <small class="red">提示：需注意制作的广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
+                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800k；
                                     </small> 
                                 </div>
                             </div>
                         
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">专题详情<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
+                                <label class="am-u-sm-2 am-text-right">专题详情<span class="red">*</span>：</label>
+                                <div class="am-u-sm-10">
                                     <div>
                                         <script id="editor" name='described' type="text/plain"><?php echo $info['described'];?></script>
                                     </div>

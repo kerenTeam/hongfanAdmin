@@ -4,12 +4,20 @@ function previewImage(file) {
   var MAXHEIGHT = 249;
   //var div = document.getElementById('preview');
   var div = findPreview(file.parentNode);
-
+  console.log(file.files[0]);
   if (file.files && file.files[0]) {
-    if(file.files[0].size > 1048576) {
+    //限制图片尺寸
+    if(file.files[0].size > 819200) {
       alert('图片尺寸不能超过1M');
       return false;
     }
+    //限制图片格式
+    var extension = /\.(gif|jpg|jpeg|png)$/i;
+    if(!extension.test(file.files[0].name)) {
+      alert('图片格式不符！');
+      return false;
+    }
+
     picArray[0]=file.files[0];
     div.innerHTML = '<img id=imghead>';
     //var img = document.getElementById('imghead');
@@ -18,8 +26,6 @@ function previewImage(file) {
       var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
       img.width = rect.width;
       img.height = rect.height;
-      //   img.style.marginLeft = rect.left+'px';
-      //  img.style.marginTop = rect.top+'px';
     }
     var reader = new FileReader();
     reader.onload = function(evt) {

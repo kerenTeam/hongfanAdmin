@@ -47,6 +47,23 @@ padding: 5px 6px!important;
         border: 1px solid #c2cad8 !important;
         border-radius: 5px !important;
     }
+.isRecommand {
+    width: 85px;
+    background: #4db14d;
+    border-radius: 5px;
+    border: 1px solid #4db14d;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.isRecommand option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+} 
 </style>
 
 <!-- 内容区域 -->
@@ -156,6 +173,7 @@ padding: 5px 6px!important;
                                     <th>联系电话</th>
                                     <th>内容</th>
                                     <th>类型</th>
+                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -346,6 +364,41 @@ function otherOperation() {
             }
         });
     });
+    for(var i=0; i<$('.isRecommand').length; i++) {
+        if($('.isRecommand').eq(i).val()=="1") {
+            $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+        } else {
+            $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+    }
+    //设置本地生活推荐
+    $('.isRecommand').change(function(){
+        var dataId=$(this).attr('data-id'), banner_state;
+        if($(this).find('option:selected').val() == "1") {
+            banner_state = 1;
+            $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
+        } else {
+            banner_state = 0;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
+        }
+        // $.ajax({
+        //     type:'post',
+        //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+        //     data: 'goodsid='+ dataId+'&state='+ banner_state,
+        //     success: function(data){
+        //         if(data==1){
+
+        //         }else{
+        //             alert("操作失败！");
+        //         }
+                
+        //     },
+        //     error:function(xhr,type,errorThrown){
+        //         alert("操作失败，请检查网络设置！");
+        //     }
+        // });
+        
+    });
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -419,6 +472,13 @@ $(document).ready(function(){
         <% } else { %>
         招聘
         <% } %>
+        </td>
+        <td class="am-text-middle">
+            <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
+                <option value="">-=请选择一项=-</option>
+                <option value="1">推荐</option>
+                <option value="0" selected="selected" >不推荐</option>
+            </select>
         </td>
         <td class="am-text-middle"><%= create_time %></td>
         <td class="am-text-middle">

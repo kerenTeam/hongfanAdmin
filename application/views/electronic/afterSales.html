@@ -81,9 +81,9 @@ td.am-text-middle img{
 <div class="container-fluid am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading">
-                <span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">发现 专题</a>
-            </div>
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
+            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
+            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">核销列表</a></small></div>
         </div>
     </div>
 </div>
@@ -91,29 +91,37 @@ td.am-text-middle img{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">发现 专题列表</div>
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">电子券查询</div>
                 </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/find/Find/findAddSpecial/'.$type;?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                </div>
-                            </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">商家：</label>
+                        <div class="am-u-sm-9">
+                            <select id="source_state">
+                                <option value="请选择">请选择</option>
+                                <option value="商家一">商家一</option>
+                                <option value="商家二">商家二</option>
+                                <option value="商家三">商家三</option>
+                            </select>
                         </div>
                     </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-center">
+                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">电子券 核销列表</div>
+                </div>
+                <div class="widget-body  am-fr">
                     <div class="am-u-sm-12"> 
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
                                     <th>编号 </th>
-                                    <th>缩略图 </th>
-                                    <th>标题 </th>
-                                    <th width="320">内容 </th>
-                                    <th>首页推荐展示 </th>
-                                    <th>创建时间 </th>
+                                    <th>核销二维码 </th>
+                                    <th>核销商家 </th>
+                                    <th>核销时间 </th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -228,7 +236,7 @@ function otherFunction() {
         $(this).siblings('.wx_type_img').find('input').val("");
         $(this).siblings('.wx_type_img').find('input').files="";
     });
-    //删除帖子
+    //删除核销
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
         $.ajax({ 
@@ -320,7 +328,7 @@ function getList(dataurl,data){
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现核销信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }         
         },
@@ -335,7 +343,7 @@ $(document).ready(function(){
     var index = href.split('/')[href.split('/').length-1];
     console.log(index);
     //加载列表数数据
-    getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
+    // getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
     //刷新页面
     $('.refresh').click(function(){
        getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
@@ -380,7 +388,7 @@ $(document).ready(function(){
                     <i class="am-icon-pencil"></i> 编辑详情
                 </a>
                 <a data-id="<%= q_id %>"  class="tieziList">
-                    <i class="am-icon-eye"></i> 帖子列表
+                    <i class="am-icon-eye"></i> 核销列表
                 </a>
                 <a data-id="<%= q_id %>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除

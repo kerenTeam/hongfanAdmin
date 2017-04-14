@@ -12,6 +12,8 @@ class Electronic extends Default_Controller {
     public $view_addElectronic = "electronic/addElectronic.html";
     //电子卷编辑
     public $view_editElectronic = "electronic/editElectronic.html";
+    //电子券核销列表
+    public $view_afterSales = "electronic/afterSales.html";
     function __construct()
     {
         parent::__construct();
@@ -167,7 +169,12 @@ class Electronic extends Default_Controller {
             echo "2";
         }
     }
-
-
+    //核销列表
+    function afterSales(){
+        //查看核销情况列表
+         $data['page']= $this->view_afterSales;
+         $data['menu'] = array('marketActivity','electronicList');
+         $this->load->view('template.html',$data);
+    }
 }
 
