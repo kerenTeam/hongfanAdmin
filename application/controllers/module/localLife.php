@@ -1208,7 +1208,7 @@ class LocalLife extends Default_Controller {
 				echo "1";
 			}else{
 				echo "3";
-			}
+			} 
 		}else{
 			echo "2";
 		}
