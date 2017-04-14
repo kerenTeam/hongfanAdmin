@@ -88,6 +88,14 @@ class LoveToGo extends Default_Controller
                 }
             }
             if($this->db->where('catid',$data['catid'])->update('hf_mall_category_igo',$data)){
+                    //日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了爱购分类，分类id是".$data['catid'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
                  echo "<script>alert('操作成功！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates')."'</script>";
                     exit;
             }else{
@@ -112,7 +120,32 @@ class LoveToGo extends Default_Controller
 
     //推荐爱购分类首页显示
     function loveToGoCates_recommend(){
-        
+        if($_POST){
+            $id = $this->input->post('catid');
+            $data['recommend_state'] = $this->input->post('recommend_state');
+            $arr['recommend_state']  =  '0';
+            $this->db->where('recommend_state','1')->update('hf_mall_category_igo',$arr);
+            if($this->db->where('catid',$id)->update('hf_mall_category_igo',$data)){
+                if($data['recommend_state'] == '1'){
+                    $title  = "推荐了爱购分类到首页";
+                }else{
+                    $title = "取消了推荐爱购分类到首页";
+                }
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username'].$title.',爱购分类id是：'.$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
     }
 
 

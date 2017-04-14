@@ -1129,4 +1129,89 @@ class LocalLife extends Default_Controller {
 			echo "2";
 		}
 	}
+
+	//推荐普通信息到首页显示
+	function  service_recommend(){
+		if($_POST){
+			$id = $this->input->post('id');
+			$data['iscommend'] = $this->input->psot('iscommend');
+			if($this->Module_model->edit_service($id,$data)){
+				if($data['iscommend'] == 1){
+					$title =  "推荐";
+				}else{
+					$title =  "取消推荐";
+				}
+				//日志
+				$log = array(
+					'userid'=>$_SESSION['users']['user_id'],  
+					"content" => $_SESSION['users']['username'].$title."了一个普通信息到本地生活首页,信息id是：".$id,
+					"create_time" => date('Y-m-d H:i:s'),
+					"userip" => get_client_ip(),
+				);
+				$this->db->insert('hf_system_journal',$log);
+				echo "1";
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
+	//推荐房产信息到本地生活
+	function house_recommend(){
+		if($_POST){
+			$id = $this->input->post('id');
+			$data['recommend_state'] = $this->input->post('recommend_state');
+			if($this->Module_model->edit_houst($id,$data)){
+				if($data['recommend_state'] == 1){
+					$title =  "推荐";
+				}else{
+					$title =  "取消推荐";
+				}
+				//日志
+				$log = array(
+					'userid'=>$_SESSION['users']['user_id'],  
+					"content" => $_SESSION['users']['username'].$title."了一个房产信息到本地生活首页,信息id是：".$id,
+					"create_time" => date('Y-m-d H:i:s'),
+					"userip" => get_client_ip(),
+				);
+				$this->db->insert('hf_system_journal',$log);
+				echo "1";
+			}else{
+				echo "2";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
+	//推荐跳蚤市场信息到本地生活
+	function market_recommend(){
+		if($_POST){
+			$id = $this->input->post('id');
+			$data['recommend_state'] = $this->input->post('recommend_state');
+			if($this->Module_model->edit_markinfo($id,$data)){
+				if($data['recommend_state'] == 1){
+					$title =  "推荐";
+				}else{
+					$title =  "取消推荐";
+				}
+				//日志
+				$log = array(
+					'userid'=>$_SESSION['users']['user_id'],  
+					"content" => $_SESSION['users']['username'].$title."了一个二手信息到本地生活首页,信息id是：".$id,
+					"create_time" => date('Y-m-d H:i:s'),
+					"userip" => get_client_ip(),
+				);
+				$this->db->insert('hf_system_journal',$log);
+				echo "1";
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
 }
