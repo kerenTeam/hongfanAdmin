@@ -114,10 +114,10 @@
                                         <label class="am-u-sm-3 am-text-right">活动类型<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="type" value="1" class="discount" />优惠活动     
+                                                <input type="radio" name="type" value="1" class="discount" />优惠    
                                             </div>
                                             <div class="am-u-sm-6 am-u-end">
-                                                <input type="radio" name="type" value="2" class="activity" />普通活动                                      
+                                                <input type="radio" name="type" value="2" class="activity" />活动（卡卷）                                     
                                             </div>
                                             
                                         </div>
@@ -269,10 +269,10 @@
 
         //优惠和活动的选择
         $(".discount").click(function(){ 
-            $('#discountCard').css('display','block');       
+            $('#discountCard').css('display','none');       
         });
         $(".activity").click(function(){ 
-            $('#discountCard').css('display','none');       
+            $('#discountCard').css('display','block');       
         });   
          var clickflag=1,clickarray=[],str='';
         //优惠券选中状态

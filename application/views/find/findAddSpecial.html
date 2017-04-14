@@ -29,7 +29,7 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>发现 &nbsp;&nbsp;<a href="<?php echo site_url().'/find/Find/findActivity';?>" style="font-size:16px;">专题活动</a>
-            <small><a href="<?php echo site_url().'/find/Find/findAddSpecial/'.$type;?>">新增 专题</a></small>
+            <small><a href="<?php echo site_url().'/find/Find/findAddSpecial/'.$type;?>">新增 专题 || 活动</a></small>
             </div>
         </div>
     </div>
@@ -40,7 +40,11 @@
             <form class="am-form" action="<?php echo site_url('/find/Find/add_findSpecial');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
+                        <?php if($type == 1):?>
+                        <div class="widget-title  am-cf">新增 活动</div>
+                        <?php else:?>
                         <div class="widget-title  am-cf">新增 专题</div>
+                        <?php endif;?>
                     </div>
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg">
@@ -64,14 +68,14 @@
                                 </div>
                             </div>
                        
-                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">专题详情<span class="red">*</span>：</label>
+                          <!--   <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
                                 <div class="am-u-sm-9">
                                     <div>
                                         <script id="editor" name='described' type="text/plain"></script>
                                     </div>
                                 </div>                            
-                            </div> 
+                            </div> -->
                         </div>
                     </div>
 

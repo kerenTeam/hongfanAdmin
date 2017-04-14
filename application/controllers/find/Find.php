@@ -236,21 +236,21 @@ class Find extends Default_Controller {
                     $data['pic']= json_encode($pic);
                 }
             }
-            // $tags = explode(',',$data['tags']);
-            // unset($data['tags']);
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
             if($this->Find_model->edit_find_service($data['news_id'],$data)){
                 //删除所有已有的标签
-                // $this->Find_model->del_news_tags($data['news_id']);
+                $this->Find_model->del_news_tags($data['news_id']);
                 //新增帖子标签
-                // foreach($tags as $v){
-                //     $arr = array(
-                //         'userid'=> $data['userid'],
-                //         'news_id' => $data['news_id'],
-                //         'tag_id' => $v,
-                //         'create_news_tag_time'=> date('Y-m-d H:i:s'),
-                //     );
-                //     $this->Find_model->add_news_tag($arr);
-                // }
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $data['news_id'],
+                        'tag_id' => $v,
+                        'create_news_tag_time'=> date('Y-m-d H:i:s'),
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -337,22 +337,22 @@ class Find extends Default_Controller {
                     $data['pic']= json_encode($pic);
                 }
             }
-            // $tags = explode(',',$data['tags']);
-            // unset($data['tags']);
+            $tags = explode(',',$data['tags']);
+            unset($data['tags']);
             $data['userid'] = $_SESSION['users']['user_id'];
             $data['create_news_time'] = date('Y_m-d H:i:s');
 
             $id =$this->Find_model->add_find_service($data); 
             if($id){
-                // foreach($tags as $v){
-                //     $arr = array(
-                //         'userid'=> $data['userid'],
-                //         'news_id' => $id,
-                //         'tag_id' => $v,
-                //         'create_news_tag_time'=> $data['create_news_time'],
-                //     );
-                //     $this->Find_model->add_news_tag($arr);
-                // }
+                foreach($tags as $v){
+                    $arr = array(
+                        'userid'=> $data['userid'],
+                        'news_id' => $id,
+                        'tag_id' => $v,
+                        'create_news_tag_time'=> $data['create_news_time'],
+                    );
+                    $this->Find_model->add_news_tag($arr);
+                }
                 // 日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  

@@ -116,20 +116,22 @@
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
                         <div class="am-u-sm-6" id="priceModelsBox">
-                            <?php if(!empty($busin['reduction_rule'])):?>
+                          
                             <?php $rule = json_decode($busin['reduction_rule'],true);?>
+                              <?php if(!empty($rule)):?>
                             <?php foreach($rule as $v):?>
                            <p>满 <input class="priceOne" value="<?php echo $v['reachPrice']?>"/> 元减 <input class="priceTwo" value="<?php echo $v['reducePrice'];?>"/> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
                            <?php endforeach;?>
                             <?php else:?>
                            <p>满 <input class="priceOne" /> 元减 <input class="priceTwo" /> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
                             <?php endif;?>
+                        
                        
                         </div>   
                         <div class="am-u-sm-1 am-u-end">
                             <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                         </div>
-                          <?php if(!empty($busin['reduction_rule'])):?>
+                          <?php if(!empty($rule)):?>
                         <input type="hidden" id="reduction_rule" name='reduction_rule' value="<?php echo $busin['reduction_rule'];?>">
                           <?php else:?>
                              <input type="hidden" id="reduction_rule" name='reduction_rule' >
@@ -229,7 +231,7 @@
                 <div class="widget-body  am-fr">
                     <div class="am-form-group am-text-center">
                         <input type="hidden" name="store_id" value="<?php echo $busin['store_id'];?>">
-                        <button type="button" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                        <button type="submit" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
                         <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
                     </div>
                 </div>
@@ -335,10 +337,26 @@
     });
 
     //点击保存按钮作验证
-    // $('#submit').click(function(){
+    $('#submit').click(function(){
+        //添加满减规则
+        var manjianRule = [], TagsModel = [];
+        for(var j=0;j<$('.priceOne').length;j++) {
+            if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
+                var priceModel = {}
+               // console.log($('.priceOne').eq(j).val() + '' +$('.priceTwo').eq(j).val());
+                priceModel.reachPrice = $('.priceOne').eq(j).val();
+                priceModel.reducePrice = $('.priceTwo').eq(j).val();
+                 console.log(priceModel);
+                manjianRule.push(priceModel);
+            }   
+        }
         
-    //     return true;
-    // });
+        console.log(manjianRule);
+        manjianRule=JSON.stringify(manjianRule);
+        $('#reduction_rule').val(manjianRule);
+
+        return true;
+    });
 
     //表单验证函数
     function validate(obj,minlen,maxlen,i){
