@@ -39,23 +39,19 @@ padding: 5px 6px!important;
     width: 50%;
     border: none;
 }
-.isRecommand {
-    width: 85px;
-    background: #4db14d;
-    border-radius: 5px;
-    border: 1px solid #4db14d;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
+.isRecommand, .isRecommand1, .isRecommand2{
+    border: 1px solid #5eb95e !important;
+    color: #5eb95e !important;
 }
-.isRecommand option {
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding:2px 5px;
-    color: #000;
-    text-align: center;
-} 
+
+.gray {
+    border: 1px solid #282d2f !important;
+    color: #282d2f !important;
+}
+.isRecommand:hover, .isRecommand1:hover, .isRecommand2:hover{
+    cursor: pointer;
+}
+ 
  
 </style>
 
@@ -247,7 +243,6 @@ padding: 5px 6px!important;
                                     <th>联系号码</th>
                                     <th>价格</th>
                                     <th>发布人身份</th>
-                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -264,16 +259,18 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
                                     <td class="am-text-middle"><?php echo $val['price']?></td>
                                     <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle">
-                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="1">推荐</option>
-                                            <option value="0" selected="selected" >不推荐</option>
-                                        </select>
-                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time']?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
+                                            <?php if($val['iscommend'] == '1'):?>
+                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand gray">
+                                                <i class="am-icon-star-o"></i> 不推荐
+                                            </a>
+                                            <?php else:?>
+                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand">
+                                                <i class="am-icon-star"></i> 推荐到banner
+                                            </a>
+                                            <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
@@ -534,8 +531,7 @@ padding: 5px 6px!important;
                                     <th>平均售价(元/平米)</th>
                                     <th>中介名称</th>
                                     <th>联系号码</th>
-                                    <th>发布人身份</th> 
-                                    <th>本地生活推荐</th>
+                                    <th>发布人身份</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -554,16 +550,18 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['intermediary_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['phone'];?></td>
                                         <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle">
-                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="1">推荐</option>
-                                            <option value="0" selected="selected" >不推荐</option>
-                                        </select>
-                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
+                                            <?php if($val['recommend_state'] == '1'):?>
+                                            <a data-id="<?php echo $val['house_id'];?>" dataId="<?php echo $val['recommend_state']?>" class="isRecommand1 gray">
+                                                <i class="am-icon-star-o"></i> 不推荐
+                                            </a>
+                                            <?php else:?>
+                                            <a data-id="<?php echo $val['house_id'];?>" dataId="<?php echo $val['recommend_state']?>" class="isRecommand1">
+                                                <i class="am-icon-star"></i> 推荐到banner
+                                            </a>
+                                            <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['house_id'].'/'.$typeid.'/'.$id;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
@@ -759,7 +757,6 @@ padding: 5px 6px!important;
                                     <th>联系号码</th>
                                     <th>发布人</th>
                                     <th>发布人身份</th>
-                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -775,18 +772,19 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $v['colour'];?></td>
                                     <td class="am-text-middle"><?php echo $v['phone']?></td>
                                     <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
-                                    <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
                                       <td class="am-text-middle"><?php if($v['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle">
-                                        <select class="isRecommand" name="recommend" data-id="">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="1">推荐</option>
-                                            <option value="0" selected="selected" >不推荐</option>
-                                        </select>
-                                    </td>
                                     <td class="am-text-middle"><?php echo $v['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
+                                            <?php if($v['recommend_state'] == '1'):?>
+                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2 gray">
+                                                <i class="am-icon-star-o"></i> 不推荐
+                                            </a>
+                                            <?php else:?>
+                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2">
+                                                <i class="am-icon-star"></i> 推荐到banner
+                                            </a>
+                                            <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$v['id'].'/'.$typeid.'/'.$id;?>" class="tpl-table-black-operation-set">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
@@ -1037,7 +1035,6 @@ padding: 5px 6px!important;
                                     <th>超市名</th>
                                     <th>商品名</th>
                                     <th>价格</th>
-                                    <th>本地生活推荐</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -1050,13 +1047,6 @@ padding: 5px 6px!important;
                                     <td class="am-text-middle"><?php echo $val['market_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['goods_name'];?></td>
                                     <td class="am-text-middle"><?php echo $val['date_price']?>/<?php echo $val['unit']?></td>
-                                    <td class="am-text-middle">
-                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="1">推荐</option>
-                                            <option value="0" selected="selected" >不推荐</option>
-                                        </select>
-                                    </td>
                                     <td class="am-text-middle"><?php echo $val['date'];?></td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
@@ -1208,40 +1198,90 @@ padding: 5px 6px!important;
     }
 
     $(document).ready(function () {
-        for(var i=0; i<$('.isRecommand').length; i++) {
-            if($('.isRecommand').eq(i).val()=="1") {
-                $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+        //推荐到发现banner
+        $('.isRecommand').click(function(){
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+            if(iscommend == "0") {
+                iscommend = 1;
             } else {
-                $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+                iscommend = 0;
             }
-        }
-        //设置本地生活推荐
-        $('.isRecommand').change(function(){
-            var dataId=$(this).attr('data-id'), banner_state;
-            if($(this).find('option:selected').val() == "1") {
-                banner_state = 1;
-                $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
-            } else {
-                banner_state = 0;
-                $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
-            }
-            // $.ajax({
-            //     type:'post',
-            //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-            //     data: 'goodsid='+ dataId+'&state='+ banner_state,
-            //     success: function(data){
-            //         if(data==1){
-
-            //         }else{
-            //             alert("操作失败！");
-            //         }
+            console.log('id='+ dataId + '&iscommend='+ iscommend);
+            $.ajax({ 
+                type:'post',
+                url: "<?php echo site_url('/module/LocalLife/service_recommend');?>",
+                data: 'id='+ dataId + '&iscommend='+ iscommend,
+                success: function(result){    
+                    console.log(result);     
+                    var res = eval(result);
+                    if(res == 1){
+                        alert("设置成功！");
+                        window.location.reload();
+                    }else{
+                       alert("网络状况不佳，请稍后重试！");
+                    }
                     
-            //     },
-            //     error:function(xhr,type,errorThrown){
-            //         alert("操作失败，请检查网络设置！");
-            //     }
-            // });
-            
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("网络状况不佳，请稍后重试！");
+                }
+            });
+        });
+        $('.isRecommand1').click(function(){
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+            if(iscommend == "0") {
+                iscommend = 1;
+            } else {
+                iscommend = 0;
+            }
+            console.log('id='+ dataId + '&iscommend='+ iscommend);
+            $.ajax({ 
+                type:'post',
+                url: "<?php echo site_url('/module/LocalLife/house_recommend');?>",
+                data: 'id='+ dataId + '&recommend_state='+ iscommend,
+                success: function(result){    
+                    console.log(result);     
+                    var res = eval(result);
+                    if(res == 1){
+                        alert("设置成功！");
+                        window.location.reload();
+                    }else{
+                       alert("网络状况不佳，请稍后重试！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("网络状况不佳，请稍后重试！");
+                }
+            });
+        });
+        $('.isRecommand2').click(function(){
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+            if(iscommend == "0") {
+                iscommend = 1;
+            } else {
+                iscommend = 0;
+            }
+            console.log('id='+ dataId + '&iscommend='+ iscommend);
+            $.ajax({ 
+                type:'post',
+                url: "<?php echo site_url('/module/LocalLife/market_recommend');?>",
+                data: 'id='+ dataId + '&recommend_state='+ iscommend,
+                success: function(result){    
+                    console.log(result);     
+                    var res = eval(result);
+                    if(res == 1){
+                        alert("设置成功！");
+                        window.location.reload();
+                    }else{
+                       alert("网络状况不佳，请稍后重试！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("网络状况不佳，请稍后重试！");
+                }
+            });
         });
     })
     //删除图片

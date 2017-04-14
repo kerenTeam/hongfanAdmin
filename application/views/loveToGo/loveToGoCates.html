@@ -40,23 +40,8 @@ label {
 #searchKey {
     height: 28px;
 }
-.isRecommand {
-    width: 85px;
-    background: #4db14d;
-    border-radius: 5px;
-    border: 1px solid #4db14d;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
-}
-.isRecommand option {
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding:2px 5px;
-    color: #000;
-    text-align: center;
-} 
+
+
 
 </style>
 
@@ -113,17 +98,19 @@ label {
                                     <td class="am-text-middle"><img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></td>
                                     <?php endif;?>
                                     <td class="am-text-middle"><?php echo $val['catid']?></td>
-                                    <td class="am-text-middle">
-                                        <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
-                                            <option value="">-=请选择一项=-</option>
-                                            <option value="1" <?php if($val['recommend_state'] == '1'){echo "selected";}?>>推荐</option>
-                                            <option value="0" <?php if($val['recommend_state'] == '0'){echo "selected";}?> >不推荐</option>
-                                        </select>
-                                    </td>
                                     <td class="am-text-middle"><?php echo $val['create_time'];?></td>
                                     <td class="am-text-middle">
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
+                                                <?php if($val['recommend_state'] == '1'):?>
+                                                <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-warning isRecommand">
+                                                    <i class="am-icon-star-o"></i> 不推荐
+                                                </a>
+                                                <?php else:?>
+                                                <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-success isRecommand">
+                                                    <i class="am-icon-star"></i> 推荐到banner
+                                                </a>
+                                                <?php endif;?>
                                                 <a data-am-modal="{target:'#edit<?php echo $val['catid'];?>'}" class="am-btn am-btn-secondary edit_sort"><span class="am-icon-pencil"></span> 编辑分类</a>&nbsp;&nbsp;
                                                 <a data-am-modal="{target:'#deleteSort<?php echo $val['catid'];?>'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>
                                             </div>
@@ -237,40 +224,36 @@ $('.sureDelete').click(function(){
     });
 });
 $(document).ready(function () {
-    for(var i=0; i<$('.isRecommand').length; i++) {
-        if($('.isRecommand').eq(i).val()=="1") {
-            $('.isRecommand').eq(i).css({'background':'#4db14d','border':'1px solid #4db14d'});
+    //推荐到首页
+    $('.isRecommand').click(function(){
+        var dataId=$(this).attr('data-id'), recommend = $(this).attr('dataId');
+        if(recommend == "0") {
+            recommend_state = 1;
         } else {
-            $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
+            recommend_state = 0;
         }
-    }
-    //设置首页推荐
-    $('.isRecommand').change(function(){
-        var dataId=$(this).attr('data-id'), banner_state;
-        if($(this).find('option:selected').val() == "1") {
-            banner_state = 1;
-            $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
-        } else {
-            banner_state = 0;
-            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
-        }
-        // $.ajax({
-        //     type:'post',
-        //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-        //     data: 'goodsid='+ dataId+'&state='+ banner_state,
-        //     success: function(data){
-        //         if(data==1){
-
-        //         }else{
-        //             alert("操作失败！");
-        //         }
+        console.log('catid='+ dataId + '&recommend_state='+ recommend_state);
+        $.ajax({ 
+            type:'post',
+            url: "<?php echo site_url('/igo/LoveToGo/loveToGoCates_recommend');?>",
+            data: 'catid='+ dataId + '&recommend_state='+ recommend_state,
+            success: function(result){    
+                console.log(result);     
+                var res = eval(result);
+                if(res == 1){
+                    alert("设置成功！");
+                    $('#de'+dataId).fadeOut();
+                    $('.am-dimmer').removeClass('am-active');
+                    window.location.reload();
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
                 
-        //     },
-        //     error:function(xhr,type,errorThrown){
-        //         alert("操作失败，请检查网络设置！");
-        //     }
-        // });
-        
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
     });
 })
 
