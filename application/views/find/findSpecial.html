@@ -16,7 +16,7 @@ td.am-text-middle img{
 .am-u-sm6{
     width:50px !important;
     margin:0;
-}
+} 
 .am-form-group div{
     line-height: 37px;
 }
@@ -52,9 +52,13 @@ td.am-text-middle img{
     padding: 5px 6px !important;
     color: #e0690c !important;
 }
-.yesRecommand, .noRecommand {
+.isRecommand {
     border: 1px solid #5eb95e !important;
     color: #5eb95e !important;
+}
+
+.isRecommand:hover {
+    cursor: pointer;
 }
 
 </style>
@@ -197,7 +201,7 @@ function otherFunction() {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editFind').eq(i).attr('data-id'), checkId =$('.tieziList').eq(i).attr('data-id'), recommandId =  $('.yesRecommand').eq(i).attr('data-id'), recooo = $('.noRecommand').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
         $('.yesRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recommandId +"'}");
-         $('.noRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recooo +"'}");
+        $('.noRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recooo +"'}");
         $('.editFind').eq(i).attr("href","<?php echo site_url().'/find/Find/findEditSpecial/';?>"+editId);
         $('.tieziList').eq(i).attr("href","<?php echo site_url().'/find/Find/findNotesList/';?>"+checkId);  
     }
@@ -233,30 +237,31 @@ function otherFunction() {
             }
         });
     });
-    //设置首页推荐
-    $('.sureRecommand').click(function(){
-        var dataId=$(this).attr('data-id'), FileController = "", formD = new FormData();
-        var recommandNum = $('#isrecommand'+ dataId).val();
-        if(!picArray[0]) {
-            console.log('不该图片');
-            formD.append('picArray',picArray[0]);
-        }     
-        formD.append('recommandNum',recommandNum);
-        //  //实例化XMLHttpRequest对象
-        var xhr=new XMLHttpRequest();
-        xhr.open('post',FileController,true);
-        xhr.send(formD);
-        xhr.onreadystatechange = function(data){
-            console.log(data);
-            if (xhr.readyState===4) {  
-                if (xhr.status===200) {
-                     alert("保存成功！");
-                    $('#re'+dataId).modal('close');
+    //推荐到发现banner
+    $('.isRecommand').click(function(){
+        var dataId=$(this).attr('data-id'), banner_state = $(this).attr('dataId');
+        console.log('q_id='+ dataId + '&banner_state='+ banner_state);
+        $.ajax({ 
+            type:'post',
+            url: "<?php echo site_url('/find/Find/findSpecial_recommend');?>",
+            data: 'q_id='+ dataId + '&banner_state='+ banner_state,
+            success: function(result){    
+                console.log(result);     
+                var res = eval(result);
+                if(res == 1){
+                    alert("删除成功！");
+                    $('#de'+dataId).fadeOut();
+                    $('.am-dimmer').removeClass('am-active');
                     getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
                 }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
             }
-        }
-        
+        });
     });
     
 }
@@ -323,15 +328,9 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= create_time %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <%if(banner_state=="1" || banner_state=="2") {%>
-                <a data-id="<%= q_id %>" class="yesRecommand">
-                    <i class="am-icon-star"></i> 修改推荐
+                <a data-id="<%= q_id %>" dataId="<%= banner_state %>" class="isRecommand">
+                    <i class="am-icon-star"></i> 推荐到banner
                 </a>
-                <%} else { %>
-                <a data-id="<%= q_id %>" class="noRecommand">
-                    <i class="am-icon-star"></i> 推荐到首页
-                </a> 
-                <% } %>
                 <a data-id="<%= q_id %>" class="editFind">
                     <i class="am-icon-pencil"></i> 编辑详情
                 </a>
@@ -354,42 +353,6 @@ $(document).ready(function(){
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
                 <span class="am-modal-btn sureDelete" data-id="<%= q_id %>" data-am-modal-confirm>确定</span>
             </div>
-        </div>
-    </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= q_id %>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">推荐</div>
-            <div class="am-modal-bd">
-                <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-text-right">推荐图<span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <div class="wx_type_img">
-                                <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                <div id="preview"> <img style="border-radius: 3px;" src="<%= pic %>" class="am-img-responsive cardView"> </div>
-                             </div>
-                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                            <small class="red">提示：图片格式支持：PNG、JPG、JPEG，最大支持2M；</small> 
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-text-right">推荐到<span class="red">*</span>：</label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <select class="am-form-field isrecommand" name="isrecommand" required id="isrecommand<%= q_id %>">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="2">每日精选</option>
-                                <option value="1">热门推荐</option>
-                                <option value="1">不推荐</option>
-                            </select> 
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf am-btn-group-xs">
-                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                        <button type="submit" class="am-btn am-btn-secondary sureRecommand" data-id="<%= q_id %>">保存</button>
-                    </div>
-                </form>      
-            </div>
-            
         </div>
     </div>
     <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<%= q_id%>">
