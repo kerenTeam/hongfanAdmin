@@ -241,12 +241,13 @@ var flag=1,tag=1,str='';
                                 }
                             });              
                         });
-                        //上传头像
+                        
                         //删除图片
                         $(".deleteImg").click(function(){
                             $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
                             $(this).siblings('.wx_type_img').find('input').val("");
                         });
+                        //上传头像
                         for(var i=0;i<$('.imgUp').length;i++){   
                             //账号类型管理
                             var name=$('.account_type_name'),jsondata={};
