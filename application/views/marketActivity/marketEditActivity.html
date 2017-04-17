@@ -191,7 +191,7 @@
                                             <?php endif;?>
                                             </div>
                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small>提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                            <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small> 
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -250,6 +250,8 @@
     $(".deleteImg").click(function(){
         
         $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').val("");
+        $(this).siblings('.wx_type_img').find('input').files="";
         
     });
 //点击取消返回上一页
