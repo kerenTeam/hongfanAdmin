@@ -434,6 +434,9 @@ class LocalLife extends Default_Controller {
 		}
 	}
 	
+
+
+
 	//新增普通信息
 	function add_service(){
 		
@@ -872,6 +875,24 @@ class LocalLife extends Default_Controller {
 		}
 	}
 
+	//批量删除超市比价商品
+	function batch_del_market(){
+		if($_POST){
+			$id = $this->input->post('id');
+			$arr = json_decode($id,true);
+			foreach($arr as $k=>$v){
+				$a = $this->Module_model->del_market_data($v);
+			}
+			if($a){
+				echo "1";
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
 	//编辑超市比价
 	function edit_market_data(){
 		if($_POST){
@@ -1091,6 +1112,23 @@ class LocalLife extends Default_Controller {
 			echo "2";
 		}
 	}
+
+	//招聘搜索
+	function search_recruit(){
+		if($_POST){
+			$q = $this->input->post('sear');
+			$list = $this->Module_model->search_recruit($q);
+			if(!empty($list)){
+				echo json_encode($list);
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
+
 	//新增 招聘信息
 	function add_recruit(){
 		if($_POST){
