@@ -46,7 +46,7 @@ class Store extends Default_Controller {
         }else{
             $data['saleid'] = $id;
         }
-        $data['cates'] = $this->MallShop_model->get_cates_parent('0');
+        $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
         $data['page'] = $this->view_storeGoodsList;
         $data['menu'] = array('store','storeGoodsList');
         $this->load->view('template.html',$data);
@@ -105,8 +105,9 @@ class Store extends Default_Controller {
             $endPrice = $_POST['endPrice'];
             $startRepertory = $_POST['startRepertory'];
             $endRepertory = $_POST['endRepertory'];
+            $diff = $_POST['diff'];
 
-            $list = search_goods($cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory);
+            $list = search_goods($diff,$cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory);
             if(empty($list)){
                 echo "2";
             }else{
@@ -223,7 +224,7 @@ class Store extends Default_Controller {
             $parent = json_decode($data['parameter'],true);
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
             $pic = array();
-
+ 
             for ($i=1; $i < 4; $i++) {
                 if(!empty($_FILES['img'.$i]['name'])){
                     $config['upload_path']      = 'Upload/goods/';
@@ -233,7 +234,7 @@ class Store extends Default_Controller {
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img'.$i)) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/store/storeEditGoods/'.$data['id'])."'</script>";exit;
                     }else{
                         unset($data['img'.$i]);
                         if($i == '1'){
@@ -261,16 +262,17 @@ class Store extends Default_Controller {
                     $value['g_id'] = $data['goods_id'];
                     $this->db->insert('hf_mall_goods_property',$value);
                 }
+                  //日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个商品信息，商品id是：".$data['goods_id'],
+                    "content" => $_SESSION['users']['username']."编辑了商品信息，商品id是：".$data['goods_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
                 $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
              }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeEditGoods/'.$data['id'])."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/store/storeEditGoods/'.$data['id'])."'</script>";exit;
              }
         }else{
             $this->load->view('404.html');
@@ -700,6 +702,9 @@ class Store extends Default_Controller {
      }
      //自营商品列表
      function sinceGoods(){
+        //获取商品分类
+        
+    $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
          $data['page'] = $this->view_sinceGoods;
          $data['menu'] = array('moll','sinceGoods');
          $this->load->view('template.html',$data);
@@ -708,7 +713,8 @@ class Store extends Default_Controller {
      //返回自用商品列表
      function get_since_goods(){
          if($_POST){
-            $goods_list  = $this->MallShop_model->get_goodslist('1');
+            $type = $this->input->post('default');
+            $goods_list  = $this->MallShop_model->get_since_goodslist($type);
             if(!empty($goods_list)){
                 echo json_encode($goods_list);
             }else{

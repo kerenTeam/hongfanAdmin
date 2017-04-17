@@ -233,7 +233,7 @@ i {
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/shop/singleShop/edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <form class="am-form" action="<?php echo site_url('/store/Store/store_edit_goods');?>" method="post" enctype="multipart/form-data" data-am-validator>
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
                         <div class="widget-title  am-cf">商品基础信息                   
@@ -290,16 +290,17 @@ i {
                                 <input type="text"  id="stockamount" name="amount" value="<?php echo $goods['amount'];?>" readonly />
                             </div>
                         </div>
+                        <?php $tag = explode(',',$goods['good_tags']);?>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="store_type" class="am-u-sm-3 am-form-label">商品标签 ：</label>
                             <div class="am-u-sm-8 am-u-end" id="shopTagsBox" >
-                                <select id="goodTags" required="required" multiple data-am-selected="{searchBox: 1,maxHeight: 300}" >
+                                <select id="goodTags" multiple data-am-selected="{searchBox: 1,maxHeight: 300}" >
                                     <option value="">请选择一个！</option>
-                                    <option value="七天无理由退货">七天无理由退货</option>
-                                    <option value="正品保证">正品保证</option>
-                                    <option value="原装进口">原装进口</option>
-                                    <option value="极速退款">极速退款</option>
-                                    <option value="如实描述">如实描述</option> 
+                                    <option value="七天无理由退货" <?php if(in_array('七天无理由退货',$tag)){echo "selected";}?>>七天无理由退货</option>
+                                    <option value="正品保证" <?php if(in_array('正品保证',$tag)){echo "selected";}?>>正品保证</option>
+                                    <option value="原装进口" <?php if(in_array('原装进口',$tag)){echo "selected";}?>>原装进口</option>
+                                    <option value="极速退款" <?php if(in_array('极速退款',$tag)){echo "selected";}?>>极速退款</option>
+                                    <option value="如实描述" <?php if(in_array('如实描述',$tag)){echo "selected";}?>>如实描述</option> 
                                 </select>
                             </div>
                             <input type="hidden" id="good_tags" name='good_tags' />
@@ -452,7 +453,7 @@ i {
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">月销量<span class="red">*</span>：</label>
                             <div class="am-u-sm-8 am-u-end">
-                                <input type="number" name='sales' id="sales" placeholder="" value="" required="required" onmousewheel="return false;" />
+                                <input type="number" name='sales' id="sales" placeholder="" value="<?php echo $goods['sales']?>" required="required" onmousewheel="return false;" />
                             </div>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
