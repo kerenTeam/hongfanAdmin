@@ -89,9 +89,7 @@ class Login extends CI_Controller {
                                 $a['error'] = '你没有权限登录！';
                                 $this->load->view('login.html',$a);
                             }
-                          
-                            // var_dump($arr);
-                            // exit;
+           
                             $data = array(
                                 "userid" => $user['user_id'],
                                 "content" => $user['username']."登录了！",
