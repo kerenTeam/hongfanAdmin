@@ -295,8 +295,9 @@ class Module_model extends CI_Model{
 	}
 	//搜索招聘信息
 	function search_recruit($q){
-		$qeury = $this->db->where('type_name','5')->or_where('type_name','5')->like('name',$q,"both")->or_like('link_man',$q,'both')->or_like('phone',$q,'both')->order_by('crtate_time','desc')->get($this->service);
-		return $query->result_array();
+		$sql = "select * from hf_local_service where `name` like '%$q%' or link_man LIKE '%$q%'  and type_name IN('4','5');";
+		$res = $this->db->query($sql);
+		return $res->result_array();
 	}
 
 }
