@@ -434,6 +434,9 @@ class LocalLife extends Default_Controller {
 		}
 	}
 	
+
+
+
 	//新增普通信息
 	function add_service(){
 		
@@ -869,6 +872,24 @@ class LocalLife extends Default_Controller {
 			}else{
 					echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market_data')."'</script>";exit;
 			}
+		}
+	}
+
+	//批量删除超市比价商品
+	function batch_del_market(){
+		if($_POST){
+			$id = $this->input->post('id');
+			$arr = json_decode($id,true);
+			foreach($arr as $k=>$v){
+				$a = $this->Module_model->del_market_data($v);
+			}
+			if($a){
+				echo "1";
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
 		}
 	}
 
