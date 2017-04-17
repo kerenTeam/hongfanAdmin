@@ -71,6 +71,17 @@
         padding:5px 6px !important;
         color: #e0690c !important;
     }
+    .isRecommand {
+    border: 1px solid #5eb95e !important;
+    color: #5eb95e !important;
+}
+.gray {
+    border: 1px solid #282d2f !important;
+    color: #282d2f !important;
+}
+.isRecommand:hover {
+    cursor: pointer;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -178,10 +189,11 @@
                                     <th width="280">商品名 </th>
                                     <th>所属店铺 </th>   
                                     <th>实时库存<i class="am-icon am-icon-sort" onclick="storeEditGoods(1)"></i> </th>   
-                                    <th>商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>   
-                                    <th>商品状态</th>
-                                    <th>是否推荐</th>
-                                    <th>变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th>
+                                    <th>商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(3)"></i> </th>
+                                    <th>商品状态</th>   
+                                    <th>排序</th>
+                                    <!-- 
+                                    <th>变更时间<i class="am-icon am-icon-sort" onclick="storeEditGoods(5)"></i></th> -->
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -196,7 +208,7 @@
                             <div class="pagination">
                                 <a class="prev"><i></i>上一页</a>
                                 <a class="current">1</a>
-                                <a >2</a>
+                                <a>2</a>
                                 <a>3</a>
                                 <a>4</a>
                                 <span class="pagination-break">...</span>
@@ -339,27 +351,12 @@
         });
         // //商品上下架
         for(var i=0; i<$('.tpl-del').length; i++) {
-            var dataId = $('.tpl-del').eq(i).attr('data-id');
+            var dataId = $('.tpl-del').eq(i).attr('data-id'), recommandId = $('.isRecommand').eq(i).attr('data-id');
             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+            $('.isRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recommandId +"'}");
             if($('.goodsState').eq(i).val()=="0"){
                 $('.goodsState').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
-            } 
-            if($('.recommend').eq(i).val()=="0"){
-                $('.recommend').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
-            }     
-            if($('.priceState').eq(i).val()=="0"){
-                $('.priceState').eq(i).css({'background':'#e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
-            }
-            
-             if($('.goodsState').eq(i).val()=="1"){
-                $('.goodsState').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-            } 
-            if($('.recommend').eq(i).val()=="1"){
-                $('.recommend').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-            }     
-            if($('.priceState').eq(i).val()=="1"){
-                $('.priceState').eq(i).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'});
-            }                
+            }                 
         }
 
         //更改商品的状态
@@ -406,46 +403,34 @@
             
         });
         //推荐商品
-        $('.recommend').change(function(){
-            var dataId=$(this).attr('data-id');
-            if($(this).find('option:selected').val()=="1"){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-                    data: 'goodsid='+ dataId+'&state=1',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
-            }else{
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-                    data: 'goodsid='+ dataId+'&state=0',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        } 
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+        $('.sureRecommand').click(function(){
+            var dataId=$(this).attr('data-id'), banner = $(this).attr('dataId'), sort = $('#sortInput'+ dataId).val();
+            if(banner == "0") {
+                banner_state = 1;
+            } else {
+                banner_state = 0;
             }
-            
-            
+            console.log('goods_id='+ dataId+'&sort='+ sort +'&recommend='+ banner_state);
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Specialty/edit_goods_stor');?>',
+                data: 'goods_id='+ dataId+'&sort='+ sort +'&recommend='+ banner_state,
+                success: function(data){
+                    console.log(data);
+                    if(data==1){
+                        alert('操作成功!');
+                     getList('<?php echo site_url('store/store/get_since_goods');?>', 'default=1'); 
+                     $('.am-dimmer').css('display', 'none');
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+           
         });
 
         //删除商品的AJAX请求
@@ -480,6 +465,7 @@
             data: data,
             success: function(result){     
                 var res = eval(result);
+                console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     total_page = Math.ceil(res.length/15); //得到总页数
@@ -635,7 +621,7 @@ $(document).ready(function(){
         <!-- <td class="am-text-middle">2016年上半季</td> -->
         <td class="am-text-middle">
         <%if(goods_state=="1"){%>
-            <select class="goodsState" name="goodsState" data-id="<%= goods_id%>">
+            <select class="goodsState" name="goodsState" data-id="<%= goods_id %>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1" selected="selected">上架</option>
                 <option value="0">下架</option>
@@ -648,32 +634,18 @@ $(document).ready(function(){
             </select>
         <%}%>
         </td>
-       
-        <td class="am-text-middle">
-        <%if(specials_state =="1"){%>
-            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1" selected="selected">是</option>
-                <option value="0">否</option>
-            </select>
-        <%}else{%>
-            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
-                <option value="">-=请选择一项=-</option>
-                <option value="1">是</option>
-                <option value="0" selected="selected">否</option>
-            </select>
-        <%}%>
-        </td>
-        <td class="am-text-middle">
-        <%if(update_time) {%>
-            <span><%= update_time%></span>
-        <%}else {%>
-            <span><%= create_time%></span>
-        <%}%>
-        </td>
-        <td><%= sort %></td>
+        <td class="am-text-middle"><%= sort %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
+                <% if(recommend == "1") { %>
+                <a data-id="<%= goods_id %>"  class="isRecommand gray">
+                    <i class="am-icon-star-o"></i> 不推荐
+                </a>
+                <% } else { %> 
+                <a data-id="<%= goods_id %>"  class="isRecommand">
+                    <i class="am-icon-star"></i> 推荐
+                </a>
+                <% } %>
                 <a data-id="<%= goods_id%>" class="editGoods">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
@@ -683,6 +655,26 @@ $(document).ready(function(){
             </div>
         </td>
     </tr>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= goods_id %>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">推荐</div>
+            <div class="am-modal-bd">
+                <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-text-right">推荐排序<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="number" id="sortInput<%= goods_id %>" value="<%= sort %>" name="sort" min="1" required onmousewheel="return false;" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-btn-group-xs">
+                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                        <button type="submit" class="am-btn am-btn-secondary sureRecommand" dataId="<%= recommend %>" data-id="<%= goods_id %>">保存</button>
+                    </div>
+                </form>      
+            </div>
+            
+        </div>
+    </div>
     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= goods_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>

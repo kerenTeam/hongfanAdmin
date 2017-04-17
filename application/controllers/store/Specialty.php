@@ -182,12 +182,12 @@ class Specialty extends Default_Controller {
     //修改商品排序
     function edit_goods_stor(){
         if($_POST){
-            $goodsid = $this->input->post('goodsid');
-            $data['sort'] = $this->input->post('sort');
-            if($this->MallShop_model->edit_goods_state($goodsid,$data)){
+            $data = $this->input->post();
+            //$data['sort'] = $this->input->post('sort');
+            if($this->MallShop_model->edit_goods_state($data['goods_id'],$data)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了商品排序，商品id是".$goodsid,
+                    "content" => $_SESSION['users']['username']."修改了商品排序，商品id是".$data['goods_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
