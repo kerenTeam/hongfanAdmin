@@ -1112,6 +1112,23 @@ class LocalLife extends Default_Controller {
 			echo "2";
 		}
 	}
+
+	//招聘搜索
+	function search_recruit(){
+		if($_POST){
+			$q = $this->input->post('sear');
+			$list = $this->Module_model->search_recruit($q);
+			if(!empty($list)){
+				echo json_encode($list);
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
+
+
 	//新增 招聘信息
 	function add_recruit(){
 		if($_POST){

@@ -147,10 +147,10 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
                                          <div class="am-u-sm-8 am-u-end">
-                                            <select class="am-form-field isbusiness" name="isbusiness" required>
+                                            <select class="am-form-field isbusiness" name="type_name" required>
                                                 <option value="">-=请选择一项=-</option>
-                                                <option value="1">求职</option>
-                                                <option value="0">招聘</option>
+                                                <option value="5">求职</option>
+                                                <option value="4">招聘</option>
                                             </select>
                                         </div>
                         
@@ -173,7 +173,7 @@ padding: 5px 6px!important;
                                     <th>联系电话</th>
                                     <th>内容</th>
                                     <th>类型</th>
-                                    <th>本地生活推荐</th>
+                                    <!--<th>本地生活推荐</th>-->
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -321,7 +321,7 @@ function otherOperation() {
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
-            data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&isbusiness="+ isbusiness,
+            data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness,
             success: function(result){       
                 console.log(result);  
                 var res = eval(result);
@@ -467,19 +467,19 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= phone %></td>
         <td class="am-text-middle"><%= content.content %></td>
         <td class="am-text-middle">
-        <% if(isbusiness == 1) { %>
+        <% if(type_name == 5) { %>
         求职
         <% } else { %>
         招聘
         <% } %>
         </td>
-        <td class="am-text-middle">
+        <!--<td class="am-text-middle">
             <select class="isRecommand" name="recommend" data-id="<%= q_id %>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1">推荐</option>
                 <option value="0" selected="selected" >不推荐</option>
             </select>
-        </td>
+        </td>-->
         <td class="am-text-middle"><%= create_time %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
@@ -545,17 +545,17 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">类型<span class="red">*</span></label>
                         <div class="am-u-sm-8 am-u-end">
-                            <% if(isbusiness == '1') { %>
-                            <select class="am-form-field isbusiness<%= id %>" name="isbusiness">
+                            <% if(type_name == '5') { %>
+                            <select class="am-form-field isbusiness<%= id %>" name="type_name">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="1" selected="selected">求职</option>
-                                <option value="0">招聘</option>
+                                <option value="5" selected="selected">求职</option>
+                                <option value="4">招聘</option>
                             </select>
                             <% } else { %>
-                            <select class="am-form-field isbusiness<%= id %>" name="isbusiness">
+                            <select class="am-form-field isbusiness<%= id %>" name="type_name">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="1" >求职</option>
-                                <option value="0"selected="selected" >招聘</option>
+                                <option value="5" >求职</option>
+                                <option value="4"selected="selected" >招聘</option>
                             </select>
                             <% } %>
                         </div>

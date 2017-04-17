@@ -290,9 +290,13 @@ class Module_model extends CI_Model{
 	//返回所有招聘信息
 	function get_recruit_list($type){
 		$where['type_name'] = $type;
-		$query = $this->db->where($where)->order_by('create_time','desc')->get($this->service);
+		$query = $this->db->where($where)->or_where('type_name','5')->order_by('create_time','desc')->get($this->service);
 		return $query->result_array();
 	}
-
+	//搜索招聘信息
+	function search_recruit($q){
+		$qeury = $this->db->where('type_name','5')->or_where('type_name','5')->like('name',$q,"both")->or_like('link_man',$q,'both')->or_like('phone',$q,'both')->order_by('crtate_time','desc')->get($this->service);
+		return $query->result_array();
+	}
 
 }
