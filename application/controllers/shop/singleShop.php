@@ -71,9 +71,12 @@ class SingleShop extends Default_Controller {
                 redirect('admin/index');
              }
         }else{
+             $storeid = $this->MallShop_model->get_basess_info($id);
              $this->session->set_userdata('businessId',$id);
+             $this->session->set_userdata('businesstype',$storeid['store_type']);
 
         }
+
         $store_id = $this->session->businessId;
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
@@ -217,6 +220,7 @@ class SingleShop extends Default_Controller {
         }else{
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
         }
+       
         $data['page'] = $this->view_goodsList;
         $data['menu'] = array('shop','goodsList');
         $this->load->view('template.html',$data);

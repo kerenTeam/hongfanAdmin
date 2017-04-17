@@ -94,7 +94,8 @@ h4.am-panel-title{
                                                                 <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                               <?php endif;?>
                                                             </div>
-                                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small>
+                                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small>
                                                         </td>
                                                     </tr>
                                                     <?php foreach($val['goods'] as $v):?>
@@ -252,28 +253,26 @@ function findPreview(parent) {
 
   //删除商品的AJAX请求
   $('.sureDelete').click(function(){
-        var goodsId=$(this).attr('data-id'),id=$(this).attr('name');
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('store/Store/del_sales_goods')?>',
-                    data: 'id='+ id +'&goodsid='+goodsId,
-                    success: function(data){
-                        if(data==1){
-                            alert('成功');
-                            $('.trClass'+goodsId).remove();
-                
-                        }else{
-                            alert("操作失败！");
-                            return false;
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-          
-        
+    var goodsId=$(this).attr('data-id'),id=$(this).attr('name');
+    $.ajax({
+        type:'post',
+        url:'<?php echo site_url('store/Store/del_sales_goods')?>',
+        data: 'id='+ id +'&goodsid='+goodsId,
+        success: function(data){
+            if(data==1){
+                alert('成功');
+                $('.trClass'+goodsId).remove();
+    
+            }else{
+                alert("操作失败！");
+                return false;
+            }
+            
+        },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
     });
+ });
 
 </script>

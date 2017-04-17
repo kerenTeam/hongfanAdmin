@@ -1,16 +1,17 @@
  
 <style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
+.am-selected {
+    width: 100%!important;
 }
-.table-check{
-width: 30px;
+.table-check {
+    width: 30px;
 }
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
+.hf-dropdown {
+    font-size: 12px!important;
+    padding: 5px 6px!important;
 } 
-.shopState{
+.shopState {
+    width: 80px;
     background: #15b5ac;
     border-radius: 5px;
     border: 1px solid #15b5ac;
@@ -19,7 +20,7 @@ padding: 5px 6px!important;
     text-align: center;
 } 
  
-.shopState option{
+.shopState option {
     background: #fff;
     border-radius: 5px;
     border: 1px solid #aaa;
@@ -27,11 +28,11 @@ padding: 5px 6px!important;
     color: #000;
     text-align: center;
 }
-.shopState option[selected="selected"]{
+.shopState option[selected="selected"] {
     background: #15b5ac;
 
 }
-.editShop{
+.editShop {
     border:1px solid #e0690c !important;
     padding:5px 6px !important;
     color: #e0690c !important;
@@ -40,12 +41,23 @@ padding: 5px 6px!important;
     background: #e0690c !important;
     color: #fff !important;
 }
- #preview{
-        height:150px !important;
-    }
-    #preview #imghead,#preview img{
-     height:140px !important;
-    }
+#preview {
+    height:150px !important;
+}
+#preview #imghead,#preview img {
+    height:140px !important;
+}
+.isRecommand {
+    border: 1px solid #5eb95e !important;
+    color: #5eb95e !important;
+}
+.gray {
+    border: 1px solid #282d2f !important;
+    color: #282d2f !important;
+}
+.isRecommand:hover {
+    cursor: pointer;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -81,7 +93,7 @@ padding: 5px 6px!important;
                         <label for="shop_state" class="am-u-sm-3 am-form-label">状态</label>
                         <div class="am-u-sm-9">
                             <select id="shopstate">
-                                <option value="">-=请选择一项=-</option>
+                                <option value="">-=请选择=-</option>
                                 <option value="1">正常</option>
                                 <option value="0">冻结</option>
                             </select>
@@ -160,7 +172,7 @@ padding: 5px 6px!important;
                                 <span class="pagination-break">...</span>
                                 <a class="ep">15</a>
                                 <a class="next">下一页 <i></i></a>
-                            </div>
+                            </div> 
                         </div>
                         <div class="searchPage">
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
@@ -217,9 +229,6 @@ padding: 5px 6px!important;
 </div>
 <!--加入达人推荐的弹窗结束-->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     var total_page=0,pageflag = 1, $shopList = parseInt(sessionStorage.getItem('shopList')) || 0;
     function otherFunction() {
@@ -232,8 +241,9 @@ padding: 5px 6px!important;
             $(this).attr("href","<?php echo site_url('/shop/singleShop/shopAdmin/" + dataId + "');?>");
         });
         for(var i=0;i<$('.tpl-del').length;i++){
-            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            var dataId=$('.tpl-del').eq(i).attr('data-id'), recommandId =  $('.isRecommand').eq(i).attr('data-id');
             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+            $('.isRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recommandId +"'}");
             if($('.shopState option:selected').eq(i).val()=="0"){
                 $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
             }                          
@@ -277,7 +287,7 @@ padding: 5px 6px!important;
                         alert("操作失败，请检查网络设置！");
                     } 
                 });
-                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+                $(this).css({'background':'#15b5ac','border':'1px solid #15b5ac'});
             }else{
                 $.ajax({
                     type:'post',
@@ -294,7 +304,7 @@ padding: 5px 6px!important;
                         alert("操作失败，请检查网络设置！");
                     }
                 });
-                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+                $(this).css({'background':'#e0690c','border':'1px solid #e0690c'}); 
             }
             
             
@@ -350,6 +360,42 @@ padding: 5px 6px!important;
                 }
             });
             
+        });
+        //推荐到HOT
+        $('.sureRecommand').click(function(){
+            var dataId=$(this).attr('data-id'), banner = $(this).attr('dataId');
+            if(banner == "0") {
+                banner_state = 1;
+            } else {
+                banner_state = 0;
+            }
+            console.log('q_id='+ dataId + '&banner_state='+ banner_state);
+            $.ajax({ 
+                type:'post',
+                url: "<?php echo site_url('/find/Find/findSpecial_recommend');?>",
+                data: 'q_id='+ dataId + '&banner_state='+ banner_state,
+                success: function(result){    
+                    console.log(result);     
+                    var res = eval(result);
+                    if(res == 1){
+                        alert("保存成功！");
+                        $('#de'+dataId).fadeOut();
+                        $('.am-dimmer').removeClass('am-active');
+                        getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
+                    }else{
+                       alert("网络状况不佳，请稍后重试！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("网络状况不佳，请稍后重试！");
+                }
+            });
+        });
+        //删除图片
+        $(".deleteImg").click(function(){      
+            $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+            $(this).prevUntil('.preview').find('input').val("");
         });
     }
     //点击前往某一页的函数
@@ -416,13 +462,8 @@ padding: 5px 6px!important;
     }
 
     //实例化编辑器
-    var ue = UE.getEditor('editor'),flag=0;
-    //删除图片
-    $(".deleteImg").click(function(){      
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).prevUntil('.preview').find('input').val(" ");
-        $(this).prevUntil('.preview').find('input').files="";
-    });
+    var flag=0;
+    
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
@@ -505,13 +546,13 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <%if(state=="1"){%>
             <select id="" class="shopState" name="shopState" data-id="<%= store_id%>">
-                <option value="">-=请选择一项=-</option>
+                <option value="">-=请选择=-</option>
                 <option value="1" selected="selected">正常</option>
                 <option value="0">冻结</option>
             </select>
             <%}else{%>
             <select id="" class="shopState" name="shopState" data-id="<%= store_id%>">
-                <option value="">-=请选择一项=-</option>
+                <option value="">-=请选择=-</option>
                 <option value="1">正常</option>
                 <option value="0" selected="selected">冻结</option>
             </select>
@@ -522,16 +563,50 @@ $(document).ready(function(){
                 <a data-id="<%= store_id%>" class="manageShop">
                     <i class="am-icon-gear" ></i> 管理
                 </a>
-                <a data-id="<%= store_id%>" class="editShop">
+                <% if(0) { %>
+                <a data-id="<%= store_id %>" dataId="<%=  %>" class="isRecommand gray">
+                    <i class="am-icon-star-o"></i> 不推荐
+                </a>
+                <% } else { %> 
+                <a data-id="<%= store_id %>" dataId="<%=  %>" class="isRecommand">
+                    <i class="am-icon-star"></i> 推荐到HOT
+                </a>
+                <% } %>
+                <a data-id="<%= store_id %>" class="editShop">
                     <i class="am-icon-pencil"></i> 编辑
                 </a>
-                <a data-id="<%= store_id%>" class="tpl-table-black-operation-del tpl-del">
+                <a data-id="<%= store_id %>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= store_id%>">
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="re<%= store_id %>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">推荐</div>
+            <div class="am-modal-bd">
+                <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data'>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-3 am-text-right">推荐图<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <div class="wx_type_img">
+                                <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                <div id="preview"> <img style="border-radius: 3px;" src="<%=  %>" class="am-img-responsive cardView" id="banner_pic<%= store_id %>"> </div>
+                             </div>
+                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                            <small class="red">提示：图片格式支持：PNG、JPG、JPEG，最大支持2M；</small> 
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf am-btn-group-xs">
+                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                        <button type="submit" class="am-btn am-btn-secondary sureRecommand" data-id="<%= news_id %>">保存</button>
+                    </div>
+                </form>      
+            </div>
+            
+        </div>
+    </div>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= store_id%>">
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">

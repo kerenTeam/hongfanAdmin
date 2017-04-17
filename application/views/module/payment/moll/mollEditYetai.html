@@ -97,10 +97,8 @@
                                           <?php endif;?>
                                           <br />
                                     </div>
-                                    <div class="am-text-center father">
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small> 
                                 </div> 
                             </div>
                             
@@ -163,7 +161,7 @@
         $(".absolute").fadeOut('1000');
     });
 
-        //删除图片
+    //删除图片
     $(".deleteImg").click(function(){
         
         $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');

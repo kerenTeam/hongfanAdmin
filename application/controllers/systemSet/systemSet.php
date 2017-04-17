@@ -35,8 +35,10 @@ class SystemSet extends Default_Controller {
     public $view_adverManage = 'systemSet/adverManage.html';
     //系统设置 广告管理
     public $view_adverEdit = 'systemSet/adverEdit.html';
-    
-
+    //引导图广告
+    public $view_guideImage = 'systemSet/guideImageManage.html';
+    //HI集头条
+    public $view_hiHeadline = 'systemSet/hiHeadline.html';
     //系统日志
     public $view_system_journal = "systemSet/journal.html";
 
@@ -60,6 +62,22 @@ class SystemSet extends Default_Controller {
     	 $this->load->view('template.html',$data);
     }
 
+    //系统设置 引导图广告管理
+    function guideImageManage()
+    {
+         $data['page'] = $this->view_guideImage;
+         $data['menu'] = array('systemSet','guideImageManage');
+         $this->load->view('template.html',$data);
+    }
+
+    //系统设置  HI集头条管理
+    function hiHeadline()
+    {
+         $data['page'] = $this->view_hiHeadline;
+         $data['menu'] = array('systemSet','hiHeadline');
+         $this->load->view('template.html',$data);
+    }
+    
     //系统设置 角色管理
     function roleManage()
     {   
@@ -183,7 +201,7 @@ class SystemSet extends Default_Controller {
         }
     }
 
-      //刪除管理員
+    //刪除管理員
     function del_admin_user(){
        if($_POST){
             $id = $_POST['userid'];

@@ -94,10 +94,8 @@
                                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <br />
                                     </div>
-                                    <div class="am-text-center father">
-                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small>
                                 </div> 
                             </div>
                             <div class="am-form-group">
@@ -158,5 +156,11 @@
     });
         
     });
-
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').attr('value','');
+        
+    });
 </script>
