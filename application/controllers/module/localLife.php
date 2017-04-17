@@ -1078,7 +1078,19 @@ class LocalLife extends Default_Controller {
 			echo "2";
 		}
 	}
-
+	//删除招聘信息
+	function del_recruit(){
+		if($_POST){
+			$id = $this->input->post('id');
+			if($this->Module_model->del_service($id)){
+				echo "1";
+			}else{
+				echo "3";
+			}
+		}else{
+			echo "2";
+		}
+	}
 	//新增 招聘信息
 	function add_recruit(){
 		if($_POST){
