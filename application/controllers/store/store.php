@@ -512,7 +512,7 @@ class Store extends Default_Controller {
         }
          $data['sales'] = $sales;
          $data['page'] = $this->view_storeGoodsSales;
-         $data['menu'] = array('store','storeGoodsSales');
+         $data['menu'] = array('moll','storeGoodsSales');
          $this->load->view('template.html',$data);
      }
      // 删除展销某个活动的产品
