@@ -1,0 +1,338 @@
+
+<script src="assets/js/echarts.min.js"></script>
+<style type="text/css">
+    #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    } 
+</style> 
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 管理商家 <small>基础信息管理</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/shop/Shop/edit_store_info');?>" method="post" enctype="multipart/form-data" data-am-validator>
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">商家基础信息</div>
+                </div>
+                <div class="widget-body  am-fr"> 
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label class="am-u-sm-3 am-form-label">商场名 <span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" minlength="2" value="宏帆广场" readonly required /> 
+                        </div>
+                    </div>
+                    <div class="am-form-group am-form-icon am-form-feedback am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label name="barnd_name" class="am-u-sm-3 am-form-label">经营品牌：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="barnd_name" minlength="2" maxlength="20" value="<?php echo $busin['barnd_name']?>" placeholder="请输入2-20个字符" onblur="validate(this,0,20,1)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="username" class="am-u-sm-3 am-form-label">登录账户<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="请输入登录手机号"  name="username" value="<?php echo $user['username']?>"  required onblur="validate(11,11,2)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="store_name" class="am-u-sm-3 am-form-label">商家名称<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="请输入2-20个字符" minlength="2" maxlength="20"  name="store_name" value="<?php echo $busin['barnd_name']?>" required onblur="validate(this,2,20,3)" />
+                        </div> 
+                        <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small> 
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="password" class="am-u-sm-3 am-form-label">登录密码<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="******"  name="password"  onblur="validate(this,6,12,6)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                  
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="en_name" class="am-u-sm-3 am-form-label">英文名称 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="例如：lisa" name="en_name" value="<?php echo $busin['en_name']?>"/>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="例如：宏帆广场1楼2012号" name="since_address" value="<?php echo $busin['since_address']?>"/>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="en_name" class="am-u-sm-3 am-form-label">归属地 ：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" placeholder="例如：四川 广安" name="address" value="<?php echo $busin['address']?>"/>
+                        </div>
+                    </div>            
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="commercial_type_name" class="am-u-sm-3 am-form-label">一级业态<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <select id="firstYetai" name="commercial_type_name" required onchange="validate(this,1,20,5)">
+                                <option value="">-=请选择一项=-</option>
+                                <?php foreach($yetai as $val):?>
+                                    <option value="<?php echo $val['id']?>" <?php if($busin['commercial_type_name'] == $val["id"]){echo "selected";}?>><?php echo $val['type_name']?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+
+                </div>
+
+
+                <!--商家简介-->
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">商家简介</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-weibo" class="am-u-sm-3 am-form-label am-fl">LOGO<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <?php if(!empty($busin['logo'])):?>
+                            <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                  <!-- 图片实时预览 -->
+                             
+                                  <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $busin['logo'];?>" class="am-img-responsive cardView"> </div>
+                               
+                                  <br />
+                             </div>
+                             <?php else:?>
+                        <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                  <!-- 图片实时预览 -->
+                             
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                               
+                                  <br />
+                             </div>
+                             <?php endif;?>
+                             <div class="am-text-center father">
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                              </div>   
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-weibo" class="am-u-sm-3 am-form-label">商家图片<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                              <?php if(!empty($busin['pic'])):?>
+                            <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                  <!-- 图片实时预览 -->
+                             
+                                  <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $busin['pic'];?>" class="am-img-responsive cardView"> </div>
+                               
+                                  <br />
+                             </div>
+                             <?php else:?>
+                        <div class="wx_type_img">
+                                 <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                  <!-- 图片实时预览 -->
+                             
+                                  <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                               
+                                  <br />
+                             </div>
+                             <?php endif;?>
+
+                             <div class="am-text-center father">
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                              </div> 
+                        </div> 
+                    </div>
+                  
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">手机号<span class="red">*</span>：</label>
+                        <div class="am-u-sm-8">
+                            <input type="tel"  name="phone" value="<?php echo $busin['phone']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入手机号" required onblur="validate(this,11,11,12)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">座机号：</label>
+                        <div class="am-u-sm-8">
+                            <input type="tel"  name="tel" value="<?php echo $busin['tel']?>" class="am-form-field tpl-form-no-bg" placeholder="请输入座机号" onblur="validate(this,7,12,13)" />
+                        </div>
+                        <small class="am-u-sm-1 red redtips13" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips13" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">新浪微博： </label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" name="sina_weibo" class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['sina_weibo']?>">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">腾讯微博：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" name="tc_weibo"  class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['tc_weibo']?>">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">微信账号： </label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" name="wechat"  class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['wechat']?>">
+                        </div>
+                    </div>  
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号： </label>
+                        <div class="am-u-sm-8 am-u-end">
+                           <input type="text" name="qq"  class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['qq']?>">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label class="am-u-sm-3 am-form-label">文字简介：</label>
+                        <div class="am-u-sm-8">
+                            <textarea name="description" rows="5" cols="40" placeholder="请输入2-500个字符" required onblur="validate(this,2,500,11)">
+                              <?php echo $busin['description']?>
+                            </textarea>
+                        </div>
+                        <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
+                    </div>
+                </div>
+
+                <!--商家楼层信息-->
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear: both;">商家楼层信息</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-name" class="am-u-sm-3 am-form-label">所在楼层：</label>
+                        <div class="am-u-sm-8 am-u-end">
+                            <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"  value="<?php echo $busin['floor_name']?>" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="user-name" class="am-u-sm-2 am-form-label">铺位号：</label>
+                        <div class="am-u-sm-7">
+                           <!--  <select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value=>输入查找/选择</option>
+                                <option value="01A0">01A0</option>
+                                <option value="037B">037B</option>
+                                <option value="037A">037A</option>
+                                <option value="042B">042B</option>
+                                <option value="038A">038A</option>
+                                <option value="045B">045B</option>
+                                <option value="002">002</option>
+                                <option value="003">003</option>
+                                <option value="005">005</option>
+                            </select> -->
+                            <input type="text" name="door_no" placeholder="例如：1001" value="<?php echo $busin['door_no']?>"  />
+                        </div>
+                       <div class="am-u-sm-3">
+                          <!--  <button type="button" class="am-btn am-btn-success am-btn-xs">
+                                <i class="am-icon-plus"></i> 添加</button> -->
+                       </div>
+                    </div>
+                    <div class="am-form-group am-text-center">
+                        <input type="hidden" name='store_id' value="<?php echo $busin['store_id']?>">
+                        <input type="hidden" name='user_id' value="<?php echo $user['user_id']?>">
+                        <button type="submit" id="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">保存</button>
+                        <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
+                    </div>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    $(document).ready(function(){
+           
+
+
+         $('#firstYetai').change(function(){
+            //根据一级业态的内容来控制二级业态的显示
+            var firstYetai=$('#firstYetai option:selected').val(),str='',sttr='';
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/shop_store_type');?>',
+                data: 'gid='+ firstYetai,
+                success: function(data){ 
+                    var jsonData=eval(data);
+                    $("#secondYetaiSelect").html('<option value="">-=请选择一项=-</option>');
+                    if(jsonData){ 
+                        if(jsonData==2){
+                            // console.log(jsonData);
+                           $('#secondYetai').css('display','none');
+                           $("#secondYetaiSelect").removeAttr("required"); 
+                        } else { 
+                            for(var i=0;i<jsonData.length;i++){
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].type_name + '</option>';
+                                sttr=sttr+str;
+                            }
+                            console.log(sttr);
+                            $('#secondYetai').css('display','block');
+                            $("#secondYetaiSelect").attr("required","required"); 
+                            $("#secondYetaiSelect").append(sttr);
+                        }
+                        
+                    }else{
+                         $('#secondYetai').css('display','none');
+                         $("#secondYetaiSelect").removeAttr("required");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        });
+    });
+
+    //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
+    //点击保存按钮作验证
+    $('#submit').click(function(){
+        if($('#startBusinessTime').val()==""){
+            alert("请选择开业时间！");
+            return false;
+        }else{
+            return true;
+        }
+    });
+
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
+    }
+
+</script>

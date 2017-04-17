@@ -215,6 +215,7 @@ class Shop extends Default_Controller {
              $store = $this->MallShop_model->get_basess_info($id);
              //获取商家登录账户
              $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
+          
              $data['busin'] = $store; 
              //返回所有一级业态
              $data['yetai'] = $this->Shop_model->store_type_level();
@@ -228,50 +229,65 @@ class Shop extends Default_Controller {
     function edit_store_info(){
         if($_POST){
             $data = $this->input->post();
-            $pic = array();
-            $i =1;
-            foreach($_FILES as $file=>$val){
-                if(!empty($_FILES['img'.$i]['name'])){
+            $arr['username'] = trim($this->input->post('username'));
+            $arr['phone'] = trim($this->input->post('username'));
+            $arr['password'] =trim($this->input->post('password'));
+            $arr['user_id'] = $this->input->post('user_id');
+            if(!empty($arr['password'])){
+                $arr['password'] = md5($arr['password']);
+            }else{
+                unset($arr['password']);
+            }
+            unset($data['username'],$data['password'],$data['user_id']);
+            if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
+                echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+            }
+                //修改登录账户
+            if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
+                unset($data['password'],$data['username']);
+
+                if(!empty($_FILES['img1']['name'])){
                     $config['upload_path']      = 'Upload/logo/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
-                    if(!$this->upload->do_upload('img'.$i)) {
+                    if(!$this->upload->do_upload('img1')) {
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
                     }else{
-                        unset($data['img'.$i]);
-                        if($i == 1){
                             $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }else{
-                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }
                     }
-                }else{
-                    if($i == 1){
-                        $data['logo'] = $data['img'.$i];
-                    }else{
-                        $data['pic'] = $data['img'.$i];
-                    }
-                    unset($data['img'.$i]);
                 }
-                $i++;
-             }
-            if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
+                if(!empty($_FILES['img2']['name'])){
+                    $config['upload_path']      = 'Upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img2')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+                    }else{
+                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
+                    }
+                }
+     
+                if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
                      //日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."编辑了一个商家,商家id是".$id.",商家名称是：".$data['store_name'],
+                        "content" => $_SESSION['users']['username']."编辑了一个商家,商家id是".$data['store_id'].",商家名称是：".$data['store_name'],
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
                    echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
                    // echo "23";
-            }else{
-                    echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
-            
+                }else{
+                        echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+                
+                }
             }
         }else{
             $this->load->view('404.html');
@@ -284,31 +300,49 @@ class Shop extends Default_Controller {
     function add_storeInfo(){
         if($_POST){
             $data = $this->input->post();
-            $pic = array();
-            $i =1;
-            foreach($_FILES as $file=>$val){
-                if(!empty($_FILES['img'.$i]['name'])){
+            $arr['username'] = trim($this->input->post('username'));
+            $arr['phone'] = trim($this->input->post('username'));
+            $arr['gid'] = '2';
+            $arr['password'] = md5(trim($this->input->post('password')));
+            $username = $this->Shop_model->get_user_info($arr['username']);
+            if(!empty($username)){
+                    echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
+            }
+            //新增商家用户账号
+           $userid = $this->Shop_model->add_store_member($arr);
+           if(!empty($userid)){
+                $data['business_id'] = $userid;
+                $data['send_userid'] = $this->session->users['user_id'];
+                $data['create_time'] = date('Y-m-d');
+                unset($data['password'],$data['username']);
+
+                if(!empty($_FILES['img1']['name'])){
                     $config['upload_path']      = 'Upload/logo/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
-                    if(!$this->upload->do_upload('img'.$i)) {
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_store')."'</script>";exit;
+                    if(!$this->upload->do_upload('img1')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
                     }else{
-                        unset($data['img'.$i]);
-                        if($i == 1){
                             $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }else{
-                            $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-                        }
                     }
                 }
-                $i++;
-             }
-        
-             if($this->Shop_model->add_store($data)){
+                if(!empty($_FILES['img2']['name'])){
+                    $config['upload_path']      = 'Upload/logo/';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    // 上传
+                    if(!$this->upload->do_upload('img2')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
+                    }else{
+                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
+                    }
+                }
+                 if($this->Shop_model->add_store($data)){
                    //日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
@@ -317,11 +351,15 @@ class Shop extends Default_Controller {
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
-               echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
+                   echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/Shop/marketBusiness')."'</script>";exit;
                // echo "23";
              }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/add_store')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
              }
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
+            }
+           
         }else{
             $this->db->view('404.html');
         }
