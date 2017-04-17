@@ -415,15 +415,23 @@ class ServeForPeople extends Default_Controller
             }
             
         }else{
+            
             $this->load->view('404.html');
         }
     }
 
 	//为民服务  编辑邻水帮帮团
     function edithelpgroup(){
-        $data['page'] = $this->view_edithelpgroup;
-        $data['menu'] = array('serveForPeople','edithelpgroup');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment('4'));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            //获取帮帮团成员信息
+            $data['info'] = $this->Service_model->ret_help_userinfo($id);
+            $data['page'] = $this->view_edithelpgroup;
+            $data['menu'] = array('serveForPeople','1');
+            $this->load->view('template.html',$data);
+        }
     }
     //编辑操作
     function edit_hele_user(){

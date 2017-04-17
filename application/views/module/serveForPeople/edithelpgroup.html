@@ -33,12 +33,21 @@
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <input type="text" placeholder="姓名" class="name" name='name' minlength="2" required="">
+                                <input type="text" placeholder="姓名" class="name" name='name' value="<?php echo $info['name']?>" minlength="2" required="">
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
+                                <?php if(!empty($info['hesdPic'])):?>
+                                <div class="wx_type_img">
+                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview" class="preview">
+                                        <img style="border-radius: 3px;" src="<?php echo $info['headPic'];?>" class="am-img-responsive cardView"> 
+                                      </div>
+                                </div>
+                                <?php else:?>
                                 <div class="wx_type_img">
                                     <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
                                       <!-- 图片实时预览 -->
@@ -46,6 +55,7 @@
                                         <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
                                       </div>
                                 </div>
+                                <?php endif;?>
                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                 <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                             </div>
@@ -53,37 +63,38 @@
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="number" name='age' class="age"  required>
+                                <input type="number" name='age' class="age" value="<?php echo $info['age'];?>"  required>
                             </div>
                         </div>  
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="text" name='sex' class="age"  required>
+                                <input type="text" name='sex' class="age"  value="<?php echo $info['sex'];?>" required>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="text" name='occupation' class="job"  required>
+                                <input type="text" name='occupation' class="job" value="<?php echo $info['occupation'];?>" required>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <input type="tel"  class="phone" name='phone' required>
+                                <input type="tel"  class="phone" name='phone' value="<?php echo $info['phone'];?>" required>
                             </div>
                         </div>            
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
-                            <div class="am-u-sm-9">                     
-                                <input type="text" name='competency' class="content" placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" required />
+                            <div class="am-u-sm-9">      
+                                <?php $res = json_decode($info['competency'],true);$competency = implode('&',$res);?>               
+                                <input type="text" name='competency' class="content"  placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" value="<?php echo $competency;?>" />
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="englishName" class="am-u-sm-3 am-form-label">简介<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <textarea rows="5" cols="40" placeholder="请务必保证填写信息的正确性"> </textarea>
+                                <textarea rows="5" cols="40" placeholder="请务必保证填写信息的正确性"><?php echo $info['age'];?> </textarea>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
@@ -91,13 +102,19 @@
                             <div class="am-u-sm-9">
                                 <select class="am-u-sm-12 state" name="recommend" data-id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
                                     <option >-=请选择一项=-</option>
-                                    <option value="1">是</option>
-                                    <option value="0"  selected="selected">否</option>
+                                    <option value="1" <?php if($info['recommend'] == 1){echo "selected";}?>>是</option>
+                                    <option value="0" <?php if($info['recommend'] == 0){echo "selected";}?>>否</option>
                                 </select>
                             </div>
                         </div>
+                          <div class="am-form-group am-cf">
+                            <label class="am-u-sm-3 am-form-label">所在社区 <span class="red">*</span>：</label>
+                            <div class="am-u-sm-9">
+                                <input type="text"  id="address" name="address"  value="<?php echo $info['address'];?>">
+                            </div>
+                        </div>
                         <div class="am-form-group am-cf">
-                            <label class="am-u-sm-3 am-form-label">所在地区 <span class="red">*</span>：</label>
+                            <label class="am-u-sm-3 am-form-label">详细地址 ：</label>
                             <input type="hidden" name="x_y" id="addressLocation">
                             <div class="am-u-sm-9">
                                 <input type="text"   id="addressInput" >

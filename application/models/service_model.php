@@ -24,6 +24,13 @@ class Service_model extends CI_Model
         $query = $this->db->where($where)->order_by('helper_id','desc')->get($this->service_user);
         return $query->result_array();
     }
+    //根据id返回帮帮团成员信息
+    function ret_help_userinfo($id){
+        $where['helper_id'] = $id;
+        $query = $this->db->where($where)->order_by('helper_id','desc')->get($this->service_user);
+        return $query->row_array();
+    }
+
     //推荐
     function edit_helpuser_state($id,$data){
         $where['helper_id'] = $id;
