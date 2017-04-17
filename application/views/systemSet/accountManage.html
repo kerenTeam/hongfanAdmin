@@ -246,6 +246,7 @@ var flag=1,tag=1,str='';
                         $(".deleteImg").click(function(){
                             $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
                             $(this).siblings('.wx_type_img').find('input').val("");
+                            $(this).siblings('.wx_type_img').find('input').files = "";
                         });
                         //上传头像
                         for(var i=0;i<$('.imgUp').length;i++){   
