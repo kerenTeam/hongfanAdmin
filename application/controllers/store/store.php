@@ -9,6 +9,8 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 class Store extends Default_Controller {
     //商品列表
     public $view_storeGoodsList = "store/storeGoodsList.html";
+    //自营商品列表
+    public $view_sinceGoods = "moll/sinceGoods.html";
     //商品分类
     public $view_storeGoodsSort = 'store/storeGoodsSort.html';
     //模块设置
@@ -61,7 +63,7 @@ class Store extends Default_Controller {
                 //特价商品
                  $goods_list = $this->MallShop_model->get_specials_goods();
             }else{
-                $goods_list = $this->MallShop_model->get_goodslist();
+                $goods_list = $this->MallShop_model->get_goodslist('4');
             }
             if(empty($goods_list)){
                 echo "2";
@@ -696,8 +698,25 @@ class Store extends Default_Controller {
             echo "2";
         }
      }
+     //自营商品列表
+     function sinceGoods(){
+         $data['page'] = $this->view_sinceGoods;
+         $data['menu'] = array('moll','sinceGoods');
+         $this->load->view('template.html',$data);
+     }
 
-
-
+     //返回自用商品列表
+     function get_since_goods(){
+         if($_POST){
+            $goods_list  = $this->MallShop_model->get_goodslist('1');
+            if(!empty($goods_list)){
+                echo json_encode($goods_list);
+            }else{
+                echo "3";
+            }
+         }else{
+             echo "2";
+         }
+     }
 }
 

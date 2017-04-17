@@ -1,0 +1,176 @@
+
+<style type="text/css">
+#preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        height:190px;
+    }
+
+   .deleteImg{
+        display: inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:1px solid #ddd;
+    }
+     .deleteImg:hover{
+        cursor: pointer;
+     }
+    small{
+        font-size: 1.2rem;
+    }
+
+    .relative{
+        position:relative;
+    }
+    .absolute{
+        width:130px;
+        border:1px solid #d84c29;
+        color:#d84c29;
+        position:absolute;
+        top:35%;
+        left:10%;
+        z-index: 5;
+        font-size:12px;
+        display:none;
+    }
+    .am-icon-info-circle{
+        color:#1fb5ac;
+    }
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商场管理 &nbsp;&nbsp;<a style="font-size:16px;" href="<?php echo site_url().'/moll/moll/mollyetaiList';?>">业态配置</a>
+            <small><a href="<?php echo site_url().'/moll/moll/mollEditYetai';?>">编辑业态</a></small>
+            
+            </div>
+            
+    </div>
+</div>
+        </div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/moll/moll/edit_storeYetai');?>" method="post" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">编辑业态</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                             <div class="am-form-group relative">
+                                <label for="oneType" >父业态 <span class="red">*</span>：</label>
+                                <select id="oneType" required onchange="confirmSelect()" name='gid'>
+                                    <option value="">-=请选择一项=-</option>
+                                    <option value="0" <?php if($storeInfo['gid'] == "0"){echo "selected";}?>>--</option>
+                                    <?php foreach($store as $val):?>
+                                    <option value="<?php echo $val['id'];?>" <?php if($val['id'] == $storeInfo['gid']){echo "selected";}?>><?php echo $val['type_name'];?></option>
+                                    <?php endforeach;?>
+
+                                </select>
+                                <!-- <span class="absolute">父业态新增后不能修改</span> -->
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">业态名称：<span class="red">*</span>：</label>
+                                 <input type="text" name="type_name" maxlength="15" value="<?php echo $storeInfo['type_name'];?>" required />
+                            </div>
+                            <div class="am-form-group ">
+                                <label for="user-weibo" class="am-form-label">ICON：</label>
+                                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <div class="wx_type_img">
+                                         <input type="file" id="imgUpload" name="icon" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+                                          <!-- 图片实时预览 -->
+                                          <?php if(empty($storeInfo['icon'])):?>
+                                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <?php else:?>
+                                            <input type="hidden" name="icon" value="<?php echo $storeInfo['icon'];?>">
+                                            <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $storeInfo['icon'];?>" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
+                                          <br />
+                                    </div>
+                                    <div class="am-text-center father">
+                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                        <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                    </div>
+                                </div> 
+                            </div>
+                            
+                            <div class="am-form-group">
+                                <label for="englishName">颜色：<span class="red">*</span>：</label>
+                                 <input type="color" name="icon_color" value="<?php echo $storeInfo['icon_color'];?>" required />
+                            </div>
+                            <div class="am-form-group">
+                                <label for="englishName">显示顺序<span class="red">*</span>：</label>
+                                 <input type="number" name="sort" value="<?php echo $storeInfo['sort'];?>" required />
+                            </div>
+                          
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                        <input type="hidden" name="id" value="<?php echo $storeInfo['id'];?>">
+                        <button class="am-btn am-btn-default" id="cancle" type="reset">取消</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+    //显示提示信息
+    $(".am-form-group label span.am-icon-info-circle").hover(function(){
+        $(".absolute").fadeIn('1000');
+    },function(){
+        $(".absolute").fadeOut('1000');
+    });
+
+        //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').attr('value','');
+        
+    });
+  });
+
+
+</script>

@@ -65,6 +65,7 @@ class SystemSet extends Default_Controller {
     //系统设置 引导图广告管理
     function guideImageManage()
     {
+        
          $data['page'] = $this->view_guideImage;
          $data['menu'] = array('systemSet','guideImageManage');
          $this->load->view('template.html',$data);
