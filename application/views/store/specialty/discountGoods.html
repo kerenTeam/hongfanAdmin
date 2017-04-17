@@ -261,23 +261,6 @@
             go_to_page(new_page);
         }
     }
-    //
-    $('#add_sales').click(function(){
-        var array=[];
-        for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
-            
-            array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-        }
-        // console.log(array);
-        if(array == ''){
-            alert('你还没有选择商品！');
-            return false;
-        }else{
-            goodsid=JSON.stringify(array);
-            $("#goodsid").val(goodsid);
-
-        }
-    });
 
     if($('.goodsSelect').val()=="1"){
         $('.goodsSelect').css({'background':'#15b5ac','border':'1px solid #15b5ac'});
@@ -437,7 +420,7 @@
                     
                 }else{
                     $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
                     $('.pagebox').css('display', 'none');
                 }
 
@@ -446,7 +429,7 @@
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
         });

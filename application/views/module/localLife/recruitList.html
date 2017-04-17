@@ -345,8 +345,8 @@ function otherOperation() {
         var dataId = $(this).attr("data-id");
         $.ajax({
             type:'post',
-            url: "<?php echo site_url('/find/Find/del_find_cates');?>",
-            data: 'cate_id='+ dataId,
+            url: "<?php echo site_url('/module/LocalLife/del_recruit');?>",
+            data: 'id='+ dataId,
             success: function(result){         
                 var res = eval(result);
                 if(res == 1){
@@ -455,7 +455,7 @@ $(document).ready(function(){
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/find/Find/search_find_cates');?>','search='+keywords);
+        getList("<?php echo site_url('/module/LocalLife/ret_recruit_list');?>",'default=1');
     });
 })
 </script>

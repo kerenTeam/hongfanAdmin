@@ -106,14 +106,14 @@ td.am-text-middle img {
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="tablecheck"><input type="checkbox"></th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="moll_name">求助人姓名 </th>
-                                    <th class="moll_name">求助内容 </th>
-                                    <th class="shop_id">求助时间</th>
-                                    <th class="shop_id">联系方式</th>
-                                    <th class="moll_name">求助对象</th>
-                                    <th class="shop_id">服务状态</th>
+                                    <th class="tablecheck"><input type="checkbox">全选</th>
+                                    <th>编号 </th>
+                                    <th>求助人姓名 </th>
+                                    <th>求助内容 </th>
+                                    <th>求助时间</th>
+                                    <th>联系方式</th>
+                                    <th>求助对象</th>
+                                    <th>服务状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -209,7 +209,7 @@ function next(argu){
 }
 function otherOperation() {
     //点击选中所有
-     $('.tablecheck').click(function() {
+    $('.tablecheck').click(function() {
         if(flag==0){
           for(var i=0;i<$('.commentBox').length;i++) {
             document.getElementsByClassName('commentBox')[i].checked=true;
