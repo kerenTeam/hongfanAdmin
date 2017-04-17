@@ -124,8 +124,7 @@
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                     </div>
                                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <small class="red">广告缩略图的要求如下：左图需保证图片的长宽比为1:1；由上图和右下图需保证图片的长宽比为2:1 ；图片格式支持：PNG、JPG、JPEG，最大支持2M；
-                                   </small> 
+                                    <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                                 </div>
                             </div>
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -170,12 +169,11 @@ function validate(obj,minlen,maxlen,i){
         $('.blacktips'+ i).css('display','inline-block');
     }
 }
-    //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        
-    });
+//删除图片
+$(".deleteImg").click(function(){      
+    $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).prevUntil('.preview').find('input').val("");
+});
 
 //点击取消返回上一页
   $('#cancle').click(function(){

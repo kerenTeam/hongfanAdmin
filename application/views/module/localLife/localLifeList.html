@@ -226,8 +226,9 @@
                                                                   
                                                                     <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo  $icon[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                                                     <?php endif;?>
-                                                                  <div class="am-text-xs">点击选择图片</div>
                                                                 </div>
+                                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                                <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
                                                             </div>
 
                                                       </div>
@@ -272,4 +273,11 @@
     </div>
 </div>
 </div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){      
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).prevUntil('.preview').find('input').val("");
+    });
+</script>
 

@@ -192,8 +192,8 @@ body.view{
                           <!-- 图片实时预览 -->
                           <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                         </div>
-                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                        <small>提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                        <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
+                        <small class="tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                     </div>
                 </div>
                 <div class="am-form-group am-btn-group-xs">
@@ -206,3 +206,11 @@ body.view{
 </div>
 <!-- 为民服务 义工团队活动 结束 -->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){      
+        $(this).prevUntil('#preview').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).prevUntil('#preview').find('input').val("");
+        $(this).prevUntil('#preview').find('input').files="";
+    });
+</script>

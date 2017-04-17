@@ -39,6 +39,7 @@
                                       </div>
                                 </div>
                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
@@ -109,7 +110,7 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
- //点击进行运费设置
+ //点击进行运费设置 
 $('#postage').click(function(){
     $('.postageNumber').css('display','block');
 
@@ -118,11 +119,10 @@ $('#postage').click(function(){
 $('#dispostage').click(function(){
     $('.postageNumber').css('display','none');
 });
- //删除图片
+//删除图片
 $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).siblings('.wx_type_img').find('input').val("");
-    $(this).siblings('.wx_type_img').find('input').files="";
+    $(this).siblings('.wx_type_img').find('input').eq(0).val("");
 });
 
 
