@@ -98,9 +98,9 @@ padding: 5px 6px!important;
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
                      <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
                         <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                            <input type="text" name='sear' class="am-form-field" placeholder="名称/联系人/联系号码" required>
+                            <input type="text" name='sear' class="am-form-field" placeholder="标题/联系人" required id="searchKey">
                             <span class="am-input-group-btn">
-                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"></button>
+                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search searchSort" type="button"></button>
                             </span>
                           
                         </div>
@@ -371,34 +371,7 @@ function otherOperation() {
             $('.isRecommand').css({'background':' #e0690c','border':'1px solid #e0690c'});
         }
     }
-    //设置本地生活推荐
-    $('.isRecommand').change(function(){
-        var dataId=$(this).attr('data-id'), banner_state;
-        if($(this).find('option:selected').val() == "1") {
-            banner_state = 1;
-            $(this).css({'background':'#4db14d','border':'1px solid #4db14d'}); 
-        } else {
-            banner_state = 0;
-            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
-        }
-        // $.ajax({
-        //     type:'post',
-        //     url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-        //     data: 'goodsid='+ dataId+'&state='+ banner_state,
-        //     success: function(data){
-        //         if(data==1){
 
-        //         }else{
-        //             alert("操作失败！");
-        //         }
-                
-        //     },
-        //     error:function(xhr,type,errorThrown){
-        //         alert("操作失败，请检查网络设置！");
-        //     }
-        // });
-        
-    });
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -408,7 +381,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(res);
+            console.log(result);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -435,7 +408,7 @@ function getList(dataurl,data){
                 otherOperation();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关招聘信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -444,7 +417,7 @@ function getList(dataurl,data){
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
             $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关招聘信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
         }
     });
@@ -455,7 +428,8 @@ $(document).ready(function(){
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
-        getList("<?php echo site_url('/module/LocalLife/ret_recruit_list');?>",'default=1');
+
+        getList("<?php echo site_url('/module/LocalLife/search_recruit');?>",'sear='+ keywords);
     });
 })
 </script>

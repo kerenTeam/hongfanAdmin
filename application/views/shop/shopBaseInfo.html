@@ -171,10 +171,8 @@
                                   <?php endif;?>
                                   <br />
                              </div>
-                             <div class="am-text-center father">
-                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                              </div>   
+                             <span class="deleteImg am-text-center">删除</span> 
+                             <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span> 
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -190,12 +188,9 @@
                                      <input type="hidden" name="img2" value="<?php echo $busin['pic']?>">
                                   <?php endif;?>
                                   <br>
-                                  </div>
-
-                             <div class="am-text-center father">
-                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                  <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
-                              </div> 
+                            </div>
+                            <span class="deleteImg am-text-center">删除</span> 
+                            <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>
                         </div> 
                     </div>
                     <!-- <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -358,13 +353,18 @@
             }   
         }
         
-        console.log(manjianRule);
+        // console.log(manjianRule);
         manjianRule=JSON.stringify(manjianRule);
         $('#reduction_rule').val(manjianRule);
 
         return true;
     });
-
+    //删除图片
+    $(".deleteImg").click(function(){
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').val("");
+        $(this).siblings('.wx_type_img').find('input').files="";
+    });
     //表单验证函数
     function validate(obj,minlen,maxlen,i){
         var content=obj.value;

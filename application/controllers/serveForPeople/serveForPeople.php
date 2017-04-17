@@ -422,7 +422,7 @@ class ServeForPeople extends Default_Controller
 	//为民服务  编辑邻水帮帮团
     function edithelpgroup(){
         $data['page'] = $this->view_edithelpgroup;
-        $data['menu'] = array('serveForPeople','1');
+        $data['menu'] = array('serveForPeople','edithelpgroup');
         $this->load->view('template.html',$data);
     }
     //编辑操作

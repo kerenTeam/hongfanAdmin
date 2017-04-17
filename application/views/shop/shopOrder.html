@@ -81,14 +81,23 @@ td.am-text-middle img{
                             <input type="text" id="buyer" name="username" />
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-4 am-u-end">
-                        <label for="businessTime" class="am-form-label am-u-sm-3">下单时间:</label>
-                       <div class="am-u-sm-9 am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                          <input type="text" name='date' id="orderDate" class="am-form-field am-inline" placeholder="" style="width:80%;" readonly>
-                          <span class="am-input-group-btn am-datepicker-add-on am-inline">
-                            <button class="am-btn am-btn-secondary" type="button"><span class="am-icon-calendar"></span> </button>
-                          </span>   
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-4">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
                         </div>
+                        
                     </div>
                     <input type="hidden" name="storeid" value="<?php echo $storeid;?>">
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
@@ -350,7 +359,7 @@ $(document).ready(function(){
     // });
     //点击搜索
     $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(),orderDate=$('#orderDate').val();
+        var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
         if((startMoney=="" && endMoney!="") || (startMoney!="" && endMoney=="") ){
             alert("交易总额必须是一个范围！");
             return false;

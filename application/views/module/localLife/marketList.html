@@ -28,7 +28,7 @@ padding: 5px 6px!important;
         margin-left: 100px;
     }
 
- .preview{
+    .preview{
         height:170px !important;
     }
     .preview #imghead,#preview img{
@@ -320,13 +320,12 @@ padding: 5px 6px!important;
               flag=1;
             }else{
                for(var i=0;i<$('.commentBox').length;i++) {
-                // $('.commentBox').eq(i).attr('checked',false);
                 document.getElementsByClassName('commentBox')[i].checked=false;
                 }
                flag=0;
             }
         });
-        //多个帮帮服务删除
+        //多个超市比价删除
         $('.deleteAll').click(function(){
             var deleteId=$(this).attr('data-id');
             var array=[];
@@ -336,7 +335,7 @@ padding: 5px 6px!important;
             array=JSON.stringify(array);
             $.ajax({
                 type:'post',
-                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
+                url:'<?php echo site_url('/module/LocalLife/batch_del_market');?>',
                 data: 'id='+array,
                 success: function(data){
                     if(data==1){
