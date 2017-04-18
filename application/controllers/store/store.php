@@ -527,6 +527,19 @@ class Store extends Default_Controller {
          $data['menu'] = array('moll','storeGoodsSales');
          $this->load->view('template.html',$data);
      }
+     //删除展销
+     function del_Sales(){
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            if($this->MallShop_model->del_Sales($id)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
+            }
+        }
+     }
      // 删除展销某个活动的产品
      function del_sales_goods(){
         if($_POST){
@@ -611,22 +624,19 @@ class Store extends Default_Controller {
             $data['picImg'] = json_encode($img);
             $data['type'] = '1';
             if($this->MallShop_model->add_sales($data)){
-                 if($this->MallShop_model->edit_salse($id,$data)){
-                           $log = array(
+                    $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
                         "content" => $_SESSION['users']['username']."新增了一个展销信息，展销名称是：".$data['title'],
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
+
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
             }
-        }else{
-            echo '2';
-        }
-     }
+       }
     }
 
     //展销图片修改
@@ -711,8 +721,14 @@ class Store extends Default_Controller {
      //自营商品列表
      function sinceGoods(){
         //获取商品分类
-        
-    $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
+           $id = intval($this->uri->segment(4));
+        // var_dump($id);
+        if($id == 0){
+            $data['saleid'] ='';
+        }else{
+            $data['saleid'] = $id;
+        }
+         $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
          $data['page'] = $this->view_sinceGoods;
          $data['menu'] = array('moll','sinceGoods');
          $this->load->view('template.html',$data);

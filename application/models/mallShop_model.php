@@ -331,6 +331,12 @@ class MallShop_model extends CI_Model
         return $query->result_array();
     }
 
+    //删除展销
+    function del_Sales($id){
+        $where['id'] = $id;
+        return $this->db->where($where)->delete($this->store_goods);
+    }
+
     //获取展销商品信息
     function get_goods_title($id){
         $where['goods_id'] = $id;

@@ -65,8 +65,8 @@ h4.am-panel-title{
                                             <div class="am-form-group">
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
-                                                        <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/store/Store/storeGoodsList/'.$val['id']);?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                                        <button type="button" class="am-btn am-btn-default am-btn-warning" id="deleteSales"><a ><span class="am-icon-trash"></span> 删除展销</a></button>
+                                                        <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/store/Store/sinceGoods/'.$val['id']);?>"><span class="am-icon-plus"></span> 新增展示商品</a></button>
+                                                        <a href="<?php echo site_url('/store/Store/del_Sales/'.$val['id']);?>" class="am-btn am-btn-default am-btn-warning" ><span class="am-icon-trash"></span> 删除展销</a>
                                                         <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                     </div>
                                                 </div>
@@ -100,6 +100,7 @@ h4.am-panel-title{
                                                         </td>
                                                     </tr>
                                                     <?php foreach($val['goods'] as $v):?>
+                                                        <?php if(!empty($v)):?>
                                                     <tr class="trClass<?php echo $v['goods_id'];?>" data-id="<?php echo $v['goods_id'];?>">
                                                         <td class="am-text-middle"><?php echo $v['goods_id'];?></td>
                                                         <td class="am-text-middle"><?php echo $v['title'];?></td>
@@ -124,6 +125,7 @@ h4.am-panel-title{
                                                 </div>
                                             </div>
                                         </div>
+                                        <?php endif;?>
                                                     <?php endforeach;?>
                                                     <!-- more data -->
                                                 </tbody>
@@ -275,28 +277,5 @@ function findPreview(parent) {
         }
     });
  });
-  //删除展销
-  $('#deleteSales').click(function () {
-    var salesId=$(this).attr('data-id');
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('store/Store/del_sales_goods')?>',
-        data: 'id='+ id +'&goodsid='+goodsId,
-        success: function(data){
-            if(data==1){
-                alert('成功');
-                $('.trClass'+goodsId).remove();
-    
-            }else{
-                alert("操作失败！");
-                return false;
-            }
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-    $(this).parent('#first'+ salesId).remove();
-  })
+
 </script>

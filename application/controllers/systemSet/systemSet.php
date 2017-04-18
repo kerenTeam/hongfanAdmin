@@ -65,10 +65,54 @@ class SystemSet extends Default_Controller {
     //系统设置 引导图广告管理
     function guideImageManage()
     {
-        
-         $data['page'] = $this->view_guideImage;
-         $data['menu'] = array('systemSet','adverManage');
-         $this->load->view('template.html',$data);
+        //返回启动图广告
+        $adver = $this->System_model->get_start_advertising();
+        $data['adver'] = json_decode($adver['banner'],true);
+        $data['id'] = $adver['id'];
+        $data['page'] = $this->view_guideImage;
+        $data['menu'] = array('systemSet','adverManage');
+        $this->load->view('template.html',$data);
+    }
+    //修改 引导图广告
+    function edit_advertising(){
+        if($_POST){
+            $id = $this->input->post('id');
+            //$pic =array();
+            $i ='0';
+            $a ='1';
+            foreach($_FILES as $val){
+                if(!empty($_FILES['img'.$a]['tmp_name'])){
+                    $config['upload_path']      = 'Upload/banner';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['max_size']     = 2048;
+                    $config['file_name'] = date('Y-m-d_His');
+                    $this->load->library('upload', $config);
+                    //上传
+                    if ( ! $this->upload->do_upload('img'.$a)) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage/')."'</script>";
+                        exit;
+                    } else{
+                        $pic[$i]['id'] =$a;
+                        $pic[$i]['pic'] = '/Upload/banner/'.$this->upload->data('file_name');
+                    }
+                }else{
+                    $pic[$i]['id'] =$a;
+                    $pic[$i]['pic']  = $_POST['img'.$a];
+                    
+                }
+                $i++;
+                $a++;
+            }
+            $data['banner'] = json_encode($pic);
+            //var_dump(json_encode($pic));
+            if($this->System_model->edit_banner($id,$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
+            }
+        }else{
+            $this->load->view('404.html');
+        }
     }
 
     //系统设置  HI集头条管理
@@ -174,7 +218,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = 'Upload/headPic/'.$this->upload->data('file_name');
                 }
             }
             $data['nickname'] = trim($_POST['nickname']);
@@ -545,22 +589,13 @@ class SystemSet extends Default_Controller {
 
      //banner列表
     function bannerList(){
-        //获去首页banner
-        // $data['homebanner'] = $this->System_model->get_bannerlist('Index');
-        // //获取超市比价banner
-        // $data['supermarketBanner'] = $this->System_model->get_bannerlist('Supermarket');
-        // //获取为民服务banner
-        // $data['serviceBanner'] = $this->System_model->get_bannerlist('Service'); 
-        // //获取商城banner
-        // $data['mallBanner'] = $this->System_model->get_bannerlist('Mall');
-       
+
         $data['banners'] = $this->System_model->get_bannerlist();
-
-
         $data['page'] = $this->view_bannerList;
         $data['menu'] = array('systemSet','bannerList');
         $this->load->view('template.html',$data);
     }
+    
     //新增banner
     function addBanner(){
         $id = intval($this->uri->segment(4));
@@ -906,6 +941,10 @@ class SystemSet extends Default_Controller {
             echo "2";
         }
     }
+
+
+
+
 
 }
 

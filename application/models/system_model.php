@@ -62,8 +62,13 @@ class System_model extends CI_Model
     }
     //返回所有banner
     function get_bannerlist(){
-        $query = $this->db->get($this->banner);
+        $query = $this->db->where('type !=','12')->get($this->banner);
         return $query->result_array();
+    }
+     //返回启动广告
+    function get_start_advertising(){
+        $query = $this->db->where('type','12')->get($this->banner);
+        return $query->row_array();
     }
     //根据id返回banner数据
     function get_banner($id){

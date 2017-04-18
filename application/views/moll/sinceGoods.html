@@ -341,6 +341,36 @@
 
         }
     });
+
+     $('#add_sales_goods').click(function(){
+        var array=[];
+        for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+            
+            array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+        }
+        if(array == ''){
+            alert('你还没有选择商品！');
+        }else{
+            goodsid=JSON.stringify(array);
+          //  console.log(goodsid);
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/add_sales_goods');?>',
+                data: 'goodsid='+goodsid+'&id='+'<?php echo $saleid;?>',
+                success: function(data){
+                    if(data==1){
+                        alert('加入成功');
+                       window.location.href='<?php echo site_url("/store/Store/storeGoodsSales");?>';
+                    }else{
+                        alert("操作失败！");
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        }
+    });
    
 
     if($('.goodsSelect').val()=="0"){
