@@ -106,7 +106,7 @@
                                 <label class="am-u-sm-2 am-text-right">图1：</label>
                                  <div class="am-u-sm-10 am-u-end">
                                     <div class="wx_type_img">
-                                      <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field">
                                       <!-- 图片实时预览 -->
                                       <input type="hidden" name="pic" value="">
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
@@ -120,7 +120,7 @@
                                 <label class="am-u-sm-2 am-text-right">图2：</label>
                                  <div class="am-u-sm-10 am-u-end">
                                     <div class="wx_type_img">
-                                      <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add am-form-field">
                                       <!-- 图片实时预览 -->
                                       <input type="hidden" name="pic" value="">
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
@@ -134,7 +134,7 @@
                                 <label class="am-u-sm-2 am-text-right">图3：</label>
                                  <div class="am-u-sm-10 am-u-end">
                                     <div class="wx_type_img">
-                                      <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add am-form-field">
                                       <!-- 图片实时预览 -->
                                       <input type="hidden" name="pic" value="">
                                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
@@ -149,7 +149,7 @@
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
                         <input type="hidden" name="id" value="" />
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >保存</button>
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="button" id="sureSave" >保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>
 
@@ -175,12 +175,37 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
+  var i = $('.wx_type_img').length + 1;
   //增加引导图
   $('#addMoreImages').click(function () {
-    var i
-    $('#imagesBox').append($('<div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4"> <label class="am-u-sm-2 am-text-right">图'+ i +'：</label><div class="am-u-sm-10 am-u-end"><div class="wx_type_img"><input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"><input type="hidden" name="pic" value=""> <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div></div><span class="deleteImg" onclick="deleteImg(this)"><i class="am-icon-trash"></i> 删除</span> <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb； </small> </div></div>'));
+    
+    $('#imagesBox').append($('<div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end"> <label class="am-u-sm-2 am-text-right">图'+ i +'：</label><div class="am-u-sm-10 am-u-end"><div class="wx_type_img"><input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"><input type="hidden" name="pic" value=""> <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div></div><span class="deleteImg" onclick="deleteImg(this)"><i class="am-icon-trash"></i> 删除</span> <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb； </small> </div></div>'));
     i++;
-  })
+  });
+  $(document).ready(function () {
+    // $('#sureSave').click(function(){
+    //     var formD = new FormData(),FileController="<?php echo site_url('/systemSet/SystemSet/edit_admin_user');?>";//上传文件的后台地址;
+    //     var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
+    //     formD.append('picArray',picArray[0]);
+    //     console.log(picArray);
+    //      //实例化XMLHttpRequest对象
+    //     var xhr=new XMLHttpRequest();
+    //     xhr.open('post',FileController,true);
+    //     xhr.send(formD);
+    //     xhr.onreadystatechange = function(data){
+    //         console.log(data);
+    //         if (xhr.readyState===4) {  
+    //             if (xhr.status===200) {
+    //                  alert("保存成功！");
+    //                 $('#ed'+dataId).modal('close');
+    //                 // console.log(xhr.responseText)
+    //                 getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+    //             }
+    //         }
+    //     }  
+    // });
+  });
+    
 
 </script>
 </body>

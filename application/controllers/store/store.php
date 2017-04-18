@@ -31,6 +31,8 @@ class Store extends Default_Controller {
     public $view_storeOrderDetail = "store/storeOrderDetail.html";
     //主题展销商品管理
     public $view_storeGoodsSales = "store/storeGoodsSales.html";
+    //特色馆 HOT推荐管理
+    public $view_storeHotRecommand = "store/storeHotRecommand.html";
 
     function __construct()
     {
@@ -50,6 +52,12 @@ class Store extends Default_Controller {
         $data['page'] = $this->view_storeGoodsList;
         $data['menu'] = array('store','storeGoodsList');
         $this->load->view('template.html',$data);
+    }
+     ////特色馆  HOT推荐管理
+    function storeHotRecommand(){
+         $data['page'] = $this->view_storeHotRecommand;
+         $data['menu'] = array('moll','storeHotRecommand');
+         $this->load->view('template.html',$data);
     }
     //返回商品列表
     function storeGoods_page(){

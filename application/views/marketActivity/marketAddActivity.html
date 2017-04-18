@@ -160,7 +160,7 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="store_name" style="display: none">
                                         <label class="am-u-sm-3 am-text-right">商家名称<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
-                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称" required="required" name="store_name" />
+                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称"  name="store_name" />
                                         </div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -218,10 +218,8 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
     //删除图片
     $(".deleteImg").click(function(){
@@ -238,7 +236,6 @@
   });
 
      //实例化编辑器
-    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
     var ue = UE.getEditor('editor');
     $(document).ready(function(){
         var startDate = new Date(2014, 11, 20);
