@@ -1,0 +1,249 @@
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+color: #333;
+}
+ #preview{
+        height:150px !important;
+    }
+    #preview #imghead,#preview img{
+     height:140px !important;
+    }
+.theme-white .tpl-user-card {
+    /* border: 1px solid #3598dc; */
+    border-top: 2px solid #fff;
+    background: #f1f1f1;
+    color: #ffffff;
+    /* border-radius: 4px; */
+}
+
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
+}
+.theme-white .widget-water {
+        padding: 12px 17px;
+        border: 1px solid #77bde2;
+        border-top: 2px solid #77bde2;
+        background: #77bde2;
+        color: #ffffff;
+        min-height: 174px;
+    }
+.theme-white .tpl-form-line-form .am-form-label,.theme-white .widget {
+    color: #333;
+}
+.widget-body {
+    background: #fff;
+}
+.theme-white .tpl-user-card-title {
+    margin-top: 0;
+    color: #333;
+}
+.width{
+    width: 500px;
+}
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商场管理
+            <a href="<?php echo site_url().'/shop/shop/findshop';?>" style="font-size: 18px;">推荐列表
+            </a>  
+            <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">推荐列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <div class="am-panel-group" id="accordion">
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">             
+                                    <h4 class="am-panel-title" data-am-collapse="">
+                                        特色馆 HOT推荐<span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                    </h4>
+                                </div>                              
+                                <div id="first" class="am-panel-collapse am-collapse am-in">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href=""><span class="am-icon-plus"></span> 加入推荐商品</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                            <thead>
+                                                 <tr>
+                                                    <th width="600">HOT推荐详情 </th>
+                                                    <th>商铺编号 </th>
+                                                    <th>商场名称 </th>
+                                                    <th>商铺品牌 </th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="trClass" >
+                                                    <td class="am-text-middle width" rowspan="5">
+                                                        <div class="tpl-user-card am-text-center">
+                                                            <div class="tpl-user-card-title">
+                                                                HOT推荐详情
+                                                            </div>
+                                                            <div class="tpl-user-card-body">
+                                                            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/shop/Shop/edit_find_info');?>" method='post' >
+                                                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+                                                                        <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
+                                                                        <div class="am-u-sm-9 am-u-end">
+                                                                            <input type="text" name="title" class="tpl-form-input" value="" id="limit-name" placeholder="请输入权限名,2-30字以内" minlength="2" maxlength="30" required onblur="validate(this)" />
+                                                                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
+                                                                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="am-form-group am-cf">
+                                                                        <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
+                                                                        <div class="am-u-sm-9 am-u-end">
+                                                                            <div class="wx_type_img">
+                                                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                                                                              <!-- 图片实时预览 -->
+                                                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                                            </div>
+                                                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                                                            <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="am-form-group am-cf">
+                                                                        <label class="am-u-sm-2 am-form-label">详情 ：</label>
+                                                                        <div class="am-u-sm-10 am-u-end">
+                                                                          <div id="editorContent">
+                                                                            <script id="editor" type="text/plain" name='content'></script>
+                                                                          </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="am-form-group am-btn-group-xs">
+                                                                        <button type="reset" class="am-btn am-btn-default">取消</button>
+                                                                        <input type="hidden" name="id" value="<?php echo $val['id'];?>">
+                                                                        <button type="submit" class="am-btn am-btn-primary">保存</button>
+                                                                    </div>
+                                                                </form> 
+                                                            </div>   
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="trClass" >
+                                                    <td class="am-text-middle">1</td>
+                                                    <td class="am-text-middle">代发货合计</td>
+                                                    <td class="am-text-middle">对方更好地</td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                            <a data-id="" class="tpl-table-black-operation-del tpl-del" data-am-modal="{target:'#find'}" >
+                                                                <i class="am-icon-trash"></i>移除该商家
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                               	<div class="am-modal am-modal-confirm" tabindex="-1" id="find">
+                                                    <div class="am-modal-dialog">
+                                                        <div class="am-modal-hd">删除提示</div>
+                                                        <div class="am-modal-bd">
+                                                            <p class="black">你，确定要删除这条记录吗？</p>
+                                                        </div>
+                                                        <div class="am-modal-footer">
+                                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                                            <span class="am-modal-btn sureDelete" name="" data-id="" data-am-modal-confirm>确定</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+//表单验证函数
+function validate(obj){
+    var content=obj.value;
+    if(content.length<2 || content.length>10){
+        $('.blacktips').css('display','none');
+        $('.redtips').css('display','block');
+    }else{
+        $('.redtips').css('display','none');
+        $('.blacktips').css('display','block');
+    }
+}
+
+ //实例化编辑器
+var ue4 = UE.getEditor('editor');
+//删除图片
+$(".deleteImg").click(function(){      
+    $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).prevUntil('.preview').find('input').val(" ");
+    $(this).prevUntil('.preview').find('input').files="";
+});
+
+//点击保存按钮作验证
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+});
+  //删除商品的AJAX请求
+    $('.sureDelete').click(function(){
+        var storeid=$(this).attr('data-id'),id=$(this).attr('name');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/Shop/del_find_store')?>',
+                data: 'id='+ id +'&storeid='+storeid,
+                success: function(data){
+                    if(data==1){
+                        alert('成功');
+                        $('.trClass'+id+storeid).remove();
+            
+                    }else{
+                        alert("操作失败！");
+                        return false;
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+    });
+$(document).ready(function(){
+    //加载列表数数据
+    // getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+    //刷新页面
+    // $('.refresh').click(function(){
+    //     getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
+    // });
+});
+</script>
+

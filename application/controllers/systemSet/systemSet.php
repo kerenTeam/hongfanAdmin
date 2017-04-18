@@ -67,7 +67,7 @@ class SystemSet extends Default_Controller {
     {
         
          $data['page'] = $this->view_guideImage;
-         $data['menu'] = array('systemSet','guideImageManage');
+         $data['menu'] = array('systemSet','adverManage');
          $this->load->view('template.html',$data);
     }
 

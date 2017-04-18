@@ -289,32 +289,32 @@ var flag=1,tag=1,str='';
                             //保存管理员账号信息
                             for(var i=0;i<$('.sureSave').length;i++){
                                 $('.sureSave').eq(i).click(function(){
-                                var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/SystemSet/edit_admin_user');?>";//上传文件的后台地址;
-                                var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
+                                    var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/SystemSet/edit_admin_user');?>";//上传文件的后台地址;
+                                    var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
 
-                                formD.append('user_id',dataId);
-                                formD.append('username',name);
-                                formD.append('nickname',nickname);
-                                formD.append('password',password);
-                                formD.append('group_name',group_name);
-                                formD.append('picArray',picArray[0]);
-                                console.log(picArray);
-                                 //实例化XMLHttpRequest对象
-                                var xhr=new XMLHttpRequest();
-                                xhr.open('post',FileController,true);
-                                xhr.send(formD);
-                                xhr.onreadystatechange = function(data){
-                                    console.log(data);
-                                    if (xhr.readyState===4) {  
-                                        if (xhr.status===200) {
-                                             alert("保存成功！");
-                                            $('#ed'+dataId).modal('close');
-                                            // console.log(xhr.responseText)
-                                            getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+                                    formD.append('user_id',dataId);
+                                    formD.append('username',name);
+                                    formD.append('nickname',nickname);
+                                    formD.append('password',password);
+                                    formD.append('group_name',group_name);
+                                    formD.append('picArray',picArray[0]);
+                                    console.log(picArray);
+                                     //实例化XMLHttpRequest对象
+                                    var xhr=new XMLHttpRequest();
+                                    xhr.open('post',FileController,true);
+                                    xhr.send(formD);
+                                    xhr.onreadystatechange = function(data){
+                                        console.log(data);
+                                        if (xhr.readyState===4) {  
+                                            if (xhr.status===200) {
+                                                 alert("保存成功！");
+                                                $('#ed'+dataId).modal('close');
+                                                // console.log(xhr.responseText)
+                                                getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+                                            }
                                         }
-                                    }
-                                }  
-                            });
+                                    }  
+                                });
                             }
                             
                         }                        
