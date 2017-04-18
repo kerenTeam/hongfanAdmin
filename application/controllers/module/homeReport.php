@@ -18,6 +18,7 @@ class HomeReport extends Default_Controller {
     public $view_userFocusSort = "module/homeReport/userFocusSort.html";
     function __construct()
     {
+        
         parent::__construct();
         $this->load->model('System_model');
     }
