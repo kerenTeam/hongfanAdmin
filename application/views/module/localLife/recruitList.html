@@ -139,7 +139,7 @@ padding: 5px 6px!important;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='content' required placeholder="请输入详细地址，2-200个字符" onblur="validate(this,2,200,6)" minlength="2" maxlength="200"/>
+                                            <textarea  name='content' rows="8" required placeholder="请输入详细地址，2-200个字符" onchange="validate(this,2,200,6)" minlength="2" maxlength="200"></textarea>
                                         </div>
                                         <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
@@ -511,7 +511,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
-                            <input type="text" class='content<%= id %>' required placeholder="请输入详细地址，2-200个字符" value="<%= content.content %>" onblur="validate(this,2,200,12)" minlength="2" maxlength="50"/>
+                            <textarea  name='content' rows="8" required placeholder="请输入详细地址，2-200个字符" onchange="validate(this,2,200,6)" minlength="2" maxlength="200"><%= content.content %></textarea>
                         </div>
                         <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
