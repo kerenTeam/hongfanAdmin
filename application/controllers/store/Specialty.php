@@ -17,6 +17,8 @@ class Specialty extends Default_Controller {
     public $view_discountGoods = "store/specialty/discountGoods.html";
     //推荐商品
     public $view_recommendGoods = "store/specialty/recommendGoods.html";
+    //HOT管理
+    public $view_hotGoods = "store/specialty/hotGoods.html";
 
     function __construct()
     {
@@ -199,6 +201,15 @@ class Specialty extends Default_Controller {
         }else{
             echo "2";
         }
+    }
+
+    //HOT管理
+    function hot_goods_list(){
+
+        
+        $data['page'] = $this->view_hotGoods;
+        $data['menu'] = array('store','hot_goods_list');
+        $this->load->view('template.html',$data);
     }
 
 

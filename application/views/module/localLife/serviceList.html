@@ -272,7 +272,7 @@ padding: 5px 6px!important;
                                             </a>
                                             <?php else:?>
                                             <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand">
-                                                <i class="am-icon-star"></i> 推荐到本地生活
+                                                <i class="am-icon-star"></i> 推荐到本地生活首页
                                             </a>
                                             <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="">
@@ -567,7 +567,7 @@ padding: 5px 6px!important;
                                             </a>
                                             <?php else:?>
                                             <a data-id="<?php echo $val['house_id'];?>" dataId="<?php echo $val['recommend_state']?>" class="isRecommand1">
-                                                <i class="am-icon-star"></i> 推荐到本地生活
+                                                <i class="am-icon-star"></i> 推荐到本地生活首页
                                             </a>
                                             <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['house_id'].'/'.$typeid.'/'.$id;?>" class="">
@@ -794,7 +794,7 @@ padding: 5px 6px!important;
                                             </a>
                                             <?php else:?>
                                             <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2">
-                                                <i class="am-icon-star"></i> 推荐到本地生活
+                                                <i class="am-icon-star"></i> 推荐到本地生活首页
                                             </a>
                                             <?php endif;?>
                                             <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$v['id'].'/'.$typeid.'/'.$id;?>" class="">
@@ -1203,7 +1203,7 @@ padding: 5px 6px!important;
     }
 
     $(document).ready(function () {
-        //推荐到本地生活
+        //推荐到本地生活首页
         $('.isRecommand').click(function(){
             var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
             if(iscommend == "0") {
