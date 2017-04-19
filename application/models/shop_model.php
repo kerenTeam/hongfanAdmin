@@ -146,7 +146,13 @@ class Shop_model extends CI_Model
 
     //获取推荐
     function get_find_shop(){
-        $query = $this->db->where('type !=','1')->get($this->store_goods);
+        $query = $this->db->where('type','2')->or_where('type','3')->get($this->store_goods);
+        return $query->result_array();
+    }
+
+    //获取hot推荐
+    function get_hot_goods(){
+        $query = $this->db->where('type','4')->get($this->store_goods);
         return $query->result_array();
     }
 

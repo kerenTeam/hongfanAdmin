@@ -24,6 +24,7 @@ class Specialty extends Default_Controller {
     {
         parent::__construct();
         $this->load->model('MallShop_model');
+        $this->load->model('Shop_model');
     }
 
     //特色馆分类
@@ -205,7 +206,16 @@ class Specialty extends Default_Controller {
 
     //HOT管理
     function hot_goods_list(){
-
+        //获取hot
+        $list = $this->Shop_model->get_hot_goods();
+        foreach ($list as $key => $value) {
+            $goods = explode(',', $value['goods_list']);
+            foreach ($goods as $k => $v) {
+                 $list[$key]['goods'][] = $this->MallShop_model->get_goods_title($v);
+            }
+           
+        }
+        $data['hot'] = $list;
         
         $data['page'] = $this->view_hotGoods;
         $data['menu'] = array('store','hot_goods_list');
