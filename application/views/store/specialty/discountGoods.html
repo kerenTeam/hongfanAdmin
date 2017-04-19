@@ -367,7 +367,7 @@
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/store/Specialty/edit_goods_stor');?>',
-                data: 'goodsid='+ dataId+'&sort='+ sort,
+                data: 'goods_id='+ dataId+'&sort='+ sort,
                 success: function(data){
                     if(data==1){
                         alert('操作成功!');
