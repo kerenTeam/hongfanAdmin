@@ -79,7 +79,7 @@ color: #333;
                                         <div class="am-form-group">
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href=""><span class="am-icon-plus"></span> 加入推荐商品</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/store/Store/storeGoodsList/'.$val['id']);?>"><span class="am-icon-plus"></span> 加入商品</a></button>
                                                     <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
@@ -102,7 +102,7 @@ color: #333;
                                                                 HOT推荐详情
                                                             </div>
                                                             <div class="tpl-user-card-body">
-                                                            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/shop/Shop/edit_find_info');?>" method='post' >
+                                                            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/store/Specialty/edit_find_info');?>" method='post' >
                                                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                                                         <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
                                                                         <div class="am-u-sm-9 am-u-end">
@@ -131,12 +131,13 @@ color: #333;
                                                                         <label class="am-u-sm-2 am-form-label">详情 ：</label>
                                                                         <div class="am-u-sm-10 am-u-end">
                                                                           <div id="editorContent">
-                                                                            <script id="editor" type="text/plain" name='content'><?php echo $val['content'];?></script>
+                                                                            <script id="editor<?php echo $val['id'];?>" type="text/plain" name='content'><?php echo $val['content'];?></script>
                                                                           </div>
                                                                         </div>
                                                                     </div>
                                                                     <div class="am-form-group am-btn-group-xs">
                                                                         <button type="reset" class="am-btn am-btn-default">取消</button>
+                                                                         <input type="hidden" name="id" value="<?php echo $val['id'];?>">
                                                                         <button type="submit" class="am-btn am-btn-primary">保存</button>
                                                                     </div>
                                                                 </form> 
@@ -146,7 +147,7 @@ color: #333;
                                                 </tr>
                                                 <?php foreach($val['goods'] as $v):?>
                                                 <?php if(!empty($v)):?>
-                                                <tr class="trClass" >
+                                                <tr class="trClass<?php echo $val['id'].$v['goods_id'];?>" >
                                                     <td class="am-text-middle"><?php echo $v['goods_id'];?></td>
                                                     <td class="am-text-middle"><?php echo $v['title'];?></td>
                                                     <td class="am-text-middle"><img src="<?php echo $v['thumb'];?>" alt=""></td>
@@ -166,7 +167,7 @@ color: #333;
                                                         </div>
                                                         <div class="am-modal-footer">
                                                             <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                                            <span class="am-modal-btn sureDelete" name="" data-id="" data-am-modal-confirm>确定</span>
+                                                            <span class="am-modal-btn sureDelete" name="<?php echo $val['id'];?>" data-id="<?php echo $v['goods_id'];?>" data-am-modal-confirm>确定</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -207,7 +208,8 @@ function validate(obj){
 }
 
  //实例化编辑器
-var ue4 = UE.getEditor('editor');
+var ue4 = UE.getEditor('editor2');
+var ue5 = UE.getEditor('editor1');
 //删除图片
 $(".deleteImg").click(function(){      
     $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
@@ -226,15 +228,15 @@ $('#submit').click(function(){
 });
   //删除商品的AJAX请求
     $('.sureDelete').click(function(){
-        var storeid=$(this).attr('data-id'),id=$(this).attr('name');
+            var goodsId=$(this).attr('data-id'),id=$(this).attr('name');
             $.ajax({
                 type:'post',
-                url:'<?php echo site_url('/shop/Shop/del_find_store')?>',
-                data: 'id='+ id +'&storeid='+storeid,
+                url:'<?php echo site_url('/store/Store/del_sales_goods')?>',
+                data: 'id='+ id +'&goodsid='+goodsId,
                 success: function(data){
                     if(data==1){
                         alert('成功');
-                        $('.trClass'+id+storeid).remove();
+                        $('.trClass'+id+goodsId).remove();
             
                     }else{
                         alert("操作失败！");

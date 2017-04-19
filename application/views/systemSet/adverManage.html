@@ -77,19 +77,10 @@ padding: 5px 6px!important;
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="am-form-group">
-                <div class="am-btn-toolbar">
-                    <div class="am-btn-group am-btn-group-xs">
-                        <button type="button"  class="am-btn am-btn-default am-btn-secondary"><a href="<?php echo site_url().'/systemSet/systemSet/guideImageManage';?>"><span class="am-icon-cogs"></span> 广告引导图管理</a></button> 
-                    </div>
-                    <!-- <div class="am-btn-group am-btn-group-xs">
-                        <button type="button"  class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/systemSet/systemSet/hiHeadline';?>"><span class="am-icon-cogs"></span> HI集头条管理</a></button>
-                    </div> -->
-                </div>
-            </div>
+    
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">首页的广告
+                    <div class="widget-title  am-cf">购物-生活研究所
                     </div>
                 </div>
                 <div class="widget-body  am-fr">
@@ -120,78 +111,6 @@ padding: 5px 6px!important;
                             <?php  endforeach;?>
                               
                                 <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">购物中心的广告
-                    </div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">标题 </th>
-                                    <th colspan="2">广告缩略图 </th>
-                                    <th colspan="2">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="commentList">
-                                 <?php foreach($adver as $k=>$val):?>
-                                <?php if($val['ad_type'] == 2):?>
-                                <tr class="trClass" data-id="">
-                                    <td colspan="2" class="am-text-middle"><?php echo $val['title'];?></td>
-                                    <td colspan="2" class="am-text-middle"><img class="imgbox" src="<?php echo $val['pic'];?>"></td>
-                                    <td colspan="2" class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/systemSet/SystemSet/adverEdit/'.$val['id'];?>" class="editComment">
-                                                <i class="am-icon-pencil"></i> 编辑详情
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php  endif;?>
-                            <?php  endforeach;?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">本地生活的广告
-                    </div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">标题 </th>
-                                    <th colspan="2">广告缩略图 </th>
-                                    <th colspan="2">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="commentList">
-                             <?php foreach($adver as $k=>$val):?>
-                                <?php if($val['ad_type'] == 3):?>
-                                <tr class="trClass" data-id="">
-                                     <td colspan="2" class="am-text-middle"><?php echo $val['title'];?></td>
-                                    <td colspan="2" class="am-text-middle"><img class="imgbox" src="<?php echo $val['pic'];?>"></td>
-                                    <td colspan="2" class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/systemSet/SystemSet/adverEdit/'.$val['id'];?>" class="editComment">
-                                                <i class="am-icon-pencil"></i> 编辑详情
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php endif;?>
-                            <?php endforeach;?>
                             </tbody>
                         </table>
                     </div>

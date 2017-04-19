@@ -288,9 +288,8 @@ class Module_model extends CI_Model{
 	    return $this->db->where("id",$id)->update('hf_local_disclaimer',$data);
 	}
 	//返回所有招聘信息
-	function get_recruit_list($type){
-		$where['type_name'] = $type;
-		$query = $this->db->where($where)->or_where('type_name','5')->order_by('create_time','desc')->get($this->service);
+	function get_recruit_list(){
+		$query = $this->db->where('type_name','4')->or_where('type_name','5')->order_by('create_time','desc')->get($this->service);
 		return $query->result_array();
 	}
 	//搜索招聘信息

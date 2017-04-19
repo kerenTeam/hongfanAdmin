@@ -86,19 +86,22 @@ padding: 5px 6px!important;
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: block;float: left !important; ">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: none;float: left !important; ">
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
-                            <input type="number" class="stable" required  id="meetMoney" name="overflowValue" min="1"  />
+                            <input type="number" class="stable" required  id="meetMoney" name="overflowValue" min="1" onmousewheel="return false;"  />
                             <span class="linkWord">减</span>
-                            <input type="number" class="stable" required id="reduceMoney" name="cutValue" min="1"  />
+                            <input type="number" class="stable" required id="reduceMoney" name="cutValue" min="1" onmousewheel="return false;" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: none;float:left !important;">
-                        <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">折扣<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="discount" id="discount" class="am-form-field tpl-form-no-bg" placeholder="请输入0-1之间的小数" required>
+                            <span class="linkWord">满</span>
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="zheMeetMoney" name="overflowValue" min="1" onmousewheel="return false;"  />
+                            <span class="linkWord">折</span>
+                            <input type="number" name="cutValue"  class="stable" placeholder="请输入0-1之间的小数" min="0" max="1" required onmousewheel="return false;" >
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">

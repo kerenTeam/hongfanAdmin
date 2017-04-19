@@ -70,7 +70,7 @@ class SystemSet extends Default_Controller {
         $data['adver'] = json_decode($adver['banner'],true);
         $data['id'] = $adver['id'];
         $data['page'] = $this->view_guideImage;
-        $data['menu'] = array('systemSet','adverManage');
+        $data['menu'] = array('systemSet','guideImageManage');
         $this->load->view('template.html',$data);
     }
     //修改 引导图广告
@@ -277,7 +277,7 @@ class SystemSet extends Default_Controller {
         //返回所有广告
         $data['adver'] = $this->System_model->get_app_adver();
          $data['page'] = $this->view_adverManage;
-         $data['menu'] = array('systemSet','adverManage');
+         $data['menu'] = array('moll','adverManage');
          $this->load->view('template.html',$data);
     }
     //系统设置 编辑广告

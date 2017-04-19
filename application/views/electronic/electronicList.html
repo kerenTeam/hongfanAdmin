@@ -50,7 +50,7 @@ td img{
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!--<div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
                         <div class="am-u-sm-9">
                            <div class="am-u-sm-6">
@@ -62,7 +62,7 @@ td img{
                               </div>
                         </div>
                     </div>
-   
+   -->
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -239,7 +239,7 @@ var startDate = new Date(2014, 11, 20);
     //点击搜索
     $('.searchSales').click(function(){
         var salesType=$('#salesType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
-        var startDate=$('#startDate').val(),endDate=$('#endDate').val();
+     //   var startDate=$('#startDate').val(),endDate=$('#endDate').val();
         if((startDate=="" && endDate!="") || (startDate!="" && endDate=="")){
             alert("交易总额必须是一个范围！");
             return false;

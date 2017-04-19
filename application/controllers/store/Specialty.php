@@ -222,6 +222,42 @@ class Specialty extends Default_Controller {
         $this->load->view('template.html',$data);
     }
 
+        //修改HOT推荐详情
+     function edit_find_info(){
+        if($_POST){
+            $data= $this->input->post();
+            if(!empty($_FILES['img']['tmp_name'])){
+                $config['upload_path']      = 'Upload/adver/';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                // 上传
+                if(!$this->upload->do_upload('img')) {
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
+                }else{
+                    $img[]['picImg'] = '/Upload/adver/'.$this->upload->data('file_name');
+                    $data['picImg'] = json_encode($img);
+                }
+            }
+           
+            if($this->Shop_model->edit_salse($data['id'],$data)){
+                  $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了一个特色馆HOT详情,id是：".$data['id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
+            }else{
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+     }
+
 
 
 

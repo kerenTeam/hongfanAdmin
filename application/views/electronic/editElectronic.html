@@ -57,7 +57,7 @@ padding: 5px 6px!important;
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf">编辑卡券</div>
                 </div> 
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('/electronic/Electronic/edit_Electronic');?>" method="post">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('/electronic/Electronic/edit_Electronic');?>" method="post" data-am-validator >
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="user-email" class="am-u-sm-3 am-form-label">卡券名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
@@ -77,24 +77,27 @@ padding: 5px 6px!important;
                                 <option value="">输入查找/选择</option>
                                 <?php foreach($type as $val):?>
                                 <option value="<?php echo $val['id']?>" <?php if($coupon['typeid'] == $val['id']){echo "selected";}?>><?php echo $val['name'];?></option>
-                            <?php endforeach;?>
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>
-                    <?php $sale = explode(',',$coupon['coupon_amount']);;?>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" <?php if($coupon['typeid'] == 1){echo 'style="display: block;float: left !important; "';}else{echo 'style="display: none;float: left !important;';}?> >
+                    <?php $sale = explode(',',$coupon['coupon_amount']);?>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: <?php if($coupon['typeid'] == '1'){echo "block";}else{echo "none";}?>;float: left !important; ">
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
                             <span class="linkWord">满</span>
-                            <input type="number" class="stable"   id="meetMoney" name="overflowValue" min="1"  value="<?php echo $sale[0]?>"/>
+                            <input type="number" class="stable" required  id="meetMoney" name="overflowValue" min="1" value="<?php echo $sale[0];?>" onmousewheel="return false;"  />
                             <span class="linkWord">减</span>
-                            <input type="number" class="stable"  id="reduceMoney" name="cutValue"  min="1"  value="<?php echo $sale[1]?>"/>
+                            <input type="number" class="stable" required id="reduceMoney" name="cutValue" min="1"  value="<?php echo $sale[1];?>" onmousewheel="return false;" />
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" <?php if($coupon['typeid'] == 2){echo 'style="display: block;float: left !important; "';}else{echo 'style="display: none;float: left !important;"';}?>>
-                        <label for="user-email" class="am-u-sm-3 am-form-label">折扣率<span class="red">*</span>：</label>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: <?php if($coupon['typeid'] == '2'){echo "block";}else{echo "none";}?>;float:left !important;">
+                        <label for="user-email" class="am-u-sm-3 am-form-label">折扣<span class="red">*</span>：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" name="discount" id="discount" value="<?php echo $coupon['coupon_amount'];?>" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" >
+                            <span class="linkWord">满</span>
+                            <input type="number" class="stable" required  onmousewheel="return false;"  value="<?php echo $sale[0];?>" id="zheMeetMoney" name="overflowValue" min="1" onmousewheel="return false;"  />
+                            <span class="linkWord">折</span>
+                            <input type="number" name="cutValue"  class="stable" placeholder="请输入0-1之间的小数" min="0" max="1"  value="<?php echo $sale[0];?>" required onmousewheel="return false;" >
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">

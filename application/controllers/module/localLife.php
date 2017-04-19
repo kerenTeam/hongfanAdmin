@@ -1089,7 +1089,7 @@ class LocalLife extends Default_Controller {
 	//返回所有招聘信息
 	function ret_recruit_list(){
 		if($_POST){
-			$list = $this->Module_model->get_recruit_list('4');
+			$list = $this->Module_model->get_recruit_list();
 			if(!empty($list)){
 				echo json_encode($list);
 			}else{
@@ -1135,8 +1135,16 @@ class LocalLife extends Default_Controller {
 			$data = $this->input->post();
 			$title = $data['name'];
 			$data['content'] = '{"title":"'.$data['name'].'","content":"'.$data['content'].'"}';
+			if($data['title'] != ''){
+				$data['name'] = $data['title'];
+				unset($data['title']);
+			}else{
+				unset($data['title']);
+			}
 		//	unset($data['title']);
 			$data['type_name'] = "4";
+			$data['userid'] = $_SESSION['users']['user_id'];
+
 			if($this->Module_model->add_service($data)){
 				//日志
 				$log = array(
