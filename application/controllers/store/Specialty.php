@@ -18,7 +18,7 @@ class Specialty extends Default_Controller {
     //推荐商品
     public $view_recommendGoods = "store/specialty/recommendGoods.html";
     //HOT管理
-    public $view_hotGoods = "store/specialty/hotGoods.html";
+    public $view_hotGoods = "store/storeHotRecommand.html";
 
     function __construct()
     {
