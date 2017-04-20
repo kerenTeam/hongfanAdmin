@@ -300,7 +300,7 @@ class SystemSet extends Default_Controller {
     //系统设置 广告管理
     function adverManage(){
         //返回所有广告
-        $data['adver'] = $this->System_model->get_app_adver();
+         $data['adver'] = $this->System_model->get_app_adver();
          $data['page'] = $this->view_adverManage;
          $data['menu'] = array('moll','adverManage');
          $this->load->view('template.html',$data);
