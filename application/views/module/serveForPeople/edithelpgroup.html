@@ -28,7 +28,7 @@
     <div class="row-content am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
-                <form class="am-form tpl-form-line-form"  action="<?php echo site_url('/serveForPeople/ServeForPeople/add_help_user');?>" method="post" enctype='multipart/form-data'>
+                <form class="am-form tpl-form-line-form"  action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_hele_user');?>" method="post" enctype='multipart/form-data'>
                         
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
@@ -39,9 +39,9 @@
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
-                                <?php if(!empty($info['hesdPic'])):?>
+                                <?php if(!empty($info['headPic'])):?>
                                 <div class="wx_type_img">
-                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
+                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple">
                                       <!-- 图片实时预览 -->
                                       <div id="preview" class="preview">
                                         <img style="border-radius: 3px;" src="<?php echo $info['headPic'];?>" class="am-img-responsive cardView"> 
@@ -94,7 +94,7 @@
                         <div class="am-form-group">
                             <label for="englishName" class="am-u-sm-3 am-form-label">简介<span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
-                                <textarea rows="5" cols="40" placeholder="请务必保证填写信息的正确性"><?php echo $info['age'];?> </textarea>
+                                <textarea rows="5" cols="40" name="info" placeholder="请务必保证填写信息的正确性"><?php echo $info['info'];?> </textarea>
                             </div>
                         </div>
                         <div class="am-form-group am-cf">
@@ -117,7 +117,7 @@
                             <label class="am-u-sm-3 am-form-label">详细地址 ：</label>
                             <input type="hidden" name="x_y" id="addressLocation">
                             <div class="am-u-sm-9">
-                                <input type="text"   id="addressInput" >
+                                <input type="text" name="street" value="<?php echo $info['street'];?>"  id="addressInput" >
                             </div>
                         </div>
                         <div class="am-form-group am-cf" >
@@ -126,6 +126,7 @@
                             </div>
                         </div>
                         <div class="am-form-group am-cf am-text-center">
+                            <input type="hidden" name="id" value="<?php echo $info['helper_id'];?>">
                             <button class="am-btn am-btn-xs am-btn-secondary" type="submit" id='addProperty'>保存</button>
                             <button class="am-btn am-btn-xs am-btn-default" type="reset" id="cancle">取消</button> 
                         </div>
@@ -175,7 +176,7 @@ AMap.event.addListener(auto, "select", select);//注册监听，当选中某条�
 function select(e) {
     placeSearch.setCity(e.poi.adcode);
     placeSearch.search(e.poi.name);  //关键字查询查询
-    var xy = '('+ e.poi.location.lat + ',' + e.poi.location.lng + ')';
+    var xy = e.poi.location.lat + ',' + e.poi.location.lng ;
     $('#addressLocation').val(xy);
 }
 </script>

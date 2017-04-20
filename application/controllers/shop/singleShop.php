@@ -215,6 +215,7 @@ class SingleShop extends Default_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //分类
+        var_dump($store_type);
         if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
         }else{

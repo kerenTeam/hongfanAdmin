@@ -75,7 +75,7 @@ class LoveToGo extends Default_Controller
             $data['catid'] = $this->input->post('catid');
             if(!empty($_FILES['img']['tmp_name'])){
                 $config['upload_path']      = 'Upload/icon';
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['allowed_types']    = 'svg|jpg|png|jpeg';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);

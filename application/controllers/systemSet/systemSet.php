@@ -115,6 +115,31 @@ class SystemSet extends Default_Controller {
         }
     }
 
+    //删除启动图
+    function del_advertisiting(){
+        $id = intval($this->uri->segment(4));
+        $bid = intval($this->uri->segment(5));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $adver = $this->System_model->get_start_advertising();
+            $pic = json_decode($adver['banner'],true);
+ 
+            foreach($pic as $k=>$v){
+                if($v['id'] == $id){
+                    unset($pic[$k]);
+                }
+            }
+           shuffle($pic);
+           $data['banner'] = json_encode($pic);
+           if($this->System_model->edit_banner($bid,$data)){
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
+           }else{
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
+           }
+        }
+    }
+
     //系统设置  HI集头条管理
     function hiHeadline()
     {
@@ -942,6 +967,7 @@ class SystemSet extends Default_Controller {
         }
     }
 
+    
 
 
 

@@ -128,26 +128,15 @@
                                             <ul class="am-list">
                                             <?php foreach($coupon as $val):?>
                                               <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
-                                               <?php if($val['typeid'] == 1):?>
-                                                <?php $sale = json_decode($val['salerule'],true);?>
+                                                <?php if($val['typeid'] == 1):?>
                                                   <div class="am-u-sm-3">
-                                                      <?php echo $sale['cutValue'];?>
+                                                     fgf 
                                                   </div>
                                                   <div class="am-u-sm-9">
 
                                                       <p>代金劵</p>
-                                                      <p>满<?php echo $sale['overflowValue'];?>元减<?php echo $sale['cutValue'];?>元 - <?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
-                                                    <?php else:?>
-                                                  <div class="am-u-sm-3">
-                                                      <?php echo $val['discount']*10;?>折
-                                                  </div>
-                                                  <div class="am-u-sm-9">
-
-                                                      <p>折扣卷</p>
-                                                      <p><?php if($val['receive_limit'] == 1){echo "限领一次";}else{echo "无限制";}?></p>
-                                                    <?php endif?>
-                                                      
-                                                      <p>有效时间：<?php echo $val['begin_date'] .'-'.$val['end_date'];?></p>
+                                                      <p>满500元减20元 - fgfgf</p>
+                                                      <p>有效时间：</p>
                                                   </div>
                                                   <input type="hidden" name="couponid[]" class="saveid" />
                                                   <span class="am-icon"></span>

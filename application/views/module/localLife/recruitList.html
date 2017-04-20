@@ -191,7 +191,7 @@ padding: 5px 6px!important;
                                     <th>标题</th>
                                     <th>联系人</th>
                                     <th>联系电话</th>
-                                    <th>内容</th>
+                                    <th width='30%'>内容</th>
                                     <th>类型</th>
                                     <!--<th>本地生活推荐</th>-->
                                     <th>创建时间</th>
@@ -342,10 +342,12 @@ function otherOperation() {
             link_man = $('.link_man' + dataId).val(),
             phone = $('.phone'+dataId).val(),
             isbusiness = $('#isbusiness'+ dataId).val();  
+            title = $('.title'+ dataId).val();  
+            address = $('.address'+ dataId).val();  
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
-            data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness,
+            data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness+'&title='+title + '&address='+address,
             success: function(result){       
                 console.log(result);  
                 var res = eval(result);
@@ -405,7 +407,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            console.log(result);
+        //    console.log(result);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -547,7 +549,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
-                            <textarea  name='content' rows="8" required placeholder="请输入详细地址，2-200个字符" onchange="validate(this,2,200,6)" minlength="2" maxlength="200"><%= content.content %></textarea>
+                            <textarea  name='content' class='content<%= id%>' rows="8" required placeholder="请输入详细地址，2-200个字符" onchange="validate(this,2,200,6)" minlength="2" maxlength="200"><%= content.content %></textarea>
                         </div>
                         <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
@@ -575,7 +577,7 @@ $(document).ready(function(){
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">公司名称 <span class="red">*</span></label>
                             <div class="am-u-sm-8">
-                                <input type="text" placeholder="请输入联系人，2-30个字符" onblur="validate(this,2,30,15)" maxlength="10" minlength="2" name='company' required>
+                                <input type="text" class="title<%= id%>" placeholder="请输入联系人，2-30个字符" value="<%= name%>" onblur="validate(this,2,30,15)" maxlength="10" minlength="2" name='title' required>
                             </div>
                             <small class="am-u-sm-1 red redtips15" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips15" style="display: none;"><i class="am-icon-check"></i></small>
@@ -583,7 +585,7 @@ $(document).ready(function(){
                         <div class="am-form-group am-cf" >
                             <label class="am-u-sm-3 am-form-label">地址 <span class="red">*</span></label>
                             <div class="am-u-sm-8">
-                                <textarea  name='address' rows="2" required placeholder="请输入详细地址，2-100个字符" onchange="validate(this,2,100,14)" minlength="2" maxlength="200"></textarea>
+                                <textarea  name='address'  class="address<%= id%>"  rows="2" value="<%= address%>" required placeholder="请输入详细地址，2-100个字符" onchange="validate(this,2,100,14)" minlength="2" maxlength="200"></textarea>
                             </div>
                             <small class="am-u-sm-1 red redtips16" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips16" style="display: none;"><i class="am-icon-check"></i></small>
