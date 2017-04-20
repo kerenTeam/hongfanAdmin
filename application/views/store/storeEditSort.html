@@ -98,8 +98,8 @@
                                         <?php endif;?>
                                        <br />
                                 </div>
-                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                  <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small>
+                                <span class="deleteImg" onclick="deleteImg(this)"><i class="am-icon-trash"></i> 删除</span> 
+                                <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small>
                             </div>
                             <div class="am-form-group">
                                 <label for="doc-vld-name-1">排序 <span class="red">*</span>：</label>
@@ -157,11 +157,11 @@ $('#cancle').click(function(){
 });
 
 //删除图片
-$(".deleteImg").click(function(){
-    
-    $(this).siblings('.wx_type_img').find('img').remove();
-    
-});
+function deleteImg(obj){
+    $(obj).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(obj).siblings('.wx_type_img').find('input').val("");
+    $(obj).siblings('.wx_type_img').find('input').files = "";
+}
 //表单验证函数
 function validate(obj,minlen,maxlen,i){
     var content=obj.value;

@@ -177,8 +177,8 @@ function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
     $('.page_link').eq(page_num).addClass('active_page');
     $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(15)*parseInt(page_num);
-    var end_page=parseInt(15)*parseInt(page_num+1);
+    var start_page=parseInt(10)*parseInt(page_num);
+    var end_page=parseInt(10)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
     sessionStorage.setItem('storeGoodsSort', current_page);
@@ -221,13 +221,12 @@ function getList(dataurl,data){
         success: function(result){         
             var res = eval(result);
             console.log(res);
-            if(res != 2 && res != 3){
+            if(res.length){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
+                total_page = Math.ceil(res.length/10); //得到总页数
                 for(var i = 0; i < res.length; i++){
-                    listData += template('dataModal',res[i]);
+                    listData += template('dataModal', res[i]);
                  }
-                console.log(total_page);
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {

@@ -412,8 +412,8 @@ function otherOperation() {
         //保存编辑后的成员信息
         $('.sureSave').eq(i).click(function(){
             var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_lawyergroupUser');?>";//上传文件的后台地址;
-            var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,star=document.getElementsByClassName('star'+dataId)[0].value,education=document.getElementsByClassName('education'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
-            console.log(name+picArray[0] +job+phone+content+star+education+state);
+            var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,star=document.getElementsByClassName('star'+dataId)[0].value,education=document.getElementsByClassName('education'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,info=document.getElementsByClassName('info'+dataId)[0].innerHTML, state=$('.state'+dataId+' option:selected').eq('0').val();
+            // console.log(name+picArray[0] +job+phone+content+star+education+state);
             formD.append('id',dataId);
             formD.append('name',name);
             formD.append('picArray',picArray[0]);
@@ -423,13 +423,13 @@ function otherOperation() {
             formD.append('competency',content);
             formD.append('star',star);
             formD.append('education',education);
+            formD.append('info',info);
             formD.append('recommend',state);
              //实例化XMLHttpRequest对象
             var xhr=new XMLHttpRequest();
             xhr.open('post',FileController,true);
             xhr.send(formD);
             xhr.onreadystatechange = function(data){
-                console.log(data);
                 if (xhr.readyState===4) {  
                     if (xhr.status===200) {
                         alert("保存成功！");
@@ -505,37 +505,37 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" id="trClass<%= helper_id%>" data-id="<%= helper_id%>">
-        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id%>" name="commentBox"></td>
+    <tr class="trClass" id="trClass<%= helper_id %>" data-id="<%= helper_id %>">
+        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id %>" name="commentBox"></td>
 
         <td class="am-text-middle"><%= helper_id%></td>
         <td class="am-text-middle"><%= name%></td>
         <td class="am-text-middle">
         <%if(headPic){%>
-            <img src="<%= headPic%>" class="am-img-responsive" alt=""/>
+            <img src="<%= headPic %>" class="am-img-responsive" alt=""/>
         <%}else{%>  
             暂无
         <%}%>
         </td>
-        <td class="am-text-middle"><%= age%></td>
-        <td class="am-text-middle"><%= occupation%></td>
-        <td class="am-text-middle"><%= phone%></td>
+        <td class="am-text-middle"><%= age %></td>
+        <td class="am-text-middle"><%= occupation %></td>
+        <td class="am-text-middle"><%= phone %></td>
         <td class="am-text-middle">
         <%for(var i=0;i<competency.length;i++){%>
-            <%= competency[i]%>   
+            <%= competency[i] %>   
         <%}%>
         </td>
-        <td class="am-text-middle"><%= education%></td>
-        <td class="am-text-middle"><%= star%></td>
+        <td class="am-text-middle"><%= education %></td>
+        <td class="am-text-middle"><%= star %></td>
         <td class="am-text-middle">
         <%if(recommend=="1"){%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
+            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id %>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1" selected="selected">是</option>
                 <option value="0">否</option>
             </select>
         <%}else{%>
-            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id%>">
+            <select id="" class="goodsState" name="goodsState" data-id="<%= helper_id %>">
                 <option value="">-=请选择一项=-</option>
                 <option value="1">是</option>
                 <option value="0" selected="selected">否</option>
@@ -635,6 +635,12 @@ $(document).ready(function(){
                         <input type="text" name='education' class="education<%= helper_id%>"  placeholder="如：硕士\本科" value="<%= education%>" required>
                     </div>
                 </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">简介<span class="red">*</span>： </label>
+                    <div class="am-u-sm-9">
+                        <textarea rows="4" name="info" class="info<%= helper_id %>"><%= info %></textarea>
+                    </div>
+                </div> 
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">

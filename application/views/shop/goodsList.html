@@ -328,53 +328,53 @@ td.am-text-middle img {
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){    
-            var res = eval(result);
-            // console.log(res);  
-            if(res != 2 && res != 3){
-                var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
-                for(var i = 0; i < res.length; i++){
-                    listData+= template('dataModal',res[i]);
-                 }
-                document.getElementById('dataList').innerHTML = listData;
-                $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($goodsList);
-                    var opts={};opts.current_page = $goodsList;
-                    $("#Pagination").pagination(total_page, opts);
-                    pageflag = 0;
-                } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                // console.log(res);  
+                if(res != 2 && res != 3){
+                    var listData = ''; //每页出现的数量
+                    total_page = Math.ceil(res.length/15); //得到总页数
+                    for(var i = 0; i < res.length; i++){
+                        listData+= template('dataModal',res[i]);
+                     }
+                    document.getElementById('dataList').innerHTML = listData;
+                    $('.pagebox').css('display', 'block');
+                    if(pageflag) {
+                        go_to_page($goodsList);
+                        var opts={};opts.current_page = $goodsList;
+                        $("#Pagination").pagination(total_page, opts);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
+                    someOptions();
+                }else{
+                    $('#dataList').find('tr').remove();
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+                    $('.pagebox').css('display', 'none');
                 }
-                if(total_page < 5) {
-                    $('.searchPage').css('display', 'none');
-                }
-                someOptions();
-            }else{
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-            $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
-            $('.pagebox').css('display', 'none');
-        }
-    });
-}
+        });
+    }
 	//导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-        console.log(fileObj);
+        // console.log(fileObj);
         var FileController="<?php echo site_url('/shop/singleShop/impolt_goods');?>";//上传文件的后台地址
         if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx' || fileObj.name.split('.')[1]=='xls'){
         	$('#refreshModal').modal();
