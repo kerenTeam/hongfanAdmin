@@ -137,7 +137,6 @@ class SystemSet extends Default_Controller {
            }else{
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
            }
-
         }
     }
 
@@ -968,6 +967,7 @@ class SystemSet extends Default_Controller {
         }
     }
 
+    
 
 
 

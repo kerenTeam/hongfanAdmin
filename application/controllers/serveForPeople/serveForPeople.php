@@ -399,7 +399,7 @@ class ServeForPeople extends Default_Controller
                    }     
             }
             $data['profession_type'] = '1';
-            $data['competency'] = json_encode(explode("&",$data['competency']));
+            $data['competency'] = json_encode(explode("&",$data['competency']),JSON_UNESCAPED_UNICODE);
             if($this->Service_model->add_help_user($data)){
                      //日志
                     $log = array(
@@ -436,25 +436,26 @@ class ServeForPeople extends Default_Controller
     //编辑操作
     function edit_hele_user(){
         if($_POST){
-            $data = $_POST;
-            if(!empty($_FILES['picArray']['name'])){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
                     $config['upload_path']      = 'Upload/headPic/';
                     $config['allowed_types']    = 'gif|jpg|png|jpeg';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
                     // 上传
-                    if(!$this->upload->do_upload('picArray')) {
-                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
+                    if(!$this->upload->do_upload('img')) {
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/edithelpgroup/'.$data['id'])."'</script>";exit;
                     }else{
                       
                         $data['headPic'] = '/Upload/headPic/'.$this->upload->data('file_name');
                    }     
             }
             $id = $data['id'];
-            unset($data['picArray'],$data['id']);
+            unset($data['img'],$data['id']);
             $con = mb_substr($data['competency'], 0, -1);
-            $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
+            $data['competency'] = json_encode(explode('&',$con),JSON_UNESCAPED_UNICODE);
+
             if($this->Service_model->edit_help_user($id,$data))
             {
                  //日志
@@ -465,13 +466,14 @@ class ServeForPeople extends Default_Controller
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
-                echo "1";
+                  echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/helpgrouplist')."'</script>";exit;
+
             } else{
-                echo "2";
+               echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/edithelpgroup/'.$id)."'</script>";exit;
             }
            
         }else{
-            echo "2";
+            $this->load->view('404.html');
         }
     }
 
