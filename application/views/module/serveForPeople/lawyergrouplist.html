@@ -154,7 +154,7 @@ textarea {
                                     <th class="moll_name">年龄 </th>
                                     <th class="shop_id">职业</th>
                                     <th class="shop_id">联系方式</th>
-                                    <th class="shop_name">帮扶内容 </th>
+                                    <th width="30%" class="shop_name">帮扶内容 </th>
                                     <th class="shop_yetai">学历</th>
                                     <th class="brand">评分</th>
                                     <th class="brand">是否推荐</th>
@@ -412,7 +412,7 @@ function otherOperation() {
         //保存编辑后的成员信息
         $('.sureSave').eq(i).click(function(){
             var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_lawyergroupUser');?>";//上传文件的后台地址;
-            var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,star=document.getElementsByClassName('star'+dataId)[0].value,education=document.getElementsByClassName('education'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,info=document.getElementsByClassName('info'+dataId)[0].innerHTML, state=$('.state'+dataId+' option:selected').eq('0').val();
+            var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,star=document.getElementsByClassName('star'+dataId)[0].value,education=document.getElementsByClassName('education'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,info=document.getElementsByClassName('info'+dataId)[0].value, state=$('.state'+dataId+' option:selected').eq('0').val();
             // console.log(name+picArray[0] +job+phone+content+star+education+state);
             formD.append('id',dataId);
             formD.append('name',name);
@@ -430,6 +430,7 @@ function otherOperation() {
             xhr.open('post',FileController,true);
             xhr.send(formD);
             xhr.onreadystatechange = function(data){
+                //console.log(data);
                 if (xhr.readyState===4) {  
                     if (xhr.status===200) {
                         alert("保存成功！");
@@ -624,9 +625,9 @@ $(document).ready(function(){
                 </div>
             
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
+                    <label class="am-u-sm-3 am-form-label">标签 <span class="red">*</span>：</label>
                     <div class="am-u-sm-9">                     
-                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length-1;i++){%><%= competency[i]%>，<%}%><%= competency[competency.length-1]%>" required />
+                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length-1;i++){%><%= competency[i]%>、<%}%><%= competency[competency.length-1]%>" required />
                     </div>
                 </div>
                 <div class="am-form-group am-cf">

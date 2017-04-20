@@ -728,7 +728,7 @@ class ServeForPeople extends Default_Controller
                    }     
             }
             $data['profession_type'] = '2';
-            $data['competency'] = json_encode(explode("&",$data['competency']),JSON_UNESCAPED_UNICODE);
+            $data['competency'] = json_encode(explode("、",$data['competency']),JSON_UNESCAPED_UNICODE);
             if($this->Service_model->add_help_user($data)){
                      //日志
                     $log = array(
@@ -770,8 +770,9 @@ class ServeForPeople extends Default_Controller
             }
             $id = $data['id'];
             unset($data['picArray'],$data['id']);
-            $con = mb_substr($data['competency'], 0, -1);
-            $data['competency'] = json_encode(explode('，',$con),JSON_UNESCAPED_UNICODE);
+           // $con = mb_substr($data['competency'], 0, -1);
+            $data['competency'] = json_encode(explode('、',$data['competency']),JSON_UNESCAPED_UNICODE);
+          //  var_dump($data);
             if($this->Service_model->edit_help_user($id,$data))
             {
                  //日志
