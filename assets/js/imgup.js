@@ -12,7 +12,7 @@ function previewImage(file) {
       return false;
     }
     //限制图片格式
-    var extension = /\.(gif|jpg|jpeg|png)$/i;
+    var extension = /\.(gif|jpg|jpeg|png|svg)$/i;
     if(!extension.test(file.files[0].name)) {
       alert('图片格式不符！');
       return false;
