@@ -72,9 +72,6 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/store/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                  <!--   <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +127,7 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 
 <script type="text/javascript">
-var total_page = 0,pageflag = 1,current_page=0,$storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort')) || 0;
+var total_page = 0,pageflag = 1,current_page=0,$storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort')) || 0, $isStoreGoodsSort = parseInt(sessionStorage.getItem('isStoreGoodsSort')) || 0;
 function otherFunction() {
     $('.editSort').click(function(){//编辑分类信息
         var dataId=$(this).attr('data-id');
@@ -263,15 +260,18 @@ function getList(dataurl,data){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
-    //刷新页面
-    $('.refresh').click(function(){
+    if($isStoreGoodsSort) {
+        var keywords=$('#searchKey').val();
+        getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        sessionStorage.setItem('isStoreGoodsSort', 1);
+    } else {
         getList('<?php echo site_url('/store/store/goods_cates');?>','id=1');
-    });
+    }
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();
         getList('<?php echo site_url('/store/store/search_cate');?>','sear='+keywords);
+        sessionStorage.setItem('isStoreGoodsSort', 1);
     });
 })
 </script>

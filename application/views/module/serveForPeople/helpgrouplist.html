@@ -395,27 +395,33 @@ function otherOperation() {
     $('.deleteAll').click(function(){
         var deleteId=$(this).attr('data-id');
         var array=[];
-        for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
-            array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-        }
-        array=JSON.stringify(array);
-        console.log(array)
-        $.ajax({
-            type:'post',
-            url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
-            data: 'id='+array,
-            success: function(data){
-                if(data==1){
-                    getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-                }else{
-                    alert("操作失败！");
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("操作失败，请检查网络设置！");
+        if($('tr.trClass td input:checkbox[name=commentBox]:checked').length) {
+            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
+                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
             }
-        });
+            array=JSON.stringify(array);
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_users');?>',
+                data: 'id='+array,
+                success: function(data){
+                    if(data==1){
+                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+            return true;
+        } else {
+            alert("你还未选择帮帮成员！");
+            return false;
+        }
+        
         
     });
     //删除图片

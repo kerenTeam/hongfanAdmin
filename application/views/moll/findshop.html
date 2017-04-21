@@ -80,18 +80,17 @@ color: #333;
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
                                                         <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/shop/Shop/marketBusiness/'.$val['id']);?>"><span class="am-icon-plus"></span> 加入商场的商家</a></button>
-                                                        <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/shop/Shop/index/'.$val['id']);?>"><span class="am-icon-plus"></span> 加入外部商家</a></button>
-                                                        <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                        <button type="button" class="am-btn am-btn-secondary"><a href="<?php echo site_url('/shop/Shop/index/'.$val['id']);?>"><span class="am-icon-plus"></span> 加入外部商家</a></button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
                                                 <thead>
                                                      <tr>
-                                                        <th class="shop_id"><?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气早餐";}?>详情 </th>
-                                                        <th class="shop_id">商铺编号 </th>
-                                                        <th class="moll_name">商场名称 </th>
-                                                        <th class="shop_type">商铺品牌 </th>
+                                                        <th><?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气早餐";}?>详情 </th>
+                                                        <th>商铺编号 </th>
+                                                        <th>商场名称 </th>
+                                                        <th>商铺品牌 </th>
                                                         <th>操作</th>
                                                     </tr>
                                                 </thead>
@@ -100,14 +99,14 @@ color: #333;
                                                         <td class="am-text-middle width" rowspan="<?php echo count($val['store'])+1;?>">
                                                             <div class="tpl-user-card am-text-center">
                                                                 <div class="tpl-user-card-title">
-                                                                    <?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气早餐";}?>详情
+                                                                    <?php if($val['type'] == '2'){echo "达人探店";}else{echo "元气吃货";}?>详情
                                                                 </div>
                                                                 <div class="tpl-user-card-body">
                                                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/shop/Shop/edit_find_info');?>" method='post' >
                                                                         <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                                                             <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
                                                                             <div class="am-u-sm-9 am-u-end">
-                                                                                <input type="text" name="title" class="tpl-form-input" value="<?php echo $val['title'];?>" id="limit-name" placeholder="请输入权限名,2-10字以内" minlength="2" maxlength="20" required onblur="validate(this)" />
+                                                                                <input type="text" name="title" class="tpl-form-input" value="<?php echo $val['title'];?>" id="limit-name" placeholder="请输入标题2-10字以内" minlength="2" maxlength="20" required onblur="validate(this)" />
                                                                                 <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
                                                                                 <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
                                                                             </div>
@@ -126,7 +125,7 @@ color: #333;
                                                                                   <?php endif;?>
                                                                                 </div>
                                                                                 <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                                                                <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                                                                                <small class="tpl-form-line-small-title">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small> 
                                                                             </div>
                                                                         </div>
                                                                         <div class="am-form-group am-cf">
@@ -220,7 +219,7 @@ var ue4 = UE.getEditor('editor4'), ue5 = UE.getEditor('editor5');
 //删除图片
 $(".deleteImg").click(function(){      
     $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).prevUntil('.preview').find('input').val(" ");
+    $(this).prevUntil('.preview').find('input').val("");
     $(this).prevUntil('.preview').find('input').files="";
 });
 

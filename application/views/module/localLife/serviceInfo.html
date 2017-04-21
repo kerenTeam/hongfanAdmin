@@ -52,8 +52,8 @@ width:50%;
                                 <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
                                 	<input type='hidden' name='type_id' value="<?php echo $type_id?>"/>
-									<input type='hidden' name='type_name' value='<?php echo $info['type_name'];?>'/>
-                                    <input type="text" placeholder="请输入标题" name='name' onblur="validate(this,2,100,1)" value='<?php echo $info['name'];?>' minlength="2" maxlength="100" required>
+									<input type='hidden' name='type_name' value="<?php echo $info['type_name'];?>"/>
+                                    <input type="text" placeholder="请输入标题" name='name' onblur="validate(this,2,100,1)" value="<?php echo $info['name'];?>" minlength="2" maxlength="100" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
@@ -69,7 +69,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">服务范围 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="text" placeholder="如：邻水xxxx街道，2-40个字符" minlength="2" maxlength=40" onblur="validate(this,2,40,3)" name='service_cope' value='<?php echo $info['service_cope'];?>' required>
+                                    <input type="text" placeholder="如：邻水xxxx街道，2-40个字符" minlength="2" maxlength="40" onblur="validate(this,2,40,3)" name='service_cope' value="<?php echo $info['service_cope'];?>" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
@@ -77,7 +77,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="number" placeholder="请输入评分,1-5之间的数字"  name='star' value="<?php echo $info['star']?>" min="1" max="5" minlength="1" maxlength="1" onblur="validate1(this,1,1,4)" required>
+                                    <input type="number" placeholder="请输入评分,1-5之间的数字"  name='star' value="<?php echo $info['star']?>" min="1" max="5" minlength="0" maxlength="1" onblur="validate1(this,0,1,4)" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
@@ -85,7 +85,7 @@ width:50%;
 							<div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="text" placeholder="例如：8:00-18:00" minlength="2" maxlength="15" onblur="validate(this,2,15,5)" name='open_time' value='<?php echo $info['open_time'];?>' required>
+                                    <input type="text" placeholder="例如：8:00-18:00" minlength="2" maxlength="15" onblur="validate(this,2,15,5)" name='open_time' value="<?php echo $info['open_time'];?>" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
@@ -93,7 +93,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="text" name='link_man' placeholder="请输入联系人，2-11个字符" minlength="2" maxlength="11" onblur="validate(this,2,11,6)" value='<?php echo $info['link_man'];?>' required>
+                                    <input type="text" name='link_man' placeholder="请输入联系人，2-11个字符" minlength="2" maxlength="11" onblur="validate(this,2,11,6)" value="<?php echo $info['link_man'];?>" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
@@ -101,7 +101,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="tel" name='phone' minlength="11" maxlength="12" onblur="validate(this,11,12,7)" value='<?php echo $info['phone'];?>' class="js-pattern-mobile" placeholder="输入合法的手机号" required>
+                                    <input type="tel" name='phone' minlength="11" maxlength="12" onblur="validate(this,11,12,7)" value="<?php echo $info['phone'];?>" class="js-pattern-mobile" placeholder="输入合法的手机号" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
@@ -109,7 +109,7 @@ width:50%;
                             <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="text" name='address' placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,8)" minlength="2" maxlength="50" value='<?php echo $info['address'];?>' required>
+                                    <input type="text" name='address' placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,8)" minlength="2" maxlength="50" value="<?php echo $info['address'];?>" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
@@ -205,7 +205,7 @@ width:50%;
                                     <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
 									<?php else:?>
 									<div class="wx_type_img">
-                                        <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
+                                        <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                         <!-- 图片实时预览 -->
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         
@@ -231,7 +231,7 @@ width:50%;
                                         <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
 											<input type='hidden' name='type_id' value='<?php echo $type_id;?>'/>
-                                            <input type="text" placeholder="请输入标题名" onblur="validate(this,2,100,9)" name='name' value='<?php echo $info['name'];?>' minlength="2" maxlength="100" required="">
+                                            <input type="text" placeholder="请输入标题名" onblur="validate(this,2,100,9)" name='name' value="<?php echo $info['name'];?>" minlength="2" maxlength="100" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
@@ -239,7 +239,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">户型 </label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='house_layout' placeholder="请输入户型，2-30个字符" onblur="validate(this,2,30,10)" minlength="2" maxlength="30" value='<?php echo $info['house_layout'];?>' required>
+                                            <input type="text" name='house_layout' placeholder="请输入户型，2-30个字符" onblur="validate(this,2,30,10)" minlength="2" maxlength="30" value="<?php echo $info['house_layout'];?>" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
@@ -247,7 +247,7 @@ width:50%;
 									<div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">小区名称 </label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='quarters' onblur="validate(this,2,20,11)" placeholder="请输入小区名称，2-20个字符" minlength="2" maxlength="20" value='<?php echo $info['quarters'];?>' required>
+                                            <input type="text" name='quarters' onblur="validate(this,2,30,11)" placeholder="请输入小区名称，2-30个字符" minlength="2" maxlength="20" value="<?php echo $info['quarters'];?>" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
@@ -256,7 +256,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">小区地址 <span class="red">*</span></label>
                                         <div class="am-u-sm-9">
-                                            <input type="text" name='area_address' onblur="validate(this,2,50,12)" placeholder="请输入小区地址，2-50个字符" minlength="2" maxlength="50" value='<?php echo $info['area_address'];?>' required>
+                                            <input type="text" name='area_address' onblur="validate(this,2,50,12)" placeholder="请输入小区地址，2-50个字符" minlength="2" maxlength="50" value="<?php echo $info['area_address'];?>" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
@@ -280,7 +280,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">中介名称 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='intermediary_name' placeholder="请输入中介名称，2-15个字符" onblur="validate(this,2,15,13)" minlength="2" maxlength="15" value='<?php echo $info['intermediary_name'];?>' required>
+                                            <input type="text" name='intermediary_name' placeholder="请输入中介名称，2-15个字符" onblur="validate(this,2,15,13)" minlength="2" maxlength="15" value="<?php echo $info['intermediary_name'];?>" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips13" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips13" style="display: none;"><i class="am-icon-check"></i></small>
@@ -288,7 +288,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">中介地址 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='address' minlength="2" maxlength="50" onblur="validate(this,2,50,14)" value='<?php echo $info['address'];?>' placeholder="如：邻水xxxx街道,2-50个字符" required>
+                                            <input type="text" name='address' minlength="2" maxlength="50" onblur="validate(this,2,50,14)" value="<?php echo $info['address'];?>" placeholder="如：邻水xxxx街道,2-50个字符" required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips14" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips14" style="display: none;"><i class="am-icon-check"></i></small>
@@ -305,7 +305,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">面积(平米) <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='house_area' minlength="2" maxlength="10" placeholder="请输入面积，2-10个字符" onblur="validate(this,2,10,16)" value='<?php echo $info['house_area'];?>'  required>
+                                            <input type="text" name='house_area' minlength="2" maxlength="10" placeholder="请输入面积，2-10个字符" onblur="validate(this,2,10,16)" value="<?php echo $info['house_area'];?>"  required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips16" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips16" style="display: none;"><i class="am-icon-check"></i></small>
@@ -313,7 +313,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">售价(元/平米) <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" name='avg_price' onblur="validate(this,2,10,17)" placeholder="请输入平均售价,2-10个字符" minlength="2" maxlength="10" value='<?php echo $info['avg_price'];?>'  required>
+                                            <input type="text" name='avg_price' onblur="validate(this,2,10,17)" placeholder="请输入平均售价,2-10个字符" minlength="2" maxlength="10" value="<?php echo $info['avg_price'];?>"  required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips17" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips17" style="display: none;"><i class="am-icon-check"></i></small>
@@ -321,7 +321,7 @@ width:50%;
 									<div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">总售价(元) <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <input type="text" minlength="2" maxlength="10" name='price' placeholder="请输入总售价,2-10个字符" onblur="validate(this,2,10,18)" value='<?php echo $info['price'];?>'  required>
+                                            <input type="text" minlength="2" maxlength="10" name='price' placeholder="请输入总售价,2-10个字符" onblur="validate(this,2,10,18)" value="<?php echo $info['price'];?>"  required>
                                         </div>
                                         <small class="am-u-sm-1 red redtips18" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips18" style="display: none;"><i class="am-icon-check"></i></small>
@@ -356,7 +356,7 @@ width:50%;
 										<?php else:?>
                                         <div class="am-u-sm-9">
 											<div class="wx_type_img">
-                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                                <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                 <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                             </div>
@@ -426,7 +426,7 @@ width:50%;
                                         <div class="am-u-sm-9">
                                             <div class="wx_type_img">
                                                 <?php if(empty($list_pic[0]['picImg'])):?>
-                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
+                                                <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                                 <!-- 图片实时预览 -->
                                                 <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                 <?php else:?>
@@ -444,7 +444,7 @@ width:50%;
                                     <div class="am-form-group am-cf">
                                         <label class="am-u-sm-3 am-form-label">房屋简介 <span class="red">*</span></label>
                                         <div class="am-u-sm-8">
-                                            <textarea class="am-validate" name="content" placeholder="请输入房屋简介，2-500个字符" onblur="validate(this,2,500,20)" id="myue" minlength="2" maxlength=500" rows="5" required><?php echo $info['content'];?></textarea>
+                                            <textarea class="am-validate" name="content" placeholder="请输入房屋简介，2-500个字符" onblur="validate(this,2,500,20)" id="myue" minlength="2" maxlength="500" rows="5" required><?php echo $info['content'];?></textarea>
                                         </div>
                                         <small class="am-u-sm-1 red redtips20" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 green blacktips20" style="display: none;"><i class="am-icon-check"></i></small>
@@ -463,7 +463,7 @@ width:50%;
                              <div class="am-form-group am-cf">
                                 <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
                                 <div class="am-u-sm-8">
-                                    <input type="text" placeholder="请输入宝贝名，2-15个字符" onblur="validate(this,2,15,21)" name='title' value="<?php echo $info['title']?>" minlength="2" maxlength="15" minlength="4" required="">
+                                    <input type="text" placeholder="请输入宝贝名，2-15个字符" onblur="validate(this,2,15,21)" name='title' value="<?php echo $info['title']?>" minlength="2" maxlength="15" minlength="4" required>
                                 </div>
                                 <small class="am-u-sm-1 red redtips21" style="display: none;"><i class="am-icon-close"></i></small>
                                 <small class="am-u-sm-1 green blacktips21" style="display: none;"><i class="am-icon-check"></i></small>
@@ -530,11 +530,11 @@ width:50%;
                                 <div class="am-u-sm-9">
                                     <div class="wx_type_img">
                                         <?php if(isset($banner[0]['picImg'])):?>
-                                        <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                        <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" >
                                         <div id="preview"><img style="border-radius: 3px;width:8rem" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                         <input type='hidden' name='img1' value="<?php echo $banner[0]['picImg'];?>" />
                                         <?php else:?>
-                                        <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" required>
+                                        <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add" >
                                        	<div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                         <?php endif;?>
                                     </div>
@@ -581,7 +581,7 @@ width:50%;
                                         <?php $list_pic = json_decode($info['list_pic'],true);?>
                                         <!-- 图片实时预览 -->
                                        <?php if(!empty($list_pic[0]['picImg'])):?>
-                                        <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add" required>
+                                        <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add">
                                         <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo $list_pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
                                          <input type='hidden' name='list_pic' value="<?php echo $list_pic[0]['picImg'];?>" />
                                         <?php else:?>
