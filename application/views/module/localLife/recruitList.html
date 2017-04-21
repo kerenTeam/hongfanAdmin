@@ -525,7 +525,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">标题 <span class="red">*</span></label>
                         <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入标题,2-15个字符" class='title<%= id %>' minlength="2" maxlength="15" value="<%= name %>" required onblur="validate(this,2,15,8)">
+                            <input type="text" placeholder="请输入标题,2-50个字符" class='title<%= id %>' minlength="2" maxlength="50" value="<%= name %>" required onblur="validate(this,2,50,8)">
                         </div>
                         <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
@@ -585,7 +585,7 @@ $(document).ready(function(){
                         <div class="am-form-group am-cf" >
                             <label class="am-u-sm-3 am-form-label">地址 <span class="red">*</span></label>
                             <div class="am-u-sm-8">
-                                <textarea  name='address'  class="address<%= id%>"  rows="2" value="<%= address%>" required placeholder="请输入详细地址，2-100个字符" onchange="validate(this,2,100,14)" minlength="2" maxlength="200"></textarea>
+                                <textarea  name='address'  class="address<%= id%>"  rows="2"  required placeholder="请输入详细地址，2-100个字符" onchange="validate(this,2,100,14)" minlength="2" maxlength="200"><%= address%></textarea>
                             </div>
                             <small class="am-u-sm-1 red redtips16" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips16" style="display: none;"><i class="am-icon-check"></i></small>

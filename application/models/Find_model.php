@@ -201,7 +201,7 @@ class Find_model extends CI_Model
     //返回活动或专题列表
     function get_find_special($type){
         $where['act_id'] = $type;
-        $query = $this->db->where($where)->get($this->findSpecial);
+        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->findSpecial);
         return $query->result_array();
     }
     
