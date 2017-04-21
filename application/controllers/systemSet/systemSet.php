@@ -66,9 +66,14 @@ class SystemSet extends Default_Controller {
     function guideImageManage()
     {
         //返回启动图广告
-        $adver = $this->System_model->get_start_advertising();
+        $adver = $this->System_model->get_start_advertising('12');
         $data['adver'] = json_decode($adver['banner'],true);
+        //返回首页标题图
+        $homeTitle = $this->System_model->get_start_advertising('13');
+        $data['homeTitle'] = json_decode($homeTitle['banner'],true);
+        
         $data['id'] = $adver['id'];
+        $data['bannerid'] = $homeTitle['id'];
         $data['page'] = $this->view_guideImage;
         $data['menu'] = array('systemSet','guideImageManage');
         $this->load->view('template.html',$data);
