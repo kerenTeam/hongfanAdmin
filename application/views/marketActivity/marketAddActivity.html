@@ -127,22 +127,38 @@
                                         <div class="am-u-sm-6 am-u-end">
                                             <ul class="am-list">
                                             <?php foreach($coupon as $val):?>
+                                             <?php if($val['typeid'] == 1):?>
                                               <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
-                                                <?php if($val['typeid'] == 1):?>
-                                                  <div class="am-u-sm-3">
-                                                     fgf 
-                                                  </div>
-                                                  <div class="am-u-sm-9">
-
-                                                      <p>代金劵</p>
-                                                      <p>满500元减20元 - fgfgf</p>
-                                                      <p>有效时间：</p>
-                                                  </div>
-                                                  <input type="hidden" name="couponid[]" class="saveid" />
-                                                  <span class="am-icon"></span>
-                                              </li>
+                                                    <div class="am-u-sm-3">
+                                                        代 
+                                                    </div>
+                                                    <div class="am-u-sm-9">
+                                                        <p><?php echo $val['title'];?></p>
+                                                        <?php $con=explode(',',$val['coupon_amount']);?>
+                                                        <p>直接抵扣<?php echo $con[0];?>元</p>
+                                                        <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
+                                                    </div>
+                                                     <span class="am-icon"></span>
+                                                     <input type="hidden" name="couponid[]" class="saveid" />
+                                                </li>
+                                            <?php elseif($val['typeid'] == 2):?>
+                                                <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
+                                                        <div class="am-u-sm-3">
+                                                         折 
+                                                        </div>
+                                                        <div class="am-u-sm-9">
+                                                            <?php $con=explode(',',$val['coupon_amount']);?>
+                                                            <p><?php echo $val['title'];?></p>
+                                                            <p>满 <b><?php echo $con[0];?></b> 元打 <?php echo $con[1]*10;?> 折</p>
+                                                            <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
+                                                        </div>
+                                                         <span class="am-icon"></span>
+                                                         <input type="hidden" name="couponid[]" class="saveid" />
+                                                 </li>
+                                               <?php endif;?>
                                             <?php endforeach;?>
-                                              
+                                               
+                                               
                                             </ul> 
                                         </div>
                                     </div>
@@ -197,7 +213,6 @@
                                 <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="submit">新增</button>
                                 <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                             </div>
-
                         </div>
             </form>
         </div>

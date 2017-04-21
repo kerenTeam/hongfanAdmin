@@ -340,7 +340,7 @@
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/store/Specialty/edit_goods_stor');?>',
-                data: 'goodsid='+ dataId+'&sort='+ sort,
+                data: 'goods_id='+ dataId+'&sort='+ sort,
                 success: function(data){
                     if(data==1){
                         alert('操作成功!');
@@ -505,7 +505,7 @@ $(document).ready(function(){
         <div class="am-modal-dialog">
             <div class="am-modal-hd">删除提示</div>
             <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
+                <p class="black">你，确定要取消这条推荐记录吗？</p>
             </div>
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>

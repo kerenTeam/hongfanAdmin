@@ -96,8 +96,8 @@
                     <div class="widget-body">
                         <div class="memberInfo padding-horizontal-lg" id="imagesBox">
 
-                            <?php if(!empty($adver)):?>
-                            <?php foreach($adver as $k=>$v):?>
+                            <?php if(!empty($homeTitle)):?>
+                            <?php foreach($homeTitle as $k=>$v):?>
                             <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4">
                                 <label class="am-u-sm-3 am-text-right"><?php if($k == 0){echo "天天特价:";}else{echo "首页推荐:";} ?></label>
                                  <div class="am-u-sm-9 am-u-end">
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type='hidden' name="id" value="<?php echo $id;?>">
+                        <input type='hidden' name="id" value="<?php echo $bannerid;?>">
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit"  >保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>
