@@ -93,12 +93,6 @@
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">铺号</label>
-                        <div class="am-u-sm-9">
-                            <input type="text" placeholder="" id="berth">
-                        </div>
-                    </div> -->
                      <div class="am-form-group am-u-sm-6 am-u-md-3 am-u-lg-3">
                         <label for="source_state" class="am-u-sm-3 am-form-label">关键字查询</label>
                         <div class="am-u-sm-9">
@@ -130,6 +124,7 @@
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
+                                    <th class="tablecheck"><input type="checkbox" /></th>
                                     <th>商场名称 </th>
                                     <th>商铺编号 </th>
                                     <th>商铺名称 </th>
@@ -150,7 +145,7 @@
                             <div class="pagination">
                                 <a class="prev"><i></i>上一页</a>
                                 <a class="current">1</a>
-                                <a >2</a>
+                                <a>2</a>
                                 <a>3</a>
                                 <a>4</a>
                                 <span class="pagination-break">...</span>
@@ -191,7 +186,7 @@
                       <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                     </div>
                     <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                    <small class="tpl-form-line-small-title">提示：图片格式支持：PNG、JPG、JPEG；最大支持2M</small> 
+                    <small class="tpl-form-line-small-title">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small> 
                 </div>
             </div>
             <div class="am-form-group am-cf">
@@ -230,6 +225,51 @@ function someOptions() {
             $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
         }                          
     }
+    //点击选中所有
+    $('.tablecheck').click(function() {
+        if(flag==0){
+          for(var i=0;i<$('.commentBox').length;i++) {
+            document.getElementsByClassName('commentBox')[i].checked=true;
+          }  
+          flag=1;
+        }else{
+           for(var i=0;i<$('.commentBox').length;i++) {
+            // $('.commentBox').eq(i).attr('checked',false);
+            document.getElementsByClassName('commentBox')[i].checked=false;
+            }
+           flag=0;
+        }
+    });
+    //加入达人推荐的ajax请求
+    $('#add_store').click(function(){
+        var array=[];
+        console.log($('tr.trClass td input:checkbox[name=commentBox]:checked').length);
+        for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){
+            
+            array[i] = $('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+        }
+        if(array == ''){
+            alert('你还没有选择商家！');
+        }else{
+            storeid=JSON.stringify(array);
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/Shop/add_find_store');?>',
+                data: 'storeid='+storeid+'&id='+'<?php echo $find;?>',
+                success: function(data){
+                    if(data==1){
+                        alert('加入成功');
+                        window.location.href='<?php echo site_url("/shop/Shop/findshop");?>';
+                    }else{
+                        alert("操作失败！");
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        }
+    });
     //更改商家的状态
     $('.shopState').change(function(){
         var dataId=$(this).attr('data-id');
@@ -290,7 +330,7 @@ function someOptions() {
         });
     });
 }
-var total_page=0,pageflag = 1, $marketList = parseInt(sessionStorage.getItem('marketList')) || 0;
+var total_page=0,pageflag = 1, $marketList = parseInt(sessionStorage.getItem('marketList')) || 0, $isMarketList = parseInt(sessionStorage.getItem('isMarketList')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -361,7 +401,7 @@ function getList(dataurl,data){
                 someOptions();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商家信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
             
@@ -369,28 +409,33 @@ function getList(dataurl,data){
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
             $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商家信息！</p></td></tr>').appendTo('#dataList');
             $('.pagebox').css('display', 'none');
         }
     });
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=1');
-    //刷新页面
-    $('.refresh').click(function(){
+    if($isMarketList) {
+        var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),berth='',keywords=$('#keywords').val();
+        // console.log('yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&sear='+keywords);
+       getList('<?php echo site_url('/shop/shop/search_store');?>','yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
+       sessionStorage.setItem('isMarketList', 1);
+    } else {
         getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=1');
-    });
+    }
     //点击搜索
     $('.searchShop').click(function(){
         var yetaiSort=$('#yetaiSort option:selected').val(),shopstate=$('#shopstate option:selected').val(),floorNumber=$('#floorNumber option:selected').val(),berth='',keywords=$('#keywords').val();
         // console.log('yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&sear='+keywords);
        getList('<?php echo site_url('/shop/shop/search_store');?>','yetai='+ yetaiSort +'&state='+ shopstate +'&floor='+ floorNumber +'&berth='+ berth +'&sear='+keywords);
+       sessionStorage.setItem('isMarketList', 1);
     });
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass<%= store_id%>" id="trClass<%= store_id%>" data-id="<%= store_id%>">
+    <tr class="trClass" id="trClass<%= store_id%>" data-id="<%= store_id%>">
+        <td class="am-text-middle" ><input type="checkbox" data-id="<%= store_id%>" class="commentBox" name="commentBox"></td>
         <td class="am-text-middle">宏帆广场</td>
         <td class="am-text-middle"><%= store_id%></td>
         <td class="am-text-middle"><%= store_name%></td>

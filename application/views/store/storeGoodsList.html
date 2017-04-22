@@ -151,7 +151,6 @@
                                 <?php if(!empty($saleid)):?>
                                     <a id="add_sales" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 加入HOT推荐</a>
                                 <?php endif;?>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                                 <div class="goodsSelectDiv">
                                     <select class="goodsSelect" name="goodsSelect">
@@ -219,15 +218,9 @@
 <!--加入展销-->
 
 <script src="assets/js/artTemplate-native.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-    //实例化编辑器
-    var ue = UE.getEditor('editor');
-    //实例化编辑器
     var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
-    var $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList')) || 0;
+    var $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList')) || 0, $isStoreGoodsList = parseInt(sessionStorage.getItem('isStoreGoodsList')) || 0;
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
@@ -369,135 +362,108 @@
             }
                                 
         }
-
+        //点击选中所有
+        $('.tablecheck').click(function() {
+            var start_page=parseInt(15)*parseInt($storeGoodsList);
+            var end_page=parseInt(15)*parseInt($storeGoodsList+1);
+            if(flag==0){
+              for(var i = start_page; i < end_page; i++) {
+                if(document.getElementsByClassName('commentBox')[i]){
+                    document.getElementsByClassName('commentBox')[i].checked=true;
+                }        
+              }   
+              flag=1;
+            }else{
+               for(var i = start_page; i < end_page; i++) {
+                if(document.getElementsByClassName('commentBox')[i]){
+                    document.getElementsByClassName('commentBox')[i].checked=false;
+                }        
+              }  
+               flag=0;
+            }
+        });
         //更改商品的状态
         $('.goodsState').change(function(){
-            var dataId=$(this).attr('data-id');
+            var dataId=$(this).attr('data-id'), goodState = 0;
             if($(this).find('option:selected').val()=="1"){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                    data: 'goodsid='+ dataId+'&state=1',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                goodState = 1;
                 $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
             }else{
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                    data: 'goodsid='+ dataId+'&state=0',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                goodState = 0;
                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
             }
-            
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                data: 'goodsid='+ dataId+'&state='+ goodState,
+                success: function(data){
+                    if(data==1){
+
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
             
         });
         //推荐商品
         $('.recommend').change(function(){
-            var dataId=$(this).attr('data-id');
+            var dataId=$(this).attr('data-id'), state = 0;
             if($(this).find('option:selected').val()=="1"){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-                    data: 'goodsid='+ dataId+'&state=1',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                state = 1;
                 $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
             }else{
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/store/Store/edit_recommend');?>',
-                    data: 'goodsid='+ dataId+'&state=0',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        } 
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                state = 0;
                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
             }
-            
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/edit_recommend');?>',
+                data: 'goodsid='+ dataId+'&state='+ state,
+                success: function(data){
+                    if(data==1){
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
             
         });
         //商品特价
         $('.priceState').change(function(){
-            var dataId=$(this).attr('data-id');
+            var dataId=$(this).attr('data-id'), state = 0;
             if($(this).find('option:selected').val()=="1"){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/specials_goods');?>',
-                    data: 'goodsid='+ dataId+'&specials_state=1',
-                    success: function(data){
-                        console.log(data);
-                        if(data==1){
-                            alert('操作成功');
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                state = 1;
                 $(this).css({'background':'#15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
             }else{
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/specials_goods');?>',
-                    data: 'goodsid='+ dataId+'&specials_state=0',
-                    success: function(data){
-                        if(data==1){
-                            alert('操作成功');
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
+                state = 0;
                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
             }
-            
-            
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/specials_goods');?>',
+                data: 'goodsid='+ dataId+'&specials_state='+ state,
+                success: function(data){
+                    console.log(data);
+                    if(data==1){
+                        alert('操作成功');
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
         });
         //删除商品的AJAX请求
         $('.sureDelete').click(function(){
@@ -531,6 +497,7 @@
             data: data,
             success: function(result){     
                 var res = eval(result);
+                // console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     total_page = Math.ceil(res.length/15); //得到总页数
@@ -557,7 +524,7 @@
                     
                 }else{
                     $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商品信息！</p></td></tr>').appendTo('#dataList');
                     $('.pagebox').css('display', 'none');
                 }
 
@@ -566,7 +533,7 @@
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商品信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
         });
@@ -601,49 +568,52 @@
         }
     }
 $(document).ready(function(){
-    
-
     //加载列表数数据 
-    getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');     
+    if($isStoreGoodsList == 2) {
+        var dataId=$('.goodsSelect').attr('data-id'), defaultSign = 0;
+        if($('.goodsSelect').find('option:selected').val()=="1"){
+            defaultSign = 2;
+            $('.goodsSelect').css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
+        }else if($('.goodsSelect').find('option:selected').val()=="0") {
+            defaultSign = 3;
+            $('.goodsSelect').css({'background':' #e0690c','border':'1px solid #e0690c'}); 
+        } else {
+            defaultSign = 1;
+        }
+        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default='+ defaultSign);
+        sessionStorage.setItem('isStoreGoodsList', 2);    
+    } else if ($isStoreGoodsList == 1) {
+        var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
+        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
+        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
+            alert("交易总额必须是一个范围！");
+            return false;
+        }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
+            alert("库存必须是一个范围！");
+            return false;
+        }else{
+            // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getList('<?php echo site_url('store/store/goods_search');?>','diff=4'+'&cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+        }
+        sessionStorage.setItem('isStoreGoodsList', 1);
+    } else {
+        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1'); 
+    }
+        
     //商品筛选
     $('.goodsSelect').change(function(){
-        var dataId=$(this).attr('data-id');
-        if($(this).find('option:selected').val()=="1"){
-            //alert('12');
-            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=2');
+        var dataId=$(this).attr('data-id'), defaultSign = 0;
+        if($(this).find('option:selected').val()=="1") {
+            defaultSign = 2;
             $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
-        }else if($(this).find('option:selected').val()=="0"){
-            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=3');
+        }else if($(this).find('option:selected').val()=="0") {
+            defaultSign = 3;
             $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
-        }else{
-            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
-        }      
-    });
-
-    //点击选中所有
-    $('.tablecheck').click(function() {
-        var start_page=parseInt(15)*parseInt($storeGoodsList);
-        var end_page=parseInt(15)*parseInt($storeGoodsList+1);
-        if(flag==0){
-          for(var i = start_page; i < end_page; i++) {
-            if(document.getElementsByClassName('commentBox')[i]){
-                document.getElementsByClassName('commentBox')[i].checked=true;
-            }        
-          }   
-          flag=1;
-        }else{
-           for(var i = start_page; i < end_page; i++) {
-            if(document.getElementsByClassName('commentBox')[i]){
-                document.getElementsByClassName('commentBox')[i].checked=false;
-            }        
-          }  
-           flag=0;
+        } else {
+            defaultSign = 1;
         }
-    });
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
-
+        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default='+ defaultSign);
+        sessionStorage.setItem('isStoreGoodsList', 2);     
     });
     //点击搜索
     $('.searchGoods').click(function(){
@@ -659,6 +629,7 @@ $(document).ready(function(){
             // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
              getList('<?php echo site_url('store/store/goods_search');?>','diff=4'+'&cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
         }
+        sessionStorage.setItem('isStoreGoodsList', 1);
         
     });
 

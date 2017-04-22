@@ -76,14 +76,14 @@ td.am-text-middle img{
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id">订单编号 </th>
-                                    <th class="moll_name">买家姓名 </th>
-                                    <th class="shop_id">身份证号 </th>
-                                    <th class="shop_yetai">收货地址 </th>
-                                    <th class="shop_yetai">手机号</th>
-                                    <th class="shop_yetai">订单金额 </th>
-                                    <th class="brand">下单时间</th>
-                                    <th class="shop_block">订单状态</th>
+                                    <th>订单编号 </th>
+                                    <th>买家姓名 </th>
+                                    <th>身份证号 </th>
+                                    <th>收货地址 </th>
+                                    <th>手机号</th>
+                                    <th>订单金额 </th>
+                                    <th>下单时间</th>
+                                    <th>订单状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -247,6 +247,7 @@ function next(argu){
                     listData+= template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($loveToGoOrderList);
                     var opts={};opts.current_page = $loveToGoOrderList;
@@ -263,12 +264,16 @@ function next(argu){
                 otherFunction();                                
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }
             
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }

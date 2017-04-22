@@ -39,6 +39,9 @@ td.am-text-middle img {
 .imgbox {
     width: 100% !important;
 }
+label {
+    font-weight: normal;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -66,6 +69,9 @@ td.am-text-middle img {
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
+                                    <a  class="am-btn am-btn-warning am-btn-xs" data-am-modal="{target: '#volunteerActivity'}">
+                                          <i class="am-icon-paper-plane"></i>&nbsp;发起活动
+                                    </a>
                                     <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
                                 </div>
                             </div>
@@ -76,10 +82,10 @@ td.am-text-middle img {
                             <thead>
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox"></th>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="moll_name">活动名称 </th>
-                                    <th class="moll_name">活动缩略图</th>
-                                    <th class="shop_id">活动发布时间</th>
+                                    <th>编号 </th>
+                                    <th>活动名称 </th>
+                                    <th活动缩略图</th>
+                                    <th>活动发布时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -129,10 +135,59 @@ td.am-text-middle img {
     </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<!-- 为民服务 义工团队活动 开始 -->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="volunteerActivity">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">义工团队活动</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/serveForPeople/ServeForPeople/add_volunteer_activities');?>" method="post">
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">活动名称<span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">  
+                        <input type="text" placeholder="建议不超过30个字符" name='title' minlength="2" maxlength="30" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">活动地点<span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">  
+                        <input type="text"  placeholder="请输入活动举办的地点" name='address' minlength="2" maxlength="30" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label for="" class="am-u-sm-3 am-form-label">活动图片<span class="red">*</span></label>
+                     <div class="am-u-sm-9">
+                        <div class="wx_type_img">
+                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                          <!-- 图片实时预览 -->
+                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                        </div>
+                        <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
+                        <small class="tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">活动详情<span class="red">*</span>：</label>
+                    <div class="am-u-sm-9">
+                        <textarea rows='8' id="editor" placeholder="主要包括活动目的，活动内容等" type="text/plain" name='content'></textarea>
+                    </div>
+                </div>
+                
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-secondary" data-am-modal-confirm>发起</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 为民服务 义工团队活动 结束 -->
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-var total_page = 0,pageflag = 1,flag = 0,current_page=0,$volunteerTeamservelist = parseInt(sessionStorage.getItem('volunteerTeamservelist')) || 0;
+var total_page = 0,pageflag = 1,flag = 0,current_page=0,$volunteerTeamservelist = parseInt(sessionStorage.getItem('volunteerTeamservelist')) || 0, ue = UE.getEditor('editor');
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -175,7 +230,7 @@ function next(argu){
 }
 function otherOperation() {
     //点击选中所有
-     $('.tablecheck').click(function() {
+    $('.tablecheck').click(function() {
         if(flag==0){
           for(var i=0;i<$('.commentBox').length;i++) {
             document.getElementsByClassName('commentBox')[i].checked=true;
@@ -188,11 +243,14 @@ function otherOperation() {
            flag=0;
         }
     });
+
+    
     for(var i=0;i<$('.tpl-del').length;i++){
         var dataId=$('.tpl-del').eq(i).attr('data-id'),detailId=$('.bangServeDetail').eq(i).attr('data-id'),reDataId=$('.conResponse').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-        $('.bangServeDetail').eq(i).attr("data-am-modal","{target: '#detail"+ detailId +"'}");
-        $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");                     
+        $('.bangServeDetail').eq(i).attr("href","<?php echo site_url().'/serveForPeople/serveForPeople/volunteerActivityEdit/" + detailId + "';?>");
+        $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");
+                           
     }
     
    
@@ -202,7 +260,6 @@ function otherOperation() {
         var array=[]; 
         array[0]=deleteId;
         array=JSON.stringify(array);
-        console.log(array);
 
         $.ajax({
             type:'post',
@@ -226,11 +283,12 @@ function otherOperation() {
     $('.deleteAll').click(function(){
         var deleteId=$(this).attr('data-id');
         var array=[];
-        for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
-            array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-        }
-        array=JSON.stringify(array);
-        $.ajax({
+        if($('tr.trClass td input:checkbox[name=commentBox]:checked').length) {
+            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
+                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
+            }
+            array=JSON.stringify(array);
+            $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/serveForPeople/serveForPeople/del_volunter_activivies');?>',
                 data: 'id='+array,
@@ -246,7 +304,18 @@ function otherOperation() {
                     alert("操作失败，请检查网络设置！");
                 }
             });
-        
+            return true;
+        } else {
+            alert("你还未选择活动！");
+            return false;
+        }
+    
+    });
+    //删除图片
+    $(".deleteImg").click(function(){
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').val("");
+        $(this).siblings('.wx_type_img').find('input').files="";
     });
 }
 //异步刷新的ajax请求 
@@ -282,7 +351,7 @@ function getList(dataurl,data){
                 otherOperation();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无义工活动信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -290,16 +359,15 @@ function getList(dataurl,data){
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无义工活动信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }
 $(document).ready(function(){
      //加载列表数数据
     getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
-    });
 })
 </script>
 <script type="text/html" id="dataModal">
@@ -313,7 +381,7 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="bangServeDetail">
-                    <i class="am-icon-info-circle"></i> 查看详情
+                    <i class="am-icon-pencil"></i> 编辑
                 </a>
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
@@ -330,43 +398,6 @@ $(document).ready(function(){
             <div class="am-modal-footer">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span>
                 <span class="am-modal-btn sureDelete" data-id="<%= id%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="detail<%= id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">帮帮活动信息</div>
-            <div class="am-modal-bd">
-                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">活动名称 ：</label>
-                    <div class="am-u-sm-9">
-                        <span class="am-text-left"><%= title%></span>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">活动缩略图 ：</label>
-                    <div class="am-u-sm-9">
-                        <span class="am-text-left"><img class="imgbox" src="<%= picImg%>"></span>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">活动内容 ：</label>
-                    <div class="am-u-sm-9">
-                      <textarea rows="5" class="am-u-sm-12"><%= content%></textarea>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">发布时间 ：</label>
-                    <div class="am-u-sm-9">
-                        <span class="am-text-left"><%= create_time%></span>
-                    </div>
-                </div>
-            </form>
-                
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-close>关闭</span>
             </div>
         </div>
     </div>

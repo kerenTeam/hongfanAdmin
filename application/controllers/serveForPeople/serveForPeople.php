@@ -15,6 +15,8 @@ class ServeForPeople extends Default_Controller
 	public $view_helpgroupservelist = 'module/serveForPeople/helpgroupservelist.html';
     public $view_volunteerTeamservelist = 'module/serveForPeople/volunteerTeamservelist.html';
     public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
+    //编辑 义工活动
+    public $view_volunteerActivityEdit= 'module/serveForPeople/volunteerActivityEdit.html';
     public $view_lawyergrouplist = 'module/serveForPeople/lawyergrouplist.html';
     public $view_lawyergroupservelist = 'module/serveForPeople/lawyergroupservelist.html';
     //新增 律师团成员
@@ -628,7 +630,12 @@ class ServeForPeople extends Default_Controller
             $this->load->view('404.html');
         }
     }
-
+    //义工团队 编辑活动
+    function volunteerActivityEdit(){
+        $data['page'] = $this->view_volunteerActivityEdit;
+        $data['menu'] = array('serveForPeople','2');
+        $this->load->view('template.html',$data);
+    }
     //获取义工团队活动列表
     function get_volunter_activities_list(){
         if($_POST){

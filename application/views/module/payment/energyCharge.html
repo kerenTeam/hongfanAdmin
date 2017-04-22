@@ -80,24 +80,15 @@ padding: 5px 6px!important;
                     </div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="shop_id">编号 </th>
-                                    <th class="shop_name">用户名 </th>
-                                    <th class="shop_name">手机号</th>
-                                    <th class="shop_type">充值金额(元) </th>
-                                    <th class="shop_type">优惠金额(元) </th>
+                                    <th>编号 </th>
+                                    <th>用户名 </th>
+                                    <th>手机号</th>
+                                    <th>充值金额(元) </th>
+                                    <th>优惠金额(元) </th>
                                     <th>充值时间</th>
                                     <th>供应商编号</th>
                                     <th>操作</th>
@@ -109,10 +100,24 @@ padding: 5px 6px!important;
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -123,94 +128,129 @@ padding: 5px 6px!important;
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-    var deleteArray=[],nums=0,flag=0;
+    function otherFunction() {
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                       
+        }
 
+        //单个记录删除
+        $('.sureDelete').click(function(){
+            var deleteId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
+                data: 'commentid='+deleteArray,
+                success: function(data){
+                    if(data==1){                                           
+                        alert("删除成功！");
+                        getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','type=1');
+                    }else{
+                        alert("操作失败！");
+                        return false;
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                    return false;
+                }
+            });
+        });
+    }
+    var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
+    var $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge')) || 0, $isEnergyCharge = parseInt(sessionStorage.getItem('isEnergyCharge')) || 0;
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page = page_num;
+        sessionStorage.setItem('EnergyCharge', current_page);
+        $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge'));
+        
+    }
+
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(argu){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(1).html());
+        }else {
+            new_page = parseInt($('.current').html());
+        }
+        if(new_page < argu){
+            go_to_page(new_page);
+        }
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){         
-            var res = eval(result);
-             console.log(res);
-            if(res!=2){
-                nums = 10; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                var thisDate = function(curr){
-                    var listData = '' , last = curr*nums - 1;
-                    last = last >= res.length ? (res.length-1) : last;
-                     for(var i = (curr*nums - nums); i <= last; i++){
-                        res[i].data = JSON.parse(res[i].data);
-                        listData+= template('dataListModal',res[i]);
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){     
+                var res = eval(result);
+                // console.log(res);
+                if(res != 2 && res != 3){
+                    var listData = ''; //每页出现的数量
+                    total_page = Math.ceil(res.length/15); //得到总页数
+                    for(var i = 0; i < res.length; i++){
+                        res[i].data=JSON.parse(res[i].data);
+                        listData+= template('dataModal',res[i]);
                      }
-                    
-                    return listData;
-                };
-                //调用分页
-                laypage({
-                    cont: 'paging_list',
-                    pages: pages,
-                    jump: function(obj){
-                        document.getElementById('dataList').innerHTML = thisDate(obj.curr);
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                       
-                        }
-
-                        //单个缴费记录删除
-                        $('.sureDelete').click(function(){
-                            var deleteId=$(this).attr('data-id');
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
-                                data: 'commentid='+deleteArray,
-                                success: function(data){
-                                    alert(data);
-                                    if(data==1){                                           
-                                        $('#trClass'+deleteId).remove();
-
-                                    }else{
-                                        alert("操作失败！");
-                                        return false;
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                    return false;
-                                }
-                            });
-                        });
+                    document.getElementById('dataList').innerHTML = listData;
+                    $('.pagebox').css('display', 'block');
+                    if(pageflag) {
+                        go_to_page($EnergyCharge);
+                        var opts={};opts.current_page = $EnergyCharge;
+                        $("#Pagination").pagination(total_page, opts);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
                     }
-                })
-            }else{
-                $('#dataList').find('tr').remove();
-                $('#paging_list').html("");
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关评论信息！</p></td></tr>').appendTo('#dataList');
-            }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }                             
+                    otherFunction();                             
+                }else{
+                    $('#dataList').find('tr').remove();
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无购票信息！</p></td></tr>').appendTo('#dataList');
+                    $('.pagebox').css('display', 'none');
+                }
 
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-        }
-    });
-}
-$(document).ready(function(){
-    //加载列表数数据
-    getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','type=1');
-    //刷新页面
-    $('.refresh').click(function(){
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无购票信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
+            }
+        });
+    }
+    $(document).ready(function(){
+        //加载列表数数据
         getList('<?php echo site_url('/payment/Payment/qianmi_order_list');?>','type=1');
-    });
-})
+    })
 </script>
-<script type="text/html" id="dataListModal">
+<script type="text/html" id="dataModal">
     <tr class="trClass" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <%if(username){%>

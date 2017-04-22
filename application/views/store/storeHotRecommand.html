@@ -80,16 +80,15 @@ color: #333;
                                             <div class="am-btn-toolbar">
                                                 <div class="am-btn-group am-btn-group-xs">
                                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url('/store/Store/storeGoodsList/'.$val['id']);?>"><span class="am-icon-plus"></span> 加入商品</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
                                             <thead>
                                                  <tr>
-                                                    <th width="600">HOT推荐详情 </th>
+                                                    <th width="480">HOT推荐详情 </th>
                                                     <th>商品编号 </th>
-                                                    <th>商品名称 </th>
+                                                    <th width="200">商品名称 </th>
                                                     <th>商品缩略图 </th>
                                                     <th>操作</th>
                                                 </tr>
@@ -105,17 +104,15 @@ color: #333;
                                                             <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/store/Specialty/edit_find_info');?>" method='post' >
                                                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                                                         <label for="user-name" class="am-u-sm-2 am-form-label">标题:</label>
-                                                                        <div class="am-u-sm-9 am-u-end">
-                                                                            <input type="text" name="title" class="tpl-form-input" value="<?php echo $val['title'];?>" id="limit-name" placeholder="请输入标题名称，2-10字以内" minlength="2" maxlength="10" required onblur="validate(this)" />
-                                                                            <small class="red redtips" style="display: none;"><i class="am-icon-close"></i></small>
-                                                                            <small class="green blacktips" style="display: none;"><i class="am-icon-check"></i></small>
+                                                                        <div class="am-u-sm-10 am-u-end">
+                                                                            <input type="text" name="title" class="tpl-form-input" value="<?php echo $val['title'];?>" id="limit-name" placeholder="请输入标题名称，2-10字以内" minlength="2" maxlength="10" required  />
                                                                         </div>
                                                                     </div>
                                                                     <div class="am-form-group am-cf">
                                                                         <label class="am-u-sm-2 am-form-label">缩略图 ：</label>
-                                                                        <div class="am-u-sm-9 am-u-end">
+                                                                        <div class="am-u-sm-10 am-u-end">
                                                                             <?php $pic = json_decode($val['picImg'],true);?>
-                                                                                <div class="wx_type_img">
+                                                                            <div class="wx_type_img">
                                                                                  <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
                                                                                   <!-- 图片实时预览 -->
                                                                                   <?php if(!empty($pic[0]['picImg'])):?>
@@ -123,9 +120,12 @@ color: #333;
                                                                                   <?php else:?>
                                                                                   <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
                                                                                   <?php endif;?>
+                                                                            </div>
                                                                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
                                                                             <small class="tpl-form-line-small-title red">提示：图片格式支持：PNG、JPG、JPEG；最大支持800kb,图片尺寸是宽180px，高120px</small> 
+
                                                                         </div>
+
                                                                     </div>
                                                                     <div class="am-form-group am-cf">
                                                                         <label class="am-u-sm-2 am-form-label">详情 ：</label>
@@ -195,17 +195,6 @@ color: #333;
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-//表单验证函数
-function validate(obj){
-    var content=obj.value;
-    if(content.length<2 || content.length>10){
-        $('.blacktips').css('display','none');
-        $('.redtips').css('display','block');
-    }else{
-        $('.redtips').css('display','none');
-        $('.blacktips').css('display','block');
-    }
-}
 
  //实例化编辑器
 var ue4 = UE.getEditor('editor2');
@@ -249,13 +238,5 @@ $('#submit').click(function(){
                 }
             });
     });
-$(document).ready(function(){
-    //加载列表数数据
-    // getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
-    //刷新页面
-    // $('.refresh').click(function(){
-    //     getList('<?php echo site_url('/shop/shop/return_shop_page');?>','typeid=2');
-    // });
-});
 </script>
 

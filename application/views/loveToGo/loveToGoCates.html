@@ -119,11 +119,11 @@ label {
                                 <!--编辑分类开始-->
                                 <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<?php echo $val['catid'];?>">
                                     <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">编辑标签</div>
+                                        <div class="am-modal-hd">编辑分类</div>
                                         <div class="am-modal-bd">
                                             <form class="am-form tpl-form-line-form"  data-am-validator action="<?php echo site_url('/igo/LoveToGo/edit_igo_cates');?>" method="post" enctype='multipart/form-data'> 
                                                 <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">分类名 ：</label>
+                                                    <label class="am-u-sm-3 am-form-label">分类名<span class="red">*</span>：</label>
                                                     <div class="am-u-sm-8 am-u-end">
                                                         <input type="text" id="name<?php echo $val['catid'];?>" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="<?php echo $val['catname']?>" />
                                                         
@@ -132,7 +132,7 @@ label {
                                                     <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
                                                 </div>
                                                 <div class="am-form-group am-cf">
-                                                    <label for="" class="am-u-sm-3 am-form-label">缩略图<span class="red">*</span></label>
+                                                    <label for="" class="am-u-sm-3 am-form-label"> 分类LOGO<span class="red">*</span>：</label>
                                                     <div class="am-u-sm-8 am-u-end">
                                                         <div class="wx_type_img">
                                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
