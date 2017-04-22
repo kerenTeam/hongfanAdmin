@@ -96,6 +96,7 @@ class Service_model extends CI_Model
         return $query->row_array();
     }
 
+
     //修改义工团队信息
     function edit_team_info($id,$data){
         $where['id'] = $id;
@@ -112,11 +113,25 @@ class Service_model extends CI_Model
         $query = $this->db->order_by('create_time','desc')->get($this->team_activity);
         return $query->result_array();
     }
+    //返回要编辑的活动信息
+    function get_activites_info($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get($this->team_activity);
+        return $query->row_array();
+    }
+
+
     //删除活动列表
     function del_volunter_activivies($id){
         $where['id'] = $id;
         return $this->db->where($where)->delete($this->team_activity);
     }
+    //编辑义工团队活动信息
+    function edit_activivies($id,$data){
+        $where['id'] = $id;
+        return $this->db->where($where)->update($this->team_activity,$data);
+    }
+
 
     //搜索律师团成员
     function search_lawergroup($sear){

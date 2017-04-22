@@ -28,28 +28,37 @@
     <div class="row-content am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
-                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_Activity');?>" method="post"  data-am-validator enctype='multipart/form-data'>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-2 am-form-label">活动名称<span class="red">*</span>：</label>
                         <div class="am-u-sm-10">  
-                            <input type="text" placeholder="建议不超过30个字符" id="title" name='title' minlength="2" maxlength="30" required value="">
+                            <input type="text" placeholder="建议不超过30个字符" id="title" name='title' minlength="2" maxlength="30" required value="<?php echo $activity['title'];?>">
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-2 am-form-label">活动地点<span class="red">*</span>：</label>
                         <div class="am-u-sm-10">  
-                            <input type="text"  placeholder="请输入活动举办的地点" id="address" name='address' minlength="2" maxlength="30" required value="">
+                            <input type="text"  placeholder="请输入活动举办的地点" id="address" name='address' minlength="2" maxlength="30" required value="<?php echo $activity['address'];?>">
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
                         <label for="" class="am-u-sm-2 am-form-label">活动图片<span class="red">*</span></label>
                          <div class="am-u-sm-10">
+                             <?php if(!empty($activity['picImg'])):?>
                             <div class="wx_type_img">
+                             <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  >
+                              <div id="preview"> 
+                                  <img style="border-radius: 3px;" src="<?php echo $activity['picImg'];?>" class="am-img-responsive cardView">
+                               </div>
+                            </div>
+                            <?php else:?>
+                                <div class="wx_type_img">
                              <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  required>
                               <div id="preview"> 
                                   <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView">
                                </div>
                             </div>
+                            <?php endif;?>
                             <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
                             <small class="am-u-sm-12 tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                         </div>
@@ -57,11 +66,12 @@
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-2 am-form-label">活动详情<span class="red">*</span>：</label>
                         <div class="am-u-sm-10">
-                            <textarea rows='8' id="editor" placeholder="主要包括活动目的，活动内容等" type="text/plain" name='content'></textarea>
+                            <textarea rows='8' id="editor" placeholder="主要包括活动目的，活动内容等" type="text/plain" name='content'><?php echo $activity['content'];?></textarea>
                         </div>
                     </div>
                     <div class="am-form-group am-text-center am-btn-group-xs">
-                        <button type="button" class="am-btn am-btn-secondary sureSave" data-id="<%= user_id%>" data-am-modal-confirm >保存<tton>
+                        <input type="hidden" name="id" value="<?php echo $activity['id'];?>">
+                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-am-modal-confirm >保存<tton>
                         <button type="reset" class="am-btn am-btn-default"  data-am-modal-close >取消<tton>
                         
                     </div>

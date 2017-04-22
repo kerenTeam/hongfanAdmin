@@ -558,6 +558,7 @@ class ServeForPeople extends Default_Controller
 
    //为民服务  义工团队 服务列表
     function volunteerTeamservelist(){
+
         $data['page'] = $this->view_volunteerTeamservelist;
         $data['menu'] = array('serveForPeople','2');
         $this->load->view('template.html',$data);
@@ -632,10 +633,56 @@ class ServeForPeople extends Default_Controller
     }
     //义工团队 编辑活动
     function volunteerActivityEdit(){
-        $data['page'] = $this->view_volunteerActivityEdit;
-        $data['menu'] = array('serveForPeople','2');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['activity'] = $this->Service_model->get_activites_info($id);
+            
+            $data['page'] = $this->view_volunteerActivityEdit;
+            $data['menu'] = array('serveForPeople','2');
+            $this->load->view('template.html',$data);
+        }
     }
+    //义工团队活动信息编辑
+    function edit_Activity(){
+        if($_POST){
+            $data = $this->input->post();
+            if(!empty($_FILES['img']['name'])){
+                $config['upload_path']      = 'Upload/team/';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['max_size']     = 2048;
+                $config['file_name'] = date('Y-m-d_His');
+                $this->load->library('upload', $config);
+                // 上传
+                if(!$this->upload->do_upload('img')) {
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerActivityEdit/'.$data['id'])."'</script>";exit;
+                }else{
+                    $data['picImg'] = '/Upload/team/'.$this->upload->data('file_name');
+                }     
+            }
+            if($this->Service_model->edit_activivies($data['id'],$data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."编辑了一个义工团队活动，活动名称是：".$data['title'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                  echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamservelist')."'</script>";exit;
+            }else{
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerActivityEdit/'.$data['id'])."'</script>";exit;
+            }
+
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
+
     //获取义工团队活动列表
     function get_volunter_activities_list(){
         if($_POST){
