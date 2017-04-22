@@ -127,7 +127,7 @@ class SystemSet extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $adver = $this->System_model->get_start_advertising();
+            $adver = $this->System_model->get_start_advertising('12');
             $pic = json_decode($adver['banner'],true);
  
             foreach($pic as $k=>$v){
@@ -137,6 +137,7 @@ class SystemSet extends Default_Controller {
             }
            shuffle($pic);
            $data['banner'] = json_encode($pic);
+    
            if($this->System_model->edit_banner($bid,$data)){
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage')."'</script>";
            }else{
@@ -319,7 +320,7 @@ class SystemSet extends Default_Controller {
             $data['adver'] = $this->System_model->get_adver_info($id);
             $data['id'] = $id;
              $data['page'] = $this->view_adverEdit;
-             $data['menu'] = array('systemSet','adverEdit');
+             $data['menu'] = array('moll','adverManage');
              $this->load->view('template.html',$data);
         }
     }

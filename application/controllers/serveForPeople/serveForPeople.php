@@ -573,7 +573,7 @@ class ServeForPeople extends Default_Controller
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img')) {
-                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamserveMess')."'</script>";exit;
                     }else{
                         $data['picImg'] = '/Upload/team/'.$this->upload->data('file_name');
                    }     
@@ -586,9 +586,9 @@ class ServeForPeople extends Default_Controller
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople/2')."'</script>";exit;
             }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamserveMess')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
@@ -607,7 +607,7 @@ class ServeForPeople extends Default_Controller
                     $this->load->library('upload', $config);
                     // 上传
                     if(!$this->upload->do_upload('img')) {
-                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople/2')."'</script>";exit;
                     }else{
                         $data['picImg'] = '/Upload/team/'.$this->upload->data('file_name');
                    }     
@@ -622,7 +622,7 @@ class ServeForPeople extends Default_Controller
                     $this->db->insert('hf_system_journal',$log);
                   echo "<script>alert('操作成功！');window.location.href='".site_url('/serveForPeople/ServeForPeople/volunteerTeamservelist')."'</script>";exit;
             }else{
-                  echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople')."'</script>";exit;
+                  echo "<script>alert('操作失败！');window.location.href='".site_url('/serveForPeople/ServeForPeople/serveForPeople/2')."'</script>";exit;
             }
         }else{
             $this->load->view('404.html');
