@@ -101,14 +101,16 @@ label {
                                     <td class="am-text-middle">
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
+                                                   <?php if($val['parentid'] == '0'):?>
                                                 <?php if($val['recommend_state'] == '1'):?>
-                                                <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-warning isRecommand">
-                                                    <i class="am-icon-star-o"></i> 不推荐
-                                                </a>
+                                                    <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-warning isRecommand">
+                                                        <i class="am-icon-star-o"></i> 不推荐
+                                                    </a>
                                                 <?php else:?>
                                                 <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-success isRecommand">
                                                     <i class="am-icon-star"></i> 推荐到首页
                                                 </a>
+                                                <?php endif;?>
                                                 <?php endif;?>
                                                 <a data-am-modal="{target:'#edit<?php echo $val['catid'];?>'}" class="am-btn am-btn-secondary edit_sort"><span class="am-icon-pencil"></span> 编辑分类</a>&nbsp;&nbsp;
                                                 <a data-am-modal="{target:'#deleteSort<?php echo $val['catid'];?>'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>

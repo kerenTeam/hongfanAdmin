@@ -267,7 +267,7 @@ class LocalLife extends Default_Controller {
 			$config['last_link']= '末页';
 
 			$type = '';
-              $cates = $this->Module_model->get_cateinfo($cate);
+            $cates = $this->Module_model->get_cateinfo($cate);
     		switch ($typeid) {
     			//普通信息
     			case '1':
@@ -312,10 +312,11 @@ class LocalLife extends Default_Controller {
 			$this->load->library('pagination');//加载ci pagination类
 			$this->pagination->initialize($config);
     		$data = array('id'=>$cate,'typeid'=>$typeid,'name'=>'搜索结果','lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type,'catename'=>$cates['name']);
-    		  //视图
-                $data['page'] = $this->view_serviceList;
-                $data['menu'] = array('localLife','service');
-                $this->load->view('template.html',$data);
+;
+			  //视图
+			$data['page'] = $this->view_serviceList;
+			$data['menu'] = array('localLife',$cate);
+			$this->load->view('template.html',$data);
 
     	}else{
     		$this->load->view('404.html');
@@ -769,9 +770,9 @@ class LocalLife extends Default_Controller {
 			}
 
 			if($isOk){
-				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type.'/'.$cateid)."'</script>";exit;
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cateid)."'</script>";exit;
 			}else{
-				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type.'/'.$cateid)."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['id'].'/'.$type.'/'.$cateid)."'</script>";exit;
 			}
 
 		}else{

@@ -94,11 +94,11 @@
                         <div class="widget-title  am-cf">首页标题图管理</div>
                     </div>
                     <div class="widget-body">
-                        <div class="memberInfo padding-horizontal-lg" id="imagesBox">
+                        <div class="memberInfo padding-horizontal-lg">
 
                             <?php if(!empty($homeTitle)):?>
                             <?php foreach($homeTitle as $k=>$v):?>
-                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4">
+                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
                                 <label class="am-u-sm-3 am-text-right"><?php if($k == 0){echo "天天特价:";}else{echo "首页推荐:";} ?></label>
                                  <div class="am-u-sm-9 am-u-end">
                                     <div class="wx_type_img">
@@ -146,10 +146,10 @@
                             </div>
                             <?php if(!empty($adver)):?>
                             <?php foreach($adver as $k=>$v):?>
-                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4">
+                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
                                 <label class="am-u-sm-2 am-text-right">图<?php echo $k+1;?>：</label>
                                  <div class="am-u-sm-10 am-u-end">
-                                    <div class="wx_type_img">
+                                    <div class="wx_type_img ">
                                       <input type="file" id="imgUpload" name="img<?php echo $k+1;?>" onchange="previewImage(this)" class="upload-add am-form-field">
                                       <!-- 图片实时预览 -->
                                       <input type="hidden" name="img<?php echo $k+1;?>" value="<?php echo $v['pic'];?>">
@@ -206,7 +206,7 @@
   $('#cancle').click(function(){
     history.go(-1);
   });
-  var i = $('.wx_type_img').length + 1;
+  var i = $('.wx_type_img').length -1;
   //增加引导图
   $('#addMoreImages').click(function () {
     

@@ -101,9 +101,10 @@ class SystemSet extends Default_Controller {
                         $pic[$i]['pic'] = '/Upload/banner/'.$this->upload->data('file_name');
                     }
                 }else{
+                    if(isset($_POST['img'.$a])){
                     $pic[$i]['id'] =$a;
                     $pic[$i]['pic']  = $_POST['img'.$a];
-                    
+                    }
                 }
                 $i++;
                 $a++;
