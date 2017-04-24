@@ -318,7 +318,7 @@ function getList(dataurl,data){
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){        
             var res = eval(result);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
@@ -359,10 +359,6 @@ function getList(dataurl,data){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=2');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=2');
-    });
     //点击搜索
     $('.searchGoods').click(function(){
         var helpgroupName=$('#helpgroupName').val(),askhelpName=$('#askhelpName').val(),source_state=$('#source_state option:selected').val(),searchKey=$('#searchKey').val();
