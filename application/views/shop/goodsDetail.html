@@ -465,13 +465,24 @@ i {
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
                             <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
+                            <?php $man = json_decode($goods['reduction_rule'],true);?>
+                            <?php if(!empty($man)):?>
+                            <div class="am-u-sm-6" id="priceModelsBox">
+                                 <?php foreach($man as $val):?>
+                               <p>满 <input class="priceOne" value="<?php echo $val['reachPrice']?>" /> 元减 <input class="priceTwo" value="<?php echo $val['reducePrice']?>"/> 元 
+                             <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
+                                <?php endforeach;?>
+                            </div>
+                            <?php else:?>
                             <div class="am-u-sm-6" id="priceModelsBox">
                                <p>满 <input class="priceOne"  /> 元减 <input class="priceTwo" /> 元 
                              <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
                             </div>
+                            <?php endif;?>
                             <div class="am-u-sm-1 am-u-end">
                                 <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                             </div>
+
                             <input type="hidden" id='reduction_rule' name="reduction_rule"/>
                         </div>
                         <?php $tag = explode(',',$goods['good_tags']);?>
@@ -1030,8 +1041,7 @@ $('#dispostage').click(function(){
         $('#inputproperty').val(JSON.stringify(propertyArray));
 
 
-        //添加满减规则
-       var manjianRule = [];
+       var manjianRule = [], TagsModel = [];
         for(var j=0;j<$('.priceOne').length;j++) {
             if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
                 var priceModel = {}
@@ -1043,11 +1053,9 @@ $('#dispostage').click(function(){
             }   
         }
         
-        console.log(manjianRule);
+        // console.log(manjianRule);
         manjianRule=JSON.stringify(manjianRule);
         $('#reduction_rule').val(manjianRule);
-
-        return true;
     });
     //批量操作的js
     $('#batchOperation').click(function () {
