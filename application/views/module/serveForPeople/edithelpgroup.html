@@ -35,6 +35,8 @@
                             <div class="am-u-sm-9">
                                 <input type="text" placeholder="姓名" class="name" name='name' value="<?php echo $info['name']?>" minlength="2" required="">
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
@@ -65,24 +67,32 @@
                             <div class="am-u-sm-9">
                                 <input type="number" name='age' class="age" value="<?php echo $info['age'];?>"  required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>  
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
                                 <input type="text" name='sex' class="age"  value="<?php echo $info['sex'];?>" required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
                                 <input type="text" name='occupation' class="job" value="<?php echo $info['occupation'];?>" required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
                             <div class="am-u-sm-9">
                                 <input type="tel"  class="phone" name='phone' value="<?php echo $info['phone'];?>" required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>            
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">帮扶内容 <span class="red">*</span>：</label>
@@ -90,6 +100,8 @@
                                 <?php $res = json_decode($info['competency'],true);$competency = implode('&',$res);?>               
                                 <input type="text" name='competency' class="content"  placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" value="<?php echo $competency;?>" />
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group">
                             <label for="englishName" class="am-u-sm-3 am-form-label">简介<span class="red">*</span>：</label>
@@ -107,12 +119,14 @@
                                 </select>
                             </div>
                         </div>
-                          <div class="am-form-group am-cf">
+                        <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">所在社区 <span class="red">*</span>：</label>
                             <div class="am-u-sm-9">
                                 <input type="text"  id="address" name="address"  value="<?php echo $info['address'];?>">
                             </div>
                         </div>
+                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">详细地址 ：</label>
                             <input type="hidden" name="x_y" id="addressLocation">

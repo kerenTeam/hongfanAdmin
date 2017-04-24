@@ -13,8 +13,8 @@ td.am-text-middle img {
     width:80px;
 } 
 .am-u-sm6 {
-    width:60px !important;
-    margin:0;
+    width: 60px !important;
+    margin: 0;
 }
 .stable {
     display: inline-block !important;
@@ -127,7 +127,6 @@ td.am-text-middle img {
                                     <th>买家 </th>
                                     <th>卖家 </th>
                                     <th>下单时间 </th>
-                                    <th>更新时间</th>
                                     <th>订单状态 </th>
                                     <th>操作</th>
                                 </tr>
@@ -266,11 +265,12 @@ td.am-text-middle img {
             data: data,
             success: function(result){     
                 var res = eval(result);
-                // console.log(res);
+                console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
+                        res[i].goods_data = JSON.parse(res[i].goods_data);
                         listData+= template('dataModal',res[i]);
                      }
                     document.getElementById('dataList').innerHTML = listData;
@@ -327,10 +327,10 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">   
-    <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
-        <td class="am-text-middle"><%= order_id%></td>
-        <td class="am-text-middle"><%= goods_data.totalNum%></td>
-        <td class="am-text-middle"><%= goods_data.totalMoney%></td>
+    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
+        <td class="am-text-middle"><%= order_id %></td>
+        <td class="am-text-middle"><%= goods_data.Params.goodsData.length %></td>
+        <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
         <%if(username) {%>
         <%= username%>
@@ -338,15 +338,8 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
-        <td class="am-text-middle"><%= store_name%></td>
+        <td class="am-text-middle"><%= store_name %></td>
         <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle">
-        <%if(updatetime=="0" || !updatetime) {%>
-            <%= updatetime%>
-        <%} else {%>
-            <%= create_time%>
-        <%}%>
-        </td>
         <%if(order_status==1) {%>
             <td class="am-text-middle red">
                 未支付

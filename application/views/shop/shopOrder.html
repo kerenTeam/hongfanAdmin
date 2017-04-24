@@ -1,40 +1,40 @@
 <style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
+.am-selected {
+    width: 100%!important;
 }
-.table-check{
-width: 30px;
+.table-check {
+    width: 30px;
 } 
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
+.hf-dropdown {
+    font-size: 12px!important;
+    padding: 5px 6px!important;
 }
-td.am-text-middle img{
+td.am-text-middle img {
     width:80px;
 }
-.am-u-sm6{
+.am-u-sm6 {
     width:60px !important;
     margin:0;
 } 
-.am-form-group div{
+.am-form-group div {
     line-height: 37px;
 }
-.stable{
+.stable {
     display: inline-block !important;
     width: 45% !important;
 }
-.linkWord{
+.linkWord {
     width: 10% !important;
 }
-.tableImg{
+.tableImg {
     width:80px;
 }
-.deliverOrder{
+.deliverOrder {
     border:1px solid #1fb5ac;
     padding:2px 5px;
     color: #15b5ac;
 }
-.modifyOrder{
+.modifyOrder {
     border:1px solid #e0690c;
     padding:2px 5px;
     color: #e0690c;
@@ -108,7 +108,7 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">全部订单列表</div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!-- <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
@@ -116,7 +116,7 @@ td.am-text-middle img{
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
@@ -125,7 +125,7 @@ td.am-text-middle img{
                                     <th>商品数量 </th>
                                     <th>订单金额 </th>
                                     <th>买家 </th>
-                                    <th>更新时间</th>
+                                    <th>订单时间</th>
                                     <th>订单状态 </th>
                                     <th>操作</th>
                                 </tr>
@@ -353,10 +353,6 @@ td.am-text-middle img{
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
-    //刷新页面
-    // $('.refresh').click(function(){
-    //     getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
-    // });
     //点击搜索
     $('.searchOrder').click(function(){
         var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
@@ -373,10 +369,10 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">   
-    <tr class="trClass" id="trClass<%= order_id%>" data-id="<%= order_id%>">
-        <td class="am-text-middle"><%= order_id%></td>
-        <td class="am-text-middle"><%= goods_data.totalNum%></td>
-        <td class="am-text-middle"><%= goods_data.totalMoney%></td>
+    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id %>">
+        <td class="am-text-middle"><%= order_id %></td>
+        <td class="am-text-middle"><%= goods_data.Params.goodsData.length %></td>
+        <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
         <%if(username) {%>
         <%= username%>
@@ -384,11 +380,9 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
-        <!-- <td class="am-text-middle"><%= store_name%></td> -->
-        <!-- <td class="am-text-middle"><%= create_time%></td> -->
         <td class="am-text-middle">
      
-            <%= updatetime%>
+            <%= create_time %>
 
         </td>
         <%if(order_status==1) {%>
@@ -439,12 +433,9 @@ $(document).ready(function(){
                 </a>
                <%if(order_status == '1'){%>
                <a data-id="<%= order_id%>" class="modifyOrder tpl-table-black-operation-del">
-                    <i class="am-icon-eye"></i> 编辑
+                    <i class="am-icon-trash"></i> 编辑
                 </a>
                 <%}%>
-           <!--      <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a> -->
             </div>
         </td>
     </tr>
