@@ -25,17 +25,17 @@
                 <form class="am-form tpl-form-line-form"  action="<?php echo site_url('/serveForPeople/ServeForPeople/add_lawyerfroupUser');?>" method="post" enctype='multipart/form-data'>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
-                            <div class="am-u-sm-9">
-                                <input type="text" placeholder="姓名" class="name" name='name' minlength="2" required="">
+                            <div class="am-u-sm-8">
+                                <input type="text" placeholder="姓名，2-15个字符" class="name" name='name' minlength="2" maxlength="15" required onblur="validate(this,2,15,1)">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
+                            <div class="am-u-sm-8 am-u-end">
                                 <div class="wx_type_img">
-                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
+                                    <input type="file" name="img" onchange="previewImage(this)"  id="imgUpload" class="upload-add imgUp" required>
                                       <!-- 图片实时预览 -->
                                       <div id="preview" class="preview">
                                         <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
@@ -47,75 +47,68 @@
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">评分<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="number" name='star' class="star" min="0" max="5" required>
+                            <div class="am-u-sm-8">
+                                <input type="number" name='star' class="star" min="1" max="5" placeholder="请输入1-5之间的数字" required onblur="validate(this,1,1,2)" onmousewheel="return false;">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
                         </div> 
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">学历<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name='education' class="education"  required>
+                            <div class="am-u-sm-8">
+                                <input type="text" name='education' class="education" onblur="validate(this,2,15,3)"  required placeholder="学历，2-15个字符">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></div>
                         </div> 
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="number" name='age' class="age"  required>
+                            <div class="am-u-sm-8">
+                                <input type="number" name='age' class="age" onmousewheel="return false;" required onblur="validate(this,1,5,4)">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips4" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips4" style="display: none;"><i class="am-icon-check"></i></div>
                         </div>  
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name='sex' class="age"  required>
+                            <div class="am-u-sm-8">
+                                <select class="am-u-sm-12 state" name="sex" onchange="validate(this,1,10,5)" required  data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                </select>
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips5" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips5" style="display: none;"><i class="am-icon-check"></i></div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="text" name='occupation' class="job"  required>
+                            <div class="am-u-sm-8">
+                                <input type="text" name='occupation' class="job" placeholder="职业，2-30个字符"  required onblur="validate(this,2,30,6)">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips6" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips6" style="display: none;"><i class="am-icon-check"></i></div>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
-                            <div class="am-u-sm-9">
-                                <input type="tel"  class="phone" name='phone' required>
+                            <div class="am-u-sm-8">
+                                <input type="tel"  class="phone" name='phone' required onblur="validate(this,11,11,7)" placeholder="请输入合法的手机号">
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                            <div class="am-u-sm-1 am-u-end red redtips7" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips7" style="display: none;"><i class="am-icon-check"></i></div>
                         </div> 
                         <div class="am-form-group am-cf">
-                            <label class="am-u-sm-3 am-form-label">简介<span class="red">*</span>： </label>
+                            <label class="am-u-sm-3 am-form-label">简介： </label>
                             <div class="am-u-sm-9">
                                 <textarea rows="4" name="info"></textarea>
                             </div>
                         </div>         
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">标签： <span class="red">*</span>：</label>
-                            <div class="am-u-sm-9">                     
-                                <input type="text" name='competency' class="content" placeholder="多个请用、符隔开(例如：法律咨询、刑事诉讼)" required />
+                            <div class="am-u-sm-8">                     
+                                <input type="text" name='competency' class="content" placeholder="多个请用、符隔开(例如：法律咨询、刑事诉讼),2-50个字符" required onblur="validate(this,2,50,8)" />
                             </div>
-                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                        </div>
-                        <div class="am-form-group am-cf">
-                            <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
-                            <div class="am-u-sm-9">
-                                <select class="am-u-sm-12 state" name="recommend" data-id="" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                    <option >-=请选择一项=-</option>
-                                    <option value="1">是</option>
-                                    <option value="0"  selected="selected">否</option>
-                                </select>
-                            </div>
+                            <div class="am-u-sm-1 am-u-end red redtips8" style="display: none;"><i class="am-icon-close"></i></div>
+                            <div class="am-u-sm-1 am-u-end green blacktips8" style="display: none;"><i class="am-icon-check"></i></div>
                         </div>
                         <div class="am-form-group am-cf am-text-center">
                             <button class="am-btn am-btn-xs am-btn-secondary" type="submit" id='addProperty'>新增</button>
@@ -148,6 +141,16 @@ $(".deleteImg").click(function(){
     $(this).siblings('.wx_type_img').find('input').val("");
     $(this).siblings('.wx_type_img').find('input').files="";
 });
-
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
 
 </script>

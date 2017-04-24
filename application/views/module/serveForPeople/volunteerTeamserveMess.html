@@ -91,59 +91,65 @@
                     <div class="widget-title  am-cf">义工团队信息</div>
                 </div>
                   <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_team_info');?>" method="post">
-                <div class="widget-body">
+                    <div class="widget-body">
+                   
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">团队名称<span class="red">*</span>：</label>
+                        <div class="am-u-sm-6">  
+                            <input type="text" value="<?php echo $team['name'];?>" placeholder="团队名称，2-30个字符" name='name' minlength="2" maxlength="30" required onblur="validate(this,1,30,1)" >
+                        </div>
+                        <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+                        <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">团队人数<span class="red">*</span>：</label>
+                        <div class="am-u-sm-6">
+                            <input type="number" name='team_number' min="1" value="<?php echo $team['team_number']?>" required onblur="validate(this,1,10,2)" onmousewheel="return false;" />
+                        </div>
+                        <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
+                        <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
+                    </div>
                
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-2 am-form-label">团队名称<span class="red">*</span>：</label>
-                    <div class="am-u-sm-6 am-u-end">  
-                        <input type="text" value="<?php echo $team['name'];?>" placeholder="建议不超过十四个字符" name='name' minlength="2" maxlength="14" required>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-2 am-form-label">团队人数<span class="red">*</span>：</label>
-                    <div class="am-u-sm-6 am-u-end">
-                        <input type="number" name='team_number' min="1" value="<?php echo $team['team_number']?>" required />
-                    </div>
-                </div>
-           
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-2 am-form-label">团队口号<span class="red">*</span>：</label>
-                    <div class="am-u-sm-6 am-u-end">
-                        <input type="text" placeholder="如:让我们携手共建美好未来" value="<?php echo $team['slogan']?>" name='slogan' required />
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label for="" class="am-u-sm-2 am-form-label">团队风采 <span class="red">*</span>:</label>
-                     <div class="am-u-sm-6 am-u-end">
-                        <div class="wx_type_img">
-                            <?php if(empty($team['picImg'])):?>
-                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                          <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                      <?php else:?>
-                           <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
-                          <input type="hidden" name="picImg" value="<?php echo $team['picImg'];?>">
-                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $team['picImg'];?>" class="am-img-responsive cardView"> </div>
-                      <?php endif;?>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">团队口号<span class="red">*</span>：</label>
+                        <div class="am-u-sm-6">
+                            <input type="text" placeholder="如:让我们携手共建美好未来,50字以内" value="<?php echo $team['slogan']?>" name='slogan' required onblur="validate(this,1,50,3)" />
                         </div>
-                        <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
-                        <small class="tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+                        <div class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></div>
+                        <div class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></div>
                     </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-2 am-form-label">团队简介<span class="red">*</span>：</label>
-                    <div class="am-u-sm-6 am-u-end">
-                        <div id="editorContent">
-                            <textarea id="editor" placeholder="请输入团队简介" type="text/plain" name='content' required><?php echo $team['content'];?></textarea>
+                    <div class="am-form-group am-cf">
+                        <label for="" class="am-u-sm-2 am-form-label">团队风采 <span class="red">*</span>:</label>
+                         <div class="am-u-sm-6 am-u-end">
+                            <div class="wx_type_img">
+                                <?php if(empty($team['picImg'])):?>
+                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                          <?php else:?>
+                               <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
+                              <input type="hidden" name="picImg" value="<?php echo $team['picImg'];?>">
+                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $team['picImg'];?>" class="am-img-responsive cardView"> </div>
+                          <?php endif;?>
+                            </div>
+                            <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
+                            <small class="tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
                         </div>
                     </div>
-                </div>
-            
-                <div class="am-form-group am-u-sm-10 am-text-center am-btn-group-xs">
-                    <input type="hidden" name="id" value="<?php echo $team['id'];?>"> 
-                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                    <button type="submit" class="am-btn am-btn-danger" data-am-modal-confirm>保存</button>
-                </div>
-          
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">团队简介<span class="red">*</span>：</label>
+                        <div class="am-u-sm-6 am-u-end">
+                            <div id="editorContent">
+                                <textarea id="editor" placeholder="请输入团队简介" type="text/plain" name='content' required onblur="validate(this,1,300,4)"><?php echo $team['content'];?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="am-form-group am-u-sm-10 am-text-center am-btn-group-xs">
+                        <input type="hidden" name="id" value="<?php echo $team['id'];?>"> 
+                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                        <button type="submit" class="am-btn am-btn-danger" data-am-modal-confirm>保存</button>
+                    </div>
+              
                 </div>
             </form>
      
@@ -160,17 +166,17 @@
     <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
     <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
     }
-}
     //删除图片
     $(".deleteImg").click(function(){      
         $(this).prevUntil('#preview').find('img').attr('src','assets/img/nullImg.jpg');
