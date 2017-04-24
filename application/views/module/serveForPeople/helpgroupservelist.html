@@ -36,6 +36,13 @@ td.am-text-middle img {
     background: #F37B1D !important; 
     color: #fff !important;
 }
+.am-u-sm-9 {
+    text-align: left;
+    white-space: normal;
+    vertical-align: middle;
+    color: #333;
+    
+}
 </style>
 
 <!-- 内容区域 -->
@@ -164,7 +171,6 @@ td.am-text-middle img {
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/js/artTemplate-native.js"></script>
-<script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
 var total_page = 0,pageflag = 1,flag = 0,current_page=0,$helpgroupservelist = parseInt(sessionStorage.getItem('helpgroupservelist')) || 0;
 //点击前往某一页的函数
@@ -203,7 +209,6 @@ function next(argu){
     
     
     if(new_page < argu){   
-        console.log(new_page + ' ' + argu);
         go_to_page(new_page);
     }
 }
@@ -240,7 +245,7 @@ function otherOperation() {
             url:'<?php echo site_url('/serveForPeople/serveForPeople/reply_help_request');?>',
             data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
             success: function(data){
-                console.log(data);
+                // console.log(data);
                 if(data==1){
                     $('#re'+dataId).modal('close');
                     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
@@ -315,10 +320,12 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
+            console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
+                    res[i].pics = eval(res[i].pics);
                     listData += template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
@@ -354,10 +361,6 @@ function getList(dataurl,data){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
-    });
     //点击搜索
     $('.searchGoods').click(function(){
         var helpgroupName=$('#helpgroupName').val(),askhelpName=$('#askhelpName').val(),source_state=$('#source_state option:selected').val(),searchKey=$('#searchKey').val();
@@ -420,102 +423,93 @@ $(document).ready(function(){
                 <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">姓名 ：</label>
+                    <input type='hidden' name='type_id' />
                     <div class="am-u-sm-9">
-                        <input type='hidden' name='type_id' />
-                        <span class="am-text-left"><%= username%></span>
+                       <%= username %>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">联系方式 ：</label>
+                    <input type='hidden' name='type_id' />
                     <div class="am-u-sm-9">
-                        <input type='hidden' name='type_id' />
-                        <span class="am-text-left"><%= phone%></span>
+                        <%= phone %>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">求助内容 ：</label>
+                    <input type='hidden' name='type_id' />
                     <div class="am-u-sm-9">
-                        <input type='hidden' name='type_id' />
-                        <span class="am-text-left"><%= content%></span>
+                        <%= content %>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">图片描述： </label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left">
-                        <%if(pics){%>
-                            <%for(var i=0;i<pics.length;i++){%>
-                                <img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="<%= pics[i].picImg%>" class="am-img-responsive cardView"> 
+                        <% if(pics) { %>
+                            <% for(var i = 0;i < pics.length; i++) { %>
+                                <img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="<%= pics[i].picImg %>" class="am-img-responsive cardView"> 
                             <%}%>
                         <%}else{%>
                             暂无图片
                         <%}%>
-                        
-                        </span>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">求助时间 ：</label>
+                    <input type='hidden' name='type_id' />
                     <div class="am-u-sm-9">
-                        <input type='hidden' name='type_id' />
-                        <span class="am-text-left"><%= create_time%></span>
+                        <%= create_time %>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">求助时间 ：</label>
+                    <input type='hidden' name='type_id' />
                     <div class="am-u-sm-9">
-                        <input type='hidden' name='type_id' />
-                        <span class="am-text-left"><%= create_time%></span>
+                        <%= create_time %> 
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">求助对象： </label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left"><%= name%></span>
+                        <%= name %>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">服务状态： </label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left">
-                            <%if(state=="1"){%>
-                                已帮助
-                            <%}else{%>
-                                待帮助
-                            <%}%>
-                        </span>
+                        <%if(state=="1"){%>
+                            已帮助
+                        <%}else{%>
+                            待帮助
+                        <%}%>
                     </div>
                 </div>
             
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">回复内容 ：</label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left">
-                            <%if(state=="1"){%>
-                            <%= reply_content%>
-                            <%}else{%>
-                            暂无
-                            <%}%>
-                        </span>
+                        <%if(state=="1"){%>
+                        <%= reply_content%>
+                        <%}else{%>
+                        暂无
+                        <%}%>
                     </div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">回复时间 ：</label>
                     <div class="am-u-sm-9">
-                        <span class="am-text-left">
-                            <%if(state=="1"){%>
-                            <%= reply_time%>
-                            <%}else{%>
-                            暂无
-                            <%}%>
-                        </span>
+                        <%if(state=="1"){%>
+                        <%= reply_time%>
+                        <%}else{%>
+                        暂无
+                        <%}%>
                     </div>
                 </div>
             </form>
                 
             </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-close>关闭</span>
+            <div class="am-modal-footer am-text-center">
+                <button type="button" class="am-btn am-btn-secondary" data-am-modal-close>关闭</button>
             </div>
         </div>
     </div>

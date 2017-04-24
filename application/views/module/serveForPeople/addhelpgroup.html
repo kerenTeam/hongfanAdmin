@@ -11,7 +11,7 @@
     }
     #mapBox object {
         z-index: 999 !important;
-    }
+    } 
 </style>  
 
 <!-- 内容区域 -->
@@ -35,6 +35,8 @@
                             <div class="am-u-sm-9">
                                 <input type="text" placeholder="姓名" class="name" name='name' minlength="2" required="">
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
@@ -55,6 +57,8 @@
                             <div class="am-u-sm-9">
                                 <input type="number" name='age' class="age"  required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>  
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
@@ -67,6 +71,8 @@
                             <div class="am-u-sm-9">
                                 <input type="text" name='occupation' class="job"  required>
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
@@ -79,12 +85,15 @@
                             <div class="am-u-sm-9">                     
                                 <input type="text" name='competency' class="content" placeholder="多个请用&符隔开(例如：法律咨询&刑事诉讼)" required />
                             </div>
+                            <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                            <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
                         <div class="am-form-group">
                             <label for="englishName" class="am-u-sm-3 am-form-label">简介：</label>
                             <div class="am-u-sm-9">
                                 <textarea rows="5" cols="40" name="info" placeholder="请务必保证填写信息的正确性"> </textarea>
                             </div>
+
                         </div>
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
@@ -159,7 +168,7 @@ AMap.event.addListener(auto, "select", select);//注册监听，当选中某条�
 function select(e) {
     placeSearch.setCity(e.poi.adcode);
     placeSearch.search(e.poi.name);  //关键字查询查询
-    var xy = '('+ e.poi.location.lat + ',' + e.poi.location.lng + ')';
+    var xy = e.poi.location.lat + ',' + e.poi.location.lng;
     $('#addressLocation').val(xy);
 }
 </script>

@@ -7,7 +7,7 @@
     } 
     .hf-dropdown {
         font-size: 12px!important;
-    padding: 5px 6px!important;
+        padding: 5px 6px!important;
     } 
     #preview {
         height:200px !important;
@@ -33,13 +33,13 @@
     .clickUp {
         margin-left: 150px;
     }
-    label{
+    label {
         font-weight: normal;
     }
     .am-list>li {
         border: none;
     }
-     .am-list>li.quan{
+     .am-list>li.quan {
         width: 300px;
         height: 80px;
         border-radius: 10px;
@@ -49,12 +49,12 @@
         padding-top:10px;
         position: relative;
     }
-    .am-list>li.quan span{
+    .am-list>li.quan span {
         position: absolute;
         left:90%;
         top:8%;
     }
-    .am-list>li.quan:hover{
+    .am-list>li.quan:hover {
         color:#fff;
     }
     .am-list>li.quan div {
@@ -64,7 +64,7 @@
         vertical-align:middle;
         font-size:30px;
     }
-    .am-list>li.quan div.am-u-sm-3{
+    .am-list>li.quan div.am-u-sm-3 {
         text-align: center;
     }
     .am-list>li.quan div p {
@@ -97,7 +97,7 @@
 <div class="row-content am-cf">
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/marketActivity/MarketActivity/market_add_activity'); ?>" method="post" enctype="multipart/form-data" >
+            <form class="am-form" action="<?php echo site_url('/marketActivity/MarketActivity/market_add_activity'); ?>" method="post" enctype="multipart/form-data" data-am-validator>
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
                                 <div class="widget-title  am-cf">新增</div>
@@ -107,8 +107,10 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
-                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称" required="required" name="title" />
-                                        </div>                                    
+                                            <input type="text" minlength="2" placeholder="请输入名称,2-50字以内" required="required" name="title" onchange="validate(this,2,50,1)" />
+                                        </div>
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>                                    
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">活动类型<span class="red">*</span>：</label>
@@ -167,6 +169,8 @@
                                         <div class="am-u-sm-6 am-u-end">
                                             <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称"  name="store_name" />
                                         </div>
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
@@ -195,8 +199,15 @@
                                               </div>
                                               <small class="red redtips" style="display: none">请先选择结束日期</small>
                                             </div>
+                                        </div>                                       
+                                    </div>
+                                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="activity_address">
+                                        <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                            <input type="text" id="" minlength="2" placeholder="请输入活动地点"  name="address" />
                                         </div>
-                                        
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">详情<span class="red">*</span>：</label>
@@ -233,48 +244,58 @@
         $(this).siblings('.wx_type_img').find('input').files="";
         
     });
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
+    }
+    //点击取消返回上一页
+    $('#cancle').click(function(){
+      history.go(-1);
+    });
 
-//点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(-1);
-  });
-
-     //实例化编辑器
+    //实例化编辑器
     var ue = UE.getEditor('editor');
     $(document).ready(function(){
         var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-          $('#begin_date').val($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
+        var endDate = new Date(2014, 11, 25);
+        var $alert = $('#my-alert');
+        $('#my-start').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+              $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+              $alert.hide();
+              startDate = new Date(event.date);
+              $('#my-startDate').text($('#my-start').data('date'));
+              $('#begin_date').val($('#my-start').data('date'));
+            }
+            $(this).datepicker('close');
+          });
 
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-          $('#end_date').val($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-    $('#my-start').hover(function(){
-        $('.redtips').css('display','block');
-      },function(){
-        $('.redtips').css('display','none');
-      });
+        $('#my-end').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+              $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+              $alert.hide();
+              endDate = new Date(event.date);
+              $('#my-endDate').text($('#my-end').data('date'));
+              $('#end_date').val($('#my-end').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+        $('#my-start').hover(function(){
+            $('.redtips').css('display','block');
+          },function(){
+            $('.redtips').css('display','none');
+          });
 
         //优惠和活动的选择
         $(".discount").click(function(){ 
@@ -315,7 +336,7 @@
             }
         });
         
-    })
+    });
 
 </script>
 </body>
