@@ -1338,11 +1338,7 @@ class SingleShop extends Default_Controller {
         }else{
             //订单
             $order = $this->MallShop_model->get_order_info($id);
-            //收货地址
-            $address = json_decode($order['goods_data'],true);
-            $address_id = $address['Params']['postData']['address_id'];
-            // var_dump($address_id);
-            // exit;
+  
             $data['order'] = $order;
             $data['page'] = $this->view_sureOrder;
             $data['menu'] = array('shop','shopOrder');
@@ -1359,7 +1355,7 @@ class SingleShop extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-               $order = $this->MallShop_model->get_order_info($id);
+            $order = $this->MallShop_model->get_order_info($id);
             //收货地址
             $arr = json_decode($order['goods_data'],true);
             $address_id = $arr['Params']['postData']['address_id'];

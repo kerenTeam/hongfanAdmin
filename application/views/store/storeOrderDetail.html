@@ -8,9 +8,9 @@
     }
     .hf-dropdown{
         font-size: 12px!important;
-    padding: 5px 6px!important;
+        padding: 5px 6px!important;
     }
- #preview{
+    #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
@@ -40,11 +40,18 @@
     .tableImg{
     width:80px;
 }
-label.am-u-sm-8{
+
+label.am-u-sm-8, label.am-u-sm-4{
         font-weight: normal;
         margin: 0 !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     padding-top: 5px;
+    }
+    label span.provalue {
+        display: inline-block;
+        padding:2px 5px;
+        background: #1fb5ac;
+        color: #fff;
     }
     .background{
         background: #eaeaea;
@@ -59,7 +66,7 @@ label.am-u-sm-8{
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-                <a href="<?php echo site_url().'/store/Store/storeOrderList';?>" style="font-size:16px;">订单管理</a>
+                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" style="font-size:16px;">订单管理</a>
                 <small>订单详情</small></div>
         </div>
     </div>
@@ -84,39 +91,53 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品总数量：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['totalNum'];?>
+                               <?php echo count($goods['Params']['goodsData'][0]['goods_Data']);?>
                             </label>
                         </div> 
-                        <?php foreach($goods['goodsData'] as $val):?>                         
+                        <?php foreach($goods['Params']['goodsData'][0]['goods_Data'] as $val):?>                         
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsName'];?>
+                               <?php echo $val['title'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品图片：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <img class="tableImg" src="<?php echo $val['goodsImg'];?>">
+                                <img class="tableImg" src="<?php echo $val['thumb'];?>">
                             </label>
                         </div>
+                        
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品单价：</label>
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品价格：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsPrice'];?>
+                               <?php echo $val['price']+$val['Floating_price'];?>
                             </label>
                         </div> 
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品数量：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsnum'];?>
+                               <?php echo $val['nums'];?>
                             </label>
+                        </div>
+                        
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
+                           
+                              <?php for($i =1;$i < 5;$i++){?>
+                                <?php if(!empty($val['stend'.$i])):?>
+                                 <label class="am-u-sm-4 am-text-left am-u-end">
+                                    <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
+                                </label>
+                                <?php endif;?>
+                              <?php }?>
+                           
                         </div>
                        <?php endforeach;?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['totalMoney'];?>
+                               <?php echo $order['amount'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
@@ -124,6 +145,27 @@ label.am-u-sm-8{
                             <label class="am-u-sm-8 am-text-middle">
 
                                  <?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
+                            </label>
+                        </div>
+                        <?php if(!empty($order['fee_name'])):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">改价原因：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['fee_name'];?>
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">改价金额：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $order['fee'];?>
+                            </label>
+                        </div>
+                        <?php endif;?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">支付金额：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['amount']+$order['fee'];?>
                             </label>
                         </div>
                       <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
@@ -139,19 +181,19 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">地址：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo $goods['sendAddress']['addressNow'];?>
+                                <?php echo $address['province'].$address['city'].$address['area'].$address['address'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">姓名：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['sendAddress']['people'];?>
+                               <?php echo $address['person'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">手机：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo $goods['sendAddress']['phoneNow'];?>
+                              <?php echo $address['phone'];?>
                             </label>
                         </div>
                      <!--    <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
@@ -163,7 +205,7 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">买家留言：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo  $goods['notice']?>
+                                <?php echo  $goods['Params']['postData']['orderStoreData'][0]['notice'];?>
                             </label>
                         </div>
                         <div class="widget-head am-cf">
@@ -188,18 +230,18 @@ label.am-u-sm-8{
                             </label>
                         </div>
                     <?php elseif($order['order_status'] == 2):?>
-                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">已支付
-                                </label>
+                            <label class="am-u-sm-8 success am-text-middle">已支付</label>
                         </div>
-                    <?php elseif($order['order_status'] == 3):?>
-                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+
+                     <?php elseif($order['order_status'] == 3):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">已发货
-                                </label>
+                            <label class="am-u-sm-8 success am-text-middle">已发货</label>
                         </div>
-                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">快递公司：</label>
                             <label class="am-u-sm-8 success am-text-middle"><?php echo $order['shipper_code'];?></label>
                         </div>  
@@ -208,59 +250,71 @@ label.am-u-sm-8{
                             <label class="am-u-sm-8 success am-text-middle"><?php echo $order['logistic_code'];?></label>
                         </div>
 
-                    <?php elseif($order['order_status'] == 4):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                     <?php elseif($order['order_status'] == 4):?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">已收货
-                                </label>
+                            <label class="am-u-sm-8 success am-text-middle">已收货</label>
                         </div>
-                    <?php elseif($order['order_status'] == 5):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                     <?php elseif($order['order_status'] == 5):?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">已评价
-                                </label>
+                            <label class="am-u-sm-8 success am-text-middle">已评价</label>
                         </div>
-                    <?php elseif($order['order_status'] == 6):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">请求退货
-                                </label>
-                        </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                     <?php elseif($order['order_status'] == 6):?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                              <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
+                              <label class="am-u-sm-8 success am-text-middle">请求退货</label>
+                           </div> 
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                               <label for="user-email" class="am-u-sm-4 am-form-label">退货理由：</label>
                               <label class="am-u-sm-8 success am-text-middle"><?php echo $order['buyer_reason']?></label>
                            </div>
+                     <?php elseif($order['order_status'] == 7):?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
+                            <label class="am-u-sm-8 success am-text-middle">退货中</label>
+                           </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                              <label for="user-email" class="am-u-sm-4 am-form-label">退货理由：</label>
+                              <label class="am-u-sm-8 success am-text-middle"><?php echo $order['buyer_reason']?></label>
+                           </div>
+
+                     <?php elseif($order['order_status'] == 8):?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
+                            <label class="am-u-sm-8 success am-text-middle">已退款</label>
+                        </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                              <label for="user-email" class="am-u-sm-4 am-form-label">退货理由：</label>
+                              <label class="am-u-sm-8 success am-text-middle"><?php echo $order['buyer_reason']?></label>
+                           </div>
+
+                     <?php else:?>
+                           <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
+                            <label class="am-u-sm-8 success am-text-middle">订单关闭</label>
+                        </div>
+
+                    <?php endif;?>
+                    <?php if($order['order_status'] == 6):?>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                       <a href="javascript:void(0)" data-id="<?php echo $order['order_id']?>" class="alink am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">同意退货 </a>
+                        </div>
                     <?php elseif($order['order_status'] == 7):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">退货中
-                                </label>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                            <a href="javascript:void(0)" data-id="<?php echo $order['order_id']?>" class="confirm am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确认货物完好并退款 </a>
                         </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                              <label for="user-email" class="am-u-sm-4 am-form-label">退货理由：</label>
-                              <label class="am-u-sm-8 success am-text-middle"><?php echo $order['buyer_reason']?></label>
-                           </div>
-                    <?php elseif($order['order_status'] == 8):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">已退款
-                                </label>
-                        </div>
-                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                              <label for="user-email" class="am-u-sm-4 am-form-label">退货理由：</label>
-                              <label class="am-u-sm-8 success am-text-middle"><?php echo $order['buyer_reason']?></label>
-                           </div>
+
                     <?php else:?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单状态：</label>
-                            <label class="am-u-sm-8 success am-text-middle">订单关闭
-                                </label>
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                            <a href="<?php echo site_url('/shop/SingleShop/shopOrder');?>" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">返回订单列表</a>
+                          <!--   <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确认</button>
+                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button> -->
                         </div>
                     <?php endif;?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                            <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确认</button>
-                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -271,3 +325,58 @@ label.am-u-sm-8{
 </div>
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+  //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
+
+$(".alink").click(function() {
+  var dataId = $(this).attr('data-id');
+  if(dataId){
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/shop/singleShop/edit_goods_order');?>',
+            data: 'orderid='+dataId+'&state=7',
+            success: function(data){
+                console.log(data);
+                if(data==1){ 
+                    location.reload();
+                }else{
+
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+}else{
+    alert('操作失败！');
+}
+});
+$(".confirm").click(function() {
+  var dataId = $(this).attr('data-id');
+  if(dataId){
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/shop/singleShop/edit_goods_order');?>',
+            data: 'orderid='+dataId+'&state=9',
+            success: function(data){
+                console.log(data);
+                if(data==1){ 
+                    location.reload();
+                }else{
+
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
+}else{
+    alert('操作失败！');
+}
+});
+</script>
