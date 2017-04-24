@@ -337,7 +337,7 @@ td.am-text-middle img {
 
             }else{
                 $('#dataList').find('tr.trClass').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -346,7 +346,7 @@ td.am-text-middle img {
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
             $('#dataList').find('tr.trClass').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
             $('.pagebox').css('display', 'none');
         }
     });

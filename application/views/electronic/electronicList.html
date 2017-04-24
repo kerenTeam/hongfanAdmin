@@ -5,7 +5,7 @@ width: 100%!important;
 .table-check{
 width: 30px;
 }
-.hf-dropdown{
+.hf-dropdown{ 
 font-size: 12px!important;
 padding: 5px 6px!important;
 }
@@ -149,7 +149,7 @@ td img{
                         });
                         $('.afterSales').click(function(){//查看核销
                             var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales');?>");
+                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales/"+ dataId +"');?>");
                         });
                         for(var i=0;i<$('.tpl-del').length;i++){
                             var dataId=$('.tpl-del').eq(i).attr('data-id');
@@ -194,7 +194,7 @@ td img{
     });
 }
 $(document).ready(function(){
-var startDate = new Date(2014, 11, 20);
+    var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
     var $alert = $('#my-alert');
     $('#my-start').datepicker().

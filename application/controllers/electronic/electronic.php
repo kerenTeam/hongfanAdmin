@@ -172,23 +172,29 @@ class Electronic extends Default_Controller {
     //核销列表
     function afterSales(){
         //查看核销情况列表
+          $id = intval($this->uri->segment('4'));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['id'] = $id;
          $data['page']= $this->view_afterSales;
          $data['menu'] = array('marketActivity','electronicList');
          $this->load->view('template.html',$data);
+        }
     }
 
     //返回核销信息
     function ret_after_list(){
-        $id = intval($this->uri->segment('4'));
-        if($id == 0){
-            echo "2";
-        }else{
+        if($_POST){
+            $id = $this->input->post('id');
             $list = $this->Activity_model->ret_after_list($id);
             if(!empty($list)){
                 echo json_encode($list);
             }else{
                 echo "3";
             }
+        }else{
+            echo "2";
         }
     }
 
