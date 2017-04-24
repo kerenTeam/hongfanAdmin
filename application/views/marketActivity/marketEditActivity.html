@@ -107,11 +107,11 @@
                                 <div class="memberInfo padding-horizontal-lg">
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">名称<span class="red">*</span>：</label>
-                                        <div class="am-u-sm-6 am-u-end">
-                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称" required="required" name="title" value="<?php echo $info['title'];?>" />
+                                        <div class="am-u-sm-6">
+                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入名称,2-50字以内" required="required" name="title" value="<?php echo $info['title'];?>" onblur="validate(this,2,50,1)" />
                                         </div>
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>                                    
+                                        <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+                                        <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>                                    
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">活动类型:<span class="red">*</span>：</label>
@@ -191,10 +191,10 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="store_name" <?php if($info['type'] == 2){echo 'style="display: block"';}else{echo 'style="display: none"';}?>>
                                         <label class="am-u-sm-3 am-text-right">商家名称<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
-                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称" value="<?php echo $info['store_name']?>" name="store_name" />
+                                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商家名称,2-30字以内" value="<?php echo $info['store_name']?>" name="store_name" onblur="validate(this,2,30,2)" />
                                         </div>
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                                        <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
+                                        <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
@@ -236,10 +236,10 @@
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" id="activity_address">
                                         <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
                                         <div class="am-u-sm-6 am-u-end">
-                                            <input type="text" id="" minlength="2" placeholder="请输入活动地点"  name="address" value="<?php echo $info['address'];?>"/>
+                                            <input type="text" id="" minlength="2" placeholder="请输入活动地点，2-50字以内"  name="address" onblur="validate(this,2,50,3)" value="<?php echo $info['address'];?>" />
                                         </div>
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+                                        <div class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></div>
+                                        <div class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></div>
                                     </div>
                                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
                                         <label class="am-u-sm-3 am-text-right">详情<span class="red">*</span>：</label>
@@ -257,7 +257,7 @@
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="submit">保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>
-
+ 
                 </div>
             </form>
         </div>

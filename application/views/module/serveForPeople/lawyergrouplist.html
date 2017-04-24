@@ -92,6 +92,9 @@ textarea {
 .am-btn-toolbar {
     height: 50px;
 }
+/*.trClass {
+    display: table !important;
+}*/
 </style>
 
 <!-- 内容区域 -->
@@ -147,7 +150,7 @@ textarea {
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="tablecheck"><input type="checkbox"></th>
+                                    <th class="tablecheck"><input type="checkbox">全选</th>
                                     <th>编号 </th>
                                     <th>姓名 </th>
                                     <th>头像 </th>
@@ -157,7 +160,6 @@ textarea {
                                     <th width="30%">帮扶内容 </th>
                                     <th>学历</th>
                                     <th>评分</th>
-                                    <th>是否推荐</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -209,6 +211,7 @@ textarea {
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
+    //文件上传
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
        // console.log(fileObj.name.split('.')[1]);
@@ -232,8 +235,19 @@ textarea {
         }
         
     }
+    //表单验证函数
+    function validate(obj,minlen,maxlen,i){
+        var content=obj.value;
+        if(content.length<minlen || content.length>maxlen){
+            $('.blacktips'+ i).css('display','none');
+            $('.redtips'+ i).css('display','inline-block');
+        }else{
+            $('.redtips'+ i).css('display','none');
+            $('.blacktips'+ i).css('display','inline-block');
+        }
+    }
 
-var total_page = 0,flag = 0,pageflag = 1,current_page=0,$helpgrouplist = parseInt(sessionStorage.getItem('helpgrouplist')) || 0;
+var total_page = 0,flag = 0,pageflag = 1,current_page=0,$lawyergrouplist = parseInt(sessionStorage.getItem('lawyergrouplist')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -243,8 +257,8 @@ function go_to_page(page_num){
     var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
-    sessionStorage.setItem('helpgrouplist', current_page);
-    $helpgrouplist = parseInt(sessionStorage.getItem('helpgrouplist'));
+    sessionStorage.setItem('lawyergrouplist', current_page);
+    $lawyergrouplist = parseInt(sessionStorage.getItem('lawyergrouplist'));
     
 }
 
@@ -348,7 +362,7 @@ function otherOperation() {
             data: 'id='+deleteId,
             success: function(data){
                 if(data==1){
-                    $('#trClass'+deleteId).remove();
+                    getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=2');
                 }else{
                     alert("操作失败！");
                 }
@@ -464,9 +478,9 @@ function getList(dataurl,data){
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
-                    go_to_page($helpgrouplist);
+                    go_to_page($lawyergrouplist);
                     var opts={};
-                    opts.current_page = $helpgrouplist;
+                    opts.current_page = $lawyergrouplist;
                     $("#Pagination").pagination(total_page, opts);
                     pageflag = 0;
                 } else {
@@ -495,10 +509,6 @@ function getList(dataurl,data){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=2');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=2');
-    });
     //点击搜索
     $('.searchGoods').click(function(){
         var helpgroupName=$('#helpgroupName').val();
@@ -508,8 +518,8 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" id="trClass<%= helper_id %>" data-id="<%= helper_id %>">
-        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id %>" name="commentBox"></td>
+    <tr class="trClass" id="trClass<%= helper_id %>" data-id="<%= helper_id %>" >
+       <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= helper_id %>" name="commentBox"></td>
 
         <td class="am-text-middle"><%= helper_id%></td>
         <td class="am-text-middle"><%= name%></td>
@@ -554,7 +564,7 @@ $(document).ready(function(){
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
-        </td>
+        </td> 
     </tr>
      <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= helper_id%>">
         <div class="am-modal-dialog">
@@ -568,22 +578,23 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
-
     <div class="am-modal am-modal-confirm" tabindex="-1" id="ed<%= helper_id%>">
         <div class="am-modal-dialog">
-            <div class="am-modal-hd">编辑律师成员信息</div>
+            <div class="am-modal-hd">编辑律师成员</div>
             <div class="am-modal-bd">
                 <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">姓名 <span class="red">*</span>：</label>
-                    <div class="am-u-sm-9">
+                    <div class="am-u-sm-8">
                         <input type='hidden' name='type_id' />
-                        <input type="text" placeholder="姓名" class="name<%= helper_id%>" value="<%= name%>" name='name' minlength="4" required="">
+                        <input type="text" placeholder="姓名，2-15个字符" class="name<%= helper_id%>" value="<%= name%>" name='name' minlength="4" required onblur="validate(this,2,15,1)">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
-                    <div class="am-u-sm-9">
+                    <div class="am-u-sm-8 am-u-end">
                         <div class="wx_type_img">
                             <input type="file" name="img1" data-id="<%= helper_id%>" id="imgUpload" class="upload-add imgUp" multiple="multiple" required>
                               <!-- 图片实时预览 -->
@@ -603,71 +614,77 @@ $(document).ready(function(){
                 <br />
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">评分<span class="red">*</span>： </label>
-                    <div class="am-u-sm-9">
-                        <input type="number" name='star' class="star<%= helper_id%>" min='1' max="5" value="<%= star%>" required>
+                    <div class="am-u-sm-8">
+                        <input type="number" name='star' class="star<%= helper_id%>" min='1' max="5" value="<%= star%>" required onblur="validate(this,1,1,2)" onmousewheel="return false;">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">年龄<span class="red">*</span>： </label>
-                    <div class="am-u-sm-9">
-                        <input type="number" name='house_layout' class="age<%= helper_id%>" value="<%= age%>" required>
+                    <div class="am-u-sm-8">
+                        <input type="number" name='house_layout' class="age<%= helper_id%>" value="<%= age%>" required onblur="validate(this,1,5,3)" onmousewheel="return false;">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
-                        <div class="am-u-sm-9">
-                            <input type="text" name='sex' class="sex<%= helper_id%>" value="<%= sex%>"  required>
-                        </div>
+                    <label class="am-u-sm-3 am-form-label">性别<span class="red">*</span>： </label>
+                    <div class="am-u-sm-8">
+                    <% if(sex == "男") { %>
+                        <select class="am-u-sm-12 state" name="sex" onchange="validate(this,1,10,4)" required  data-am-selected="{searchBox: 1,maxHeight: 200}" >
+                            <option value="男" selected>男</option>
+                            <option value="女">女</option>
+                        </select>
+                    <% } else { %>
+                        <select class="am-u-sm-12 state" name="sex" onchange="validate(this,1,10,4)" required  data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <option value="男" selected>男</option>
+                            <option value="女" selected>女</option>
+                        </select>
+                    <% } %>
+                    </div>
+                    <div class="am-u-sm-1 am-u-end red redtips4" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips4" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">职业<span class="red">*</span>： </label>
-                    <div class="am-u-sm-9">
-                        <input type="text" name='house_layout' class="job<%= helper_id%>" value="<%= occupation%>" required>
+                    <div class="am-u-sm-8">
+                        <input type="text" name='house_layout' class="job<%= helper_id %>" value="<%= occupation %>" placeholder="2-30个字符" required onblur="validate(this,2,30,5)">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips5" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips5" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">联系方式<span class="red">*</span>： </label>
-                    <div class="am-u-sm-9">
-                        <input type="tel" value="<%= phone%>" class="phone<%= helper_id%>" name='quarters' required>
+                    <div class="am-u-sm-8">
+                        <input type="tel" value="<%= phone %>" class="phone<%= helper_id %>" name='quarters' required placeholder="请输入合法的联系方式" onblur="validate(this,11,11,6)">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips6" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips6" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
             
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">标签 <span class="red">*</span>：</label>
-                    <div class="am-u-sm-9">                     
-                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length-1;i++){%><%= competency[i]%>、<%}%><%= competency[competency.length-1]%>" required />
+                    <div class="am-u-sm-8">                     
+                        <input type="text" name='area_address' class="content<%= helper_id%>" value="<%for(var i=0;i<competency.length-1;i++){%><%= competency[i]%>、<%}%><%= competency[competency.length-1]%>" required  onblur="validate(this,2,50,7)" placeholder="2-50个字符" />
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips7" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips7" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">学历 <span class="red">*</span>：</label>
-                    <div class="am-u-sm-9">
-                        <input type="text" name='education' class="education<%= helper_id%>"  placeholder="如：硕士\本科" value="<%= education%>" required>
+                    <div class="am-u-sm-8">
+                        <input type="text" name='education' class="education<%= helper_id%>"  placeholder="如：硕士\本科" value="<%= education%>" required onblur="validate(this,2,30,8)">
                     </div>
+                    <div class="am-u-sm-1 am-u-end red redtips8" style="display: none;"><i class="am-icon-close"></i></div>
+                    <div class="am-u-sm-1 am-u-end green blacktips8" style="display: none;"><i class="am-icon-check"></i></div>
                 </div>
                 <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">简介<span class="red">*</span>： </label>
+                    <label class="am-u-sm-3 am-form-label">简介： </label>
                     <div class="am-u-sm-9">
-                        <textarea rows="4" name="info" class="info<%= helper_id %>"><%= info %></textarea>
+                        <textarea rows="4" name="info" class="info<%= helper_id %>" onblur="validate(this,2,15,1)"><%= info %></textarea>
                     </div>
                 </div> 
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">是否推荐 <span class="red">*</span>：</label>
-                    <div class="am-u-sm-9">
-                    <%if(recommend=="1"){%>
-                        <select class="am-u-sm-12 state<%= helper_id%>" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1" selected="selected">是</option>
-                            <option value="0">否</option>
-                        </select>
-                    <%}else{%>
-                        <select class="am-u-sm-12 state<%= helper_id%>" name="goodsState" data-id="<%= helper_id%>" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">是</option>
-                            <option value="0" selected="selected">否</option>
-                        </select>
-                    <%}%>
-                    </div>
-                </div>
                 
                 </form>
                 
@@ -680,4 +697,5 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
+    
 </script>
