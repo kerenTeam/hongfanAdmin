@@ -159,7 +159,7 @@ AMap.event.addListener(auto, "select", select);//注册监听，当选中某条�
 function select(e) {
     placeSearch.setCity(e.poi.adcode);
     placeSearch.search(e.poi.name);  //关键字查询查询
-    var xy = '('+ e.poi.location.lat + ',' + e.poi.location.lng + ')';
+    var xy =  e.poi.location.lat + ',' + e.poi.location.lng;
     $('#addressLocation').val(xy);
 }
 </script>

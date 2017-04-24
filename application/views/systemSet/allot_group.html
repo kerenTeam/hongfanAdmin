@@ -77,7 +77,7 @@ color: #333;
                                         <td class="am-text-middle"><?php echo $val['controller'];?></td>
                                       
                                         <td class="am-text-middle">
-                                            <input type="checkbox" data-id="<?php echo $val['modular_id']?>" class="commentBox" name="commentBox" <?php if($val['true'] == 1){echo "checked";}?>>
+                                            <input type="checkbox" data-id="<?php echo $val['modular_id']?>" class="commentBox" name="commentBox" <?php if(isset($val['true'])){if($val['true'] == 1){echo "checked";}}?>>
                                             </td>
                                      </tr>
                                     
