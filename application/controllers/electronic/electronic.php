@@ -176,5 +176,23 @@ class Electronic extends Default_Controller {
          $data['menu'] = array('marketActivity','electronicList');
          $this->load->view('template.html',$data);
     }
+
+    //返回核销信息
+    function ret_after_list(){
+        $id = intval($this->uri->segment('4'));
+        if($id == 0){
+            echo "2";
+        }else{
+            $list = $this->Activity_model->ret_after_list($id);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }
+    }
+
+
+
 }
 

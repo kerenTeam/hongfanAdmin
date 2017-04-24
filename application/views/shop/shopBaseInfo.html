@@ -117,7 +117,7 @@
                         <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
                         <div class="am-u-sm-6" id="priceModelsBox">
                           
-                            <?php $rule = json_decode($busin['reduction_rule'],true);?>
+                            <?php $rule = json_decode($busin['store_reduction'],true);?>
                               <?php if(!empty($rule)):?>
                             <?php foreach($rule as $v):?>
                            <p>满 <input class="priceOne" value="<?php echo $v['reachPrice']?>"/> 元减 <input class="priceTwo" value="<?php echo $v['reducePrice'];?>"/> 元 <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button></p> 
@@ -132,9 +132,9 @@
                             <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
                         </div>
                           <?php if(!empty($rule)):?>
-                        <input type="hidden" id="reduction_rule" name='reduction_rule' value="<?php echo $busin['reduction_rule'];?>">
+                        <input type="hidden" id="reduction_rule" name='store_reduction' value="<?php echo $busin['store_reduction'];?>">
                           <?php else:?>
-                             <input type="hidden" id="reduction_rule" name='reduction_rule' >
+                             <input type="hidden" id="reduction_rule" name='store_reduction' >
                           <?php endif;?>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">

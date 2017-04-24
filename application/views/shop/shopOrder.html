@@ -309,14 +309,15 @@ td.am-text-middle img {
         data: data,
         success: function(result){         
             var res = JSON.parse(result);
-            // console.log(res);
+        //    console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
                     res[i].goods_data=JSON.parse(res[i].goods_data);
+                    // res[i].goods_data.Params.goodsData.goods_Data = eval(res[i].goods_data.Params.goodsData.goods_Data);
                     listData+= template('dataModal',res[i]);
-                 }
+                 } 
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
@@ -371,7 +372,7 @@ $(document).ready(function(){
 <script type="text/html" id="dataModal">   
     <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id %>">
         <td class="am-text-middle"><%= order_id %></td>
-        <td class="am-text-middle"><%= goods_data.Params.goodsData.length %></td>
+        <td class="am-text-middle"><%= goods_data.Params.goodsData[0].goods_Data.length %></td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
         <%if(username) {%>

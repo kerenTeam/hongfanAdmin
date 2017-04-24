@@ -84,39 +84,49 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品总数量：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['totalNum'];?>
+                               <?php echo count($goods['Params']['goodsData'][0]['goods_Data']);?>
                             </label>
                         </div> 
-                        <?php foreach($goods['goodsData'] as $val):?>                         
+                        <?php foreach($goods['Params']['goodsData'][0]['goods_Data'] as $val):?>                         
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsName'];?>
+                               <?php echo $val['title'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品图片：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <img class="tableImg" src="<?php echo $val['goodsImg'];?>">
+                                <img class="tableImg" src="<?php echo $val['thumb'];?>">
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品单价：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsPrice'];?>
+                               <?php echo $val['price'];?>
                             </label>
                         </div> 
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品数量：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['goodsnum'];?>
+                               <?php echo $val['nums'];?>
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品属性：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                              <?php for($i =1;$i < 5;$i++){?>
+                                <?php if(!empty($val['stend'.$i])):?>
+                                    <?php echo $val['stend'.$i].':'.$val['value'.$i];?>
+                                <?php endif;?>
+                              <?php }?>
                             </label>
                         </div>
                        <?php endforeach;?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['totalMoney'];?>
+                               <?php echo $order['amount'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
