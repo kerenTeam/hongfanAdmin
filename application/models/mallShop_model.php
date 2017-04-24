@@ -420,6 +420,13 @@ class MallShop_model extends CI_Model
     }
 
 
+    //返回用户收货地址
+    function ret_user_address($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get('hf_user_address');
+        return $query->row_array();
+    }
+
 }
 
 

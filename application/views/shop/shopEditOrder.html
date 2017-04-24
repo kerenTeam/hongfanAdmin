@@ -8,9 +8,9 @@
     }
     .hf-dropdown{
         font-size: 12px!important;
-    padding: 5px 6px!important;
+        padding: 5px 6px!important;
     }
- #preview{
+    #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
@@ -40,11 +40,18 @@
     .tableImg{
     width:80px;
 }
-label.am-u-sm-8{
+
+label.am-u-sm-8, label.am-u-sm-4{
         font-weight: normal;
         margin: 0 !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     padding-top: 5px;
+    }
+    label span.provalue {
+        display: inline-block;
+        padding:2px 5px;
+        background: #1fb5ac;
+        color: #fff;
     }
     .background{
         background: #eaeaea;
@@ -113,14 +120,16 @@ label.am-u-sm-8{
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品属性：</label>
-                            <label class="am-u-sm-8 am-text-middle">
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
+                           
                               <?php for($i =1;$i < 5;$i++){?>
                                 <?php if(!empty($val['stend'.$i])):?>
-                                    <?php echo $val['stend'.$i].':'.$val['value'.$i];?>
+                                 <label class="am-u-sm-4 am-text-left am-u-end">
+                                    <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
+                                </label>
                                 <?php endif;?>
                               <?php }?>
-                            </label>
+                           
                         </div>
                        <?php endforeach;?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
@@ -136,6 +145,27 @@ label.am-u-sm-8{
                                  <?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
                             </label>
                         </div>
+                        <?php if(!empty($order['fee_name'])):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">改价原因：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['fee_name'];?>
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">改价金额：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $order['fee'];?>
+                            </label>
+                        </div>
+                        <?php endif;?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">支付金额：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['amount']+$order['fee'];?>
+                            </label>
+                        </div>
                       <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">卖家：</label>
                             <label class="am-u-sm-8 am-text-middle">
@@ -149,19 +179,19 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">地址：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo $goods['sendAddress']['addressNow'];?>
+                                <?php echo $address['province'].$address['city'].$address['area'].$address['address'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">姓名：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $goods['sendAddress']['people'];?>
+                               <?php echo $address['person'];?>
                             </label>
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">手机：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo $goods['sendAddress']['phoneNow'];?>
+                              <?php echo $address['phone'];?>
                             </label>
                         </div>
                      <!--    <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
@@ -173,7 +203,7 @@ label.am-u-sm-8{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">买家留言：</label>
                             <label class="am-u-sm-8 am-text-middle">
-                                <?php echo  $goods['notice']?>
+                                <?php echo  $goods['Params']['postData']['orderStoreData'][0]['notice'];?>
                             </label>
                         </div>
                         <div class="widget-head am-cf">

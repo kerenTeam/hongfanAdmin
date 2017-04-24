@@ -1336,7 +1336,14 @@ class SingleShop extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['order'] = $this->MallShop_model->get_order_info($id);
+            //订单
+            $order = $this->MallShop_model->get_order_info($id);
+            //收货地址
+            $address = json_decode($order['goods_data'],true);
+            $address_id = $address['Params']['postData']['address_id'];
+            // var_dump($address_id);
+            // exit;
+            $data['order'] = $order;
             $data['page'] = $this->view_sureOrder;
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);
@@ -1352,7 +1359,13 @@ class SingleShop extends Default_Controller {
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['order'] = $this->MallShop_model->get_order_info($id);
+               $order = $this->MallShop_model->get_order_info($id);
+            //收货地址
+            $arr = json_decode($order['goods_data'],true);
+            $address_id = $arr['Params']['postData']['address_id'];
+            //获取收货地址
+            $data['address'] = $this->MallShop_model->ret_user_address($address_id);
+            $data['order'] = $order;
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');
             $this->load->view('template.html',$data);

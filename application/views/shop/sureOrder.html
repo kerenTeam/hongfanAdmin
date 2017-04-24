@@ -8,9 +8,9 @@
     }
     .hf-dropdown{
         font-size: 12px!important;
-    padding: 5px 6px!important;
+        padding: 5px 6px!important;
     }
- #preview{
+    #preview{
         height:200px !important;
     }
     #preview #imghead,#preview img{
@@ -40,6 +40,24 @@
     .tableImg{
     width:80px;
 }
+
+label.am-u-sm-8, label.am-u-sm-4{
+        font-weight: normal;
+        margin: 0 !important;
+    font-size: 15px !important;
+    padding-top: 5px;
+    }
+    label span.provalue {
+        display: inline-block;
+        padding:2px 5px;
+        background: #1fb5ac;
+        color: #fff;
+    }
+    .background{
+        background: #eaeaea;
+        clear: both;
+        margin-left: -20px;
+    }
 </style>
 
 <!-- 内容区域 -->
@@ -49,7 +67,7 @@
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
             <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
                 <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" style="font-size:16px;">订单管理</a>
-                <small><a href="<?php echo site_url().'/shop/singleShop/sureOrder';?>">确认订单</a></small></div>
+                <small>订单编辑</small></div>
         </div>
     </div>
 </div>
@@ -57,97 +75,109 @@
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">订单操作</div>
+               <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">修改订单</div>
                 </div>
                 <div class="widget-body am-fr">
-                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">当前操作：</label>
-                            <div class="am-u-sm-9">
-                               <p class="red">修改订单</p> 
-                            </div>
-                        </div>        
-                        <?php 
-                            $orderinfo = json_decode($order['goods_data'],true);
-                        ?>                 
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">订单单号：</label>
-                            <div class="am-u-sm-9">
-                                <?php echo $order["order_id"];?>
-                            </div>
+                        <div class="widget-head am-cf ">
+                            <div class="widget-title  am-cf background">商品信息:</div>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">商品名称：</label>
-                            <div class="am-u-sm-9">
-                                <?php echo $orderinfo['goodsData'][0]['goodsName'];?>
-                            </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单单号：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['order_id'];?>
+                            </label>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">商品图片：</label>
-                            <div class="am-u-sm-9">
-                                <img class="tableImg" src="<?php echo $orderinfo['goodsData'][0]['goodsImg'];?>">
-                            </div>
+                        <?php $goods = json_decode($order['goods_data'],true);?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品总数量：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo count($goods['Params']['goodsData'][0]['goods_Data']);?>
+                            </label>
+                        </div> 
+                        <?php foreach($goods['Params']['goodsData'][0]['goods_Data'] as $val):?>                         
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $val['title'];?>
+                            </label>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">买家：</label>
-                            <div class="am-u-sm-9">
-                                <?php echo user_name($order['buyer']);?>
-                            </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品图片：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                <img class="tableImg" src="<?php echo $val['thumb'];?>">
+                            </label>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">买家联系方式：</label>
-                            <div class="am-u-sm-9">
-                                 <?php echo $orderinfo['sendAddress']['phoneNow'];?>
-                            </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品单价：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $val['price'];?>
+                            </label>
+                        </div> 
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品数量：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $val['nums'];?>
+                            </label>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">买家留言：</label>
-                            <div class="am-u-sm-9">
-                                <?php echo $orderinfo['sendAddress']['people'];?>
-                            </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
+                           
+                              <?php for($i =1;$i < 5;$i++){?>
+                                <?php if(!empty($val['stend'.$i])):?>
+                                 <label class="am-u-sm-4 am-text-left am-u-end">
+                                    <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
+                                </label>
+                                <?php endif;?>
+                              <?php }?>
+                           
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">下单时间：</label>
-                            <div class="am-u-sm-9">
-                               <?php echo $order['create_time'];?>
-                            </div>
+                       <?php endforeach;?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['amount'];?>
+                            </label>
                         </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">商品单价：</label>
-                            <div class="am-u-sm-9">
-                                ￥<?php echo $orderinfo['totalMoney'];?>
-                                <!-- ￥<input type="number" value="320" name="" > -->
-                            </div>
-                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">买家：</label>
+                            <label class="am-u-sm-8 am-text-middle">
 
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">附加名称：</label>
-                            <div class="am-u-sm-9">
-                                 <?php if(!empty($order['fee_name'])):?>
-                                <?php echo $order['fee_name'];?>
-                                 <?php else:?>
-                                <input type="text"  name="fee_name" placeholder="例如运费、退款、收费等" >
-                            <?php endif;?>
-                            </div>
+                                 <?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
+                            </label>
                         </div>
-
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">附加值：</label>
-                            <div class="am-u-sm-9">
-                            <?php if($order['fee'] != '0'):?>
-                                ￥<?php echo $order['fee'];?>
-                            <?php else:?>
-                                ￥<input type="text" name="fee" placeholder="可以为负值" >
-                            <?php endif;?>
-                            </div>
-                        </div>
-               <!--          <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                            <label for="user-email" class="am-u-sm-3 am-form-label"></label>
-                            <div class="am-u-sm-9">
-                               <input type="checkbox" name="">同时确认订单
-                            </div>
+                      <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">卖家：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                1234
+                            </label>
                         </div> -->
+                         <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf background" >修改信息:</div>
+                        </div>
+                         <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
+                            <label for="user-email" class="am-u-sm-3 am-form-label" >附加名称<span style="color:#ff0000;">*</span>：</label>
+                            <div class="am-u-sm-9">
+                            <?php if(!empty($order['fee_name'])):?>
+                                <?php echo $order['fee_name'];?>
+                            <?php else:?>
+                                <input type="text"  name="fee_name" placeholder="例如运费、退款、收费等" required>
+                            <?php endif;?>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" >
+                            <label for="user-email" class="am-u-sm-3 am-form-label">附加值(￥)：</label>
+                           <div class="am-u-sm-9">
+                            <?php if($order['fee'] != '0'):?>
+                                <?php echo $order['fee'];?>
+                            <?php else:?>
+                                <input type="text" name="fee" placeholder="可以为负值" >
+                            <?php endif;?>
+                           </div>
+                        </div>    
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                             <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
                             <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
@@ -156,6 +186,7 @@
                     </form>
                 </div>
             </div>
+            
         </div>
     </div>
 
@@ -163,6 +194,11 @@
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+  //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
+
   //点击取消返回上一页
   $('#cancle').click(function(){
     history.go(0);
