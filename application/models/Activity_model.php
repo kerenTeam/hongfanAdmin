@@ -28,7 +28,7 @@ class Activity_model extends CI_Model
         $this->db->select('a.*,b.store_name');
         $this->db->from('hf_shop_coupon as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
-        $query = $this->db->get();
+        $query = $this->db->order_by('id','desc')->get();
         return $query->result_array();
     }
     //返回卡卷详情

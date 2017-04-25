@@ -52,27 +52,30 @@ class Electronic extends Default_Controller {
     function add_electronic(){
         if($_POST){
             $data = $this->input->post();
-            if(isset($data['overflowValue'])){
-                if(empty($data['overflowValue'])){
-                    unset($data['overflowValue'],$data['cutValue']);
-                    $data['coupon_amount'] = $data['discount'];
-                }else{
+            if($data['typeid'] == 1){
                     $arr = array($data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
                     unset($data['overflowValue'],$data['cutValue']);
-                }
+            }elseif($data['typeid'] == 2){
+                  $arr = array($data['overflow'],$data['cut']);
+                   // $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = implode(',',$arr);
+                    unset($data['overflow'],$data['cut']);
+            }else{
+                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }
-            //日志
-            $log = array(
-                'userid'=>$_SESSION['users']['user_id'],  
-                "content" => $_SESSION['users']['username']."新增了一个优惠卷。优惠卷名称是".$data['name'],
-                "create_time" => date('Y-m-d H:i:s'),
-                "userip" => get_client_ip(),
-            );
-            $this->db->insert('hf_system_journal',$log);
+   
             //
             if($this->Activity_model->add_electronic($data)){
+                 //日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."新增了一个优惠卷。优惠卷名称是".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/electronic/Electronic/electronicList')."'</script>";exit;
             }else{
                 echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/addElectronic')."'</script>";exit;
@@ -102,16 +105,18 @@ class Electronic extends Default_Controller {
     function edit_Electronic(){
         if($_POST){
             $data = $this->input->post();
-            if(isset($data['overflowValue'])){
-                if(empty($data['overflowValue'])){
-                    unset($data['overflowValue'],$data['cutValue']);
-                    $data['coupon_amount'] = $data['discount'];
-                }else{
+            if($data['typeid'] == 1){
                     $arr = array($data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
                     unset($data['overflowValue'],$data['cutValue']);
-                }
+            }elseif($data['typeid'] == 2){
+                  $arr = array($data['overflow'],$data['cut']);
+                   // $data['salerule'] = json_encode($arr);
+                    $data['coupon_amount'] = implode(',',$arr);
+                    unset($data['overflow'],$data['cut']);
+            }else{
+                  unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }
             //日志
             $log = array(

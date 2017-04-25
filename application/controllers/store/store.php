@@ -450,18 +450,47 @@ class Store extends Default_Controller {
         $this->load->view('template.html',$data);
     }
 
+         //返回订单详情
+     function order_info(){
+         if($_POST){
+             $id= $this->input->post('id');
+             $order = $this->MallShop_model->get_order_info($id);
+             if(!empty($order)){
+                 echo json_encode($order);
+             }else{
+                 echo "3";
+             }
+         }else{
+             echo "2";
+         }
+     }
+     //获取收货地址
+     function get_address(){
+         if($_POST){
+             $id= $this->input->post('id');
+             $list = $this->MallShop_model->ret_user_address($id);
+             if(!empty($list)){
+                 echo json_encode($list);
+             }else{
+                 echo "3";
+             }
+         }else{
+             echo "2";
+         }
+     }
+
     //订单管理 订单详情
     function storeOrderDetail(){
         $id = intval($this->uri->segment(4));
         if($id != 0){
             //获取订单详情
-             $data['order'] = $this->MallShop_model->get_order_info($id);$order = $this->MallShop_model->get_order_info($id);
-            //收货地址
-            $arr = json_decode($order['goods_data'],true);
-            $address_id = $arr['Params']['postData']['address_id'];
-            //获取收货地址
-            $data['address'] = $this->MallShop_model->ret_user_address($address_id);
-
+            //  $data['order'] = $this->MallShop_model->get_order_info($id);$order = $this->MallShop_model->get_order_info($id);
+            // //收货地址
+            // $arr = json_decode($order['goods_data'],true);
+            // $address_id = $arr['Params']['postData']['address_id'];
+            // //获取收货地址
+            // $data['address'] = $this->MallShop_model->ret_user_address($address_id);
+            $data['id'] = $id;
              $data['page'] = $this->view_storeOrderDetail;
              $data['menu'] = array('store','storeOrderList');
              $this->load->view('template.html',$data);
@@ -764,5 +793,10 @@ class Store extends Default_Controller {
              echo "2";
          }
      }
+
+
+
+
+
 }
 
