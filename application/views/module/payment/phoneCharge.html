@@ -85,8 +85,7 @@ padding: 5px 6px!important;
                                 <tr>
                                     <th>编号 </th>
                                     <th>用户名 </th>
-                                    <th>出发地</th>
-                                    <th>目的地 </th>
+                                    <th>购票信息</th>
                                     <th>出发时间 </th>
                                     <th>到达时间 </th>
                                     <th>购买金额 </th>
@@ -129,7 +128,7 @@ padding: 5px 6px!important;
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
     var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
-    var $PhoneCharge = parseInt(sessionStorage.getItem('PhoneCharge')) || 0, $isPhoneCharge = parseInt(sessionStorage.getItem('isPhoneCharge')) || 0;
+    var $PhoneCharge = parseInt(sessionStorage.getItem('PhoneCharge')) || 0, $isPhoneCharge = parseInt(sessionStorage.getItem('isPhoneCharge')) || 0, totalNum = 0;
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -207,19 +206,24 @@ padding: 5px 6px!important;
             data: data,
             success: function(result){     
                 var res = eval(result);
-                // console.log(res);
+                console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
-                    total_page = Math.ceil(res.length/15); //得到总页数
+                    totalNum = res.length;
                     for(var i = 0; i < res.length; i++){
-                        res[i].data=JSON.parse(res[i].data);
-                        listData+= template('dataModal',res[i]);
-                     }
+                        res[i].payment_data=JSON.parse(res[i].payment_data);
+                        if(!res[i].payment_data.errorToken) {  
+                            listData+= template('dataModal',res[i]);    
+                        } else {
+                            totalNum--;
+                        }      
+                    }
+                    total_page = Math.ceil(totalNum/15); //得到总页数
                     document.getElementById('dataList').innerHTML = listData;
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
-                        go_to_page($TrainTicket);
-                        var opts={};opts.current_page = $TrainTicket;
+                        go_to_page($PhoneCharge);
+                        var opts={};opts.current_page = $PhoneCharge;
                         $("#Pagination").pagination(total_page, opts);
                         pageflag = 0;
                     } else {
@@ -253,15 +257,15 @@ padding: 5px 6px!important;
     })
 </script>
 <script type="text/html" id="dataModal">
+    <% if(payment_data.air_order_create_response) {%>
     <tr class="trClass" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= username%></td>
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.startStation%></td>
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.recevieStation%></td>
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.startTime%></td>
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.recevieTime%></td> 
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.totalPayCash%></td>
-        <td class="am-text-middle"><%= data.air_order_create_response.ticketTrade.ctime%></td>
+        <td class="am-text-middle"><%= id %></td>
+        <td class="am-text-middle"><%= nickname %></td>
+        <td class="am-text-middle"><%= payment_data.air_order_create_response.ticketTrade.title %></td>
+        <td class="am-text-middle"><%= payment_data.air_order_create_response.ticketTrade.startTime %></td>
+        <td class="am-text-middle"><%= payment_data.air_order_create_response.ticketTrade.recevieTime %></td> 
+        <td class="am-text-middle"><%= payment_data.air_order_create_response.ticketTrade.totalPayCash%></td>
+        <td class="am-text-middle"><%= payment_data.air_order_create_response.ticketTrade.ctime%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
@@ -282,4 +286,5 @@ padding: 5px 6px!important;
             </div>
         </div>
     </div>
+    <% } %>
 </script>
