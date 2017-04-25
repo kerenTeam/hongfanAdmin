@@ -33,6 +33,8 @@ class Store extends Default_Controller {
     public $view_storeGoodsSales = "store/storeGoodsSales.html";
     //特色馆 HOT推荐管理
     public $view_storeHotRecommand = "store/storeHotRecommand.html";
+    //购物中心 订单管理
+    public $view_mollOrderList = "moll/mollOrderList.html";
 
     function __construct()
     {
@@ -417,8 +419,9 @@ class Store extends Default_Controller {
         }
     }
 
-    //订单管理
+    //特色馆订单管理
     function storeOrderList(){
+        
         $data['page'] = $this->view_storeOrderList;
         $data['menu'] = array('store','storeOrderList');
          $this->load->view('template.html',$data);
@@ -427,7 +430,8 @@ class Store extends Default_Controller {
     //获取所有订单
     function Order_page(){
         if($_POST){
-            $order = $this->MallShop_model->get_order_list();
+            $type =  $this->input->post('default');
+            $order = $this->MallShop_model->get_order_list($type);
             if(empty($order)){
                 echo "2";
             }else{
@@ -438,6 +442,13 @@ class Store extends Default_Controller {
         }
     }
 
+    //购物中心 订单
+    function mollOrder(){
+        
+        $data['page'] = $this->view_mollOrderList;
+        $data['menu'] = array('moll','mollOrder');
+        $this->load->view('template.html',$data);
+    }
 
     //订单管理 订单详情
     function storeOrderDetail(){

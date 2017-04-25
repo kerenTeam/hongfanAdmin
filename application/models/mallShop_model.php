@@ -279,12 +279,12 @@ class MallShop_model extends CI_Model
     }
 
     //返回所有订单
-    function get_order_list(){
+    function get_order_list($type){
         $this->db->select('a.*,b.store_name,c.username,c.nickname');
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('order_type','1')->get();
+        $query = $this->db->where('order_type',$type)->get();
         return $query->result_array();
     }
 

@@ -244,7 +244,7 @@ td.am-text-middle img {
                 success: function(data){
                     console.log(data);
                     if(data==1){ 
-                        getList('<?php echo site_url('store/store/Order_page');?>','default=1');
+                        getList('<?php echo site_url('store/store/Order_page');?>','default=4');
                         alert("操作成功！");
                     }else{
                         alert("操作失败！");
@@ -314,7 +314,7 @@ $(document).ready(function(){
         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
         sessionStorage.setItem('isStoreOrderList', 1);
     } else {
-       getList('<?php echo site_url('store/store/Order_page');?>','default=1'); 
+       getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
