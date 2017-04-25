@@ -85,13 +85,13 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th>编号 </th>
-                                    <th>用户名 </th>
-                                    <th>出发地</th>
-                                    <th>目的地 </th>
+                                    <th>缴费用户 </th>
+                                    <th>购买者 </th>
+                                    <th>购票信息</th>
                                     <th>出发时间 </th>
-                                    <th>到达时间 </th>
                                     <th>购买金额(元) </th>
                                     <th>购买时间</th>
+                                    <th>状态</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -130,7 +130,7 @@ padding: 5px 6px!important;
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
     var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
-    var $TrainTicket = parseInt(sessionStorage.getItem('TrainTicket')) || 0, $isTrainTicket = parseInt(sessionStorage.getItem('isTrainTicket')) || 0;
+    var $TrainTicket = parseInt(sessionStorage.getItem('TrainTicket')) || 0, $isTrainTicket = parseInt(sessionStorage.getItem('isTrainTicket')) || 0, totalNum = 0;
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -208,11 +208,16 @@ padding: 5px 6px!important;
                 // console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
-                    total_page = Math.ceil(res.length/15); //得到总页数
+                    totalNum = res.length;
                     for(var i = 0; i < res.length; i++){
-                        res[i].data=JSON.parse(res[i].data);
-                        listData+= template('dataModal',res[i]);
-                     }
+                        res[i].payment_data=JSON.parse(res[i].payment_data);
+                        if(!res[i].payment_data.errorToken) {  
+                            listData+= template('dataModal',res[i]);    
+                        } else {
+                            totalNum--;
+                        }      
+                    }
+                    total_page = Math.ceil(totalNum/15); //得到总页数
                     document.getElementById('dataList').innerHTML = listData;
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
@@ -251,23 +256,16 @@ padding: 5px 6px!important;
     })
 </script>
 <script type="text/html" id='dataModal'>
+    <% if(payment_data.train_order_create_response) { %>
     <tr class="trClass" data-id="<%= id %>">
         <td class="am-text-middle"><%= id %></td>
-        <td class="am-text-middle"><%= username %></td>
-   
-        <td class="am-text-middle"><%=data.train_order_create_response.ticketTrade.startStation%></td>
-        
-        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.recevieStation%></td>
-        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.startTime%></td>
-        <td class="am-text-middle">
-        <% if(data.train_order_create_response.ticketTrade.recevieTime) { %>
-            <%= data.train_order_create_response.ticketTrade.recevieTime%>
-        <% } else { %>
-            暂无
-        <% } %>
-        </td>
-        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.totalPayCash%></td>
-        <td class="am-text-middle"><%= data.train_order_create_response.ticketTrade.ctime%></td>
+        <td class="am-text-middle"><%= nickname %></td>
+        <td class="am-text-middle"><%= payment_data.train_order_create_response.ticketTrade.contactName %></td>
+        <td class="am-text-middle"><%=payment_data.train_order_create_response.ticketTrade.title %></td>
+        <td class="am-text-middle"><%= payment_data.train_order_create_response.ticketTrade.startTime %></td>
+        <td class="am-text-middle"><%= payment_data.train_order_create_response.ticketTrade.totalSalePrice %></td>
+        <td class="am-text-middle"><%= payment_data.train_order_create_response.ticketTrade.ctime %></td>
+        <td class="am-text-middle"><%= payment_data.train_order_create_response.ticketTrade.stateName %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id %>" class="tpl-table-black-operation-del tpl-del">
@@ -288,75 +286,5 @@ padding: 5px 6px!important;
             </div>
         </div>
     </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="co<%= id %>">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">购买详情</div>
-        <div class="am-modal-bd">
-            <div class="modal-content">
-                <span class="am-fl">编号：</span>
-                <span class="am-fr">
-                    <%= id %>
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">用户名：</span>
-                <span class="am-fr">
-                    <%= grade_star %>
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">出发地：</span>
-                <span class="am-fr">
-                    <%= seller_ctime %>
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">目的地：</span>
-                <span class="am-fr">
-                    <%= seller_comment %>
-                </span>
-            </div>
-            
-            <div class="modal-content">
-                <span class="am-fl">出发时间：</span>
-                <span class="am-fr">
-                <% if(comment_pic) { %>
-                    <% for(var i=0;i<comment_pic.length;i++) { %>
-                        <img src="<%= comment_pic[i].comment_pic%>" class="commentImg">
-                    <% } %>
-                <% } else { %>
-                    暂无评论图片
-                <% } %>             
-                
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">购买数量：</span>
-                <span class="am-fr">
-                    <% if(reply) { %>
-                    <%= reply.seller_comment %>
-                    <% } else { %>
-                    无回复内容
-                    <% } %>
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">购买金额：</span>
-                <span class="am-fr">
-                    <%= seller_comment %>
-                </span>
-            </div>
-            <div class="modal-content">
-                <span class="am-fl">购买时间：</span>
-                <span class="am-fr">
-                    <%= seller_comment %>
-                </span>
-            </div>
-
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>关闭</span>
-        </div>
-    </div>
-</div>
+    <% } %>
 </script>

@@ -159,7 +159,7 @@ padding: 5px 6px!important;
         });
     }
     var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
-    var $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge')) || 0, $isEnergyCharge = parseInt(sessionStorage.getItem('isEnergyCharge')) || 0;
+    var $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge')) || 0, $isEnergyCharge = parseInt(sessionStorage.getItem('isEnergyCharge')) || 0, totalNum = 0;
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -205,14 +205,19 @@ padding: 5px 6px!important;
             data: data,
             success: function(result){     
                 var res = eval(result);
-                // console.log(res);
+                console.log(res);
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
-                    total_page = Math.ceil(res.length/15); //得到总页数
+                    totalNum = res.length;
                     for(var i = 0; i < res.length; i++){
-                        res[i].data=JSON.parse(res[i].data);
-                        listData+= template('dataModal',res[i]);
-                     }
+                        res[i].payment_data=JSON.parse(res[i].payment_data);
+                        if(!res[i].payment_data.errorToken) {  
+                            listData+= template('dataModal',res[i]);    
+                        } else {
+                            totalNum--;
+                        }      
+                    }
+                    total_page = Math.ceil(totalNum/15); //得到总页数
                     document.getElementById('dataList').innerHTML = listData;
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
@@ -251,18 +256,15 @@ padding: 5px 6px!important;
     })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <%if(username){%>
-        <td class="am-text-middle"><%= username%></td>
-        <%}else{%>
-         <td class="am-text-middle"><%= nickname%></td>
-        <%}%>
-        <td class="am-text-middle"><%= data.data.rechargeAccount%></td>
-        <td class="am-text-middle"><%= data.data.saleAmount%></td>
-        <td class="am-text-middle"><%= data.data.orderProfit%></td>
-        <td class="am-text-middle"><%= data.data.orderTime%></td>
-        <td class="am-text-middle"><%= data.data.supId%></td>
+<% if(!payment_data.message) {%>
+    <tr class="trClass" data-id="<%= id %>">
+        <td class="am-text-middle"><%= id %></td>
+        <td class="am-text-middle"><%= nickname %></td>
+        <td class="am-text-middle"><%= payment_data.data.rechargeAccount%></td>
+        <td class="am-text-middle"><%= payment_data.data.saleAmount%></td>
+        <td class="am-text-middle"><%= payment_data.data.orderProfit%></td>
+        <td class="am-text-middle"><%= payment_data.data.orderTime%></td>
+        <td class="am-text-middle"><%= payment_data.data.supId%></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
@@ -285,4 +287,5 @@ padding: 5px 6px!important;
     </div>
 
 </div>
+<% } %>
 </script>
