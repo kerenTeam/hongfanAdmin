@@ -484,12 +484,12 @@ class Store extends Default_Controller {
         $id = intval($this->uri->segment(4));
         if($id != 0){
             //获取订单详情
-            //  $data['order'] = $this->MallShop_model->get_order_info($id);$order = $this->MallShop_model->get_order_info($id);
-            // //收货地址
-            // $arr = json_decode($order['goods_data'],true);
-            // $address_id = $arr['Params']['postData']['address_id'];
-            // //获取收货地址
-            // $data['address'] = $this->MallShop_model->ret_user_address($address_id);
+             $data['order'] = $this->MallShop_model->get_order_info($id);$order = $this->MallShop_model->get_order_info($id);
+            //收货地址
+            $arr = json_decode($order['goods_data'],true);
+            $address_id = $arr['Params']['postData']['address_id'];
+            //获取收货地址
+            $data['address'] = $this->MallShop_model->ret_user_address($address_id);
             $data['id'] = $id;
              $data['page'] = $this->view_storeOrderDetail;
              $data['menu'] = array('store','storeOrderList');
