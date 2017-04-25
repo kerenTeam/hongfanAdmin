@@ -39,6 +39,27 @@ td.am-text-middle img {
     padding:2px 5px;
     color: #e0690c;
 }
+.smallSize {
+    font-size: 14px;
+}
+td div div p {
+    padding:0;
+    margin:0;
+}
+.goodsTitle,.goods_price {
+    color: #32323a;
+}    
+.goods_tags {
+    display: inline-block;
+    padding: 0 2px;
+    border: 1px solid #1fb5ac;
+    color: #1fb5ac ;
+    font-size: 10px;
+}
+.goodsImg {
+    width: 80px;
+}
+
 </style>
 
 <!-- 内容区域 -->
@@ -122,7 +143,7 @@ td.am-text-middle img {
                             <thead>
                                 <tr>
                                     <th>订单编号 </th>
-                                    <th>商品数量 </th>
+                                    <th width="40%" class="am-text-center">购买商品 </th>
                                     <th>订单金额 </th>
                                     <th>买家 </th>
                                     <th>订单时间</th>
@@ -314,10 +335,14 @@ td.am-text-middle img {
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
-                    res[i].goods_data=JSON.parse(res[i].goods_data);
-                    // res[i].goods_data.Params.goodsData.goods_Data = eval(res[i].goods_data.Params.goodsData.goods_Data);
+                    res[i].goods_data = JSON.parse(res[i].goods_data);
+                    res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic = eval(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic);
+                    if(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags) {
+                        res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags = res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags.split(',');
+                    }
+
                     listData+= template('dataModal',res[i]);
-                 } 
+                } 
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
@@ -372,7 +397,52 @@ $(document).ready(function(){
 <script type="text/html" id="dataModal">   
     <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id %>">
         <td class="am-text-middle"><%= order_id %></td>
-        <td class="am-text-middle"><%= goods_data.Params.goodsData[0].goods_Data.length %></td>
+        <td class="am-text-middle">
+        <% for(var j = 0; j < goods_data.Params.goodsData[0].goods_Data.length; j++) {%>    
+            <div class="am-u-sm-12">
+                <div class="am-u-sm-2">
+                <% if(goods_data.Params.goodsData[0].goods_Data[0].good_pic.length) {%>
+                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].good_pic[0].bannerPic %>" class="goodsImg">
+                <% } else { %>
+                    <img src="assets/img/nullImg.jpg" class="goodsImg">
+                <% } %>
+                </div>
+                <div class="am-u-sm-8 smallSize">
+                    <p class="goodsTitle"><%= goods_data.Params.goodsData[0].goods_Data[j].title %></p>
+                    <p class="gray">
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend1) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend1 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value1 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend2) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend2 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value2 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend3) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend3 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value3 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend4) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend4 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value4 %></span>
+                        <% } %>
+                        <span class="am-fr"><%= goods_data.Params.goodsData[0].stores.store_name %> </span>
+                    </p>
+                    <% if(goods_data.Params.goodsData[0].goods_Data[j].good_tags) { %>
+                        <% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
+                        <p>
+                            <span class="goods_tags"><%= goods_data.Params.goodsData[0].goods_Data[j].good_tags[i] %></span>
+                        </p>
+                        <% } %>
+                    <% } %>
+                </div>
+                <div class="am-u-sm-2 am-text-right">
+                    <p class="goods_price">￥<%= goods_data.Params.goodsData[0].goods_Data[j].price %></p>
+                    <p class="gray">x<%= goods_data.Params.goodsData[0].goods_Data[j].nums %></p>
+                </div>
+            </div>
+        <% } %>
+        </td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
         <%if(username) {%>

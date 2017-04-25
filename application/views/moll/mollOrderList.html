@@ -1,1 +1,457 @@
-dfg
+<style type="text/css" media="screen">
+.am-selected {
+    width: 100%!important;
+} 
+.table-check {
+    width: 30px;
+} 
+.hf-dropdown {
+    font-size: 12px!important;
+    padding: 5px 6px!important;
+}   
+td.am-text-middle img {
+    width:80px;
+} 
+.am-u-sm6 {
+    width: 60px !important;
+    margin: 0;
+}
+.stable {
+    display: inline-block !important;
+    width: 45% !important;
+} 
+.linkWord {
+    width: 10% !important;
+}
+.stable {
+    display: inline-block !important;
+    width: 45% !important;
+}
+.linkWord {
+    width: 10% !important;
+}
+.tableImg {
+    width: 80px;
+}
+.am-table>tbody>tr.noBorder>td {
+    border-top: none;
+}
+.smallSize {
+    font-size: 14px;
+}
+td div div p {
+    padding:0;
+    margin:0;
+}
+.goodsTitle,.goods_price {
+    color: #32323a;
+}    
+.goods_tags {
+    display: inline-block;
+    padding: 0 2px;
+    border: 1px solid #1fb5ac;
+    color: #1fb5ac ;
+    font-size: 10px;
+}
+.goodsImg {
+    width: 80px;
+}
+
+    
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>订单列表</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">订单搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">状态:</label>
+                        <div class="am-u-sm-9">
+                            <select id="orderState" name="state">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1">未支付</option>
+                                <option value="2">已支付</option>
+                                <option value="3">已发货</option>
+                                <option value="4">已收货</option>
+                                <option value="5">已评价</option>
+                                <option value="6">求退货</option>
+                                <option value="7">退货中</option>
+                                <option value="8">退款</option>
+                                <option value="9">其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end">
+                        <button type="button" class="am-btn am-btn-secondary am-btn-xs searchOrder"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">订单列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>订单编号 </th>
+                                    <th width="40%" class="am-text-center">购买商品 </th>
+                                    <th>订单金额 </th>
+                                    <th>买家 </th>
+                                    <th>卖家 </th>
+                                    <th>下单时间 </th>
+                                    <th>订单状态 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataList">
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a>2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
+                        </div>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+  var pageflag = 1,$mollOrderList = parseInt(sessionStorage.getItem('mollOrderList')) || 0, $ismollOrderList = parseInt(sessionStorage.getItem('ismollOrderList')) || 0, total_page=0;
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page=page_num;
+        sessionStorage.setItem('mollOrderList', current_page);
+        $mollOrderList =  sessionStorage.setItem('mollOrderList', current_page);
+    }
+
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(){
+        new_page = current_page+1;
+        if($('.active_page').next('.page_link').length==true){
+            go_to_page(new_page);
+        }
+    }
+    function otherFunction() {
+        $('.editOrder').click(function(){//查看订单信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
+        });
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
+        }
+        //删除订单的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/del_Order');?>',
+                data: 'id='+dataId,
+                success: function(data){
+                    console.log(data);
+                    if(data==1){ 
+                        getList('<?php echo site_url('/store/Store/Order_page');?>','default=1');
+                        alert("操作成功！");
+                    }else{
+                        alert("操作失败！");
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        
+        });
+    }
+    //异步刷新的ajax请求   
+    function getList(dataurl,data,changeIndex){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){     
+                var res = eval(result);
+                // console.log(res);
+                if(res != 2 && res != 3){
+                    var listData = ''; //每页出现的数量
+                    var total_page = Math.ceil(res.length/15); //得到总页数
+                    for(var i = 0; i < res.length; i++){
+                        res[i].goods_data = JSON.parse(res[i].goods_data);
+                        res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic = eval(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic);
+                        if(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags) {
+                            res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags = res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags.split(',');
+                        }
+                        listData+= template('dataModal',res[i]);
+                    }
+                    document.getElementById('dataList').innerHTML = listData;
+                    $('.pagebox').css('display', 'block');
+                    if(pageflag) {
+                        go_to_page($mollOrderList);
+                        var opts={};opts.current_page = $mollOrderList;
+                        $("#Pagination").pagination(total_page, opts);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
+                    otherFunction();
+                         
+                }else{
+                    $('#dataList').find('tr').remove();
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+                    $('.pagebox').css('display', 'none');
+                }
+
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
+            }
+        });
+    }
+$(document).ready(function(){
+    //加载列表数数据
+    if($ismollOrderList) {
+        var order_status = $('#orderState option:selected').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        sessionStorage.setItem('ismollOrderList', 1);
+    } else {
+       getList('<?php echo site_url('/store/Store/Order_page');?>','default=1'); 
+    }
+    //点击搜索
+    $('.searchOrder').click(function(){
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer option:selected').val(),seller=$('#seller').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
+          // console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        sessionStorage.setItem('ismollOrderList', 1);
+        
+    });
+})
+</script>
+<script type="text/html" id="dataModal">   
+    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
+        <td class="am-text-middle"><%= order_id %></td>
+        <td class="am-text-middle">
+        <% for(var j = 0; j < goods_data.Params.goodsData[0].goods_Data.length; j++) {%>    
+            <div class="am-u-sm-12">
+                <div class="am-u-sm-2">
+                <% if(goods_data.Params.goodsData[0].goods_Data[0].good_pic.length) {%>
+                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].good_pic[0].bannerPic %>" class="goodsImg">
+                <% } else { %>
+                	<img src="assets/img/nullImg.jpg" class="goodsImg">
+                <% } %>
+                </div>
+                <div class="am-u-sm-8 smallSize">
+                    <p class="goodsTitle"><%= goods_data.Params.goodsData[0].goods_Data[j].title %></p>
+                    <p class="gray">
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend1) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend1 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value1 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend2) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend2 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value2 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend3) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend3 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value3 %></span>
+                        <% } %>
+                        <% if(goods_data.Params.goodsData[0].goods_Data[j].stend4) { %>
+                        <span><%= goods_data.Params.goodsData[0].goods_Data[j].stend4 %>:
+<%= goods_data.Params.goodsData[0].goods_Data[j].value4 %></span>
+                        <% } %>
+                        <span class="am-fr"><%= goods_data.Params.goodsData[0].stores.store_name %> </span>
+                    </p>
+                    <% if(goods_data.Params.goodsData[0].goods_Data[j].good_tags) { %>
+	                    <% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
+	                    <p>
+	                        <span class="goods_tags"><%= goods_data.Params.goodsData[0].goods_Data[j].good_tags[i] %></span>
+	                    </p>
+	                    <% } %>
+                   	<% } %>
+                </div>
+                <div class="am-u-sm-2 am-text-right">
+                    <p class="goods_price">￥<%= goods_data.Params.goodsData[0].goods_Data[j].price %></p>
+                    <p class="gray">x<%= goods_data.Params.goodsData[0].goods_Data[j].nums %></p>
+                </div>
+            </div>
+        <% } %>
+        </td>
+        <td class="am-text-middle"><%= amount %></td>
+        <td class="am-text-middle">
+        <%if(username) {%>
+        <%= username%>
+        <%} else {%>
+        <%= nickname%>
+        <%}%>
+        </td>
+        <td class="am-text-middle"><%= store_name %></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <%if(order_status==1) {%>
+            <td class="am-text-middle red">
+                未支付
+            </td>
+        <%}else if(order_status==2){%>
+            <td class="am-text-middle">
+                已支付
+            </td>
+        <%}else if(order_status==3){%>
+            <td class="am-text-middle warning">
+                已发货
+            </td>
+        <%}else if(order_status==4){%>
+            <td class="am-text-middle">
+                已收货
+            </td>
+        <%}else if(order_status==5){%>
+            <td class="am-text-middle success">
+                已评价
+            </td>
+        <%}else if(order_status==6){%>
+            <td class="am-text-middle">
+                求退货
+            </td>
+        <%}else if(order_status==7){%>
+            <td class="am-text-middle">
+                退货中
+            </td>
+        <%}else if(order_status==8){%>
+            <td class="am-text-middle">
+                退款
+            </td>
+        <%}else if(order_status==9){%>
+            <td class="am-text-middle">
+                其他
+            </td>
+        <%}%>
+        
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= order_id%>" class="editOrder">
+                    <i class="am-icon-eye"></i> 查看详情
+                </a>
+                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= order_id%>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= order_id%>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+</script>
+
