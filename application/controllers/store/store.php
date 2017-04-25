@@ -449,9 +449,22 @@ class Store extends Default_Controller {
         $data['menu'] = array('moll','mollOrder');
         $this->load->view('template.html',$data);
     }
+    function order_info(){
+        $id= intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $order = $this->MallShop_model->get_order_info($id);
+            if(!empty($order)){
+                echo json_encode($order);
+            }else{
+                echo "3";
+            }
+        }
+    }
 
          //返回订单详情
-     function order_info(){
+     function order_info1(){
          if($_POST){
              $id= $this->input->post('id');
              $order = $this->MallShop_model->get_order_info($id);
