@@ -70,7 +70,8 @@ class MarketActivity extends Default_Controller {
                         $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
                     }
             }
-            if($data['type'] == 2){
+         
+            if($data['type'] == 1){
                 $cou = array_filter($data['couponid']);
                 if(!empty($cou)){
                     $data['couponid'] = implode(',',$cou);
@@ -159,7 +160,7 @@ class MarketActivity extends Default_Controller {
                     }
             }
           
-            if($data['type'] == 2){
+            if($data['type'] == 1){
                 $cou = array_unique(array_filter($data['couponid']));
                 if(!empty($cou)){
                     $data['couponid'] = implode(',',$cou);

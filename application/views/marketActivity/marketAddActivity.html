@@ -157,6 +157,20 @@
                                                  <span class="am-icon"></span>
                                                  <input type="hidden" name="couponid[]" class="saveid" />
                                          </li>
+                                    <?php elseif($val['typeid'] == 3):?>
+                                        <li class="quan" state="0" data-id="<?php echo $val['id'];?>">
+                                                <div class="am-u-sm-3">
+                                                 活 
+                                                </div>
+                                                <div class="am-u-sm-9">
+                                                    <?php $con=explode(',',$val['coupon_amount']);?>
+                                                    <p><?php echo $val['title'];?></p>
+                                                    
+                                                    <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
+                                                </div>
+                                                 <span class="am-icon"></span>
+                                                 <input type="hidden" name="couponid[]" class="saveid" />
+                                         </li>
                                        <?php endif;?>
                                     <?php endforeach;?>
                                        

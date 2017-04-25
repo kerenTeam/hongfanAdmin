@@ -182,6 +182,31 @@
                                                             <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
                                                         </div>
                                                  </li>
+                                                <?php elseif($val['typeid'] == 3):?>
+                                             <?php if(isset($val['check'])){
+                                                 if($val['check'] == 1){
+                                                ?>
+                                                <li class="quan active" state='1'  data-id="<?php echo $val['id'];?>">
+                                                <span class="am-icon am-icon-check"></span>
+                                                  <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $val['id'];?>" />
+                                                <?php }else{?>
+                                                    <li class="quan" state='0'  data-id="<?php echo $val['id'];?>">
+                                                    <span class="am-icon "></span>
+                                                      <input type="hidden" name="couponid[]" class="saveid"  />
+                                                <?php } }else{?>
+                                                    <li class="quan" state='0'  data-id="<?php echo $val['id'];?>">
+                                                    <span class="am-icon"></span>
+                                                    <input type="hidden" name="couponid[]" class="saveid"  />
+                                                <?php }?>
+                                                        <div class="am-u-sm-3">
+                                                         活 
+                                                        </div>
+                                                        <div class="am-u-sm-9">
+                                                            <?php $con=explode(',',$val['coupon_amount']);?>
+                                                            <p><?php echo $val['title'];?></p>
+                                                            <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
+                                                        </div>
+                                                 </li>
                                                <?php endif;?>
                                             <?php endforeach;?>
                                               
@@ -253,7 +278,7 @@
                             </div>
 
                     <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                    <input type="hidden" name="id" value="<?php echo $info['id'];?>">
+                        <input type="hidden" name="id" value="<?php echo $info['id'];?>">
                         <button class="am-btn am-btn-secondary am-btn-xs" type="submit" id="submit">保存</button>
                         <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
                     </div>

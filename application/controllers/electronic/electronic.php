@@ -56,12 +56,12 @@ class Electronic extends Default_Controller {
                     $arr = array($data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflowValue'],$data['cutValue']);
+                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }elseif($data['typeid'] == 2){
-                  $arr = array($data['overflow'],$data['cut']);
+                  $arr = array($data['overflow'],$data['cut'],$data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflow'],$data['cut']);
+                   unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }else{
                     unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }
@@ -109,12 +109,12 @@ class Electronic extends Default_Controller {
                     $arr = array($data['overflowValue'],$data['cutValue']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflowValue'],$data['cutValue']);
+                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }elseif($data['typeid'] == 2){
                   $arr = array($data['overflow'],$data['cut']);
                    // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflow'],$data['cut']);
+                     unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }else{
                   unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
             }
