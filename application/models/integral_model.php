@@ -98,6 +98,12 @@ class Integral_model extends CI_Model
             $query = $this->db->where($where)->where('order_status','2')->like('create_time',$date,'both')->order_by('create_time','asc')->get($this->order);
             return $query->result_array();
     }
+    //返回爱购订单详情
+    function ret_loveOrder_info($id){
+        $where['order_id'] = $id;
+        $query = $this->db->where($where)->get('hf_mall_order');
+        return $query->row_array();
+    }
 
     //删除爱购商品
     function del_love_goods($id){
@@ -112,8 +118,6 @@ class Integral_model extends CI_Model
         $query = $this->db->where($where)->get('hf_user_address');
         return $query->row_array();
     }
-
-
     //获取用户信息
     function ret_user_info($id){
         $where['user_id'] = $id;

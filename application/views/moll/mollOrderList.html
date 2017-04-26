@@ -235,7 +235,7 @@ td div div p {
     function otherFunction() {
         $('.editOrder').click(function(){//查看订单信息
             var dataId=$(this).attr('data-id');
-            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
+            $(this).attr("href","<?php echo site_url('store/store/moll_order_info/" + dataId + "');?>");
         });
         for(var i=0;i<$('.tpl-del').length;i++){
             var dataId=$('.tpl-del').eq(i).attr('data-id');

@@ -11,12 +11,15 @@ class LoveToGo extends Default_Controller
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
 	public $view_loveToGoOrderList = 'loveToGo/loveToGoOrderList.html';
+    //订单详情
+    public $view_loveOrderinfo = "loveToGo/loveOrderinfo.html";
     //爱购分类
     public $view_loveToGoCates = "loveToGo/loveToGoCates.html";
     function __construct()
 	{
 		 parent::__construct();
          $this->load->model('Integral_model');
+         $this->load->model('MallShop_model');
 
 	}   
     //爱购 商品列表
@@ -200,6 +203,24 @@ class LoveToGo extends Default_Controller
             }
         }else{
             echo "2";
+        }
+    }
+
+    //返回爱购订单详情
+    function loveToGo_order_info(){
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $order = $this->Integral_model->ret_loveOrder_info($id);
+             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+             $data['id_card'] = $this->Integral_model->ret_user_info($order['buyer']);
+
+             $data['order'] = $order;
+
+            $data['page'] = $this->view_loveOrderinfo;
+            $data['menu'] = array('loveToGo','loveToGoOrderList');
+            $this->load->view('template.html',$data);
         }
     }
 
