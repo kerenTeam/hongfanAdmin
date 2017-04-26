@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 require_once(APPPATH.'controllers/Default_Controller.php');
 
-class LoveToGo extends CI_Controller
+class LoveToGo extends Default_Controller
 {
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
@@ -295,29 +295,37 @@ class LoveToGo extends CI_Controller
                     $bookings = $this->Integral_model->get_love_order();  
                     break;
             }
+       //     var_dump($bookings);exit;
             if(count($bookings) > 0)
             {
                 foreach ($bookings as $booking) {
                     $i++;
                     $user = json_decode($booking['goods_data'],true);
-                    $address = explode(' ',$user['sendAddress']['addressNow']);
-                    foreach ($user['goodsData'] as $key => $value) {
-                         $goods[$i][$key]= $value['goodsId'].'|'.$value['goodsnum'];
+                    //地址
+                   $address = $this->Integral_model->get_user_address($booking['buyer_address']);
+                   //省份证
+                   $id_card = $this->Integral_model->ret_user_info($booking['buyer']);
+                   //留言
+                   $notice = json_decode($booking['userPostData'],true);
+                   
+
+                    foreach ($user['goods_Data'] as $key => $value) {
+                         $goods[$i][$key]= $value['id'].'|'.$value['nums'];
                     }
                     $good = implode(',',$goods[$i]);
                  //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
                     $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_UUID']);
-                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $user['sendAddress']['people']);
-                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['id_card']);
-                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $user['sendAddress']['addressNow']);
-                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $user['sendAddress']['phoneNow']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $address['person']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $id_card);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['address']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
                     $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
                     $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
                     $this->excel->getActiveSheet()->setCellValue('H' . $i, '400000');
-                    $this->excel->getActiveSheet()->setCellValue('I' . $i, $address['0']);
-                    $this->excel->getActiveSheet()->setCellValue('J' . $i, $address['1']);
-                    $this->excel->getActiveSheet()->setCellValue('K' . $i, $address['2']);
-                    $this->excel->getActiveSheet()->setCellValue('L' . $i, $user['notice']);
+                    $this->excel->getActiveSheet()->setCellValue('I' . $i, $address['province']);
+                    $this->excel->getActiveSheet()->setCellValue('J' . $i, $address['city']);
+                    $this->excel->getActiveSheet()->setCellValue('K' . $i, $address['area']);
+                    $this->excel->getActiveSheet()->setCellValue('L' . $i, $notice['notice']);
                     $this->excel->getActiveSheet()->setCellValue('M' . $i, $good);
                     $this->excel->getActiveSheet()->setCellValue('N' . $i, 'allinpay');
                     $this->excel->getActiveSheet()->setCellValue('O' . $i, 'EMS');
