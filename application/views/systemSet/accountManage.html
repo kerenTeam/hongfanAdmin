@@ -139,7 +139,7 @@
                                         <button type="submit" class="am-btn am-btn-secondary">新增</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <!--新增账号模态框结束-->
@@ -297,11 +297,11 @@ function someOptions() {
                 if (xhr.readyState===4) {  
                     if (xhr.status===200) {
                          alert("保存成功！");
-                        $('#ed'+dataId).modal('close');
                         getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
                     }
                 }
-            }  
+            } 
+            $('#ed'+dataId).modal('close'); 
         });
     }
     //删除管理员帐户

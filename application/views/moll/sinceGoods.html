@@ -445,7 +445,6 @@
                     if(data==1){
                         alert('操作成功!');
                         getList('<?php echo site_url('store/store/get_since_goods');?>', 'default=1'); 
-                        $('.am-dimmer').css('display', 'none');
                     }else{
                         alert("操作失败！");
                     }
@@ -455,7 +454,7 @@
                     alert("操作失败，请检查网络设置！");
                 }
             });
-           
+            $('#re'+ dataId).modal('close');
         });
 
         //删除商品的AJAX请求
@@ -469,7 +468,7 @@
                     if(data==1){                                           
                       getList('<?php echo site_url('store/store/get_since_goods');?>', 'default=1');
                     }else{
-                        alert("操作失败！");
+                      alert("操作失败！");
                     }
                     
                 },

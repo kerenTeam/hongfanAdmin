@@ -118,7 +118,7 @@
                             <thead>
                                 <tr>
                                     <th>编号</th>
-                                    <th>新闻名称 </th>
+                                    <th width="35%">新闻名称 </th>
                                     <th>新闻缩略图 </th>
                                     <th>点赞数 </th>
                                     <th>发布时间 </th>
@@ -214,7 +214,6 @@ function otherOperation() {
     //是否推荐到本地生活
     $('.reportState').change(function(){
         var dataId=$(this).attr('data-id'), state = $(this).find('option:selected').val(); 
- 
         $.ajax({
             type:'post',
             url:'<?php echo site_url('/module/HomeReport/edit_notice_state');?>',
@@ -230,7 +229,6 @@ function otherOperation() {
                 alert("操作失败，请检查网络设置！");
             }
         });
-        console.log(state);
         if(state == "1") {
             $(this).css({'background':' #23abf0','border':'1px solid #23abf0'});
         }else if(state == "2") {

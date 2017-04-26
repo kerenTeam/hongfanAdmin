@@ -246,8 +246,7 @@ function otherOperation() {
             data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
             success: function(data){
                 // console.log(data);
-                if(data==1){
-                    $('#re'+dataId).modal('close');
+                if(data==1){         
                     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
                 }else{
                     alert("操作失败！");
@@ -258,7 +257,7 @@ function otherOperation() {
                 alert("操作失败，请检查网络设置！");
             }
         });
-        
+        $('#re'+dataId).modal('close');
     });
     //单个帮帮服务删除
     $('.sureDelete').click(function(){
@@ -347,7 +346,7 @@ function getList(dataurl,data){
                 otherOperation();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帮帮服务信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -355,6 +354,9 @@ function getList(dataurl,data){
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帮帮服务信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }

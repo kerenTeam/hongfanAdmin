@@ -222,7 +222,7 @@ function someOptions() {
         var dataId=$('.tpl-del').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
         if($('.shopState option:selected').eq(i).val()=="0"){
-            $('.shopState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            $('.shopState').eq(i).css({'background':' #e0690c','border':'1px solid #e0690c'});
         }                          
     }
     //点击选中所有
@@ -272,42 +272,29 @@ function someOptions() {
     });
     //更改商家的状态
     $('.shopState').change(function(){
-        var dataId=$(this).attr('data-id');
+        var dataId=$(this).attr('data-id'), state = 0;
         if($(this).find('option:selected').val()=="1"){
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
-                data: 'id='+ dataId+'&state=1',
-                success: function(data){
-                    if(data==1){
-                        
-                    }else{
-                        alert("操作失败！");
-                    }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-            $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+            state = 1;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'});
         }else{
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
-                data: 'id='+ dataId+'&state=2',
-                success: function(data){
-                    if(data==1){
-
-                    }else{
-                        alert("操作失败！");
-                    }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-            $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            state = 0;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
         }   
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/shop/shop/edit_shop_state');?>',
+            data: 'id='+ dataId+'&state='+ state,
+            success: function(data){
+                if(data==1){
+                    
+                }else{
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
     });
     //删除商品的AJAX请求
     $('.sureDelete').click(function(){

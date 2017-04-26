@@ -298,11 +298,6 @@ function next(argu){
     }
 }
 function otherOperation() {
-    //删除图片
-    $(".deleteImg").click(function(){
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).siblings('.wx_type_img').find('input').eq(0).val("");
-    });
     //点击选中所有
     $('.tablecheck').click(function() {
         if(flag==0){
@@ -331,43 +326,29 @@ function otherOperation() {
     });
     //更改帮帮团成员的状态
     $('.goodsState').change(function(){
-        var dataId=$(this).attr('data-id');
+        var dataId=$(this).attr('data-id'), state = 0;
         if($(this).find('option:selected').val()=="1"){
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
-                data: 'state=1&id='+dataId,
-                success: function(data){
-                    if(data==1){
-                    }else{
-                        alert("操作失败！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
+            state = 1;
             $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
         }else{
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
-                data: 'state=0&id='+dataId,
-                success: function(data){
-                    if(data==1){
-
-                    }else{
-                        alert("操作失败！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
+            state = 0;
             $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
-        }                                                
+        }
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/serveForPeople/serveForPeople/recommend');?>',
+            data: 'state='+ state +'&id='+dataId,
+            success: function(data){
+                if(data==1){
+                }else{
+                    alert("操作失败！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });                                               
     });
 
     //单个帮帮成员删除
@@ -430,55 +411,6 @@ function otherOperation() {
         $(this).prevUntil('#preview').find('input').val("");
         $(this).prevUntil('#preview').find('input').files="";
     });
-    //上传图片
-    var picArray=[];//定义一个定时器
-    for(var i=0;i<$('.imgUp').length;i++){
-        $('.imgUp').eq(i).change(function() {
-            var dataId=$(this).attr('data-id');                              
-            if(this.files[0] && this.files){
-                picArray[0]=this.files[0];
-                var reader = new FileReader();
-                reader.readAsDataURL(this.files[0]);
-                reader.onload = function(e) {
-                    var str='<img class="picimg" src="'+this.result+'"/>';
-                    document.getElementsByClassName('preview'+dataId)[0].innerHTML=str;
-                } 
-                console.log(picArray);
-                
-            }
-        });
-        //保存编辑后的成员信息
-        $('.sureSave').eq(i).click(function(){
-            var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/serveForPeople/serveForPeople/edit_hele_user');?>";//上传文件的后台地址;
-            var name=document.getElementsByClassName('name'+dataId)[0].value,job=document.getElementsByClassName('job'+dataId)[0].value,phone=document.getElementsByClassName('phone'+dataId)[0].value,content=document.getElementsByClassName('content'+dataId)[0].value,area=document.getElementsByClassName('area'+dataId)[0].value,address=document.getElementsByClassName('address'+dataId)[0].value,age=document.getElementsByClassName('age'+dataId)[0].value,state=$('.state'+dataId+' option:selected').eq('0').val();
-            console.log(name+picArray[0] +job+phone+content+area+address+state);
-            formD.append('id',dataId);
-            formD.append('name',name);
-            formD.append('picArray',picArray[0]);
-            formD.append('age',age);
-            formD.append('occupation',job);
-            formD.append('phone',phone);
-            formD.append('competency',content);
-            formD.append('area',area);
-            formD.append('address',address);
-            formD.append('recommend',state);
-             //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.send(formD);
-            xhr.onreadystatechange = function(){
-                if (xhr.readyState===4) {  
-                    if (xhr.status===200) {
-                        alert("保存成功！");
-                        $('#ed'+dataId).modal('close');
-                        // console.log(xhr.responseText)
-                        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-                        return true;
-                    }
-                }
-            }  
-        });
-    }
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -513,7 +445,7 @@ function getList(dataurl,data){
                 otherOperation();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帮帮成员信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -521,6 +453,9 @@ function getList(dataurl,data){
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帮帮成员信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }
