@@ -106,6 +106,21 @@ class Integral_model extends CI_Model
     }
 
 
+    //返回用户收货地址
+    function get_user_address($id){
+        $where['id'] = $id;
+        $query = $this->db->where($where)->get('hf_user_address');
+        return $query->row_array();
+    }
+
+
+    //获取用户信息
+    function ret_user_info($id){
+        $where['user_id'] = $id;
+        $query = $this->db->where($where)->get('hf_user_member');
+        $res = $query->row_array();
+        return $res['id_card'];
+    }
 }
 
  ?>

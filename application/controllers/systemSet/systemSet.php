@@ -809,12 +809,11 @@ class SystemSet extends Default_Controller {
 
     //修改版本
     function edit_app_version(){
-   
+  
         if($_POST){
             $id= $this->input->post('id');
             $data['versionNum']= $this->input->post('versionNum');
             $data['create_time'] = date('Y-m-d H:i:s');
-           
             if(!empty($_FILES['file']['tmp_name'])){
                 $file_path = "Upload/xls/".$_FILES["file"]['name']; 
                 move_uploaded_file($_FILES["file"]["tmp_name"],  $file_path);

@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 require_once(APPPATH.'controllers/Default_Controller.php');
 
-class LoveToGo extends Default_Controller
+class LoveToGo extends CI_Controller
 {
 	public $view_loveToGoList = 'loveToGo/loveToGoList.html';	
 	public $view_loveToGogoodDetail = 'loveToGo/loveToGogoodDetail.html';
@@ -188,6 +188,11 @@ class LoveToGo extends Default_Controller
         if($_POST){
 
             $list = $this->Integral_model->get_love_order();
+            //获取用户信息
+            foreach($list as $key=>$val){
+                $list[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
+                $list[$key]['users'] = $this->Integral_model->ret_user_info($val['buyer']);
+            }
             if(empty($list)){
                 echo "2";
             }else{

@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * */
 require_once(APPPATH.'controllers/Default_Controller.php');
 
-class SingleShop extends CI_Controller {
+class SingleShop extends Default_Controller {
     //商家 列表主页
     public $view_shopAdmin = "shop/shopAdmin.html";
     //商家基础信息
