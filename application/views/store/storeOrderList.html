@@ -4,7 +4,7 @@
 } 
 .table-check {
     width: 30px;
-} 
+}   
 .hf-dropdown {
     font-size: 12px!important;
     padding: 5px 6px!important;
@@ -86,9 +86,10 @@ td div div p {
                                 <option value="4">已收货</option>
                                 <option value="5">已评价</option>
                                 <option value="6">求退货</option>
-                                <option value="7">退货中</option>
+                                <option value="7">等待退货物流</option>
                                 <option value="8">退款</option>
                                 <option value="9">其他</option>
+                                <option value="10">等待退款</option>
                             </select>
                         </div>
                     </div>
@@ -171,6 +172,9 @@ td div div p {
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
                         </div>
                     </div>
                 </div>
@@ -297,6 +301,7 @@ td div div p {
                     } 
                     console.log(res);
                     document.getElementById('dataList').innerHTML = listData;
+                    $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
                         go_to_page($storeOrderList);
@@ -428,22 +433,25 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==6){%>
             <td class="am-text-middle">
-                求退货
+                等待退货
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                退货中
+                等待退货物流
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
-                退款
+                退款成功
             </td>
         <%}else if(order_status==9){%>
             <td class="am-text-middle">
                 其他
             </td>
+        <%}else if(order_status==10){%>
+            <td class="am-text-middle">
+                等待退款
+            </td>
         <%}%>
-        
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= order_id%>" class="editOrder">

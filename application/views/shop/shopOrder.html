@@ -1,7 +1,7 @@
 <style type="text/css" media="screen">
 .am-selected {
     width: 100%!important;
-}
+} 
 .table-check {
     width: 30px;
 } 
@@ -11,7 +11,7 @@
 }
 td.am-text-middle img {
     width:80px;
-}
+} 
 .am-u-sm6 {
     width:60px !important;
     margin:0;
@@ -82,18 +82,19 @@ td div div p {
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-4">
                         <label for="goodsBatch" class="am-form-label am-u-sm-3">状态:</label>
                         <div class="am-u-sm-9">
-                        <select id="orderState" name="state">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="1">未支付</option>
-                            <option value="2">已支付</option>
-                            <option value="3">已发货</option>
-                            <option value="4">已收货</option>
-                            <option value="5">已评价</option>
-                            <option value="6">求退货</option>
-                            <option value="7">退货中</option>
-                            <option value="8">退款</option>
-                            <option value="9">其他</option>
-                        </select>
+                            <select id="orderState" name="state">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1">未支付</option>
+                                <option value="2">已支付</option>
+                                <option value="3">已发货</option>
+                                <option value="4">已收货</option>
+                                <option value="5">已评价</option>
+                                <option value="6">求退货</option>
+                                <option value="7">等待退货物流</option>
+                                <option value="8">退款</option>
+                                <option value="9">其他</option>
+                                <option value="10">等待退款</option>
+                            </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-4" >
@@ -314,7 +315,7 @@ td div div p {
                 alert("请正确填写发货信息！");
                 return false;
             }
-            
+            $('#'+ dataId).modal('close');
         });
     }
     //异步刷新的ajax请求   
@@ -493,9 +494,7 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==2){%>
             <td class="am-text-middle">
-                已支付 &nbsp;&nbsp;
-                <a data-id="<%= order_id%>" class="deliverOrder"><i class="am-icon-paper-plane"></i>发货</a>
-
+                已支付
             </td>
         <%}else if(order_status==3){%>
             <td class="am-text-middle warning">
@@ -511,23 +510,25 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==6){%>
             <td class="am-text-middle">
-                求退货
-
+                等待退货
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                退货中
+                等待退货物流
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
-                退款
+                退款成功
             </td>
         <%}else if(order_status==9){%>
             <td class="am-text-middle">
-                订单关闭
+                其他
+            </td>
+        <%}else if(order_status==10){%>
+            <td class="am-text-middle">
+                等待退款
             </td>
         <%}%>
-        
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= order_id%>" class="editOrder">

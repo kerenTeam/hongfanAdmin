@@ -3,11 +3,11 @@
     width: 100%!important;
 } 
 .table-check{
-width: 30px;
-}
+    width: 30px;
+} 
 .hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
+    font-size: 12px!important;
+    padding: 5px 6px!important;
 }
 td.am-text-middle img{
     width:80px;
@@ -272,6 +272,7 @@ function getList(dataurl,data){
                     listData += template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($findCates);
