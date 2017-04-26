@@ -149,6 +149,7 @@ td div div p {
                         </table>
                     </div>
                     <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        
                         <div id="Pagination">
                             <div class="pagination">
                                 <a class="prev"><i></i>上一页</a>
@@ -165,6 +166,9 @@ td div div p {
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
                         </div>
                     </div>
                 </div>
@@ -319,9 +323,10 @@ td div div p {
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
-            var res = eval(result);
-           console.log(res);
+        success: function(result){ 
+                 
+            var res = eval(result); 
+            console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -338,6 +343,7 @@ td div div p {
                 } 
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
+                $('.allData').html(res.length);
                 if(pageflag) {
                     go_to_page($shopOrder);
                     var opts={};opts.current_page = $shopOrder;
@@ -400,19 +406,19 @@ $(document).ready(function(){
       });
     //加载列表数数据
     if($isShopOrder) {
-        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-           console.log('&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
-        // getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
-        // sessionStorage.setItem('isShopOrder', 1);
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+        getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+        sessionStorage.setItem('isShopOrder', 1);
     } else {
         getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-           console.log('&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
-        // getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
-        // sessionStorage.setItem('isShopOrder', 1);
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+        getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+        sessionStorage.setItem('isShopOrder', 1);
             return true;
         
     });

@@ -435,13 +435,14 @@ class Store extends Default_Controller {
         if($_POST){
             $type =  $this->input->post('default');
             $order = $this->MallShop_model->get_order_list($type);
+          
             if(empty($order)){
                 echo "2";
             }else{
                 echo json_encode($order);
             }
         }else{
-            echo "2";
+            echo "4";
         }
     }
 

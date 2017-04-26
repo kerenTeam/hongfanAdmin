@@ -332,19 +332,17 @@ td div div p {
 $(document).ready(function(){
     //加载列表数数据
     if($isStoreOrderList) {
-        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer option:selected').val(),seller=$('#seller').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-          // console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        // getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        // sessionStorage.setItem('isStoreOrderList', 1);
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4');
+        sessionStorage.setItem('isStoreOrderList', 1);
     } else {
        getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer option:selected').val(),seller=$('#seller').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-          console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        // getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        // sessionStorage.setItem('isStoreOrderList', 1);
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4');
+        sessionStorage.setItem('isStoreOrderList', 1);
         
     });
 })

@@ -105,6 +105,9 @@ td img{
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
                         </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -206,6 +209,7 @@ td img{
                         listData += template('dataModal',res[i]);
                     }
                     document.getElementById('dataList').innerHTML = listData;
+                    $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
                         var opts={};
@@ -224,12 +228,15 @@ td img{
                     otherFunction();
                 }else{
                     $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无电子券信息！</p></td></tr>').appendTo('#dataList');
                     $('.pagebox').css('display', 'none');
                 }         
             },
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无电子券信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
             }
         });
     }
