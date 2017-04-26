@@ -139,8 +139,8 @@ class MallShop_model extends CI_Model
     }
 
     //返回商家订单列表
-    function get_store_orders($storeid){
-        $sql = "SELECT a.order_id,a.order_UUID,a.order_type,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where order_type = '1' and a.buyer = b.user_id and seller = '$storeid'";
+    function get_store_orders($storeid,$type){
+        $sql = "SELECT a.order_id,a.order_UUID,a.order_type,a.buyer,a.goods_data,a.seller,a.amount,a.create_time,a.updatetime,a.order_status,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where order_type = '$type' and a.buyer = b.user_id and seller = '$storeid'";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -154,6 +154,13 @@ class MallShop_model extends CI_Model
         $where['order_id'] = $id;
         $query = $this->db->where($where)->get($this->shop_order);
         return $query->row_array();
+    }
+    //根据类型返回所有商家
+    function ret_store_type($type,$store_distinction){
+        $where['store_distinction'] = $store_distinction;
+        $where['store_type'] = $type;
+        $query = $this->db->where($where)->order_by('store_id','desc')->get($this->shop_store);
+        return $query->result_array();
     }
 
     //返回店铺详情

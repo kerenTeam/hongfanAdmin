@@ -40,6 +40,7 @@ class Store extends Default_Controller {
     {
         parent::__construct();
         $this->load->model('MallShop_model');
+        $this->load->model('Shop_model');
     }
     //商品列表
     function storeGoodsList(){
@@ -421,10 +422,11 @@ class Store extends Default_Controller {
 
     //特色馆订单管理
     function storeOrderList(){
-        
+        //获取所有商家
+        $data['store'] = $this->MallShop_model->ret_store_type('2','2');
         $data['page'] = $this->view_storeOrderList;
         $data['menu'] = array('store','storeOrderList');
-         $this->load->view('template.html',$data);
+        $this->load->view('template.html',$data);
     }
 
     //获取所有订单
@@ -540,7 +542,7 @@ class Store extends Default_Controller {
             $state = $_POST['order_status'];
             $buyer = trim($_POST['buyer']);
             $seller = trim($_POST['seller']);
-            $time = trim($_POST['create_time']);
+          //  $time = trim($_POST['create_time']);
             if(!empty($buyer)){
                 //获取买家id
                 $query = $this->db->where('username',$buyer)->get('hf_user_member');

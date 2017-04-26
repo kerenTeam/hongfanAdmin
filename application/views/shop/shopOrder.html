@@ -330,7 +330,7 @@ td div div p {
         data: data,
         success: function(result){         
             var res = JSON.parse(result);
-        //    console.log(res);
+            console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
