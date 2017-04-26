@@ -757,11 +757,10 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 }
 
 //管理员订单搜索
-function order_search($state,$buyer,$seller,$time,$type){
+function order_search($state,$buyer,$seller,$time,$endtime,$type){
       $CI = &get_instance();
       $res = '';
       if(!empty($state) && empty($buyer) && empty($seller) && empty($time)){
-        echo "2";
             $CI->db->select('a.*,b.store_name,c.username');
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
@@ -791,7 +790,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       //两组
@@ -817,7 +816,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where("order_status",$state)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       
@@ -834,7 +833,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
        if(empty($state) && empty($buyer) && !empty($seller) && !empty($time)){
@@ -842,7 +841,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('seller',$seller)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       //三组
@@ -852,7 +851,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('seller',$seller)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       if(!empty($state) && empty($buyer) && !empty($seller) && !empty($time)){
@@ -860,7 +859,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       if(!empty($state) && !empty($buyer) && !empty($seller) && empty($time)){
@@ -876,7 +875,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('buyer',$buyer)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       //四组
@@ -885,7 +884,7 @@ function order_search($state,$buyer,$seller,$time,$type){
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->like('a.create_time',$time,'both')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
       }else
       if(empty($state) && empty($buyer) && empty($seller) && empty($time)){

@@ -41,6 +41,7 @@ class Store extends Default_Controller {
         parent::__construct();
         $this->load->model('MallShop_model');
         $this->load->model('Shop_model');
+        // $this->load->helper('search_helper');
     }
     //商品列表
     function storeGoodsList(){
@@ -512,11 +513,12 @@ class Store extends Default_Controller {
     //订单搜索
     function order_search(){
         if($_POST){
-
             $state = $_POST['order_status'];
             $buyer = trim($_POST['buyer']);
             $seller = trim($_POST['seller']);
-          //  $time = trim($_POST['create_time']);
+            $time = trim($_POST['start_time']);
+            $endtime = trim($_POST['end_time']);
+            $type = $_POST['type'];
             if(!empty($buyer)){
                 //获取买家id
                 $query = $this->db->where('username',$buyer)->get('hf_user_member');
@@ -525,16 +527,7 @@ class Store extends Default_Controller {
             }else{
                 $buyer = '';
             }
-            if(!empty($seller)){
-                //获取卖家商铺id
-                $query1 = $this->db->where('store_name',$seller)->get('hf_shop_store');
-                $res1 = $query1->row_array();
-                $seller = $res1['store_id'];
-            }else{
-                $seller = '';
-            }
-
-            $list = order_search($state,$buyer,$seller,$time,'1');
+            $list = order_search($state,$buyer,$seller,$time,$endtime,$type);
             if(empty($list)){
                 echo "2";
             }else{
