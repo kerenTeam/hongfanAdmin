@@ -491,6 +491,28 @@ class Store extends Default_Controller {
         }
     }
 
+    //购物中心 订单详情
+    function moll_order_info(){
+        $id = intval($this->uri->segment(4));
+        if($id != 0){
+            //获取订单详情
+            $order = $this->MallShop_model->get_order_info($id);
+            //收货地址
+     //       $arr = json_decode($order['goods_data'],true);
+          
+            //获取收货地址
+            $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+            $data['id'] = $id;
+            $data['order'] = $order;
+             $data['page'] = $this->view_storeOrderDetail;
+             $data['menu'] = array('moll','mollOrder');
+             $this->load->view('template.html',$data);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
 
 
     //删除订单
