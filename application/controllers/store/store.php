@@ -29,6 +29,8 @@ class Store extends Default_Controller {
     public $view_storeDeliveryList = 'store/storeDeliveryList.html';
     //订单详情
     public $view_storeOrderDetail = "store/storeOrderDetail.html";
+    //订单详情
+    public $view_storeOrderDetail1 = "store/storeOrderDetail1.html";
     //主题展销商品管理
     public $view_storeGoodsSales = "store/storeGoodsSales.html";
     //特色馆 HOT推荐管理
@@ -513,6 +515,27 @@ class Store extends Default_Controller {
             $this->load->view('404.html');
         }
     }
+
+    //订单管理 订单详情
+    function storeOrderDetail1(){
+        $id = intval($this->uri->segment(4));
+        if($id != 0){
+            //获取订单详情
+             $data['order'] = $this->MallShop_model->get_order_info($id);$order = $this->MallShop_model->get_order_info($id);
+            //收货地址
+            $arr = json_decode($order['goods_data'],true);
+            $address_id = $arr['Params']['postData']['address_id'];
+            //获取收货地址
+            $data['address'] = $this->MallShop_model->ret_user_address($address_id);
+            $data['id'] = $id;
+             $data['page'] = $this->view_storeOrderDetail1;
+             $data['menu'] = array('store','storeOrderList');
+             $this->load->view('template.html',$data);
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
 
     //删除订单
     function del_Order(){
