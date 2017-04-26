@@ -201,7 +201,7 @@ function next(argu){
 function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
         var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editFind').eq(i).attr('data-id'), checkId =$('.tieziList').eq(i).attr('data-id'), recommandId =  $('.yesRecommand').eq(i).attr('data-id'), recooo = $('.noRecommand').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
         $('.yesRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recommandId +"'}");
         $('.noRecommand').eq(i).attr("data-am-modal","{target: '#re"+ recooo +"'}");
         $('.editFind').eq(i).attr("href","<?php echo site_url().'/find/Find/findEditSpecial/';?>"+editId);

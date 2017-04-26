@@ -52,18 +52,12 @@ class Electronic extends Default_Controller {
     function add_electronic(){
         if($_POST){
             $data = $this->input->post();
-            if($data['typeid'] == 1){
-                    $arr = array($data['overflowValue'],$data['cutValue']);
-                   // $data['salerule'] = json_encode($arr);
+           if($data['typeid'] == 2){
+                  $arr = array($data['overflow'],$data['cut']);
                     $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
-            }elseif($data['typeid'] == 2){
-                  $arr = array($data['overflow'],$data['cut'],$data['overflowValue'],$data['cutValue']);
-                   // $data['salerule'] = json_encode($arr);
-                    $data['coupon_amount'] = implode(',',$arr);
-                   unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
+                   unset($data['overflow'],$data['cut']);
             }else{
-                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
+                    unset($data['overflow'],$data['cut']);
             }
    
             //
@@ -105,18 +99,12 @@ class Electronic extends Default_Controller {
     function edit_Electronic(){
         if($_POST){
             $data = $this->input->post();
-            if($data['typeid'] == 1){
-                    $arr = array($data['overflowValue'],$data['cutValue']);
-                   // $data['salerule'] = json_encode($arr);
-                    $data['coupon_amount'] = implode(',',$arr);
-                    unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
-            }elseif($data['typeid'] == 2){
+            if($data['typeid'] == 2){
                   $arr = array($data['overflow'],$data['cut']);
-                   // $data['salerule'] = json_encode($arr);
                     $data['coupon_amount'] = implode(',',$arr);
-                     unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
+                   unset($data['overflow'],$data['cut']);
             }else{
-                  unset($data['overflowValue'],$data['cutValue'],$data['overflow'],$data['cut']);
+                    unset($data['overflow'],$data['cut']);
             }
             //日志
             $log = array(
@@ -193,6 +181,9 @@ class Electronic extends Default_Controller {
         if($_POST){
             $id = $this->input->post('id');
             $list = $this->Activity_model->ret_after_list($id);
+            foreach($list as $key=>$val){
+                $list[$key]['store_name'] = $this->Activity_model->get_store_name($val['store_id']);
+            }
             if(!empty($list)){
                 echo json_encode($list);
             }else{
