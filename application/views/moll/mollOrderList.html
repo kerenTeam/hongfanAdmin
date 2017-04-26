@@ -11,7 +11,7 @@
 }   
 td.am-text-middle img {
     width:80px;
-} 
+}  
 .am-u-sm6 {
     width: 60px !important;
     margin: 0;
@@ -89,9 +89,10 @@ td div div p {
                                 <option value="4">已收货</option>
                                 <option value="5">已评价</option>
                                 <option value="6">求退货</option>
-                                <option value="7">退货中</option>
+                                <option value="7">等待退货物流</option>
                                 <option value="8">退款</option>
                                 <option value="9">其他</option>
+                                <option value="10">等待退款</option>
                             </select>
                         </div>
                     </div>
@@ -418,19 +419,23 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==6){%>
             <td class="am-text-middle">
-                求退货
+                等待退货
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                退货中
+                等待退货物流
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
-                退款
+                退款成功
             </td>
         <%}else if(order_status==9){%>
             <td class="am-text-middle">
                 其他
+            </td>
+        <%}else if(order_status==10){%>
+            <td class="am-text-middle">
+                等待退款
             </td>
         <%}%>
         

@@ -15,7 +15,7 @@ td.am-text-middle img{
 .am-u-sm6{
     width:60px !important;
     margin:0;
-}
+} 
 .am-form-group div{
     line-height: 37px;
 }
@@ -98,6 +98,28 @@ td.am-text-middle img{
                                 <!-- more data -->
                             </tbody>
                         </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
+                        </div>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -244,6 +266,7 @@ function getList(dataurl,data){
                     listData += template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($storeGoodsSort);

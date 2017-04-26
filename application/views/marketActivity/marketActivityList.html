@@ -78,6 +78,9 @@ padding: 5px 6px!important;
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
                         </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,6 +191,7 @@ padding: 5px 6px!important;
                         listData += template('dataModal',res[i]);
                     }
                     document.getElementById('dataList').innerHTML = listData;
+                    $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
                         var opts={};

@@ -85,7 +85,7 @@
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
                                 <tr>
-                                    <th class="table-check"><input type="checkbox"></th>
+                                    <th class="table-check"><input type="checkbox">全选</th>
                                     <th class="member_name">姓名</th>
                                     <th class="member_id">昵称</th>
                                     <th>电话</th>
@@ -104,7 +104,7 @@
                                 <?php foreach($users as $value):?>
                                 <tr class="gradeX">
                                     <td><input type="checkbox" name='id[]' value="<?php echo $value['user_id']?>"></td>
-                                    <td><?php echo $value['username']?></td>
+                                    <td class="am-text-middle"><?php echo $value['username']?></td>
                                     <td class="am-text-middle"><?php echo $value['nickname']?></td>
                                     <td class="am-text-middle"><?php echo $value['phone']?></td>
                                     <td class="am-text-middle"><?php echo $value['qq']?></td>

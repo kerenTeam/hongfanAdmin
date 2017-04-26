@@ -5,7 +5,7 @@
     }
     .table-check {
         width: 30px;
-    } 
+    }  
     .hf-dropdown {
         font-size: 12px!important;
         padding: 5px 6px!important;
@@ -205,6 +205,9 @@
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
                         </div>
                     </div>
                 </div>
@@ -505,6 +508,7 @@
                         listData+= template('dataModal',res[i]);
                      }
                     document.getElementById('dataList').innerHTML = listData;
+                    $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
                         go_to_page($storeGoodsList);
