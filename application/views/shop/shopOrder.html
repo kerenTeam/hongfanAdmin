@@ -337,9 +337,9 @@ td div div p {
                 for(var i = 0; i < res.length; i++){
                     res[i].goods_data = JSON.parse(res[i].goods_data);
                   //  res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic = eval(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic);
-                    if(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags) {
-                        res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags = res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags.split(',');
-                    }
+                    // if(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags) {
+                    //     res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags = res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags.split(',');
+                    // }
 
                     listData+= template('dataModal',res[i]);
                 } 
@@ -460,11 +460,7 @@ $(document).ready(function(){
                         <% } %>
                         <span class="am-fr"><%= goods_data.Params.goodsData[0].stores.store_name %> </span>
                     </p>
-                    <% if(goods_data.Params.goodsData[0].goods_Data[j].good_tags) { %>
-                        <p><% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
-                            <span class="goods_tags"><%= goods_data.Params.goodsData[0].goods_Data[j].good_tags[i] %></span>
-                        <% } %></p>
-                    <% } %>
+                  
                 </div>
                 <div class="am-u-sm-2 am-text-right">
                     <p class="goods_price">￥<%= goods_data.Params.goodsData[0].goods_Data[j].price %></p>
