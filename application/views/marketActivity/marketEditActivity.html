@@ -202,7 +202,30 @@
                                                          活 
                                                         </div>
                                                         <div class="am-u-sm-9">
-                                                            <?php $con=explode(',',$val['coupon_amount']);?>
+                                                            <p><?php echo $val['title'];?></p>
+                                                            <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
+                                                        </div>
+                                                 </li>
+                                                <?php elseif($val['typeid'] == 4):?>
+                                             <?php if(isset($val['check'])){
+                                                 if($val['check'] == 1){
+                                                ?>
+                                                <li class="quan active" state='1'  data-id="<?php echo $val['id'];?>">
+                                                <span class="am-icon am-icon-check"></span>
+                                                  <input type="hidden" name="couponid[]" class="saveid" value="<?php echo $val['id'];?>" />
+                                                <?php }else{?>
+                                                    <li class="quan" state='0'  data-id="<?php echo $val['id'];?>">
+                                                    <span class="am-icon "></span>
+                                                      <input type="hidden" name="couponid[]" class="saveid"  />
+                                                <?php } }else{?>
+                                                    <li class="quan" state='0'  data-id="<?php echo $val['id'];?>">
+                                                    <span class="am-icon"></span>
+                                                    <input type="hidden" name="couponid[]" class="saveid"  />
+                                                <?php }?>
+                                                        <div class="am-u-sm-3">
+                                                         礼 
+                                                        </div>
+                                                        <div class="am-u-sm-9">
                                                             <p><?php echo $val['title'];?></p>
                                                             <p>有效时间：<?php echo $val['begin_date'].'至'.$val['end_date'];?></p>
                                                         </div>
