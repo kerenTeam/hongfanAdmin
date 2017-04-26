@@ -1366,10 +1366,9 @@ class SingleShop extends Default_Controller {
         }else{
             $order = $this->MallShop_model->get_order_info($id);
             //收货地址
-            $arr = json_decode($order['goods_data'],true);
-            $address_id = $arr['Params']['postData']['address_id'];
+          
             //获取收货地址
-            $data['address'] = $this->MallShop_model->ret_user_address($address_id);
+            $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
             $data['order'] = $order;
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');
