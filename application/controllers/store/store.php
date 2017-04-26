@@ -264,6 +264,9 @@ class Store extends Default_Controller {
                      unset($data['img'.$i]);
                 }
              }
+            if(empty(json_decode($data['reduction_rule']))){
+                $data['reduction_rule'] = '';
+            }
 
              $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
