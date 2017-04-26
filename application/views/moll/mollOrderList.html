@@ -340,8 +340,8 @@ $(document).ready(function(){
         <% for(var j = 0; j < goods_data.Params.goodsData[0].goods_Data.length; j++) {%>    
             <div class="am-u-sm-12">
                 <div class="am-u-sm-2">
-                <% if(goods_data.Params.goodsData[0].goods_Data[0].good_pic.length) {%>
-                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].good_pic[0].bannerPic %>" class="goodsImg">
+                <% if(goods_data.Params.goodsData[0].goods_Data[0].thumb) {%>
+                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].thumb %>" class="goodsImg">
                 <% } else { %>
                 	<img src="assets/img/nullImg.jpg" class="goodsImg">
                 <% } %>

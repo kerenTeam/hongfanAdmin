@@ -336,7 +336,7 @@ td div div p {
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
                     res[i].goods_data = JSON.parse(res[i].goods_data);
-                    res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic = eval(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic);
+                  //  res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic = eval(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_pic);
                     if(res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags) {
                         res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags = res[i].goods_data.Params.goodsData[0].goods_Data[0].good_tags.split(',');
                     }
@@ -401,8 +401,8 @@ $(document).ready(function(){
         <% for(var j = 0; j < goods_data.Params.goodsData[0].goods_Data.length; j++) {%>    
             <div class="am-u-sm-12">
                 <div class="am-u-sm-2">
-                <% if(goods_data.Params.goodsData[0].goods_Data[0].good_pic.length) {%>
-                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].good_pic[0].bannerPic %>" class="goodsImg">
+                <% if(goods_data.Params.goodsData[0].goods_Data[0].thumb) {%>
+                    <img src="<%= goods_data.Params.goodsData[0].goods_Data[0].thumb %>" class="goodsImg">
                 <% } else { %>
                     <img src="assets/img/nullImg.jpg" class="goodsImg">
                 <% } %>
