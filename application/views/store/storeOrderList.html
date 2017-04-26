@@ -141,7 +141,6 @@ td div div p {
                                     <th width="40%" class="am-text-center">购买商品 </th>
                                     <th>订单金额 </th>
                                     <th>买家 </th>
-                                    <th>卖家 </th>
                                     <th>下单时间 </th>
                                     <th>订单状态 </th>
                                     <th>操作</th>
@@ -293,7 +292,7 @@ td div div p {
                         }
 
                         listData+= template('dataModal',res[i]);
-                    }
+                    } 
                     document.getElementById('dataList').innerHTML = listData;
                     $('.pagebox').css('display', 'block');
                     if(pageflag) {
@@ -332,17 +331,17 @@ $(document).ready(function(){
     if($isStoreOrderList) {
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer option:selected').val(),seller=$('#seller').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
           // console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        sessionStorage.setItem('isStoreOrderList', 1);
+        // getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        // sessionStorage.setItem('isStoreOrderList', 1);
     } else {
        getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer option:selected').val(),seller=$('#seller').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-          // console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
-        sessionStorage.setItem('isStoreOrderList', 1);
+          console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        // getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&begin_date="+ begin_date + '&end_date=' + end_date);
+        // sessionStorage.setItem('isStoreOrderList', 1);
         
     });
 })
@@ -382,11 +381,9 @@ $(document).ready(function(){
                         <span class="am-fr"><%= goods_data.Params.goodsData[0].stores.store_name %> </span>
                     </p>
                     <% if(goods_data.Params.goodsData[0].goods_Data[j].good_tags) { %>
-                        <% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
-                        <p>
+                        <p><% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>    
                             <span class="goods_tags"><%= goods_data.Params.goodsData[0].goods_Data[j].good_tags[i] %></span>
-                        </p>
-                        <% } %>
+                        <% } %></p>
                     <% } %>
                 </div>
                 <div class="am-u-sm-2 am-text-right">
@@ -404,7 +401,6 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
-        <td class="am-text-middle"><%= store_name %></td>
         <td class="am-text-middle"><%= create_time%></td>
         <%if(order_status==1) {%>
             <td class="am-text-middle red">
@@ -447,7 +443,7 @@ $(document).ready(function(){
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= order_id%>" class="editOrder">
-                    <i class="am-icon-eye"></i> 查看详情
+                    <i class="am-icon-eye"></i> 详情
                 </a>
                 <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除

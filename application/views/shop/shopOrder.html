@@ -207,10 +207,10 @@ td div div p {
                 </div>
             </form>
         </div>
-    </div>
+    </div> 
 </div>
 <script type="text/javascript">
-    var total_page=0,pageflag = 1, $shopOrder = parseInt(sessionStorage.getItem('shopOrder')) || 0;
+    var total_page=0,pageflag = 1, $shopOrder = parseInt(sessionStorage.getItem('shopOrder')) || 0, $isShopOrder = parseInt(sessionStorage.getItem('isShopOrder')) || 0;
     //导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
@@ -329,8 +329,8 @@ td div div p {
         url:dataurl,
         data: data,
         success: function(result){         
-            var res = JSON.parse(result);
-        //    console.log(res);
+            var res = eval(result);
+           console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
@@ -377,21 +377,53 @@ td div div p {
     });
 }
 $(document).ready(function(){
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
     //加载列表数数据
-    getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
+    if($isShopOrder) {
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
+           console.log('&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
+        // getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
+        // sessionStorage.setItem('isShopOrder', 1);
+    } else {
+        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>); 
+    }
     //点击搜索
     $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
-        if((startMoney=="" && endMoney!="") || (startMoney!="" && endMoney=="") ){
-            alert("交易总额必须是一个范围！");
-            return false;
-        }else{
-           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
-         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#my-startDate').text(), end_date = $('#my-endDate').text();
+           console.log('&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
+        // getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState + '&buyer='+ buyer +'&begin_date='+ begin_date +'&end_date='+ end_date);
+        // sessionStorage.setItem('isShopOrder', 1);
             return true;
-        }
         
     });
+
 })
 </script>
 <script type="text/html" id="dataModal">   
@@ -429,11 +461,9 @@ $(document).ready(function(){
                         <span class="am-fr"><%= goods_data.Params.goodsData[0].stores.store_name %> </span>
                     </p>
                     <% if(goods_data.Params.goodsData[0].goods_Data[j].good_tags) { %>
-                        <% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
-                        <p>
+                        <p><% for(var i = 0;i < goods_data.Params.goodsData[0].goods_Data[j].good_tags.length; i++) { %>
                             <span class="goods_tags"><%= goods_data.Params.goodsData[0].goods_Data[j].good_tags[i] %></span>
-                        </p>
-                        <% } %>
+                        <% } %></p>
                     <% } %>
                 </div>
                 <div class="am-u-sm-2 am-text-right">
@@ -451,10 +481,8 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
-        <td class="am-text-middle">
-     
+        <td class="am-text-middle">   
             <%= create_time %>
-
         </td>
         <%if(order_status==1) {%>
             <td class="am-text-middle red">

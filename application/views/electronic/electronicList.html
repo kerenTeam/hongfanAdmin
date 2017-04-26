@@ -50,19 +50,6 @@ td img{
                             </select>
                         </div>
                     </div>
-                    <!--<div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
-                        <div class="am-u-sm-9">
-                           <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_date" value="" /><span id="my-startDate">2014-12-20</span>
-                                <small class="red redtips" style="display: none">请先选择结束日期</small>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_date" value="" /><span id="my-endDate">2014-12-25</span>
-                              </div>
-                        </div>
-                    </div>
-   -->
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -76,7 +63,6 @@ td img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -96,15 +82,29 @@ td img{
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="electronicList">
+                            <tbody id="dataList">
                                 <!-- more data -->
                             </tbody>
                         </table>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center">
-                        <div class="" id="paging_list">
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
                         </div>
-                        <p>共<span class="dataNumber"></span>条数据，共<span class="pageNumber"></span>页</p>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,85 +114,125 @@ td img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
+    var total_page = 0,pageflag = 1,current_page=0,$findSpecial = parseInt(sessionStorage.getItem('findSpecial')) || 0;
+    //点击前往某一页的函数
+    function go_to_page(page_num){
+        $('.page_link').removeClass('active_page');
+        $('.page_link').eq(page_num).addClass('active_page');
+        $("#dataList").children('tr').css("display","none");
+        var start_page=parseInt(15)*parseInt(page_num);
+        var end_page=parseInt(15)*parseInt(page_num+1);
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+        current_page=page_num;
+        sessionStorage.setItem('findSpecial', current_page);
+        $findSpecial = parseInt(sessionStorage.getItem('findSpecial'));
+        
+    }
+
+    //点击上一页的函数
+    function previous(){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+        }else {
+            new_page = parseInt($('.current').html()) - 2;
+        }
+        if(new_page >= 0) {
+            go_to_page(new_page);
+        }
+    }
+
+    //点击下一页的函数
+    function next(argu){
+        if($('.current').length>1) {
+            new_page = parseInt($('.current').eq(1).html());
+        }else {
+            new_page = parseInt($('.current').html());
+        }
+        
+        
+        if(new_page < argu){   
+            console.log(new_page + ' ' + argu);
+            go_to_page(new_page);
+        }
+    }
+    //操作函数
+    function otherFunction() {
+        $('.editElectronic').click(function(){//编辑商品信息
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/electronic/Electronic/editElectronic/" + dataId + "');?>");
+        });
+        $('.afterSales').click(function(){//查看核销
+            var dataId=$(this).attr('data-id');
+            $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales/"+ dataId +"');?>");
+        });
+        for(var i=0;i<$('.tpl-del').length;i++){
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                         
+        }
+        //删除优惠券的AJAX请求
+        $('.sureDelete').click(function(){
+            var dataId=$(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/electronic/Electronic/del_coupon');?>',
+                data: 'id='+dataId,
+                success: function(data){
+                    if(data==1){                 
+                       $('#trClass'+dataId).remove();
+                    }else{
+                        alert("操作失败，请检查网络设置！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        });
+    }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
         $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){         
-            var res = eval(result);
-            console.log(res);
-            if(res!=2){
-                var nums = 10; //每页出现的数量
-                var pages = Math.ceil(res.length/nums); //得到总页数
-                $('.dataNumber').html(res.length);
-                $('.pageNumber').html(pages);
-                var thisDate = function(curr){
-                    var listData = '' , last = curr*nums - 1;
-                    last = last >= res.length ? (res.length-1) : last;
-                     for(var i = (curr*nums - nums); i <= last; i++){
-                        listData+= template('electronicListModal',res[i]);
-                     }
-                    
-                    return listData;
-                }; 
-                //调用分页
-                laypage({
-                    cont: 'paging_list',
-                    pages: pages,
-                    jump: function(obj){
-                        document.getElementById('electronicList').innerHTML = thisDate(obj.curr);
-                        $('.editElectronic').click(function(){//编辑商品信息
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/editElectronic/" + dataId + "');?>");
-                        });
-                        $('.afterSales').click(function(){//查看核销
-                            var dataId=$(this).attr('data-id');
-                            $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales/"+ dataId +"');?>");
-                        });
-                        for(var i=0;i<$('.tpl-del').length;i++){
-                            var dataId=$('.tpl-del').eq(i).attr('data-id');
-                            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                         
-                        }
-                        //删除优惠券的AJAX请求
-                        $('.sureDelete').click(function(){
-                            var dataId=$(this).attr('data-id');
-                            $.ajax({
-                                type:'post',
-                                url:'<?php echo site_url('/electronic/Electronic/del_coupon');?>',
-                                data: 'id='+dataId,
-                                success: function(data){
-                                    if(data==1){                 
-                                       $('#trClass'+dataId).remove();
-                                    }else{
-                                        alert("操作失败，请检查网络设置！");
-                                    }
-                                    
-                                },
-                                error:function(xhr,type,errorThrown){
-                                    alert("操作失败，请检查网络设置！");
-                                }
-                            });
-                        });
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){         
+                var res = eval(result);
+                // console.log(res);
+                if(res != 2 && res != 3){
+                    var listData = ''; //每页出现的数量
+                    total_page = Math.ceil(res.length/8); //得到总页数
+                    for(var i = 0; i < res.length; i++){
+                        listData += template('dataModal',res[i]);
+                    }
+                    document.getElementById('dataList').innerHTML = listData;
+                    $('.pagebox').css('display', 'block');
+                    if(pageflag) {
+                        var opts={};
+                        opts.current_page = $findSpecial;
+                        $("#Pagination").pagination(total_page, opts);
+                        go_to_page($findSpecial);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
                         
                     }
-                })
-            }else{
-                $('#electronicList').find('tr').remove();
-                $('#paging_list').html("");
-                $('.dataNumber').html("");
-                $('.pageNumber').html("");
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关优惠券信息！</p></td></tr>').appendTo('#electronicList');
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
+                    otherFunction();
+                }else{
+                    $('#dataList').find('tr').remove();
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                    $('.pagebox').css('display', 'none');
+                }         
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
             }
-
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-        }
-    });
-}
+        });
+    }
 $(document).ready(function(){
     var startDate = new Date(2014, 11, 20);
     var endDate = new Date(2014, 11, 25);
@@ -232,10 +272,6 @@ $(document).ready(function(){
     
     //加载列表数数据
     getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');
-    });
     //点击搜索
     $('.searchSales').click(function(){
         var salesType=$('#salesType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
@@ -250,7 +286,7 @@ $(document).ready(function(){
     });
 })
 </script>
-<script type="text/html" id="electronicListModal">
+<script type="text/html" id="dataModal">
     <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td class="am-text-middle"><%= id%></td>
         <td class="am-text-middle"><%= name%></td>

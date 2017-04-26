@@ -109,7 +109,6 @@ label {
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/find/Find/addService';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +159,6 @@ label {
 </div>
 <!--编辑帖子开始-->
 
-<!--编辑帖子结束-->
 <!--删除帖子开始-->
 <div class="am-modal am-modal-confirm" tabindex="-1" id="delete_content">
     <div class="am-modal-dialog">
@@ -299,7 +297,6 @@ function getList(dataurl,data){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/8); //得到总页数
                 for(var i = 0; i < res.length; i++){
-                    //  res[i].pic = JSON.parse(res[i].pic[0].picImg);
 
                     if(res[i].pic.indexOf('http')>-1){
                         res[i].pic =  res[i].pic;
@@ -332,12 +329,15 @@ function getList(dataurl,data){
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无发现帖子信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }         
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无发现帖子信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }
@@ -355,10 +355,6 @@ function validate(obj,minlen,maxlen,i){
 $(document).ready(function(){
     //加载列表数数据
     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
-    });
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val();
@@ -368,19 +364,19 @@ $(document).ready(function(){
 })
 </script>
 <script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= news_id%>">
-        <td class="am-text-middle"><%= news_id%></td>
+    <tr class="trClass" data-id="<%= news_id %>">
+        <td class="am-text-middle"><%= news_id %></td>
         <td class="am-text-middle">
             <img src="<%= pic%>" class="am-img-responsive imgbox" alt=""/>
         </td>
-         <td class="am-text-middle"><%= cate_name%></td>
+         <td class="am-text-middle"><%= cate_name %></td>
          <% if(username){%>
-         <td class="am-text-middle"><%= username%></td>
+         <td class="am-text-middle"><%= username %></td>
          <%}else{%>
-         <td class="am-text-middle"><%= nickname%></td>
+         <td class="am-text-middle"><%= nickname %></td>
          <%}%>
-          <td class="am-text-middle"><%= content%></td>
-        <td class="am-text-middle"><%= create_news_time%></td>
+          <td class="am-text-middle"><%= content %></td>
+        <td class="am-text-middle"><%= create_news_time %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <%if(type_name == "2" || type_name == "1") {%>
