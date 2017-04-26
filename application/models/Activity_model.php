@@ -137,7 +137,7 @@ class Activity_model extends CI_Model
 
     //返回卡卷核销信息
     function ret_after_list($id){
-        $where['user_coupon_id']= $id;
+        $where['shop_coupon_id']= $id;
         $this->db->select('a.*,b.store_name,c.nickname');
         $this->db->from('hf_shop_couponverify as a');
         $this->db->join('hf_shop_store as b','a.store_id = b.store_id','left');
