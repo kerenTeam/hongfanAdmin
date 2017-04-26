@@ -191,7 +191,7 @@ class LoveToGo extends CI_Controller
             //获取用户信息
             foreach($list as $key=>$val){
                 $list[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
-                $list[$key]['users'] = $this->Integral_model->ret_user_info($val['buyer']);
+                $list[$key]['id_card'] = $this->Integral_model->ret_user_info($val['buyer']);
             }
             if(empty($list)){
                 echo "2";
