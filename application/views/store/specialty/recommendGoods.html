@@ -272,45 +272,30 @@
 
         //更改商品的状态
         $('.goodsState').change(function(){
-            var dataId=$(this).attr('data-id');
+            var dataId=$(this).attr('data-id'), state = 0;
             if($(this).find('option:selected').val()=="1"){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                    data: 'goodsid='+ dataId+'&state=1',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-                $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+                state = 1;
+                $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
             }else{
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
-                    data: 'goodsid='+ dataId+'&state=0',
-                    success: function(data){
-                        if(data==1){
-
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-                $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+                state = 0;
+                $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
             }
-            
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/edit_goods_state');?>',
+                data: 'goodsid='+ dataId+'&state='+ state,
+                success: function(data){
+                    if(data==1){
+
+                    }else{
+                        alert("操作失败！");
+                    }
+                    
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
             
         });
         //删除商品的AJAX请求
@@ -344,6 +329,7 @@
                 success: function(data){
                     if(data==1){
                         alert('操作成功!');
+                        getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=2');
                     }else{
                         alert("操作失败！");
                     }
@@ -353,8 +339,7 @@
                     alert("操作失败，请检查网络设置！");
                 }
             });
-            getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=2');
-            $('.am-dimmer').css('display', 'none');
+            
         });
         
     }
@@ -407,19 +392,6 @@
             }
         });
     }
-    //商品数据的排序函数
-    function storeEditGoods(arg1) {
-        if(arg1 == 1) {
-            if(storageFlag) {
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=3');
-                storageFlag=0;
-            } else {
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=4');
-                storageFlag=1;
-            }
-            
-        }
-    }
     //表单验证函数
 	function validate(obj,minlen,maxlen,i){
 	    var content=obj.value;
@@ -434,22 +406,6 @@
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=2');
-    //点击搜索
-    // $('.searchGoods').click(function(){
-    //     var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
-    //     var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
-    //     if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
-    //         alert("交易总额必须是一个范围！");
-    //         return false;
-    //     }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
-    //         alert("库存必须是一个范围！");
-    //         return false;
-    //     }else{
-    //         // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-    //          getList('<?php echo site_url('store/store/goods_search');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-    //     }
-        
-    // });
 })
 
 
@@ -527,15 +483,12 @@ $(document).ready(function(){
                         <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
                         <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
                     </div>
-
-                    <div class="am-form-group am-btn-group-xs">
-                        <input type="hidden" name="id" value="">
-                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-id="<%= goods_id %>">保存</button>
-                    </div>
                 </form>      
             </div>
-            
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureSave" data-id="<%= goods_id%>" data-am-modal-confirm>保存</span>
+            </div>
         </div>
     </div>
 </script>
