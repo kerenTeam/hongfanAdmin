@@ -107,7 +107,6 @@ label {
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/find/Find/addService';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -225,7 +224,7 @@ function otherFunction() {
        
         $('.editContent').eq(i).attr("href","<?php echo site_url().'/find/Find/editFindService/" + editId + "';?>"); 
         if($('.commentState option:selected').eq(i).val()=="0"){
-                $('.commentState').eq(i).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'});
+                $('.commentState').eq(i).css({'background':' #e0690c','border':'1px solid #e0690c'});
         }     
     }
     //删除评论
@@ -240,8 +239,6 @@ function otherFunction() {
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
-                    $('#de'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
@@ -255,45 +252,29 @@ function otherFunction() {
     });
     //更改评论的状态
     $('.commentState').change(function(){
-        var dataId=$(this).attr('data-id');
+        var dataId=$(this).attr('data-id'), state = 0;
         if($(this).find('option:selected').val()=="1"){
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/find/Find/edit_service_comment');?>',
-                data: 'id='+ dataId+'&state=1',
-                success: function(data){
-                    if(data==1){
-
-                    }else{
-                        alert("操作失败！");
-                    }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-            $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
+            state = 1;
+            $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
         }else{
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/find/Find/edit_service_comment');?>',
-                data: 'id='+ dataId+'&state=0',
-                success: function(data){
-                    if(data==1){
-
-                    }else{
-                        alert("操作失败！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-            $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
+            state = 0;
+            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
         }
-        
-        
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/find/Find/edit_service_comment');?>',
+            data: 'id='+ dataId+'&state='+ state,
+            success: function(data){
+                if(data==1){
+
+                }else{
+                    alert("操作失败！");
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });     
     });
     
 }
@@ -331,12 +312,15 @@ function getList(dataurl,data){
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子评论信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }         
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子评论信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }
@@ -354,10 +338,6 @@ function validate(obj,minlen,maxlen,i){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/find/Find/ret_find_service_comment');?>','news_id=<?php echo $news_id;?>');
-    });
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();

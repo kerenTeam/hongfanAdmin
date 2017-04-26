@@ -190,22 +190,20 @@ function otherFunction() {
             url: '<?php echo site_url('/find/Find/edit_find_tags');?>',
             data: 'tag_id='+ dataId + '&tagName=' +tagName,
             success: function(result){ 
-            console.log(result);        
+            // console.log(result);        
                 var res = eval(result);
                 if(res == 1){
                     getList('<?php echo site_url('/find/Find/ret_find_tags');?>','default=1');
                     
                 }else{
                    alert("网络状况不佳，请稍后重试！");
-                }
-                $('#edit'+dataId).fadeOut();
-                $('.am-dimmer').removeClass('am-active');
-                
+                }    
             },
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
             }
         });
+        $('#edit'+dataId).modal('close'); 
     });
     //删除标签
     $('.sureDelete').click(function () {
@@ -222,8 +220,6 @@ function otherFunction() {
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
-                $('#de'+dataId).fadeOut();
-                $('.am-dimmer').removeClass('am-active');
                 
             },
             error:function(xhr,type,errorThrown){

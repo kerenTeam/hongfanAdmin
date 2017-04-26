@@ -349,12 +349,10 @@ function otherOperation() {
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
             data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness+'&title='+title + '&address='+address,
             success: function(result){       
-                console.log(result);  
+                // console.log(result);  
                 var res = eval(result);
                 if(res == 1){
                     alert("修改成功！");
-                    $('#edit'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList("<?php echo site_url('/module/LocalLife/ret_recruit_list');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
@@ -365,6 +363,7 @@ function otherOperation() {
                 alert("网络状况不佳，请稍后重试！");
             }
         });
+        $('#edit'+dataId).modal('close');
     });
     //删除招聘
     $('.sureDelete').click(function () {

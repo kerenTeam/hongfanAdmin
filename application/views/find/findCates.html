@@ -78,7 +78,6 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target:'#add_cates'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -117,6 +116,9 @@ td.am-text-middle img{
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
                         </div>
                     </div>
                 </div>
@@ -212,7 +214,6 @@ function otherOperation() {
     //编辑分类
     $('.sureSave').click(function () {
         var dataId = $(this).attr("data-id"),cateName = $('.name' + dataId).val();sort = $('.sort'+dataId).val();
-
         $.ajax({
             type:'post',
             url: "<?php echo site_url('/find/Find/edit_find_cates');?>",
@@ -221,8 +222,6 @@ function otherOperation() {
                 var res = eval(result);
                 if(res == 1){
                     alert("修改成功！");
-                    $('#edit'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
@@ -232,7 +231,8 @@ function otherOperation() {
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
             }
-        });
+        }); 
+        $('#edit'+dataId).modal('close');
     });
     //删除分类
     $('.sureDelete').click(function () {
@@ -245,8 +245,6 @@ function otherOperation() {
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
-                    $('#edit'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
@@ -255,9 +253,6 @@ function otherOperation() {
             },
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
             }
         });
     });
@@ -295,7 +290,7 @@ function getList(dataurl,data){
                 otherOperation();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关分类信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子分类信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
 
@@ -303,6 +298,9 @@ function getList(dataurl,data){
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子分类信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
         }
     });
 }
@@ -320,10 +318,6 @@ function validate(obj,minlen,maxlen,i){
 $(document).ready(function(){
     //加载列表数数据
     getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList("<?php echo site_url('/find/Find/ret_find_cates');?>",'default=1');
-    });
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val();

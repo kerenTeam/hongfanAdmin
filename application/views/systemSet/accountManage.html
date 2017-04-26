@@ -118,7 +118,7 @@
                                         </div>
                                         <small class="am-u-sm-1 am-u-end red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
                                         <small class="am-u-sm-1 am-u-end green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>   
-                                    </div>
+                                    </div> 
                                     <div class="am-form-group am-cf am-form-icon am-form-feedback">
                                         <label for="" class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
                                         <div class="am-u-sm-8 am-u-end">
@@ -139,7 +139,7 @@
                                         <button type="submit" class="am-btn am-btn-secondary">新增</button>
                                     </div>
                                 </form>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                     <!--新增账号模态框结束-->
@@ -177,6 +177,9 @@
                           <span class="page-sum">共<strong class="allPage">15</strong>页</span>
                           <span class="page-go">跳转<input type="text">页</span>
                           <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                        <div claa="am-text-middle">
+                           <span>共<span class="allData">15</span>条数据</span> 
                         </div>
                     </div>
                 </div>
@@ -297,11 +300,11 @@ function someOptions() {
                 if (xhr.readyState===4) {  
                     if (xhr.status===200) {
                          alert("保存成功！");
-                        $('#ed'+dataId).modal('close');
                         getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
                     }
                 }
-            }  
+            } 
+            $('#ed'+dataId).modal('close'); 
         });
     }
     //删除管理员帐户
@@ -353,6 +356,7 @@ function getList(dataurl,data){
                     listData+= template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     go_to_page($accountManage);

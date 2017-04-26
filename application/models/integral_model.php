@@ -84,7 +84,7 @@ class Integral_model extends CI_Model
 
     //返回爱购订单
     function get_love_order(){
-        $where['order_type'] = '2';
+        $where['order_type'] = '0';
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_mall_order a');
         $this->db->join('hf_user_member b','b.user_id = a.buyer','left');

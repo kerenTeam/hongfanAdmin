@@ -1275,7 +1275,6 @@ class SingleShop extends CI_Controller {
              }else{
                  $type = '1';
              }
-
             //h获取订单
             $orders = $this->MallShop_model->get_store_orders($storeid,$type);
           

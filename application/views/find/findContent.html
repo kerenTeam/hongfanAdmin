@@ -182,8 +182,8 @@ function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
     $('.page_link').eq(page_num).addClass('active_page');
     $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(8)*parseInt(page_num);
-    var end_page=parseInt(8)*parseInt(page_num+1);
+    var start_page=parseInt(10)*parseInt(page_num);
+    var end_page=parseInt(10)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
     sessionStorage.setItem('$findContent', current_page);
@@ -238,8 +238,6 @@ function otherFunction() {
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
-                    $('#de'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
                     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
@@ -273,13 +271,12 @@ function otherFunction() {
             console.log(data);
             if (xhr.readyState===4) {  
                 if (xhr.status===200) {
-                     alert("保存成功！");
-                    $('#re'+dataId).modal('close');
+                    alert("保存成功！");
                     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
                 }
             }
         }
-        
+        $('#re'+dataId).modal('close');
     });
     
 }
@@ -295,7 +292,7 @@ function getList(dataurl,data){
            
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/8); //得到总页数
+                total_page = Math.ceil(res.length/10); //得到总页数
                 for(var i = 0; i < res.length; i++){
 
                     if(res[i].pic.indexOf('http')>-1){
@@ -329,14 +326,14 @@ function getList(dataurl,data){
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无发现帖子信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }         
         },
         error:function(xhr,type,errorThrown){
             alert("网络状况不佳，请稍后重试！");
             $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无发现帖子信息！</p></td></tr>').appendTo('#dataList');
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无帖子信息！</p></td></tr>').appendTo('#dataList');
             $('.pagebox').css('display', 'none');
         }
     });
@@ -417,10 +414,15 @@ $(document).ready(function(){
                         <div class="am-u-sm-8 am-u-end">
                             <div class="wx_type_img">
                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                <div id="preview"> <img style="border-radius: 3px;" src="<%= banner_pic %>" class="am-img-responsive cardView" id="banner_pic<%= news_id %>"> </div>
-                             </div>
+                                <div id="preview"> 
+                                <% if(banner_pic) { %><img style="border-radius: 3px;" src="<%= banner_pic %>" class="am-img-responsive cardView" id="banner_pic<%= news_id %>">
+                                <% } else { %>
+                                <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView" id="banner_pic<%= news_id %>">
+                                <% } %>
+                                </div>
+                            </div>
                             <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                            <small class="red">提示：图片格式支持：PNG、JPG、JPEG，最大支持800k；图片尺寸为宽500px高200px</small> 
+                            <small class="red" style="white-space: initial;">提示：图片格式支持：PNG、JPG、JPEG，最大支持800k；图片尺寸为宽500px高200px</small>
                         </div>
                     </div>
                     <div class="am-form-group am-cf">
