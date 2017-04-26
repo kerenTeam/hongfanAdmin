@@ -445,7 +445,7 @@ $(document).ready(function(){
                 <div class="am-form-group am-cf">
                     <label class="am-u-sm-3 am-form-label">图片描述： </label>
                     <div class="am-u-sm-9">
-                        <% if(pics) { %>
+                        <% if(pics.length) { %>
                             <% for(var i = 0;i < pics.length; i++) { %>
                                 <img style="border-radius: 3px;width: 100px;margin-left: 36%;" src="<%= pics[i].picImg %>" class="am-img-responsive cardView"> 
                             <%}%>

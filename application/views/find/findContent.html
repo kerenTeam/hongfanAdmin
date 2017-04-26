@@ -176,7 +176,7 @@ label {
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script src="assets/js/artTemplate-native.js"></script>
 <script type="text/javascript">
-var total_page = 0,pageflag = 1,current_page=0,findContent = parseInt(sessionStorage.getItem('$findContent')) || 0;
+var total_page = 0,pageflag = 1,current_page=0,findContent = parseInt(sessionStorage.getItem('$findContent')) || 0, isFindContent = parseInt(sessionStorage.getItem('$isFindContent')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -354,12 +354,19 @@ function validate(obj,minlen,maxlen,i){
 }
 $(document).ready(function(){
     //加载列表数数据
+    if(isFindContent) {
+        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val();
+        // console.log('search='+ keywords + '&cate_id=' + cate_id);
+        getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id);
+        sessionStorage.setItem('$isFindContent', 1);
+    }
     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     //点击搜索
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val();
-        console.log('search='+ keywords + '&cate_id=' + cate_id);
+        // console.log('search='+ keywords + '&cate_id=' + cate_id);
         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id);
+        sessionStorage.setItem('$isFindContent', 1);
     });
 })
 </script>
