@@ -97,7 +97,9 @@ td div div p {
                         <div class="am-u-sm-9 am-u-end">
                             <select id="seller" name="seller">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="1">商家以</option>
+                                <?php foreach($store as $val): ?>
+                                <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
+                                <?php endforeach;?>
                             </select>
                         </div>
                     </div>

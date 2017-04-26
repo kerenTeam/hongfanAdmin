@@ -1256,7 +1256,9 @@ class SingleShop extends Default_Controller {
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
+
         $data['storeid'] = $this->session->businessId;
+       
         $data['page'] = $this->view_shopOrder;
         $data['menu'] = array('shop','shopOrder');
         $this->load->view('template.html',$data);
@@ -1267,8 +1269,15 @@ class SingleShop extends Default_Controller {
         if($_POST){
             //获取卖家id
             $storeid = $_POST['storeid'];
+             $storetype = $this->session->businesstype;
+             if($storetype == 2){
+                 $type = '4';
+             }else{
+                 $type = '1';
+             }
+
             //h获取订单
-            $orders = $this->MallShop_model->get_store_orders($storeid);
+            $orders = $this->MallShop_model->get_store_orders($storeid,$type);
           
             if(empty($orders)){
                 echo "2";
