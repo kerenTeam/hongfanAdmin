@@ -1358,7 +1358,7 @@ class SingleShop extends Default_Controller {
         }else{
             //订单
             $order = $this->MallShop_model->get_order_info($id);
-  
+                
             $data['order'] = $order;
             $data['page'] = $this->view_sureOrder;
             $data['menu'] = array('shop','shopOrder');
