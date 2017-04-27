@@ -287,13 +287,18 @@ td div div p {
             var dataId=$('.tpl-del').eq(i).attr('data-id');
             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
         }
+        $('.send_type').change(function () {
+            if($(this).val() == "ZT") {
+                $('.kuaidiNum').css('display', 'none');
+            }
+        });
         //确认发货的AJAX请求
         $('.sureDeliver').click(function(){
             var dataId=$(this).attr('data-id');
             var send_type= $('#send_type'+dataId).val();
-            var send_no=$('#send_no'+dataId).val();
+            var send_no=$('#send_no'+dataId).val() || '';
 
-            if(send_type && send_no){
+            if(send_type){
                 $.ajax({
                     type:'post',
                     url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
@@ -310,8 +315,8 @@ td div div p {
                     error:function(xhr,type,errorThrown){
                         alert("操作失败，请检查网络设置！");
                     }
-                });
-            }else{
+                });               
+            } else {
                 alert("请正确填写发货信息！");
                 return false;
             }
@@ -565,14 +570,15 @@ $(document).ready(function(){
                                 <option value="ZTO">中通速递</option>
                                 <option value="YD">韵达快递</option>
                                 <option value="HTKY">百世汇通</option>
+                                <option value="ZT">自提</option>
                             </select>
                         </div>
                     </div>
                
-                    <div class="am-form-group am-cf">
+                    <div class="am-form-group am-cf kuaidiNum">
                         <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id%>' class="send_no" name='send_no' required>
+                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id%>' class="send_no" name='send_no'>
                         </div>
                     </div>
                     <div class="am-form-group am-btn-group-xs">
