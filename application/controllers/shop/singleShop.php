@@ -141,6 +141,10 @@ class SingleShop extends Default_Controller {
             if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
                  echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
             }
+            if(empty(json_decode($data['store_reduction']))){
+                $data['store_reduction'] = '';
+            }
+
             $pic = array();
          
                 if(!empty($_FILES['img1']['name'])){
