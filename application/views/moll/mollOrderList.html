@@ -289,10 +289,13 @@ td div div p {
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
-                    if($mollOrderList) {
-                        go_to_page($mollOrderList);
+                    if(pageflag) {
                         var opts={};opts.current_page = $mollOrderList;
                         $("#Pagination").pagination(total_page, opts);
+                        if($mollOrderList) {
+                            go_to_page($mollOrderList);
+                        }
+                        pageflag = 0;
                     } else {
                         $("#Pagination").pagination(total_page);
                         go_to_page(0);

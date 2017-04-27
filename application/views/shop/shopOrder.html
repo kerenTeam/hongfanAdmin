@@ -206,7 +206,7 @@ td div div p {
     </div> 
 </div>
 <script type="text/javascript">
-    var total_page=0, $shopOrder = parseInt(sessionStorage.getItem('shopOrder')) || 0, $isShopOrder = parseInt(sessionStorage.getItem('isShopOrder')) || 0;
+    var total_page=0, pageflag = 1, $shopOrder = parseInt(sessionStorage.getItem('shopOrder')) || 0, $isShopOrder = parseInt(sessionStorage.getItem('isShopOrder')) || 0;
     //导入数据
     function uploadFiles(){
         var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
@@ -238,7 +238,7 @@ td div div p {
         var start_page=parseInt(15)*parseInt(page_num);
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-        current_page=page_num;
+        current_page = page_num;
         sessionStorage.setItem('shopOrder', current_page);
         $shopOrder = parseInt(sessionStorage.getItem('shopOrder'));
         
@@ -345,10 +345,13 @@ td div div p {
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 $('.allData').html(res.length);
-                if($shopOrder != 0) {
-                    go_to_page($shopOrder);
+                if(pageflag) {
                     var opts={};opts.current_page = $shopOrder;
                     $("#Pagination").pagination(total_page, opts);
+                    if($shopOrder) {
+                        go_to_page($shopOrder);
+                    }
+                    pageflag = 0;
                 } else {
                     $("#Pagination").pagination(total_page);
                     go_to_page(0);

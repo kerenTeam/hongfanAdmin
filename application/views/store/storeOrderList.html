@@ -304,9 +304,12 @@ td div div p {
                     $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
                     if($storeOrderList) {
-                        go_to_page($storeOrderList);
                         var opts={};opts.current_page = $storeOrderList;
                         $("#Pagination").pagination(total_page, opts);
+                        if($storeOrderList) {
+                            go_to_page($storeOrderList);
+                        }
+                        pageflag = 0;
                     } else {
                         $("#Pagination").pagination(total_page);
                         go_to_page(0);
