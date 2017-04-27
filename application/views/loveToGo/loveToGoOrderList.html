@@ -235,17 +235,12 @@ function next(argu){
         var dataId=$('.deliverOrder').eq(i).attr('data-id');
         $('.deliverOrder').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");                      
     }
-    $('.send_type').change(function () {
-        if($(this).val() == "ZT") {
-            $('.kuaidiNum').css('display', 'none');
-        }
-    });
     //确认发货的AJAX请求
     $('.sureDeliver').click(function(){
         var dataId=$(this).attr('data-id');
         var send_type= $('#send_type'+dataId).val();
-        var send_no=$('#send_no'+dataId).val() || '';
-        if(send_type) {
+        var send_no=$('#send_no'+dataId).val();
+        if(send_type &&　send_no) {
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
@@ -424,7 +419,6 @@ $(document).ready(function(){
                                 <option value="ZTO">中通速递</option>
                                 <option value="YD">韵达快递</option>
                                 <option value="HTKY">百世汇通</option>
-                                <option value="ZT">自提</option>
                             </select>
                         </div>
                     </div>
