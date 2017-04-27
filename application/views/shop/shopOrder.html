@@ -494,7 +494,10 @@ $(document).ready(function(){
         <%}else if(order_status==2){%>
             <td class="am-text-middle">
                 已支付
+                 &nbsp;&nbsp;
+                <a data-id="<%= order_id%>" class="deliverOrder"><i class="am-icon-paper-plane"></i>发货</a>
             </td>
+
         <%}else if(order_status==3){%>
             <td class="am-text-middle warning">
                 已发货
