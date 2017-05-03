@@ -88,7 +88,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                                <?php echo $order['order_id'];?>
                             </label>
                         </div>
-                       <?php $goods = json_decode($order['goods_data'],true);?>
+                         <?php $goods = json_decode($order['goods_data'],true);?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">商品总数量：</label>
                             <label class="am-u-sm-8 am-text-middle">
@@ -156,7 +156,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="widget-title  am-cf background" >修改信息:</div>
                         </div>
                          <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
-
+                        <?php if($order['order_status'] == 1):?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
                             <label for="user-email" class="am-u-sm-3 am-form-label" >附加名称<span style="color:#ff0000;">*</span>：</label>
                             <div class="am-u-sm-9">
@@ -177,7 +177,31 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 <input type="text" name="fee" placeholder="可以为负值" >
                             <?php endif;?>
                            </div>
-                        </div>    
+                        </div>  
+                        <?php else:?>
+                             <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
+                            <label for="user-email" class="am-u-sm-3 am-form-label" >快递公司:<span style="color:#ff0000;">*</span>：</label>
+                            <div class="am-u-sm-9">
+                                <select class="send_type am-input" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="shipper_code" id="shipper_code">
+                                    <option value="">输入查找/选择</option>
+                                    <option value="EMS" <?php if($order['shipper_code'] == "EMS"){echo "selected";}?>>EMS</option>
+                                    <option value="SF"  <?php if($order['shipper_code'] == "SF"){echo "selected";}?>>顺丰快递</option>
+                                    <option value="STO" <?php if($order['shipper_code'] == "STO"){echo "selected";}?>>申通快递</option>
+                                    <option value="YTO" <?php if($order['shipper_code'] == "YTO"){echo "selected";}?>>圆通速递</option>
+                                    <option value="ZTO" <?php if($order['shipper_code'] == "ZTO"){echo "selected";}?>>中通速递</option>
+                                    <option value="YD" <?php if($order['shipper_code'] == "YD"){echo "selected";}?>>韵达快递</option>
+                                    <option value="HTKY" <?php if($order['shipper_code'] == "HTKY"){echo "selected";}?>>百世汇通</option>
+                                    <option value="ZT" <?php if($order['shipper_code'] == "ZT"){echo "selected";}?>>自提</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" id="logistic_code">
+                            <label for="user-email" class="am-u-sm-3 am-form-label">快递单号：</label>
+                           <div class="am-u-sm-9">
+                              <input type="text" placeholder="请输入快递单号！" value="<?php echo $order['logistic_code'];?>" class="send_no" name='logistic_code'>
+                           </div>
+                        </div>  
+                        <?php endif;?>  
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                             <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
                             <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
@@ -203,4 +227,16 @@ label.am-u-sm-8, label.am-u-sm-4{
   $('#cancle').click(function(){
     history.go(0);
   });
+
+  //编辑快递
+  $('#shipper_code').change(function () {
+      if($(this).val() == "ZT") {
+        $('#logistic_code').css('display', 'none');
+      } else {
+        $('#logistic_code').css('display', 'block');
+      }
+  });
+  if($('#shipper_code').val() == "ZT") {
+        $('#logistic_code').css('display', 'none');
+      }
 </script>
