@@ -377,6 +377,92 @@ class LoveToGo extends Default_Controller
     }
 
 
+    //爱购订单搜索
+    function search_love_order(){
+        if($_POST){
+            $order_status = $this->input->post('order_status');
+            $username = $this->input->post('buyer');
+            $start_time = $this->input->post('start_time');
+            $endtime = $this->input->post('end_time');
+
+             if(!empty($username)){
+                //获取买家id
+                $query = $this->db->where('username',$username)->get('hf_user_member');
+                $res = $query->row_array();
+                $buyer = $res['user_id'];
+            }else{
+                $buyer = '';
+            }
+            $res ='';
+            if(!empty($order_status) && empty($buyer) && empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.order_status',$order_status)->order_by('create_time','asc')->get();  
+                $res = $query->result_array();              
+            }else if(empty($order_status) && !empty($buyer) && empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.buyer',$buyer)->order_by('a.create_time','asc')->get();  
+                $res = $query->result_array();    
+            }else if(empty($order_status) && empty($buyer) && !empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+            }else if(!empty($order_status) && !empty($buyer) && empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.order_status',$order_status)->where('a.buyer <=',$buyer)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+            }else if(empty($order_status) && !empty($buyer) && !empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->where('a.buyer',$buyer)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+
+            }else if(!empty($order_status) && empty($buyer) && !empty($start_time)){
+                 $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->where('a.order_status',$order_status)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+            }else if(!empty($order_status) && !empty($buyer) && !empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->where('a.order_status',$order_status)-where('buyer',$buyer)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+            }else if(empty($order_status) && empty($buyer) && empty($start_time)){
+                $where['order_type'] = '0';
+                $this->db->select('a.*,b.username,b.nickname');
+                $this->db->from('hf_mall_order a');
+                $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
+                $query = $this->db->where($where)->order_by('create_time','asc')->get();  
+                $res = $query->result_array(); 
+            }
+            if(!empty($res)){
+                echo json_encode($res);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
 
 
 }
