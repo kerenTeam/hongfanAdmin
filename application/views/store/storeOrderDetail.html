@@ -192,15 +192,17 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <?php elseif($order['order_status'] == 8):?>
                                 已退款
                                 <p>退货理由：<span><?php echo $order['buyer_reason']?></span></p>
-                            <?php else:?>
+                            <?php endif?>
                             </div>
-                            <div class="am-u-sm-4">
+                            <?php if($order['order_status'] == 3):?>
+                            <div class="am-u-sm-4" >
                                 快递公司：<?php echo $order['shipper_code'];?>
                             </div>
                             <div class="am-u-sm-4">
                                 快递单号：<?php echo $order['logistic_code'];?>
                             </div>
                             <?php endif;?>
+                            
 
 
                         </div>
