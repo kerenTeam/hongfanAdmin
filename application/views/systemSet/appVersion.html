@@ -72,6 +72,13 @@
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+                                <tr>
+                                    <th>安卓下载点击量：<?php echo $app['dowAndroid'];?></th>
+                                    <th>ios下载点击量：<?php echo $app['dowIso'];?> </th>
+                                </tr>
+                            </thead>
                             <thead>
                                 <tr>
                                     <th>版本号</th>
@@ -81,6 +88,7 @@
                                 </tr>
                             </thead>
                             <tbody id="accountList">
+                           
                             <form action="<?php echo site_url('/systemSet/SystemSet/edit_app_version');?>" method="post" enctype="multipart/form-data">
                                 
                                     <tr class="trClass" id="trClass" >

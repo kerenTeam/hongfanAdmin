@@ -71,6 +71,7 @@ class Member extends Default_Controller {
         );
         //获取会员卡类型
         $data['cards'] = $this->user_model->get_card_type( );
+        $data['userNum'] = $this->user_model->get_users('5');
         //视图界面
         $data['page'] = $this->view_memberList;
         $data['menu'] = array('member','memberList');
@@ -183,7 +184,7 @@ class Member extends Default_Controller {
         }else{
           
             //自己不能删除
-            if($id == $this->session->users['user_id']){
+            if($id == $_SESSION['users']['user_id']){
                 echo "<script>alert('不能删除自己！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
                 exit;
             }
@@ -492,7 +493,7 @@ class Member extends Default_Controller {
     			exit;
     		}
     		//自己不能屏蔽
-    		if($id == $this->session->users['user_id']){
+    		if($id == $_SESSION['users']['user_id']){
     			echo "<script>alert('不能冻结自己！');window.location.href='".site_url('/member/Member/memberList')."'</script>";
     			exit;
     		}

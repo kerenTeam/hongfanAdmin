@@ -62,6 +62,57 @@ td.am-text-middle img {
     <div class="row">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">订单搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">状态:</label>
+                        <div class="am-u-sm-9">
+                            <select id="orderState" name="state">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1">未支付</option>
+                                <option value="2">已支付</option>
+                                <option value="3">已发货</option>
+                                <option value="4">已收货</option>
+                                <option value="5">已评价</option>
+                                <option value="6">求退货</option>
+                                <option value="7">等待退货物流</option>
+                                <option value="8">退款</option>
+                                <option value="9">其他</option>
+                                <option value="10">等待退款</option>
+                            </select>
+                        </div>
+                    </div>
+                 
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">买家:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <input type="text" id="buyer" name="username" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-01-31</span>
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
                 <div class="widget-head am-cf" style="clear:both;">
                     <div class="widget-title  am-cf">订单列表</div>
                 </div>
@@ -136,7 +187,7 @@ td.am-text-middle img {
                     导出今日已支付订单
                 </div>
                 <div class="am-u-sm-6 am-text-center">
-                    <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有订单
+                    <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有已支付订单
                 </div>
             </div>
         </div>
@@ -149,7 +200,35 @@ td.am-text-middle img {
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-var flag=0, current_page=0,total_page=0,pageflag = 1, $loveToGoOrderList = parseInt(sessionStorage.getItem('loveToGoOrderList')) || 0;;
+$(function() {
+    var startDate = new Date(2017, 04, 01);
+    var endDate = new Date(2017, 04, 30);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+var flag=0, current_page=0,total_page=0,pageflag = 1, $loveToGoOrderList = parseInt(sessionStorage.getItem('loveToGoOrderList')) || 0, $isloveToGoOrderList = parseInt(sessionStorage.getItem('isloveToGoOrderList')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -280,7 +359,7 @@ function next(argu){
                     res[i].goods_data = JSON.parse(res[i].goods_data);
                     listData+= template('dataModal',res[i]);
                 } 
-                console.log(res);
+              //  console.log(res);
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
@@ -315,20 +394,22 @@ function next(argu){
 }
 $(document).ready(function(){
     //加载列表数数据
-    getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1');
+    if($isloveToGoOrderList) {
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer +"&start_time="+ begin_date + '&end_time=' + end_date);
+        sessionStorage.setItem('isloveToGoOrderList', 1);
+    } else {
+       getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1'); 
+    }
+    
     //点击搜索
-    // $('.searchOrder').click(function(){
-    //     var orderState=$('#orderState option:selected').val(),startMoney=$('#startMoney').val(),endMoney=$('#endMoney').val(),buyer=$('#buyer').val(),orderDate=$('#orderDate').val();
-    //     if((startMoney=="" && endMoney!="") || (startMoney!="" && endMoney=="") ){
-    //         alert("交易总额必须是一个范围！");
-    //         return false;
-    //     }else{
-         
-    //      getList('<?php echo site_url('/shop/singleShop/order_search');?>','state='+ orderState +'&startPrice='+ startMoney +'&endPrice='+ endMoney +'&date='+ orderDate +'&username='+ buyer);
-    //         return true;
-    //     }
+    $('.searchOrder').click(function(){
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+      //  console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
+        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
+        sessionStorage.setItem('isloveToGoOrderList', 1);
         
-    // });
+    });
 })
 </script>
 <script type="text/html" id="dataModal">   
@@ -338,7 +419,7 @@ $(document).ready(function(){
 [0].id %></td>
         <td class="am-text-middle">
         <%if(username) {%>
-        <%= username%>
+        <%= username %>
         <%} else {%>
         <%= nickname%>
         <%}%>
@@ -347,8 +428,8 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= adddress.address %></td>
         <td class="am-text-middle"><%= adddress.phone %></td>
         <td class="am-text-middle"><%= amount %></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <%if(order_status==1) {%>
+        <td class="am-text-middle"><%= create_time %></td>
+        <%if(order_status == 1) {%>
             <td class="am-text-middle red">
                 未支付
             </td>
@@ -426,7 +507,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf kuaidiNum" >
                         <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id%>' class="send_no" name='send_no' required>
+                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id %>' class="send_no" name='send_no' required>
                         </div>
                     </div>
                     <div class="am-form-group am-btn-group-xs">

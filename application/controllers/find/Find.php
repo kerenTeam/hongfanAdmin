@@ -900,6 +900,27 @@ class Find extends Default_Controller {
         }
     }
 
-
+    //取消推荐显示
+    function findSpecial_Qurecommend(){
+        if($_POST){
+            $id = $this->input->post('id');
+             $data['type_name'] = '0';
+            if($this->db->where('news_id',$id)->update('hf_friend_news',$data)){
+                // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."取消了一个首页推荐帖子，帖子id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "3";
+        }
+    }
 
 }

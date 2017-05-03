@@ -187,7 +187,7 @@ class LocalLife extends Default_Controller {
 						break;
 					//房产信息
 					case '2':
-					//	$userid = $this->session->users['user_id'];
+					//	$userid = $_SESSION['users']['user_id'];
 						$list = $this->Module_model->get_houst();
 						$config['total_rows'] = count($list);
 						//分页数据
@@ -468,7 +468,7 @@ class LocalLife extends Default_Controller {
         
 			 $data['pic'] = json_encode($pic);
 			 $data['logo'] = json_encode($logo);
-             $data['userid'] = $this->session->users['user_id'];
+             $data['userid'] = $_SESSION['users']['user_id'];
 			 if($this->Module_model->add_service($data)){
 
 				//日志
@@ -518,7 +518,7 @@ class LocalLife extends Default_Controller {
 			 }
 			 $data['pic'] =json_encode($pic);
 			 $data['list_pic'] = json_encode($logo);
-			 $data['userid'] = $this->session->users['user_id'];
+			 $data['userid'] = $_SESSION['users']['user_id'];
 			 $id = $data['type_id'];
 			 unset($data['type_id']);
 			 if($this->Module_model->add_houst($data)){
@@ -569,7 +569,7 @@ class LocalLife extends Default_Controller {
 			}
 			$data['pic'] = json_encode($pic);
 			$data['list_pic'] = json_encode($logo);
-			$data['userid'] = $this->session->users['user_id'];
+			$data['userid'] = $_SESSION['users']['user_id'];
 			$type= $data['id'];
 			unset($data['id']);
 
@@ -782,7 +782,7 @@ class LocalLife extends Default_Controller {
 
 	//超市比价
 	function market_data(){
-		$userid = $this->session->users['user_id'];
+		$userid = $_SESSION['users']['user_id'];
 			//条数
 			$config['per_page'] = 10;
 			//获取页码
@@ -833,9 +833,9 @@ class LocalLife extends Default_Controller {
 		if($_POST){
 			$data = $this->input->post();
 			$data['date'] = date('Y-m-d H:i:s');
-			$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+			$market_name =  $this->user_model->get_user_info( $_SESSION['users']['user_id']);
 			$data['market_name'] = $market_name['username'];
-			$data['marketid'] = $this->session->users['user_id'];
+			$data['marketid'] = $_SESSION['users']['user_id'];
 			if($this->Module_model->add_market_data($data)){
 				//日志
 	            $log = array(
@@ -864,7 +864,7 @@ class LocalLife extends Default_Controller {
 					//日志
 		            $log = array(
 		                'userid'=>$_SESSION['users']['user_id'],  
-		                "content" => $_SESSION['users']['username']."删除了一个超市特价信息,信息名称是".$data['goods_name'].",信息id是：".$id,
+		                "content" => $_SESSION['users']['username']."删除了一个超市特价信息,信息名称是,信息id是：".$id,
 		                "create_time" => date('Y-m-d H:i:s'),
 		                "userip" => get_client_ip(),
 		            );
@@ -986,10 +986,10 @@ class LocalLife extends Default_Controller {
 	            $data[$currentRow]['unit'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值 
 	            $data[$currentRow]['standard'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
 	            $data[$currentRow]['date'] = date('Y-m-d H:i:s');
-	            	$market_name =  $this->user_model->get_user_info( $this->session->users['user_id']);
+	            	$market_name =  $this->user_model->get_user_info( $_SESSION['users']['user_id']);
 	             $data[$currentRow]['market_name'] = $market_name['username'];
-	            $data[$currentRow]['import_user'] = $this->session->users['user_id'];
-	            $data[$currentRow]['marketid'] = $this->session->users['user_id'];
+	            $data[$currentRow]['import_user'] = $_SESSION['users']['user_id'];
+	            $data[$currentRow]['marketid'] = $_SESSION['users']['user_id'];
 
 	            //插入数据库
 	            // $where = array('property_id'=>$property_id,'unit_no'=>$unit_no);

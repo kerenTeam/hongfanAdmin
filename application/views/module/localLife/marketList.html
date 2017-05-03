@@ -181,7 +181,7 @@ padding: 5px 6px!important;
                             <tbody>
                             <?php if(!empty($lists)):?>
                                 <?php foreach($lists as $val):?>
-                                <tr>
+                                <tr class="trClass">
                                     <td  class="am-text-middle"><input type="checkbox" class="commentBox" data-id="<?php echo $val['id'];?>" name="commentBox"></td>
                                     <td class="am-text-middle"><?php echo $val['id'];?></td>
                                     <!-- <td class="am-text-middle"><?php echo $val['market_name'];?></td> -->
@@ -327,19 +327,22 @@ padding: 5px 6px!important;
         });
         //多个超市比价删除
         $('.deleteAll').click(function(){
-            var deleteId=$(this).attr('data-id');
+           // var deleteId=$(this).attr('data-id');
             var array=[];
             for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
                 array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
             }
+        
             array=JSON.stringify(array);
+            console.log(array);
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/module/LocalLife/batch_del_market');?>',
                 data: 'id='+array,
                 success: function(data){
                     if(data==1){
-                        getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+                        alert('操作成功！');
+                       window.location.href='<?php echo site_url('/module/LocalLife/market_data');?>';
                     }else{
                         alert("操作失败！");
                     }

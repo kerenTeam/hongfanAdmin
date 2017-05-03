@@ -195,7 +195,8 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = 'Upload/headPic/'.$this->upload->data('file_name');
+                    $pic['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = json_encode($pic);
                 }
             }
             $data['password'] = md5($data['password']);
@@ -250,7 +251,8 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $data['avatar'] = 'Upload/headPic/'.$this->upload->data('file_name');
+                    $pic['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                    $data['avatar'] = json_encode($pic);
                 }
             }
             $data['nickname'] = trim($_POST['nickname']);
@@ -889,7 +891,7 @@ class SystemSet extends Default_Controller {
 
     //运费模板
     function expressTemplate(){
-        $data['store_id'] =  $this->session->businessId;
+        $data['store_id'] =  $_SESSION['businessId'];
         $data['page'] = $this->view_express;
         $data['menu'] = array('shop','expressTemplate');
         $this->load->view('template.html',$data);
@@ -913,7 +915,7 @@ class SystemSet extends Default_Controller {
     function add_express(){
         if($_POST){
             $data = $this->input->post();
-            $data['businid'] = $this->session->businessId;
+            $data['businid'] = $_SESSION['businessId'];
             $data['create_time'] = date('Y-m-d H:i:s');
             if($this->System_model->add_express_temp($data)){
                 $log = array(

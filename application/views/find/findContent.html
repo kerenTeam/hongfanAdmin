@@ -59,6 +59,8 @@ label {
     border: 1px solid #5eb95e !important;
     color: #5eb95e !important;
 }
+
+
 </style>
 
 <!-- 内容区域 -->
@@ -281,6 +283,30 @@ function otherFunction() {
         }
         $('#re'+dataId).modal('close');
     });
+
+    //取消推荐
+    $('.quRecommand').click(function () {
+        var dataId = $(this).attr("data-id");
+        $.ajax({
+            type:'post',
+            url: "<?php echo site_url('/find/Find/findSpecial_Qurecommend');?>",
+            data: 'id='+ dataId,
+            success: function(result){    
+                console.log(result);     
+                var res = eval(result);
+                if(res == 1){
+                    alert("取消成功！");
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    });
     
 }
 //异步刷新的ajax请求 
@@ -391,6 +417,10 @@ $(document).ready(function(){
                 <a data-id="<%= news_id %>" class="yesRecommand">
                     <i class="am-icon-star"></i> 修改推荐
                 </a>
+                <a data-id="<%= news_id %>" class="quRecommand" style="color: black;">
+                    <i class="am-icon-star"></i> 取消推荐
+                </a>
+
                 <%} else { %>
                 <a data-id="<%= news_id %>" class="noRecommand">
                     <i class="am-icon-star-o"></i> 推荐到首页

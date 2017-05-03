@@ -39,14 +39,18 @@ class Login extends CI_Controller {
                     $this->load->view('login.html',$a);
                 }else{
                     //正确  缓存
-                   $this->session->set_userdata('users',$user);
+                   session_start();
+               // $this->session->set_userdata('users',$user);
+                   $_SESSION['users']  = $user;
+                  // $_SESSION['id'] = $user['user_id'];
+                  // var_dump($_SESSION);exit;
                     // 判断用户分组
                    switch ($user['gid']){
                         case 2:
                            redirect( site_url('shop/SingleShop/shopAdmin') );
                            break;
                         default:
-                           $plateid = $this->m_model->group_permiss($this->session->users['gid']);
+                           $plateid = $this->m_model->group_permiss($_SESSION['users']['gid']);
                            $plateid = json_decode($plateid,true);
 
                            if(!empty($plateid)){
@@ -84,7 +88,8 @@ class Login extends CI_Controller {
                                 // }
           
                                 $json = json_encode($arr);
-                                $this->session->set_userdata('menu',$json);
+                                $_SESSION['menu'] = $json;
+                                //$this->session->set_userdata('menu',$json);
                             }else{
                                 $a['error'] = '你没有权限登录！';
                                 $this->load->view('login.html',$a);
@@ -112,8 +117,9 @@ class Login extends CI_Controller {
     //退出登陆
     function loginOut(){
         if($_GET){
-            $this->session->unset_userdata('users');
-            $this->session->unset_userdata('menu');
+            // $this->session->unset_userdata('users');
+            // $this->session->unset_userdata('menu');
+            unset($_SESSION['users'],$_SESSION['menu']);
             //var_dump($_SESSION['menu']);
             redirect('Login/index');
         }else{

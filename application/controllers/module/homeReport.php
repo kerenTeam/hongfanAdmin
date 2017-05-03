@@ -84,7 +84,7 @@ class HomeReport extends Default_Controller {
                     $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
-            $data['userid'] = $this->session->users['user_id'];
+            $data['userid'] = $_SESSION['users']['user_id'];
             if($this->System_model->add_notice($data)){
                 //日志
                 $log = array(
@@ -123,7 +123,7 @@ class HomeReport extends Default_Controller {
                     $data['pic'] =  '/Upload/news/'.$this->upload->data('file_name');
                 }
             }
-            $data['userid'] = $this->session->users['user_id'];
+            $data['userid'] = $_SESSION['users']['user_id'];
             if($this->System_model->edit_notice($data['id'],$data)){
                    //日志
                 $log = array(
