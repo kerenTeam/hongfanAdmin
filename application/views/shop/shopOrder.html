@@ -305,6 +305,8 @@ td div div p {
         $('.send_type').change(function () {
             if($(this).val() == "ZT") {
                 $('.kuaidiNum').css('display', 'none');
+            } else {
+                $('.kuaidiNum').css('display', 'block');
             }
         });
         //是否同意退款
@@ -607,8 +609,8 @@ $(document).ready(function(){
                         <div class="am-form-group am-cf">
                             <label class="am-u-sm-3 am-form-label">快递类型<span class="red">*</span> </label>
                             <div class="am-u-sm-9 am-text-left">
-                                <select class="send_type am-input" id="send_type<%= order_id%>" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
-                                    <option value="">输入查找/选择</option>
+                                <select class="send_type am-form-field" id="send_type<%= order_id%>" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
+                                    <option value="">请选择快递类型</option>
                                     <option value="EMS">EMS</option>
                                     <option value="SF">顺丰快递</option>
                                     <option value="STO">申通快递</option>

@@ -96,8 +96,8 @@ td div div p {
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">商家:</label>
                         <div class="am-u-sm-9 am-u-end">
-                            <select id="seller" name="seller">
-                                <option value="">-=请选择一项=-</option>
+                            <select id="seller" name="seller" data-am-selected="{searchBox: 1}">
+                                <option value="">请选择/搜索</option>
                                 <?php foreach($store as $val): ?>
                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                 <?php endforeach;?>
