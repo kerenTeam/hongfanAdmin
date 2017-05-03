@@ -30,4 +30,26 @@ class Welcome extends CI_Controller {
 
         $this->load->view('welcome_message.html');
     }
+
+    
+    function inset_app(){
+    	if($_POST){
+    		$type = $this->input->post('id');
+    		$query = $this->db->get('hf_system_version');
+    		$res = $query->row_array();
+    		//var_dump($res);
+    		if($type == 1){
+	    		$arr['dowAndroid']= $res['dowAndroid'] + 1;
+	    	}else{
+	    		$arr['dowIso']= $res['dowIso'] + 1;
+	    	}
+    		$this->db->where('id',$res['id'])->update('hf_system_version',$arr);
+    		echo "1";
+    	}else{
+    		echo "2";
+    	}
+    }
+
+
+
 }

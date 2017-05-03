@@ -141,9 +141,20 @@ class Activity_model extends CI_Model
         $this->db->select('a.*,c.nickname');
         $this->db->from('hf_shop_couponverify as a');
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
-        $query = $this->db->where($where)->get();
+        $query = $this->db->where($where)->order_by('create_time','desc')->get();
         return $query->result_array();
     }
+
+    //根据日期返回核销信息
+    function get_search_after($id,$time,$endtime){
+        $where['shop_coupon_id']= $id;
+        $this->db->select('a.*,c.nickname');
+        $this->db->from('hf_shop_couponverify as a');
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $query = $this->db->where($where)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+
 
     //返回核销商家名称
     function get_store_name($id){
@@ -151,6 +162,20 @@ class Activity_model extends CI_Model
         $query = $this->db->where($where)->get('hf_shop_store');
         $res = $query->row_array();
         return $res['store_name'];
+    }
+
+    //返回核销数
+    function get_WriteNum($id){
+        $where['shop_coupon_id'] = $id;
+        $query = $this->db->where($where)->get('hf_shop_couponverify');
+        return $query->result_array();
+    }
+
+    //返回领取数
+    function get_ReceiveNum($id){
+        $where['store_coupon_id'] = $id;
+        $query = $this->db->where($where)->get('hf_user_coupon');
+        return $query->result_array();
     }
 
 

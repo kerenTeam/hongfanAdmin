@@ -15,6 +15,8 @@ class Default_Controller extends CI_Controller
         $this->load->helper('Default_helper');
 		$this->load->helper('Search_helper');
         //验证是否登陆
+        session_start();
+
 		if(!isset($_SESSION['users'])){
 			echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/Login/index')."';</script>";
 			exit;

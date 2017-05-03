@@ -37,8 +37,14 @@
                                 欢迎<?php echo $_SESSION['users']['username'];?>登录宏帆后台管理系统
                             </div>
                             <div class="achievement-subheading">
-                                您总共登录&nbsp;<b style="color: red;"><?php echo $loginNum;?></b>&nbsp;次，上次登录时间是：<?php echo $lastTime['create_time'];?><br/>
+                             <?php if(!empty($lastTime['create_time'])):?>
+                                您总共登录&nbsp;<b style="color: red;"><?php echo $loginNum;?>
+                                   
+                                </b>&nbsp;次，上次登录时间是：<?php echo $lastTime['create_time'];?><br/>
                             上次登录ip为：<?php echo $lastTime['userip'];?>&nbsp;&nbsp;&nbsp;&nbsp; 登录地址是：<?php echo $lastTime['login_address'];?>
+                        <?php else:?>
+                                这是你第一次登陆！
+                        <?php endif;?>
                             </div>  
                         
                         </div>

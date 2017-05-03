@@ -88,16 +88,24 @@ class Integral_model extends CI_Model
         $this->db->select('a.*,b.username,b.nickname');
         $this->db->from('hf_mall_order a');
         $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
-        $query = $this->db->where($where)->order_by('create_time','asc')->get();
+        $query = $this->db->where($where)->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
 
     //返回今天所有的订单
     function get_love_newOrder($date){
-            $where['order_type'] = '2';
-            $query = $this->db->where($where)->where('order_status','2')->like('create_time',$date,'both')->order_by('create_time','asc')->get($this->order);
+            $where['order_type'] = '0';
+            $query = $this->db->where($where)->where('order_status','2')->like('create_time',$date,'both')->order_by('create_time','desc')->get($this->order);
             return $query->result_array();
     }
+    //返回爱购所有已支付订单
+    function get_LoveOrder(){
+          $where['order_type'] = '0';
+            $query = $this->db->where($where)->where('order_status','2')->order_by('create_time','desc')->get($this->order);
+            return $query->result_array();
+    }
+
+
     //返回爱购订单详情
     function ret_loveOrder_info($id){
         $where['order_id'] = $id;

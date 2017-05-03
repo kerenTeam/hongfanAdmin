@@ -165,11 +165,17 @@ class Electronic extends Default_Controller {
     //核销列表
     function afterSales(){
         //查看核销情况列表
-          $id = intval($this->uri->segment('4'));
+        $id = intval($this->uri->segment('4'));
         if($id == 0){
             $this->load->view('404.html');
         }else{
-            $data['id'] = $id;
+         $data['id'] = $id;
+
+         //返回核销数
+         $data['he'] = $this->Activity_model->get_WriteNum($id);
+         //返回领取数
+          $data['lin'] = $this->Activity_model->get_ReceiveNum($id);
+
          $data['page']= $this->view_afterSales;
          $data['menu'] = array('marketActivity','electronicList');
          $this->load->view('template.html',$data);
@@ -189,6 +195,29 @@ class Electronic extends Default_Controller {
             }else{
                 echo "3";
             }
+        }else{
+            echo "2";
+        }
+    }
+
+    //根据日期返回核销记录
+    function search_after(){
+        if($_POST){
+            $start_time = $this->input->post('time');
+            $end_time = $this->input->post('endtime');
+            $id = $this->input->post('id');
+            $list = $this->Activity_model->get_search_after($id,$start_time,$end_time);
+            if(!empty($list)){
+                foreach($list as $key=>$val){
+                   $list[$key]['store_name'] = $this->Activity_model->get_store_name($val['store_id']);
+                }
+                echo json_encode($list);
+
+            }else{
+                echo "3";
+            }
+
+
         }else{
             echo "2";
         }

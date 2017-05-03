@@ -98,16 +98,16 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 <img class="tableImg" src="<?php echo $val['thumb'];?>">
                             </div>
                             <div class="am-u-sm-4">
-                               <p class="am-text-left"><?php echo $val['title'];?></p>
-                               <p class="am-text-left">
+                               <p><?php echo $val['title'];?></p>
+                               <p>
                                    <?php for($i =1;$i < 5;$i++){?>
                                     <?php if(!empty($val['stend'.$i])):?>
                                         <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
                                     <?php endif;?>
                                   <?php }?>
                                </p>
-                               <p class="am-text-left"><span>商品标签</span></p>
-                               <p class="am-text-left"><span><?php echo $goods['Params']['goodsData'][0]['stores']['store_name'];?></span></p>
+                               <p><span>商品标签</span></p>
+                               <p><span><?php echo $goods['Params']['goodsData'][0]['stores']['store_name'];?></span></p>
 
                             </div>
                             <div class="am-u-sm-4">

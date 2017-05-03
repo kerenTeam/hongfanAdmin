@@ -313,10 +313,10 @@ class LoveToGo extends Default_Controller
                     break;
                 //导出所有订单
                 case '2':
-                    $bookings = $this->Integral_model->get_love_order();  
+                    $bookings = $this->Integral_model->get_LoveOrder();  
                     break;
             }
-       //     var_dump($bookings);exit;
+            if(!empty($bookings)){
             if(count($bookings) > 0)
             {
                 foreach ($bookings as $booking) {
@@ -353,6 +353,7 @@ class LoveToGo extends Default_Controller
                    
                 }
             }
+
             //日志
             $log = array(
                 'userid'=>$_SESSION['users']['user_id'],  
@@ -364,13 +365,17 @@ class LoveToGo extends Default_Controller
 
 
             $filename = 'ImportOrder.xls'; //save our workbook as this file name
-
+           /// var_dump($filename);
             header('Content-Type: application/vnd.ms-excel'); //mime type
             header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
             header('Cache-Control: max-age=0'); //no cache
 
-            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-            $objWriter->save('php://output');
+             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+             $objWriter->save('php://output');
+             exit;
+            }else{
+                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/igo/LoveToGo/')."'</script>";
+            }
         }else{
             $this->load->view('404.html');
         }
@@ -453,6 +458,11 @@ class LoveToGo extends Default_Controller
                 $res = $query->result_array(); 
             }
             if(!empty($res)){
+                //获取用户信息
+            foreach($res as $key=>$val){
+                $res[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
+                $res[$key]['id_card'] = $this->Integral_model->ret_user_info($val['buyer']);
+            }
                 echo json_encode($res);
             }else{
                 echo "3";

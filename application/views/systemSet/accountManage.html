@@ -348,11 +348,12 @@ function getList(dataurl,data){
         data: data,
         success: function(result){    
             var res = eval(result);
-            // console.log(res);  
+            console.log(res);  
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/10); //得到总页数
                 for(var i = 0; i < res.length; i++){
+                    res[i].avatar = eval(res[i].avatar);
                     listData+= template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
@@ -409,7 +410,7 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= group_name%></td>
         <td class="am-text-middle">
             <%if(avatar) {%>
-            <img src="<%= avatar%>" class="am-img-responsive" alt=""/>
+            <img src="<%= avatar[0].picImg%>" class="am-img-responsive" alt=""/>
             <%}else {%>
             暂无
             <%}%>
@@ -486,7 +487,7 @@ $(document).ready(function(){
                                   <!-- 图片实时预览 -->
                                   <div id="preview" class="preview<%= user_id%>">
                                   <%if(avatar) {%>
-                                    <img src="<%= avatar%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
+                                    <img src="<%= avatar[0].picImg%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
                                   <%}else {%>
                                     <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
                                   <%}%></div> 

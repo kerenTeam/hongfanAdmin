@@ -63,36 +63,40 @@ class SingleShop extends Default_Controller {
         $id = intval($this->uri->segment(4));
         if($id == 0){
             //商家登录
-             $storeid = $this->MallShop_model->get_store_list($this->session->users['user_id']);
+             $storeid = $this->MallShop_model->get_store_list($_SESSION['users']['user_id']);
              if(!empty($storeid)){
-                $this->session->set_userdata('businessId',$storeid['store_id']);
-                $this->session->set_userdata('businesstype',$storeid['store_type']);
+                $_SESSION['businessId'] = $storeid['store_id'];
+                $_SESSION['businesstype'] = $storeid['store_type'];
+                //$_SESSION['set_userda']ta('businessId',$storeid['store_id']);
+                //$_SESSION['set_userda']ta('businesstype',$storeid['store_type']);
              }else{
                 redirect('admin/index');
              }
         }else{
              $storeid = $this->MallShop_model->get_basess_info($id);
-             $this->session->set_userdata('businessId',$id);
-             $this->session->set_userdata('businesstype',$storeid['store_type']);
+             //$_SESSION['set_userda']ta('businessId',$id);
+             //$_SESSION['set_userda']ta('businesstype',$storeid['store_type']);
+             $_SESSION['businessId'] = $id;
+             $_SESSION['businesstype'] = $storeid['store_type'];
 
         }
 
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
-       // var_dump($this->session->businessId);
+       // var_dump($_SESSION['businessId']);
         $data['page'] = $this->view_shopAdmin;
     	$this->load->view('template.html',$data);
     }
     //商家基础信息
     function shopBaseInfo(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
          if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //获取商家信息
-        $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+        $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
         //获取商家登录账户
         $data['user'] = $this->Shop_model->get_login_store($store['business_id']);
        
@@ -122,7 +126,7 @@ class SingleShop extends Default_Controller {
 
     //商家基础信息操作
     function edit_busin_info(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
@@ -142,7 +146,7 @@ class SingleShop extends Default_Controller {
                  echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
             }
             if(empty(json_decode($data['store_reduction']))){
-                $data['store_reduction'] = '';
+                $data['store_reduction'] = NULL;
             }
 
             $pic = array();
@@ -213,13 +217,12 @@ class SingleShop extends Default_Controller {
     }
     //  //商品列表
     function goodsList(){
-        $store_id = $this->session->businessId;
-        $store_type = $this->session->businesstype;
+        $store_id =$_SESSION['businessId'];
+        $store_type =$_SESSION['businesstype'];
            if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
         //分类
-        var_dump($store_type);
         if($store_type == '2'){
             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
         }else{
@@ -235,11 +238,11 @@ class SingleShop extends Default_Controller {
     function store_goods_list(){
         if($_POST){
            //获取商家信息
-           $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+           $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
            if($store['store_type'] == 1){
-               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'1');
+               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'1');
            }else{
-               $arr = $this->MallShop_model->get_goods_list($this->session->businessId,'4');
+               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'4');
            }
            if(empty($arr)){
                 echo "2";
@@ -278,8 +281,8 @@ class SingleShop extends Default_Controller {
     }
     //商品详情
     function goodsDetail(){
-        $store_id = $this->session->businessId;
-        $store_type = $this->session->businesstype;
+        $store_id =$_SESSION['businessId'];
+        $store_type =$_SESSION['businesstype'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
@@ -384,7 +387,7 @@ class SingleShop extends Default_Controller {
                 }
              }
             if(empty(json_decode($data['reduction_rule']))){
-                $data['reduction_rule'] = '';
+                $data['reduction_rule'] = NULL;
             }
 
              $data['update_time'] = date('Y-m-d H:i:s');
@@ -415,8 +418,8 @@ class SingleShop extends Default_Controller {
 
      //新增商品
     function goodsAdd(){
-        $store_id = $this->session->businessId;
-        $store_type = $this->session->businesstype;
+        $store_id =$_SESSION['businessId'];
+        $store_type =$_SESSION['businesstype'];
            if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
@@ -483,13 +486,13 @@ class SingleShop extends Default_Controller {
              }
 
             if(empty(json_decode($data['reduction_rule']))){
-                $data['reduction_rule'] = '';
+                $data['reduction_rule'] = NULL;
             }
    
              $data['good_pic'] = json_encode($pic);
-             $data['storeid'] = $this->session->businessId;
+             $data['storeid'] =$_SESSION['businessId'];
             
-            $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+            $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
             if($store['store_type'] == 1){
                 $data['differentiate'] = '1';
             }else{
@@ -521,7 +524,7 @@ class SingleShop extends Default_Controller {
 
     //
     function impolt_goods(){
-          $store_id = $this->session->businessId;
+          $store_id =$_SESSION['businessId'];
            if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
@@ -723,8 +726,8 @@ class SingleShop extends Default_Controller {
                 }else{
                     $goods[$currentRow]['good_pic'] = '';
                 }
-                $goods[$currentRow]['storeid'] = $this->session->businessId;
-                $store = $this->MallShop_model->get_basess_info($this->session->businessId);
+                $goods[$currentRow]['storeid'] =$_SESSION['businessId'];
+                $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
                 if($store['store_type'] == 1){
                      $goods[$currentRow]['differentiate'] = '1';
                 }else{
@@ -802,7 +805,7 @@ class SingleShop extends Default_Controller {
  
     //商品搜索
     function search_goods(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "2";exit;
         }
@@ -856,7 +859,7 @@ class SingleShop extends Default_Controller {
     //获取评论列表
     function comment_list(){
         if($_POST){
-            $storeid = $this->session->businessId;
+            $storeid =$_SESSION['businessId'];
             //所有评论
             $comment = $this->MallShop_model->get_store_comment($storeid);
             if(empty($comment)){
@@ -954,7 +957,7 @@ class SingleShop extends Default_Controller {
     //获取店铺优惠券
     function get_sales_list(){
         if($_POST){
-            $storeid = $this->session->businessId;
+            $storeid =$_SESSION['businessId'];
             $data = $this->MallShop_model->get_store_coupon($storeid);
             if(empty($data)){
                 echo "2";
@@ -980,7 +983,7 @@ class SingleShop extends Default_Controller {
                 }
             }
           
-            $data['storeid'] = $this->session->businessId;
+            $data['storeid'] =$_SESSION['businessId'];
             if($this->MallShop_model->add_coupon($data)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -1087,7 +1090,7 @@ class SingleShop extends Default_Controller {
      //商家活动 & 优惠 添加活动
     function shopAddActivity(){
         //获取所有优惠劵
-        $data['coupon'] = $this->MallShop_model->get_store_coupon($this->session->businessId);
+        $data['coupon'] = $this->MallShop_model->get_store_coupon($_SESSION['businessId']);
         $data['page'] = $this->view_shopAddActivity;
         $data['menu'] = array('activity','shopActivityList');
         $this->load->view('template.html',$data);
@@ -1123,7 +1126,7 @@ class SingleShop extends Default_Controller {
              }else{
                 $data['couponid'] = '';
              }
-            $data['storeid'] = $this->session->businessId;
+            $data['storeid'] =$_SESSION['businessId'];
             if($this->MallShop_model->add_activity($data)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -1148,7 +1151,7 @@ class SingleShop extends Default_Controller {
         }else{
             $info = $this->MallShop_model->get_activity_info($id);
             //获取所有优惠劵            
-            $coupon = $this->MallShop_model->get_store_coupon($this->session->businessId);
+            $coupon = $this->MallShop_model->get_store_coupon($_SESSION['businessId']);
             if(!empty($info['couponid'])){
                 $couponid = explode(',',$info['couponid']);
                 foreach ($coupon as $key => $value) {
@@ -1244,7 +1247,7 @@ class SingleShop extends Default_Controller {
     function activity_list(){
         if($_POST){
             //活动列表
-            $activity = $this->MallShop_model->get_activity_list($this->session->businessId);
+            $activity = $this->MallShop_model->get_activity_list($_SESSION['businessId']);
             if(empty($activity)){
                 echo "2";
             }else{
@@ -1264,12 +1267,12 @@ class SingleShop extends Default_Controller {
 
     //商家订单管理
     function shopOrder(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
 
-        $data['storeid'] = $this->session->businessId;
+        $data['storeid'] =$_SESSION['businessId'];
        
         $data['page'] = $this->view_shopOrder;
         $data['menu'] = array('shop','shopOrder');
@@ -1281,7 +1284,7 @@ class SingleShop extends Default_Controller {
         if($_POST){
             //获取卖家id
             $storeid = $_POST['storeid'];
-             $storetype = $this->session->businesstype;
+             $storetype =$_SESSION['businesstype'];
              if($storetype == 2){
                  $type = '4';
              }else{
@@ -1348,7 +1351,7 @@ class SingleShop extends Default_Controller {
     }
     //商家订单编辑
     function shopEditOrder(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }
@@ -1367,7 +1370,7 @@ class SingleShop extends Default_Controller {
     }
     //订单管理 详情
     function sureOrder(){
-        $store_id = $this->session->businessId;
+        $store_id =$_SESSION['businessId'];
         if(empty($store_id)){
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
         }

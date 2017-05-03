@@ -190,7 +190,7 @@
                     <ul>
                         <!-- 欢迎语 -->
                         <li class="am-text-sm tpl-header-navbar-welcome">
-                            <a href="javascript:;">欢迎你, <span><?php echo $this->session->users['username'];?></span> </a>
+                            <a href="javascript:;">欢迎你, <span><?php echo $_SESSION['users']['username'];?></span> </a>
                         </li>
                         
                         <li class="am-text-sm">
@@ -208,15 +208,11 @@
             <div class="tpl-sidebar-user-panel">
                 <div class="tpl-user-panel-slide-toggleable am-text-center">
                     <div class="tpl-user-panel-profile-picture">
-<!--                         <?php if(empty($this->session->users['avatar'])){ ?>
-                        <img class="am-text-center" src="assets/img/user04.png" alt="">
-                        <?php }else{ ?>
-                        <img class="am-text-center" src="<?php echo $this->session->users['avatar'];?>" alt="">
-                        <?php }?> -->
+
                     </div>
                     <span class="user-panel-logged-in-text">
               <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-              <?php echo $this->session->users['username'];?>
+             <?php echo $_SESSION['users']['username'];?>
                 </span>
                 </div>
             </div>

@@ -312,7 +312,7 @@ class Shop extends Default_Controller {
            $userid = $this->Shop_model->add_store_member($arr);
            if(!empty($userid)){
                 $data['business_id'] = $userid;
-                $data['send_userid'] = $this->session->users['user_id'];
+                $data['send_userid'] = $_SESSION['users']['user_id'];
                 $data['create_time'] = date('Y-m-d');
                 unset($data['password'],$data['username']);
 
@@ -385,7 +385,7 @@ class Shop extends Default_Controller {
            $userid = $this->Shop_model->add_store_member($arr);
            if(!empty($userid)){
                 $data['business_id'] = $userid;
-                $data['send_userid'] = $this->session->users['user_id'];
+                $data['send_userid'] = $_SESSION['users']['user_id'];
                 $data['create_time'] = date('Y-m-d');
                 unset($data['password'],$data['username']);
                 if($data['store_distinction'] == '2'){
@@ -657,7 +657,7 @@ class Shop extends Default_Controller {
                 // $type_tow_name = $PHPExcel->getActiveSheet()->getCell("L".$currentRow)->getValue();//获取d列的值 
                 $data['phone'] = trim($PHPExcel->getActiveSheet()->getCell("M".$currentRow)->getValue());//获取d列的值
                 $data['create_time'] = date('Y-m-d');
-                $data['send_userid'] = $this->session->users['user_id'];
+                $data['send_userid'] = $_SESSION['users']['user_id'];
                 if($data['barnd_name'] == NULL){
                      //删除临时文件
                     exit;

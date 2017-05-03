@@ -103,10 +103,10 @@ td.am-text-middle img{
                             </div>
                             <div class="am-g">
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2014-12-20</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
                               </div>
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-01-31</span>
                               </div>
                             </div>
                             <small class="red redtips">请先选择结束日期</small>
@@ -114,11 +114,13 @@ td.am-text-middle img{
                         
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
-                        <button type="submit" class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-search"></i> 查询</button>
+                        <button type="button" id="searchOrder" class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
                     <div class="widget-title  am-cf">电子券 核销列表</div>
+                    <div  class="widget-title">领取数：<?php echo count($lin);?></div>
+                    <div  class="widget-title">核销数：<?php echo count($he);?></div>
                 </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12"> 
@@ -180,7 +182,39 @@ td.am-text-middle img{
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
 <script type="text/javascript">
-var total_page = 0,pageflag = 1,current_page=0,$findSpecial = parseInt(sessionStorage.getItem('findSpecial')) || 0;
+$(function() {
+    var startDate = new Date(2014, 01, 01);
+    var endDate = new Date(2014, 01, 30);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+
+
+
+
+var total_page = 0,pageflag = 1,current_page=0,$afterSales = parseInt(sessionStorage.getItem('afterSales')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -190,8 +224,8 @@ function go_to_page(page_num){
     var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
-    sessionStorage.setItem('findSpecial', current_page);
-    $findSpecial = parseInt(sessionStorage.getItem('findSpecial'));
+    sessionStorage.setItem('afterSales', current_page);
+    $afterSales = parseInt(sessionStorage.getItem('afterSales'));
     
 }
 
@@ -239,7 +273,7 @@ function otherFunction() {
         var dataId = $(this).attr("data-id");
         $.ajax({ 
             type:'post',
-            url: "<?php echo site_url('/find/Find/del_findSpecial');?>",
+            url: "<?php echo site_url('/find/Find/del_afterSales');?>",
             data: 'id='+ dataId,
             success: function(result){    
                 console.log(result);     
@@ -248,7 +282,7 @@ function otherFunction() {
                     alert("删除成功！");
                     $('#de'+dataId).fadeOut();
                     $('.am-dimmer').removeClass('am-active');
-                    getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
+                    getList('<?php echo site_url('/find/Find/ret_afterSales_list');?>','type='+index);
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -271,7 +305,7 @@ function getList(dataurl,data){
             console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/8); //得到总页数
+                total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
                     res[i].qrcode = JSON.parse(res[i].qrcode);
                     listData += template('dataModal',res[i]);
@@ -280,9 +314,9 @@ function getList(dataurl,data){
                 $('.pagebox').css('display', 'block');
                 if(pageflag) {
                     var opts={};
-                    opts.current_page = $findSpecial;
+                    opts.current_page = $afterSales;
                     $("#Pagination").pagination(total_page, opts);
-                    go_to_page($findSpecial);
+                    go_to_page($afterSales);
                     pageflag = 0;
                 } else {
                     $("#Pagination").pagination(total_page);
@@ -310,7 +344,18 @@ function getList(dataurl,data){
 $(document).ready(function(){
 
     //加载列表数数据
+
     getList('<?php echo site_url('/electronic/Electronic/ret_after_list');?>','id='+<?php echo $id;?>);
+
+   
+     //点击搜索
+    $('#searchOrder').click(function(){
+        var  begin_date = $('#my-start').data('date'), end_date = $('#my-end').data('date');
+        console.log("time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>");
+
+        getList('<?php echo site_url('/electronic/Electronic/search_after');?>', "time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>" );
+        
+    });
 
 })
 </script>

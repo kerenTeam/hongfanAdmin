@@ -265,7 +265,7 @@ class Store extends Default_Controller {
                 }
              }
             if(empty(json_decode($data['reduction_rule']))){
-                $data['reduction_rule'] = '';
+                $data['reduction_rule'] = NULL;
             }
 
              $data['update_time'] = date('Y-m-d H:i:s');

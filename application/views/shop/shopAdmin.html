@@ -28,17 +28,17 @@
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 widget-margin-bottom-lg ">
                         <div class="tpl-user-card am-text-center widget-body-lg">
                             <div class="tpl-user-card-title">
-                                <?php echo $this->session->users['username'];?>
+                                <?php echo $_SESSION['users']['username'];?>
                             </div>
                          <!--    <div class="achievement-subheading">
                                 普通管理员
                             </div> -->
                             
                   
-                        <!--        <?php if(empty($this->session->users['avatar'])){ ?>
+                        <!--        <?php if(empty($_SESSION['users']['avatar'])){ ?>
                         <img class="achievement-image" src="assets/img/user04.png" alt="">
                         <?php }else{ ?>
-                        <img class="achievement-image" src="<?php echo $this->session->users['avatar'];?>" alt="">
+                        <img class="achievement-image" src="<?php echo $_SESSION['users']['avatar'];?>" alt="">
                         <?php }?> -->
                         </div>
                     </div>

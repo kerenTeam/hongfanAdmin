@@ -84,17 +84,6 @@ td.am-text-middle img {
                             </select>
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">商家:</label>
-                        <div class="am-u-sm-9 am-u-end">
-                            <select id="seller" name="seller">
-                                <option value="">-=请选择一项=-</option>
-                                <?php foreach($store as $val): ?>
-                                <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                    </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">买家:</label>
                         <div class="am-u-sm-9 am-u-end">
@@ -109,10 +98,10 @@ td.am-text-middle img {
                             </div>
                             <div class="am-g">
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2014-12-20</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
                               </div>
                               <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2014-12-25</span>
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-01-31</span>
                               </div>
                               <small class="red redtips">请先选择结束日期</small>
                             </div>
@@ -197,7 +186,7 @@ td.am-text-middle img {
                     导出今日已支付订单
                 </div>
                 <div class="am-u-sm-6 am-text-center">
-                    <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有订单
+                    <input type="radio" class="am-inline exportRadio" name='exportRadio' value="2" onchange="changeFunction(this)">导出所有已支付订单
                 </div>
             </div>
         </div>
@@ -369,7 +358,7 @@ function next(argu){
                     res[i].goods_data = JSON.parse(res[i].goods_data);
                     listData+= template('dataModal',res[i]);
                 } 
-                console.log(res);
+              //  console.log(res);
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
@@ -406,7 +395,11 @@ $(document).ready(function(){
     //加载列表数数据
     if($isloveToGoOrderList) {
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+<<<<<<< HEAD
         getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
+=======
+        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer +"&start_time="+ begin_date + '&end_time=' + end_date);
+>>>>>>> c148125f129bb0b9bb9304a11b9bf55617684295
         sessionStorage.setItem('isloveToGoOrderList', 1);
     } else {
        getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1'); 
@@ -415,8 +408,13 @@ $(document).ready(function(){
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+<<<<<<< HEAD
         getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
 
+=======
+      //  console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
+        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
+>>>>>>> c148125f129bb0b9bb9304a11b9bf55617684295
         sessionStorage.setItem('isloveToGoOrderList', 1);
         
     });
@@ -428,12 +426,18 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= goods_data.goods_Data
 [0].id %></td>
         <td class="am-text-middle">
-            <%= nickname %>
+        <%if(username) {%>
+        <%= username %>
+        <%} else {%>
+        <%= nickname%>
+        <%}%>
         </td>
         <td class="am-text-middle"><%= id_card %></td>
         <td class="am-text-middle"><%= adddress.address %></td>
-        
-        <%if(order_status==1) {%>
+        <td class="am-text-middle"><%= adddress.phone %></td>
+        <td class="am-text-middle"><%= amount %></td>
+        <td class="am-text-middle"><%= create_time %></td>
+        <%if(order_status == 1) {%>
             <td class="am-text-middle red">
                 未支付
             </td>
@@ -511,7 +515,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf kuaidiNum" >
                         <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                         <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id%>' class="send_no" name='send_no' required>
+                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id %>' class="send_no" name='send_no' required>
                         </div>
                     </div>
                     <div class="am-form-group am-btn-group-xs">

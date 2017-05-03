@@ -291,7 +291,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('order_type',$type)->get();
+        $query = $this->db->where('order_type',$type)->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
 

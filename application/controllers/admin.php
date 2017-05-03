@@ -14,6 +14,7 @@ class Admin extends Default_Controller
 	}
 
 	function index(){
+
             if(isset($_SESSION['businessId'])){
                 if($_SESSION['users']['user_id'] != $_SESSION['businessId']){
                    unset($_SESSION['businessId']);

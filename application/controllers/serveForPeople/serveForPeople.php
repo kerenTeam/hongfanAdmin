@@ -226,7 +226,7 @@ class ServeForPeople extends Default_Controller
             $data['address'] = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取c列的值
             $data['info'] = $PHPExcel->getActiveSheet()->getCell("K".$currentRow)->getValue();//获取c列的值
             $data['competency'] = json_encode(explode('&',$com),JSON_UNESCAPED_UNICODE);
-            $data['import_userid'] = $this->session->users['user_id'];
+            $data['import_userid'] = $_SESSION['users']['user_id'];
             $data['profession_type'] = '1';
 
                //缩略图
@@ -328,11 +328,11 @@ class ServeForPeople extends Default_Controller
             }
             $data['reply_content'] = $content;
             $data['state'] = '1';
-            $data['reply_userid'] = $this->session->users['user_id'];
+            $data['reply_userid'] = $_SESSION['users']['user_id'];
             $data['reply_time'] = date('Y-m-d H:i:s');
             $arr['userid'] = $userid;
             $arr['content'] = $content;
-            $arr['sender'] = $this->session->users['user_id'];
+            $arr['sender'] = $_SESSION['users']['user_id'];
             if($this->Service_model->edit_help_request($id,$data)){
                 if($this->Service_model->add_user_message($arr)){
                          //日志
@@ -509,6 +509,7 @@ class ServeForPeople extends Default_Controller
             $i = 1;
             //查询数据库得到要导出的内容
             $bookings = $this->Service_model->get_requert($type);
+            if(!empty($bookings)){
             if(count($bookings) > 0)
             {
                 foreach ($bookings as $booking) {
@@ -551,6 +552,9 @@ class ServeForPeople extends Default_Controller
 
             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
             $objWriter->save('php://output');
+            }else{
+                echo "<script>alert('暂无服务请求！');window.location.href='".site_url('serveForPeople/ServeForPeople/helpgroupservelist')."'</script>";
+            }
         }else{
             $this->load->view('404.html');
         }
