@@ -1345,7 +1345,7 @@ class SingleShop extends Default_Controller {
             if($this->MallShop_model->edit_order_state($data['order_id'],$arr)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['orderr_id'],
+                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['order_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
@@ -1377,7 +1377,7 @@ class SingleShop extends Default_Controller {
              if($this->MallShop_model->edit_order_state($data['order_id'],$arr)){
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['orderr_id'],
+                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['order_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
