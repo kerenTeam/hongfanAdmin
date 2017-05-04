@@ -334,19 +334,13 @@ td div.am-u-sm-12 {
             var isAgreeReturn = $('#isAgreeReturn'+dataId).val();
             var refund_reason_return = $('#refund_reason_return'+dataId).val() || '';
             console.log('isAgreeReturn='+ isAgreeReturn +'&refund_reason_return='+ refund_reason_return);
-            // if(isAgree == 0 && refund_reason){
+            // if(isAgreeReturn == 1 && refund_reason_return){
             //     $.ajax({
             //         type:'post',
-            //         url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
-            //         data: 'isAgree='+isAgree+'&refund_reason='+ refund_reason,
+            //         url:'<?php echo site_url('/shop/singleShop/refund/');?>',
+            //         data: 'isAgree='+isAgreeReturn+'&refund_reason='+ refund_reason_return,
             //         success: function(data){
-            //             if(data==1){ 
-            //                 getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
-            //                 alert("操作成功！");
-
-            //             }else{
-            //                 alert("操作失败！");
-            //             }
+            //           console.log(data)
             //         },
             //         error:function(xhr,type,errorThrown){
             //             alert("操作失败，请检查网络设置！");
@@ -367,16 +361,10 @@ td div.am-u-sm-12 {
             if(isAgree == 0 && refund_reason){
                 $.ajax({
                     type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
+                    url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
                     data: 'isAgree='+isAgree+'&refund_reason='+ refund_reason,
                     success: function(data){
-                        if(data==1){ 
-                            getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
-                            alert("操作成功！");
-
-                        }else{
-                            alert("操作失败！");
-                        }
+                        console.log(data)
                     },
                     error:function(xhr,type,errorThrown){
                         alert("操作失败，请检查网络设置！");

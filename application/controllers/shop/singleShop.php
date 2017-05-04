@@ -1325,6 +1325,75 @@ class SingleShop extends Default_Controller {
             echo "2";
         }
     }
+
+    //同意仅退款订单并通知管理员
+    function order_refund(){
+        if($_POST){
+            $data = $this->input->post();
+            
+            if($data['isAgree'] == 1){
+                $arr['admin_orderState'] = '1';
+            }else{
+                $order = $this->MallShop_model->get_order_info($data['order_id']);
+                $arr['refuse_refund'] = $data['refund_reason'];
+                if(!empty($order['shipper_code'])){
+                    $arr['order_status'] = '3';
+                }else{
+                     $arr['order_status'] = '2';
+                }
+            }
+            if($this->MallShop_model->edit_order_state($data['order_id'],$arr)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['orderr_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+        }else{  
+            echo "2";
+        }
+    }
+
+    //商家同意退货退款订单
+    function order_refund_goods(){
+        if($_POST){
+            $data = $this->input->post();
+            $order = $this->MallShop_model->get_order_info($data['order_id']);
+            if($data['isAgree'] == 1){
+                $arr['order_status'] = '7';
+            }else{
+                $arr['refuse_refund'] = $data['refund_reason'];
+                if(!empty($order['shipper_code'])){
+                    $arr['order_status'] = '3';
+                }else{
+                     $arr['order_status'] = '2';
+                }
+            }
+             if($this->MallShop_model->edit_order_state($data['order_id'],$arr)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个退款订单状态,订单id是：".$data['orderr_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+
+
+
     //提交物流信息
     function send_express(){
         if($_POST){

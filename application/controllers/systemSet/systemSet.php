@@ -251,7 +251,7 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/index/')."'</script>";
                     exit;
                 } else{
-                    $pic['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
+                    $pic[]['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
                     $data['avatar'] = json_encode($pic);
                 }
             }
