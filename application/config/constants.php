@@ -86,8 +86,8 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 
 //爱购保稅 AppKey 和 AppSecret
-defined('IGOAPPKEY')           OR define('IGOAPPKEY', '6458153266');//爱购AppKey
-defined('IGOAPPSECRET')           OR define('IGOAPPSECRET', '2a1cc0c25a60e8c394e5a822936df862');//爱购AppSecret
+defined('IGOAPPKEY')           OR define('IGOAPPKEY', '2184365138');//爱购AppKey
+defined('IGOAPPSECRET')           OR define('IGOAPPSECRET', '47accd33cafb73548e135bb3bec6c290');//爱购AppSecret
 defined('IGOLISTAPIURL')           OR define('IGOLISTAPIURL', 'http://api.igetmall.net/DRP_getProList');//爱购商品列表api
 defined('IGOINFOAPIURL')           OR define('IGOINFOAPIURL', 'http://api.igetmall.net/DRP_getProDetail'); //爱购商品详情api
 defined('IGOCATEAPIURL')           OR define('IGOCATEAPIURL', 'http://api.igetmall.net/DRP_getCategory'); //爱购商品详情api

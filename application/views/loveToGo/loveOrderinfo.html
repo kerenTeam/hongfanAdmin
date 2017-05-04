@@ -97,18 +97,14 @@ label.am-u-sm-8, label.am-u-sm-4{
                  
                             <div class="am-u-sm-4">
                                <p><?php echo $val['title'];?></p>
-                               <p>
-                                   <?php for($i =1;$i < 5;$i++){?>
-                                    <?php if(!empty($val['stend'.$i])):?>
-                                        <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
-                                    <?php endif;?>
-                                  <?php }?>
-                               </p>
+                               <p>单价：<?php @$tax_rate = $val['tax_rate']/100 +1; echo $val['price'] / $tax_rate;?> </p>
+                               <p>税费：<?php echo $val['price'] - $val['price'] / @$tax_rate;?> </p>
                       
                             </div>
                             <div class="am-u-sm-4">
-                                <p>￥<?php echo $val['price']+$val['Floating_price'];?></p>
-                                <p>x<?php echo $val['nums'];?></p>
+                                <p>总价：￥<?php echo $val['price'];?></p> 
+                                <p>数量：x<?php echo $val['nums'];?></p>
+                                <p>运费：￥<?php echo $goods['postAge'];?></p>
                             </div>
                         </div>
                         <?php endforeach;?>
@@ -117,14 +113,11 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="am-u-sm-4">
                                 买家：<?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
                             </div>
-                            <?php if(!empty($order['fee_name'])):?>
+                             <?php $pay = json_decode($order['PriceCalculation'],true);?>
                             <div class="am-u-sm-4">
-                                改价原因：<?php echo $order['fee_name'];?>
-                            </div>    
-                            <div class="am-u-sm-4">        
-                                改价金额：<?php echo $order['fee'];?>  
+                                支付方式：<?php echo $pay['Params']['postData']['payType']?>
                             </div>
-                            <?php endif;?>
+                          
                             <div class="am-u-sm-4">
                                 支付金额：<?php echo $order['amount']+$order['fee'];?>
                             </div>
