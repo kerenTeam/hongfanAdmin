@@ -213,11 +213,9 @@ class LoveToGo extends Default_Controller
             $this->load->view('404.html');
         }else{
             $order = $this->Integral_model->ret_loveOrder_info($id);
-             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
-             $data['id_card'] = $this->Integral_model->ret_user_info($order['buyer']);
-
-             $data['order'] = $order;
-
+            $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+            $data['id_card'] = $this->Integral_model->ret_user_info($order['buyer']);
+            $data['order'] = $order;
             $data['page'] = $this->view_loveOrderinfo;
             $data['menu'] = array('loveToGo','loveToGoOrderList');
             $this->load->view('template.html',$data);
