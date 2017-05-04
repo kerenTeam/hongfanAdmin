@@ -208,8 +208,8 @@ function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
     $('.page_link').eq(page_num).addClass('active_page');
     $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(10)*parseInt(page_num);
-    var end_page=parseInt(10)*parseInt(page_num+1);
+    var start_page=parseInt(15)*parseInt(page_num);
+    var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
     sessionStorage.setItem('accountManage', current_page);
@@ -248,7 +248,7 @@ function someOptions() {
         $('.editAccount').eq(i).attr("data-am-modal","{target: '#ed"+ edDataId +"'}");                        
     }
     //账号类型管理
-    var name=$('.account_type_name'),jsondata={};
+    var type_name = $('.account_type_name'),jsondata={};
     //获取管理员类型下拉菜单并默认选中
     $.ajax({
         type:'post',
@@ -261,12 +261,13 @@ function someOptions() {
                 for(var i=0;i<jsonData.length;i++){
                     str+='<option class="option" value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>';                           
                 } 
-                for(var i=0;i<name.length;i++){
-                   var typeid=name.eq(i).attr('data-id');
-                   $('#usertype'+typeid).append(str);
+                for(var i = 0;i < type_name.length;i++){
+                   var typeid = type_name.eq(i).attr('data-id'), userid = type_name.eq(i).attr('datatag');
+                   // console.log($('#usertype'+ typeid));
+                   $('#usertype'+ userid).append(str);
                    var ddd=$('#usertype'+typeid).find('option');
                    for(var j=1;j<ddd.length;j++){
-                       if(ddd.eq(j).val()==typeid){
+                       if(ddd.eq(j).val() == typeid){
                           ddd.eq(j).attr('selected',true);
                        }
                    }
@@ -352,18 +353,20 @@ function getList(dataurl,data){
             console.log(res);  
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/10); //得到总页数
+                total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
-                    res[i].avatar = eval(res[i].avatar);
+                    res[i].avatar = JSON.parse(res[i].avatar);
                     listData+= template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($accountManage);
+                if(pageflag) {    
                     var opts={};opts.current_page = $accountManage;
                     $("#Pagination").pagination(total_page, opts);
+                    if($accountManage) {
+                       go_to_page($accountManage); 
+                    }
                     pageflag = 0;
                 } else {
                     $("#Pagination").pagination(total_page);
@@ -474,7 +477,7 @@ $(document).ready(function(){
                     <div class="am-form-group am-cf">
                         <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
                         <div class="am-u-sm-8">
-                            <select name="account_type_name<%= user_id%>" onblur="validate(this,1,15,8)" class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= gid%>" data-id="<%= gid%>" >
+                            <select name="account_type_name<%= user_id%>"  class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= user_id %>" data-id="<%= gid %>" datatag="<%= user_id %>" >
                             </select>
                         </div>
                         <small class="am-u-sm-1 am-u-end red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
