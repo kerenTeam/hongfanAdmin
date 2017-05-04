@@ -84,6 +84,7 @@ td.am-text-middle img {
                             </select>
                         </div>
                     </div>
+                 
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">买家:</label>
                         <div class="am-u-sm-9 am-u-end">
@@ -395,11 +396,7 @@ $(document).ready(function(){
     //加载列表数数据
     if($isloveToGoOrderList) {
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
-<<<<<<< HEAD
-        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
-=======
         getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer +"&start_time="+ begin_date + '&end_time=' + end_date);
->>>>>>> c148125f129bb0b9bb9304a11b9bf55617684295
         sessionStorage.setItem('isloveToGoOrderList', 1);
     } else {
        getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1'); 
@@ -408,13 +405,8 @@ $(document).ready(function(){
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
-<<<<<<< HEAD
-        getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
-
-=======
       //  console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
         getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
->>>>>>> c148125f129bb0b9bb9304a11b9bf55617684295
         sessionStorage.setItem('isloveToGoOrderList', 1);
         
     });
