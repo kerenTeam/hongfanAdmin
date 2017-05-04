@@ -324,8 +324,10 @@ td div.am-u-sm-12 {
         $('.isAgreeReturn').change(function () {
             if($(this).val() == "0") {
                 $('.refuseReturnInput').css('display', 'block');
+                $('.receiveAddress').css('display', 'none');
             } else {
                 $('.refuseReturnInput').css('display', 'none');
+                $('.receiveAddress').css('display', 'block');
             }
         });
         //确认退货
@@ -333,15 +335,20 @@ td div.am-u-sm-12 {
             var dataId = $(this).attr('data-id');
             var isAgreeReturn = $('#isAgreeReturn'+dataId).val();
             var refund_reason_return = $('#refund_reason_return'+dataId).val() || '';
-            console.log('order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return);
+            var return_address = $('#backAddress'+dataId).val() || '';
+            console.log('order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return + '&return_address='+ return_address);
             if(isAgreeReturn == 0 && !refund_reason_return){
+                alert("请正确填写发货信息！");
+                return false;          
+            }
+            if(isAgreeReturn == 1 && !return_address){
                 alert("请正确填写发货信息！");
                 return false;          
             }
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/shop/SingleShop/order_refund_goods');?>',
-                data: 'order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return,
+                data: 'order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return + '&return_address='+ return_address,
                 success: function(data){
                   if(data == 1) {
                     getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
@@ -675,7 +682,7 @@ $(document).ready(function(){
                         <div class="am-modal-bd">
                             <form class="am-form tpl-form-line-form">
                                 <div class="am-form-group am-cf">
-                                    <label class="am-u-sm-3 am-form-label">退货类型：</label>
+                                    <label class="am-u-sm-3 am-form-label">退款类型：</label>
                                     <div class="am-u-sm-9 am-text-left">
                                         退货退款
                                     </div>
@@ -692,7 +699,7 @@ $(document).ready(function(){
                                     </div>
                                 </div>
                                 <div class="am-form-group am-cf">
-                                    <label class="am-u-sm-3 am-form-label">是否同意：</label>
+                                    <label class="am-u-sm-3 am-form-label">是否同意<span class="red">*</span>：</label>
                                     <div class="am-u-sm-9">
                                         <select class="am-input isAgreeReturn" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="isAgreeReturn" id="isAgreeReturn<%= order_id%>">
                                             <option value="">输入查找/选择</option>
@@ -702,8 +709,16 @@ $(document).ready(function(){
                                         </select>
                                     </div>
                                 </div>
+                                <div class="am-form-group am-cf receiveAddress">
+                                   <label for="user-email" class="am-u-sm-3 am-form-label">退货地址<span class="red">*</span>：</label>
+                                   <div class="am-u-sm-9">
+                                      <textarea class="am-form-field" rows="3" id="backAddress<%= return_address %>">
+                                          <%= return_address %>
+                                      </textarea>
+                                   </div>
+                                </div> 
                                 <div class="am-form-group am-cf refuseReturnInput">
-                                   <label for="user-email" class="am-u-sm-3 am-form-label">拒绝理由：</label>
+                                   <label for="user-email" class="am-u-sm-3 am-form-label">拒绝理由<span class="red">*</span>：</label>
                                    <div class="am-u-sm-9">
                                       <input type="text" placeholder="请输入拒绝理由！" class="refund_reason_return" name='refund_reason' id="refund_reason_return<%= order_id%>" required />
                                    </div>
