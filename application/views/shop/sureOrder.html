@@ -123,13 +123,11 @@ label.am-u-sm-8, label.am-u-sm-4{
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
                            
-                              <?php for($i =1;$i < 5;$i++){?>
-                                <?php if(!empty($val['stend'.$i])):?>
-                                 <label class="am-u-sm-4 am-text-left am-u-end">
-                                    <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
-                                </label>
-                                <?php endif;?>
-                              <?php }?>
+                          <?php for($i =1;$i < 5;$i++){?>
+                            <?php if(!empty($val['stend'.$i])):?>
+                                <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
+                            <?php endif;?>
+                          <?php }?>
                            
                         </div>
                        <?php endforeach;?>
