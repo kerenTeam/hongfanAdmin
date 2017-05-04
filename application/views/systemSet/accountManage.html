@@ -265,7 +265,7 @@ function someOptions() {
                    var typeid = type_name.eq(i).attr('data-id'), userid = type_name.eq(i).attr('datatag');
                    // console.log($('#usertype'+ typeid));
                    $('#usertype'+ userid).append(str);
-                   var ddd=$('#usertype'+typeid).find('option');
+                   var ddd=$('#usertype'+userid).find('option');
                    for(var j=1;j<ddd.length;j++){
                        if(ddd.eq(j).val() == typeid){
                           ddd.eq(j).attr('selected',true);
