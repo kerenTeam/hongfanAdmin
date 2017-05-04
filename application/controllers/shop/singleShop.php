@@ -1449,10 +1449,11 @@ class SingleShop extends Default_Controller {
             $this->load->view('404.html');
         }else{
             $order = $this->MallShop_model->get_order_info($id);
-            //收货地址
-          
             //获取收货地址
             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+            //后去运费模板
+            $express = json_decode($order['userPostData'],true);
+            $data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
             $data['order'] = $order;
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');

@@ -434,6 +434,14 @@ class MallShop_model extends CI_Model
         return $query->row_array();
     }
 
+    //返回运费模板
+    function ret_store_express($id){
+        $where['express_id'] = $id;
+        $query = $this->db->where($where)->get('hf_mall_goods_express');
+        return $query->row_array();
+    }   
+
+
 }
 
 
