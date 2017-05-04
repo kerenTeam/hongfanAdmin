@@ -1366,6 +1366,7 @@ class SingleShop extends Default_Controller {
             $order = $this->MallShop_model->get_order_info($data['order_id']);
             if($data['isAgree'] == 1){
                 $arr['order_status'] = '7';
+                $arr['return_address'] = $data['return_address'];
             }else{
                 $arr['refuse_refund'] = $data['refund_reason'];
                 if(!empty($order['shipper_code'])){
