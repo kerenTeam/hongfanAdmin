@@ -333,47 +333,72 @@ td div.am-u-sm-12 {
             var dataId = $(this).attr('data-id');
             var isAgreeReturn = $('#isAgreeReturn'+dataId).val();
             var refund_reason_return = $('#refund_reason_return'+dataId).val() || '';
-            console.log('isAgreeReturn='+ isAgreeReturn +'&refund_reason_return='+ refund_reason_return);
-            // if(isAgreeReturn == 1 && refund_reason_return){
-            //     $.ajax({
-            //         type:'post',
-            //         url:'<?php echo site_url('/shop/singleShop/refund/');?>',
-            //         data: 'isAgree='+isAgreeReturn+'&refund_reason='+ refund_reason_return,
-            //         success: function(data){
-            //           console.log(data)
-            //         },
-            //         error:function(xhr,type,errorThrown){
-            //             alert("操作失败，请检查网络设置！");
-            //         }
-            //     });               
-            // } else {
-            //     alert("请正确填写发货信息！");
-            //     return false;
-            // }
+            console.log('order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return);
+            if(isAgreeReturn == 0 && !refund_reason_return){
+                alert("请正确填写发货信息！");
+                return false;          
+            }
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/SingleShop/order_refund_goods');?>',
+                data: 'order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return,
+                success: function(data){
+                  if(data == 1) {
+                    getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
+                  }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });     
             $('#agreeSales'+ dataId).modal('close');
+            return true;
+        });
+        //货已收到
+        $('.confirmGot').click(function(){
+            var dataId = $(this).attr('data-id');
+            var isAgreeReturn = 1;
+            var refund_reason_return = '';
+            console.log('order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return);
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
+                data: 'order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return,
+                success: function(data){
+                  if(data == 1) {
+                    getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
+                  }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });     
+            $('#agreeSales'+ dataId).modal('close');
+            return true;
         });
         //确认退款
         $('.sureAgree').click(function(){
             var dataId = $(this).attr('data-id');
             var isAgree = $('#isAgree'+dataId).val();
             var refund_reason = $('#refund_reason'+dataId).val() || '';
-            console.log('isAgree='+isAgree+'&refund_reason='+ refund_reason);
-            if(isAgree == 0 && refund_reason){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
-                    data: 'isAgree='+isAgree+'&refund_reason='+ refund_reason,
-                    success: function(data){
-                        console.log(data)
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });               
-            } else {
-                alert("请正确填写发货信息！");
-                return false;
+            console.log('order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason);
+            if(isAgree == 0 && !refund_reason){
+               alert("请正确填写发货信息！");
+                return false;             
             }
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
+                data: 'order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason,
+                success: function(data){
+                    if(data == 1) {
+                        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);
+                      }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });   
             $('#agree'+ dataId).modal('close');
         });
         //确认发货的AJAX请求
@@ -694,8 +719,8 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                等待退货物流
-                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>货已收到</a>
+                <p>等待退货物流</p>
+                
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
@@ -706,6 +731,7 @@ $(document).ready(function(){
                 其他
             </td>
         <%}else if(order_status==10 && admin_orderState == 0){%>
+           <%if(order_status==10 && !saleReturn_num){%>
             <td class="am-text-middle">
                 <p>仅申请退款</p>
                 <a data-id="<%= order_id%>" class="agreeRefund"><i class="am-icon-check"></i>同意并通知管理员</a>
@@ -756,7 +782,14 @@ $(document).ready(function(){
                         </div>
                     </div>
                 </div>
+
             </td>
+             <%}else{%>
+                <td>   
+                     <p>退货物流已提交</p>
+                     <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>货已收到</a>
+                </td>
+             <%}%>
         <%} else if(order_status==10 && admin_orderState == 1) { %>
              <td class="am-text-middle">
                等待管理员退款
