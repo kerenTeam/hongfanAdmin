@@ -197,7 +197,7 @@ label {
         <div class="am-modal-hd">批量分类</div>
         <div class="am-modal-bd" >
             <form class="am-form tpl-form-line-form"  data-am-validator method="post" enctype='multipart/form-data' >
-                <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" style="height: 150px;">
                     <label class="am-u-sm-3 am-text-right">帖子分类<span class="red">*</span>：</label>
                     <div class="am-u-sm-8 am-u-end">
                         <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
@@ -209,11 +209,11 @@ label {
                         </select>
                     </div>
                 </div>
-                <div class="am-form-group am-cf am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                    <button type="button" class="am-btn am-btn-secondary sortAll" data-am-modal-confirm>保存</button>
-                </div>
-            </form>      
+            </form>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sortAll"  data-am-modal-confirm>保存</span>
+            </div>      
         </div>
         
     </div>
@@ -374,24 +374,24 @@ function otherFunction() {
             array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
         }
         array=JSON.stringify(array);
-        console.log(array);
-        // $.ajax({
-        //     type:'post',
-        //     url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
-        //     data: 'id='+array,
-        //     success: function(data){
-        //         if(data==1){
-        //             alert('操作成功！'); 
-        //             getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
-        //         }else{
-        //             alert("操作失败！");
-        //         }
+        // console.log(array);
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/find/Find/del_service_find');?>',
+            data: 'ids='+array,
+            success: function(data){
+                if(data==1){
+                    alert('操作成功！'); 
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                }else{
+                    alert("操作失败！");
+                }
                 
-        //     },
-        //     error:function(xhr,type,errorThrown){
-        //         alert("操作失败，请检查网络设置！");
-        //     }
-        // });
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
         
     });
     //批量分类
@@ -402,24 +402,24 @@ function otherFunction() {
             array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
         }
         array=JSON.stringify(array);
-        console.log(array + tagName);
-        // $.ajax({
-        //     type:'post',
-        //     url:'<?php echo site_url('/serveForPeople/serveForPeople/del_help_request');?>',
-        //     data: 'id='+array,
-        //     success: function(data){
-        //         if(data==1){
-        //             alert('操作成功！'); 
-        //             getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
-        //         }else{
-        //             alert("操作失败！");
-        //         }
+        // console.log(array + tagName);
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/find/Find/find_service_cate');?>',
+            data: 'ids='+array+'&cate_id='+ tagName,
+            success: function(data){
+                if(data==1){
+                    alert('操作成功！'); 
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                }else{
+                    alert("操作失败！");
+                }
                 
-        //     },
-        //     error:function(xhr,type,errorThrown){
-        //         alert("操作失败，请检查网络设置！");
-        //     }
-        // });
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
         
     });
     //设置首页推荐

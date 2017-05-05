@@ -241,7 +241,7 @@ class Find extends Default_Controller {
         if($_POST){
             $id = $this->input->post('ids');
             $data['categoryid'] = $this->input->post('cate_id');
-            $arr = json_encode($id,true);
+            $arr = json_decode($id,true);
             foreach($arr as $v){
                 $ls = $this->Find_model->edit_find_service($v,$data);
             }
@@ -374,7 +374,8 @@ class Find extends Default_Controller {
     function del_service_find(){
         if($_POST){
             $id = $this->input->post('ids');
-            $arr = json_encode($id,true);
+            $arr = json_decode($id,true);
+           // var_dump($arr);exit;
             foreach($arr as $v){
                 //删除所有已有的标签
                 $this->Find_model->del_news_tags($v);
