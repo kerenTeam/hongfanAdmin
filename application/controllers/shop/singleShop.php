@@ -1454,6 +1454,8 @@ class SingleShop extends Default_Controller {
             //后去运费模板
             $express = json_decode($order['userPostData'],true);
             $data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
+
+            
             $data['order'] = $order;
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');
