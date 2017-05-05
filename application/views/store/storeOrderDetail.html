@@ -202,25 +202,15 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 快递单号：<?php echo $order['logistic_code'];?>
                             </div>
                             <?php endif;?>
-                            
-
-
                         </div>
 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                            <?php if($order['order_status'] == 6):?>
-                             
-                                <a href="javascript:void(0)" data-id="<?php echo $order['order_id']?>" class="alink am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">同意退货 </a>
-                             
-                            <?php elseif($order['order_status'] == 7):?>
-                                <a href="javascript:void(0)" data-id="<?php echo $order['order_id']?>" class="confirm am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确认货物完好并退款 </a>
-                            <?php else:?>
+               
                                 <?php if($order['order_type'] == 4):?>
                                 <a href="<?php echo site_url('/store/Store/storeOrderList');?>" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">返回订单列表</a>
                                 <?php else:?>
                                 <a href="<?php echo site_url('/store/Store/mollOrder');?>" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">返回订单列表</a>
                                 <?php endif;?>
-                            <?php endif;?>
                         </div>
                 </div>
             </div>

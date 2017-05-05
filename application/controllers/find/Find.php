@@ -236,6 +236,36 @@ class Find extends Default_Controller {
         }
     }
 
+    //批量给帖子设置分类
+    function find_service_cate(){
+        if($_POST){
+            $id = $this->input->post('ids');
+            $data['categoryid'] = $this->input->post('cate_id');
+            $arr = json_encode($id,true);
+            foreach($arr as $v){
+                $ls = $this->Find_model->edit_find_service($v,$data);
+            }
+            if($ls){
+                   // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."批量给帖子设置了分类，帖子id是".implode(',',$arr).',分类id是:'.$data['categoryid'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+
+
+
 
     //编辑帖子界面
     function editFindService(){
@@ -339,6 +369,38 @@ class Find extends Default_Controller {
             echo "2";
         }
     }
+
+    //批量删除帖子
+    function del_service_find(){
+        if($_POST){
+            $id = $this->input->post('ids');
+            $arr = json_encode($id,true);
+            foreach($arr as $v){
+                //删除所有已有的标签
+                $this->Find_model->del_news_tags($v);
+                $ls = $this->Find_model->del_find_service($v);
+            }
+            if($ls){
+                      // 日志
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."批量删除了帖子，帖子id是：". implode(',',$arr),
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                    echo "1";
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "3";
+        }
+    }
+
+
+
     //新增帖子界面
     function addService(){
         $id = intval($this->uri->segment(4));
@@ -432,6 +494,9 @@ class Find extends Default_Controller {
     function ret_find_cates(){
         if($_POST){
             $list = $this->Find_model->get_find_cates();
+            foreach($list as $k=>$v){
+                $list[$k]['nums'] = count($this->Find_model->get_find_cate_service($v['cate_id']));
+            }
             if($list){
                 echo json_encode($list);
             }else{
@@ -701,6 +766,10 @@ class Find extends Default_Controller {
         if($_POST){
             $type = $this->input->post('type');
             $list = $this->Find_model->get_find_special($type);
+            foreach($list as $k=>$v){
+                $a = $this->Find_model->get_find_special_serviceList($v['q_id']);
+                $list[$k]['nums'] = count($a);
+            }
             if(!empty($list)){
                 echo json_encode($list);
             }else{

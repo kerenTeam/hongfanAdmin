@@ -335,7 +335,7 @@ class LoveToGo extends Default_Controller
                  //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
                     $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_UUID']);
                     $this->excel->getActiveSheet()->setCellValue('B' . $i, $address['person']);
-                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $id_card);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, ' '.$id_card);
                     $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['address']);
                     $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
                     $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
