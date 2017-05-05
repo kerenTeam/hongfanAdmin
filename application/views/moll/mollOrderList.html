@@ -184,6 +184,7 @@ td div div p {
           $alert.hide();
           startDate = new Date(event.date);
           $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
         }
         $(this).datepicker('close');
       });
@@ -196,6 +197,7 @@ td div div p {
           $alert.hide();
           endDate = new Date(event.date);
           $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
         }
         $(this).datepicker('close');
       });

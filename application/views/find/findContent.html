@@ -93,12 +93,39 @@ label {
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">帖子专题:</label>
+                        <div class="am-u-sm-8">
+                            <select id="tieziSpecial" name="special">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="1">专题一</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-12-31</span>
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-text-center">
                         <label for="source_state" class="am-u-sm-4 am-form-label">关键字搜素:</label>
                         <div class="am-u-sm-8">
                             <input type="text" class="" placeholder="请输入搜素的关键字" id="searchKey" name="sear" />
                         </div>
                     </div>
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6 am-text-left">
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-left">
                         <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
                     </div>
                 </form>
@@ -222,6 +249,36 @@ label {
 <script src="assets/js/artTemplate-native.js"></script>
 <script type="text/javascript">
 var total_page = 0,pageflag = 1,flag = 0,current_page=0,findContent = parseInt(sessionStorage.getItem('$findContent')) || 0, isFindContent = parseInt(sessionStorage.getItem('$isFindContent')) || 0;
+$(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -493,17 +550,17 @@ function validate(obj,minlen,maxlen,i){
 $(document).ready(function(){
     //加载列表数数据
     if(isFindContent) {
-        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val();
-        // console.log('search='+ keywords + '&cate_id=' + cate_id);
-        getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id);
+        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+        // getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     }
     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     //点击搜索
     $('.searchSort').click(function(){
-        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val();
-        // console.log('search='+ keywords + '&cate_id=' + cate_id);
-        getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id);
+        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+        // getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     });
 })
