@@ -285,7 +285,8 @@ function otherOperation() {
             data: 'id='+array,
             success: function(data){
                 if(data==1){
-                    $('#trClass'+deleteId).remove();
+                    alert('操作成功');
+                    getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
                 }else{
                     alert("操作失败！");
                 }
@@ -312,6 +313,7 @@ function otherOperation() {
                 data: 'id='+array,
                 success: function(data){
                     if(data==1){
+                         alert('操作成功');
                         getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
                     }else{
                         alert("操作失败！");

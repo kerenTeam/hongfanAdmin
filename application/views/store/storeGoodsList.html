@@ -476,7 +476,8 @@
                 url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
                 data: 'goodsid='+dataId,
                 success: function(data){
-                    if(data==1){                                           
+                    if(data==1){  
+                      alert("操作成功！");                                         
                       getList('<?php echo site_url('store/store/storeGoods_page');?>', 'default=1');
                     }else{
                         alert("操作失败！");

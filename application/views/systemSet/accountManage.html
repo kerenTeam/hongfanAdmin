@@ -255,7 +255,6 @@ function someOptions() {
         url:'<?php echo site_url('/systemSet/systemSet/admin_user_group');?>',
         data: 'default=1',
         success: function(data){ 
-            console.log(data);
             var jsonData=eval(data);
             if(data){
                 for(var i=0;i<jsonData.length;i++){

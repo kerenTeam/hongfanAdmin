@@ -249,7 +249,8 @@ function otherOperation() {
             data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
             success: function(data){
                 // console.log(data);
-                if(data==1){         
+                if(data==1){
+                    alert('操作成功！');         
                     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
                 }else{
                     alert("操作失败！");
@@ -274,7 +275,9 @@ function otherOperation() {
             data: 'id='+array,
             success: function(data){
                 if(data==1){
-                    $('#trClass'+deleteId).remove();
+                    alert('操作成功！');
+                    getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
+
                 }else{
                     alert("操作失败！");
                 }
@@ -301,6 +304,7 @@ function otherOperation() {
                 data: 'id='+array,
                 success: function(data){
                     if(data==1){
+                        alert('操作成功！');
                         getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
                     }else{
                         alert("操作失败！");

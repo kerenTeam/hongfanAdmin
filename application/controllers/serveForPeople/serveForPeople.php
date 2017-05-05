@@ -304,7 +304,7 @@ class ServeForPeople extends Default_Controller
               //日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."批量删除了服务请求，帮帮团成员id是：".implode(’,‘,$arr),
+                    "content" => $_SESSION['users']['username']."批量删除了服务请求，帮帮团成员id是：".implode(',',$arr),
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
