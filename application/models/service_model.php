@@ -43,7 +43,7 @@ class Service_model extends CI_Model
     }
     //返回请求列表
     function get_requert($type){
-        $this->db->select('a.*,b.username,b.phone,c.name');
+        $this->db->select('a.*,b.username,b.nickname,b.phone,c.name');
         $this->db->from('hf_service_request as a');
         $this->db->join('hf_user_member as b','a.user_id = b.user_id','left');
         $this->db->join('hf_service_help_user as c','a.helper_id = c.helper_id','left');
