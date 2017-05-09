@@ -611,9 +611,13 @@ $(document).ready(function(){
         <td class="am-text-middle">   
             <%= create_time %>
         </td>
-        <%if(order_status==1) {%>
+        <%if(order_status==1 && trash == 1) {%>
             <td class="am-text-middle red">
                 未支付
+            </td>
+        <%}else if(order_status==1 && trash == 0){%>
+           <td class="am-text-middle red">
+                订单已取消
             </td>
         <%}else if(order_status==2){%>
             <td class="am-text-middle">

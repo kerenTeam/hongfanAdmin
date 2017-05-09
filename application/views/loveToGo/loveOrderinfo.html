@@ -196,6 +196,31 @@ label.am-u-sm-8, label.am-u-sm-4{
 
 
                         </div>
+                     <?php if($order['order_status'] == 3 || $order['order_status'] == 4 || $order['order_status'] == 5):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">快递公司：</label>
+                            <label class="am-u-sm-8 success am-text-middle"><?php echo $order['shipper_code'];?></label>
+                        </div>  
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">快递单号：</label>
+                            <label class="am-u-sm-8 success am-text-middle"><?php echo $order['logistic_code'];?></label>
+                        </div> 
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">物流信息</label><br>
+                             <?php if(!empty($express_w['Traces'])):?>
+                            <div>
+                                <?php rsort($express_w['Traces']); foreach($express_w['Traces'] as $k=>$v):?>
+                                <p><?php echo $v['AcceptTime']?></p>
+                                <p><?php echo $v['AcceptStation']?></p>
+                                <?php endforeach;?>
+                            </div>
+                            <?php else:?>
+                                暂无物流信息
+                            <?php endif;?>
+                        </div>
+                        </div>
+                    <?php endif;?>
 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                            

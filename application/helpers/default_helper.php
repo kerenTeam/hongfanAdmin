@@ -117,6 +117,51 @@ function curl_post($url, $post){
     return $result;
 }
 
+//模拟post 登陆app
+function curl_post_token($url, $post){
+    $options = array(
+        CURLOPT_RETURNTRANSFER =>true,
+        CURLOPT_HEADER =>false,
+        CURLOPT_POST =>true,
+        CURLOPT_POSTFIELDS => $post,
+    );
+    $ch = curl_init($url);
+    curl_setopt_array($ch, $options);
+    curl_setopt($ch, CURLOPT_HEADER, 1);
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+    $result = curl_exec($ch);
+    if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200') {
+	    $header_size	= curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $headers		=substr(substr($result, 79, $header_size),0,148);
+        $body		= substr($result, $header_size);
+    }
+    curl_close($ch);
+    return $headers;
+}
+
+function curl_post_express($header,$url, $post){
+    $ch = curl_init();
+    $res= curl_setopt ($ch, CURLOPT_URL,$url);
+  //  return($res);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt ($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch,CURLOPT_HTTPHEADER,$header);
+    $result = curl_exec ($ch);
+    curl_close($ch);
+    if ($result == NULL) {
+    return 0;
+    }
+    return $result;
+}
+
+
+
+
+
 //返回ip
 function get_client_ip() {
     $ip = $_SERVER['REMOTE_ADDR'];

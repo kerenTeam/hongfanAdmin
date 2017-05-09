@@ -476,13 +476,32 @@ class Store extends Default_Controller {
         if($id != 0){
             //获取订单详情
             $order = $this->MallShop_model->get_order_info($id);
-            //收货地址
-     //       $arr = json_decode($order['goods_data'],true);
-          
+
             //获取收货地址
             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
-            $data['id'] = $id;
+            //后去运费模板
+            $express = json_decode($order['userPostData'],true);
+            $data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
+            //模拟登陆APP
+            $url = APPLOGIN."/api/useraccount/login";
+            // var_dump($url);
+            $arr = array('phone'=>"15828277232","password"=>"123456a");
+            $token = curl_post_token($url,$arr);
+            //获取物流新词
+            $url_ex = APPLOGIN."/api/kdniao/getordertraces";
+         //   $ret = array("orderCode"=>$order['logistic_code'],"shipperCode"=>$order["shipper_code"],"logisticCode"=>$order['logistic_code']);
+            $ret = "orderCode=".$order['logistic_code'].'&shipperCode='.$order["shipper_code"].'&logisticCode='.$order['logistic_code'];
+            $header = array("token:".trim($token)); 
+            $w = json_decode(curl_post_express($header,$url_ex,$ret),true);
+            
+            $data['express_w'] = $w['data'];
             $data['order'] = $order;
+
+
+
+
+
+            
              $data['page'] = $this->view_storeOrderDetail;
              $data['menu'] = array('store','storeOrderList');
              $this->load->view('template.html',$data);
@@ -509,6 +528,27 @@ class Store extends Default_Controller {
              $this->load->view('template.html',$data);
         }else{
             $this->load->view('404.html');
+        }
+    }
+    //订单退款成功
+    function refund_price(){
+        if($_POST){
+            $orderid = $this->input->post('order_id');
+            $arr['order_status'] = '8'; 
+            if($this->MallShop_model->edit_order_state($orderid,$arr)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个订单为退款成功状态，订单id 是：".$orderid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "3";
         }
     }
 

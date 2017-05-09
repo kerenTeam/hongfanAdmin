@@ -1454,6 +1454,20 @@ class SingleShop extends Default_Controller {
             //后去运费模板
             $express = json_decode($order['userPostData'],true);
             $data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
+            //模拟登陆APP
+            $url = APPLOGIN."/api/useraccount/login";
+            // var_dump($url);
+            $arr = array('phone'=>"15828277232","password"=>"123456a");
+            $token = curl_post_token($url,$arr);
+            //获取物流新词
+            $url_ex = APPLOGIN."/api/kdniao/getordertraces";
+         //   $ret = array("orderCode"=>$order['logistic_code'],"shipperCode"=>$order["shipper_code"],"logisticCode"=>$order['logistic_code']);
+            $ret = "orderCode=".$order['logistic_code'].'&shipperCode='.$order["shipper_code"].'&logisticCode='.$order['logistic_code'];
+            $header = array("token:".trim($token)); 
+            $w = json_decode(curl_post_express($header,$url_ex,$ret),true);
+            
+            $data['express_w'] = $w['data'];
+
 
             
             $data['order'] = $order;

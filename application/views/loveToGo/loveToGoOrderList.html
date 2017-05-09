@@ -47,6 +47,11 @@ td.am-text-middle img {
     padding:2px 5px;
     color: #ea6e0c;
 }
+.agreeOrder,.confirmGot,.agreeRefund {
+    border:1px solid #e0690c;
+    padding:2px 5px;
+    color: #e0690c;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -343,6 +348,26 @@ function next(argu){
         }
         $('#'+ dataId).modal('close');
     });
+
+        $('.confirmGot').click(function(){
+            var dataId = $(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/refund_price');?>',
+                data: 'order_id='+dataId,
+                success: function(data){
+                  if(data == 1) {
+                       alert('操作成功！');
+                       getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=4'); 
+                  }else{
+                      alert('操作失败！');
+                  }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });     
+        });
   }
     //异步刷新的ajax请求   
     function getList(dataurl,data){
@@ -469,6 +494,7 @@ $(document).ready(function(){
         <%}else if(order_status==10){%>
             <td class="am-text-middle">
                 等待退款
+                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
             </td>
         <%}%>
         <td class="am-text-middle">

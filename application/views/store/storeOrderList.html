@@ -59,6 +59,11 @@ td div.am-u-sm-12 {
 .goodsImg {
     width: 100%;
 }
+.agreeOrder,.confirmGot,.agreeRefund {
+    border:1px solid #e0690c;
+    padding:2px 5px;
+    color: #e0690c;
+}
 </style>
 
 <!-- 内容区域 -->
@@ -284,6 +289,26 @@ td div.am-u-sm-12 {
             });
         
         });
+
+        $('.confirmGot').click(function(){
+            var dataId = $(this).attr('data-id');
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/refund_price');?>',
+                data: 'order_id='+dataId,
+                success: function(data){
+                  if(data == 1) {
+                      alert('操作成功！');
+                       getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
+                  }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });     
+            $('#agreeSales'+ dataId).modal('close');
+            return true;
+        });
     }
     //异步刷新的ajax请求   
     function getList(dataurl,data,changeIndex){
@@ -419,9 +444,13 @@ $(document).ready(function(){
         <%}%>
         </td>
         <td class="am-text-middle"><%= create_time%></td>
-        <%if(order_status==1) {%>
+         <%if(order_status==1 && trash == 1) {%>
             <td class="am-text-middle red">
                 未支付
+            </td>
+        <%}else if(order_status==1 && trash == 0){%>
+           <td class="am-text-middle red">
+                订单已取消
             </td>
         <%}else if(order_status==2){%>
             <td class="am-text-middle">
@@ -457,7 +486,8 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==10){%>
             <td class="am-text-middle">
-                等待退款
+                <p>等待退款</p>
+                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
             </td>
         <%}%>
         <td class="am-text-middle">
