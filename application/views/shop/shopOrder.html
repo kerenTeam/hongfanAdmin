@@ -530,7 +530,7 @@ $(document).ready(function(){
       });
     //加载列表数数据
     if($isShopOrder) {
-        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
            console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         sessionStorage.setItem('isShopOrder', 1);
@@ -539,7 +539,7 @@ $(document).ready(function(){
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').text(), end_date = $('#end_date').text();
+        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
            console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         sessionStorage.setItem('isShopOrder', 1);
