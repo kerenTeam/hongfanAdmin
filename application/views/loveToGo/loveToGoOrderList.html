@@ -432,7 +432,7 @@ $(document).ready(function(){
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-       console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
+    //   / console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
         getList('<?php echo site_url('igo/LoveToGo/search_love_order');?>','order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date );
         sessionStorage.setItem('isloveToGoOrderList', 1);
         
