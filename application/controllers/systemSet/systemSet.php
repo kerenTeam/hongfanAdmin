@@ -811,10 +811,11 @@ class SystemSet extends Default_Controller {
 
     //修改版本
     function edit_app_version(){
-  
         if($_POST){
             $id= $this->input->post('id');
             $data['versionNum']= $this->input->post('versionNum');
+            $data['ios_versionNum']= $this->input->post('ios_versionNum');
+            $data['ios_path_url']= $this->input->post('ios_path_url');
             $data['create_time'] = date('Y-m-d H:i:s');
             if(!empty($_FILES['file']['tmp_name'])){
                 $file_path = "Upload/xls/".$_FILES["file"]['name']; 
@@ -830,8 +831,13 @@ class SystemSet extends Default_Controller {
                     echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
                 }
             }else{
-                echo "4";
+                if($this->System_model->edit_app_version($id,$data)){
+                    echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+                }else{
+                    echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+                }
             }
+
         }else{
             $this->load->view('404.html');
         }

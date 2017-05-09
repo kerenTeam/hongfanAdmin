@@ -27,6 +27,17 @@ class Find_model extends CI_Model
         $query = $this->db->where('categoryid',$id)->order_by('a.create_news_time','desc')->get();
         return $query->result_array();
     }
+
+    //返回举报帖子
+    function get_find_service_state($state){
+        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->from('hf_friend_news as a');
+        $this->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $this->db->where('news_state',$state)->order_by('type_name','desc')->order_by('a.create_news_time','desc')->get();
+        return $query->result_array();
+    }
+
+
     //根据关键字返回帖子
     function get_find_sear_service($sear){
         $this->db->select('a.*,b.username,b.nickname');

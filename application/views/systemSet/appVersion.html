@@ -83,14 +83,15 @@
                                 <tr>
                                     <th>版本号</th>
                                     <th>安卓更新地址 </th>
+                                    <th>ios版本号 </th>
                                     <th>ios更新地址</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
+                            <form action="<?php echo site_url('/systemSet/SystemSet/edit_app_version');?>" method="post" enctype="multipart/form-data">
                             <tbody id="accountList">
                            
-                            <form action="<?php echo site_url('/systemSet/SystemSet/edit_app_version');?>" method="post" enctype="multipart/form-data">
-                                
+                         
                                     <tr class="trClass" id="trClass" >
                                         <td class="am-text-middle">
                                             <input type="text" name="versionNum" value="<?php echo $app['versionNum'];?>" id="versionNum" />
@@ -103,16 +104,19 @@
                                             <input type="text" value="<?php echo $app['android_path_url']?>"  />
                                         </td>
                                         <td class="am-text-middle">
+                                        <input type="text" value="<?php echo $app['ios_versionNum']?>" name="ios_versionNum"  id="ios_versionNum" style="width:40%;"/>
+                                        </td>
+                                        <td class="am-text-middle">
                                         <input type="text" value="<?php echo $app['ios_path_url']?>" name="ios_path_url" />
                                         </td>
                                         <td class="am-text-middle">
                                             <input type="hidden" name="id" value="<?php echo $app['id'];?>">
-                                        <button type="submit" class="am-btn-primary">确定</button> 
+                                            <button type="submit" class="am-btn-primary">确定</button> 
                                         </td>
                                     </tr>
-                             </form>
-                               
                             </tbody>
+                            
+                             </form>
                         </table>
                     </div>
                     

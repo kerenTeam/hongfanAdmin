@@ -48,6 +48,7 @@ class Find extends Default_Controller {
         if($_POST){
             $cateid = $this->input->post('cate_id');
             $sear = $this->input->post('search');
+
             $list = '';
             //判断条件
             if(!empty($cateid) && empty($sear)){
@@ -57,6 +58,7 @@ class Find extends Default_Controller {
             }else if(!empty($cateid) && !empty($sear)){
                 $list = $this->Find_model->get_find_service_search($cateid,$sear);
             }
+            
 
             if(!empty($list)){
                 //获取分类名
@@ -179,7 +181,12 @@ class Find extends Default_Controller {
     //返回帖子列表
     function ret_find_service(){
         if($_POST){
-            $list = $this->Find_model->get_find_service();
+            $type = $this->input->post('default');
+            if($type == '1'){
+                $list = $this->Find_model->get_find_service();
+            }else{
+                $list = $this->Find_model->get_find_service_state($type);
+            }
             foreach($list as $key=>$val){
                 if(empty($val['categoryid'])){
                     $list[$key]['cate_name'] = "还没有归类,请编辑归类!";
