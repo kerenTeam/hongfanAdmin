@@ -30,52 +30,26 @@ class Member extends Default_Controller {
     //会员 列表
     function memberList()
     {
-        //获取会员列表
-    	$config['per_page'] = 10; //每页显示的数据数
-
-    	//页码
-        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
-        //分页数据
-        $result = $this->user_model->get_user_page('5',$current_page,$config['per_page']);
-       	//配置
-        $config['base_url'] = site_url('/member/Member/memberList');
-        //分页配置
-        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-        $config['full_tag_close'] = '</ul>';
-        $config['first_tag_open'] = '<li>';
-        $config['first_tag_close'] = '</li>';
-        $config['prev_tag_open'] = '<li>';
-        $config['prev_tag_close'] = '</li>';
-        $config['next_tag_open'] = '<li>';
-        $config['next_tag_close'] = '</li>';
-        $config['cur_tag_open'] = '<li class="am-active"><a>';
-        $config['cur_tag_close'] = '</a></li>';
-        $config['last_tag_open'] = '<li>';
-        $config['last_tag_close'] = '</li>';
-        $config['num_tag_open'] = '<li>';
-        $config['num_tag_close'] = '</li>';
-
-        $config['first_link']= '首页';
-        $config['next_link']= '下一页';
-        $config['prev_link']= '上一页';
-        $config['last_link']= '末页';
-        //总共多少
-        $num = $this->user_model->get_users('5');
-        $config['total_rows'] = count($num);//总条数
-
-        $this->load->library('pagination');//加载ci pagination类
-        $this->pagination->initialize($config);
-        $data = array(
-            'users' => $result,
-            'pages' => $this->pagination->create_links(),
-        );
-        //获取会员卡类型
-        $data['cards'] = $this->user_model->get_card_type( );
-        $data['userNum'] = $this->user_model->get_users('5');
+       
+          $data['userNum'] = $this->user_model->get_users('5');
         //视图界面
         $data['page'] = $this->view_memberList;
         $data['menu'] = array('member','memberList');
     	$this->load->view('template.html',$data);
+    }
+
+    //返回会员列表
+    function ret_member_list(){
+        if($_POST){
+            $num = $this->user_model->get_users('5');
+            if(!empty($num)){
+                echo json_encode($num);
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "3";
+        }
     }
 
 
@@ -103,10 +77,6 @@ class Member extends Default_Controller {
                 echo "<script>alert('电话已被注册！请重新添加！');window.location.href='".site_url('/member/Member/addMember')."'</script>";
                 exit;
             }
-
-           
-
-
             //插入
             if($this->user_model->add_user_member($data)){
                  //日志
