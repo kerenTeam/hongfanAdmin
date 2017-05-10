@@ -8,6 +8,8 @@ class Find extends Default_Controller {
 
 	//文章；列表
 	public $view_content = "find/findContent.html";
+    //被举报 帖子列表
+    public $view_findReport = "find/findReport.html";
     //帖子评论列表
     public $view_comment = "find/findComment.html";
     //新增帖子
@@ -42,7 +44,12 @@ class Find extends Default_Controller {
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
     }
-
+    //被举报 帖子列表  
+    function findReport(){
+        $data['page'] = $this->view_findReport;
+        $data['menu'] = array('find','findContent');
+        $this->load->view('template.html',$data);
+    }
     //帖子搜索
     function search_find_service(){
         if($_POST){

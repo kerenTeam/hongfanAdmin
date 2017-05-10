@@ -41,7 +41,7 @@ class member_model extends CI_Model{
         return $query->result_array();
     }
     //搜索会员总数
-    function search_users($gid,$card,$gender,$state,$sear){
+    function search_users($gid,$card,$gender,$starttime,$endtime,$sear){
         //会员卡
         $cardsql ='';
         $gendersql ='';
@@ -57,9 +57,9 @@ class member_model extends CI_Model{
            // $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' order by create_time desc";
        //状态不为空
         }
-        if($state == 0 || $state == 1){
+         if(!empty($starttime)){
            // $sql = "SELECT * FROM $this->member where gid='$gid'  and state = '$state' order by create_time desc";
-            $statesql = " and state = '$state'";
+            $statesql = " and create_time >= '$starttime' and create_time <= '$endtime'";
         //关键字不为空
         }
         if(!empty($sear)){
