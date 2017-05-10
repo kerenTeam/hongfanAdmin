@@ -499,6 +499,16 @@ class LoveToGo extends Default_Controller
     }
 
 
+    // //爱购订单退款
+    // function refund_loveTogo_Order(){
+    //     if($_POST){
+            
+    //     }else{
+    //         echo "3";
+    //     }
+    // }
+
+
 
 
 }

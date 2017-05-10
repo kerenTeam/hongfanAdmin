@@ -433,21 +433,41 @@ function next(argu){
            alert("请正确填写发货信息！");
             return false;             
         }
-        $.ajax({
-            type:'post',
-            url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
-            data: 'order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason,
-            success: function(data){
-                console.log(data);
-                if(data == 1) {
-                    getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1'); 
+        if(isAgree == 1){
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/store/Store/refund_price');?>',
+                data: 'order_id='+dataId,
+                success: function(data){
+                  if(data == 1) {
+                       alert('操作成功！');
+                       getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=4'); 
+                  }else{
+                      alert('操作失败！');
+                  }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
                 }
-            },
-            error:function(xhr,type,errorThrown){
-                alert("操作失败，请检查网络设置！");
-            }
-        });   
+            });     
+        }else{
+            $.ajax({
+                type:'post',
+                url:'<?php echo site_url('/shop/singleShop/order_refund');?>',
+                data: 'order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason,
+                success: function(data){
+                    console.log(data);
+                    if(data == 1) {
+                        getList('<?php echo site_url('igo/LoveToGo/ret_loveTogo_order');?>','default=1'); 
+                    }
+                },
+                error:function(xhr,type,errorThrown){
+                    alert("操作失败，请检查网络设置！");
+                }
+            });
+        }   
         $('#agree'+ dataId).modal('close');
+
     });
   }
     //异步刷新的ajax请求   
@@ -465,7 +485,7 @@ function next(argu){
                     res[i].goods_data = JSON.parse(res[i].goods_data);
                     listData+= template('dataModal',res[i]);
                 } 
-              //  console.log(res);
+               console.log(res);
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
@@ -575,7 +595,7 @@ $(document).ready(function(){
                             <div class="am-form-group am-cf kuaidiNum">
                                 <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
                                 <div class="am-u-sm-9">
-                                    <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id%>' class="send_no" name='send_no'>
+                                    <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id %>' class="send_no" name='send_no'>
                                 </div>
                             </div>
                             <div class="am-form-group am-btn-group-xs">
@@ -617,7 +637,7 @@ $(document).ready(function(){
                                 <div class="am-form-group am-cf">
                                     <label class="am-u-sm-3 am-form-label">退款理由：</label>
                                     <div class="am-u-sm-9 am-text-left">
-                                        <% if(buyer_reason.length) { %>
+                                        <% if(buyer_reason) { %>
                                             <%= buyer_reason %>
                                         <%}else {%>
                                            买家未填写
@@ -660,7 +680,8 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                等待退货物流
+                <p>等待退货物流</p>
+                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>货已收到并退款</a>
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
