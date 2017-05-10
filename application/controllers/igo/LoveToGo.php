@@ -216,7 +216,11 @@ class LoveToGo extends Default_Controller
             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
             $data['id_card'] = $this->Integral_model->ret_user_info($order['buyer']);
 
-            //$data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
+            //获取收货地址
+            $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+            //后去运费模板
+          //  $express = json_decode($order['userPostData'],true);
+           // $data['express'] = $this->MallShop_model->ret_store_express($express['express_id']);
             //模拟登陆APP
             $url = APPLOGIN."/api/useraccount/login";
             // var_dump($url);
@@ -224,15 +228,21 @@ class LoveToGo extends Default_Controller
             $token = curl_post_token($url,$arr);
             //获取物流新词
             $url_ex = APPLOGIN."/api/kdniao/getordertraces";
-         //   $ret = array("orderCode"=>$order['logistic_code'],"shipperCode"=>$order["shipper_code"],"logisticCode"=>$order['logistic_code']);
+            //发货物流
             $ret = "orderCode=".$order['logistic_code'].'&shipperCode='.$order["shipper_code"].'&logisticCode='.$order['logistic_code'];
             $header = array("token:".trim($token)); 
             $w = json_decode(curl_post_express($header,$url_ex,$ret),true);
+            //退货物流
+            $refund['data'] = '';
+            if(!empty($order['saleReturn_num'])){
+                $a = explode(',',$order['saleReturn_num']);
+                $refund_data = "orderCode=".$a['1'].'&shipperCode='.$a["0"].'&logisticCode='.$a['1'];
+                $refund = json_decode(curl_post_express($header,$url_ex,$refund_data),true);
+                
+            }
             
             $data['express_w'] = $w['data'];
-
-
-
+            $data['refund_express'] = $refund['data'];
             $data['order'] = $order;
             $data['page'] = $this->view_loveOrderinfo;
             $data['menu'] = array('loveToGo','loveToGoOrderList');

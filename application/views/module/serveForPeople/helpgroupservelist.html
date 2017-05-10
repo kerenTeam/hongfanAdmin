@@ -240,15 +240,14 @@ function otherOperation() {
     
     //回复某个服务
     $('.response').click(function(){
-        var serveId=$(this).attr('data-id'),user_id=$('this').attr('data_id');
+        var serveId=$(this).attr('data-id'),user_id=$(this).attr('data_id');
         var content=document.getElementsByClassName('content'+serveId)[0].value;
-        console.log(content);
+        console.log(user_id);
         $.ajax({
             type:'post',
             url:'<?php echo site_url('/serveForPeople/serveForPeople/reply_help_request');?>',
             data: 'content='+ content +'&id='+ serveId +'&userid='+user_id,
             success: function(data){
-                // console.log(data);
                 if(data==1){
                     alert('操作成功！');         
                     getList('<?php echo site_url('/serveForPeople/serveForPeople/help_request_list');?>','default=1');
@@ -327,7 +326,7 @@ function getList(dataurl,data){
         success: function(result){ 
 
             var res = eval(result);
-           //  console.log(res);
+            console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数

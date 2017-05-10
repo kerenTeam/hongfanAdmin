@@ -420,6 +420,7 @@ td div.am-u-sm-12 {
                     url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
                     data: 'send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId,
                     success: function(data){
+
                         if(data==1){ 
                             getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
                             alert("操作成功！");
@@ -695,10 +696,20 @@ $(document).ready(function(){
                                 </div>
                            
                                 <div class="am-form-group am-cf">
-                                    <label class="am-u-sm-3 am-form-label">退款理由：</label>
+                                    <label class="am-u-sm-3 am-form-label">退款原因：</label>
                                     <div class="am-u-sm-9 am-text-left">
                                         <% if(buyer_reason.length) { %>
-                                            <%= buyer_reason %>
+                                            <%= buyer_reason %> 
+                                        <%}else {%>
+                                           买家未填写
+                                        <%}%>
+                                    </div>
+                                </div>
+                                <div class="am-form-group am-cf">
+                                    <label class="am-u-sm-3 am-form-label">退款说明：</label>
+                                    <div class="am-u-sm-9 am-text-left">
+                                        <% if(refund_reason.length) { %>
+                                            <%= refund_reason %>
                                         <%}else {%>
                                            买家未填写
                                         <%}%>

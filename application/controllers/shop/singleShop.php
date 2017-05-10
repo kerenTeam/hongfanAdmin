@@ -1411,6 +1411,40 @@ class SingleShop extends Default_Controller {
                     "userip" => get_client_ip(),
                 );
                 $this->db->insert('hf_system_journal',$log);
+                if($data['shipper_code'] != "ZT"){
+                    //获取用户id
+                    $order = $this->MallShop_model->get_order_info($orderid);
+                    //获取用户电话
+                    $user = $this->user_model->get_user_info($order['buyer']);
+                    //模拟登陆APP
+                    $url = APPLOGIN."/api/useraccount/login";
+                    // var_dump($url);
+                    $arr = array('phone'=>"15828277232","password"=>"123456a");
+                    $token = curl_post_token($url,$arr);
+                    $header = array("token:".trim($token)); 
+                    if($data['shipper_code'] == "EMS"){
+                        $exporess  = "中国邮政";
+                    }else if($data['shipper_code'] == "SF"){
+                        $exporess  = "顺丰";
+                    }else if($data['shipper_code'] == "STO"){
+                        $exporess  = "申通";
+                    }else if($data['shipper_code'] == "YTO"){
+                        $exporess  = "圆通";
+                    }else if($data['shipper_code'] == "ZTO"){
+                        $exporess  = "中通";
+                    }else if($data['shipper_code'] == "YD"){
+                        $exporess  = "韵达";
+                    }else if($data['shipper_code'] == "HTKY"){
+                        $exporess  = "百世汇通";
+                    }else if($data['shipper_code'] == "PJ"){
+                        $exporess  = "品骏";
+                    }else if($data['shipper_code'] == "UAPEX"){
+                        $exporess  = "全一";
+                    }
+                    $post_url = APPLOGIN."/api/index/sendsms";
+                    $ret = 'phoneNum='.$user['phone'].'&SMScontent='."hi，小主，感谢您惠顾HI集，您所购买的宝贝已穿戴整齐，向您飞奔而来，请注意查收。".$exporess."快递:".$data['logistic_code'].'【HI集】';
+                    $a = curl_post_express($header,$post_url,$ret);
+                }
                 echo "1";
             }else{
                 echo "2";
@@ -1461,15 +1495,24 @@ class SingleShop extends Default_Controller {
             $token = curl_post_token($url,$arr);
             //获取物流新词
             $url_ex = APPLOGIN."/api/kdniao/getordertraces";
-         //   $ret = array("orderCode"=>$order['logistic_code'],"shipperCode"=>$order["shipper_code"],"logisticCode"=>$order['logistic_code']);
+            //发货物流
             $ret = "orderCode=".$order['logistic_code'].'&shipperCode='.$order["shipper_code"].'&logisticCode='.$order['logistic_code'];
             $header = array("token:".trim($token)); 
             $w = json_decode(curl_post_express($header,$url_ex,$ret),true);
+            //退货物流
+            $refund['data'] = '';
+            if(!empty($order['saleReturn_num'])){
+                $a = explode(',',$order['saleReturn_num']);
+                $refund_data = "orderCode=".$a['1'].'&shipperCode='.$a["0"].'&logisticCode='.$a['1'];
+                $refund = json_decode(curl_post_express($header,$url_ex,$refund_data),true);
+                
+            }
             
             $data['express_w'] = $w['data'];
+            $data['refund_express'] = $refund['data'];
 
 
-            
+         //    var_dump($data);
             $data['order'] = $order;
             $data['page'] = $this->view_shopEditOrder;
             $data['menu'] = array('shop','shopOrder');

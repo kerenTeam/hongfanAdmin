@@ -338,11 +338,24 @@ class ServeForPeople extends Default_Controller
                          //日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."回复了服务请求，回复内容：".$content.'回复请求id是：'.$id,
+                        "content" => $_SESSION['users']['username']."回复了服务请求，回复内容：".$content.'，服务请求id是：'.$id,
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
                     $this->db->insert('hf_system_journal',$log);
+
+                    //获取用户电话
+                    $user = $this->user_model->get_user_info($userid);
+                    //模拟登陆APP
+                    $url = APPLOGIN."/api/useraccount/login";
+                    // var_dump($url);
+                    $arr = array('phone'=>"15828277232","password"=>"123456a");
+                    $token = curl_post_token($url,$arr);
+                    $header = array("token:".trim($token)); 
+                    $post_url = APPLOGIN."/api/index/sendsms";
+                    $ret = 'phoneNum='.$user['phone'].'&SMScontent='."hi，小主，您所提交的帮助信息已有回复，请登陆HI集APP查看详情，感谢您的支持！【HI集】";
+                    $a = curl_post_express($header,$post_url,$ret);
+                   // var_dump($userid);
                     echo "1";
                 }else{
                     echo "1";
