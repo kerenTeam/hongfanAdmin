@@ -387,7 +387,11 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
+        <% if(username){%>
         <td class="am-text-middle"><%= username%></td>
+        <%}else{%>
+        <td class="am-text-middle"><%= nickname%></td>
+        <%}%>
         <td class="am-text-middle"><%= content%></td>
         <td class="am-text-middle"><%= create_time%></td>
         <td class="am-text-middle"><%= phone%></td>
