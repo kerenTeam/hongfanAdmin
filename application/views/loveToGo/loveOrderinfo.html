@@ -184,17 +184,10 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <?php elseif($order['order_status'] == 8):?>
                                 已退款
                                 <p>退货理由：<span><?php echo $order['buyer_reason']?></span></p>
-                            <?php else:?>
-                            </div>
-                            <div class="am-u-sm-4">
-                                快递公司：<?php echo $order['shipper_code'];?>
-                            </div>
-                            <div class="am-u-sm-4">
-                                快递单号：<?php echo $order['logistic_code'];?>
-                            </div>
+                            <?php elseif($order['order_status'] == 10):?>
+                                等待退款
                             <?php endif;?>
-
-
+                            </div>
                         </div>
                      <?php if($order['order_status'] == 3 || $order['order_status'] == 4 || $order['order_status'] == 5):?>
                         <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
@@ -220,6 +213,47 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <?php endif;?>
                         </div>
                         </div>
+                    <?php endif;?>
+                      <?php if($order['order_status'] == 6 || $order['order_status'] == 7 || $order['order_status'] == 10):?>
+                        <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf background" >退货信息:</div>
+                        </div>
+                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">货物状态(退款理由)：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                               <?php echo $order['buyer_reason'];?>
+                            </label>
+                        </div>
+                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">退货留言：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                 <?php echo $order['refund_reason'];?>
+                            </label>
+                        </div>
+                        <?php if($order['order_status'] == 10 && $order['saleReturn_num']):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">退货物流公司：</label>
+                            <label class="am-u-sm-8 am-text-middle">
+                                <?php  $a = explode(',',$order['saleReturn_num']);?>
+                                 <?php echo $a['0'];?>
+                            </label>
+                        </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+                            <label for="user-email" class="am-u-sm-4 am-form-label">物流信息：</label>
+                              <?php if(!empty($refund_express['Traces'])):?>
+                            <label class="am-u-sm-10">
+                                <?php rsort($refund_express['Traces']); foreach($refund_express['Traces'] as $k=>$v):?>
+                                <p><?php echo $v['AcceptTime']?>
+                                    <?php echo $v['AcceptStation']?></p>
+                                <?php endforeach;?>
+                            </label>
+                            <?php else:?>
+                                暂无物流信息
+                            <?php endif;?>
+                        </div>
+                        <?php endif;?>
+
+
                     <?php endif;?>
 
                         <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
