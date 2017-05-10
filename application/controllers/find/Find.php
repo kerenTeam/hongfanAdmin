@@ -414,6 +414,30 @@ class Find extends Default_Controller {
         }
     }
 
+    //修改帖子状态
+    function edit_find_serviceState(){
+        if($_POST){
+            $findid = $this->input->post('id');
+            $data['news_state'] = $this->input->post('state');
+            if($this->Find_model->edit_find_service($findid,$data)){
+                 // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."修改了一个帖子状态，帖子id是：". $findid,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+            
+
+        }else{
+            echo "3";
+        }
+    }
 
 
     //新增帖子界面

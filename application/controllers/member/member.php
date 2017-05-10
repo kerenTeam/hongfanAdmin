@@ -258,9 +258,9 @@ class Member extends Default_Controller {
             }else{
                 echo "3";
             }
-            }else{
-               echo "2";
-            }
+        }else{
+            echo "2";
+        }
     }
 
     //会员组
