@@ -66,7 +66,6 @@ class Find extends Default_Controller {
                 $list = $this->Find_model->get_find_service_search($cateid,$sear);
             }
             
-
             if(!empty($list)){
                 //获取分类名
                  foreach($list as $key=>$val){
@@ -1030,5 +1029,32 @@ class Find extends Default_Controller {
             echo "3";
         }
     }
+
+    //推荐专题到首页
+    function special_recommend(){
+        if($_POST){
+            $id = $this->input->post('q_id');
+            $data['isindex'] = $this->input->post('isindex');
+            if($this->Find_model->edit_find_special($id,$data)){
+                 // 日志
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."推荐了一个帖子到首页，专题id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+
+        }else{
+            echo "3";
+        }
+    }
+
+
+
 
 }

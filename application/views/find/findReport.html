@@ -80,6 +80,13 @@ label {
                 <div class="widget-head am-cf" style="clear:both;">
                     <div class="widget-title  am-cf">帖子列表</div>
                 </div>
+                <div class="am-form-group">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <a type="button" class="am-btn am-btn-default am-btn-danger" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
@@ -259,7 +266,7 @@ function next(argu){
 }
 function otherFunction() {
     for(var i=0; i<$('.tpl-del').length; i++) {
-        var dataId = $('.tpl-del').eq(i).attr('data-id'), editId = $('.editContent').eq(i).attr('data-id'), checkId =$('.checkComment').eq(i).attr('data-id'), recommandId =  $('.yesRecommand').eq(i).attr('data-id'), recooo = $('.noRecommand').eq(i).attr('data-id');
+        var dataId = $('.tpl-del').eq(i).attr('data-id');
         $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
     }
     //点击选中所有
@@ -277,6 +284,29 @@ function otherFunction() {
            flag=0;
         }
     });
+    //恢复正常
+    $('.editContent').click(function () {
+        var dataId = $(this).attr("data-id");
+        $.ajax({
+            type:'post',
+            url: "<?php echo site_url('/find/Find/edit_find_serviceState');?>",
+            data: 'id='+ dataId +'&state=1',
+            success: function(result){    
+                console.log(result);     
+                var res = eval(result);
+                if(res == 1){
+                    alert("恢复正常，可前往帖子列表查看！");
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=3');
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    });
     //删除帖子
     $('.sureDelete').click(function () {
         var dataId = $(this).attr("data-id");
@@ -289,7 +319,7 @@ function otherFunction() {
                 var res = eval(result);
                 if(res == 1){
                     alert("删除成功！");
-                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=3');
                 }else{
                    alert("网络状况不佳，请稍后重试！");
                 }
@@ -316,7 +346,7 @@ function otherFunction() {
             success: function(data){
                 if(data==1){
                     alert('操作成功！'); 
-                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
+                    getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=3');
                 }else{
                     alert("操作失败！");
                 }
