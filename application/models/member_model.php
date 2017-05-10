@@ -31,7 +31,7 @@ class member_model extends CI_Model{
     //获取所有用户数
     function get_users($gid){
         $where['gid'] = $gid;
-        $query = $this->db->where($where)->get($this->member);
+        $query = $this->db->where($where)->order_by('create_time','desc')->get($this->member);
         return $query->result_array();
     }
     //返回用户分页
@@ -72,7 +72,7 @@ class member_model extends CI_Model{
         return $query->result_array();
     }
     //搜索会员分页
-       function search_users_page($gid,$card,$gender,$state,$sear,$off,$page){
+       function search_users_page($gid,$card,$gender,$starttime,$endtime){
         //会员卡
         $cardsql ='';
         $gendersql ='';
@@ -88,9 +88,9 @@ class member_model extends CI_Model{
            // $sql = "SELECT * FROM $this->member where gid='$gid' and gender ='$gender' order by create_time desc";
        //状态不为空
         }
-        if($state == 0 || $state == 1){
+        if(!empyt($starttime)){
            // $sql = "SELECT * FROM $this->member where gid='$gid'  and state = '$state' order by create_time desc";
-            $statesql = " and state = '$state'";
+            $statesql = " and create_time >= '$starttime' and create_time =< '$endtime'";
         //关键字不为空
         }
         if(!empty($sear)){
@@ -98,7 +98,7 @@ class member_model extends CI_Model{
             $searsql = " and username like '%$sear%' or nickname like '%$sear%' or phone like '%$sear%'";
            //全部不为空
         }
-        $sql = "SELECT * FROM $this->member where gid='$gid' $cardsql $gendersql $statesql $searsql order by create_time desc limit $off,$page";
+        $sql = "SELECT * FROM $this->member where gid='$gid' $cardsql $gendersql $statesql $searsql order by create_time desc";
         $query = $this->db->query($sql);
         return $query->result_array();
     }

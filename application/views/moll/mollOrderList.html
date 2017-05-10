@@ -352,6 +352,7 @@ $(document).ready(function(){
     //加载列表数数据
     if($ismollOrderList) {
         var order_status = $('#orderState option:selected').val(), buyer='',seller='', begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+      
         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=1');
         sessionStorage.setItem('ismollOrderList', 1);
     } else {
@@ -360,6 +361,7 @@ $(document).ready(function(){
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer='',seller='', begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+      //    console.log(begin_date,end_date);
         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=1');
         sessionStorage.setItem('ismollOrderList', 1);
         

@@ -245,58 +245,21 @@ class Member extends Default_Controller {
     //会员搜索
     function search(){
         if($_POST){
-            $card_type = $this->input->post('card');
+             $card_type = '';
             $gender = $this->input->post('gender');
-            $state = $this->input->post('state');
+            $start_time = $this->input->post('start_time');
+            $end_time = $this->input->post('end_time');
             $sear = trim($this->input->post('sear'));
 
-            $config['per_page'] = 10; //每页显示的数据数
-            //页码
-            $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
-            //分页数据
-            $result = $this->user_model->search_users_page('5',$card_type,$gender,$state,$sear,$current_page,$config['per_page']);
-            //配置
-            $config['base_url'] = site_url('/member/Member/memberList');
-            //分页配置
-            $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-            $config['full_tag_close'] = '</ul>';
-            $config['first_tag_open'] = '<li>';
-            $config['first_tag_close'] = '</li>';
-            $config['prev_tag_open'] = '<li>';
-            $config['prev_tag_close'] = '</li>';
-            $config['next_tag_open'] = '<li>';
-            $config['next_tag_close'] = '</li>';
-            $config['cur_tag_open'] = '<li class="am-active"><a>';
-            $config['cur_tag_close'] = '</a></li>';
-            $config['last_tag_open'] = '<li>';
-            $config['last_tag_close'] = '</li>';
-            $config['num_tag_open'] = '<li>';
-            $config['num_tag_close'] = '</li>';
-
-            $config['first_link']= '首页';
-            $config['next_link']= '下一页';
-            $config['prev_link']= '上一页';
-            $config['last_link']= '末页';
             //总共多少
-            $num = $this->user_model->search_users('5',$card_type,$gender,$state,$sear);
-
-            $this->load->library('pagination');//加载ci pagination类
-            $this->pagination->initialize($config);
-            $data = array(
-                'users' => $result,
-                'pages' => $this->pagination->create_links(),
-            );
-            //获取会员卡类型
-            $data['cards'] = $this->user_model->get_card_type( );
-
-            $data['title'] = '搜索结果';
-             //视图界面
-            $data['page'] = $this->view_memberList;
-            $data['menu'] = array('member','memberList');
-            $this->load->view('template.html',$data);
-              
+            $num = $this->user_model->search_users('5',$card_type,$gender,$start_time,$end_time,$sear);
+            if(!empty($num)){
+                echo json_encode($num);
             }else{
-                $this->load->view('404.html');
+                echo "3";
+            }
+            }else{
+               echo "2";
             }
     }
 
