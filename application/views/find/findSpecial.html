@@ -52,7 +52,7 @@ td.am-text-middle img {
     padding: 5px 6px !important;
     color: #e0690c !important;
 }
-.isRecommand {
+.isRecommand, .isRecommandIndex {
     border: 1px solid #5eb95e !important;
     color: #5eb95e !important;
 }
@@ -60,7 +60,7 @@ td.am-text-middle img {
     border: 1px solid #282d2f !important;
     color: #282d2f !important;
 }
-.isRecommand:hover {
+.isRecommand:hover, .isRecommandIndex:hover {
     cursor: pointer;
 }
 
@@ -274,6 +274,33 @@ function otherFunction() {
             }
         });
     });
+    //推荐到发现banner
+    $('.isRecommandIndex').click(function(){
+        var dataId=$(this).attr('data-id'), banner = $(this).attr('dataId');
+        if(banner == "0") {
+            banner_state = 1;
+        } else {
+            banner_state = 0;
+        }
+        console.log('q_id='+ dataId + '&isindex='+ banner_state);
+        $.ajax({ 
+            type:'post',
+            url: "<?php echo site_url('/find/Find/special_recommend');?>",
+            data: 'q_id='+ dataId + '&isindex='+ banner_state,
+            success: function(result){    
+                if(result == 1){
+                    alert("设置成功！");
+                    getList('<?php echo site_url('/find/Find/ret_findSpecial_list');?>','type='+index);
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    });
     
 }
 //异步刷新的ajax请求   
@@ -284,7 +311,7 @@ function getList(dataurl,data){
         data: data,
         success: function(result){         
             var res = eval(result);
-            // console.log(res);
+             console.log(res);
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/8); //得到总页数
@@ -348,11 +375,20 @@ $(document).ready(function(){
             <div class="tpl-table-black-operation">
                 <% if(banner_state == '1') { %>
                 <a data-id="<%= q_id %>" dataId="<%= banner_state %>" class="isRecommand gray">
-                    <i class="am-icon-star-o"></i> 不推荐
+                    <i class="am-icon-star-o"></i> 不推荐到banner
                 </a>
                 <% } else { %> 
                 <a data-id="<%= q_id %>" dataId="<%= banner_state %>" class="isRecommand">
                     <i class="am-icon-star"></i> 推荐到banner
+                </a>
+                <% } %>
+                <% if(isindex == '1') { %>
+                <a data-id="<%= q_id %>" dataId="<%= isindex %>" class="isRecommandIndex gray">
+                    <i class="am-icon-star-o"></i> 不推荐到首页
+                </a>
+                <% } else { %> 
+                <a data-id="<%= q_id %>" dataId="<%= isindex %>" class="isRecommandIndex">
+                    <i class="am-icon-star"></i> 推荐到首页
                 </a>
                 <% } %>
                 <a data-id="<%= q_id %>" class="editFind">
