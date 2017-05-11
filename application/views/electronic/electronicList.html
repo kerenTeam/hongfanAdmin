@@ -117,7 +117,7 @@ td img{
 </div>
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 <script type="text/javascript">
-    var total_page = 0,pageflag = 1,current_page=0,$findSpecial = parseInt(sessionStorage.getItem('findSpecial')) || 0;
+    var total_page = 0,pageflag = 1,current_page=0,$electronicList = parseInt(sessionStorage.getItem('electronicList')) || 0;
     //点击前往某一页的函数
     function go_to_page(page_num){
         $('.page_link').removeClass('active_page');
@@ -127,8 +127,8 @@ td img{
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page=page_num;
-        sessionStorage.setItem('findSpecial', current_page);
-        $findSpecial = parseInt(sessionStorage.getItem('findSpecial'));
+        sessionStorage.setItem('electronicList', current_page);
+        $electronicList = parseInt(sessionStorage.getItem('electronicList'));
         
     }
 
@@ -211,20 +211,26 @@ td img{
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
-                    if(pageflag) {
-                        var opts={};
-                        opts.current_page = $findSpecial;
-                        $("#Pagination").pagination(total_page, opts);
-                        go_to_page($findSpecial);
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
+                    if(total_page <= 1) {
+                        $('#Pagination').css('display', 'none');
                         $('.searchPage').css('display', 'none');
+                    } else {
+                        if(pageflag) {
+                            var opts={};
+                            opts.current_page = $electronicList;
+                            $("#Pagination").pagination(total_page, opts);
+                            go_to_page($electronicList);
+                            pageflag = 0;
+                        } else {
+                            $("#Pagination").pagination(total_page);
+                            go_to_page(0);
+                            
+                        }
+                        if(total_page < 5) {
+                            $('.searchPage').css('display', 'none');
+                        }
                     }
+                    
                     otherFunction();
                 }else{
                     $('#dataList').find('tr').remove();

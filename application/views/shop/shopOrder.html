@@ -15,7 +15,7 @@
 .am-u-sm6 {
     width:60px !important;
     margin:0;
-} 
+}  
 .am-form-group div {
     line-height: 37px;
 } 
@@ -467,21 +467,25 @@ td div.am-u-sm-12 {
                 document.getElementById('dataList').innerHTML = listData;
                 $('.pagebox').css('display', 'block');
                 $('.allData').html(res.length);
-                if(pageflag) {
-                    var opts={};opts.current_page = $shopOrder;
-                    $("#Pagination").pagination(total_page, opts);
-                    if($shopOrder) {
-                        go_to_page($shopOrder);
-                    }
-                    pageflag = 0;
+                 if(total_page <= 1) {
+                        $('#Pagination').css('display', 'none');
+                        $('.searchPage').css('display', 'none');
                 } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
+                    if(pageflag) {
+                        var opts={};opts.current_page = $shopOrder;
+                        $("#Pagination").pagination(total_page, opts);
+                        go_to_page($shopOrder);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }
-                if(total_page < 5) {
-                    $('.searchPage').css('display', 'none');
-                }
+                
                 someOptions();
 
             }else{

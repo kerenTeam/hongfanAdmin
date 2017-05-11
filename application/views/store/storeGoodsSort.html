@@ -177,8 +177,8 @@ function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
     $('.page_link').eq(page_num).addClass('active_page');
     $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(10)*parseInt(page_num);
-    var end_page=parseInt(10)*parseInt(page_num+1);
+    var start_page=parseInt(15)*parseInt(page_num);
+    var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
     sessionStorage.setItem('storeGoodsSort', current_page);
@@ -223,27 +223,33 @@ function getList(dataurl,data){
             console.log(res);
             if(res.length){
                 var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/10); //得到总页数
+                total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
                     listData += template('dataModal', res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($storeGoodsSort);
-                    var opts={};
-                    opts.current_page = $storeGoodsSort;
-                    $("#Pagination").pagination(total_page, opts);
-                    pageflag = 0;
-                } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
+                if(total_page <= 1) {
+                       $('#Pagination').css('display', 'none');
+                        $('.searchPage').css('display', 'none');
+                } else { 
+                    if(pageflag) {        
+                        var opts={};
+                        opts.current_page = $storeGoodsSort;
+                        $("#Pagination").pagination(total_page, opts);
+                        go_to_page($storeGoodsSort);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }
-                if(total_page < 5) {
-                    $('.searchPage').css('display', 'none');
-                }
+                
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();

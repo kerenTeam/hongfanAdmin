@@ -377,7 +377,7 @@
                 url: "<?php echo site_url('/find/Find/findSpecial_recommend');?>",
                 data: 'q_id='+ dataId + '&banner_state='+ banner_state,
                 success: function(result){    
-                    console.log(result);     
+                    // console.log(result);     
                     var res = eval(result);
                     if(res == 1){
                         alert("保存成功！");
@@ -484,19 +484,25 @@
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($shopList);
-                    var opts={};opts.current_page = $shopList;
-                    $("#Pagination").pagination(total_page, opts);
-                    pageflag = 0;
-                } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
-                }
-                if(total_page < 5) {
+                if(total_page <= 1) {
+                    $('#Pagination').css('display', 'none');
                     $('.searchPage').css('display', 'none');
+                } else {
+                    if(pageflag) {
+                        var opts={};opts.current_page = $shopList;
+                        $("#Pagination").pagination(total_page, opts); 
+                        go_to_page($shopList);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }
+                
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();
