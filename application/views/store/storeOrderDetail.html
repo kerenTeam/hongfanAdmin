@@ -112,7 +112,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="am-u-sm-4">
                                 <p>单价：￥<?php echo $val['price']+$val['Floating_price'];?></p>
                                 <p>数量：x<?php echo $val['nums'];?></p>
-                                <p>运费：￥<?php echo $goods['postAge'];?></p>
+                              
                                 <?php if(!empty($val['reduction_rule'])):?>
                                     <p>商品满减规则： <?php $re = json_decode($val['reduction_rule'],true); foreach($re as $v):?>满<?php echo $v['reachPrice'];?>减<?php echo $v['reducePrice']?>&nbsp;<?php endforeach;?></p>
                                 <?php endif;?>
@@ -125,7 +125,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="am-u-sm-4">
                                 买家：<?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
                             </div>
-                            
+                          
                             <?php if(!empty($order['fee_name'])):?>
                             <div class="am-u-sm-4">
                                 改价原因：<?php echo $order['fee_name'];?>
@@ -140,6 +140,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
                                  <div class="am-u-sm-4">用户所选快递模板：<?php echo $express['expressName'];?></div>
+                                   <div class="am-u-sm-4">  运费：￥<?php echo $goods['postAge'];?></div>
                                 <?php $pay = json_decode($order['PriceCalculation'],true);?>
                                 <div class="am-u-sm-4">
                                     支付方式：<?php echo $pay['Params']['postData']['payType']?>
