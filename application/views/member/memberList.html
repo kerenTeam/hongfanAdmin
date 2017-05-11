@@ -1,3 +1,12 @@
+<style>
+.avatar{
+    width: 100px;
+    height: 100px;
+}
+
+
+</style>
+
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
 <div class="container-fluid am-cf">
@@ -68,6 +77,7 @@
                 </form>
                 <div class="widget-head am-cf">
                     <div class="widget-title  am-cf" style="clear: both;">会员列表</div>
+                    <div class="widget-title  am-cf" style="clear: both;">会员注册总数：<?php echo count($userNum);?></div>
                 </div> 
                 <div class="widget-body  am-fr">
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -329,7 +339,7 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle">
             <% if(avatar) { %>
-            <img alt="" src="<%= avatar[0].picImg %>">
+            <img class='avatar' alt="" src="<%= avatar[0].picImg %>">
             <% } else { %>
             暂无
             <% } %>
