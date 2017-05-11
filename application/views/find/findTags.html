@@ -78,7 +78,6 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target:'#add_tags'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -268,20 +267,25 @@ function getList(dataurl,data){
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($storeGoodsSort);
-                    var opts={};
-                    opts.current_page = $storeGoodsSort;
-                    $("#Pagination").pagination(total_page, opts);
-                    pageflag = 0;
-                } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
-                }
-                if(total_page < 5) {
+                if(total_page <= 1) {
+                    $('#Pagination').css('display', 'none');
                     $('.searchPage').css('display', 'none');
+                } else {
+                    if(pageflag) {
+                        var opts={};
+                        opts.current_page = $storeGoodsSort;
+                        $("#Pagination").pagination(total_page, opts);go_to_page($storeGoodsSort);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }
+                
                 otherFunction();
             }else{
                 $('#dataList').find('tr').remove();

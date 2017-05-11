@@ -211,7 +211,7 @@
 </div>
 <!--加入达人推荐的弹窗结束-->
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
+<script type="text/javascript">//找店
 function someOptions() {
     $('.editShop').click(function(){//编辑商家信息
         var dataId=$(this).attr('data-id');
@@ -376,19 +376,26 @@ function getList(dataurl,data){
                 document.getElementById('dataList').innerHTML = listData;
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    go_to_page($marketList);
-                    var opts={};opts.current_page = $marketList;
-                    $("#Pagination").pagination(total_page, opts);
-                    pageflag = 0;
+                if(total_page <= 1) {
+                       $('#Pagination').css('display', 'none');
+                        $('.searchPage').css('display', 'none');
                 } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
+                    if(pageflag) {
                     
+                        var opts={};opts.current_page = $marketList;
+                        $("#Pagination").pagination(total_page, opts);
+                        go_to_page($marketList);
+                        pageflag = 0;
+                    } else {
+                        $("#Pagination").pagination(total_page);
+                        go_to_page(0);
+                        
+                    }
+                    if(total_page < 5) {
+                        $('.searchPage').css('display', 'none');
+                    }
                 }
-                if(total_page < 5) {
-                    $('.searchPage').css('display', 'none');
-                }
+
                 someOptions();
             }else{
                 $('#dataList').find('tr').remove();

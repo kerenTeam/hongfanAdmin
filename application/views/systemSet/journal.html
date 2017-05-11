@@ -163,15 +163,6 @@ td.am-text-middle img{
                     <div class="widget-title  am-cf">日志列表</div>
                 </div>
                 <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
@@ -261,8 +252,9 @@ td.am-text-middle img{
         var end_page=parseInt(15)*parseInt(page_num+1);
         $('#dataList').children('tr').slice(start_page,end_page).css('display','');
         current_page = page_num;
-        localStorage.setItem('journal', current_page);
-        $journal = localStorage.setItem('journal', current_page);
+        sessionStorage.setItem('journal', current_page);
+        $journal = sessionStorage.setItem('journal', current_page);
+
     }
 
     //点击上一页的函数
@@ -298,19 +290,25 @@ td.am-text-middle img{
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
-                    if(pageflag) {
-                        go_to_page($journal);
-                        var opts={};opts.current_page = $journal;
-                        $("#Pagination").pagination(total_page, opts);
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
+                    if(total_page <= 1) {
+                       $('#Pagination').css('display', 'none');
                         $('.searchPage').css('display', 'none');
+                    } else { 
+                      if(pageflag) {
+                          var opts={};opts.current_page = $journal;
+                          $("#Pagination").pagination(total_page, opts);
+                          go_to_page($journal);
+                          pageflag = 0;
+                      } else {
+                          $("#Pagination").pagination(total_page);
+                          go_to_page(0);
+                          
+                      }
+                      if(total_page < 5) {
+                          $('.searchPage').css('display', 'none');
+                      }
                     }
+                    
                 }else{
                     $('#dataList').find('tr').remove();
                     $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
@@ -328,10 +326,6 @@ td.am-text-middle img{
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', $journal);
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('systemSet/SystemSet/get_system_journal');?>','default=1', $journal);
-    });
 })
 </script>
 <script type="text/html" id="dataModal">   

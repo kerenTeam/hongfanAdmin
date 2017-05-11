@@ -511,19 +511,25 @@
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
                     $('.pagebox').css('display', 'block');
-                    if(pageflag) {
-                        go_to_page($storeGoodsList);
-                        var opts={};opts.current_page = $storeGoodsList;
-                        $("#Pagination").pagination(total_page, opts);
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
+                    if(total_page <= 1) {
+                        $('#Pagination').css('display', 'none');
                         $('.searchPage').css('display', 'none');
-                    }                             
+                    } else {
+                        if(pageflag) { 
+                            var opts={};opts.current_page = $storeGoodsList;
+                            $("#Pagination").pagination(total_page, opts);
+                            go_to_page($storeGoodsList);
+                            pageflag = 0;
+                        } else {
+                            $("#Pagination").pagination(total_page);
+                            go_to_page(0);
+                            
+                        }
+                        if(total_page < 5) {
+                            $('.searchPage').css('display', 'none');
+                        } 
+                    }
+                                                
                     otherFunction();
                     
                     

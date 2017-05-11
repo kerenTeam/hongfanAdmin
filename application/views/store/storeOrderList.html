@@ -250,7 +250,7 @@ td div.am-u-sm-12 {
             go_to_page(new_page);
         }
     }
-
+ 
     //点击下一页的函数
     function next(){
         new_page = current_page+1;
@@ -275,7 +275,7 @@ td div.am-u-sm-12 {
                 url:'<?php echo site_url('/store/Store/del_Order');?>',
                 data: 'id='+dataId,
                 success: function(data){
-                    console.log(data);
+                    // console.log(data);
                     if(data==1){ 
                         getList('<?php echo site_url('store/store/Order_page');?>','default=4');
                         alert("操作成功！");
@@ -334,19 +334,25 @@ td div.am-u-sm-12 {
                     // console.log(res);
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
-                    $('.pagebox').css('display', 'block');
-                    if(pageflag) {
-                        go_to_page($storeOrderList);
-                        var opts={};opts.current_page = $storeOrderList;
-                        $("#Pagination").pagination(total_page, opts);
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
+                    if(total_page <= 1) {
+                       $('#Pagination').css('display', 'none');
                         $('.searchPage').css('display', 'none');
+                    } else {
+                        $('.allData').html(res.length);
+                        $('.pagebox').css('display', 'block');
+                        if(pageflag) {  
+                            var opts={};opts.current_page = $storeOrderList;
+                            $("#Pagination").pagination(total_page, opts);
+                            go_to_page($storeOrderList);
+                            pageflag = 0;
+                        } else {
+                            $("#Pagination").pagination(total_page);
+                            go_to_page(0);
+                            
+                        }
+                        if(total_page < 5) {
+                            $('.searchPage').css('display', 'none');
+                        }
                     }
                     otherFunction();
                          
