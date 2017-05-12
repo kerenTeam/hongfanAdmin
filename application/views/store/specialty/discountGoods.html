@@ -155,8 +155,8 @@
                                     <th>商品名 </th>
                                     <th>所属店铺 </th>   
                                     <th>实时库存 </th>   
-                                    <th>商品价格<i class="am-icon am-icon-sort" onclick="storeEditGoods(1)"></th> 
-                                    <th>销量<i class="am-icon am-icon-sort" onclick="storeEditGoods(2)"></th> 
+                                    <th>商品价格></th> 
+                                    <th>销量</th> 
                                     <th>商品状态</th>
                                     <th>排序</th>
                                     <th>操作</th>
@@ -412,27 +412,27 @@
             }
         });
     }
-//天天特价排序
-function storeEditGoods(arg1) {
-    if(arg1 == 1) {
-        if(salesFlag) {
-            getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=3');
-            salesFlag=0;
-        } else {
-            getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=4');
-            salesFlag=1;
-        }
+// //天天特价排序
+// function storeEditGoods(arg1) {
+//     if(arg1 == 1) {
+//         if(salesFlag) {
+//             getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=3');
+//             salesFlag=0;
+//         } else {
+//             getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=4');
+//             salesFlag=1;
+//         }
         
-    } else {
-        if(priceFlag) {
-            getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=5');
-            priceFlag=0;
-        } else {
-            getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=6');
-            priceFlag=1;
-        }
-    }
-}
+//     } else {
+//         if(priceFlag) {
+//             getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=5');
+//             priceFlag=0;
+//         } else {
+//             getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=6');
+//             priceFlag=1;
+//         }
+//     }
+// }
 $(document).ready(function(){
     
 
