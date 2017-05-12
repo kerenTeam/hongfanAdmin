@@ -558,7 +558,7 @@ $(document).ready(function(){
     if(isFindContent) {
         var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
         console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
-        // getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     }
     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
@@ -566,7 +566,7 @@ $(document).ready(function(){
     $('.searchSort').click(function(){
         var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
         console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
-        // getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     });
 })
