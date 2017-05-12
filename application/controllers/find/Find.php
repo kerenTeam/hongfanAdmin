@@ -50,11 +50,15 @@ class Find extends Default_Controller {
         $data['menu'] = array('find','findContent');
         $this->load->view('template.html',$data);
     }
+    
     //帖子搜索
     function search_find_service(){
         if($_POST){
             $cateid = $this->input->post('cate_id');
             $sear = $this->input->post('search');
+            $special  = $this->input->post('special');
+            $begin_date = $this->input->post('begin_date');
+            $end_date = $this->input->post('end_date');
 
             $list = '';
             //判断条件
