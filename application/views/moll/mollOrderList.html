@@ -131,6 +131,7 @@ td div div p {
                             <thead>
                                 <tr>
                                     <th>订单编号 </th>
+                                    <th>支付订单号 </th>
                                     <th width="40%" class="am-text-center">购买商品 </th>
                                     <th>订单金额 </th>
                                     <th>买家 </th>
@@ -377,6 +378,7 @@ $(document).ready(function(){
 <script type="text/html" id="dataModal">   
     <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
         <td class="am-text-middle"><%= order_id %></td>
+        <td class="am-text-middle"><%= order_UUID %></td>
         <td class="am-text-middle">
         <% for(var j = 0; j < goods_data.goods_Data.length; j++) {%>    
             <div class="am-u-sm-12">

@@ -137,7 +137,7 @@ td.am-text-middle img {
                             <thead>
                                 <tr>
                                     <th>订单编号 </th>
-                                    <th>爱购编号 </th>
+                                    <th>支付订单号 </th>
                                     <th>买家姓名 </th>
                                     <th>身份证号 </th>
                                     <th>收货地址 </th>
@@ -547,8 +547,7 @@ $(document).ready(function(){
 <script type="text/html" id="dataModal">   
     <tr class="trClass" data-id="<%= order_id %>">
         <td class="am-text-middle"><%= order_id %></td>
-        <td class="am-text-middle"><%= goods_data.goods_Data
-[0].id %></td>
+        <td class="am-text-middle"><%= order_UUID %></td>
         <td class="am-text-middle">
         <%if(username) {%>
         <%= username %>
