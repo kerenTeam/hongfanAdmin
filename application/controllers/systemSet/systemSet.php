@@ -993,6 +993,21 @@ class SystemSet extends Default_Controller {
         $this->load->view('template.html',$data);
     }
 
+    //返回反馈留言
+    function ret_feedback(){
+        if($_POST){
+            $query = $this->db->order_by('feeback_data','desc')->get('hf_system_feedback');
+            $list = $query->result_array();
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "3";
+        }
+    }
+
 
 
 }
