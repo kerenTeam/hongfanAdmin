@@ -42,6 +42,9 @@ class SystemSet extends Default_Controller {
     //系统日志
     public $view_system_journal = "systemSet/journal.html";
 
+    //留言反馈
+    public $view_feedback = "systemSet/feedback.html";
+
     //运费模板
     public $view_express = "systemSet/expressTemplate.html";
     function __construct()
@@ -982,7 +985,13 @@ class SystemSet extends Default_Controller {
     }
 
     
+    //反馈留言
+    function feedback(){
 
+        $data['page'] = $this->view_feedback;
+        $data['menu'] = array('systemSet','feedback');
+        $this->load->view('template.html',$data);
+    }
 
 
 
