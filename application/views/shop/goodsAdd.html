@@ -279,8 +279,15 @@ i {
                             <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
                             <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
                         </div>
-                         
-                     
+                        <?php if($store_type != 2):?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                            <label for="goodBrand" class="am-u-sm-3 am-form-label">最大限购数：</label>
+                            <div class="am-u-sm-8 am-u-end">
+                                <input type="text" name='maxTorder' id="maxTorder" placeholder="不限购就不填"  />
+                            </div>
+                        </div>
+                        <?php endif;?>
+                        
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">计量单位：</label>
                             <div class="am-u-sm-8 am-u-end">

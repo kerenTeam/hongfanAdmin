@@ -146,10 +146,13 @@ padding: 5px 6px!important;
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">商家<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
-                            <select name="store" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="">输入查找/选择</option>
-                                <option value="3">商家一</option>
-                                <option value="2">商家二</option>
+                            <select name="storeid" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value="0">输入查找/选择</option>
+                                <?php if(!empty($store)):?>
+                                <?php foreach($store as $k=>$v):?>
+                                <option value="<?php echo $v['store_id'];?>" <?php if($coupon['storeid'] == $v['store_id']){echo "selected";}?>><?php echo $v['store_name'];?></option>
+                                <?php endforeach;?>
+                                <?php endif;?>
                             </select>
                         </div>
                     </div>
