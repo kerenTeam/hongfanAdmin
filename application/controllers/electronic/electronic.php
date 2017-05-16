@@ -18,6 +18,7 @@ class Electronic extends Default_Controller {
     {
         parent::__construct();
         $this->load->model('Activity_model');
+        $this->load->model('Shop_model');
     }
     //electronic列表
     function electronicList(){
@@ -44,6 +45,9 @@ class Electronic extends Default_Controller {
     function addElectronic(){
         //获取优惠劵类型
          $data['type'] = $this->Activity_model->get_coupon_type();
+         //获取找点商家
+         $data['store']  =  $this->Shop_model->shop_list('1');
+
          $data['page']= $this->view_addElectronic;
          $data['menu'] = array('marketActivity','electronicList');
          $this->load->view('template.html',$data);
@@ -88,6 +92,9 @@ class Electronic extends Default_Controller {
             $data['type'] = $this->Activity_model->get_coupon_type();
             //获取卡卷信息
             $data['coupon'] = $this->Activity_model->get_electr_info($id);
+
+                //获取找点商家
+             $data['store']  =  $this->Shop_model->shop_list('1');
 
              $data['page']= $this->view_editElectronic;
              $data['menu'] = array('marketActivity','electronicList');

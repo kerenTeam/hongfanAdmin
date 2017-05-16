@@ -327,7 +327,7 @@ class SingleShop extends Default_Controller {
             }
               //返回快递模板
             //$data['express'] = $this->MallShop_model->get_express_temp();
-
+            $data['store_type'] = $store_type;
             $data['shuxing'] = $parent;
             $data['page'] = $this->view_goodsDetail;
             $data['menu'] = array('shop','goodsList');       
@@ -431,7 +431,7 @@ class SingleShop extends Default_Controller {
         }
         //返回快递模板
         //$data['express'] = $this->MallShop_model->get_express_temp();
-
+        $data['store_type'] = $store_type;
         $data['page'] = $this->view_goodsAdd;
         $data['menu'] = array('shop','goodsList');       
         $this->load->view('template.html',$data);
