@@ -996,8 +996,7 @@ class SystemSet extends Default_Controller {
     //返回反馈留言
     function ret_feedback(){
         if($_POST){
-            $query = $this->db->order_by('feeback_data','desc')->get('hf_system_feedback');
-            $list = $query->result_array();
+            $list = $this->System_model->ret_feedback();
             if(!empty($list)){
                 echo json_encode($list);
             }else{

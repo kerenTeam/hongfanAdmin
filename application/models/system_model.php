@@ -227,6 +227,13 @@ class System_model extends CI_Model
         return $this->db->where($where)->delete($this->report_cates);
     }
 
+    function ret_feedback(){
+        $this->db->select('a.*, b.username,b.nickname');
+        $this->db->from('hf_system_feedback a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->order_by('a.feedback_data','desc')->get();
+        return $query->result_array(); 
+    }
 
 }
 
