@@ -188,7 +188,7 @@ class HomeReport extends Default_Controller {
                     //日志
                     $log = array(
                         'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."删除了一个家乡话新闻。公告id是：".$data['id'],
+                        "content" => $_SESSION['users']['username']."删除了一个家乡话新闻。公告id是：".$id,
                         "create_time" => date('Y-m-d H:i:s'),
                         "userip" => get_client_ip(),
                     );
