@@ -336,7 +336,13 @@ $(document).ready(function(){
 <script type="text/html" id="dataModal">   
     <tr class="trClass">
         <td class="am-text-middle"><%= id %></td>
-        <td class="am-text-middle"><%= username %></td>
+        <td class="am-text-middle">
+          <% if(username) { %>
+          <%= username %>
+          <% } else { %>
+          <%= nickname %>
+          <% } %>
+        </td>
         <td class="am-text-middle"><%= content %></td>
         <td class="am-text-middle"><%= feedback_data %></td>
     </tr>
