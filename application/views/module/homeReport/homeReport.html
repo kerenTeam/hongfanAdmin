@@ -107,7 +107,6 @@
                                     <button type="button" class="am-btn am-btn-warning"><a href="<?php echo site_url().'/module/HomeReport/homeReportSort';?>"><span class="am-icon-sort"></span> 管理分类</a></button>
                                     <!--<button type="button" class="am-btn am-btn-secondary"><a href="<?php echo site_url().'/module/HomeReport/userFocusSort';?>"><span class="am-icon-user"></span> 用户关注分类</a></button>-->
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/module/HomeReport/homeReportAdd';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -241,7 +240,7 @@ function otherOperation() {
         }    
     });
 
-    //删除管理员帐户
+    //删除家乡话
     $('.sureDelete').click(function(){
         var dataId=$(this).attr('data-id');
         $.ajax({
@@ -249,8 +248,10 @@ function otherOperation() {
             url:'<?php echo site_url('/module/HomeReport/del_notice');?>',
             data: 'id='+dataId,
             success: function(data){
+                console.log(data);
                 if(data==1){
-                    $('.trClass'+dataId).remove();
+                    alert("操作成功！");
+                    getList('<?php echo site_url('/module/HomeReport/get_notice_list');?>','default=1');
                 }else{
                     alert("操作失败！");
                 }
@@ -316,10 +317,6 @@ function getList(dataurl,data){
 $(document).ready(function(){
      //加载列表数数据
     getList('<?php echo site_url('/module/HomeReport/get_notice_list');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/module/HomeReport/get_notice_list');?>','default=1');
-    });
 })
 </script>
 <script type="text/html" id="dataModal">
