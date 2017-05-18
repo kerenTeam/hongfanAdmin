@@ -450,6 +450,28 @@ i {
                             </div>
                             
                         </div>
+                        <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" >
+                            <label for="" class="am-u-sm-3 am-form-label">满减规则：</label>
+                            <?php $man = json_decode($goods['reduction_rule'],true);?>
+                            <?php if(!empty($man)):?>
+                            <div class="am-u-sm-6" id="priceModelsBox">
+                                 <?php foreach($man as $val):?>
+                               <p>满 <input class="priceOne" value="<?php echo $val['reachPrice']?>" /> 元减 <input class="priceTwo" value="<?php echo $val['reducePrice']?>"/> 元 
+                             <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
+                                <?php endforeach;?>
+                            </div>
+                            <?php else:?>
+                            <div class="am-u-sm-6" id="priceModelsBox">
+                               <p>满 <input class="priceOne"  /> 元减 <input class="priceTwo" /> 元 
+                             <button type="button" class="am-btn am-btn-warning am-btn-xs" onclick="deletePriceModel(this)">删除</button>
+                            </div>
+                            <?php endif;?>
+                            <div class="am-u-sm-1 am-u-end">
+                                <a type="button" class="am-btn am-btn-success am-btn-xs" id="addNew">新增规则</a>
+                            </div>
+
+                            <input type="hidden" id='reduction_rule' name="reduction_rule"/>
+                        </div>
                       <!--   <input type="hidden"  id="respority" name="amount" min="1" required="required" /> -->
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-u-end">
                             <label for="goodBrand" class="am-u-sm-3 am-form-label">月销量<span class="red">*</span>：</label>
@@ -1001,6 +1023,21 @@ $('#dispostage').click(function(){
         $('#stockamount').val(totalrespority);
         $('#inputproperty').val(JSON.stringify(propertyArray));
 
+        var manjianRule = [], TagsModel = [];
+        for(var j=0;j<$('.priceOne').length;j++) {
+            if($('.priceOne').eq(j).val() && $('.priceTwo').eq(j).val()) {
+                var priceModel = {}
+               // console.log($('.priceOne').eq(j).val() + '' +$('.priceTwo').eq(j).val());
+                priceModel.reachPrice = $('.priceOne').eq(j).val();
+                priceModel.reducePrice = $('.priceTwo').eq(j).val();
+                 console.log(priceModel);
+                manjianRule.push(priceModel);
+            }   
+        }
+        
+        // console.log(manjianRule);
+        manjianRule=JSON.stringify(manjianRule);
+        $('#reduction_rule').val(manjianRule);
         return true;
     });
     //批量操作的js

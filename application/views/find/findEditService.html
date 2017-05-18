@@ -175,8 +175,9 @@
                                         <div class="tagsBox" id="tieContent">
                                             标签：&nbsp;&nbsp;
                                             <?php
-                                                $tag = '';
+                                                $tag = array();
                                                 foreach($news_tag as $k=>$v){
+                                          
                                                     $tag[$k] = $v['tag_id']; 
                                             ?>
                                             <span class="blue">#<?php echo ret_find_tagName($v['tag_id']);?>#<i class="am-icon-times smalldelete" onclick="deleteTags(this)" data-id="<?php echo $v['tag_id'];?>"></i></span>
