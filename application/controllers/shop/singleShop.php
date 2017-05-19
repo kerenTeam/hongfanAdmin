@@ -244,6 +244,22 @@ class SingleShop extends Default_Controller {
            }else{
                $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'4');
            }
+
+            //获取商品库存
+            foreach($arr as $k=>$v){
+                //获取商品属性
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+                if(!empty($parent)){
+                    $a = '0';
+                    foreach($parent as $key=>$val){
+                        $a += $val['stock'];
+                    }
+                    $arr[$k]['amount'] = $a;
+                }else{
+                    $arr[$k]['amount'] = '0';
+                }
+            } 
+
            if(empty($arr)){
                 echo "2";
            }else{

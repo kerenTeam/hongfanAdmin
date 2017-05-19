@@ -197,6 +197,9 @@ class Find extends Default_Controller {
             }else{
                 $list = $this->Find_model->get_find_service_state($type);
             }
+            
+
+
             foreach($list as $key=>$val){
                 if(empty($val['categoryid'])){
                     $list[$key]['cate_name'] = "还没有归类,请编辑归类!";

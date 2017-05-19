@@ -940,6 +940,24 @@ class Store extends Default_Controller {
          if($_POST){
             $type = $this->input->post('default');
             $goods_list  = $this->MallShop_model->get_since_goodslist($type);
+
+            
+            //获取商品库存
+            foreach($goods_list as $k=>$v){
+                //获取商品属性
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+                if(!empty($parent)){
+                    $a = '0';
+                    foreach($parent as $key=>$val){
+                        $a += $val['stock'];
+                    }
+                    $goods_list[$k]['amount'] = $a;
+                }else{
+                    $goods_list[$k]['amount'] = '0';
+                }
+            } 
+            
+
             if(!empty($goods_list)){
                 echo json_encode($goods_list);
             }else{
