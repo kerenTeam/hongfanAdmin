@@ -388,7 +388,7 @@ td div.am-u-sm-12 {
             var dataId = $(this).attr('data-id');
             var isAgree = $('#isAgree'+dataId).val();
             var refund_reason = $('#refund_reason'+dataId).val() || '';
-            console.log('order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason);
+            // console.log('order_id='+ dataId +'&isAgree='+isAgree+'&refund_reason='+ refund_reason);
             if(isAgree == 0 && !refund_reason){
                alert("请正确填写发货信息！");
                 return false;             
@@ -536,7 +536,7 @@ $(document).ready(function(){
     //加载列表数数据
     if($isShopOrder) {
         var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+           // console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         sessionStorage.setItem('isShopOrder', 1);
     } else {
@@ -545,7 +545,7 @@ $(document).ready(function(){
     //点击搜索
     $('.searchOrder').click(function(){
         var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+           // console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
         sessionStorage.setItem('isShopOrder', 1);
             return true;

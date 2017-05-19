@@ -471,10 +471,6 @@ function getList(dataurl,data){
 $(document).ready(function(){
     //加载列表数数据
     getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/serveForPeople/serveForPeople/helpUser_list');?>','default=1');
-    });
     //点击搜索
     $('.searchGoods').click(function(){
         var helpgroupName=$('#helpgroupName').val(),helpgroupArea=$('#helpgroupArea').val(),helpgroupJob=$('#helpgroupJob').val(),helpgroupAddress=$('#helpgroupAddress').val(),helpgroupkey=$('#helpgroupkey').val();
