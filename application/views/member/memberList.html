@@ -252,13 +252,13 @@ $(function() {
             data: data,
             success: function(result){
 
-                var res = JSON.parse(result);
+                var res = eval(result);
                 // console.log(res); 
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
-                        res[i].avatar = JSON.parse(res[i].avatar);
+                        res[i].avatar = eval(res[i].avatar);
                         listData+= template('dataModal',res[i]);
                      }
                     document.getElementById('dataList').innerHTML = listData;

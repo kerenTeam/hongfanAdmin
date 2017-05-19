@@ -77,6 +77,21 @@ class Store extends Default_Controller {
             }else{
                 $goods_list = $this->MallShop_model->get_goodslist('4');
             }
+
+            //获取商品库存
+            foreach($goods_list as $k=>$v){
+                //获取商品属性
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+                if(!empty($parent)){
+                    $a = '0';
+                    foreach($parent as $key=>$val){
+                        $a += $val['stock'];
+                    }
+                    $goods_list[$k]['amount'] = $a;
+                }else{
+                    $goods_list[$k]['amount'] = '0';
+                }
+            } 
             if(empty($goods_list)){
                 echo "2";
             }else{
@@ -188,10 +203,12 @@ class Store extends Default_Controller {
             $this->load->view('404.html');
          }else{
             //获取商品详情
-            $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
-
-            $data['cates'] = $this->MallShop_model->get_goods_cates_list('2');
-
+            $goods = $this->MallShop_model->get_goodsInfo($id);
+            if($goods['differentiate'] == 1){
+                $data['cates'] = $this->MallShop_model->get_goods_cates_list('1');
+            }else{
+                $data['cates'] = $this->MallShop_model->get_goods_cates_list('2');
+            }
             
             //获取商品属性
             $parent = $this->MallShop_model->get_goods_parent($id);
@@ -222,13 +239,67 @@ class Store extends Default_Controller {
 
              $data['shuxing'] = $parent;
 
-
+             $data['goods'] = $goods;
 
             $data['page'] = $this->view_storeEditGoods;
             $data['menu'] = array('store','storeGoodsList');
             $this->load->view('template.html',$data);
          }
     }
+
+    //编辑商品
+    function mollEditGoods(){
+         $id = intval($this->uri->segment(4));
+         if($id == 0){
+            $this->load->view('404.html');
+         }else{
+            //获取商品详情
+            $goods = $this->MallShop_model->get_goodsInfo($id);
+            if($goods['differentiate'] == 1){
+                $data['cates'] = $this->MallShop_model->get_goods_cates_list('1');
+            }else{
+                $data['cates'] = $this->MallShop_model->get_goods_cates_list('2');
+            }
+            
+            //获取商品属性
+            $parent = $this->MallShop_model->get_goods_parent($id);
+            if(!empty($parent)){
+                foreach ($parent as $key => $value) {
+                    $stend['0']['name'][] = $value['stend1'];
+                    $stend['0']['value'][] = $value['value1'];
+                    $stend['1']['name'][]= $value['stend2'];
+                    $stend['1']['value'][]= $value['value2'];
+                    $stend['2']['name'][]= $value['stend3'];
+                    $stend['2']['value'][]= $value['value3'];
+                    $stend['3']['name'][] = $value['stend4'];
+                    $stend['3']['value'][] = $value['value4'];
+                }
+                foreach ($stend as $k => $v) {
+                    if($v['name'][0] == ''){
+                        unset($v);
+                    }else{
+                        $arr[$k]['name'] = array_unique($v['name']);
+                        $arr[$k]['value'] = array_unique($v['value']);
+                    }
+                }
+                $data['parent'] =$arr;
+            }else{
+                $parent = '';
+                $data['parent'] = '';
+            }
+
+             $data['shuxing'] = $parent;
+
+             $data['goods'] = $goods;
+
+            $data['page'] = $this->view_storeEditGoods;
+            $data['menu'] = array('moll','sinceGoods');
+            $this->load->view('template.html',$data);
+         }
+    }
+
+
+
     //编辑商品操作
     function store_edit_goods(){
         if($_POST){

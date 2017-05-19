@@ -389,6 +389,9 @@ class SingleShop extends Default_Controller {
             if(empty(json_decode($data['reduction_rule']))){
                 $data['reduction_rule'] = NULL;
             }
+            if(empty($data['maxTorder'])){
+                $data['maxTorder'] = NULL;
+            }
 
              $data['update_time'] = date('Y-m-d H:i:s');
              $data['good_pic'] = json_encode($pic);
@@ -487,6 +490,9 @@ class SingleShop extends Default_Controller {
 
             if(empty(json_decode($data['reduction_rule']))){
                 $data['reduction_rule'] = NULL;
+            }
+             if(empty($data['maxTorder'])){
+                $data['maxTorder'] = NULL;
             }
    
              $data['good_pic'] = json_encode($pic);

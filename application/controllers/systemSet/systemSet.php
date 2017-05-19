@@ -989,7 +989,7 @@ class SystemSet extends Default_Controller {
     function feedback(){
 
         $data['page'] = $this->view_feedback;
-        $data['menu'] = array('systemSet','feedback');
+        $data['menu'] = array('member','feedback');
         $this->load->view('template.html',$data);
     }
 
