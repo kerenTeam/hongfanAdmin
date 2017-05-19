@@ -157,8 +157,9 @@ td div.am-u-sm-12 {
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
                                         <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
                                         <div class="am-u-sm-9 am-u-end">
-                                            <select id="seller" name="seller" data-am-selected="{searchBox: 1}">
+                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
                                                 <option value="">请选择/搜索</option>
+                                                <option value="0">全部订单</option>
                                                 <?php foreach($store as $val): ?>
                                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                                 <?php endforeach;?>
@@ -166,7 +167,7 @@ td div.am-u-sm-12 {
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间<span class="red">*</span>：</label>
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
                                         <div class="am-u-sm-9 am-u-end">
                                             <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
                                               <p>开始日期应小于结束日期！</p>
@@ -464,22 +465,22 @@ $(document).ready(function(){
     $('.sureExport').click(function () {
         var seller = $('#mollseller').val(), begin_date = $('#begin_date1').val(), end_date = $('#end_date1').val();
         console.log(seller, begin_date, end_date);
-        // $.ajax({
-        //     type:'post',
-        //     url:'<?php echo site_url('/store/Store/del_Order');?>',
-        //     data: 'id='+dataId,
-        //     success: function(data){
-        //         // console.log(data);
-        //         if(data==1){ 
-        //             alert("操作成功！");
-        //         }else{
-        //             alert("操作失败！");
-        //         }
-        //     },
-        //     error:function(xhr,type,errorThrown){
-        //         alert("操作失败，请检查网络设置！");
-        //     }
-        // });
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/store/Store/Import_mollOrder');?>',
+            data: 'storeid='+seller+'&begin_date='+begin_date+'&end_date='+end_date,
+            success: function(data){
+                 console.log(data);
+                // if(data==1){ 
+                //     alert("操作成功！");
+                // }else{
+                //     alert("操作失败！");
+                // }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+            }
+        });
     });
 })
 </script>
