@@ -19,10 +19,10 @@
 .stable {
     display: inline-block !important;
     width: 45% !important;
-} 
+}  
 .linkWord {
     width: 10% !important;
-}
+} 
 .stable {
     display: inline-block !important;
     width: 45% !important;
@@ -146,6 +146,51 @@ td div.am-u-sm-12 {
                     <div class="widget-title  am-cf">订单列表</div>
                 </div>
                 <div class="widget-body  am-fr">
+                    <div class="am-btn-toolbar">
+                        <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+                    </div>
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">导出商家订单</div>
+                            <div class="am-modal-bd">
+                                <form class="am-form tpl-form-line-form">
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="seller" name="seller" data-am-selected="{searchBox: 1}">
+                                                <option value="">请选择/搜索</option>
+                                                <?php foreach($store as $val): ?>
+                                                <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                              <p>开始日期应小于结束日期！</p>
+                                            </div>
+                                            <div class="am-g">
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                              </div>
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                              </div>
+                                              <small class="red redtips">请先选择结束日期</small>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="am-modal-footer">
+                                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                <span class="am-modal-btn sureExport"  data-am-modal-confirm>确定</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="am-u-sm-12">
                         <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
                             <thead>
@@ -226,6 +271,31 @@ td div.am-u-sm-12 {
         }
         $(this).datepicker('close');
       });
+    $('#my-start1').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate1').text($('#my-start1').data('date'));
+          $('#begin_date1').val($('#my-start1').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end1').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate1').text($('#my-end1').data('date'));
+          $('#end_date1').val($('#my-end1').data('date'));
+        }
+        $(this).datepicker('close');
+      }); 
   });
     //点击前往某一页的函数
     function go_to_page(page_num){
@@ -389,6 +459,27 @@ $(document).ready(function(){
         getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4');
         sessionStorage.setItem('isStoreOrderList', 1);
         
+    });
+    //导出订单
+    $('.sureExport').click(function () {
+        var seller = $('#mollseller').val(), begin_date = $('#begin_date1').val(), end_date = $('#end_date1').val();
+        console.log(seller, begin_date, end_date);
+        // $.ajax({
+        //     type:'post',
+        //     url:'<?php echo site_url('/store/Store/del_Order');?>',
+        //     data: 'id='+dataId,
+        //     success: function(data){
+        //         // console.log(data);
+        //         if(data==1){ 
+        //             alert("操作成功！");
+        //         }else{
+        //             alert("操作失败！");
+        //         }
+        //     },
+        //     error:function(xhr,type,errorThrown){
+        //         alert("操作失败，请检查网络设置！");
+        //     }
+        // });
     });
 })
 </script>
