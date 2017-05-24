@@ -91,7 +91,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                          
                     </div>                        
                 </div>  
-                <div class="widget-body am-fr">
+                <div class="widget am-fr">
                         <div class="widget-head am-cf ">
                             <div class="widget-title  am-cf background">&nbsp;商品信息:</div>
                         </div>
@@ -100,12 +100,12 @@ label.am-u-sm-8, label.am-u-sm-4{
                  
                             <div class="am-u-sm-4">
                                <p><?php echo $val['title'];?></p>
-                               <p>单价：<?php @$tax_rate = $val['tax_rate']/100 +1; echo $val['price'] / $tax_rate;?> </p>
-                               <p>税费：<?php echo $val['price'] - $val['price'] / @$tax_rate;?> </p>
+                               <p>单价：￥<?php echo $val['price'];?> </p>
+                               <p>税费：<?php echo $val['price'] * 0.17 + $goods['postAge']*0.17;?> </p>
                       
                             </div>
                             <div class="am-u-sm-4">
-                                <p>总价：￥<?php echo $val['price'];?></p> 
+                                <p>总价：￥<?php echo $val['price'] + $goods['postAge'] + $val['price']*0.17 + $goods['postAge']*0.17;?></p> 
                                 <p>数量：x<?php echo $val['nums'];?></p>
                                 <p>运费：￥<?php echo $goods['postAge'];?></p>
                             </div>

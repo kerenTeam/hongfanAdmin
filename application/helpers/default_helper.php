@@ -277,4 +277,35 @@ function ret_find_tagName($tag_id){
        return $res['tagName'];
 }
 
+
+
+
+function arrayToXml($arr){ 
+    $xml = "<xml>"; 
+    foreach ($arr as $key=>$val){ 
+    if(is_array($val)){ 
+    $xml.="<".$key.">".arrayToXml($val)."</".$key.">"; 
+    }else{ 
+    $xml.="<".$key.">".$val."</".$key.">"; 
+    } 
+    } 
+    $xml.="</xml>"; 
+    return $xml; 
+}
+
+function xmlToArray($xml){ 
+ 
+ //禁止引用外部xml实体 
+ 
+libxml_disable_entity_loader(true); 
+ 
+$xmlstring = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA); 
+ 
+$val = json_decode(json_encode($xmlstring),true); 
+ 
+return $val; 
+ 
+} 
+
+
  ?>
