@@ -27,6 +27,7 @@ class Finance extends Default_Controller {
     function ret_moll_order(){
         if($_POST){
             $list = $this->MallShop_model->get_moll_order();
+            
             if(!empty($list)){
                 echo json_encode($list);
             }else{
