@@ -4,7 +4,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 /*
 *   发现板块
 */
-class Finance extends CI_Controller {
+class Finance extends Default_Controller {
 
     public $view_finance_order = "finance/finance_order.html";
 
