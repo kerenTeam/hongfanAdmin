@@ -1462,10 +1462,12 @@ class SingleShop extends Default_Controller {
                         $exporess  = "品骏";
                     }else if($data['shipper_code'] == "UAPEX"){
                         $exporess  = "全一";
+                    }else if($data['shipper_code'] == "HHTT"){
+                        $exporess  = "天天快递";
                     }
                     $post_url = APPLOGIN."/api/index/sendsms";
                     $ret = 'phoneNum='.$user['phone'].'&SMScontent='."hi，小主，感谢您惠顾HI集，您所购买的宝贝已穿戴整齐，向您飞奔而来，请注意查收。".$exporess."快递:".$data['logistic_code'].'【HI集】';
-                    $a = curl_post_express($header,$post_url,$ret);
+                     $a = curl_post_express($header,$post_url,$ret);
                 }
                 echo "1";
             }else{

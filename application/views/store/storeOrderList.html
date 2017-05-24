@@ -153,7 +153,7 @@ td div.am-u-sm-12 {
                         <div class="am-modal-dialog">
                             <div class="am-modal-hd">导出商家订单</div>
                             <div class="am-modal-bd">
-                                <form class="am-form tpl-form-line-form">
+                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/Import_mollOrder');?>" method="post">
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
                                         <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
                                         <div class="am-u-sm-9 am-u-end">
@@ -184,11 +184,11 @@ td div.am-u-sm-12 {
                                         </div>
                                         
                                     </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs sureExport" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
                                 </form>
-                            </div>
-                            <div class="am-modal-footer">
-                                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                <span class="am-modal-btn sureExport"  data-am-modal-confirm>确定</span>
                             </div>
                         </div>
                     </div>
@@ -463,24 +463,7 @@ $(document).ready(function(){
     });
     //导出订单
     $('.sureExport').click(function () {
-        var seller = $('#mollseller').val(), begin_date = $('#begin_date1').val(), end_date = $('#end_date1').val();
-        console.log(seller, begin_date, end_date);
-        $.ajax({
-            type:'post',
-            url:'<?php echo site_url('/store/Store/Import_mollOrder');?>',
-            data: 'storeid='+seller+'&begin_date='+begin_date+'&end_date='+end_date,
-            success: function(data){
-                 console.log(data);
-                // if(data==1){ 
-                //     alert("操作成功！");
-                // }else{
-                //     alert("操作失败！");
-                // }
-            },
-            error:function(xhr,type,errorThrown){
-                alert("操作失败，请检查网络设置！");
-            }
-        });
+        $('#exportFile').modal('close');
     });
 })
 </script>

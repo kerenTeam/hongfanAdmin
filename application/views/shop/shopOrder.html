@@ -413,14 +413,13 @@ td div.am-u-sm-12 {
             var dataId=$(this).attr('data-id');
             var send_type= $('#send_type'+dataId).val();
             var send_no=$('#send_no'+dataId).val() || '';
-
+           // console.log('send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId);
             if(send_type){
                 $.ajax({
                     type:'post',
-                    url:'<?php echo site_url('/shop/singleShop/send_express/');?>',
+                    url:'<?php echo site_url('/shop/singleShop/send_express');?>',
                     data: 'send_type='+send_type+'&send_no='+ send_no+'&orderid='+dataId,
                     success: function(data){
-
                         if(data==1){ 
                             getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>);                                          
                             alert("操作成功！");

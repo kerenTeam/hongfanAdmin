@@ -193,7 +193,12 @@ class LoveToGo extends Default_Controller
             $list = $this->Integral_model->get_love_order();
             //获取用户信息
             foreach($list as $key=>$val){
-                $list[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
+                $address = $this->Integral_model->get_user_address($val['buyer_address']);
+                if(empty($address)){
+                    $list[$key]['adddress'] = '';
+                }else{
+                   $list[$key]['adddress'] = $address;
+                }
                 $list[$key]['id_card'] = $this->Integral_model->ret_user_info($val['buyer']);
             }
             if(empty($list)){
