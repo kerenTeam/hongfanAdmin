@@ -630,9 +630,13 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= adddress.phone %></td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle"><%= create_time %></td>
-        <%if(order_status == 1) {%>
+        <%if(order_status == 1 && trash == 1) {%>
             <td class="am-text-middle red">
                 未支付
+            </td>
+        <% } else if(order_status == 1 && trash == 0) {%>
+            <td class="am-text-middle red">
+                订单已取消
             </td>
         <%}else if(order_status==2){%>
             <td class="am-text-middle">
@@ -684,7 +688,7 @@ $(document).ready(function(){
         <%}else if(order_status==3){%>
             <td class="am-text-middle warning">
                 已发货
-            </td>
+            </td> 
         <%}else if(order_status==4){%>
             <td class="am-text-middle">
                 已收货
@@ -695,7 +699,7 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==6){%>
             <td class="am-text-middle">
-                <p>等待退货退款</p>
+                <p>申请退货退款</p>
                 <a data-id="<%= order_id%>" class="agreeOrder" data-am-modal="{target: '#agreeSales<%= order_id%>'}"><i class="am-icon-check"></i>同意并等待商品退回</a>
                 <div class="am-modal am-modal-confirm" tabindex="-1" id="agreeSales<%= order_id%>">
                     <div class="am-modal-dialog">
@@ -755,8 +759,7 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
-                <p>等待退货物流</p>
-                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>货已收到并退款</a>
+                <p>等待退货物流</p>    
             </td>
         <%}else if(order_status==8){%>
             <td class="am-text-middle">
@@ -766,7 +769,8 @@ $(document).ready(function(){
             <td class="am-text-middle">
                 其他
             </td>
-        <%}else if(order_status==10){%>
+        <%}else if(order_status == 10){%>
+          <% if(!saleReturn_num) { %>
             <td class="am-text-middle">
                 <p>仅申请退款</p>
                 <a data-id="<%= order_id%>" class="agreeRefund" data-am-modal="{target: '#agree<%= order_id%>'}"><i class="am-icon-check"></i>同意退款</a>
@@ -818,6 +822,12 @@ $(document).ready(function(){
                     </div>
                 </div>
             </td>
+          <% } else { %>
+            <td>   
+                 <p>退货物流已提交</p>
+                 <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>货已收到</a>
+            </td>
+          <% } %>
         <%}%>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
@@ -827,44 +837,5 @@ $(document).ready(function(){
             </div>
         </td>
     </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= order_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">确认发货</div>
-            <div class="am-modal-bd">
-                <form class="am-form tpl-form-line-form">
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label" style="line-height: 37px">当前操作 </label>
-                        <div class="am-u-sm-9 am-form-label am-text-danger am-text-left">确认发货</div>  
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">快递类型<span class="red">*</span> </label>
-                        <div class="am-u-sm-9 am-text-left">
-                            <select class="am-u-sm-9 send_type am-input" id="send_type<%= order_id%>" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="send_type">
-                                <option value="">输入查找/选择</option>
-                                <option value="EMS">EMS</option>
-                                <option value="SF">顺丰快递</option>
-                                <option value="STO">申通快递</option>
-                                <option value="YTO">圆通速递</option>
-                                <option value="ZTO">中通速递</option>
-                                <option value="YD">韵达快递</option>
-                                <option value="HTKY">百世汇通</option>
-                            </select>
-                        </div>
-                    </div>
-               
-                    <div class="am-form-group am-cf kuaidiNum" >
-                        <label class="am-u-sm-3 am-form-label">快递单号 <span class="red">*</span></label>
-                        <div class="am-u-sm-9">
-                            <input type="text" placeholder="请输入快递单号！"  id='send_no<%= order_id %>' class="send_no" name='send_no' required>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-btn-group-xs">
-                        <span type="button" class="am-btn am-btn-default" data-am-modal-close>取消</span>
-                        <span  class="am-btn am-btn-danger sureDeliver" data-id="<%= order_id%>" data-am-modal-confirm>发货</span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </script>
 
