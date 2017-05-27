@@ -55,7 +55,7 @@ label {
             义工团队活动列表</a></small>
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 <div class="row-content am-cf">
     <div class="row">
@@ -144,9 +144,6 @@ label {
 
 <script src="assets/js/artTemplate-native.js"></script>
 <script src="assets/laypage/laypage.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script type="text/javascript">
 //表单验证函数
 function validate(obj,minlen,maxlen,i){
@@ -159,7 +156,7 @@ function validate(obj,minlen,maxlen,i){
         $('.blacktips'+ i).css('display','inline-block');
     }
 }
-var total_page = 0,pageflag = 1,flag = 0,current_page=0,$volunteerTeamservelist = parseInt(sessionStorage.getItem('volunteerTeamservelist')) || 0, ue = UE.getEditor('editor');
+var total_page = 0,pageflag = 1,flag = 0,current_page=0,$volunteerSignUp = parseInt(sessionStorage.getItem('volunteerSignUp')) || 0;
 //点击前往某一页的函数
 function go_to_page(page_num){
     $('.page_link').removeClass('active_page');
@@ -169,8 +166,8 @@ function go_to_page(page_num){
     var end_page=parseInt(15)*parseInt(page_num+1);
     $('#dataList').children('tr').slice(start_page,end_page).css('display','');
     current_page=page_num;
-    sessionStorage.setItem('volunteerTeamservelist', current_page);
-    $volunteerTeamservelist = parseInt(sessionStorage.getItem('volunteerTeamservelist'));
+    sessionStorage.setItem('volunteerSignUp', current_page);
+    $volunteerSignUp = parseInt(sessionStorage.getItem('volunteerSignUp'));
     
 }
 
@@ -201,31 +198,6 @@ function next(argu){
     }
 }
 function otherOperation() {
-    //点击选中所有
-    $('.tablecheck').click(function() {
-        if(flag==0){
-          for(var i=0;i<$('.commentBox').length;i++) {
-            document.getElementsByClassName('commentBox')[i].checked=true;
-          }  
-          flag=1;
-        }else{
-           for(var i=0;i<$('.commentBox').length;i++) {
-            document.getElementsByClassName('commentBox')[i].checked=false;
-            }
-           flag=0;
-        }
-    });
-
-    
-    for(var i=0;i<$('.tpl-del').length;i++){
-        var dataId=$('.tpl-del').eq(i).attr('data-id'),detailId=$('.bangServeDetail').eq(i).attr('data-id'),reDataId=$('.conResponse').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-        $('.bangServeDetail').eq(i).attr("href","<?php echo site_url().'/serveForPeople/serveForPeople/volunteerActivityEdit/" + detailId + "';?>");
-        $('.conResponse').eq(i).attr("data-am-modal","{target: '#re"+ reDataId +"'}");
-                           
-    }
-    
-   
     //单个义工活动删除
     $('.sureDelete').click(function(){
         var deleteId=$(this).attr('data-id');
@@ -251,46 +223,6 @@ function otherOperation() {
         });
         
     });
-    
-    //多个义工活动删除
-    $('.deleteAll').click(function(){
-        var deleteId=$(this).attr('data-id');
-        var array=[];
-        if($('tr.trClass td input:checkbox[name=commentBox]:checked').length) {
-            for(var i=0;i<$('tr.trClass td input:checkbox[name=commentBox]:checked').length;i++){                            
-                array[i]=$('tr.trClass td input:checkbox[name=commentBox]:checked').eq(i).attr("data-id");
-            }
-            array=JSON.stringify(array);
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/serveForPeople/serveForPeople/del_volunter_activivies');?>',
-                data: 'id='+array,
-                success: function(data){
-                    if(data==1){
-                         alert('操作成功');
-                        getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
-                    }else{
-                        alert("操作失败！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-            return true;
-        } else {
-            alert("你还未选择活动！");
-            return false;
-        }
-    
-    });
-    //删除图片
-    $(".deleteImg").click(function(){
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).siblings('.wx_type_img').find('input').val("");
-        $(this).siblings('.wx_type_img').find('input').files="";
-    });
 }
 //异步刷新的ajax请求 
 function getList(dataurl,data){
@@ -307,6 +239,7 @@ function getList(dataurl,data){
                     listData += template('dataModal',res[i]);
                  }
                 document.getElementById('dataList').innerHTML = listData;
+                console.log(res);
                 $('.allData').html(res.length);
                 $('.pagebox').css('display', 'block');
                 if(total_page <= 1) {
@@ -315,8 +248,8 @@ function getList(dataurl,data){
                 } else {
                     if(pageflag) {
                         var opts={};
-                        opts.current_page = $volunteerTeamservelist;
-                        $("#Pagination").pagination(total_page, opts);go_to_page($volunteerTeamservelist);
+                        opts.current_page = $volunteerSignUp;
+                        $("#Pagination").pagination(total_page, opts);go_to_page($volunteerSignUp);
                         pageflag = 0;
                     } else {
                         $("#Pagination").pagination(total_page);
@@ -347,39 +280,79 @@ function getList(dataurl,data){
 }
 $(document).ready(function(){
      //加载列表数数据
-    // getList('<?php echo site_url('/serveForPeople/serveForPeople/get_volunter_activities_list');?>','default=1');
+    getList('<?php echo site_url('/serveForPeople/ServeForPeople/ret_Registration');?>',"aid=<?php echo $aid;?>");
 })
 </script>
 <script type="text/html" id="dataModal">
 
-    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
-        <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><img src="<%= picImg%>"></td>
-        <td class="am-text-middle"><%= create_time%></td>
+    <tr class="trClass" data-id="<%= id %>">
+        <td class="am-text-middle"><%= id %></td>
+        <td class="am-text-middle"><%= name %></td>
+        <td class="am-text-middle">
+        <% if(gender == "点击选择" && gender == "") {%>
+            暂无
+        <% } else { %>
+            <%= gender %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(birthPlace == "") {%>
+            暂无
+        <% } else { %>
+            <%= birthPlace %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+            <%= phoneNumber %>
+        </td>
+        <td class="am-text-middle">
+        <% if(email == "") {%>
+            暂无
+        <% } else { %>
+            <%= email %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(qq == "") {%>
+            暂无
+        <% } else { %>
+            <%= qq %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(IDNumber == "") {%>
+            暂无
+        <% } else { %>
+            <%= IDNumber %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(address == "") {%>
+            暂无
+        <% } else { %>
+            <%= address %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(politicalGroup == "") {%>
+            暂无
+        <% } else { %>
+            <%= politicalGroup %>
+        <% } %>
+        </td>
+        <td class="am-text-middle">
+        <% if(history == "") {%>
+            暂无
+        <% } else { %>
+            <%= history %>
+        <% } %>
+        </td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
-                <a data-id="<%= id%>" class="bangServeDetail">
-                    <i class="am-icon-pencil"></i> 编辑
-                </a>
-                <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">
+                <a data-id="<%= id %>" class="tpl-table-black-operation-del tpl-del">
                     <i class="am-icon-trash"></i> 删除
                 </a>
             </div>
         </td>
     </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= id%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-
 </script>
