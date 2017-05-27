@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
 *  为民服务
-*/
+*/ 
 require_once(APPPATH.'controllers/Default_Controller.php');
 
 class ServeForPeople extends Default_Controller
@@ -17,6 +17,8 @@ class ServeForPeople extends Default_Controller
     public $view_volunteerTeamserveMess= 'module/serveForPeople/volunteerTeamserveMess.html';
     //编辑 义工活动
     public $view_volunteerActivityEdit= 'module/serveForPeople/volunteerActivityEdit.html';
+    public $view_volunteerSignUp= 'module/serveForPeople/volunteerSignUp.html';
+
     public $view_lawyergrouplist = 'module/serveForPeople/lawyergrouplist.html';
     public $view_lawyergroupservelist = 'module/serveForPeople/lawyergroupservelist.html';
     //新增 律师团成员
@@ -49,6 +51,12 @@ class ServeForPeople extends Default_Controller
     function helpgrouplist(){
         $data['page'] = $this->view_helpgrouplist;
         $data['menu'] = array('serveForPeople','1');
+        $this->load->view('template.html',$data);
+    }
+    //为民服务  邻水帮帮团成员列表
+    function volunteerSignUp(){
+        $data['page'] = $this->view_volunteerSignUp;
+        $data['menu'] = array('serveForPeople','2');
         $this->load->view('template.html',$data);
     }
     //为民服务  义工团队信息
