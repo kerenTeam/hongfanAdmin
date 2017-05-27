@@ -53,12 +53,36 @@ class ServeForPeople extends Default_Controller
         $data['menu'] = array('serveForPeople','1');
         $this->load->view('template.html',$data);
     }
-    //为民服务  邻水帮帮团成员列表
+    //为民服务  义工活动报名情况
     function volunteerSignUp(){
-        $data['page'] = $this->view_volunteerSignUp;
-        $data['menu'] = array('serveForPeople','2');
-        $this->load->view('template.html',$data);
+        $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $data['aid'] = $id;
+            $data['page'] = $this->view_volunteerSignUp;
+            $data['menu'] = array('serveForPeople','2');
+            $this->load->view('template.html',$data);
+         }
     }
+
+    //返回报名情况
+    function ret_Registration(){
+        if($_POST){
+            $aid = $this->input->post('aid');
+            $list = $this->Service_model->ret_Registration($aid);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+
+
     //为民服务  义工团队信息
     function volunteerTeamserveMess(){
        //获取团队信息
