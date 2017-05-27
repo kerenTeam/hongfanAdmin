@@ -155,6 +155,14 @@ class MallShop_model extends CI_Model
         $query = $this->db->where($where)->get($this->shop_order);
         return $query->row_array();
     }
+    //根据uuid返回支付信息
+    function ret_order_paydata($uuid){
+        $where['repay_UUID'] = $uuid;
+        $query = $this->db->where($where)->get("hf_mall_order_repaydata");
+        return $query->row_array();
+    }
+
+
     //根据类型返回所有商家
     function ret_store_type($type,$store_distinction){
         $where['store_distinction'] = $store_distinction;
@@ -448,6 +456,15 @@ class MallShop_model extends CI_Model
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
         $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+
+    //返回所有商家
+    function ret_mollStore(){
+        $where['store_distinction'] = '2';
+        $where['state'] = '1';
+        //$where['store_type'] = $type;
+        $query = $this->db->where($where)->order_by('store_id','desc')->get($this->shop_store);
         return $query->result_array();
     }
 

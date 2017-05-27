@@ -87,7 +87,7 @@ td div div p {
                         <div class="am-u-sm-9">
                             <select id="orderState" name="state">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="1">未支付</option>
+                                <!--<option value="1">未支付</option>-->
                                 <option value="2">已支付</option>
                                 <option value="3">已发货</option>
                                 <option value="4">已收货</option>
@@ -124,6 +124,7 @@ td div div p {
                         <div class="am-u-sm-9 am-u-end">
                             <select id="seller" name="seller" data-am-selected="{searchBox: 1}">
                                 <option value="">请选择/搜索</option>
+                                <option value="-1">跨境优品</option>
                                 <?php foreach($store as $val): ?>
                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                 <?php endforeach;?>
@@ -145,12 +146,13 @@ td div div p {
                         <div class="am-modal-dialog">
                             <div class="am-modal-hd">导出商家订单</div>
                             <div class="am-modal-bd">
-                                <form class="am-form tpl-form-line-form">
+                                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/Import_mollOrder');?>" method="post">
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
                                         <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
                                         <div class="am-u-sm-9 am-u-end">
-                                            <select id="mollseller" name="seller" data-am-selected="{searchBox: 1}">
+                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
                                                 <option value="">请选择/搜索</option>
+                                                <option value="0">全部订单</option>
                                                 <?php foreach($store as $val): ?>
                                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                                 <?php endforeach;?>
@@ -158,7 +160,7 @@ td div div p {
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf">
-                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间<span class="red">*</span>：</label>
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
                                         <div class="am-u-sm-9 am-u-end">
                                             <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
                                               <p>开始日期应小于结束日期！</p>
@@ -175,12 +177,13 @@ td div div p {
                                         </div>
                                         
                                     </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs sureExport" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
                                 </form>
                             </div>
-                            <div class="am-modal-footer">
-                                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                <span class="am-modal-btn sureExport"  data-am-modal-confirm>确定</span>
-                            </div>
+                          
                         </div>
                     </div>
                     <div class="am-u-sm-12">
@@ -191,7 +194,7 @@ td div div p {
                                     <th>支付订单号 </th>
                                     <th width="30%" class="am-text-center">购买商品 </th>
                                     <th>订单总额 </th>
-                                    <th>积分抵扣</th>
+                                    <th>积分抵扣金额</th>
                                     <th>买家 </th>
                                     <th>商家</th>
                                     <th>下单时间 </th>
@@ -324,10 +327,10 @@ td div div p {
         }
     }
     function otherFunction() {
-        $('.editOrder').click(function(){//查看订单信息
-            var dataId=$(this).attr('data-id');
-            $(this).attr("href","<?php echo site_url('store/store/moll_order_info/" + dataId + "');?>");
-        });
+        // $('.editOrder').click(function(){//查看订单信息
+        //     var dataId=$(this).attr('data-id');
+        //     $(this).attr("href","<?php echo site_url('store/store/moll_order_info/" + dataId + "');?>");
+        // });
         for(var i=0;i<$('.tpl-del').length;i++){
             var dataId=$('.tpl-del').eq(i).attr('data-id');
             $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
@@ -342,7 +345,7 @@ td div div p {
                 success: function(data){
                     // console.log(data);
                     if(data==1){ 
-                        getList('<?php echo site_url('/store/Store/Order_page');?>','default=1');
+                      getList('<?php echo site_url('/finance/Finance/ret_moll_order');?>','default=1'); 
                         alert("操作成功！");
                     }else{
                         alert("操作失败！");
@@ -364,7 +367,7 @@ td div div p {
                 success: function(data){
                   if(data == 1) {
                        alert('操作成功！');
-                        getList('<?php echo site_url('/store/Store/Order_page');?>','default=1'); 
+                        getList('<?php echo site_url('/finance/Finance/ret_moll_order');?>','default=1'); 
                   }else{
                       alert('操作失败！');
                   }
@@ -383,9 +386,10 @@ td div div p {
             type:'post',
             url:dataurl,
             data: data,
-            success: function(result){     
+            success: function(result){
+            //      console.log(result);     
                 var res = eval(result);
-                console.log(res);
+              
                 if(res != 2 && res != 3){
                     var listData = ''; //每页出现的数量
                     var total_page = Math.ceil(res.length/15); //得到总页数
@@ -443,18 +447,18 @@ td div div p {
 $(document).ready(function(){
     //加载列表数数据
     if($isfinance_order) {
-        var order_status = $('#orderState option:selected').val(), buyer='',seller='', begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        var order_status = $('#orderState option:selected').val(), seller= $('#seller option:selected').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
       
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=1');
+        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date);
         sessionStorage.setItem('isfinance_order', 1);
     } else {
        getList('<?php echo site_url('/finance/Finance/ret_moll_order');?>','default=1'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var order_status = $('#orderState option:selected').val(), buyer='',seller='', begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-      //    console.log(begin_date,end_date);
-        getList('<?php echo site_url('/finance/Finance/ret_moll_order');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=1');
+        var order_status = $('#orderState option:selected').val(),seller= $('#seller option:selected').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+          console.log(begin_date,end_date,seller,order_status);
+        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date);
         sessionStorage.setItem('isfinance_order', 1);
         
     });
@@ -526,11 +530,7 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
-        <% if(PriceCalculation.nowIntergal.intergral) { %>
-        <%= PriceCalculation.nowIntergal.intergral %>
-        <% } else { %>
-        未使用积分
-        <% } %>
+    
         </td>
         <td class="am-text-middle">
         <%if(username) {%>
@@ -539,7 +539,11 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
+        <% if(goods_data.stores.store_name){%>
         <td class="am-text-middle"><%= goods_data.stores.store_name %></td>
+        <%}else{%>
+        <td class="am-text-middle">跨境优品</td>
+        <%}%>
         <td class="am-text-middle"><%= create_time%></td>
         <%if(order_status==1) {%>
             <td class="am-text-middle red">
@@ -579,7 +583,7 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==10){%>
             <td class="am-text-middle">
-                等待退款
+                等待退款<br>
                 <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
             </td>
         <%}%>
