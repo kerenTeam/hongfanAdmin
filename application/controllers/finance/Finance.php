@@ -8,11 +8,13 @@ class Finance extends Default_Controller {
 
     public $view_finance_order = "finance/finance_order.html";
     public $view_financeOrder_info = "finance/financeOrder_info.html";
+    public $view_loveTogoOrder_info = "finance/loveTogoOrder_info.html";
 
     function __construct()
     {
         parent::__construct();
         $this->load->model('MallShop_model');
+        $this->load->model('Integral_model');
     }
 
 
@@ -84,9 +86,16 @@ class Finance extends Default_Controller {
 
 
             $data['id'] = $id;
-             $data['page'] = $this->view_financeOrder_info;
+            
              $data['menu'] = array('finance','mallOrder');
-             $this->load->view('template.html',$data);
+             if($order['order_type'] !='0'){
+                $data['page'] = $this->view_financeOrder_info;
+                $this->load->view('template.html',$data);
+             }else{
+                 $data['id_card'] = $this->Integral_model->ret_user_info($order['buyer']);
+                $data['page'] = $this->view_loveTogoOrder_info;
+                $this->load->view('template.html',$data);
+             }
         }else{
             $this->load->view('404.html');
         }
