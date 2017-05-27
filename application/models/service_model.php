@@ -140,6 +140,13 @@ class Service_model extends CI_Model
         return $query->result_array();
     }
     
+    function ret_Registration($id){
+        $where['activities_id'] = $id;
+        $query = $this->db->where($where)->order_by('create_time','desc')->get('hf_service_volunteer_join_service');
+        return $query->result_array();
+    }
+
+
 }
 
 
