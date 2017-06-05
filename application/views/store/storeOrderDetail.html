@@ -89,7 +89,11 @@ label.am-u-sm-8, label.am-u-sm-4{
                     <?php if(isset($inter['nowIntergal']['intergral'])):?>
                     <div class="am-u-sm-4">
                         积分抵用金额：￥<?php echo $inter['nowIntergal']['intergral'];?>
-                    </div>  
+                    </div> 
+                    <?php else:?>
+                     <div class="am-u-sm-4">
+                        积分抵用金额：未使用积分
+                    </div> 
                     <?php endif;?>
                     <div class="am-u-sm-4">
                         <?php $goods = json_decode($order['goods_data'],true);?>

@@ -791,5 +791,69 @@ class Shop extends Default_Controller {
             $objWriter->save('php://output');
         }
     }
+
+    //导出商场内的店铺
+    function Dow_mollStore(){
+         $id = intval($this->uri->segment(4));
+        if($id == 0){
+            $this->load->view('404.html');
+        }else{
+            $this->load->library('excel');
+            //activate worksheet number 1
+            $this->excel->setActiveSheetIndex(0);
+            //name the worksheet
+            $this->excel->getActiveSheet()->setTitle('Stores');
+            $arr_title = array(
+                'A' => '商家ID',
+                'B' => '品牌名称',
+                'C' => '商家名称',
+                'D' => '联系电话',
+                'E' => '创建时间'
+            );
+             //设置excel 表头
+            foreach ($arr_title as $key => $value) {
+                $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+            $i = 1;
+            //查询数据库得到要导出的内容
+            $bookings = $this->Shop_model->shop_list($id);
+            if(count($bookings) > 0)
+            {
+                foreach ($bookings as $booking) {
+                    $i++;
+           
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['store_id']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['barnd_name']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['store_name']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['phone']); 
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['create_time']);
+                }
+            }
+
+            $filename = '商户列表.xls'; //save our workbook as this file name
+
+            header('Content-Type: application/vnd.ms-excel'); //mime type
+            header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+            header('Cache-Control: max-age=0'); //no cache
+
+             $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了商家信息",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+
+            $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+            $objWriter->save('php://output');
+        }
+    }
+
+
 }
 

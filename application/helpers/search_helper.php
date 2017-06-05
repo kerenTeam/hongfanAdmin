@@ -1084,8 +1084,55 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
     }
     return $res;
 }
-//财务导出订单
 
+
+//财务导出订单
+function moll_order_list($storeid,$time,$endtime){
+      $CI = &get_instance();
+      $res= '';
+      if(empty($time)){
+            if($storeid == '-2'){
+                $CI->db->select('a.*,b.store_name');
+                $CI->db->from('hf_mall_order as a');
+                $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $query = $CI->db->where('order_status =','4,5')->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }elseif($storeid == '-1'){
+                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' ORDER BY `create_time` DESC";
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else{
+                $CI->db->select('a.*,b.store_name');
+                $CI->db->from('hf_mall_order as a');
+                $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $query = $CI->db->where('order_status =','4,5')->where('seller',$storeid)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }
+      }else{
+            if($storeid == '-2'){
+                $CI->db->select('a.*,b.store_name');
+                $CI->db->from('hf_mall_order as a');
+                $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $query = $CI->db->where('order_status =','4,5')->where('order_type !=','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }elseif($storeid == '-1'){
+
+                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' ORDER BY `create_time` DESC";
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else{
+                $CI->db->select('a.*,b.store_name');
+                $CI->db->from('hf_mall_order as a');
+                $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $query = $CI->db->where('a.order_status =','4,5')->where('a.seller',$storeid)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }
+
+      }
+
+      return $res;
+
+}
 
 
  ?>

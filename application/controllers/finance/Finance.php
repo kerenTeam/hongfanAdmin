@@ -195,9 +195,10 @@ class Finance extends Default_Controller {
 
     function Import_mollOrder(){
         if($_POST){
-            $storeid = $this->input->post('storeid');
-            $start_time = $this->input->post('begin_date');
-            $end_time = $this->input->post('end_date');
+            $storeid = $this->input->post('mollseller');
+            $start_time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+
             $this->load->library('excel');
             //activate worksheet number 1
             $this->excel->setActiveSheetIndex(0);
@@ -214,83 +215,138 @@ class Finance extends Default_Controller {
             $this->excel->getActiveSheet()->getDefaultColumnDimension('A1')->setWidth(20);
 
             $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);  
-     
-            $arr_title = array(
-                'A' => '订单编号',
-                'B' => '成交时间',
-                'C' => '商品编码',
-                'D' => '商品名称',
-                'E' => '单价',
-                'F' => '数量',
-                'G' => '总价',
-                'H' => '成交价格',
-                'I' => '邮资',
-                'J' => '成交总额',
-                'K' => '佣金比率',
-                'L' => '佣金总额',
-                'M' => '结算金额',
-                'N' => '备注'
-            );
-            
-                  //设置excel 表头
+            if($storeid == '-1'){
+                $arr_title = array(
+                    'A' => '自定义编号',
+                    'B' => '收件人姓名',
+                    'C' => '收件人身份证号',
+                    'D' => '收件人地址',
+                    'E' => '手机号码',
+                    'F' => '固话',
+                    'G' => 'Email',
+                    'H' => '邮编',
+                    'I' => '省份',
+                    'J' => '市',
+                    'K' => '区',
+                    'L' => '买家留言',
+                    'M' => '产品信息(产品id_产品属性ID|数量,产品id|数量)，产品属性ID在前台商家中心-商品列表中点击商品编号查看属性ID',
+                    'N' => '支付方式',
+                    'O' => '运输方式'
+                );
+            }else{
+                $arr_title = array(
+                    'A' => '商家名称',
+                    'B' => '订单编号',
+                    'C' => '成交时间',
+                    'D' => '商品编码',
+                    'E' => '商品名称',
+                    'F' => '单价',
+                    'G' => '数量',
+                    'H' => '总价',
+                    'I' => '成交价格',
+                    'J' => '邮资',
+                    'K' => '成交总额',
+                    'L' => '佣金比率',
+                    'M' => '佣金总额',
+                    'N' => '结算金额',
+                    'O' => '备注'
+                );
+            }
+            //设置excel 表头
             foreach ($arr_title as $key => $value) {
                 $this->excel->getActiveSheet()->setCellValue($key . '2', $value);
                 $this->excel->getActiveSheet()->getStyle($key . '2')->getFont()->setSize(13);
                 $this->excel->getActiveSheet()->getStyle($key . '2')->getFont()->setBold(true);
-               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+                $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
                 $this->excel->getActiveSheet()->getStyle($key . '2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
+            //获取要导出的订单
+            $list = moll_order_list($storeid,$start_time,$end_time);
 
+            if(!empty($list)){
+              if(count($list) > 0)
+              {
+                  $i ='2';
+                 if($storeid == '-1'){
+                    foreach ($list as $booking) {
+                        $i++;
+                        $user = json_decode($booking['goods_data'],true);
+                        //地址
+                        $address = $this->Integral_model->get_user_address($booking['buyer_address']);
+                        //省份证
+                        $id_card = $this->Integral_model->ret_user_info($booking['buyer']);
+                        //留言
+                        $notice = json_decode($booking['userPostData'],true);
+                            foreach ($user['goods_Data'] as $key => $value) {
+                                $goods[$i][$key]= $value['id'].'|'.$value['nums'];
+                            }
+                            $good = implode(',',$goods[$i]);
+                        //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
+                            $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_UUID']);
+                            $this->excel->getActiveSheet()->setCellValue('B' . $i, $address['person']);
+                            $this->excel->getActiveSheet()->setCellValue('C' . $i, ' '.$id_card);
+                            $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['address']);
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
+                            $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
+                            $this->excel->getActiveSheet()->setCellValue('H' . $i, '400000');
+                            $this->excel->getActiveSheet()->setCellValue('I' . $i, $address['province']);
+                            $this->excel->getActiveSheet()->setCellValue('J' . $i, $address['city']);
+                            $this->excel->getActiveSheet()->setCellValue('K' . $i, $address['area']);
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $notice['notice']);
+                            $this->excel->getActiveSheet()->setCellValue('M' . $i, $good);
+                            $this->excel->getActiveSheet()->setCellValue('N' . $i, 'allinpay');
+                            $this->excel->getActiveSheet()->setCellValue('O' . $i, 'EMS');
+                        
+                    }
+                }else{
 
+                    foreach($list as $book){
+                        $i++;
+                      
+                        $goods = json_decode($book['goods_data'],true);
+                        
+                        foreach ($goods['goods_Data'] as $key => $value) {
+                            $k[$i][$key]= $value['goods_id'];
+                            $c[$i][$key]= $value['title'];
+                            $n[$i][$key]= $value['nums'];
+                            $p[$i][$key]= $value['price'];
+                        }
+                        $good = implode('|',$k[$i]);
+                        $name = implode('|',$c[$i]);
+                        $num = implode('|',$n[$i]);
+                        $price = implode('|',$p[$i]);
+                        //佣金
+                       $points=  $goods['total_goods_prices'] * ($goods['stores']['points']/100);
 
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $goods['stores']['store_name']);
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['create_time']);
 
-            //        if(!empty($bookings)){
-            // if(count($bookings) > 0)
-            // {
-            //     foreach ($bookings as $booking) {
-            //         $i++;
-            //         $user = json_decode($booking['goods_data'],true);
-            //         //地址
-            //        $address = $this->Integral_model->get_user_address($booking['buyer_address']);
-            //        //省份证
-            //        $id_card = $this->Integral_model->ret_user_info($booking['buyer']);
-            //        //留言
-            //        $notice = json_decode($booking['userPostData'],true);
-                   
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $good);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $name);
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $price);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $num);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $book['amount']);
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $goods['total_goods_prices']- $goods['postAge']);
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $goods['postAge']);
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['total_goods_prices']);
+                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['stores']['points']);
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $points);
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $goods['total_goods_prices'] - $points);
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '');
+                    }
+                }
+            }
 
-            //         foreach ($user['goods_Data'] as $key => $value) {
-            //              $goods[$i][$key]= $value['id'].'|'.$value['nums'];
-            //         }
-            //         $good = implode(',',$goods[$i]);
-            //      //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
-            //         $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_UUID']);
-            //         $this->excel->getActiveSheet()->setCellValue('B' . $i, $address['person']);
-            //         $this->excel->getActiveSheet()->setCellValue('C' . $i, ' '.$id_card);
-            //         $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['address']);
-            //         $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
-            //         $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
-            //         $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
-            //         $this->excel->getActiveSheet()->setCellValue('H' . $i, '400000');
-            //         $this->excel->getActiveSheet()->setCellValue('I' . $i, $address['province']);
-            //         $this->excel->getActiveSheet()->setCellValue('J' . $i, $address['city']);
-            //         $this->excel->getActiveSheet()->setCellValue('K' . $i, $address['area']);
-            //         $this->excel->getActiveSheet()->setCellValue('L' . $i, $notice['notice']);
-            //         $this->excel->getActiveSheet()->setCellValue('M' . $i, $good);
-            //         $this->excel->getActiveSheet()->setCellValue('N' . $i, 'allinpay');
-            //         $this->excel->getActiveSheet()->setCellValue('O' . $i, 'EMS');
-                   
-            //     }
-            // }
-
-            // //日志
-            // $log = array(
-            //     'userid'=>$_SESSION['users']['user_id'],  
-            //     "content" => $_SESSION['users']['username']."导出了爱购商品订单信息",
-            //     "create_time" => date('Y-m-d H:i:s'),
-            //     "userip" => get_client_ip(),
-            // );
-            // $this->db->insert('hf_system_journal',$log);
-
+            //日志
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."导出了订单信息",
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+            );
+            $this->db->insert('hf_system_journal',$log);
 
             $filename = 'ImportOrder.xls'; //save our workbook as this file name
            /// var_dump($filename);
@@ -300,10 +356,11 @@ class Finance extends Default_Controller {
 
              $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
              $objWriter->save('php://output');
+             echo "<script>alert('导出成功！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
              exit;
-            // }else{
-            //     echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/igo/LoveToGo/')."'</script>";
-            // }
+            }else{
+                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
+            }
 
         }
      }
