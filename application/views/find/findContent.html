@@ -154,6 +154,8 @@ label {
                                     <th>分类 </th>
                                     <th>发布用户 </th>
                                     <th width="350">发帖内容 </th>
+                                    <th>点赞数 </th>
+                                    <th>评论数 </th>
                                     <th>发帖时间 </th>
                                     <th>操作</th>
                                 </tr>
@@ -585,6 +587,8 @@ $(document).ready(function(){
          <td class="am-text-middle"><%= nickname %></td>
          <%}%>
           <td class="am-text-middle"><%= content %></td>
+          <td class="am-text-middle"><%= likeNumber %></td>
+          <td class="am-text-middle"><%= comment_num %></td>
         <td class="am-text-middle"><%= create_news_time %></td>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">

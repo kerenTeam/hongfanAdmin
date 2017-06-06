@@ -198,14 +198,15 @@ class Find extends Default_Controller {
                 $list = $this->Find_model->get_find_service_state($type);
             }
             
-
-
             foreach($list as $key=>$val){
                 if(empty($val['categoryid'])){
                     $list[$key]['cate_name'] = "还没有归类,请编辑归类!";
                 }else{
                     $list[$key]['cate_name'] = $this->Find_model->ret_cate_name($val['categoryid']);
                 }
+                //获取评论数
+                $list[$key]['comment_num'] = count($this->Find_model->get_find_service_comment($val['news_id']));
+
             }
             if(!empty($list)){
                 echo json_encode($list);

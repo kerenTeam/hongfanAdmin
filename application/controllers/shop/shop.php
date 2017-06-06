@@ -386,7 +386,7 @@ class Shop extends Default_Controller {
            if(!empty($userid)){
                 $data['business_id'] = $userid;
                 $data['send_userid'] = $_SESSION['users']['user_id'];
-                $data['create_time'] = date('Y-m-d');
+                $data['create_time'] = date('Y-m-d H:i:s');
                 unset($data['password'],$data['username']);
                 if($data['store_distinction'] == '2'){
                     if($this->Shop_model->add_store_info($data)){

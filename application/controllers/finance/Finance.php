@@ -262,7 +262,8 @@ class Finance extends Default_Controller {
             }
             //获取要导出的订单
             $list = moll_order_list($storeid,$start_time,$end_time);
-
+        // var_dump($list);
+        // exit;
             if(!empty($list)){
               if(count($list) > 0)
               {
@@ -348,7 +349,7 @@ class Finance extends Default_Controller {
             );
             $this->db->insert('hf_system_journal',$log);
 
-            $filename = 'ImportOrder.xls'; //save our workbook as this file name
+            $filename = 'ImportOrder.xlsx'; //save our workbook as this file name
            /// var_dump($filename);
             header('Content-Type: application/vnd.ms-excel'); //mime type
             header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
