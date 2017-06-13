@@ -562,10 +562,15 @@ $(document).ready(function(){
             <td class="am-text-middle">
                 其他
             </td>
-        <%}else if(order_status==10){%>
+
+          <%}else if(order_status==10 && admin_orderState == 1){%>
             <td class="am-text-middle">
-                等待退款
-                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+                <p>商家已确认，等待退款</p>
+                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+            </td>
+        <%}else if(order_status==10 && admin_orderState == 0){%>
+            <td class="am-text-middle">
+                等待商家确认退款
             </td>
         <%}%>
         

@@ -553,7 +553,7 @@ $(document).ready(function(){
             </td>
         <%}else if(order_status==6){%>
             <td class="am-text-middle">
-                等待退货
+                等待商家同意退货
             </td>
         <%}else if(order_status==7){%>
             <td class="am-text-middle">
@@ -567,10 +567,14 @@ $(document).ready(function(){
             <td class="am-text-middle">
                 其他
             </td>
-        <%}else if(order_status==10){%>
+        <%}else if(order_status==10 && admin_orderState == 1){%>
             <td class="am-text-middle">
-                <p>等待退款</p>
+                <p>商家已确认，等待退款</p>
                   <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+            </td>
+        <%}else if(order_status==10 && admin_orderState == 0){%>
+            <td class="am-text-middle">
+                等待商家确认退款
             </td>
         <%}%>
         <td class="am-text-middle">

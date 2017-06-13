@@ -69,21 +69,25 @@ class Api_goods extends CI_Controller
            echo $xml;
            //返回数据
            $arguments = file_get_contents('php://input');  
+          // file_put_contents('text.log',json_encode($arr));
             $a = xmlToArray($arguments);
             $order_uuid = $a['out_trade_no'];
             $pay_data = json_encode($a);
 
-            // $pay_url = APPLOGIN.'api/index/validatewxpay';
-            // $header = array("token:".trim($token)); 
-            // $w = curl_post_express($header,$pay_url,$pay_data);
+            // // $pay_url = APPLOGIN.'api/index/validatewxpay';
+            // // $header = array("token:".trim($token)); 
+            // // $w = curl_post_express($header,$pay_url,$pay_data);
 
-            //更改预支付订单
+            // //更改预支付订单
             $data['wechatReturn'] = $pay_data;
             $data['pay_state'] = '2';
+            $data['payType'] = 'wxpay';
             $this->db->where('repay_UUID',$order_uuid)->update('hf_mall_order_repaydata',$data);
             // //更改订单号
             $order['order_status'] = '2';
             $this->db->where('order_UUID',$order_uuid)->update('hf_mall_order',$order);
+            //file_put_contents('text.log',json_encode($a));
+            
     }
 
 

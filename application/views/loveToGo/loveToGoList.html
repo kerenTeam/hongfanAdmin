@@ -56,7 +56,7 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 刷新</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 更新商品库</button>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +203,8 @@ td.am-text-middle img{
         type:'post',
         url:dataurl,
         data: data,
-        success: function(result){         
+        success: function(result){  
+            console.log(result)       
             var res = eval(result);    
             if(res!=2){
                 var listData = ''; //每页出现的数量

@@ -40,6 +40,8 @@ class Find extends Default_Controller {
     //文章列表	
 	function findContent(){
         $data['cates'] = $this->Find_model->get_find_cates();
+        //获取专题
+        $data['special'] = $this->Find_model->get_find_special('1');
         $data['page'] = $this->view_content;
         $data['menu'] = array('find','findContent');
  		$this->load->view('template.html',$data);
@@ -56,20 +58,14 @@ class Find extends Default_Controller {
         if($_POST){
             $cateid = $this->input->post('cate_id');
             $sear = $this->input->post('search');
-            $special  = $this->input->post('special');
+            $special  = $this->input->post('tieziSpecial');
             $begin_date = $this->input->post('begin_date');
             $end_date = $this->input->post('end_date');
+            $likenum = $this->input->post('likenum');
 
-            $list = '';
-            //判断条件
-            if(!empty($cateid) && empty($sear)){
-                $list = $this->Find_model->get_find_cate_service($cateid);
-            }else if(empty($cateid) && !empty($sear)){
-                $list = $this->Find_model->get_find_sear_service($sear);
-            }else if(!empty($cateid) && !empty($sear)){
-                $list = $this->Find_model->get_find_service_search($cateid,$sear);
-            }
-            
+            $list = findContent_search($cateid,$sear,$special,$begin_date,$end_date,$likenum);
+          
+   
             if(!empty($list)){
                 //获取分类名
                  foreach($list as $key=>$val){
@@ -78,6 +74,8 @@ class Find extends Default_Controller {
                         }else{
                             $list[$key]['cate_name'] = $this->Find_model->ret_cate_name($val['categoryid']);
                         }
+                        $list[$key]['comment_num'] = count($this->Find_model->get_find_service_comment($val['news_id']));
+
                  }
                  echo json_encode($list);
             }else{

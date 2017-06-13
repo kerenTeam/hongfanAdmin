@@ -6,6 +6,8 @@ class Integral_model extends CI_Model
 {
     //商品表
     public $shop_goods = 'hf_mall_goods';
+    //igo 商品表
+    public $lovetogoods = 'hf_mall_goods_igo';
     //分类表
     public $shop_cates = 'hf_mall_category';
     //爱购分类
@@ -67,7 +69,7 @@ class Integral_model extends CI_Model
     function get_igo_goods(){
         $where['differentiate'] = '3';
         $this->db->select('goods_id,open_iid,title,price,thumb,commission_price,commission_rate');
-        $query = $this->db->where($where)->get($this->shop_goods);
+        $query = $this->db->where($where)->get($this->lovetogoods);
         return $query->result_array();
     }
 
@@ -116,7 +118,7 @@ class Integral_model extends CI_Model
     //删除爱购商品
     function del_love_goods($id){
         $where['open_iid'] = $id;
-        return $this->db->where($where)->delete($this->shop_goods);
+        return $this->db->where($where)->delete($this->lovetogoods);
     }
 
 

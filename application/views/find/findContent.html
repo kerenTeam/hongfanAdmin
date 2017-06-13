@@ -97,7 +97,22 @@ label {
                         <div class="am-u-sm-8">
                             <select id="tieziSpecial" name="special">
                                 <option value="">-=请选择一项=-</option>
-                                <option value="1">专题一</option>
+                                <?php foreach($special as $val):?>
+                                <option value="<?php echo $val['q_id']?>"><?php echo $val['title']?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">点赞量:</label>
+                        <div class="am-u-sm-8">
+                            <select id="likenum" name="likenum">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="10">10以上</option>
+                                <option value="20">20以上</option>
+                                <option value="50">50以上</option>
+                                <option value="100">100以上</option>
+                                <option value="200">200以上</option>
                             </select>
                         </div>
                     </div>
@@ -487,8 +502,9 @@ function getList(dataurl,data){
         url:dataurl,
         data: data,
         success: function(result){ 
+             // console.log(result);   
             var res = eval(result);
-            console.log(res);   
+            //console.log(res);   
            
             if(res != 2 && res != 3){
                 var listData = ''; //每页出现的数量
@@ -558,17 +574,17 @@ function validate(obj,minlen,maxlen,i){
 $(document).ready(function(){
     //加载列表数数据
     if(isFindContent) {
-        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
-         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(), likenum = $('#likenum option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date + '&likenum='+likenum);
+         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id+'&likenum='+likenum + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     }
     getList("<?php echo site_url('/find/Find/ret_find_service');?>",'default=1');
     //点击搜索
     $('.searchSort').click(function(){
-        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
-         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date);
+        var keywords=$('#searchKey').val(), cate_id = $('#tieziType option:selected').val(), tieziSpecial = $('#tieziSpecial option:selected').val(),likenum = $('#likenum option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        console.log('search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial + '&begin_date='+ begin_date + '&end_date='+end_date+'&likenum='+likenum);
+         getList('<?php echo site_url('/find/Find/search_find_service');?>','search='+ keywords + '&cate_id=' + cate_id + '&tieziSpecial='+ tieziSpecial+'&likenum='+likenum + '&begin_date='+ begin_date + '&end_date='+end_date);
         sessionStorage.setItem('$isFindContent', 1);
     });
 })

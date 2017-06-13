@@ -1126,5 +1126,208 @@ function moll_order_list($storeid,$time,$endtime){
 
 }
 
+//发现帖子搜所
+function findContent_search($cateid,$sear,$special,$time,$endtime,$likenum){
+        $CI = &get_instance();
+        $res= '';
+        //判断条件
+        if(!empty($cateid) && empty($sear) && empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(empty($cateid) && !empty($sear) && empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->like('content',$sear,'both')->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(empty($cateid) && empty($sear) && !empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->like('q_id',$special,'both')->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(empty($cateid) && empty($sear) && empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(empty($cateid) && empty($sear) && empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          //er
+        }elseif(!empty($cateid) && !empty($sear) && empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(!empty($cateid) && empty($sear) && !empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(!empty($cateid) && empty($sear) && empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(!empty($cateid) && empty($sear) && empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && !empty($special) && empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->like('content',$sear,'both')->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && empty($sear) && empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        //san
+        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(!empty($cateid) && !empty($sear) && empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(!empty($cateid) && !empty($sear) && empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+
+         //si 
+        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(!empty($cateid) && empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }elseif(!empty($cateid) && !empty($sear) && empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+            
+          //wu
+        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
+            $CI->db->select('a.*,b.username,b.nickname');
+            $CI->db->from('hf_friend_news as a');
+            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+          
+        }elseif(empty($cateid) && empty($sear) && empty($special) && empty($time) && empty($likenum)){
+             $CI->db->select('a.*,b.username,b.nickname');
+        $CI->db->from('hf_friend_news as a');
+        $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
+        $query = $CI->db->order_by('type_name','desc')->order_by('a.create_news_time','desc')->get();
+            $res = $query->result_array();
+        }
+        return $res;
+}
 
  ?>
