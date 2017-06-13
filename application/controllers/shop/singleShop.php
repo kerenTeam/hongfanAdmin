@@ -1314,11 +1314,25 @@ class SingleShop extends Default_Controller {
              }
             //h获取订单
             $orders = $this->MallShop_model->get_store_orders($storeid,$type);
-          
+
             if(empty($orders)){
                 echo "2";
             }else{
-                echo json_encode($orders);
+                //判断订单是否收货
+                foreach($orders as $val){
+                    if(!empty($val['updatetime'])){
+                        //获取过期时间
+                        $endtime = strtotime($val['updatetime'])+3600*24*$val['automatic_confirmation'];
+                        //获取当前时间
+                        $newdata = time();
+                        //var_dump($newdata);
+                        if($newdata > $endtime && $val['order_status'] == '3'){
+                            $data['order_status'] = '4';
+                            $this->MallShop_model->edit_order_state($val['order_id'],$data);
+                        }
+                    }
+                }
+                 echo json_encode($orders);
             }
         }else{
             echo "2";

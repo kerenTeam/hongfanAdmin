@@ -171,6 +171,7 @@ td.am-text-middle img{
                                     <th>用户名 </th>
                                     <th width="400">反馈内容 </th>
                                     <th>反馈时间 </th>
+                                    <th>操作 </th>
                                 </tr>
                             </thead>
                             <tbody id="dataList">
@@ -345,5 +346,10 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= content %></td>
         <td class="am-text-middle"><%= feedback_data %></td>
+        <td class="am-text-middle">  
+                <a data-id="<%= user_id%>" class="editAccount">
+                    <i class="am-icon-pencil"></i> 编辑
+                </a>
+        </td>
     </tr>
 </script>
