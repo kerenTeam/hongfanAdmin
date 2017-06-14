@@ -88,6 +88,7 @@ class SystemSet extends Default_Controller {
             //$pic =array();
             $i ='0';
             $a ='1';
+
             foreach($_FILES as $val){
                 if(!empty($_FILES['img'.$a]['tmp_name'])){
                     $config['upload_path']      = 'Upload/banner';
@@ -101,17 +102,25 @@ class SystemSet extends Default_Controller {
                         exit;
                     } else{
                         $pic[$i]['id'] =$a;
+                        $pic[$i]['sort'] = $this->input->post('sort'.$a);
                         $pic[$i]['pic'] = '/Upload/banner/'.$this->upload->data('file_name');
                     }
                 }else{
                     if(isset($_POST['img'.$a])){
-                    $pic[$i]['id'] =$a;
-                    $pic[$i]['pic']  = $_POST['img'.$a];
+                        $pic[$i]['id'] =$a;
+                        $pic[$i]['sort'] = $this->input->post('sort'.$a);
+                        $pic[$i]['pic']  = $_POST['img'.$a];
                     }
                 }
                 $i++;
                 $a++;
             }
+            foreach($pic as $k=>$v){
+                $num1[$k] = $v['sort'];
+            }
+            array_multisort($num1, SORT_ASC, $pic);
+
+
             $data['banner'] = json_encode($pic);
             //var_dump(json_encode($pic));
             if($this->System_model->edit_banner($id,$data)){

@@ -35,6 +35,8 @@ class Store extends Default_Controller {
     public $view_storeHotRecommand = "store/storeHotRecommand.html";
     //购物中心 订单管理
     public $view_mollOrderList = "moll/mollOrderList.html";
+    //商品回收站
+    public $view_goodsRecycle = "store/goodsRecycle.html";
 
     function __construct()
     {
@@ -101,6 +103,44 @@ class Store extends Default_Controller {
             echo "2";
         }
     }
+
+    //返回回收站商品列表
+    function goodsRecycle(){
+         $data['page'] = $this->view_goodsRecycle;
+         $data['menu'] = array('store','goodsRecycle');
+         $this->load->view('template.html',$data);
+    }
+
+    //返回回收站商品数据
+    function goodsRecycleList(){
+          //获取所有商品
+            $id = $this->input->post('default');
+          
+            $goods_list = $this->MallShop_model->get_godosRecycle();
+         
+
+            //获取商品库存
+            foreach($goods_list as $k=>$v){
+                //获取商品属性
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+                if(!empty($parent)){
+                    $a = '0';
+                    foreach($parent as $key=>$val){
+                        $a += $val['stock'];
+                    }
+                    $goods_list[$k]['amount'] = $a;
+                }else{
+                    $goods_list[$k]['amount'] = '0';
+                }
+            } 
+            if(empty($goods_list)){
+                echo "2";
+            }else{
+                echo json_encode($goods_list,JSON_UNESCAPED_UNICODE);
+            }
+    }
+
+
     //根据分页返回商品数据
     function store_goods_page(){
         if($_POST){

@@ -805,7 +805,7 @@ class SingleShop extends Default_Controller {
 
 
     //商品删除
-    function del_goods(){
+    function del_y_goods(){
         if($_POST){
             $id = $_POST['goodsid'];
             if($this->MallShop_model->del_goods($id)){
@@ -816,6 +816,51 @@ class SingleShop extends Default_Controller {
                 "userip" => get_client_ip(),
             );
             $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+    //移动回收站
+    function del_goods(){
+        if($_POST){
+            $id = $_POST['goodsid'];
+            $data['goods_state'] = '2';
+            
+            if($this->MallShop_model->edit_goods($id,$data)){
+                $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."删除一个商品到回收站，商品id是：".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+                );
+             $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+    //恢复商品
+     function recovery_goods(){
+        if($_POST){
+            $id = $_POST['goodsid'];
+            $data['goods_state'] = $_POST['state'];
+            
+            if($this->MallShop_model->edit_goods($id,$data)){
+                $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+                "content" => $_SESSION['users']['username']."恢复一个回收站商品到商品列表，商品id是：".$id,
+                "create_time" => date('Y-m-d H:i:s'),
+                "userip" => get_client_ip(),
+                );
+             $this->db->insert('hf_system_journal',$log);
                 echo "1";
             }else{
                 echo "2";
