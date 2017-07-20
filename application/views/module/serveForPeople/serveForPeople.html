@@ -1,170 +1,170 @@
- <style type="text/css">
-     .imgbox{
-        width: 100px;
-        height: 100px;
-        border: 1px solid #fff;
-        border-radius: 5px;
-     }
-     .theme-white .widget-water {
-        padding: 12px 17px;
-        border: 1px solid #77bde2;
-        border-top: 2px solid #77bde2;
-        background: #77bde2;
-        color: #ffffff;
-        min-height: 174px;
-    }
-    .theme-white .widget-elec {
-        padding: 12px 17px;
-        border: 1px solid #c77eb5;
-        border-top: 2px solid #c77eb5;
-        background: #c77eb5;
-        color: #ffffff;
-        min-height: 174px;
-    } 
-    .theme-white .widget-lawyer {
-        padding: 12px 17px;
-        border: 1px solid #ba55d3;
-        border-top: 2px solid #ba55d3;
-        background: #ba55d3;
-        color: #ffffff;
-        min-height: 174px;
-    }
-    .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        border:  1px solid #ddd;
-    }
-    .theme-white .widget-statistic-value{
-        font-size: 30px;
-    }
-    #preview img{
-        width: 200px;
-    }
-    small{
-        font-size: 10px;
-    }
-    .am-modal-dialog {
-        width: 700px;
-    }
-    #editorContent,textarea#editor{
-        height: 400px !important;
-    }
-    body.view{
-       height: 400px !important; 
-    }
- </style>
-
- <script src="assets/js/echarts.min.js"></script>
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-
-    <div class="container-fluid am-cf">
-        <div class="row">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块 
-                <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size: 18px;">为民服务</a> 
-                <small></small></div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row-content am-cf">
-        <div class="row  am-cf">
-        <?php if($id == 2):?>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                <div class="widget widget-primary am-cf">
-                    <div class="widget-statistic-header">
-                        为民服务
-                    </div>
-                    <div class="widget-statistic-body">
-                        <div class="widget-statistic-value">
-                            义工团队
-                        </div>
-                        <a  class="am-btn am-btn-secondary am-btn-xs" href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerTeamserveMess';?>">
-                              <i class="am-icon-user"></i>&nbsp;团队信息
-                         </a>
-                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerTeamservelist';?>" class="am-btn am-btn-success am-btn-xs">
-                              <i class="am-icon-coffee"></i>&nbsp;活动信息
-                         </a>
-                         
-                        <div class="widget-statistic-description am-fr">
-                            
-                            <!-- 现已有<strong>36</strong> 个人获得过帮助 -->
-
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-   
-            <?php elseif($id == 1):?>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                <div class="widget widget-elec am-cf">
-                    <div class="widget-statistic-header">
-                        为民服务
-                    </div>
-                    <div class="widget-statistic-body">
-                        <div class="widget-statistic-value">
-                            帮帮团
-                        </div>
-                        <a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" class="am-btn am-btn-secondary am-btn-xs">
-                              <i class="am-icon-user"></i>&nbsp;成员信息
-                         </a>
-                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgroupservelist';?>" class="am-btn am-btn-success am-btn-xs">
-                              <i class="am-icon-coffee"></i>&nbsp;服务信息
-                         </a>
-                        <div class="widget-statistic-description am-fr">
-                            
-                            <!-- 现共有<strong>390</strong> 个人获得过帮助 -->
-
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        <?php else:?>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
-                <div class="widget widget-lawyer am-cf">
-                    <div class="widget-statistic-header">
-                        为民服务
-                    </div>
-                    <div class="widget-statistic-body">
-                        <div class="widget-statistic-value">
-                            律师团
-                        </div>
-                        <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergrouplist';?>" class="am-btn am-btn-secondary am-btn-xs">
-                              <i class="am-icon-user"></i>&nbsp;成员信息
-                         </a>
-                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergroupservelist';?>" class="am-btn am-btn-success am-btn-xs">
-                              <i class="am-icon-coffee"></i>&nbsp;服务信息
-                         </a>
-                        <div class="widget-statistic-description am-fr">
-                            
-                            <!-- 现共有<strong>390</strong> 个人获得过帮助 -->
-
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            <?php endif;?>
-        </div>
-    </div>
-</div>
-
-
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-    //删除图片
-    $(".deleteImg").click(function(){      
-        $(this).prevUntil('#preview').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).prevUntil('#preview').find('input').val("");
-        $(this).prevUntil('#preview').find('input').files="";
-    });
-</script>
+ <style type="text/css">
+     .imgbox{
+        width: 100px;
+        height: 100px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+     }
+     .theme-white .widget-water {
+        padding: 12px 17px;
+        border: 1px solid #77bde2;
+        border-top: 2px solid #77bde2;
+        background: #77bde2;
+        color: #ffffff;
+        min-height: 174px;
+    }
+    .theme-white .widget-elec {
+        padding: 12px 17px;
+        border: 1px solid #c77eb5;
+        border-top: 2px solid #c77eb5;
+        background: #c77eb5;
+        color: #ffffff;
+        min-height: 174px;
+    } 
+    .theme-white .widget-lawyer {
+        padding: 12px 17px;
+        border: 1px solid #ba55d3;
+        border-top: 2px solid #ba55d3;
+        background: #ba55d3;
+        color: #ffffff;
+        min-height: 174px;
+    }
+    .deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
+    }
+    .theme-white .widget-statistic-value{
+        font-size: 30px;
+    }
+    #preview img{
+        width: 200px;
+    }
+    small{
+        font-size: 10px;
+    }
+    .am-modal-dialog {
+        width: 700px;
+    }
+    #editorContent,textarea#editor{
+        height: 400px !important;
+    }
+    body.view{
+       height: 400px !important; 
+    }
+ </style>
+
+ <script src="assets/js/echarts.min.js"></script>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块 
+                <a href="<?php echo site_url().'/serveForPeople/serveForPeople/serveForPeople';?>" style="font-size: 18px;">为民服务</a> 
+                <small></small></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row-content am-cf">
+        <div class="row  am-cf">
+        <?php if($id == 2):?>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                <div class="widget widget-primary am-cf">
+                    <div class="widget-statistic-header">
+                        为民服务
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            义工团队
+                        </div>
+                        <a  class="am-btn am-btn-secondary am-btn-xs" href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerTeamserveMess';?>">
+                              <i class="am-icon-user"></i>&nbsp;团队信息
+                         </a>
+                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerTeamservelist';?>" class="am-btn am-btn-success am-btn-xs">
+                              <i class="am-icon-coffee"></i>&nbsp;活动信息
+                         </a>
+                         
+                        <div class="widget-statistic-description am-fr">
+                            
+                            <!-- 现已有<strong>36</strong> 个人获得过帮助 -->
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+   
+            <?php elseif($id == 1):?>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+                <div class="widget widget-elec am-cf">
+                    <div class="widget-statistic-header">
+                        为民服务
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            帮帮团
+                        </div>
+                        <a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgrouplist';?>" class="am-btn am-btn-secondary am-btn-xs">
+                              <i class="am-icon-user"></i>&nbsp;成员信息
+                         </a>
+                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgroupservelist';?>" class="am-btn am-btn-success am-btn-xs">
+                              <i class="am-icon-coffee"></i>&nbsp;服务信息
+                         </a>
+                        <div class="widget-statistic-description am-fr">
+                            
+                            <!-- 现共有<strong>390</strong> 个人获得过帮助 -->
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        <?php else:?>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
+                <div class="widget widget-lawyer am-cf">
+                    <div class="widget-statistic-header">
+                        为民服务
+                    </div>
+                    <div class="widget-statistic-body">
+                        <div class="widget-statistic-value">
+                            律师团
+                        </div>
+                        <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergrouplist';?>" class="am-btn am-btn-secondary am-btn-xs">
+                              <i class="am-icon-user"></i>&nbsp;成员信息
+                         </a>
+                         <a href="<?php echo site_url().'/serveForPeople/serveForPeople/lawyergroupservelist';?>" class="am-btn am-btn-success am-btn-xs">
+                              <i class="am-icon-coffee"></i>&nbsp;服务信息
+                         </a>
+                        <div class="widget-statistic-description am-fr">
+                            
+                            <!-- 现共有<strong>390</strong> 个人获得过帮助 -->
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <?php endif;?>
+        </div>
+    </div>
+</div>
+
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){      
+        $(this).prevUntil('#preview').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).prevUntil('#preview').find('input').val("");
+        $(this).prevUntil('#preview').find('input').files="";
+    });
+</script>

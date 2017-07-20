@@ -1,263 +1,263 @@
-<style type="text/css">
-  #preview{
-        width:150px !important;
-    }
-    #preview #imghead,#preview img{
-     width:140px !important;
-    }
-    div.am-u-sm-12{
-    padding-left: 10%;
-
-}
-.postageNumber{
-        display: none;
-    } 
-</style>  
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsList';?>" style="font-size:16px;">商品列表</a>
-            <small><a href="<?php echo site_url().'/store/store/storeAddGoods';?>">新增商品</a></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">商品基础信息</div>
-                    </div>
-                    <div class="widget-body  am-fr">
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                        <div class="am-form-group">
-                            <label for="doc-vld-name-1">商品编号 <span class="red">*</span>：</label>
-                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商品编号" required="required" />
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="Name">商品名称<span class="red">*</span>：</label>
-                            <input type="text" id="Name" value="" required="required" />
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">商品价格<span class="red">*</span>：</label>
-                            <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" />
-                        </div>
-                         
-                        <div class="am-form-group">
-                            <label for="englishName">商品品牌：</label>
-                            <input type="number" id="englishName" value=""  />
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">添加属性：</label>
-                            <div class="tableContainer">
-                                <table class="addProperty">
-                                <thead>
-                                    <th>属性名称</th>
-                                    <th>&nbsp;</th>
-                                </thead>
-                                <tbody class="addPropertyBody">
-                                    <td class="propertyName"><input type="text" name="parameter_name[]"></td>
-                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
-                                    <table class="addPropertyContent">
-                                        <thead>
-                                            <th>属性值</th>
-                                            <th>附加值</th>
-                                            <th>库存</th>
-                                            <th>&nbsp;</th>
-                                        </thead>
-                                        <tbody class="addPropertyTr">
-                                            <tr class="addPropertytr">
-                                                <td class="propertyValue"><input type="text" name="child_parameter_name"></td>
-                                                <td class="propertyValue"><input type="text" name="equivalence"></td>
-                                                <td class="propertyValue"><input type="text" name="Inventory"></td>
-                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </tbody>
-                            </table>
-                           
-                            </div>
-                            <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button>
-                        </div>
-                        <div class="am-form-group" >
-                            <label for="oneType">是否包邮：</label>
-                            <input type="radio" name="yes" value="0" id="dispostage" />是
-                            <input type="radio" name="yes" id="postage" value="1"/>否
-                        </div>
-                        <div class="am-form-group postageNumber" >
-                            <label for="englishName">请输入运费<span class="red">*</span>：</label>
-                            <input type="number"  id="postageNum" value="" required="required" />
-                        </div>
-                        <div class="am-form-group">
-                            <label for="oneType">货到付款：</label>
-                            <select id="oneType" required="required">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">支持货到付款</option>
-                                <option value="option2">不支持货到付款</option>
-                            </select>
-                        </div>
-                        
-                    </div>
-                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                    <div class="am-form-group">
-                            <label>商品分类<span class="red">*</span>：</label>
-                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value=>输入查找/选择</option>
-                                <option value="上装">上装</option>
-                                <option value="下装">下装</option>
-                                <option value="裙装">裙装</option>
-                            </select>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>是
-                            <input type="radio" name="yes" value=""/>否
-                        </div>
-                        
-                        <div class="am-form-group">
-                            <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
-                            <input type="number"  id="respority" value="" required="required" />
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
-                            <select id="oneType" required="required">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="通过审核">通过审核</option>
-                                <option value="待审核">待审核</option>
-                                <option value="未通过">未通过</option>
-                            </select>
-
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">商品状态：<span class="red">*</span>：</label>
-                            <input type="radio" name="yes" value=""/>上架
-                            <input type="radio" name="yes" value=""/>下架
-                        </div>
-                        <div class="am-form-group">
-                            <label for="user-weibo" >商品图片：</label>
-                            <div class="am-u-sm-12">
-                                <div class="am-u-sm-4">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                </div>
-                                <div class="am-u-sm-4">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                </div>
-                                <div class="am-u-sm-4">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
-                                      <!-- 图片实时预览 --> 
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                </div>
-                            </div>
-                            <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="englishName">商品信息详情<span class="red">*</span>：</label>
-                            <div>
-                                <script id="editor" type="text/plain"></script>
-                            </div>
-                                                     
-                        </div>
-                    </div>
-                </div>
-
-                    <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
-                        <button class="am-btn am-btn-default" type="reset">取消</button> 
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-</body>
-<script type="text/javascript">
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-
-//点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(-1);
-  });
- //点击进行运费设置
-$('#postage').click(function(){
-    $('.postageNumber').css('display','block');
-
-});
-//点击取消运费设置
-$('#dispostage').click(function(){
-    $('.postageNumber').css('display','none');
-});
- //删除图片
-$(".deleteImg").click(function(){
-    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).siblings('.wx_type_img').find('input').val("");
-    $(this).siblings('.wx_type_img').find('input').files="";
-});
-
-//添加属性名称的设置
-// $('.createMoreName').click(function(){   
-//     $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name=""></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
-//     $('.createMore').click(function(){
-//    $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-// })
-// })
-//添加属性值的设置
-// $('.createMore').click(function(){
-//    $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
-// })
-</script>
+<style type="text/css">
+  #preview{
+        width:150px !important;
+    }
+    #preview #imghead,#preview img{
+     width:140px !important;
+    }
+    div.am-u-sm-12{
+    padding-left: 10%;
+
+}
+.postageNumber{
+        display: none;
+    } 
+</style>  
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeGoodsList';?>" style="font-size:16px;">商品列表</a>
+            <small><a href="<?php echo site_url().'/store/store/storeAddGoods';?>">新增商品</a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="" method="" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">商品基础信息</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                        <div class="am-form-group">
+                            <label for="doc-vld-name-1">商品编号 <span class="red">*</span>：</label>
+                            <input type="text" id="doc-vld-name-1" minlength="2" placeholder="请输入商品编号" required="required" />
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="Name">商品名称<span class="red">*</span>：</label>
+                            <input type="text" id="Name" value="" required="required" />
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="englishName">商品价格<span class="red">*</span>：</label>
+                            <input type="number" class="am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6" id="lowprice" value="" required="required" />
+                        </div>
+                         
+                        <div class="am-form-group">
+                            <label for="englishName">商品品牌：</label>
+                            <input type="number" id="englishName" value=""  />
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="englishName">添加属性：</label>
+                            <div class="tableContainer">
+                                <table class="addProperty">
+                                <thead>
+                                    <th>属性名称</th>
+                                    <th>&nbsp;</th>
+                                </thead>
+                                <tbody class="addPropertyBody">
+                                    <td class="propertyName"><input type="text" name="parameter_name[]"></td>
+                                    <td><i class="am-icon am-icon-plus addStyle createMoreName"></i></td>
+                                    <table class="addPropertyContent">
+                                        <thead>
+                                            <th>属性值</th>
+                                            <th>附加值</th>
+                                            <th>库存</th>
+                                            <th>&nbsp;</th>
+                                        </thead>
+                                        <tbody class="addPropertyTr">
+                                            <tr class="addPropertytr">
+                                                <td class="propertyValue"><input type="text" name="child_parameter_name"></td>
+                                                <td class="propertyValue"><input type="text" name="equivalence"></td>
+                                                <td class="propertyValue"><input type="text" name="Inventory"></td>
+                                                <td class="propertyValue"><i class="am-icon am-icon-plus addStyle createMore1"></i></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </tbody>
+                            </table>
+                           
+                            </div>
+                            <button type="button" id="addProperty" class="am-btn-secondary am-text-center">添加</button>
+                        </div>
+                        <div class="am-form-group" >
+                            <label for="oneType">是否包邮：</label>
+                            <input type="radio" name="yes" value="0" id="dispostage" />是
+                            <input type="radio" name="yes" id="postage" value="1"/>否
+                        </div>
+                        <div class="am-form-group postageNumber" >
+                            <label for="englishName">请输入运费<span class="red">*</span>：</label>
+                            <input type="number"  id="postageNum" value="" required="required" />
+                        </div>
+                        <div class="am-form-group">
+                            <label for="oneType">货到付款：</label>
+                            <select id="oneType" required="required">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="option1">支持货到付款</option>
+                                <option value="option2">不支持货到付款</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                    <div class="am-form-group">
+                            <label>商品分类<span class="red">*</span>：</label>
+                            <select id="yetai" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value=>输入查找/选择</option>
+                                <option value="上装">上装</option>
+                                <option value="下装">下装</option>
+                                <option value="裙装">裙装</option>
+                            </select>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="oneType">是否是推荐产品<span class="red">*</span>：</label>
+                            <input type="radio" name="yes" value=""/>是
+                            <input type="radio" name="yes" value=""/>否
+                        </div>
+                        
+                        <div class="am-form-group">
+                            <label for="englishName">商品库存(件)<span class="red">*</span>：</label>
+                            <input type="number"  id="respority" value="" required="required" />
+                        </div>
+                        <div class="am-form-group">
+                            <label for="englishName">审核状态：<span class="red">*</span>：</label>
+                            <select id="oneType" required="required">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="通过审核">通过审核</option>
+                                <option value="待审核">待审核</option>
+                                <option value="未通过">未通过</option>
+                            </select>
+
+                        </div>
+                        <div class="am-form-group">
+                            <label for="englishName">商品状态：<span class="red">*</span>：</label>
+                            <input type="radio" name="yes" value=""/>上架
+                            <input type="radio" name="yes" value=""/>下架
+                        </div>
+                        <div class="am-form-group">
+                            <label for="user-weibo" >商品图片：</label>
+                            <div class="am-u-sm-12">
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                                <div class="am-u-sm-4">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img[]" onchange="previewImage(this)" class="upload-add" multiple="multiple" required>
+                                      <!-- 图片实时预览 --> 
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                </div>
+                            </div>
+                            <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="englishName">商品信息详情<span class="red">*</span>：</label>
+                            <div>
+                                <script id="editor" type="text/plain"></script>
+                            </div>
+                                                     
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit" id="cancle">添加</button>
+                        <button class="am-btn am-btn-default" type="reset">取消</button> 
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+</body>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+ //点击进行运费设置
+$('#postage').click(function(){
+    $('.postageNumber').css('display','block');
+
+});
+//点击取消运费设置
+$('#dispostage').click(function(){
+    $('.postageNumber').css('display','none');
+});
+ //删除图片
+$(".deleteImg").click(function(){
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).siblings('.wx_type_img').find('input').val("");
+    $(this).siblings('.wx_type_img').find('input').files="";
+});
+
+//添加属性名称的设置
+// $('.createMoreName').click(function(){   
+//     $('<table class="addProperty"><thead><th>属性名称</th><th>&nbsp;</th></thead><tbody><td><input type="text" name=""></td><td>&nbsp;</i></td><table class="addPropertyContent"><thead><th>属性值</th><th>附加值</th><th>&nbsp;</th></thead><tbody class="addPropertyTr"><tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td><i class="am-icon am-icon-plus addStyle createMore"></i></td></tr></tbody></table></tbody></table>').appendTo('.tableContainer');
+//     $('.createMore').click(function(){
+//    $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+// })
+// })
+//添加属性值的设置
+// $('.createMore').click(function(){
+//    $('<tr><td><input type="text" name=""></td><td><input type="text" name=""></td><td></td></tr>').appendTo(this.parentNode.parentNode.parentNode);
+// })
+</script>

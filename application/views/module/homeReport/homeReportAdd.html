@@ -1,190 +1,190 @@
-<style type="text/css" media="screen">
-    .am-selected{
-        width: 100%!important;
-    }
-    .table-check{
-        width: 30px;
-    } 
-    .hf-dropdown{
-        font-size: 12px!important;
-    padding: 5px 6px!important;
-    }
- #preview{
-        height:200px !important;
-    }
-    #preview #imghead,#preview img{
-        
-        height:190px;
-    }
-
-    .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        border:  1px solid #ddd;
-    }
-    .addpadding{
-        padding-left:10%;
-    }
-    .clickUp{
-        margin-left: 150px;
-    }
-    label{
-        font-weight: normal;
-    }
-    .am-list>li {
-        border: none;
-    }
-    .quan{
-        width: 280px;
-        height: 80px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        background: #f43b41;
-        color:#fff;
-    }
-    a.quan:hover{
-        color:#fff;
-    }
-    .quan div {
-        height: 50px;
-        line-height: 50px;
-        display: inline-block;
-        vertical-align:middle;
-        font-size:30px;
-    }
-    .quan div p {
-        padding:0;
-        margin:0;
-        color:#ccc;
-        height:20px;
-        line-height: 20px;
-        font-size:10px;
-    }
-    .quan div p:first-child{
-        color:#fff;
-        font-size:16px;
-    }
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 
-            <a href="<?php echo site_url().'/module/LocalLife/localLifeList';?>" style="font-size:18px;"> 服务模块 </a>
-            
-            <a href="<?php echo site_url().'/module/HomeReport/index';?>" style="font-size:18px;">家乡报道</a>  
-            <small><a href="<?php echo site_url().'/module/HomeReport/homeReportAdd';?>" style="font-size:16px;">新增新闻</a></small>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/module/HomeReport/add_notice');?>" method="post" enctype="multipart/form-data" >
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">新增新闻</div>
-                    </div>
-                    <div class="widget-body">
-                        <div class="memberInfo padding-horizontal-lg">
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">新闻标题<span class="red">*</span>：</label>
-                                 <div class="am-u-sm-6 am-u-end">
-                                   <input type="text" name="title" placeholder="请输入2-10个字符"  required onblur="validate(this,2,10,1)" />
-                                </div>
-                                <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">新闻分类<span class="red">*</span>：</label>
-                              <div class="am-u-sm-6 am-u-end">
-                                    <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='cateid'>
-                                        <option value=''>请选择一个！</option>
-                                        <?php foreach($cates as $val):?>
-                                        <option value="<?php echo $val['cate_id'];?>"><?php echo $val['name'];?></option>
-                                        <?php endforeach;?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">新闻缩略图<span class="red">*</span>：</label>
-                                 <div class="am-u-sm-6 am-u-end">
-                                    <div class="wx_type_img">
-                                     <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">新闻详情<span class="red">*</span>：</label>
-                                <div class="am-u-sm-6 am-u-end">
-                                    <div>
-                                        <script id="editor" type="text/plain" name="content"></script>
-                                    </div>
-                                </div>                            
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type="hidden" name="id" value="" />
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
-                        <button class="am-btn am-btn-default am-btn-xs" id="cancle" type="reset">取消</button> 
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
-
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致新增器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
-//删除图片
-$(".deleteImg").click(function(){      
-    $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).prevUntil('.preview').find('input').val("");
-});
-
-//点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(0);
-  });
-
-     //实例化新增器
-    //建议使用工厂方法getEditor创建和引用新增器实例，如果在某个闭包下引用该新增器，直接调用UE.getEditor('editor')就能拿到相关的实例
-    var ue = UE.getEditor('editor');
-
-
-</script>
-</body>
-</html>
+<style type="text/css" media="screen">
+    .am-selected{
+        width: 100%!important;
+    }
+    .table-check{
+        width: 30px;
+    } 
+    .hf-dropdown{
+        font-size: 12px!important;
+    padding: 5px 6px!important;
+    }
+ #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+    label{
+        font-weight: normal;
+    }
+    .am-list>li {
+        border: none;
+    }
+    .quan{
+        width: 280px;
+        height: 80px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #f43b41;
+        color:#fff;
+    }
+    a.quan:hover{
+        color:#fff;
+    }
+    .quan div {
+        height: 50px;
+        line-height: 50px;
+        display: inline-block;
+        vertical-align:middle;
+        font-size:30px;
+    }
+    .quan div p {
+        padding:0;
+        margin:0;
+        color:#ccc;
+        height:20px;
+        line-height: 20px;
+        font-size:10px;
+    }
+    .quan div p:first-child{
+        color:#fff;
+        font-size:16px;
+    }
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 
+            <a href="<?php echo site_url().'/module/LocalLife/localLifeList';?>" style="font-size:18px;"> 服务模块 </a>
+            
+            <a href="<?php echo site_url().'/module/HomeReport/index';?>" style="font-size:18px;">家乡报道</a>  
+            <small><a href="<?php echo site_url().'/module/HomeReport/homeReportAdd';?>" style="font-size:16px;">新增新闻</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/module/HomeReport/add_notice');?>" method="post" enctype="multipart/form-data" >
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">新增新闻</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">新闻标题<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-6 am-u-end">
+                                   <input type="text" name="title" placeholder="请输入2-10个字符"  required onblur="validate(this,2,10,1)" />
+                                </div>
+                                <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+                                <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">新闻分类<span class="red">*</span>：</label>
+                              <div class="am-u-sm-6 am-u-end">
+                                    <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='cateid'>
+                                        <option value=''>请选择一个！</option>
+                                        <?php foreach($cates as $val):?>
+                                        <option value="<?php echo $val['cate_id'];?>"><?php echo $val['name'];?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">新闻缩略图<span class="red">*</span>：</label>
+                                 <div class="am-u-sm-6 am-u-end">
+                                    <div class="wx_type_img">
+                                     <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">新闻详情<span class="red">*</span>：</label>
+                                <div class="am-u-sm-6 am-u-end">
+                                    <div>
+                                        <script id="editor" type="text/plain" name="content"></script>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <input type="hidden" name="id" value="" />
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
+                        <button class="am-btn am-btn-default am-btn-xs" id="cancle" type="reset">取消</button> 
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致新增器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+//删除图片
+$(".deleteImg").click(function(){      
+    $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).prevUntil('.preview').find('input').val("");
+});
+
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(0);
+  });
+
+     //实例化新增器
+    //建议使用工厂方法getEditor创建和引用新增器实例，如果在某个闭包下引用该新增器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor('editor');
+
+
+</script>
+</body>
+</html>

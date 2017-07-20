@@ -1,160 +1,160 @@
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small><a href="<?php echo site_url().'/member/member/addMember';?>">新增会员</a></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/member/member/add_user');?>" method="post" enctype="multipart/form-data" data-am-validator>
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">会员信息</div>
-                    </div>
-                    <div class="widget-body  am-fr">
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                            <div class="am-form-group">
-                                <label for="">用户名 <span class="red">*</span>：</label>
-                                <input type="text" id="" minlength="2" maxlength="15" name="username" placeholder="输入用户名（至少 2 个字符,至多15个字符）" required/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="">密码 <span class="red">*</span>：</label>
-                                <input type="text" id=""  name="password" placeholder="输入密码（至少 6 个字符,至多16个字符）" required/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="">昵称：</label>
-                                <input type="text" id="doc-vld-email-2" minlength="2" maxlength="15" name="nickname" placeholder="输入昵称（至少 2 个字符,至多15个字符）"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-528">手机号 <span class="red">*</span>：</label>
-                                <input type="tel" name="phone" onchange="confirmPhone(this)" required placeholder="输入手机号"/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="">QQ ：</label>
-                                <input type="text" minlength="6" maxlength="12" id="" name="qq"  placeholder="请输入QQ" required/>
-                            </div>
-                            <div class="am-form-group">
-                                <label for="doc-vld-email-2">邮箱：</label>
-                                <input type="email" id="doc-vld-email-2" name="email" placeholder="输入邮箱"/>
-                            </div>
-
-
-                        </div>
-                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
-                           
-                             <div class="am-form-group">
-                                <label for="doc-select-1">会员卡等级 <span class="red">*</span>：</label>
-                                <select id="doc-select-1" name="card_id" required>
-                                    <option value="">-=请选择一项=-</option>
-                                    <?php foreach($cards as $val){?>
-                                    <option value="<?php echo $val['id']?>"><?php echo $val['name'];?></option>
-                                    <?php }?>
-                                </select>
-                                <span class="am-form-caret"></span>
-                            </div>
-
-                            <div class="am-form-group">
-                                <label for="doc-vld-email-2">默认积分：</label>
-                                <input type="number" id="doc-vld-email-2" required name="intergral" placeholder="输入积分"/>
-
-                            </div>
-                            <div class="am-form-group">
-                                <label>性别： </label>
-                                <label class="am-radio-inline">
-                                    <input type="radio"  value="男" name="gender"> 男
-                                </label>
-                                <label class="am-radio-inline">
-                                    <input type="radio" name="gender" value="女"> 女
-                                </label>
-
-                            </div>
-
-                            <!--<div class="am-form-group">-->
-                                <!--<label for="doc-vld-ta-2">学历：</label>-->
-                                <!--<select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">-->
-                                    <!--<option value=>输入查找/选择</option>-->
-                                    <!--<option value="0">本科</option>-->
-                                    <!--<option value="1">研究生以上</option>-->
-                                    <!--<option value="2">本科以下</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <!--<div class="am-form-group">-->
-                                <!--<label class="am-form-label">爱好：</label>-->
-                                <!--<label class="am-checkbox-inline">-->
-                                    <!--<input type="checkbox" value="电影" name="docVlCb" minchecked="2" maxchecked="4"> 电影-->
-                                <!--</label>-->
-                                <!--<label class="am-checkbox-inline">-->
-                                    <!--<input type="checkbox" value="交友" name="docVlCb"> 交友-->
-                                <!--</label>-->
-                                <!--<label class="am-checkbox-inline">-->
-                                    <!--<input type="checkbox" value="美食" name="docVlCb"> 美食-->
-                                <!--</label>-->
-                                <!--<label class="am-checkbox-inline">-->
-                                    <!--<input type="checkbox" value="逛街" name="docVlCb"> 逛街-->
-                                <!--</label>-->
-                                <!--<label class="am-checkbox-inline">-->
-                                    <!--<input type="checkbox" value="运动" name="docVlCb"> 运动-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        </div>
-
-                    </div>
-                    <!--<div class="widget-head am-cf">-->
-                        <!--<div class="widget-title  am-cf">会员卡信息</div>-->
-                    <!--</div>-->
-                    <!--<div class="widget-body  am-fr">-->
-                    <!--<div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">-->
-                        <!--<div class="am-form-group">-->
-                                <!--<label for="doc-select-1">会员卡类型 <span class="red">*</span>：</label>-->
-                                <!--<select id="doc-select-1" required name="cardid">-->
-                                    <!--<option value="">-=请选择一项=-</option>-->
-                                    <!--<?php foreach($cards as $val){?>-->
-                                    <!--<option value="<?php echo $val['id'];?>"><?php echo $val['name'];?></option>-->
-                                    <!--<?php }?>-->
-
-                                <!--</select>-->
-                                <!--<span class="am-form-caret"></span>-->
-                            <!--</div>-->
-                             <!--<div class="am-form-group">-->
-                                <!--<label for="">会员卡号 <span class="red">*</span>：</label>-->
-                                <!--<input type="text" id="" minlength="2" required/>-->
-                            <!--</div>-->
-                            <!--<div class="am-form-group">-->
-                                <!--<label for="">会员积分：</label>-->
-                                <!--<input type="number" id="" required/>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">-->
-                        <!--<div class="am-form-group">-->
-                                <!--<label for="doc-select-1">证件类型：</label>-->
-                                <!--<select id="doc-select-1">-->
-                                    <!--<option value="">-=请选择一项=-</option>-->
-                                    <!--<option value="option1">身份证</option>-->
-                                    <!--<option value="option2">军官证</option>-->
-                                    <!--<option value="option3">护照</option>-->
-                                    <!--<option value="option3">其他</option>-->
-                                <!--</select>-->
-                                <!--<span class="am-form-caret"></span>-->
-                            <!--</div>-->
-                             <!--<div class="am-form-group">-->
-                                <!--<label for="">证件号：</label>-->
-                                <!--<input type="text" id=""/>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                     <div class="am-form-group am-text-center">
-                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
-                        </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small><a href="<?php echo site_url().'/member/member/addMember';?>">新增会员</a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/member/member/add_user');?>" method="post" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">会员信息</div>
+                    </div>
+                    <div class="widget-body  am-fr">
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                            <div class="am-form-group">
+                                <label for="">用户名 <span class="red">*</span>：</label>
+                                <input type="text" id="" minlength="2" maxlength="15" name="username" placeholder="输入用户名（至少 2 个字符,至多15个字符）" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="">密码 <span class="red">*</span>：</label>
+                                <input type="text" id=""  name="password" placeholder="输入密码（至少 6 个字符,至多16个字符）" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="">昵称：</label>
+                                <input type="text" id="doc-vld-email-2" minlength="2" maxlength="15" name="nickname" placeholder="输入昵称（至少 2 个字符,至多15个字符）"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-528">手机号 <span class="red">*</span>：</label>
+                                <input type="tel" name="phone" onchange="confirmPhone(this)" required placeholder="输入手机号"/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="">QQ ：</label>
+                                <input type="text" minlength="6" maxlength="12" id="" name="qq"  placeholder="请输入QQ" required/>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="doc-vld-email-2">邮箱：</label>
+                                <input type="email" id="doc-vld-email-2" name="email" placeholder="输入邮箱"/>
+                            </div>
+
+
+                        </div>
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+                           
+                             <div class="am-form-group">
+                                <label for="doc-select-1">会员卡等级 <span class="red">*</span>：</label>
+                                <select id="doc-select-1" name="card_id" required>
+                                    <option value="">-=请选择一项=-</option>
+                                    <?php foreach($cards as $val){?>
+                                    <option value="<?php echo $val['id']?>"><?php echo $val['name'];?></option>
+                                    <?php }?>
+                                </select>
+                                <span class="am-form-caret"></span>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="doc-vld-email-2">默认积分：</label>
+                                <input type="number" id="doc-vld-email-2" required name="intergral" placeholder="输入积分"/>
+
+                            </div>
+                            <div class="am-form-group">
+                                <label>性别： </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio"  value="男" name="gender"> 男
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="gender" value="女"> 女
+                                </label>
+
+                            </div>
+
+                            <!--<div class="am-form-group">-->
+                                <!--<label for="doc-vld-ta-2">学历：</label>-->
+                                <!--<select id="yetai" data-am-selected="{searchBox: 1,maxHeight: 200}">-->
+                                    <!--<option value=>输入查找/选择</option>-->
+                                    <!--<option value="0">本科</option>-->
+                                    <!--<option value="1">研究生以上</option>-->
+                                    <!--<option value="2">本科以下</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <!--<div class="am-form-group">-->
+                                <!--<label class="am-form-label">爱好：</label>-->
+                                <!--<label class="am-checkbox-inline">-->
+                                    <!--<input type="checkbox" value="电影" name="docVlCb" minchecked="2" maxchecked="4"> 电影-->
+                                <!--</label>-->
+                                <!--<label class="am-checkbox-inline">-->
+                                    <!--<input type="checkbox" value="交友" name="docVlCb"> 交友-->
+                                <!--</label>-->
+                                <!--<label class="am-checkbox-inline">-->
+                                    <!--<input type="checkbox" value="美食" name="docVlCb"> 美食-->
+                                <!--</label>-->
+                                <!--<label class="am-checkbox-inline">-->
+                                    <!--<input type="checkbox" value="逛街" name="docVlCb"> 逛街-->
+                                <!--</label>-->
+                                <!--<label class="am-checkbox-inline">-->
+                                    <!--<input type="checkbox" value="运动" name="docVlCb"> 运动-->
+                                <!--</label>-->
+                            <!--</div>-->
+                        </div>
+
+                    </div>
+                    <!--<div class="widget-head am-cf">-->
+                        <!--<div class="widget-title  am-cf">会员卡信息</div>-->
+                    <!--</div>-->
+                    <!--<div class="widget-body  am-fr">-->
+                    <!--<div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">-->
+                        <!--<div class="am-form-group">-->
+                                <!--<label for="doc-select-1">会员卡类型 <span class="red">*</span>：</label>-->
+                                <!--<select id="doc-select-1" required name="cardid">-->
+                                    <!--<option value="">-=请选择一项=-</option>-->
+                                    <!--<?php foreach($cards as $val){?>-->
+                                    <!--<option value="<?php echo $val['id'];?>"><?php echo $val['name'];?></option>-->
+                                    <!--<?php }?>-->
+
+                                <!--</select>-->
+                                <!--<span class="am-form-caret"></span>-->
+                            <!--</div>-->
+                             <!--<div class="am-form-group">-->
+                                <!--<label for="">会员卡号 <span class="red">*</span>：</label>-->
+                                <!--<input type="text" id="" minlength="2" required/>-->
+                            <!--</div>-->
+                            <!--<div class="am-form-group">-->
+                                <!--<label for="">会员积分：</label>-->
+                                <!--<input type="number" id="" required/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">-->
+                        <!--<div class="am-form-group">-->
+                                <!--<label for="doc-select-1">证件类型：</label>-->
+                                <!--<select id="doc-select-1">-->
+                                    <!--<option value="">-=请选择一项=-</option>-->
+                                    <!--<option value="option1">身份证</option>-->
+                                    <!--<option value="option2">军官证</option>-->
+                                    <!--<option value="option3">护照</option>-->
+                                    <!--<option value="option3">其他</option>-->
+                                <!--</select>-->
+                                <!--<span class="am-form-caret"></span>-->
+                            <!--</div>-->
+                             <!--<div class="am-form-group">-->
+                                <!--<label for="">证件号：</label>-->
+                                <!--<input type="text" id=""/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                     <div class="am-form-group am-text-center">
+                        <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+

@@ -1,219 +1,219 @@
-<?php $this->load->view('common.html');?>
-<!-- 菜单 -->
-<ul class="sidebar-nav">
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/admin';?>">
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title active">
-            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberCard';?>" class="sub-active">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
-                </a>
-            </li>
-        </ul>
-    </li>
-    <!-- <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/addMember';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/member/member/memberList';?>">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
-                </a>
-            </li>
-        </ul>
-    </li> -->
-    <li class="sidebar-nav-link">
-        <a href="calendar.html">
-            <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="form.html">
-            <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="chart.html">
-            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title">
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub">
-            <li class="sidebar-nav-link">
-                <a href="table-list.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="table-list-img.html">
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
-                </a>
-            </li>
-        </ul>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="sign-up.html">
-            <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="404.html">
-            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
-        </a>
-    </li>
-</ul>
-</div>
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-    <div class="container-fluid am-cf">
-        <div class="row">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理 <small>新增会员卡</small></div>
-            </div>
-        </div>
-    </div>
-    <div class="row-content am-cf">
-        <div class="row">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                <form class="am-form" action="" method="post" enctype="multipart/form-data" data-am-validator>
-                    <div class="widget am-cf">
-                        <div class="widget-head am-cf">
-                            <div class="widget-title  am-cf">积分规则管理</div>
-                        </div>
-                        <div class="widget-body  am-fr">
-                            <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
-                                <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                    <label for="" class="am-u-sm-3 am-form-label">积分有效期<span class="red">*</span>：</label>
-                                    <div class="am-u-sm-9">
-                                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                          <input type="text" name="" id="" class="am-form-field" placeholder="日历组件" readonly>
-                                          <span class="am-input-group-btn am-datepicker-add-on">
-                                            <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                          </span>
-                                        </div>至
-                                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
-                                          <input type="text" name="" id="" class="am-form-field" placeholder="日历组件" readonly>
-                                          <span class="am-input-group-btn am-datepicker-add-on">
-                                            <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
-                                          </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                    <label for="englishName">消费积分规则：</label>
-                                    <div>
-                                        <script id="editor" type="text/plain"></script>
-                                    </div>
-                                                         
-                                </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                    <label for="englishName">线上活跃积分规则配置：</label>
-                                    <div>
-                                        <script id="editor" type="text/plain"></script>
-                                    </div>
-                                                         
-                                </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                    <label for="englishName">积分活动规则规则配置：</label>
-                                    <div>
-                                        <script id="editor" type="text/plain"></script>
-                                    </div>
-                                                         
-                                </div>
-                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                                    <label for="englishName">积分清零规则配置：</label>
-                                    <div>
-                                        <script id="editor" type="text/plain"></script>
-                                    </div>
-                                                         
-                                </div>
-                                <div class="am-form-group">
-                                    <button type="submit" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 保存更改</button>
-                                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-refresh"></span> 取消</button>
-                                </div>
-                        </div>
-                        
-                       </div>  
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script src="assets/js/amazeui.min.js"></script>
-<script src="assets/js/amazeui.datatables.min.js"></script>
-<script src="assets/js/dataTables.responsive.min.js"></script>
-<script src="assets/js/app.js"></script>
-<link rel="stylesheet" type="text/css" href="assets/css/memberCard.css">
-</body>
-</html>
+<?php $this->load->view('common.html');?>
+<!-- 菜单 -->
+<ul class="sidebar-nav">
+    <li class="sidebar-nav-link">
+        <a href="<?php echo site_url().'/admin';?>">
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 管理中心
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/shop/shop/addShop';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增商家
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title active">
+            <i class="am-icon-users sidebar-nav-link-logo"></i> 会员管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub" style="display: block;">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberGroup';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员组
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增会员
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员列表
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberCard';?>" class="sub-active">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 会员卡管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动审核
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/addMember';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动/促销审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 团购审核
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="<?php echo site_url().'/member/member/memberList';?>">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 特卖审核
+                </a>
+            </li>
+        </ul>
+    </li> -->
+    <li class="sidebar-nav-link">
+        <a href="calendar.html">
+            <i class="am-icon-map-marker sidebar-nav-link-logo"></i> 本地生活
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="form.html">
+            <i class="am-icon-money sidebar-nav-link-logo"></i> 充值缴费
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="chart.html">
+            <i class="am-icon-bar-chart sidebar-nav-link-logo"></i> 图表
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="javascript:;" class="sidebar-nav-sub-title">
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 卡券管理
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico"></span>
+        </a>
+        <ul class="sidebar-nav sidebar-nav-sub">
+            <li class="sidebar-nav-link">
+                <a href="table-list.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 电子券
+                </a>
+            </li>
+            <li class="sidebar-nav-link">
+                <a href="table-list-img.html">
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 积分
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="sign-up.html">
+            <i class="am-icon-heart sidebar-nav-link-logo"></i> 一键钟情
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 管理员管理
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="login.html">
+            <i class="am-icon-unlock sidebar-nav-link-logo"></i> 登录
+        </a>
+    </li>
+    <li class="sidebar-nav-link">
+        <a href="404.html">
+            <i class="am-icon-tv sidebar-nav-link-logo"></i> 404错误
+        </a>
+    </li>
+</ul>
+</div>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理 <small>新增会员卡</small></div>
+            </div>
+        </div>
+    </div>
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                <form class="am-form" action="" method="post" enctype="multipart/form-data" data-am-validator>
+                    <div class="widget am-cf">
+                        <div class="widget-head am-cf">
+                            <div class="widget-title  am-cf">积分规则管理</div>
+                        </div>
+                        <div class="widget-body  am-fr">
+                            <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 padding-horizontal-lg">
+                                <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                    <label for="" class="am-u-sm-3 am-form-label">积分有效期<span class="red">*</span>：</label>
+                                    <div class="am-u-sm-9">
+                                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                          <input type="text" name="" id="" class="am-form-field" placeholder="日历组件" readonly>
+                                          <span class="am-input-group-btn am-datepicker-add-on">
+                                            <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                                          </span>
+                                        </div>至
+                                        <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years'}">
+                                          <input type="text" name="" id="" class="am-form-field" placeholder="日历组件" readonly>
+                                          <span class="am-input-group-btn am-datepicker-add-on">
+                                            <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                                          </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <label for="englishName">消费积分规则：</label>
+                                    <div>
+                                        <script id="editor" type="text/plain"></script>
+                                    </div>
+                                                         
+                                </div>
+                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <label for="englishName">线上活跃积分规则配置：</label>
+                                    <div>
+                                        <script id="editor" type="text/plain"></script>
+                                    </div>
+                                                         
+                                </div>
+                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <label for="englishName">积分活动规则规则配置：</label>
+                                    <div>
+                                        <script id="editor" type="text/plain"></script>
+                                    </div>
+                                                         
+                                </div>
+                                <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                                    <label for="englishName">积分清零规则配置：</label>
+                                    <div>
+                                        <script id="editor" type="text/plain"></script>
+                                    </div>
+                                                         
+                                </div>
+                                <div class="am-form-group">
+                                    <button type="submit" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-pencil"></span> 保存更改</button>
+                                    <button type="button" class="am-btn am-btn-default"><span class="am-icon-refresh"></span> 取消</button>
+                                </div>
+                        </div>
+                        
+                       </div>  
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script src="assets/js/amazeui.min.js"></script>
+<script src="assets/js/amazeui.datatables.min.js"></script>
+<script src="assets/js/dataTables.responsive.min.js"></script>
+<script src="assets/js/app.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/css/memberCard.css">
+</body>
+</html>

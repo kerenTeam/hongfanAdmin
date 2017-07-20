@@ -1,136 +1,136 @@
-<style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
-} 
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-.am-modal-bd {
-    border-top: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
-} 
-.am-modal-bd textarea{
-    margin:0 40px;
-    margin-top: 30px;
-    margin-bottom: 10px;
-
-}
-.goodsName{
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-.commentState{
-    background: #15b5ac;
-    border-radius: 5px;
-    border: 1px solid #15b5ac;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
-}
-.commentState option{
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding:2px 5px;
-    color: #000;
-    text-align: center;
-}
-.commentState option[selected="selected"]{
-    background: #15b5ac;
-}
-.modal-content{
-    width: 400px;
-    height: 30px;
-    margin:20px auto;
-    
-}
-.modal-content span.am-fr{
-    color: #15b5ac;
-}
-.commentImg{
-    width:100px;
-    border: 1px solid #f1f1f1;
-    border-radius: 5px;
-}
-.imgbox{
-    width: 100px;
-}
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>系统设置
-            <a href="<?php echo site_url().'/systemSet/SystemSet/adverManage';?>" style="font-size: 18px;">广告管理
-            </a>  
-            <small></small>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-    
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">购物-生活研究所
-                    </div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th colspan="2">标题 </th>
-                                    <th colspan="2">广告缩略图 </th>
-                                    <th colspan="2">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="commentList">
-                            <?php foreach($adver as $k=>$val):?>
-                                <?php if($val['ad_type'] == 2):?>
-                                <tr class="trClass" data-id="">
-                                    <td colspan="2" class="am-text-middle"><?php echo $val['title'];?></td>
-                                    <td colspan="2" class="am-text-middle"><img class="imgbox" src="<?php echo $val['pic'];?>"></td>
-                                    <td colspan="2" class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="<?php echo site_url().'/systemSet/SystemSet/adverEdit/'.$val['id'];?>" class="editComment">
-                                                <i class="am-icon-pencil"></i> 编辑详情
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            <?php  endif;?>
-                            <?php  endforeach;?>
-                              
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<!--批量删除的弹窗-->
- <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
-        <div class="am-modal-bd">
-            <p class="black">你，确定删除所有选中的记录吗？</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
-        </div>
-    </div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+} 
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+.am-modal-bd {
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+} 
+.am-modal-bd textarea{
+    margin:0 40px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+}
+.goodsName{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.commentState{
+    background: #15b5ac;
+    border-radius: 5px;
+    border: 1px solid #15b5ac;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.commentState option{
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+}
+.commentState option[selected="selected"]{
+    background: #15b5ac;
+}
+.modal-content{
+    width: 400px;
+    height: 30px;
+    margin:20px auto;
+    
+}
+.modal-content span.am-fr{
+    color: #15b5ac;
+}
+.commentImg{
+    width:100px;
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
+}
+.imgbox{
+    width: 100px;
+}
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>系统设置
+            <a href="<?php echo site_url().'/systemSet/SystemSet/adverManage';?>" style="font-size: 18px;">广告管理
+            </a>  
+            <small></small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+    
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">购物-生活研究所
+                    </div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">标题 </th>
+                                    <th colspan="2">广告缩略图 </th>
+                                    <th colspan="2">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="commentList">
+                            <?php foreach($adver as $k=>$val):?>
+                                <?php if($val['ad_type'] == 2):?>
+                                <tr class="trClass" data-id="">
+                                    <td colspan="2" class="am-text-middle"><?php echo $val['title'];?></td>
+                                    <td colspan="2" class="am-text-middle"><img class="imgbox" src="<?php echo $val['pic'];?>"></td>
+                                    <td colspan="2" class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a href="<?php echo site_url().'/systemSet/SystemSet/adverEdit/'.$val['id'];?>" class="editComment">
+                                                <i class="am-icon-pencil"></i> 编辑详情
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php  endif;?>
+                            <?php  endforeach;?>
+                              
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--批量删除的弹窗-->
+ <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定删除所有选中的记录吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>

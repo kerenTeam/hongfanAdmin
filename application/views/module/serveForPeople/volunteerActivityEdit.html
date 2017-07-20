@@ -1,116 +1,116 @@
- <style type="text/css">
-
-    #preview #imghead,#preview img{
-     width:140px !important;
-    }
-    .postageNumber{
-        display: none;
-    } 
-    #mapBox {
-        height: 300px !important;
-    }
-    #mapBox object {
-        z-index: 999 !important;
-    }
-</style>  
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-    <div class="container-fluid am-cf">
-        <div class="row">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>义工团队 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgroupservelist';?>" style="font-size:18px;">义工团队活动列表</a>
-                <small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerActivityEdit';?>">编辑义工活动</a></small></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="row-content am-cf">
-        <div class="row">
-            <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
-                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_Activity');?>" method="post"  data-am-validator enctype='multipart/form-data'>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-2 am-form-label">名称<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">  
-                            <input type="text" placeholder="活动名称，2-30个字符" id="title" name='title' minlength="2" maxlength="30" required value="<?php echo $activity['title'];?>" onblur="validate(this,2,30,1)">
-                        </div>
-                        <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
-                        <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-2 am-form-label">地点<span class="red">*</span>：</label>
-                        <div class="am-u-sm-9">  
-                            <input type="text"  placeholder="请输入活动举办的地点,2-50个字符" id="address" name='address' minlength="2" maxlength="50" required value="<?php echo $activity['address'];?>" onblur="validate(this,2,50,2)">
-                        </div>
-                        <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
-                        <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label for="" class="am-u-sm-2 am-form-label">缩略图<span class="red">*</span>：</label>
-                         <div class="am-u-sm-9 am-u-end">
-                             <?php if(!empty($activity['picImg'])):?>
-                            <div class="wx_type_img">
-                             <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  >
-                              <div id="preview"> 
-                                  <img style="border-radius: 3px;" src="<?php echo $activity['picImg'];?>" class="am-img-responsive cardView">
-                               </div>
-                            </div>
-                            <?php else:?>
-                                <div class="wx_type_img">
-                             <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  required>
-                              <div id="preview"> 
-                                  <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView">
-                               </div>
-                            </div>
-                            <?php endif;?>
-                            <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
-                            <small class="am-u-sm-12 tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
-                        </div>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-2 am-form-label">活动详情<span class="red">*</span>：</label>
-                        <div class="am-u-sm-10">
-                            <textarea rows='8' id="editor" placeholder="主要包括活动目的，活动内容等" type="text/plain" name='content'><?php echo $activity['content'];?></textarea>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-text-center am-btn-group-xs">
-                        <input type="hidden" name="id" value="<?php echo $activity['id'];?>">
-                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-am-modal-confirm >保存<tton>
-                        <button type="reset" class="am-btn am-btn-default"  data-am-modal-close >取消<tton>
-                        
-                    </div>
-                </form>   
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-</body>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
- ue = UE.getEditor('editor');
-//点击取消返回上一页
-$('#cancle').click(function(){
-    history.go(-1);
-});
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
-//删除图片
-$(".deleteImg").click(function(){
-    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).siblings('.wx_type_img').find('input').eq(0).val("");
-});
-
-</script>
+ <style type="text/css">
+
+    #preview #imghead,#preview img{
+     width:140px !important;
+    }
+    .postageNumber{
+        display: none;
+    } 
+    #mapBox {
+        height: 300px !important;
+    }
+    #mapBox object {
+        z-index: 999 !important;
+    }
+</style>  
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+    <div class="container-fluid am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>义工团队 &nbsp;&nbsp;<a href="<?php echo site_url().'/serveForPeople/serveForPeople/helpgroupservelist';?>" style="font-size:18px;">义工团队活动列表</a>
+                <small><a href="<?php echo site_url().'/serveForPeople/serveForPeople/volunteerActivityEdit';?>">编辑义工活动</a></small></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row-content am-cf">
+        <div class="row">
+            <div class="am-u-sm-12 am-u-md-8 am-u-lg-8">
+                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/serveForPeople/ServeForPeople/edit_Activity');?>" method="post"  data-am-validator enctype='multipart/form-data'>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">名称<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">  
+                            <input type="text" placeholder="活动名称，2-30个字符" id="title" name='title' minlength="2" maxlength="30" required value="<?php echo $activity['title'];?>" onblur="validate(this,2,30,1)">
+                        </div>
+                        <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+                        <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">地点<span class="red">*</span>：</label>
+                        <div class="am-u-sm-9">  
+                            <input type="text"  placeholder="请输入活动举办的地点,2-50个字符" id="address" name='address' minlength="2" maxlength="50" required value="<?php echo $activity['address'];?>" onblur="validate(this,2,50,2)">
+                        </div>
+                        <div class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></div>
+                        <div class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label for="" class="am-u-sm-2 am-form-label">缩略图<span class="red">*</span>：</label>
+                         <div class="am-u-sm-9 am-u-end">
+                             <?php if(!empty($activity['picImg'])):?>
+                            <div class="wx_type_img">
+                             <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  >
+                              <div id="preview"> 
+                                  <img style="border-radius: 3px;" src="<?php echo $activity['picImg'];?>" class="am-img-responsive cardView">
+                               </div>
+                            </div>
+                            <?php else:?>
+                                <div class="wx_type_img">
+                             <input type="file" id="imgUpload"  name="img" onchange="previewImage(this)" class="upload-add am-form-field img<%= id%>"  required>
+                              <div id="preview"> 
+                                  <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView">
+                               </div>
+                            </div>
+                            <?php endif;?>
+                            <span class="deleteImg am-fl"><i class="am-icon-trash"></i> 删除</span>
+                            <small class="am-u-sm-12 tpl-form-line-small-title red" style="clear: both;">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+                        </div>
+                    </div>
+                    <div class="am-form-group am-cf">
+                        <label class="am-u-sm-2 am-form-label">活动详情<span class="red">*</span>：</label>
+                        <div class="am-u-sm-10">
+                            <textarea rows='8' id="editor" placeholder="主要包括活动目的，活动内容等" type="text/plain" name='content'><?php echo $activity['content'];?></textarea>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-text-center am-btn-group-xs">
+                        <input type="hidden" name="id" value="<?php echo $activity['id'];?>">
+                        <button type="submit" class="am-btn am-btn-secondary sureSave" data-am-modal-confirm >保存<tton>
+                        <button type="reset" class="am-btn am-btn-default"  data-am-modal-close >取消<tton>
+                        
+                    </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+</body>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+ ue = UE.getEditor('editor');
+//点击取消返回上一页
+$('#cancle').click(function(){
+    history.go(-1);
+});
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length<minlen || content.length>maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+//删除图片
+$(".deleteImg").click(function(){
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).siblings('.wx_type_img').find('input').eq(0).val("");
+});
+
+</script>

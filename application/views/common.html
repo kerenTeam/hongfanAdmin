@@ -1,220 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>宏帆广场后台管理</title>
-    <base href="<?php echo base_url();?>" >
-    <meta name="description" content="这是一个 index 页面">
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <link rel="icon" type="image/png" href="assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
-    <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <style type="text/css">
-  .tpl-user-panel-slide-toggleable{
-    padding:5% !important;
-  }
-    .tpl-user-panel-profile-picture{
-        width:100% !important;
-        height:100% !important;
-        text-align: center;
-        margin:0;
-        padding:0;
-        border-radius: 0px;
-        border-radius: 50%;
-    }
-    
-    .deleteImg{
-        display: inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        border:1px solid #ddd;
-    }
-     .deleteImg:hover,#page_navigation span:hover {
-        cursor: pointer;
-     }
-
-
-     /*分页部分的css样式*/
-    .current {
-        background: #1fb5ac;
-        color: #fff;
-    }
-    .pagebox {
-        width: 100%;
-        padding-left: 25%;
-        margin: 0 auto;
-    }
-    #Pagination {
-      float: left;
-      overflow: hidden;
-    }
-    #Pagination .pagination {
-      height: 40px;
-      text-align: right;
-      font-family: \u5b8b\u4f53,Arial;
-    }
-    #Pagination .pagination a,
-    #Pagination .pagination span {
-      float: left;
-      display: inline;
-      padding: 11px 13px;
-      border: 1px solid #e6e6e6;
-      border-right: none;
-      background: #f6f6f6;
-      color: #666666;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    #Pagination .pagination .current {
-      background: #1fb5ac;
-      color: #fff;
-    }
-    #Pagination .pagination .prev,
-    #Pagination .pagination .next {
-      float: left;
-      padding: 11px 13px;
-      border: 1px solid #e6e6e6;
-      background: #f6f6f6;
-      color: #666666;
-      cursor: pointer;
-    }
-    #Pagination .pagination .prev i,
-    #Pagination .pagination .next i {
-      display: inline-block;
-      width: 4px;
-      height: 11px;
-      margin-right: 5px;
-    }
-    #Pagination .pagination .prev {
-      border-right: none;
-    }
-    #Pagination .pagination .prev i {
-      background-position: -144px -1px;
-      *background-position: -144px -4px;
-    }
-    #Pagination .pagination .next i {
-      background-position: -156px -1px;
-      *background-position: -156px -4px;
-    }
-    #Pagination .pagination .pagination-break {
-      padding: 11px 5px;
-      border: none;
-      border-left: 1px solid #e6e6e6;
-      background: none;
-      cursor: default;
-    }
-    .searchPage {
-      float: left;
-      padding: 8px 0;
-    }
-    .searchPage .page-sum {
-      padding: 11px 13px;
-      color: #999999;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 16px;
-    }
-    .searchPage .page-go {
-      padding: 6px 0;
-      color: #999999;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 16px;
-      padding: 10px 0\9;
-      *padding: 6px 0;
-    }
-    .searchPage .page-go input {
-      width: 50px;
-      height: 30px;
-      margin: 0 5px;
-      padding: 2px 5px;
-      border: 1px solid #ccc;
-    }
-    .searchPage .page-btn {
-      margin: 9px 0 5px 5px;
-      padding: 5px 10px;
-      background: #1fb5ac;
-      border-radius: 2px;
-      color: #ffffff;
-      font-family: Arial, 'Microsoft YaHei';
-      font-size: 16px;
-      text-decoration: none;
-    }
-
-    /*去掉type=number输入框的三角符号*/
-    /*火狐下*/
-    input[type="number"]{-moz-appearance:textfield;}
-    /*谷歌下*/
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button{
-        -webkit-appearance: none !important;
-        margin: 0; 
-    }
-    </style>
-    <script src="assets/js/jquery.min.js"></script>
-
-<script src="assets/js/imgup.js"></script>
-</head>
-
-<body data-type="index">
-    <script src="assets/js/theme.js"></script>
-    <script src="assets/js/jquery.pagination.js"></script>
-    <div class="am-g tpl-g">
-        <!-- 头部 -->
-        <header>
-            <!-- logo -->
-            <div class="am-fl tpl-header-logo">
-                <div class="lightBlue logoname"><b>宏帆广场后台管理</b></div>
-            </div>
-            <!-- 右侧内容 -->
-            <div class="tpl-header-fluid">
-                <!-- 侧边切换 -->
-                <div class="am-fl tpl-header-switch-button am-icon-list">
-                    <span>
-                </span>
-                </div>
-                <!-- 其它功能-->
-                <div class="am-fr tpl-header-navbar">
-                    <ul>
-                        <!-- 欢迎语 -->
-                        <li class="am-text-sm tpl-header-navbar-welcome">
-                            <a href="javascript:;">欢迎你, <span><?php echo $_SESSION['users']['username'];?></span> </a>
-                        </li>
-                        
-                        <li class="am-text-sm">
-                            <a href="<?php echo site_url('login/loginOut?action=O');?>">
-                                <span class="am-icon-sign-out"></span> 退出
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-        </header>
-        <div class="left-sidebar">
-            <!-- 用户信息 -->
-            <div class="tpl-sidebar-user-panel">
-                <div class="tpl-user-panel-slide-toggleable am-text-center">
-                    <div class="tpl-user-panel-profile-picture">
-
-                    </div>
-                    <span class="user-panel-logged-in-text">
-              <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
-             <?php echo $_SESSION['users']['username'];?>
-                </span>
-                </div>
-            </div>
-
-
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>宏帆广场后台管理</title>
+    <base href="<?php echo base_url();?>" >
+    <meta name="description" content="这是一个 index 页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="icon" type="image/png" href="assets/i/favicon.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <link rel="stylesheet" href="assets/css/amazeui.min.css" />
+    <link rel="stylesheet" href="assets/css/amazeui.datatables.min.css" />
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <style type="text/css">
+  .tpl-user-panel-slide-toggleable{
+    padding:5% !important;
+  }
+    .tpl-user-panel-profile-picture{
+        width:100% !important;
+        height:100% !important;
+        text-align: center;
+        margin:0;
+        padding:0;
+        border-radius: 0px;
+        border-radius: 50%;
+    }
+    
+    .deleteImg{
+        display: inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:1px solid #ddd;
+    }
+     .deleteImg:hover,#page_navigation span:hover {
+        cursor: pointer;
+     }
+
+
+     /*分页部分的css样式*/
+    .current {
+        background: #1fb5ac;
+        color: #fff;
+    }
+    .pagebox {
+        width: 100%;
+        padding-left: 25%;
+        margin: 0 auto;
+    }
+    #Pagination {
+      float: left;
+      overflow: hidden;
+    }
+    #Pagination .pagination {
+      height: 40px;
+      text-align: right;
+      font-family: \u5b8b\u4f53,Arial;
+    }
+    #Pagination .pagination a,
+    #Pagination .pagination span {
+      float: left;
+      display: inline;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      border-right: none;
+      background: #f6f6f6;
+      color: #666666;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #Pagination .pagination .current {
+      background: #1fb5ac;
+      color: #fff;
+    }
+    #Pagination .pagination .prev,
+    #Pagination .pagination .next {
+      float: left;
+      padding: 11px 13px;
+      border: 1px solid #e6e6e6;
+      background: #f6f6f6;
+      color: #666666;
+      cursor: pointer;
+    }
+    #Pagination .pagination .prev i,
+    #Pagination .pagination .next i {
+      display: inline-block;
+      width: 4px;
+      height: 11px;
+      margin-right: 5px;
+    }
+    #Pagination .pagination .prev {
+      border-right: none;
+    }
+    #Pagination .pagination .prev i {
+      background-position: -144px -1px;
+      *background-position: -144px -4px;
+    }
+    #Pagination .pagination .next i {
+      background-position: -156px -1px;
+      *background-position: -156px -4px;
+    }
+    #Pagination .pagination .pagination-break {
+      padding: 11px 5px;
+      border: none;
+      border-left: 1px solid #e6e6e6;
+      background: none;
+      cursor: default;
+    }
+    .searchPage {
+      float: left;
+      padding: 8px 0;
+    }
+    .searchPage .page-sum {
+      padding: 11px 13px;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+    }
+    .searchPage .page-go {
+      padding: 6px 0;
+      color: #999999;
+      font-family: \u5b8b\u4f53,Arial;
+      font-size: 16px;
+      padding: 10px 0\9;
+      *padding: 6px 0;
+    }
+    .searchPage .page-go input {
+      width: 50px;
+      height: 30px;
+      margin: 0 5px;
+      padding: 2px 5px;
+      border: 1px solid #ccc;
+    }
+    .searchPage .page-btn {
+      margin: 9px 0 5px 5px;
+      padding: 5px 10px;
+      background: #1fb5ac;
+      border-radius: 2px;
+      color: #ffffff;
+      font-family: Arial, 'Microsoft YaHei';
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    /*去掉type=number输入框的三角符号*/
+    /*火狐下*/
+    input[type="number"]{-moz-appearance:textfield;}
+    /*谷歌下*/
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button{
+        -webkit-appearance: none !important;
+        margin: 0; 
+    }
+    </style>
+    <script src="assets/js/jquery.min.js"></script>
+
+<script src="assets/js/imgup.js"></script>
+</head>
+
+<body data-type="index">
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/jquery.pagination.js"></script>
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        <header>
+            <!-- logo -->
+            <div class="am-fl tpl-header-logo">
+                <div class="lightBlue logoname"><b>宏帆广场后台管理</b></div>
+            </div>
+            <!-- 右侧内容 -->
+            <div class="tpl-header-fluid">
+                <!-- 侧边切换 -->
+                <div class="am-fl tpl-header-switch-button am-icon-list">
+                    <span>
+                </span>
+                </div>
+                <!-- 其它功能-->
+                <div class="am-fr tpl-header-navbar">
+                    <ul>
+                        <!-- 欢迎语 -->
+                        <li class="am-text-sm tpl-header-navbar-welcome">
+                            <a href="javascript:;">欢迎你, <span><?php echo $_SESSION['users']['username'];?></span> </a>
+                        </li>
+                        
+                        <li class="am-text-sm">
+                            <a href="<?php echo site_url('login/loginOut?action=O');?>">
+                                <span class="am-icon-sign-out"></span> 退出
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </header>
+        <div class="left-sidebar">
+            <!-- 用户信息 -->
+            <div class="tpl-sidebar-user-panel">
+                <div class="tpl-user-panel-slide-toggleable am-text-center">
+                    <div class="tpl-user-panel-profile-picture">
+
+                    </div>
+                    <span class="user-panel-logged-in-text">
+              <i class="am-icon-circle-o am-text-success tpl-user-panel-status-icon"></i>
+             <?php echo $_SESSION['users']['username'];?>
+                </span>
+                </div>
+            </div>
+
+

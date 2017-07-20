@@ -1,389 +1,389 @@
- 
-<style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
-}
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-}
-.am-u-sm6{
-    width:50px !important;
-    margin:0;
-}
-.am-form-group div{
-    line-height: 37px;
-}
-
-.stable{
-    display: inline-block !important;
-    width: 45% !important;
-}
-.linkWord{
-    width: 10% !important;
-}
-.detailId{
-    border: 1px solid #F37B1D !important;
-    color: #F37B1D !important;
-}
-.detailId:hover {
-    background: #F37B1D !important; 
-    color: #fff !important;
-}
-.imgBox {
-    width: 100px;
-}
-.signUpMess{
-    border: 1px solid #F37B1D !important;
-    color: #F37B1D !important;
-}
-.signUpMess:hover{
-    background: #F37B1D !important; 
-    color: #fff !important;
-}
-.tieziList {
-    border: 1px solid #e0690c !important;
-    padding: 5px 6px !important;
-    color: #e0690c !important;
-}
-
-.isRecommand {
-    width: 120px;
-    background: #15b5ac;
-    border-radius: 5px;
-    border: 1px solid #15b5ac;
-    padding:5px 5px;
-    color: #fff;
-    text-align: center;
-}
-.isRecommand option {
-    background: #fff;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    padding:2px 5px;
-    color: #000;
-    text-align: center;
-} 
-.isRecommand option[selected="selected"] {
-    background: #15b5ac;
-    border:1px solid #15b5ac;
-}
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
-            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
-            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">核销列表</a></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">核销信息查询</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="businessTime" class="am-u-sm-3 am-text-right">核销时间：</label>
-                        <div class="am-u-sm-9  am-u-end">
-                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                              <p>开始日期应小于结束日期！</p>
-                            </div>
-                            <div class="am-g">
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-01-31</span>
-                              </div>
-                            </div>
-                            <small class="red redtips">请先选择结束日期</small>
-                        </div>
-                        
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
-                        <button type="button" id="searchOrder" class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form>
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">电子券 核销列表</div>
-                    <div  class="widget-title">领取数：<?php echo count($lin);?></div>
-                    <div  class="widget-title">核销数：<?php echo count($he);?></div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12"> 
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号 </th>
-                                    <th>核销用户 </th>
-                                    <th>核销商家 </th>
-                                    <th>核销时间 </th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a >2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<!--批量删除的弹窗-->
-<div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">删除提示</div>
-        <div class="am-modal-bd">
-            <p class="black">你，确定删除所有选中的记录吗？</p>
-        </div>
-        <div class="am-modal-footer">
-            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
-        </div>
-    </div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script src="assets/js/artTemplate-native.js"></script>
-<script src="assets/laypage/laypage.js"></script>
-<script type="text/javascript">
-$(function() {
-    var startDate = new Date(2014, 01, 01);
-    var endDate = new Date(2014, 01, 30);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-
-
-
-
-var total_page = 0,pageflag = 1,current_page=0,$afterSales = parseInt(sessionStorage.getItem('afterSales')) || 0;
-//点击前往某一页的函数
-function go_to_page(page_num){
-    $('.page_link').removeClass('active_page');
-    $('.page_link').eq(page_num).addClass('active_page');
-    $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(15)*parseInt(page_num);
-    var end_page=parseInt(15)*parseInt(page_num+1);
-    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-    current_page=page_num;
-    sessionStorage.setItem('afterSales', current_page);
-    $afterSales = parseInt(sessionStorage.getItem('afterSales'));
-    
-}
-
-//点击上一页的函数
-function previous(){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(0).html()) - 2;
-    }else {
-        new_page = parseInt($('.current').html()) - 2;
-    }
-    if(new_page >= 0) {
-        go_to_page(new_page);
-    }
-}
-
-//点击下一页的函数
-function next(argu){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(1).html());
-    }else {
-        new_page = parseInt($('.current').html());
-    }
-    
-    
-    if(new_page < argu){   
-        console.log(new_page + ' ' + argu);
-        go_to_page(new_page);
-    }
-}
-//其他操作
-function otherFunction() {
-    for(var i=0; i<$('.tpl-del').length; i++) {
-        var dataId = $('.tpl-del').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
-    }
-
-    //删除图片
-    $(".deleteImg").click(function(){
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).siblings('.wx_type_img').find('input').val("");
-        $(this).siblings('.wx_type_img').find('input').files="";
-    });
-    //删除核销
-    $('.sureDelete').click(function () {
-        var dataId = $(this).attr("data-id");
-        $.ajax({ 
-            type:'post',
-            url: "<?php echo site_url('/find/Find/del_afterSales');?>",
-            data: 'id='+ dataId,
-            success: function(result){    
-                console.log(result);     
-                var res = eval(result);
-                if(res == 1){
-                    alert("删除成功！");
-                    $('#de'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
-                    getList('<?php echo site_url('/find/Find/ret_afterSales_list');?>','type='+index);
-                }else{
-                   alert("网络状况不佳，请稍后重试！");
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    });    
-}
-//异步刷新的ajax请求   
-function getList(dataurl,data){
-    $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){         
-            var res = eval(result);
-            console.log(res);
-            if(res != 2 && res != 3){
-                var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
-                for(var i = 0; i < res.length; i++){
-                    res[i].qrcode = JSON.parse(res[i].qrcode);
-                    listData += template('dataModal',res[i]);
-                }
-                document.getElementById('dataList').innerHTML = listData;
-                $('.pagebox').css('display', 'block');
-                if(pageflag) {
-                    var opts={};
-                    opts.current_page = $afterSales;
-                    $("#Pagination").pagination(total_page, opts);
-                    go_to_page($afterSales);
-                    pageflag = 0;
-                } else {
-                    $("#Pagination").pagination(total_page);
-                    go_to_page(0);
-                    
-                }
-                if(total_page < 5) {
-                    $('.searchPage').css('display', 'none');
-                }
-                otherFunction();
-            }else{
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
-            }         
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-            $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
-            $('.pagebox').css('display', 'none');
-        }
-    });
-}
-$(document).ready(function(){
-
-    //加载列表数数据
-
-    getList('<?php echo site_url('/electronic/Electronic/ret_after_list');?>','id='+<?php echo $id;?>);
-
-   
-     //点击搜索
-    $('#searchOrder').click(function(){
-        var  begin_date = $('#my-start').data('date'), end_date = $('#my-end').data('date');
-        console.log("time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>");
-
-        getList('<?php echo site_url('/electronic/Electronic/search_after');?>', "time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>" );
-        
-    });
-
-})
-</script>
-<script type="text/html" id="dataModal">
-
-    <tr class="trClass" id="trClass<%= id %>" data-id="<%= id %>">
-        <td class="am-text-middle"><%= id %></td>
-        <td class="am-text-middle"><%= nickname %></td>
-        <td class="am-text-middle"><%= store_name %></td>
-        <td class="am-text-middle"><%= create_time %></td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= id %>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
-    </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id %>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= id %>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-</script>
+ 
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+}
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+td.am-text-middle img{
+    width:80px;
+}
+.am-u-sm6{
+    width:50px !important;
+    margin:0;
+}
+.am-form-group div{
+    line-height: 37px;
+}
+
+.stable{
+    display: inline-block !important;
+    width: 45% !important;
+}
+.linkWord{
+    width: 10% !important;
+}
+.detailId{
+    border: 1px solid #F37B1D !important;
+    color: #F37B1D !important;
+}
+.detailId:hover {
+    background: #F37B1D !important; 
+    color: #fff !important;
+}
+.imgBox {
+    width: 100px;
+}
+.signUpMess{
+    border: 1px solid #F37B1D !important;
+    color: #F37B1D !important;
+}
+.signUpMess:hover{
+    background: #F37B1D !important; 
+    color: #fff !important;
+}
+.tieziList {
+    border: 1px solid #e0690c !important;
+    padding: 5px 6px !important;
+    color: #e0690c !important;
+}
+
+.isRecommand {
+    width: 120px;
+    background: #15b5ac;
+    border-radius: 5px;
+    border: 1px solid #15b5ac;
+    padding:5px 5px;
+    color: #fff;
+    text-align: center;
+}
+.isRecommand option {
+    background: #fff;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding:2px 5px;
+    color: #000;
+    text-align: center;
+} 
+.isRecommand option[selected="selected"] {
+    background: #15b5ac;
+    border:1px solid #15b5ac;
+}
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
+            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
+            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">核销列表</a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">核销信息查询</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">核销时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-01-31</span>
+                              </div>
+                            </div>
+                            <small class="red redtips">请先选择结束日期</small>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
+                        <button type="button" id="searchOrder" class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">电子券 核销列表</div>
+                    <div  class="widget-title">领取数：<?php echo count($lin);?></div>
+                    <div  class="widget-title">核销数：<?php echo count($he);?></div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12"> 
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>编号 </th>
+                                    <th>核销用户 </th>
+                                    <th>核销商家 </th>
+                                    <th>核销时间 </th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataList">
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                        <div id="Pagination">
+                            <div class="pagination">
+                                <a class="prev"><i></i>上一页</a>
+                                <a class="current">1</a>
+                                <a >2</a>
+                                <a>3</a>
+                                <a>4</a>
+                                <span class="pagination-break">...</span>
+                                <a class="ep">15</a>
+                                <a class="next">下一页 <i></i></a>
+                            </div>
+                        </div>
+                        <div class="searchPage">
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+                          <span class="page-go">跳转<input type="text">页</span>
+                          <a href="javascript:;" class="page-btn">确定</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--批量删除的弹窗-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">删除提示</div>
+        <div class="am-modal-bd">
+            <p class="black">你，确定删除所有选中的记录吗？</p>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script src="assets/js/artTemplate-native.js"></script>
+<script src="assets/laypage/laypage.js"></script>
+<script type="text/javascript">
+$(function() {
+    var startDate = new Date(2014, 01, 01);
+    var endDate = new Date(2014, 01, 30);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+
+
+
+
+var total_page = 0,pageflag = 1,current_page=0,$afterSales = parseInt(sessionStorage.getItem('afterSales')) || 0;
+//点击前往某一页的函数
+function go_to_page(page_num){
+    $('.page_link').removeClass('active_page');
+    $('.page_link').eq(page_num).addClass('active_page');
+    $("#dataList").children('tr').css("display","none");
+    var start_page=parseInt(15)*parseInt(page_num);
+    var end_page=parseInt(15)*parseInt(page_num+1);
+    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+    current_page=page_num;
+    sessionStorage.setItem('afterSales', current_page);
+    $afterSales = parseInt(sessionStorage.getItem('afterSales'));
+    
+}
+
+//点击上一页的函数
+function previous(){
+    if($('.current').length>1) {
+        new_page = parseInt($('.current').eq(0).html()) - 2;
+    }else {
+        new_page = parseInt($('.current').html()) - 2;
+    }
+    if(new_page >= 0) {
+        go_to_page(new_page);
+    }
+}
+
+//点击下一页的函数
+function next(argu){
+    if($('.current').length>1) {
+        new_page = parseInt($('.current').eq(1).html());
+    }else {
+        new_page = parseInt($('.current').html());
+    }
+    
+    
+    if(new_page < argu){   
+        console.log(new_page + ' ' + argu);
+        go_to_page(new_page);
+    }
+}
+//其他操作
+function otherFunction() {
+    for(var i=0; i<$('.tpl-del').length; i++) {
+        var dataId = $('.tpl-del').eq(i).attr('data-id');
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
+    }
+
+    //删除图片
+    $(".deleteImg").click(function(){
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).siblings('.wx_type_img').find('input').val("");
+        $(this).siblings('.wx_type_img').find('input').files="";
+    });
+    //删除核销
+    $('.sureDelete').click(function () {
+        var dataId = $(this).attr("data-id");
+        $.ajax({ 
+            type:'post',
+            url: "<?php echo site_url('/find/Find/del_afterSales');?>",
+            data: 'id='+ dataId,
+            success: function(result){    
+                console.log(result);     
+                var res = eval(result);
+                if(res == 1){
+                    alert("删除成功！");
+                    $('#de'+dataId).fadeOut();
+                    $('.am-dimmer').removeClass('am-active');
+                    getList('<?php echo site_url('/find/Find/ret_afterSales_list');?>','type='+index);
+                }else{
+                   alert("网络状况不佳，请稍后重试！");
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    });    
+}
+//异步刷新的ajax请求   
+function getList(dataurl,data){
+    $.ajax({
+        type:'post',
+        url:dataurl,
+        data: data,
+        success: function(result){         
+            var res = eval(result);
+            console.log(res);
+            if(res != 2 && res != 3){
+                var listData = ''; //每页出现的数量
+                total_page = Math.ceil(res.length/15); //得到总页数
+                for(var i = 0; i < res.length; i++){
+                    res[i].qrcode = JSON.parse(res[i].qrcode);
+                    listData += template('dataModal',res[i]);
+                }
+                document.getElementById('dataList').innerHTML = listData;
+                $('.pagebox').css('display', 'block');
+                if(pageflag) {
+                    var opts={};
+                    opts.current_page = $afterSales;
+                    $("#Pagination").pagination(total_page, opts);
+                    go_to_page($afterSales);
+                    pageflag = 0;
+                } else {
+                    $("#Pagination").pagination(total_page);
+                    go_to_page(0);
+                    
+                }
+                if(total_page < 5) {
+                    $('.searchPage').css('display', 'none');
+                }
+                otherFunction();
+            }else{
+                $('#dataList').find('tr').remove();
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
+                $('.pagebox').css('display', 'none');
+            }         
+        },
+        error:function(xhr,type,errorThrown){
+            alert("网络状况不佳，请稍后重试！");
+            $('#dataList').find('tr').remove();
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
+            $('.pagebox').css('display', 'none');
+        }
+    });
+}
+$(document).ready(function(){
+
+    //加载列表数数据
+
+    getList('<?php echo site_url('/electronic/Electronic/ret_after_list');?>','id='+<?php echo $id;?>);
+
+   
+     //点击搜索
+    $('#searchOrder').click(function(){
+        var  begin_date = $('#my-start').data('date'), end_date = $('#my-end').data('date');
+        console.log("time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>");
+
+        getList('<?php echo site_url('/electronic/Electronic/search_after');?>', "time="+ begin_date + '&endtime=' + end_date + "&id="+ "<?php echo $id;?>" );
+        
+    });
+
+})
+</script>
+<script type="text/html" id="dataModal">
+
+    <tr class="trClass" id="trClass<%= id %>" data-id="<%= id %>">
+        <td class="am-text-middle"><%= id %></td>
+        <td class="am-text-middle"><%= nickname %></td>
+        <td class="am-text-middle"><%= store_name %></td>
+        <td class="am-text-middle"><%= create_time %></td>
+        <td class="am-text-middle">
+            <div class="tpl-table-black-operation">
+                <a data-id="<%= id %>" class="tpl-table-black-operation-del tpl-del">
+                    <i class="am-icon-trash"></i> 删除
+                </a>
+            </div>
+        </td>
+    </tr>
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= id %>">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">删除提示</div>
+            <div class="am-modal-bd">
+                <p class="black">你，确定要删除这条记录吗？</p>
+            </div>
+            <div class="am-modal-footer">
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                <span class="am-modal-btn sureDelete" data-id="<%= id %>" data-am-modal-confirm>确定</span>
+            </div>
+        </div>
+    </div>
+</script>

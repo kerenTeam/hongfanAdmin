@@ -1,337 +1,337 @@
-
-<script src="assets/js/echarts.min.js"></script>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理
-             <a href="<?php echo site_url().'/member/member/memberList';?>" style="font-size: 16px;">会员列表</a>
-             <small><a href="<?php echo site_url().'/member/member/memberInfo';?>" >查看会员详情</a>
-            </small>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5">
-            <div class="widget am-cf" style="min-height: 500px;">
-                <div class="widget-head am-cf">
-                    <div class="widget-title am-fl">会员简介</div>
-                    <div class="widget-function am-fr">
-                        <a href="javascript:;" class="am-icon-cog"></a>
-                    </div>
-                </div>
-                <div class="widget-body  widget-body-lg am-text-center">
-                    <?php if(empty($userinfo['avatar'])){?>
-                    <img class="achievement-image" src="assets/img/user02.png" alt="">
-                    <?php }else{?>
-                    <img class="achievement-image" src="<?php echo $userinfo['avatar']?>" alt="">
-                    <?php }?>
-                    <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">昵称： <span class="black"><?php echo $userinfo['nickname']?></span></label>
-                        <label class="am-u-sm-6 am-form-label">性别： <span class="black"><?php echo $userinfo['gender']?></span></label>
-                    </div>
-                    <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">用户名称： <span class="black"><?php echo $userinfo['username']?></span></label>
-                        <!-- <label class="am-u-sm-6 am-form-label">用户密码： <span class="black"><?php echo $userinfo['password']?></span></label> -->
-                        <label class="am-u-sm-6 am-form-label">电话号码： <span class="black"><?php echo $userinfo['phone']?></span></label>
-                    </div>
-                    <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">邮箱: <span class="black"> <?php echo $userinfo['qq']?></span></label>
-                         <label class="am-u-sm-6 am-form-label">QQ: <span class="black"> <?php echo $userinfo['email']?></span></label>
-                    </div>
-                    <div class="am-cf memberBrief">
-                        <label class="am-u-sm-6 am-form-label">积分： <span class="black"><?php echo $userinfo['intergral']?></span></label>
-                    </div>
-                    <div class="am-cf memberBrief">
-                        <label class="am-u-sm-12 am-form-label">支付宝账号： <span class="black"><?php echo $userinfo['alipay']?></span></label>
-                        <label class="am-u-sm-12 am-form-label">微信号：<span class="black"><?php echo $userinfo['wechat']?></span></label>
-                    </div>
-                 
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-7">
-        <div class="widget am-cf" style="min-height: 500px;">
-            <div class="widget-head am-cf">
-                <div class="widget-title am-fl">积分记录</div>
-                <div class="widget-function am-fr">
-                    <a href="javascript:;" class="am-icon-cog"></a>
-                </div>
-            </div>
-            <div class="widget-body  widget-body-lg am-fr">
-                <table width="100%" class="am-table am-table-compact tpl-table-black " id="example-r">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>说明</th>
-                            <th>时间</th>
-                            <th>积分</th>
-                        </tr>
-                    </thead>
-                    <tbody id="integralRecord">
-                    </tbody>
-                </table>
-                <!-- 分页 -->
-                <div class="am-u-lg-12 am-cf am-text-center">
-                    <div class="" id="paging_list1">
-                    </div>
-                    <p>共<span class="dataNumber1"></span>条数据，共<span class="pageNumber1"></span>页</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content">
-<div class="row">
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-        <div class="widget am-cf">
-            <div class="widget-head am-cf">
-                <div class="widget-title am-fl">用户地址</div>
-                <div class="widget-function am-fr">
-                    <a href="javascript:;" class="am-icon-cog"></a>
-                </div>
-            </div>
-            <div class="widget-body  widget-body-lg am-fr">
-                <table width="100%" class="am-table am-table-compact am-table-bordered tpl-table-black " id="example-r">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <th>联系人</th>
-                            <th>手机号</th>
-                            <th>邮编</th>
-                            <th>地址</th>
-                            <th>时间</th>
-                            <th>是否默认</th>
-                        </tr>
-                    </thead>
-                    <tbody id="userAddressList">
-                    </tbody>
-                </table>
-                <!-- 分页 -->
-                <div class="am-u-lg-12 am-cf am-text-center">
-                    <div class="" id="paging_list2">
-                    </div>
-                    <p>共<span class="dataNumber2"></span>条数据，共<span class="pageNumber2"></span>页</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-        <div class="widget am-cf">
-            <div class="widget-head am-cf">
-                <div class="widget-title am-fl">会员消息</div>
-                <div class="widget-function am-fr">
-                    <a href="javascript:;" class="am-icon-cog"></a>
-                </div>
-            </div>
-            <div class="widget-body  widget-body-lg am-fr">
-                <table width="100%" class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black " id="example-r">
-                    <thead>
-                        <tr>
-                            <th>编号</th>
-                            <!--<th>发送人</th>-->
-                            <th>文章标题</th>
-                            <th>内容</th>
-                            <th>发布时间</th>
-                        </tr>
-                    </thead>
-                    <tbody id="memberMessList">
-                    </tbody>
-                </table>
-                <div class="am-u-lg-12 am-cf am-text-center">
-                    <div class="" id="paging_list3">
-                    </div>
-                    <p>共<span class="dataNumber3"></span>条数据，共<span class="pageNumber3"></span>页</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-    //异步刷新的ajax请求   
-    function getList(dataurl,data){
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result){    
-                var res = eval(result);
-                console.log(res);  
-                if(res!=3){
-                    var nums = 10; //每页出现的数量
-                    var pages = Math.ceil(res.length/nums); //得到总页数
-                    $('.dataNumber1').html(res.length);
-                    $('.pageNumber1').html(pages);
-                    var thisDate = function(curr){
-                        var listData = '' , last = curr*nums - 1;
-                        last = last >= res.length ? (res.length-1) : last;
-                         for(var i = (curr*nums - nums); i <= last; i++){
-                            listData+= template('integralRecordModal',res[i]);
-                         }
-                        return listData;
-                    };
-                    //调用分页
-                    laypage({
-                        cont: 'paging_list1',
-                        pages: pages,
-                        jump: function(obj){
-                            document.getElementById('integralRecord').innerHTML = thisDate(obj.curr);                
-                        }
-                    })
-                }else{
-                    $('#integralRecord').find('tr').remove();
-                    $('#paging_list1').html("");
-                    $('.dataNumber1').html("");
-                    $('.pageNumber1').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关积分记录！</p></td></tr>').appendTo('#integralRecord');
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    }
-    function getList1(dataurl,data){
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result){    
-                var res = eval(result);
-                // console.log(res);  
-                if(res!=3){
-                    var nums = 10; //每页出现的数量
-                    var pages = Math.ceil(res.length/nums); //得到总页数
-                    $('.dataNumber2').html(res.length);
-                    $('.pageNumber2').html(pages);
-                    var thisDate = function(curr){
-                        var listData = '' , last = curr*nums - 1;
-                        last = last >= res.length ? (res.length-1) : last;
-                         for(var i = (curr*nums - nums); i <= last; i++){
-                            listData+= template('userAddressListModal',res[i]);
-                         }
-                        return listData;
-                    };
-                    //调用分页
-                    laypage({
-                        cont: 'paging_list1',
-                        pages: pages,
-                        jump: function(obj){
-                            document.getElementById('userAddressList').innerHTML = thisDate(obj.curr);                
-                        }
-                    })
-                }else{
-                    $('#userAddressList').find('tr').remove();
-                    $('#paging_list').html("");
-                    $('.dataNumber').html("");
-                    $('.pageNumber').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无用户地址信息！</p></td></tr>').appendTo('#userAddressList');
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    }
-    function getList2(dataurl,data){
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result){    
-                var res = eval(result);
-                console.log(res);  
-                if(res!=3){
-                    var nums = 10; //每页出现的数量
-                    var pages = Math.ceil(res.length/nums); //得到总页数
-                    $('.dataNumber3').html(res.length);
-                    $('.pageNumber3').html(pages);
-                    var thisDate = function(curr){
-                        var listData = '' , last = curr*nums - 1;
-                        last = last >= res.length ? (res.length-1) : last;
-                         for(var i = (curr*nums - nums); i <= last; i++){
-                            listData+= template('memberMessListModal',res[i]);
-                         }
-                        return listData;
-                    };
-                    //调用分页
-                    laypage({
-                        cont: 'paging_list3',
-                        pages: pages,
-                        jump: function(obj){
-                            document.getElementById('memberMessList').innerHTML = thisDate(obj.curr);                
-                        }
-                    })
-                }else{
-                    $('#memberMessList').find('tr').remove();
-                    $('#paging_list3').html("");
-                    $('.dataNumber3').html("");
-                    $('.pageNumber3').html("");
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无会员信息！</p></td></tr>').appendTo('#memberMessList');
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    }
-    $(document).ready(function(){
-        //会员消息
-        getList2('<?php echo site_url("/member/Member/ret_user_message");?>','userid=<?php echo $userinfo["user_id"];?>');
-        //积分记录
-        getList('<?php echo site_url("/member/Member/ret_user_intergral");?>','userid=<?php echo $userinfo["user_id"];?>');
-        //用户地址
-        getList1('<?php echo site_url("/member/Member/ret_user_address");?>','userid=<?php echo $userinfo["user_id"];?>');
-    })
-</script>
-<script type="text/html" id="integralRecordModal">
-    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= notice%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle"><%= intergral_float%></td>
-    </tr>
-</script>
-<script type="text/html" id="userAddressListModal">
-    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= person%></td>
-        <td class="am-text-middle"><%= phone%></td>
-        <td class="am-text-middle">
-        <%if(postcode) {%>
-        <%= postcode%>
-        <%}else{%>
-        暂无
-        <%}%>
-        </td>
-        <td class="am-text-middle"><%= address%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle">
-        <%if(state=="1") {%>
-        是
-        <%}else{%>
-        否
-        <%}%>    
-        </td>
-    </tr>
-</script>
-<script type="text/html" id="memberMessListModal">
-    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
-        <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= title%></td>
-        <td class="am-text-middle"><%= content%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-    </tr>
+
+<script src="assets/js/echarts.min.js"></script>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员卡管理
+             <a href="<?php echo site_url().'/member/member/memberList';?>" style="font-size: 16px;">会员列表</a>
+             <small><a href="<?php echo site_url().'/member/member/memberInfo';?>" >查看会员详情</a>
+            </small>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-5">
+            <div class="widget am-cf" style="min-height: 500px;">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">会员简介</div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog"></a>
+                    </div>
+                </div>
+                <div class="widget-body  widget-body-lg am-text-center">
+                    <?php if(empty($userinfo['avatar'])){?>
+                    <img class="achievement-image" src="assets/img/user02.png" alt="">
+                    <?php }else{?>
+                    <img class="achievement-image" src="<?php echo $userinfo['avatar']?>" alt="">
+                    <?php }?>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">昵称： <span class="black"><?php echo $userinfo['nickname']?></span></label>
+                        <label class="am-u-sm-6 am-form-label">性别： <span class="black"><?php echo $userinfo['gender']?></span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">用户名称： <span class="black"><?php echo $userinfo['username']?></span></label>
+                        <!-- <label class="am-u-sm-6 am-form-label">用户密码： <span class="black"><?php echo $userinfo['password']?></span></label> -->
+                        <label class="am-u-sm-6 am-form-label">电话号码： <span class="black"><?php echo $userinfo['phone']?></span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">邮箱: <span class="black"> <?php echo $userinfo['qq']?></span></label>
+                         <label class="am-u-sm-6 am-form-label">QQ: <span class="black"> <?php echo $userinfo['email']?></span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-6 am-form-label">积分： <span class="black"><?php echo $userinfo['intergral']?></span></label>
+                    </div>
+                    <div class="am-cf memberBrief">
+                        <label class="am-u-sm-12 am-form-label">支付宝账号： <span class="black"><?php echo $userinfo['alipay']?></span></label>
+                        <label class="am-u-sm-12 am-form-label">微信号：<span class="black"><?php echo $userinfo['wechat']?></span></label>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-7">
+        <div class="widget am-cf" style="min-height: 500px;">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">积分记录</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>说明</th>
+                            <th>时间</th>
+                            <th>积分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="integralRecord">
+                    </tbody>
+                </table>
+                <!-- 分页 -->
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list1">
+                    </div>
+                    <p>共<span class="dataNumber1"></span>条数据，共<span class="pageNumber1"></span>页</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content">
+<div class="row">
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+        <div class="widget am-cf">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">用户地址</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact am-table-bordered tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>联系人</th>
+                            <th>手机号</th>
+                            <th>邮编</th>
+                            <th>地址</th>
+                            <th>时间</th>
+                            <th>是否默认</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userAddressList">
+                    </tbody>
+                </table>
+                <!-- 分页 -->
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list2">
+                    </div>
+                    <p>共<span class="dataNumber2"></span>条数据，共<span class="pageNumber2"></span>页</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+        <div class="widget am-cf">
+            <div class="widget-head am-cf">
+                <div class="widget-title am-fl">会员消息</div>
+                <div class="widget-function am-fr">
+                    <a href="javascript:;" class="am-icon-cog"></a>
+                </div>
+            </div>
+            <div class="widget-body  widget-body-lg am-fr">
+                <table width="100%" class="am-table am-table-compact am-table-bordered am-table-radius am-table-striped tpl-table-black " id="example-r">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <!--<th>发送人</th>-->
+                            <th>文章标题</th>
+                            <th>内容</th>
+                            <th>发布时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="memberMessList">
+                    </tbody>
+                </table>
+                <div class="am-u-lg-12 am-cf am-text-center">
+                    <div class="" id="paging_list3">
+                    </div>
+                    <p>共<span class="dataNumber3"></span>条数据，共<span class="pageNumber3"></span>页</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    //异步刷新的ajax请求   
+    function getList(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber1').html(res.length);
+                    $('.pageNumber1').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('integralRecordModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list1',
+                        pages: pages,
+                        jump: function(obj){
+                            document.getElementById('integralRecord').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#integralRecord').find('tr').remove();
+                    $('#paging_list1').html("");
+                    $('.dataNumber1').html("");
+                    $('.pageNumber1').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关积分记录！</p></td></tr>').appendTo('#integralRecord');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    function getList1(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                // console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber2').html(res.length);
+                    $('.pageNumber2').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('userAddressListModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list1',
+                        pages: pages,
+                        jump: function(obj){
+                            document.getElementById('userAddressList').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#userAddressList').find('tr').remove();
+                    $('#paging_list').html("");
+                    $('.dataNumber').html("");
+                    $('.pageNumber').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无用户地址信息！</p></td></tr>').appendTo('#userAddressList');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    function getList2(dataurl,data){
+        $.ajax({
+            type:'post',
+            url:dataurl,
+            data: data,
+            success: function(result){    
+                var res = eval(result);
+                console.log(res);  
+                if(res!=3){
+                    var nums = 10; //每页出现的数量
+                    var pages = Math.ceil(res.length/nums); //得到总页数
+                    $('.dataNumber3').html(res.length);
+                    $('.pageNumber3').html(pages);
+                    var thisDate = function(curr){
+                        var listData = '' , last = curr*nums - 1;
+                        last = last >= res.length ? (res.length-1) : last;
+                         for(var i = (curr*nums - nums); i <= last; i++){
+                            listData+= template('memberMessListModal',res[i]);
+                         }
+                        return listData;
+                    };
+                    //调用分页
+                    laypage({
+                        cont: 'paging_list3',
+                        pages: pages,
+                        jump: function(obj){
+                            document.getElementById('memberMessList').innerHTML = thisDate(obj.curr);                
+                        }
+                    })
+                }else{
+                    $('#memberMessList').find('tr').remove();
+                    $('#paging_list3').html("");
+                    $('.dataNumber3').html("");
+                    $('.pageNumber3').html("");
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无会员信息！</p></td></tr>').appendTo('#memberMessList');
+                }
+                
+            },
+            error:function(xhr,type,errorThrown){
+                alert("网络状况不佳，请稍后重试！");
+            }
+        });
+    }
+    $(document).ready(function(){
+        //会员消息
+        getList2('<?php echo site_url("/member/Member/ret_user_message");?>','userid=<?php echo $userinfo["user_id"];?>');
+        //积分记录
+        getList('<?php echo site_url("/member/Member/ret_user_intergral");?>','userid=<?php echo $userinfo["user_id"];?>');
+        //用户地址
+        getList1('<?php echo site_url("/member/Member/ret_user_address");?>','userid=<?php echo $userinfo["user_id"];?>');
+    })
+</script>
+<script type="text/html" id="integralRecordModal">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= notice%></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle"><%= intergral_float%></td>
+    </tr>
+</script>
+<script type="text/html" id="userAddressListModal">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= person%></td>
+        <td class="am-text-middle"><%= phone%></td>
+        <td class="am-text-middle">
+        <%if(postcode) {%>
+        <%= postcode%>
+        <%}else{%>
+        暂无
+        <%}%>
+        </td>
+        <td class="am-text-middle"><%= address%></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle">
+        <%if(state=="1") {%>
+        是
+        <%}else{%>
+        否
+        <%}%>    
+        </td>
+    </tr>
+</script>
+<script type="text/html" id="memberMessListModal">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+        <td class="am-text-middle"><%= id%></td>
+        <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%= content%></td>
+        <td class="am-text-middle"><%= create_time%></td>
+    </tr>
 </script>

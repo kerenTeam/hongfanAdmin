@@ -1,184 +1,184 @@
-<style type="text/css">
-  #preview{
-        width:150px !important;
-    }
-    #preview #imghead,#preview img{
-     width:140px !important;
-    }
-    .postageNumber{
-        display: none;
-    } 
-    /*form.am-form{
-        padding:1% 10%;
-    }*/
-    label{
-        font-weight: normal;
-        line-height: 28px;
-        height: 28px;
-    }
-    .memberInfo{
-        padding-left: 15% !important;
-        padding-right: 30% !important;
-
-    }
-</style>  
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块
-            <a href="<?php echo site_url().'/module/fallinlove/loveactivityList';?>" style="font-size:18px;">一键钟情</a>
-            <small><a href="<?php echo site_url().'/module/fallinlove/loveAddactivity';?>">新增活动</a></small>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/module/Fallinlove/add_love_activity');?>" method="post" enctype="multipart/form-data" data-am-validator>
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">新增活动</div>
-                    </div>
-                    <div class="widget-body">
-                        <div class="memberInfo padding-horizontal-lg">
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动名称<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text" id="doc-vld-name-1" name="title" minlength="2" placeholder="请输入活动名称" required="required" />
-                                </div>
-                            </div>
-                           <!--  <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动分类<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                   <input type="text" id="doc-vld-name-1" name="type_name" minlength="2" placeholder="请输入活动类型" required="required" />
-                                </div>
-                            </div> -->
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">报名时间<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
-                                      <p>开始日期应小于结束日期！</p>
-                                    </div>
-                                    <div class="am-g">
-                                      <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="start_time"  /><span id="my-startDate"></span>
-                                      </div>
-                                      <div class="am-u-sm-6">
-                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time"  /><span id="my-endDate"></span>
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动时间<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                     <input type="text" id="doc-vld-name-1" name="times" minlength="2" placeholder="请输入活动时间" required="required" />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动人数限制<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <select name="persons_limit" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                        <option value=''>输入查找/选择</option>
-                                        <option value="20">20人以下</option>
-                                        <option value="50">50人以下</option>
-                                        <option value="100">100人以下</option>
-                                        <option value="200">200人以下</option>
-                                        <option value="500">500人以下</option>
-                                        <option value="1000">1000人以下</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
-                                <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text"  id="postageNum" name="address" required="required" />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
-                                <label class="am-u-sm-3 am-text-right">报名费用<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <input type="text"  id="postageNum" name="charge" placeholder="免费输入0即可" required="required" />
-                                </div>
-                            </div>
-                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
-                                <div class="am-u-sm-9">
-                                    <div>
-                                        <script id="editor" name='content' type="text/plain"></script>
-                                    </div>
-                                </div>                            
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
-                        <button class="am-btn am-btn-default am-btn-xs" type="reset" id='cancle'>取消</button> 
-                    </div>
-
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
-    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
-    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
-    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
-  $(function() {
-    //实例化编辑器
-  var ue = UE.getEditor('editor');
-
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-          $('#begin_date').val($('#my-start').data('date'));
-
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-          $('#end_date').val($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-
-//点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(-1);
-  });
-
- //删除图片
-$(".deleteImg").click(function(){
-    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).siblings('.wx_type_img').find('input').val("");
-    $(this).siblings('.wx_type_img').find('input').files="";
-});
-
-</script>
+<style type="text/css">
+  #preview{
+        width:150px !important;
+    }
+    #preview #imghead,#preview img{
+     width:140px !important;
+    }
+    .postageNumber{
+        display: none;
+    } 
+    /*form.am-form{
+        padding:1% 10%;
+    }*/
+    label{
+        font-weight: normal;
+        line-height: 28px;
+        height: 28px;
+    }
+    .memberInfo{
+        padding-left: 15% !important;
+        padding-right: 30% !important;
+
+    }
+</style>  
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>主页模块
+            <a href="<?php echo site_url().'/module/fallinlove/loveactivityList';?>" style="font-size:18px;">一键钟情</a>
+            <small><a href="<?php echo site_url().'/module/fallinlove/loveAddactivity';?>">新增活动</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/module/Fallinlove/add_love_activity');?>" method="post" enctype="multipart/form-data" data-am-validator>
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">新增活动</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg">
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动名称<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text" id="doc-vld-name-1" name="title" minlength="2" placeholder="请输入活动名称" required="required" />
+                                </div>
+                            </div>
+                           <!--  <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动分类<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                   <input type="text" id="doc-vld-name-1" name="type_name" minlength="2" placeholder="请输入活动类型" required="required" />
+                                </div>
+                            </div> -->
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">报名时间<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                                      <p>开始日期应小于结束日期！</p>
+                                    </div>
+                                    <div class="am-g">
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="start_time"  /><span id="my-startDate"></span>
+                                      </div>
+                                      <div class="am-u-sm-6">
+                                        <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time"  /><span id="my-endDate"></span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动时间<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                     <input type="text" id="doc-vld-name-1" name="times" minlength="2" placeholder="请输入活动时间" required="required" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动人数限制<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <select name="persons_limit" required="required" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                        <option value=''>输入查找/选择</option>
+                                        <option value="20">20人以下</option>
+                                        <option value="50">50人以下</option>
+                                        <option value="100">100人以下</option>
+                                        <option value="200">200人以下</option>
+                                        <option value="500">500人以下</option>
+                                        <option value="1000">1000人以下</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
+                                <label class="am-u-sm-3 am-text-right">活动地点<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text"  id="postageNum" name="address" required="required" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" >
+                                <label class="am-u-sm-3 am-text-right">报名费用<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <input type="text"  id="postageNum" name="charge" placeholder="免费输入0即可" required="required" />
+                                </div>
+                            </div>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <label class="am-u-sm-3 am-text-right">活动详情<span class="red">*</span>：</label>
+                                <div class="am-u-sm-9">
+                                    <div>
+                                        <script id="editor" name='content' type="text/plain"></script>
+                                    </div>
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit" >新增</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset" id='cancle'>取消</button> 
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+  $(function() {
+    //实例化编辑器
+  var ue = UE.getEditor('editor');
+
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+
+//点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+
+ //删除图片
+$(".deleteImg").click(function(){
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+    $(this).siblings('.wx_type_img').find('input').val("");
+    $(this).siblings('.wx_type_img').find('input').files="";
+});
+
+</script>

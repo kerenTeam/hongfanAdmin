@@ -1,224 +1,224 @@
-<style type="text/css" media="screen">
-    .am-selected{
-        width: 100%!important;
-    }
-    .table-check{
-        width: 30px;
-    } 
-    .hf-dropdown{
-        font-size: 12px!important;
-    padding: 5px 6px!important;
-    }
- #preview{
-        height:200px !important;
-    }
-    #preview #imghead,#preview img{
-        
-        height:190px;
-    }
-
-    .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-        border:  1px solid #ddd;
-    }
-    .addpadding{
-        padding-left:10%;
-    }
-    .clickUp{
-        margin-left: 150px;
-    }
-    label{
-        font-weight: normal;
-    }
-    .am-list>li {
-        border: none;
-    }
-    .quan{
-        width: 280px;
-        height: 80px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        background: #f43b41;
-        color:#fff;
-    }
-    a.quan:hover{
-        color:#fff;
-    }
-    .quan div {
-        height: 50px;
-        line-height: 50px;
-        display: inline-block;
-        vertical-align:middle;
-        font-size:30px;
-    } 
-    .quan div p {
-        padding:0;
-        margin:0;
-        color:#ccc;
-        height:20px;
-        line-height: 20px;
-        font-size:10px;
-    }
-    .quan div p:first-child{
-        color:#fff;
-        font-size:16px;
-    }
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>系统设置
-            <a href="<?php echo site_url().'/systemSet/SystemSet/adverManage';?>" style="font-size: 18px;">广告管理
-            </a>  
-            <small><a href="<?php echo site_url().'/systemSet/SystemSet/guideImageManage';?>">广告引导图管理</a></small>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_advertising');?>" method="post" enctype="multipart/form-data" >
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">首页标题图管理</div>
-                    </div>
-                    <div class="widget-body">
-                        <div class="memberInfo padding-horizontal-lg">
-
-                            <?php if(!empty($homeTitle)):?>
-                            <?php foreach($homeTitle as $k=>$v):?>
-                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
-                                <label class="am-u-sm-3 am-text-right"><?php if($k == 0){echo "天天特价:";}else{echo "首页推荐:";} ?></label>
-                                 <div class="am-u-sm-9 am-u-end">
-                                    <div class="wx_type_img">
-                                      <input type="file" id="imgUpload" name="img<?php echo $k+1;?>" onchange="previewImage(this)" class="upload-add am-form-field">
-                                      <!-- 图片实时预览 -->
-                                      <input type="hidden" name="img<?php echo $k+1;?>" value="<?php echo $v['pic'];?>">
-                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $v['pic'];?>" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    
-                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；
-                                   </small> 
-                                </div>
-                            </div>
-                            <?php endforeach;?>
-                            <?php endif;?>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type='hidden' name="id" value="<?php echo $bannerid;?>">
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit"  >保存</button>
-                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_advertising');?>" method="post" enctype="multipart/form-data" >
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">启动广告引导图</div>
-                    </div>
-                    <div class="widget-body">
-                        <div class="memberInfo padding-horizontal-lg" id="imagesBox">
-                            <div class="am-form-group  am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <div class="am-btn-toolbar">
-                                    <div class="am-btn-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default am-btn-success" id="addMoreImages"><a ><span class="am-icon-plus"></span> 新增引导图</a></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php if(!empty($adver)):?>
-                            <?php foreach($adver as $k=>$v):?>
-                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
-                                <label class="am-u-sm-2 am-text-right">图<?php echo $k+1;?>：</label>
-                                 <div class="am-u-sm-10 am-u-end">
-                                    <div class="wx_type_img ">
-                                      <input type="file" id="imgUpload" name="img<?php echo $k+1;?>" onchange="previewImage(this)" class="upload-add am-form-field">
-                                      <!-- 图片实时预览 -->
-                                      <input type="hidden" name="img<?php echo $k+1;?>" value="<?php echo $v['pic'];?>">
-                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $v['pic'];?>" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <br />
-                                    <?php if(!empty($v['sort'])):?>
-                                    <input type="text" name="sort<?php echo $k+1;?>" placeholder="排序" value="<?php echo $v['sort'];?>" />
-                                    <?php else:?>
-                                    <input type="text" name="sort<?php echo $k+1;?>" placeholder="排序" />
-                                    <?php endif;?>
-                                    <a href="<?php echo site_url('/systemSet/SystemSet/del_advertisiting/'.$v['id'].'/'.$id);?>" type="button" class="am-btn am-btn-danger am-btn-xs"> <span><i class="am-icon-trash"></i> 删除</span> </a>
-                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；图片尺寸为640*1136像素；
-                                   </small> 
-                                </div>
-                            </div>
-                            <?php endforeach;?>
-                            <?php else:?>
-                              <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
-                                <label class="am-u-sm-2 am-text-right">图1：</label>
-                                 <div class="am-u-sm-10 am-u-end">
-                                    <div class="wx_type_img">
-                                      <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field">
-                                      <!-- 图片实时预览 -->
-                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                    </div>
-                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；图片尺寸为640*1136像素；
-                                   </small> 
-                                </div>
-                            </div>
-                            <?php endif;?>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
-                        <input type='hidden' name="id" value="<?php echo $id;?>">
-                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit"  >保存</button>
-                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
-<script type="text/javascript">
-    var i = 4;
-    //删除图片
-   function deleteImg(obj){
-        $(obj).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        $(obj).siblings('.wx_type_img').find('input').val("");
-        $(obj).siblings('.wx_type_img').find('input').files = "";
-  }
-
-  //点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(-1);
-  });
-  var i = $('.wx_type_img').length -1;
-  //增加引导图
-  $('#addMoreImages').click(function () {
-    
-    $('#imagesBox').append($('<div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end"> <label class="am-u-sm-2 am-text-right">图'+ i +'：</label><div class="am-u-sm-10 am-u-end"><div class="wx_type_img"><input type="file" id="imgUpload" name="img'+ i +'" onchange="previewImage(this)" class="upload-add am-form-field"><input type="hidden" name="pic" value=""> <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div></div><span class="deleteImg" onclick="deleteImg(this)"><i class="am-icon-trash"></i> 删除</span> <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb； </small> </div></div>'));
-    i++;
-  });
-
-</script>
-</body>
-</html>
+<style type="text/css" media="screen">
+    .am-selected{
+        width: 100%!important;
+    }
+    .table-check{
+        width: 30px;
+    } 
+    .hf-dropdown{
+        font-size: 12px!important;
+    padding: 5px 6px!important;
+    }
+ #preview{
+        height:200px !important;
+    }
+    #preview #imghead,#preview img{
+        
+        height:190px;
+    }
+
+    .deleteImg{
+        display:inline-block;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #666;
+        font-size: 1.2rem;
+        border:  1px solid #ddd;
+    }
+    .addpadding{
+        padding-left:10%;
+    }
+    .clickUp{
+        margin-left: 150px;
+    }
+    label{
+        font-weight: normal;
+    }
+    .am-list>li {
+        border: none;
+    }
+    .quan{
+        width: 280px;
+        height: 80px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        background: #f43b41;
+        color:#fff;
+    }
+    a.quan:hover{
+        color:#fff;
+    }
+    .quan div {
+        height: 50px;
+        line-height: 50px;
+        display: inline-block;
+        vertical-align:middle;
+        font-size:30px;
+    } 
+    .quan div p {
+        padding:0;
+        margin:0;
+        color:#ccc;
+        height:20px;
+        line-height: 20px;
+        font-size:10px;
+    }
+    .quan div p:first-child{
+        color:#fff;
+        font-size:16px;
+    }
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>系统设置
+            <a href="<?php echo site_url().'/systemSet/SystemSet/adverManage';?>" style="font-size: 18px;">广告管理
+            </a>  
+            <small><a href="<?php echo site_url().'/systemSet/SystemSet/guideImageManage';?>">广告引导图管理</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_advertising');?>" method="post" enctype="multipart/form-data" >
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">首页标题图管理</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg">
+
+                            <?php if(!empty($homeTitle)):?>
+                            <?php foreach($homeTitle as $k=>$v):?>
+                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
+                                <label class="am-u-sm-3 am-text-right"><?php if($k == 0){echo "天天特价:";}else{echo "首页推荐:";} ?></label>
+                                 <div class="am-u-sm-9 am-u-end">
+                                    <div class="wx_type_img">
+                                      <input type="file" id="imgUpload" name="img<?php echo $k+1;?>" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" name="img<?php echo $k+1;?>" value="<?php echo $v['pic'];?>">
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $v['pic'];?>" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    
+                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；
+                                   </small> 
+                                </div>
+                            </div>
+                            <?php endforeach;?>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <input type='hidden' name="id" value="<?php echo $bannerid;?>">
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit"  >保存</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <form class="am-form" action="<?php echo site_url('/systemSet/SystemSet/edit_advertising');?>" method="post" enctype="multipart/form-data" >
+                <div class="widget am-cf">
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">启动广告引导图</div>
+                    </div>
+                    <div class="widget-body">
+                        <div class="memberInfo padding-horizontal-lg" id="imagesBox">
+                            <div class="am-form-group  am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default am-btn-success" id="addMoreImages"><a ><span class="am-icon-plus"></span> 新增引导图</a></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if(!empty($adver)):?>
+                            <?php foreach($adver as $k=>$v):?>
+                            <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
+                                <label class="am-u-sm-2 am-text-right">图<?php echo $k+1;?>：</label>
+                                 <div class="am-u-sm-10 am-u-end">
+                                    <div class="wx_type_img ">
+                                      <input type="file" id="imgUpload" name="img<?php echo $k+1;?>" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <!-- 图片实时预览 -->
+                                      <input type="hidden" name="img<?php echo $k+1;?>" value="<?php echo $v['pic'];?>">
+                                      <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $v['pic'];?>" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <br />
+                                    <?php if(!empty($v['sort'])):?>
+                                    <input type="text" name="sort<?php echo $k+1;?>" placeholder="排序" value="<?php echo $v['sort'];?>" />
+                                    <?php else:?>
+                                    <input type="text" name="sort<?php echo $k+1;?>" placeholder="排序" />
+                                    <?php endif;?>
+                                    <a href="<?php echo site_url('/systemSet/SystemSet/del_advertisiting/'.$v['id'].'/'.$id);?>" type="button" class="am-btn am-btn-danger am-btn-xs"> <span><i class="am-icon-trash"></i> 删除</span> </a>
+                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；图片尺寸为640*1136像素；
+                                   </small> 
+                                </div>
+                            </div>
+                            <?php endforeach;?>
+                            <?php else:?>
+                              <div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end">
+                                <label class="am-u-sm-2 am-text-right">图1：</label>
+                                 <div class="am-u-sm-10 am-u-end">
+                                    <div class="wx_type_img">
+                                      <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field">
+                                      <!-- 图片实时预览 -->
+                                      <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                    </div>
+                                    <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+                                    <small class="red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；图片尺寸为640*1136像素；
+                                   </small> 
+                                </div>
+                            </div>
+                            <?php endif;?>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center" style="margin:20px auto;">
+                        <input type='hidden' name="id" value="<?php echo $id;?>">
+                        <button class="am-btn am-btn-secondary am-btn-xs" type="submit"  >保存</button>
+                        <button class="am-btn am-btn-default am-btn-xs" type="reset">取消</button> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+<script type="text/javascript">
+    var i = 4;
+    //删除图片
+   function deleteImg(obj){
+        $(obj).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+        $(obj).siblings('.wx_type_img').find('input').val("");
+        $(obj).siblings('.wx_type_img').find('input').files = "";
+  }
+
+  //点击取消返回上一页
+  $('#cancle').click(function(){
+    history.go(-1);
+  });
+  var i = $('.wx_type_img').length -1;
+  //增加引导图
+  $('#addMoreImages').click(function () {
+    
+    $('#imagesBox').append($('<div class="am-form-group am-u-sm-6 am-u-md-4 am-u-lg-4 am-u-end"> <label class="am-u-sm-2 am-text-right">图'+ i +'：</label><div class="am-u-sm-10 am-u-end"><div class="wx_type_img"><input type="file" id="imgUpload" name="img'+ i +'" onchange="previewImage(this)" class="upload-add am-form-field"><input type="hidden" name="pic" value=""> <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div></div><span class="deleteImg" onclick="deleteImg(this)"><i class="am-icon-trash"></i> 删除</span> <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb； </small> </div></div>'));
+    i++;
+  });
+
+</script>
+</body>
+</html>

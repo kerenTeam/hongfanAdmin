@@ -1,244 +1,244 @@
-<style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
-}
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-}
-.am-u-sm6{
-    width:60px !important;
-    margin:0;
-}
-.am-form-group div{
-    line-height: 37px;
-}
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理&nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeDeliveryList';?>" style="font-size:16px;">快递管理</a> <small></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">快递搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsType" class="am-form-label am-u-sm-4">条件搜索:</label>
-                        <div class="am-u-sm-8">
-                            <select id="goodsType" name="goodsType">
-                                <option value="">-=请选择一项=-</option>
-                                <option value="option1">商品名称</option>
-                                <option value="option2">卖家</option>
-                                <option value="option2">买家</option>
-                                <option value="option2">订单金额</option>
-                                <option value="option2">附加金额</option>
-                                <option value="option2">附加名称</option>
-                                <option value="option2">买家名称</option>
-                                <option value="option2">买家地址</option>
-                                <option value="option2">买家邮编</option>
-                                <option value="option2">买家电话</option>
-                                <option value="option2">买家手机</option>
-                                <option value="option2">发货快递</option>
-                                <option value="option2">发货单号</option>
-                                <option value="option2">备注</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-4">状态:</label>
-                        <div class="am-u-sm-8">
-                        <select id="goodsBatch" name="goodsBatch">
-                            <option value="">-=请选择一项=-</option>
-                            <option value="option1">未知</option>
-                            <option value="option2">在途</option>
-                            <option value="option2">派送中</option>
-                            <option value="option2">已签收</option>
-                            <option value="option2">退回</option>
-                            <option value="option2">其他</option>
-                            <option value="option2">无记录</option>
-                        </select>
-                        </div>
-                    </div>                 
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">快递单号:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" id="startPrice" name="startPrice" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">订单单号:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" id="startPrice" name="startPrice" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3" style="float:left;">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">卖家:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" id="startPrice" name="startPrice" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="goodsPrice" class="am-form-label am-u-sm-4">买家:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" id="startPrice" name="startPrice" />
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-fl">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" placeholder="请输入关键字">
-                        </div>
-                    </div>
-                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="button" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form>
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">快递列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th class="shop_id">订单单号 </th>
-                                    <th class="moll_name">快递公司 </th>
-                                    <th class="shop_id">快递单号 </th>
-                                    <th class="shop_name">快递状态 </th>
-                                    <th class="shop_type">卖家 </th>
-                                    <th class="shop_yetai">买家 </th>
-                                    <th class="brand">下单时间 </th>
-                                    <th class="shop_block">更新时间 </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="am-text-middle">F1003012542114255</td>
-                                    <td class="am-text-middle">中通</td>
-                                    <td class="am-text-middle">Q15465415641232</td>
-                                    <td class="am-text-middle">已付款</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">user10255</td>
-                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
-                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">F1003012542114255</td>
-                                    <td class="am-text-middle">中通</td>
-                                    <td class="am-text-middle">Q15465415641232</td>
-                                    <td class="am-text-middle">已付款</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">user10255</td>
-                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
-                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">F1003012542114255</td>
-                                    <td class="am-text-middle">中通</td>
-                                    <td class="am-text-middle">Q15465415641232</td>
-                                    <td class="am-text-middle">已付款</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">user10255</td>
-                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
-                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">F1003012542114255</td>
-                                    <td class="am-text-middle">中通</td>
-                                    <td class="am-text-middle">Q15465415641232</td>
-                                    <td class="am-text-middle">已付款</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">user10255</td>
-                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
-                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
-                                </tr>
-                                <tr>
-                                    <td class="am-text-middle">F1003012542114255</td>
-                                    <td class="am-text-middle">中通</td>
-                                    <td class="am-text-middle">Q15465415641232</td>
-                                    <td class="am-text-middle">已付款</td>
-                                    <td class="am-text-middle">寒渊阁</td>
-                                    <td class="am-text-middle">user10255</td>
-                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
-                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
-                                </tr>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fr">
-                            <ul class="am-pagination tpl-pagination">
-                                <li class="am-disabled"><a href="#">«</a></li>
-                                <li class="am-active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">»</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-</script>
+<style type="text/css" media="screen">
+.am-selected{
+width: 100%!important;
+}
+.table-check{
+width: 30px;
+}
+.hf-dropdown{
+font-size: 12px!important;
+padding: 5px 6px!important;
+}
+td.am-text-middle img{
+    width:80px;
+}
+.am-u-sm6{
+    width:60px !important;
+    margin:0;
+}
+.am-form-group div{
+    line-height: 37px;
+}
+
+</style>
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理&nbsp;&nbsp;<a href="<?php echo site_url().'/store/store/storeDeliveryList';?>" style="font-size:16px;">快递管理</a> <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">快递搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsType" class="am-form-label am-u-sm-4">条件搜索:</label>
+                        <div class="am-u-sm-8">
+                            <select id="goodsType" name="goodsType">
+                                <option value="">-=请选择一项=-</option>
+                                <option value="option1">商品名称</option>
+                                <option value="option2">卖家</option>
+                                <option value="option2">买家</option>
+                                <option value="option2">订单金额</option>
+                                <option value="option2">附加金额</option>
+                                <option value="option2">附加名称</option>
+                                <option value="option2">买家名称</option>
+                                <option value="option2">买家地址</option>
+                                <option value="option2">买家邮编</option>
+                                <option value="option2">买家电话</option>
+                                <option value="option2">买家手机</option>
+                                <option value="option2">发货快递</option>
+                                <option value="option2">发货单号</option>
+                                <option value="option2">备注</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-4">状态:</label>
+                        <div class="am-u-sm-8">
+                        <select id="goodsBatch" name="goodsBatch">
+                            <option value="">-=请选择一项=-</option>
+                            <option value="option1">未知</option>
+                            <option value="option2">在途</option>
+                            <option value="option2">派送中</option>
+                            <option value="option2">已签收</option>
+                            <option value="option2">退回</option>
+                            <option value="option2">其他</option>
+                            <option value="option2">无记录</option>
+                        </select>
+                        </div>
+                    </div>                 
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">快递单号:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" id="startPrice" name="startPrice" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">订单单号:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" id="startPrice" name="startPrice" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3" style="float:left;">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">卖家:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" id="startPrice" name="startPrice" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="goodsPrice" class="am-form-label am-u-sm-4">买家:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" id="startPrice" name="startPrice" />
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3 am-fl">
+                        <label for="source_state" class="am-u-sm-4 am-form-label">关键词搜索:</label>
+                        <div class="am-u-sm-8">
+                            <input type="text" placeholder="请输入关键字">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="button" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <div class="widget-title  am-cf">快递列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th class="shop_id">订单单号 </th>
+                                    <th class="moll_name">快递公司 </th>
+                                    <th class="shop_id">快递单号 </th>
+                                    <th class="shop_name">快递状态 </th>
+                                    <th class="shop_type">卖家 </th>
+                                    <th class="shop_yetai">买家 </th>
+                                    <th class="brand">下单时间 </th>
+                                    <th class="shop_block">更新时间 </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
+                                </tr>
+                                <tr>
+                                    <td class="am-text-middle">F1003012542114255</td>
+                                    <td class="am-text-middle">中通</td>
+                                    <td class="am-text-middle">Q15465415641232</td>
+                                    <td class="am-text-middle">已付款</td>
+                                    <td class="am-text-middle">寒渊阁</td>
+                                    <td class="am-text-middle">user10255</td>
+                                    <td class="am-text-middle">2016/11/25 15:25:00</td>
+                                    <td class="am-text-middle">2016/11/30 18:25:00</td>  
+                                </tr>
+                                <!-- more data -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf">
+                        <div class="am-fr">
+                            <ul class="am-pagination tpl-pagination">
+                                <li class="am-disabled"><a href="#">«</a></li>
+                                <li class="am-active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+  });
+</script>

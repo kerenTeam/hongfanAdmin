@@ -26,12 +26,8 @@ class Welcome extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-
-
-
 	function asd(){
-		echo "23456";
-	
+
         $this->load->view('welcome_message.html');
     }
 

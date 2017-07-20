@@ -91,4 +91,4 @@ defined('IGOAPPSECRET')           OR define('IGOAPPSECRET', '47accd33cafb73548e1
 defined('IGOLISTAPIURL')           OR define('IGOLISTAPIURL', 'http://api.igetmall.net/DRP_getProList');//爱购商品列表api
 defined('IGOINFOAPIURL')           OR define('IGOINFOAPIURL', 'http://api.igetmall.net/DRP_getProDetail'); //爱购商品详情api
 defined('IGOCATEAPIURL')           OR define('IGOCATEAPIURL', 'http://api.igetmall.net/DRP_getCategory'); //爱购商品详情api
-defined('APPLOGIN')           OR define('APPLOGIN', 'http://211.149.183.181:7200'); //APP登陆
+defined('APPLOGIN')           OR define('APPLOGIN', 'http://hiji.hifete.com'); //APP登陆

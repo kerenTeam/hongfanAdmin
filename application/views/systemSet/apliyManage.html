@@ -1,409 +1,409 @@
-<style type="text/css">
-
-    .deleteImg{
-        display:inline-block;
-        background: #d15145;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #ffffff;
-        font-size: 1.2rem;
-    }
-     .clickUp{
-        display: inline-block;
-        float: left;
-        margin-left: 100px;
-    }
-
- .preview{
- 	width:100px !important;
-        height:100px ;
-        border-radius: 50%;
-        border:none;
-    }
-    .preview #imghead,#preview img{
-        
-        height:100px;
-        border-radius: 50%;
-        
-    }
-
-    input.am-form-field{
-    	border:1px solid #ccc !important;
-    }
-</style>
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">支付账号管理</a>
-            <small></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <!-- <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">系统管理员账号查询</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
-                                <option value="请选择">请选择</option>
-                                <option value="礼品券">礼品券</option>
-                                <option value="代金券">代金券</option>
-                                <option value="折扣券">折扣券</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
-                        <div class="am-u-sm-9">
-                            <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
-                              </div>
-                              <div class="am-u-sm-6">
-                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
-                              </div>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
-                        <label for="" class="am-u-sm-3 am-form-label">领取等级：</label>
-                        <div class="am-u-sm-9">
-                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="">输入查找/选择</option>
-                                <option value="不限制">不限制</option>
-                                <option value="商家促销">超级VIP</option>
-                                <option value="商家活动">普通会员</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">审核状态：</label>
-                        <div class="am-u-sm-9">
-                            <select id="source_state">
-                                <option value="请选择">请选择</option>
-                                <option value="0">待审核</option>
-                                <option value="1">通过审核</option>
-                                <option value="2">驳回</option>
-                                <option value="3">删除</option>
-                                <option value="3">过期</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
-                    </div>
-                </form> -->
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">支付账号列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <div class="am-panel-group" id="accordion">
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
-                                        支付宝账号
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="homepage" class="am-panel-collapse am-collapse am-in">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">APP ID </th>
-                                                    <th class="am-text-middle">应用私钥 </th>
-                                                    <th class="am-text-middle">客户端SDK </th>
-                                                    <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">平台公钥 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a>
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a>
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
-                                        微信账号列表
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="market" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">APP ID </th>
-                                                    <th class="am-text-middle">应用私钥 </th>
-                                                    <th class="am-text-middle">客户端SDK </th>
-                                                    <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">平台公钥 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a type="submit" class="am-btn-xs">
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a type="submit">
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="am-panel am-panel-default">
-                                <div class="am-panel-hd">
-                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
-                                        银联帐号列表
-                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
-                                    </h4>
-                                </div>
-                                <div id="shopCenter" class="am-panel-collapse am-collapse">
-                                    <div class="am-panel-bd">
-                                        <div class="am-form-group">
-                                            <div class="am-btn-toolbar">
-                                                <div class="am-btn-group am-btn-group-xs">
-                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
-                                            <thead>
-                                                <tr>
-                                                    <th class="am-text-middle">APP ID </th>
-                                                    <th class="am-text-middle">应用私钥 </th>
-                                                    <th class="am-text-middle">客户端SDK </th>
-                                                    <th class="am-text-middle">接口地址 </th>
-                                                    <th class="am-text-middle">平台公钥 </th>
-                                                    <th class="am-text-middle">操作</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a type="submit">
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr class="gradeX">
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
-                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
-                                                    <td class="am-text-middle">
-                                                        <div class="tpl-table-black-operation">
-                                                             <a type="submit">
-                                                                <i class="am-icon-pencil"></i>保存
-                                                            </a>
-                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
-                                                                <i class="am-icon-trash"></i> 删除
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <!-- more data -->
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--新增账号模态框开始-->
-<div class="am-modal am-modal-confirm" tabindex="-1" id="addAccount">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">新增账号</div>
-        <div class="am-modal-bd">
-            <!-- 本地生活 信息展示类 -->
-            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">APP ID<span class="red">*</span></label>
-                    <div class="am-u-sm-9">  
-                        <input type="text" placeholder="请输入APP ID" name='name' minlength="2" minlength="10" required>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">	应用私钥 <span class="red">*</span></label>
-                    <div class="am-u-sm-9">  
-                        <input type="text" placeholder="请输入应用私钥" name='name' minlength="2" minlength="10" required>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">客户端SDK <span class="red">*</span></label>
-                    <div class="am-u-sm-9">  
-                        <input type="password" placeholder="请输入客户端SDK" name='name' minlength="2" minlength="10" required>
-                    </div>
-                </div>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">	接口地址 <span class="red">*</span></label>
-                    <div class="am-u-sm-9">  
-                        <input type="url" placeholder="请输入接口地址" name='name' minlength="2" minlength="10" required>
-                    </div>
-                </div>
-                <div class="am-form-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                    <button type="submit" class="am-btn am-btn-secondary">新增</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!--新增账号模态框结束-->
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-    function uploadFiles(){
-        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-       // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/module/localLife/send_market_data');?>";//上传文件的后台地址
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
-           var form=new FormData();
-            form.append('file',fileObj); //文件对象
-            //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.onload=function(){
-                alert("导入成功！");
-                location.reload();
-            
-            };
-            xhr.send(form); 
-            return true;
-        }else{
-            alert("上传文件的格式错误！");
-            return false;
-        }
-        
-    }
-
-    //删除图片
-    $(".deleteImg").click(function(){
-        
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        
-    });
-    //点击展开与收起菜单栏
-    $('.ulSign').click(function(){
-        if($(this).hasClass('am-icon-chevron-up')){
-            $(this).removeClass('am-icon-chevron-up');
-            $(this).addClass('am-icon-chevron-down');
-        }else{
-            $(this).removeClass('am-icon-chevron-down');
-            $(this).addClass('am-icon-chevron-up');
-        }
-       
-    });
+<style type="text/css">
+
+    .deleteImg{
+        display:inline-block;
+        background: #d15145;
+        width:60px;
+        height:25px;
+        line-height: 25px;
+        text-align: center;
+        color: #ffffff;
+        font-size: 1.2rem;
+    }
+     .clickUp{
+        display: inline-block;
+        float: left;
+        margin-left: 100px;
+    }
+
+ .preview{
+ 	width:100px !important;
+        height:100px ;
+        border-radius: 50%;
+        border:none;
+    }
+    .preview #imghead,#preview img{
+        
+        height:100px;
+        border-radius: 50%;
+        
+    }
+
+    input.am-form-field{
+    	border:1px solid #ccc !important;
+    }
+</style>
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">支付账号管理</a>
+            <small></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <!-- <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">系统管理员账号查询</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
+                        <div class="am-u-sm-9">
+                            <select id="source_state">
+                                <option value="请选择">请选择</option>
+                                <option value="礼品券">礼品券</option>
+                                <option value="代金券">代金券</option>
+                                <option value="折扣券">折扣券</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="openTime" class="am-u-sm-3 am-form-label">有效期：</label>
+                        <div class="am-u-sm-9">
+                            <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-start">开始日期</button><span id="my-startDate">2014-12-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-xs am-btn-default am-btn-secondary" id="my-end">结束日期</button><span id="my-endDate">2014-12-25</span>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" style="clear: both;">
+                        <label for="" class="am-u-sm-3 am-form-label">领取等级：</label>
+                        <div class="am-u-sm-9">
+                            <select name="" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                                <option value="">输入查找/选择</option>
+                                <option value="不限制">不限制</option>
+                                <option value="商家促销">超级VIP</option>
+                                <option value="商家活动">普通会员</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">审核状态：</label>
+                        <div class="am-u-sm-9">
+                            <select id="source_state">
+                                <option value="请选择">请选择</option>
+                                <option value="0">待审核</option>
+                                <option value="1">通过审核</option>
+                                <option value="2">驳回</option>
+                                <option value="3">删除</option>
+                                <option value="3">过期</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form> -->
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf" style="clear:both;">支付账号列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12">
+                        <div class="am-panel-group" id="accordion">
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage'}">
+                                        支付宝账号
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                    </h4>
+                                </div>
+                                <div id="homepage" class="am-panel-collapse am-collapse am-in">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">APP ID </th>
+                                                    <th class="am-text-middle">应用私钥 </th>
+                                                    <th class="am-text-middle">客户端SDK </th>
+                                                    <th class="am-text-middle">接口地址 </th>
+                                                    <th class="am-text-middle">平台公钥 </th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a>
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a>
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#market'}">
+                                        微信账号列表
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                    </h4>
+                                </div>
+                                <div id="market" class="am-panel-collapse am-collapse">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">APP ID </th>
+                                                    <th class="am-text-middle">应用私钥 </th>
+                                                    <th class="am-text-middle">客户端SDK </th>
+                                                    <th class="am-text-middle">接口地址 </th>
+                                                    <th class="am-text-middle">平台公钥 </th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a type="submit" class="am-btn-xs">
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a type="submit">
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-panel am-panel-default">
+                                <div class="am-panel-hd">
+                                    <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#shopCenter'}">
+                                        银联帐号列表
+                                        <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
+                                    </h4>
+                                </div>
+                                <div id="shopCenter" class="am-panel-collapse am-collapse">
+                                    <div class="am-panel-bd">
+                                        <div class="am-form-group">
+                                            <div class="am-btn-toolbar">
+                                                <div class="am-btn-group am-btn-group-xs">
+                                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
+                                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-refresh "></span> 刷新</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black">
+                                            <thead>
+                                                <tr>
+                                                    <th class="am-text-middle">APP ID </th>
+                                                    <th class="am-text-middle">应用私钥 </th>
+                                                    <th class="am-text-middle">客户端SDK </th>
+                                                    <th class="am-text-middle">接口地址 </th>
+                                                    <th class="am-text-middle">平台公钥 </th>
+                                                    <th class="am-text-middle">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a type="submit">
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="gradeX">
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_ID" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="APP_PRIVATE_KEY" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="AlipayClient" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="https://open.alipay.com/caseCenter/caseCenter.htm?type=pay" name=""></td>
+                                                    <td class="am-text-middle"><input type="text" class="am-form-field" required value="ALIPAY_PUBLIC_KEY" name=""></td>
+                                                    <td class="am-text-middle">
+                                                        <div class="tpl-table-black-operation">
+                                                             <a type="submit">
+                                                                <i class="am-icon-pencil"></i>保存
+                                                            </a>
+                                                            <a onClick="return confirm('确定删除?');" href="#" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete'}">
+                                                                <i class="am-icon-trash"></i> 删除
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- more data -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--新增账号模态框开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="addAccount">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">新增账号</div>
+        <div class="am-modal-bd">
+            <!-- 本地生活 信息展示类 -->
+            <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='' method='post' >
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">APP ID<span class="red">*</span></label>
+                    <div class="am-u-sm-9">  
+                        <input type="text" placeholder="请输入APP ID" name='name' minlength="2" minlength="10" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">	应用私钥 <span class="red">*</span></label>
+                    <div class="am-u-sm-9">  
+                        <input type="text" placeholder="请输入应用私钥" name='name' minlength="2" minlength="10" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">客户端SDK <span class="red">*</span></label>
+                    <div class="am-u-sm-9">  
+                        <input type="password" placeholder="请输入客户端SDK" name='name' minlength="2" minlength="10" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">	接口地址 <span class="red">*</span></label>
+                    <div class="am-u-sm-9">  
+                        <input type="url" placeholder="请输入接口地址" name='name' minlength="2" minlength="10" required>
+                    </div>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-secondary">新增</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--新增账号模态框结束-->
+</div>
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+    function uploadFiles(){
+        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
+       // console.log(fileObj.name.split('.')[1]);
+        var FileController="<?php echo site_url('/module/localLife/send_market_data');?>";//上传文件的后台地址
+        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
+           var form=new FormData();
+            form.append('file',fileObj); //文件对象
+            //实例化XMLHttpRequest对象
+            var xhr=new XMLHttpRequest();
+            xhr.open('post',FileController,true);
+            xhr.onload=function(){
+                alert("导入成功！");
+                location.reload();
+            
+            };
+            xhr.send(form); 
+            return true;
+        }else{
+            alert("上传文件的格式错误！");
+            return false;
+        }
+        
+    }
+
+    //删除图片
+    $(".deleteImg").click(function(){
+        
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        
+    });
+    //点击展开与收起菜单栏
+    $('.ulSign').click(function(){
+        if($(this).hasClass('am-icon-chevron-up')){
+            $(this).removeClass('am-icon-chevron-up');
+            $(this).addClass('am-icon-chevron-down');
+        }else{
+            $(this).removeClass('am-icon-chevron-down');
+            $(this).addClass('am-icon-chevron-up');
+        }
+       
+    });
 </script>

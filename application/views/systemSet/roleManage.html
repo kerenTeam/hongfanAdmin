@@ -1,213 +1,213 @@
-
-<style type="text/css" media="screen">
-.theme-white .tpl-user-card{
-    color: #333;
-}
-
-.widget-body-lg {
-    min-height:800px;
-}
-.theme-white .tpl-user-card-title {
-    font-size: 20px;
-}
-::-webkit-scrollbar {
-    width: 0!important;
-    opacity: 1!important;
-}
-.am-btn-group-xs a {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-</style>
-<!-- 菜单 -->
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size: 18px;">管理员账号管理
-            </a>  
-            <small>  <a href="<?php echo site_url().'/systemSet/systemSet/roleManage';?>" >管理员类型管理
-            </a></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row am-cf">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 widget-margin-bottom-lg">
-            <div class="widget am-cf widget-body-lg">
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <a id="add_rule" data-am-modal="{target:'#addRule'}" class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 新增管理员类型</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>管理员类型名 </th>
-                                    <th>操作 </th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <?php foreach($group as $v):?>
-                                <tr class="trClass" id="trClass<?php echo $v['gid'];?>" data-id="">
-                                    <td class="am-text-middle"><?php echo $v['group_name'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                <a data-am-modal="{target:'#editRule<?php echo $v['gid'];?>'}" class="am-btn am-btn-warning edit_rule"><span class="am-icon-edit"></span> 修改</a>
-
-                                                <a data-am-modal="{target:'#deleteRule<?php echo $v['gid'];?>'}" class="am-btn am-btn-danger delete_rule"><span class="am-icon-edit"></span> 删除</a>
-                                                <a href="<?php echo site_url().'/systemSet/SystemSet/allot_group/Authority/'.$v['gid'];?>"  class="am-btn am-btn-secondary sort_rule"><span class="am-icon-sort"></span> 分配权限</a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!--修改权限开始-->
-                                <div class="am-modal am-modal-confirm" tabindex="-1" id="editRule<?php echo $v['gid'];?>">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">修改类型名</div>
-                                        <div class="am-modal-bd">
-                                            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/memberLimitEdit');?>" method="post" enctype='multipart/form-data' data-am-validator>
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">类型名 ：</label>
-                                                    <div class="am-u-sm-8 am-u-end">
-                                                        <input type="text" name="group_name" value="<?php echo $v['group_name'];?>" required minlength="2" maxlength="15" onblur="validate(this,2,15,2)" />
-                                                        
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>
-                                                <div class="am-form-group am-btn-group-xs">
-                                                    <input type="hidden" name="gid" value="<?php echo $v['gid'];?>">
-                                                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                                    <button type="submit" class="am-btn am-btn-warning">修改</button>
-                                                </div>
-                                            </form>   
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <!--修改权限结束-->
-                                <!--删除权限开始-->
-                                <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteRule<?php echo $v['gid'];?>">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">删除提示</div>
-                                        <div class="am-modal-bd">
-                                            <p class="black">你，确定要删除这条记录吗？</p>
-                                        </div>
-                                        <div class="am-modal-footer">
-                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                            <span class="am-modal-btn sureDelete" data-id="<?php echo $v['gid'];?>" data-am-modal-confirm>确定</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--删除权限结束-->
-                            <?php endforeach;?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
- <!--新增权限开始-->
-<div class="am-modal am-modal-confirm" tabindex="-1" id="addRule">
-    <div class="am-modal-dialog">
-        <div class="am-modal-hd">新增管理员类型</div>
-        <div class="am-modal-bd">
-            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/add_member_group');?>" method="post" enctype='multipart/form-data' data-am-validator>
-                <div class="am-form-group am-cf">
-                    <label class="am-u-sm-3 am-form-label">类型名 ：</label>
-                    <div class="am-u-sm-8 am-u-end">
-                        <input type="text" name="group_name" required minlength="2" maxlength="15" onblur="validate(this,2,15,2)" />
-                        
-                    </div>
-                    <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                    <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                </div>
-                <div class="am-form-group am-btn-group-xs">
-                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                    <button type="submit" class="am-btn am-btn-warning">添加</button>
-                </div>
-            </form>   
-        </div>
-        
-    </div>
-</div>
-<!--新增权限结束-->
-
-
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length < minlen || content.length > maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
-$(function(){
-    $('.secondLimit').css("display","none");
-        $('.firstLimit').on('change',function(){
-        var firstLimit = this.value;
-        //alert(firstLimit);
-        $('.secondLimit').each(function(){
-            var id=$(this).attr("id");
-            if(firstLimit==id){
-            $('#'+firstLimit).css("display","block");
-            }
-        })
-    });
-    
-})
-
-$('.sureDelete').click(function(){
-   var dataId = $(this).attr('data-id');
-    $.ajax({
-       url: '<?php echo site_url("systemSet/SystemSet/del_group");?>',
-       type: 'post',
-       data: 'gid='+dataId,
-       success:function(data){
-        console.log(data);
-            if(data == 1){
-                $('#trClass'+dataId).remove()
-            }else{
-                alert("操作失败，请检查网络设置！");
- 
-            }
-       },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-   });   
-});
-
-//点击保存按钮作验证
-$('#submit').click(function(){
-    if($("#controlname").val()==""){
-        alert("权限名不能为空！");
-        return false;
-    }else{
-        return true;
-    }
-});
-
-
-</script>
+
+<style type="text/css" media="screen">
+.theme-white .tpl-user-card{
+    color: #333;
+}
+
+.widget-body-lg {
+    min-height:800px;
+}
+.theme-white .tpl-user-card-title {
+    font-size: 20px;
+}
+::-webkit-scrollbar {
+    width: 0!important;
+    opacity: 1!important;
+}
+.am-btn-group-xs a {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+</style>
+<!-- 菜单 -->
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size: 18px;">管理员账号管理
+            </a>  
+            <small>  <a href="<?php echo site_url().'/systemSet/systemSet/roleManage';?>" >管理员类型管理
+            </a></small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row am-cf">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 widget-margin-bottom-lg">
+            <div class="widget am-cf widget-body-lg">
+                <div class="widget-body  am-fr">
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <a id="add_rule" data-am-modal="{target:'#addRule'}" class="am-btn am-btn-secondary"><span class="am-icon-plus"></span> 新增管理员类型</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>管理员类型名 </th>
+                                    <th>操作 </th>
+                                </tr>
+                            </thead>
+                            <tbody id="dataList">
+                                <?php foreach($group as $v):?>
+                                <tr class="trClass" id="trClass<?php echo $v['gid'];?>" data-id="">
+                                    <td class="am-text-middle"><?php echo $v['group_name'];?></td>
+                                    <td class="am-text-middle">
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <a data-am-modal="{target:'#editRule<?php echo $v['gid'];?>'}" class="am-btn am-btn-warning edit_rule"><span class="am-icon-edit"></span> 修改</a>
+
+                                                <a data-am-modal="{target:'#deleteRule<?php echo $v['gid'];?>'}" class="am-btn am-btn-danger delete_rule"><span class="am-icon-edit"></span> 删除</a>
+                                                <a href="<?php echo site_url().'/systemSet/SystemSet/allot_group/Authority/'.$v['gid'];?>"  class="am-btn am-btn-secondary sort_rule"><span class="am-icon-sort"></span> 分配权限</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!--修改权限开始-->
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="editRule<?php echo $v['gid'];?>">
+                                    <div class="am-modal-dialog">
+                                        <div class="am-modal-hd">修改类型名</div>
+                                        <div class="am-modal-bd">
+                                            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/memberLimitEdit');?>" method="post" enctype='multipart/form-data' data-am-validator>
+                                                <div class="am-form-group am-cf">
+                                                    <label class="am-u-sm-3 am-form-label">类型名 ：</label>
+                                                    <div class="am-u-sm-8 am-u-end">
+                                                        <input type="text" name="group_name" value="<?php echo $v['group_name'];?>" required minlength="2" maxlength="15" onblur="validate(this,2,15,2)" />
+                                                        
+                                                    </div>
+                                                    <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                                                    <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                                                </div>
+                                                <div class="am-form-group am-btn-group-xs">
+                                                    <input type="hidden" name="gid" value="<?php echo $v['gid'];?>">
+                                                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                                                    <button type="submit" class="am-btn am-btn-warning">修改</button>
+                                                </div>
+                                            </form>   
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <!--修改权限结束-->
+                                <!--删除权限开始-->
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteRule<?php echo $v['gid'];?>">
+                                    <div class="am-modal-dialog">
+                                        <div class="am-modal-hd">删除提示</div>
+                                        <div class="am-modal-bd">
+                                            <p class="black">你，确定要删除这条记录吗？</p>
+                                        </div>
+                                        <div class="am-modal-footer">
+                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                            <span class="am-modal-btn sureDelete" data-id="<?php echo $v['gid'];?>" data-am-modal-confirm>确定</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--删除权限结束-->
+                            <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+ <!--新增权限开始-->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="addRule">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">新增管理员类型</div>
+        <div class="am-modal-bd">
+            <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/add_member_group');?>" method="post" enctype='multipart/form-data' data-am-validator>
+                <div class="am-form-group am-cf">
+                    <label class="am-u-sm-3 am-form-label">类型名 ：</label>
+                    <div class="am-u-sm-8 am-u-end">
+                        <input type="text" name="group_name" required minlength="2" maxlength="15" onblur="validate(this,2,15,2)" />
+                        
+                    </div>
+                    <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+                    <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+                </div>
+                <div class="am-form-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                    <button type="submit" class="am-btn am-btn-warning">添加</button>
+                </div>
+            </form>   
+        </div>
+        
+    </div>
+</div>
+<!--新增权限结束-->
+
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript">
+//表单验证函数
+function validate(obj,minlen,maxlen,i){
+    var content=obj.value;
+    if(content.length < minlen || content.length > maxlen){
+        $('.blacktips'+ i).css('display','none');
+        $('.redtips'+ i).css('display','inline-block');
+    }else{
+        $('.redtips'+ i).css('display','none');
+        $('.blacktips'+ i).css('display','inline-block');
+    }
+}
+$(function(){
+    $('.secondLimit').css("display","none");
+        $('.firstLimit').on('change',function(){
+        var firstLimit = this.value;
+        //alert(firstLimit);
+        $('.secondLimit').each(function(){
+            var id=$(this).attr("id");
+            if(firstLimit==id){
+            $('#'+firstLimit).css("display","block");
+            }
+        })
+    });
+    
+})
+
+$('.sureDelete').click(function(){
+   var dataId = $(this).attr('data-id');
+    $.ajax({
+       url: '<?php echo site_url("systemSet/SystemSet/del_group");?>',
+       type: 'post',
+       data: 'gid='+dataId,
+       success:function(data){
+        console.log(data);
+            if(data == 1){
+                $('#trClass'+dataId).remove()
+            }else{
+                alert("操作失败，请检查网络设置！");
+ 
+            }
+       },
+        error:function(xhr,type,errorThrown){
+            alert("操作失败，请检查网络设置！");
+        }
+   });   
+});
+
+//点击保存按钮作验证
+$('#submit').click(function(){
+    if($("#controlname").val()==""){
+        alert("权限名不能为空！");
+        return false;
+    }else{
+        return true;
+    }
+});
+
+
+</script>

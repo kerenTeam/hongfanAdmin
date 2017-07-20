@@ -1,283 +1,283 @@
-<style type="text/css" media="screen">
-.am-selected{
-    width: 100%!important;
-}
-.table-check{
-    width: 30px;
-}
-.hf-dropdown{
-    font-size: 12px!important;
-    padding: 5px 6px!important;
-}
-.am-imgContainer{
-    width:50%;
-}
-.disclaimerArea{
-    min-height: 500px;
-}
-</style>
-
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活 <small>服务模块列表</small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">服务板块列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <!--<div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#disclaimer'}"><span class="am-icon-pencil"></span> 修改免责声明</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
-                    <!--免责协议弹窗开始-->
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="disclaimer">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">免责协议</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 信息展示类 -->
-                                <!--<form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/LocalLife/edit_disclaimer');?>"  method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">免责协议 <span class="red">*</span>：</label>
-                                        <div class="am-u-sm-8 am-u-end">
-                                            <textarea rows='4' type="text"  name='content' class="disclaimerArea am-text-left" required><?php echo $disclaimer['content'];?>
-                                            </textarea>
-                                        </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <input type="hidden" name="id" value="<?php echo $disclaimer['id'];?>">
-                                        <button type="submit" class="am-btn am-btn-danger">保存</button>
-                                    </div>
-                                </form>-->
-                            </div>
-                        </div>
-                    </div>
-                    <!--免责协议弹窗结束-->
-                    <!--<div class="am-modal am-modal-confirm" tabindex="-1" id="add">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增</div>
-                            <div class="am-modal-bd">
-                                 <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/module/add_cates');?>"  method="post" enctype="multipart/form-data" data-am-validator>
-                                     <div class="am-form-group am-cf">
-                                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-10">
-                                          <input type="text" id="doc-ipt-1" placeholder="请输入2-4个字" minlength="2" name="name" maxlength="4" required="">
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">类别 <span class="red">*</span></label>
-                                        <div class="am-u-sm-10">
-                                            <select name="typeid" id="doc-select-1" required>
-                                                <option value="">--请选择类别--</option>
-                                                <option value="1">普通信息类</option>
-                                                <option value="2">房产信息类</option>
-                                                <option value="3">跳蚤市场</option>
-                                                <option value="4">快递上门</option>
-                                                <option value="5">超市比价</option>
-                                                <option value="6">招聘</option>
-                                                <option value="7">家乡话</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">排序 <span class="red">*</span></label>
-                                        <div class="am-u-sm-10">
-                                          <input type="number" name="sort" id="doc-ipt-3" min="1" required>
-                                        </div>
-                                      </div>
-                                     <div class="am-form-group am-cf">
-                                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">icon 背景色 <span class="red">*</span></label>
-                                         <div class="am-u-sm-10">
-                                             <input type="color" name="icon_color" id="doc-ipt-3" min="1" required>
-                                         </div>
-                                     </div>
-                                      <div class="am-form-group am-cf">
-                                            <label for="imgUpload" class="am-u-sm-2 am-form-label">ICON <span class="red">*</span></label>
-                                            <div class="am-u-sm-10">
-                                                <div class="wx_type_img">
-                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
-                                                  图片实时预览
-                                                  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                  <div class="am-text-xs">点击选择图片</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="reset" class="am-btn am-btn-default">重置</button>
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>-->
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <!--<th class="table-check"><input type="checkbox"></th>-->
-                                    <th class="shop_id">名称</th>
-                                    <th class="moll_name">排序</th>
-                                    <th class="shop_id">类别</th>
-                                    <th class="shop_name">icon</th>
-                                    <th class="shop_name">icon背景色</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php if(!empty($cates)):?>
-                                <?php foreach($cates as $v):?>
-                                <tr>
-                                    <!--<td class="am-text-middle"><input type="checkbox"></td>-->
-                                    <td class="am-text-middle"><?php echo $v['name'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['sort'];?></td>
-                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市特价类";break;case '6': echo "招聘信息类";break; case "7": echo "家乡话";break; }?></td>
-                                    <?php $icon = json_decode($v['icon'],true); ?>
-                                    <td class="am-text-middle"><img class="am-imgContainer" src="<?php echo $icon[0]['picImg'];?>" ></td>
-                                    <td class="am-text-middle"><input type="color" value="<?php echo $v['icon_color'];?>" disabled="disabled"/></td>
-                                    <td class="am-text-middle"><?php echo $v['create_time'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <?php if($v['typeid'] == 6):?>
-                                               <!--招聘-->
-                                                <a href="<?php echo site_url().'/module/localLife/recruit_list';?>" class="tpl-table-black-operation-set">
-                                                <i class="am-icon-eye" ></i> 查看
-                                                </a>
-                                            <?php elseif($v['typeid'] == 7):?>
-                                                <!--家乡话-->
-                                                <a href="<?php echo site_url().'/module/HomeReport/index';?>" class="tpl-table-black-operation-set">
-                                                <i class="am-icon-eye" ></i> 查看
-                                                </a>
-                                            <?php else:?>
-                                                <a href="<?php echo site_url().'/module/localLife/serviceList/'.$v['id'];?>" class="tpl-table-black-operation-set">
-                                                <i class="am-icon-eye" ></i> 查看
-                                                </a>
-                                            <?php endif;?>
-                                            <a href="javascript:;" data-am-modal="{target: '#edited<?=$v['id']?>'}">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <!--<a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">-->
-                                                <!--<i class="am-icon-trash"></i> 删除-->
-                                            <!--</a>-->
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                    <!-- 编辑 模态框 -->
-                                    <div class="am-modal am-modal-confirm" tabindex="-1" id="edited<?=$v['id']?>">
-                                        <div class="am-modal-dialog">
-                                            <div class="am-modal-hd">编辑</div>
-                                            <div class="am-modal-bd">
-                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/localLife/edit_cates');?>"  method="post" enctype="multipart/form-data" data-am-validator>
-                                                     <div class="am-form-group am-cf">
-                                                        <label class="am-u-sm-2 am-form-label">名称 <span class="red">*</span></label>
-                                                        <div class="am-u-sm-10">
-                                                          <input type="text" placeholder="请输入2-4个字" name="name" value="<?php echo $v['name'];?>" minlength="2" maxlength="4" required="">
-                                                        </div>
-                                                      </div>
-                                                      <div class="am-form-group am-cf">
-                                                        <label class="am-u-sm-2 am-form-label">类别 <span class="red">*</span></label>
-                                                        <div class="am-u-sm-10">
-                                                            <select name="typeid" id="doc-select-1" required>
-                                                                <option value="">&#45;&#45;请选择类别&#45;&#45;</option>
-                                                                <option value="1" <?php if($v['typeid'] ==1){echo "selected";}?>>普通信息类</option>
-                                                                <option value="2" <?php if($v['typeid'] ==2){echo "selected";}?>>房产信息类</option>
-                                                                <option value="3" <?php if($v['typeid'] ==3){echo "selected";}?>>法律咨询类</option>
-                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option> <option value="5" <?php if($v['typeid'] ==5){echo "selected";}?>>超市特价类</option>
-                                                            </select>
-                                                        </div>
-                                                      </div>
-                                                      <div class="am-form-group am-cf">
-                                                        <label class="am-u-sm-2 am-form-label">排序 <span class="red">*</span></label>
-                                                        <div class="am-u-sm-10">
-                                                            <input type="hidden" value="<?php echo $v['id'];?>" name="id" />
-                                                            <input type="number" name="sort" value="<?php echo $v['sort'];?>" min="1" required>
-                                                        </div>
-                                                      </div>
-                                                      <div class="am-form-group am-cf">
-                                                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">icon 背景色 <span class="red">*</span></label>
-                                                         <div class="am-u-sm-10">
-                                                             <input type="color" name="icon_color" id="doc-ipt-3" min="1" value="<?php echo $v['icon_color']?>" required>
-                                                         </div>
-                                                     </div>
-                                                      <div class="am-form-group am-cf">
-                                                            <label for="imgUpload" class="am-u-sm-2 am-form-label">LOGO <span class="red">*</span></label>
-                                                            <div class="am-u-sm-10">
-                                                                <div class="wx_type_img">
-                                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
-                                                                    <?php if(empty( $icon[0]['picImg'])):?>
-                                                                  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                                    <?php else:?>
-                                                                  
-                                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo  $icon[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                                                    <?php endif;?>
-                                                                </div>
-                                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                                                <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif、svg，图片大小不超过800kb;</small>
-                                                            </div>
-
-                                                      </div>
-                                                    <div class="am-form-group am-btn-group-xs">
-                                                        <button type="reset" class="am-btn am-btn-default">重置</button>
-
-                                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                                    </div>
-                                                </div>
-                                               <!--  <div class="am-form-group am-btn-group-xs">
-                                                    <button type="reset" class="am-btn am-btn-default">重置</button>
-                                                    <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                                </div> -->
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--&lt;!&ndash; 删除弹框 &ndash;&gt;-->
-                                <!--<div class="am-modal am-modal-confirm" tabindex="-1" id="delete1">-->
-                                    <!--<div class="am-modal-dialog">-->
-                                        <!--<div class="am-modal-hd">删除提示</div>-->
-                                        <!--<div class="am-modal-bd">-->
-                                            <!--<p class="black">你，确定要删除这条记录吗？</p>-->
-                                        <!--</div>-->
-                                        <!--<div class="am-modal-footer">-->
-                                            <!--<span class="am-modal-btn" data-am-modal-cancel>取消</span>-->
-                                            <!--<span class="am-modal-btn" data-am-modal-confirm>确定</span>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                            <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="8" style="text-align:center;">暂无分类</th>
-                                <?php endif;?>
-                                <!--&lt;!&ndash; more data &ndash;&gt;-->
-                            <!--</tbody>-->
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<script type="text/javascript">
-    //删除图片
-    $(".deleteImg").click(function(){      
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).prevUntil('.preview').find('input').val("");
-    });
-</script>
-
+<style type="text/css" media="screen">
+.am-selected{
+    width: 100%!important;
+}
+.table-check{
+    width: 30px;
+}
+.hf-dropdown{
+    font-size: 12px!important;
+    padding: 5px 6px!important;
+}
+.am-imgContainer{
+    width:50%;
+}
+.disclaimerArea{
+    min-height: 500px;
+}
+</style>
+
+
+<!-- 内容区域 -->
+<div class="tpl-content-wrapper">
+<div class="container-fluid am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活 <small>服务模块列表</small></div>
+        </div>
+    </div>
+</div>
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title  am-cf">服务板块列表</div>
+                </div>
+                <div class="widget-body  am-fr">
+                    <!--<div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <div class="am-form-group">
+                            <div class="am-btn-toolbar">
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#disclaimer'}"><span class="am-icon-pencil"></span> 修改免责声明</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <!--免责协议弹窗开始-->
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="disclaimer">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">免责协议</div>
+                            <div class="am-modal-bd">
+                                <!-- 本地生活 信息展示类 -->
+                                <!--<form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/LocalLife/edit_disclaimer');?>"  method='post' enctype='multipart/form-data'>
+                                    <div class="am-form-group am-cf">
+                                        <label class="am-u-sm-3 am-form-label">免责协议 <span class="red">*</span>：</label>
+                                        <div class="am-u-sm-8 am-u-end">
+                                            <textarea rows='4' type="text"  name='content' class="disclaimerArea am-text-left" required><?php echo $disclaimer['content'];?>
+                                            </textarea>
+                                        </div>
+                                    <div class="am-form-group am-btn-group-xs">
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+                                        <input type="hidden" name="id" value="<?php echo $disclaimer['id'];?>">
+                                        <button type="submit" class="am-btn am-btn-danger">保存</button>
+                                    </div>
+                                </form>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--免责协议弹窗结束-->
+                    <!--<div class="am-modal am-modal-confirm" tabindex="-1" id="add">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">新增</div>
+                            <div class="am-modal-bd">
+                                 <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/module/add_cates');?>"  method="post" enctype="multipart/form-data" data-am-validator>
+                                     <div class="am-form-group am-cf">
+                                        <label for="doc-ipt-1" class="am-u-sm-2 am-form-label">名称 <span class="red">*</span></label>
+                                        <div class="am-u-sm-10">
+                                          <input type="text" id="doc-ipt-1" placeholder="请输入2-4个字" minlength="2" name="name" maxlength="4" required="">
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="doc-ipt-2" class="am-u-sm-2 am-form-label">类别 <span class="red">*</span></label>
+                                        <div class="am-u-sm-10">
+                                            <select name="typeid" id="doc-select-1" required>
+                                                <option value="">--请选择类别--</option>
+                                                <option value="1">普通信息类</option>
+                                                <option value="2">房产信息类</option>
+                                                <option value="3">跳蚤市场</option>
+                                                <option value="4">快递上门</option>
+                                                <option value="5">超市比价</option>
+                                                <option value="6">招聘</option>
+                                                <option value="7">家乡话</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">排序 <span class="red">*</span></label>
+                                        <div class="am-u-sm-10">
+                                          <input type="number" name="sort" id="doc-ipt-3" min="1" required>
+                                        </div>
+                                      </div>
+                                     <div class="am-form-group am-cf">
+                                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">icon 背景色 <span class="red">*</span></label>
+                                         <div class="am-u-sm-10">
+                                             <input type="color" name="icon_color" id="doc-ipt-3" min="1" required>
+                                         </div>
+                                     </div>
+                                      <div class="am-form-group am-cf">
+                                            <label for="imgUpload" class="am-u-sm-2 am-form-label">ICON <span class="red">*</span></label>
+                                            <div class="am-u-sm-10">
+                                                <div class="wx_type_img">
+                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
+                                                  图片实时预览
+                                                  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                  <div class="am-text-xs">点击选择图片</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-btn-group-xs">
+                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <!--<th class="table-check"><input type="checkbox"></th>-->
+                                    <th class="shop_id">名称</th>
+                                    <th class="moll_name">排序</th>
+                                    <th class="shop_id">类别</th>
+                                    <th class="shop_name">icon</th>
+                                    <th class="shop_name">icon背景色</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php if(!empty($cates)):?>
+                                <?php foreach($cates as $v):?>
+                                <tr>
+                                    <!--<td class="am-text-middle"><input type="checkbox"></td>-->
+                                    <td class="am-text-middle"><?php echo $v['name'];?></td>
+                                    <td class="am-text-middle"><?php echo $v['sort'];?></td>
+                                    <td class="am-text-middle"><?php switch($v['typeid']){case '1': echo "普通信息类";break;case '2': echo "房产信息类";break;case '3': echo "跳蚤市场";break;case '4': echo "快递上门";break;case '5': echo "超市特价类";break;case '6': echo "招聘信息类";break; case "7": echo "家乡话";break; }?></td>
+                                    <?php $icon = json_decode($v['icon'],true); ?>
+                                    <td class="am-text-middle"><img class="am-imgContainer" src="<?php echo $icon[0]['picImg'];?>" ></td>
+                                    <td class="am-text-middle"><input type="color" value="<?php echo $v['icon_color'];?>" disabled="disabled"/></td>
+                                    <td class="am-text-middle"><?php echo $v['create_time'];?></td>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <?php if($v['typeid'] == 6):?>
+                                               <!--招聘-->
+                                                <a href="<?php echo site_url().'/module/localLife/recruit_list';?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-eye" ></i> 查看
+                                                </a>
+                                            <?php elseif($v['typeid'] == 7):?>
+                                                <!--家乡话-->
+                                                <a href="<?php echo site_url().'/module/HomeReport/index';?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-eye" ></i> 查看
+                                                </a>
+                                            <?php else:?>
+                                                <a href="<?php echo site_url().'/module/localLife/serviceList/'.$v['id'];?>" class="tpl-table-black-operation-set">
+                                                <i class="am-icon-eye" ></i> 查看
+                                                </a>
+                                            <?php endif;?>
+                                            <a href="javascript:;" data-am-modal="{target: '#edited<?=$v['id']?>'}">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <!--<a href="javascript:;" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">-->
+                                                <!--<i class="am-icon-trash"></i> 删除-->
+                                            <!--</a>-->
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                    <!-- 编辑 模态框 -->
+                                    <div class="am-modal am-modal-confirm" tabindex="-1" id="edited<?=$v['id']?>">
+                                        <div class="am-modal-dialog">
+                                            <div class="am-modal-hd">编辑</div>
+                                            <div class="am-modal-bd">
+                                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/module/localLife/edit_cates');?>"  method="post" enctype="multipart/form-data" data-am-validator>
+                                                     <div class="am-form-group am-cf">
+                                                        <label class="am-u-sm-2 am-form-label">名称 <span class="red">*</span></label>
+                                                        <div class="am-u-sm-10">
+                                                          <input type="text" placeholder="请输入2-4个字" name="name" value="<?php echo $v['name'];?>" minlength="2" maxlength="4" required="">
+                                                        </div>
+                                                      </div>
+                                                      <div class="am-form-group am-cf">
+                                                        <label class="am-u-sm-2 am-form-label">类别 <span class="red">*</span></label>
+                                                        <div class="am-u-sm-10">
+                                                            <select name="typeid" id="doc-select-1" required>
+                                                                <option value="">&#45;&#45;请选择类别&#45;&#45;</option>
+                                                                <option value="1" <?php if($v['typeid'] ==1){echo "selected";}?>>普通信息类</option>
+                                                                <option value="2" <?php if($v['typeid'] ==2){echo "selected";}?>>房产信息类</option>
+                                                                <option value="3" <?php if($v['typeid'] ==3){echo "selected";}?>>法律咨询类</option>
+                                                                <option value="4" <?php if($v['typeid'] ==4){echo "selected";}?>>闲置商品类</option> <option value="5" <?php if($v['typeid'] ==5){echo "selected";}?>>超市特价类</option>
+                                                            </select>
+                                                        </div>
+                                                      </div>
+                                                      <div class="am-form-group am-cf">
+                                                        <label class="am-u-sm-2 am-form-label">排序 <span class="red">*</span></label>
+                                                        <div class="am-u-sm-10">
+                                                            <input type="hidden" value="<?php echo $v['id'];?>" name="id" />
+                                                            <input type="number" name="sort" value="<?php echo $v['sort'];?>" min="1" required>
+                                                        </div>
+                                                      </div>
+                                                      <div class="am-form-group am-cf">
+                                                         <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">icon 背景色 <span class="red">*</span></label>
+                                                         <div class="am-u-sm-10">
+                                                             <input type="color" name="icon_color" id="doc-ipt-3" min="1" value="<?php echo $v['icon_color']?>" required>
+                                                         </div>
+                                                     </div>
+                                                      <div class="am-form-group am-cf">
+                                                            <label for="imgUpload" class="am-u-sm-2 am-form-label">LOGO <span class="red">*</span></label>
+                                                            <div class="am-u-sm-10">
+                                                                <div class="wx_type_img">
+                                                                 <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" required>
+                                                                    <?php if(empty( $icon[0]['picImg'])):?>
+                                                                  <div id="preview"> <img style="border-radius: 3px;width:8rem" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                                                    <?php else:?>
+                                                                  
+                                                                    <div id="preview"> <img style="border-radius: 3px;width:8rem" src="<?php echo  $icon[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                                                    <?php endif;?>
+                                                                </div>
+                                                                <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+                                                                <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif、svg，图片大小不超过800kb;</small>
+                                                            </div>
+
+                                                      </div>
+                                                    <div class="am-form-group am-btn-group-xs">
+                                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+
+                                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                    </div>
+                                                </div>
+                                               <!--  <div class="am-form-group am-btn-group-xs">
+                                                    <button type="reset" class="am-btn am-btn-default">重置</button>
+                                                    <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                </div> -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--&lt;!&ndash; 删除弹框 &ndash;&gt;-->
+                                <!--<div class="am-modal am-modal-confirm" tabindex="-1" id="delete1">-->
+                                    <!--<div class="am-modal-dialog">-->
+                                        <!--<div class="am-modal-hd">删除提示</div>-->
+                                        <!--<div class="am-modal-bd">-->
+                                            <!--<p class="black">你，确定要删除这条记录吗？</p>-->
+                                        <!--</div>-->
+                                        <!--<div class="am-modal-footer">-->
+                                            <!--<span class="am-modal-btn" data-am-modal-cancel>取消</span>-->
+                                            <!--<span class="am-modal-btn" data-am-modal-confirm>确定</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <?php endforeach;?>
+                                <?php else:?>
+                                    <th colspan="8" style="text-align:center;">暂无分类</th>
+                                <?php endif;?>
+                                <!--&lt;!&ndash; more data &ndash;&gt;-->
+                            <!--</tbody>-->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+    //删除图片
+    $(".deleteImg").click(function(){      
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+        $(this).prevUntil('.preview').find('input').val("");
+    });
+</script>
+
