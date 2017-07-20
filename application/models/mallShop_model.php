@@ -193,13 +193,12 @@ class MallShop_model extends CI_Model
 
     //返回商家所有评论
     function get_store_comment($store_id){
-        //$where['storeid'] = $storeid;
-       $this->db->select('a.*, b.username,c.title');
+       $this->db->select('a.*,b.nickname,c.title');
 
         $this->db->from('hf_mall_comment as a');
         $this->db->join('hf_user_member as b','a.buyerid = b.user_id','left');
         $this->db->join('hf_mall_goods as c','a.goodsid = c.goods_id','left');
-        $query =  $this->db->where('a.stroeid', $store_id)->where('commentid','0')->get();
+        $query =  $this->db->where('a.stroeid', $store_id)->order_by('a.seller_ctime','desc')->get();
          return $query->result_array();
     } 
     function gte_store_reply($commentid){
@@ -209,6 +208,7 @@ class MallShop_model extends CI_Model
         $query =  $this->db->where('commentid',$commentid)->get();
          return $query->row_array();
     }
+
     //修改评论状态
     function edit_comment_state($id,$data){
         $where['id'] = $id;
@@ -311,7 +311,17 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('order_type',$type)->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('order_type',$type)->where('a.admin_delOrder','1')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+
+    //返回回收站订单
+    function ret_orderRe($type){
+        $this->db->select('a.*,b.store_name,c.username,c.nickname');
+        $this->db->from('hf_mall_order as a');
+        $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+        $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+        $query = $this->db->where('order_type',$type)->where('a.admin_delOrder !=','1')->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
 

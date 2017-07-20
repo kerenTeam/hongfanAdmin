@@ -100,7 +100,12 @@ td div div p {
                             </select>
                         </div>
                     </div>
-
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                          <label for="goodsBatch" class="am-form-label am-u-sm-3">关键字:</label>
+                            <div class="am-u-sm-9  am-u-end">
+                                <input type="text" name="sear" id="sear" placeholder="支付订单号" />
+                            </div>
+                    </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
                         <div class="am-u-sm-9  am-u-end">
@@ -131,6 +136,8 @@ td div div p {
                             </select>
                         </div>
                     </div>
+                 
+                  
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end">
                         <button type="button" class="am-btn am-btn-secondary am-btn-xs searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -388,22 +395,32 @@ td div div p {
             url:dataurl,
             data: data,
             success: function(result){
-            //      console.log(result);     
                 var res = eval(result);
-              
+                console.log(res);
                 if(res != 2 && res != 3){
-                    var listData = ''; //每页出现的数量
+                    var listData = ''; //每页出现的数量 
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         res[i].goods_data = JSON.parse(res[i].goods_data);
                         res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
+
+                        
+
+                        var nowIntergal = eval(res[i].PriceCalculation.nowIntergal);
+                        console.log('数据源',res[i]);
                         for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
                             res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
                             if(res[i].goods_data.goods_Data[j].good_tags) {
                                 res[i].goods_data.goods_Data[j].good_tags = res[i].goods_data.goods_Data[j].good_tags.split(',');
                             }
+                          
                         }
                         listData+= template('dataModal',res[i]);
+                        // if(nowIntergal && nowIntergal.storenowIntergal){
+                        //   console.log(nowIntergal.storenowIntergal);
+                        // }else{
+                        //     console.log('没有');
+                        // }
                     } 
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
@@ -448,18 +465,18 @@ td div div p {
 $(document).ready(function(){
     //加载列表数数据
     if($isfinance_order) {
-        var order_status = $('#orderState option:selected').val(), seller= $('#seller option:selected').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        var order_status = $('#orderState option:selected').val(), seller= $('#seller option:selected').val(), sear= $('#sear').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
       
-        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date);
+        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller+'&sear='+ sear +"&start_time="+ begin_date + '&end_time=' + end_date);
         sessionStorage.setItem('isfinance_order', 1);
     } else {
        getList('<?php echo site_url('/finance/Finance/ret_moll_order');?>','default=1'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var order_status = $('#orderState option:selected').val(),seller= $('#seller option:selected').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-          console.log(begin_date,end_date,seller,order_status);
-        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date);
+        var order_status = $('#orderState option:selected').val(),seller= $('#seller option:selected').val(),sear= $('#sear').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+          console.log(begin_date,end_date,seller,order_status,sear);
+        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller+ '&sear='+ sear +"&start_time="+ begin_date + '&end_time=' + end_date);
         sessionStorage.setItem('isfinance_order', 1);
         
     });
@@ -504,8 +521,9 @@ $(document).ready(function(){
                         </p>
                     <% } %>
                 </div>
+                
                 <div class="am-u-sm-2 am-text-right">
-                    <p class="goods_price">￥<%= goods_data.goods_Data[j].price %></p>
+                    <p class="goods_price">￥<%= goods_data.goods_Data[j].product_total %></p>
                     <p class="gray">x<%= goods_data.goods_Data[j].nums %></p>
                 </div>
             </div>
@@ -513,7 +531,12 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
-    
+            <% if(PriceCalculation && PriceCalculation.nowIntergal && PriceCalculation.nowIntergal.storenowIntergal){%>
+                <%= PriceCalculation.nowIntergal.storenowIntergal.toFixed(2) %>
+            <%}else{%>
+                没有抵用
+            <%}%>        
+                
         </td>
         <td class="am-text-middle">
         <%if(username) {%>

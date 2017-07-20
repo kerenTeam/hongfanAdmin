@@ -95,17 +95,12 @@ class Integral_model extends CI_Model
     }
 
     //返回今天所有的订单
-    function get_love_newOrder($date){
+    function get_love_newOrder($time,$endtime){
             $where['order_type'] = '0';
-            $query = $this->db->where($where)->where('order_status','2')->like('create_time',$date,'both')->order_by('create_time','desc')->get($this->order);
+            $query = $this->db->where($where)->where('order_status','2')->where('create_time >=',$time)->where('create_time <=',$endtime)->order_by('create_time','desc')->get($this->order);
             return $query->result_array();
     }
-    //返回爱购所有已支付订单
-    function get_LoveOrder(){
-          $where['order_type'] = '0';
-            $query = $this->db->where($where)->where('order_status','2')->order_by('create_time','desc')->get($this->order);
-            return $query->result_array();
-    }
+
 
 
     //返回爱购订单详情

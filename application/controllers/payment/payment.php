@@ -63,7 +63,11 @@ class Payment extends Default_Controller
     function qianmi_order_list(){
         if($_POST){
             $type = $_POST['type'];
+            if($type == 1){
+             $list = $this->Payment_model->get_phone_order($type);
+            }else{
             $list = $this->Payment_model->get_qianmi_order($type);
+            }
             if(empty($list)){
                 echo "2";
             }else{

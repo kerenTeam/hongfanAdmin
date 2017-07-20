@@ -85,10 +85,11 @@ padding: 5px 6px!important;
                             <thead>
                                 <tr>
                                     <th>编号 </th>
+                                    <th>支付订单号 </th>
                                     <th>用户名 </th>
                                     <th>手机号</th>
                                     <th>充值金额(元) </th>
-                                    <th>优惠金额(元) </th>
+                                    <!-- <th>优惠金额(元) </th> -->
                                     <th>成交金额(元) </th>
                                     <th>充值时间</th>
                                     <th>供应商编号</th>
@@ -215,7 +216,7 @@ padding: 5px 6px!important;
                     totalNum = res.length;
                     for(var i = 0; i < res.length; i++){
                         res[i].payment_data=JSON.parse(res[i].payment_data);
-                        if(!res[i].payment_data.errorToken) {  
+                        if(!res[i].payment_data.errorToken) {
                             listData+= template('dataModal',res[i]);    
                         } else {
                             totalNum--;
@@ -246,7 +247,7 @@ padding: 5px 6px!important;
                     otherFunction();                             
                 }else{
                     $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无购票信息！</p></td></tr>').appendTo('#dataList');
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无充值信息！</p></td></tr>').appendTo('#dataList');
                     $('.pagebox').css('display', 'none');
                 }
 
@@ -255,7 +256,7 @@ padding: 5px 6px!important;
             error:function(xhr,type,errorThrown){
                 alert("网络状况不佳，请稍后重试！");
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无购票信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无充值信息！</p></td></tr>').appendTo('#dataList');
                 $('.pagebox').css('display', 'none');
             }
         });
@@ -270,12 +271,20 @@ padding: 5px 6px!important;
     <tr class="trClass" data-id="<%= id %>">
         <td class="am-text-middle"><%= id %></td>
         <td class="am-text-middle"><%= nickname %></td>
-        <td class="am-text-middle"><%= payment_data.data.rechargeAccount%></td>
-        <td class="am-text-middle"><%= payment_data.data.saleAmount%></td>
-        <td class="am-text-middle"><%= payment_data.data.orderProfit%></td>
-        <td class="am-text-middle"><%= payment_data.data.orderCost %></td>
-        <td class="am-text-middle"><%= payment_data.data.orderTime%></td>
-        <td class="am-text-middle"><%= payment_data.data.supId%></td>
+        <td class="am-text-middle"><%= uuid %></td>
+        <% if(payment_data.data.mobileNo){%>
+        <td class="am-text-middle"><%= payment_data.data.mobileNo%></td>
+        <td class="am-text-middle"><%= payment_data.data.rechargeAmount%></td>
+        <td class="am-text-middle"><%= payment_data.data.advicePrice %></td>
+        <td class="am-text-middle"><%= create_time%></td>
+        <td class="am-text-middle"><%= payment_data.data.itemId%></td>
+        <%}else{%>
+             <td class="am-text-middle"><%= payment_data.data.rechargeAccount%></td>
+             <td class="am-text-middle"><%= payment_data.data.saleAmount%></td>
+             <td class="am-text-middle"><%= payment_data.data.orderCost%></td>
+             <td class="am-text-middle"><%= create_time%></td>
+             <td class="am-text-middle"><%= payment_data.data.supId%></td>
+        <%}%>
         <td class="am-text-middle">
             <div class="tpl-table-black-operation">
                 <a data-id="<%= id%>" class="tpl-table-black-operation-del tpl-del">

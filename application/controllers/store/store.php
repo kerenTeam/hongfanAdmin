@@ -37,6 +37,8 @@ class Store extends Default_Controller {
     public $view_mollOrderList = "moll/mollOrderList.html";
     //商品回收站
     public $view_goodsRecycle = "store/goodsRecycle.html";
+    //订单回收站
+    public $view_orderRecycle = "store/orderRecycle.html";
 
     function __construct()
     {
@@ -588,7 +590,7 @@ class Store extends Default_Controller {
             //获取订单详情
             $order = $this->MallShop_model->get_order_info($id);
 
-          //获取收货地址
+            //获取收货地址
             $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
             //后去运费模板
             $express = json_decode($order['userPostData'],true);
@@ -726,17 +728,43 @@ class Store extends Default_Controller {
         }
     }
 
-
+    //删除订单进回收站
+    function orderRe(){
+        if($_POST){
+            $id = $_POST['id'];
+            $order = $this->MallShop_model->get_order_info($id);
+            $data['admin_delOrder'] =  $_POST['state'];
+            if($this->MallShop_model->edit_order_state($id,$data)){
+                //删除预支付订单
+                //$this->db->where('repay_UUID',$order['order_UUID'])->delete("hf_mall_order_repaydata");
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个订单信息到回收站，订单id是：".$id.';支付订单号是：'.$order['order_UUID'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 
     //删除订单
     function del_Order(){
         if($_POST){
             $id = $_POST['id'];
+            $order = $this->MallShop_model->get_order_info($id);
             if($this->MallShop_model->del_store_order($id)){
+                //删除预支付订单
+                $this->db->where('repay_UUID',$order['order_UUID'])->delete("hf_mall_order_repaydata");
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."删除了一个订单信息，订单id是：".$id,
+                    "content" => $_SESSION['users']['username']."删除了一个订单信息到回收站，订单id是：".$id.';支付订单号是：'.$order['order_UUID'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );
@@ -778,6 +806,36 @@ class Store extends Default_Controller {
             echo "2";
         }    
     }
+
+    //订单回收站
+    function orderRecycle(){
+
+        $data['page'] = $this->view_orderRecycle;
+        $data['menu'] = array('store','orderRecycle');
+        $this->load->view('template.html',$data);
+    }
+
+    //获取回收站订单信息
+    function ret_orderRecycle(){
+        if($_POST){
+            $type = $this->input->post('default');
+            $order = $this->MallShop_model->ret_orderRe($type);
+            if(!empty($order)){
+                echo json_encode($order);
+            }else{
+                echo "3";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
+
+
+
+
+
     //主题展销商品管理
     function storeGoodsSales(){
         //获取所有展销商品

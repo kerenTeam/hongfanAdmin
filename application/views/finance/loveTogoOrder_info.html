@@ -121,9 +121,22 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 支付方式：<?php echo $pay['Params']['postData']['payType']?>
                             </div>
                           
+                           
+                             <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
                             <div class="am-u-sm-4">
-                                支付金额：<?php echo $order['amount']+$order['fee'];?>
+                                积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
+                            </div> 
+                              <div class="am-u-sm-4">
+                                支付金额：￥<?php echo $goods['total_goods_prices'] - round($inter['nowIntergal']['storenowIntergal'],2);?>
                             </div>
+                            <?php else:?>
+                            <div class="am-u-sm-4">
+                                积分抵用金额：未使用积分
+                            </div> 
+                              <div class="am-u-sm-4">
+                                支付金额：￥<?php echo $goods['total_goods_prices'];?>
+                            </div>
+                            <?php endif;?>
                         </div>
                       <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
                             <label for="user-email" class="am-u-sm-4 am-form-label">卖家：</label>

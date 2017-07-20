@@ -1107,15 +1107,15 @@ function moll_order_list($storeid,$time,$endtime){
             }
       }else{
             if($storeid == '-2'){
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `order_type` != '0' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `order_type` != '0' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' ORDER BY `create_time` DESC";
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }elseif($storeid == '-1'){
-                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' ORDER BY `create_time` DESC";
+                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else{
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `seller` = '$storeid' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `seller` = '$storeid' AND `a`.`create_time` >= '2017-05-04' AND `a`.`create_time` <= '2017-05-30' ORDER BY `create_time` DESC";
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `seller` = '$storeid' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$time' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `seller` = '$storeid' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
                 $query = $CI->db->query($sql);                
                 $res = $query->result_array();
             }

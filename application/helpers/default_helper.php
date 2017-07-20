@@ -102,6 +102,29 @@ function generate_promotion_code($code){
     //display generated file
         return $filename;
 }
+
+    function insert_db($goods_list=[]){
+        $CI = &get_instance();
+        if(!empty($goods_list)){
+            foreach($goods_list as $k=>$val){
+                $pic = explode(',',$val['pic_url']['pic_url']);
+                $val['thumb'] = str_replace('./','/',$pic[0]);
+                $val['differentiate'] = '3';
+                $val['categoryid'] = $val['category_id'];
+                $val['originalprice'] = $val['original_price'];
+                $val['content'] = $val['remark'];
+                $val['tax_rate'] = $val['tax_rate']/100;
+                unset($val['remark'],$val['pic_url'],$val['category_id'],$val['original_price'],$val['isdown'],$val['shop_status']);
+                $CI->db->insert('hf_mall_goods_igo',$val);
+                sleep(2);
+            }
+            echo "1";  
+        }else{
+            echo "1";
+        }
+    }
+
+
 //模拟post
 function curl_post($url, $post){
     $options = array(

@@ -120,7 +120,15 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="am-u-sm-4">
                                 支付方式：<?php echo $pay['Params']['postData']['payType']?>
                             </div>
-                          
+                              <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
+                            <div class="am-u-sm-4">
+                                积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
+                            </div> 
+                            <?php else:?>
+                            <div class="am-u-sm-4">
+                                积分抵用金额：未使用积分
+                            </div> 
+                            <?php endif;?>
                             <div class="am-u-sm-4">
                                 支付金额：<?php echo $order['amount']+$order['fee'];?>
                             </div>

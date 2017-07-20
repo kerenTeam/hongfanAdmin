@@ -12,6 +12,11 @@ class Api_goods extends CI_Controller
         $this->load->helper('Default_helper');
 		$this->load->model('MallShop_model');
 	}
+    function index(){
+            $order_uuid = 'hfczSZ5sJ6_5qd5_L1DatwBJr9pLftTy';
+          $type = substr($order_uuid,0,4);
+          var_dump($type);
+    }
 
 	function get_goods_property(){
 		if($_POST){
@@ -44,7 +49,7 @@ class Api_goods extends CI_Controller
                 $parent = '';
                 $data[]['parent'] = '';
              }
-             $data[]['parentlist'] = $parent;
+             $data[]['parentlist'] = $parent; 
             echo json_encode($data);
             // var_dump($data);
     
@@ -56,6 +61,7 @@ class Api_goods extends CI_Controller
 
 
     function notify_wxPay(){
+           //file_put_contents('text.log','254578');
             //模拟登陆APP
             // $url = APPLOGIN."/api/useraccount/login";
             // // var_dump($url);
@@ -72,21 +78,51 @@ class Api_goods extends CI_Controller
           // file_put_contents('text.log',json_encode($arr));
             $a = xmlToArray($arguments);
             $order_uuid = $a['out_trade_no'];
+
             $pay_data = json_encode($a);
+            //截取回调是那个接口
+            $type = substr($order_uuid,0,4);
+            if($type == "hfcz"){
+                $sjczurl = APPLOGIN."/api/banma/rechargemobilepaybillpost";
+                $data = array('UUID'=>$order_uuid,'rebackData'=>$pay_data);
+               // file_put_contents("text.log", var_export($data,TRUE),FILE_APPEND);
+                $ret = curl_post($sjczurl,$data);
+            }else if($type == 'llcz'){
+                $llcz = APPLOGIN."/api/banma/mobileflowpaybillpost";
+                $data = array('UUID'=>$order_uuid,'rebackData'=>$pay_data);
+                $ret = curl_post($llcz,$data);
+
+            }else if($type == 'sdqc'){
+                $sdqc = APPLOGIN."/api/banma/liferechargepaybillpost";
+                $data = array('UUID'=>$order_uuid,'rebackData'=>$pay_data);
+                $ret = curl_post($sdqc,$data);
+            }else{
+                
+                if($a['result_code'] == "SUCCESS"){
+                    $data['wechatReturn'] = $pay_data;
+                    $data['pay_state'] = '2';
+                    $data['payType'] = 'wxpay';
+                    $this->db->where('repay_UUID', $order_uuid)->update('hf_mall_order_repaydata',$data);
+                    // //更改订单号
+                    $order['order_status'] = '2';
+                    $this->db->where('order_UUID',$order_uuid)->update('hf_mall_order',$order);
+                    //file_put_contents('text.log',json_encode($a));
+                }
+            }
+
+            //判断
+            
+
+            // $pay_data = json_encode($a);
+            //file_put_contents("text.log", var_export($a,TRUE),FILE_APPEND);
+         
 
             // // $pay_url = APPLOGIN.'api/index/validatewxpay';
             // // $header = array("token:".trim($token)); 
             // // $w = curl_post_express($header,$pay_url,$pay_data);
 
             // //更改预支付订单
-            $data['wechatReturn'] = $pay_data;
-            $data['pay_state'] = '2';
-            $data['payType'] = 'wxpay';
-            $this->db->where('repay_UUID',$order_uuid)->update('hf_mall_order_repaydata',$data);
-            // //更改订单号
-            $order['order_status'] = '2';
-            $this->db->where('order_UUID',$order_uuid)->update('hf_mall_order',$order);
-            //file_put_contents('text.log',json_encode($a));
+         
             
     }
 

@@ -210,10 +210,10 @@ padding: 5px 6px!important;
                 $.ajax({
                     type:'post',
                     url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                    data: 'goodsid='+ id+'&state=1',
+                    data: 'commentid='+ id+'&state=1',
                     success: function(data){
                         if(data==1){
-
+                            alert('操作成功');
                         }else{
                             alert("操作失败！");
                         }
@@ -227,10 +227,10 @@ padding: 5px 6px!important;
                 $.ajax({
                     type:'post',
                     url:'<?php echo site_url('/shop/singleShop/edit_comment_state');?>',
-                    data: 'goodsid='+ id+'&state=0',
+                    data: 'commentid='+ id+'&state=0',
                     success: function(data){
                         if(data==1){
-
+                            alert('操作成功');
                         }else{
                             alert("操作失败！");
                         }
@@ -259,7 +259,7 @@ padding: 5px 6px!important;
                         url:'<?php echo site_url('/shop/singleShop/del_comment_single');?>',
                         data: 'commentid='+deleteArray,
                         success: function(data){
-                            alert(data);
+                     
                             if(data==1){                                           
                                 for(var i=0;i<$('.trClass').length;i++){
                                     if($('.trClass').eq(i).attr('data-id')==id){
@@ -317,13 +317,16 @@ padding: 5px 6px!important;
             for(var i=0;i<$('.trClass').length;i++){
                 if($('table tbody tr').eq(i).attr('data-id')==id){
                     var contentText=$('#contentText').val();
+                    var goodsid=$('#goodsidC').val();
+                   // console.log(goodsid,contentText);
                     $.ajax({
                         type:'post',
-                        url:'<?php echo site_url('/shop/singleShop/del_goods/');?>',
-                        data: 'goodsid='+contentText,
+                        url:'<?php echo site_url('/shop/singleShop/replay_comment');?>',
+                        data: 'commentid='+id + '&seller_reply='+contentText + '&goodsid='+goodsid,
                         success: function(data){
                             if(data==1){                                           
-                                $('table tbody tr').eq(i).find('.commendResponse').html(contentText);  
+                                $('table tbody tr').eq(i).find('.commendResponse').html(contentText); 
+                                alert("操作成功！"); 
                             }else{
                                 alert("操作失败！");
                             }
@@ -346,17 +349,19 @@ padding: 5px 6px!important;
         data: data,
         success: function(result){          
             var res = eval(result);
-            // console.log(res);
+             //console.log(res);
             if(res!=2){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
+                    res[i]['c_pic'] = eval(res[i]['comment_pic'])
                     listData+= template('dataModal',res[i]);
-                 }
+                }
+               
                 document.getElementById('dataList').innerHTML = listData;
                 if(pageflag) {
-                    go_to_page($goodsList);
-                    var opts={};opts.current_page = $goodsList;
+                    go_to_page($shopComment);
+                    var opts={};opts.current_page = $shopComment;
                     $("#Pagination").pagination(total_page, opts);
                     pageflag = 0;
                 } else {
@@ -417,21 +422,21 @@ $(document).ready(function(){
     <tr class="trClass" data-id="<%= id%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= id%>" name="commentBox"></td>
         <td class="am-text-middle"><%= id%></td>
-        <td class="am-text-middle"><%= username%></td>
+        <td class="am-text-middle"><%= nickname%></td>
         <td class="am-text-middle goodsName" width="100"><%= title%></td>
-        <td class="am-text-middle"><%= commendContent%></td>
-        <%if(reply) {%>
-        <td class="am-text-middle"><%= reply.seller_comment%></td>
+        <td class="am-text-middle"><%= seller_comment%></td>
+        <%if(seller_reply) {%>
+        <td class="am-text-middle"><%= seller_reply%></td>
         <%}else {%>
         <td class="am-text-middle">无回复内容</td>
         <%}%>
         
         <td class="am-text-middle"><%= seller_ctime%></td>
-        <%if(reply) {%>
+        <%if(seller_reply) {%>
         <td class="am-text-middle"><div class="tpl-table-black-operation"><i class="am-icon-toggle-on"></i>已回复</div></td>
         <%}else {%>
         <td class="am-text-middle commendResponse">
-        <div class="tpl-table-black-operation"><a class="canResponse" data-id="<%= id%>"><i class="am-icon-toggle-on" ></i>可回复</a></div></td>
+        <div class="tpl-table-black-operation"><a class="canResponse" data-id="re<%= id%>"><i class="am-icon-toggle-on" ></i>可回复</a></div></td>
         <%}%>
         <%if(state=="1"){%>
         <td class="am-text-middle">        
@@ -518,9 +523,9 @@ $(document).ready(function(){
             <div class="modal-content">
                 <span class="am-fl">评论图片：</span>
                 <span class="am-fr">
-                <%if(comment_pic) {%>
-                    <%for(var i=0;i<comment_pic.length;i++) {%>
-                        <img src="<%= comment_pic[i].comment_pic%>" class="commentImg">
+                <%if(c_pic.length) {%>
+                    <%for(var i=0;i<c_pic.length;i++) {%>
+                        <img src="<%= c_pic[i].picImg%>" class="commentImg">
                     <%}%>
                 <%}else {%>
                     暂无评论图片
@@ -531,8 +536,8 @@ $(document).ready(function(){
             <div class="modal-content">
                 <span class="am-fl">回复内容：</span>
                 <span class="am-fr">
-                    <%if(reply) {%>
-                    <%= reply.seller_comment%>
+                    <%if(seller_reply) {%>
+                    <%=seller_reply %>
                     <%}else {%>
                     无回复内容
                     <%}%>

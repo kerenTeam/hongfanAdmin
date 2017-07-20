@@ -108,15 +108,17 @@ class Finance extends Default_Controller {
             $seller = trim($_POST['seller']);
             $time = trim($_POST['start_time']);
             $endtime = trim($_POST['end_time']);
+            $sear = trim($_POST['sear']);
+
             $res= '';
-            if(!empty($state) && empty($seller) && empty($time)){
+            if(!empty($state) && empty($seller) && empty($time) && empty($sear)){
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(empty($state ) && !empty($seller) && empty($time)){
+            }elseif(empty($state ) && !empty($seller) && empty($time) && empty($sear)){
                 if($seller == '-1'){
                     $seller = '0';
                 }
@@ -126,15 +128,26 @@ class Finance extends Default_Controller {
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('seller',$seller)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(empty($state ) && empty($seller) && !empty($time)){
+            }elseif(empty($state ) && empty($seller) && !empty($time) && empty($sear)){
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(!empty($state ) && !empty($seller) && empty($time)){
-                if($seller == '-1'){
+
+            }elseif(empty($state ) && empty($seller) && empty($time) && !empty($sear)){
+           
+                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $query = $this->db->where('order_status !=','1')->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }
+            //二个    
+            elseif(!empty($state ) && !empty($seller) && empty($time) && empty($sear)){
+                 if($seller == '-1'){
                     $seller = '0';
                 }
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
@@ -143,34 +156,51 @@ class Finance extends Default_Controller {
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('seller',$seller)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(!empty($state ) && empty($seller) && !empty($time)){
+            }elseif(!empty($state ) && empty($seller) && !empty($time) && empty($sear)){
+                 if($seller == '-1'){
+                    $seller = '0';
+                }
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(empty($state ) && !empty($seller) && !empty($time)){
-                if($seller == '-1'){
+            }elseif(!empty($state ) && empty($seller) && empty($time) && !empty($sear)){
+                 if($seller == '-1'){
                     $seller = '0';
                 }
+                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $query = $this->db->where('order_status !=','1')->where('order_status',$state)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }elseif(empty($state ) && !empty($seller) && !empty($time) && empty($sear)){
+           
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
                 $query = $this->db->where('order_status !=','1')->where('seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(!empty($state ) && !empty($seller) && !empty($time)){
-                if($seller == '-1'){
-                    $seller = '0';
-                }
+            }elseif(empty($state ) && !empty($seller) && empty($time) && !empty($sear)){
+           
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-                $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+                $query = $this->db->where('order_status !=','1')->where('seller',$seller)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
-            }elseif(!empty($state ) && empty($seller) && empty($time)){
+            }elseif(empty($state ) && empty($seller) && !empty($time) && !empty($sear)){
+           
+                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }else{   
                 $this->db->select('a.*,b.store_name,c.username,c.nickname');
                 $this->db->from('hf_mall_order as a');
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
@@ -178,6 +208,17 @@ class Finance extends Default_Controller {
                 $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
                 $res = $query->result_array();
             }
+
+            //三个
+
+            //四个
+
+    
+
+
+
+
+          // var_dumP($res);
             if(!empty($res)){
                 echo json_encode($res);
             }else{
@@ -260,9 +301,10 @@ class Finance extends Default_Controller {
                 $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
                 $this->excel->getActiveSheet()->getStyle($key . '2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
+         
             //获取要导出的订单
             $list = moll_order_list($storeid,$start_time,$end_time);
-        // var_dump($list);
+    
         // exit;
             if(!empty($list)){
               if(count($list) > 0)

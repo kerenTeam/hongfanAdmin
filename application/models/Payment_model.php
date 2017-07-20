@@ -20,10 +20,18 @@ class Payment_model extends CI_Model
     //返回千米所有订单
     function get_qianmi_order($type){
         $where['type'] = $type;
-        $this->db->select('a.*,b.username,b.nickname');
+        $this->db->select('a.*,b.nickname');
         $this->db->from('hf_qianmi_order a');
         $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
         $query = $this->db->where($where)->order_by('create_time','desc')->get();
+        return $query->result_array();
+    }
+    function get_phone_order($type){
+        $where['type'] = $type;
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where($where)->where('a.state','1')->order_by('create_time','desc')->get();
         return $query->result_array();
     }
 

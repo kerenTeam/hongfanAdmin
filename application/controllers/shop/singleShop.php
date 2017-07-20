@@ -963,6 +963,29 @@ class SingleShop extends Default_Controller {
             echo "2";
         }
     }
+    //回复评论
+    function replay_comment(){
+        if($_POST){
+            $id = $_POST['commentid'];
+            $data['seller_reply'] = $_POST['seller_reply'];
+
+            if($this->MallShop_model->edit_comment_state($id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."回复了一个评论，评论id是：".$id.';回复内容是：'.$data['seller_reply'],
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
     //批量删除评论
     function del_comment(){
         if($_POST){
@@ -1607,17 +1630,25 @@ class SingleShop extends Default_Controller {
     function edit_store_order(){
         if($_POST){
             $data = $this->input->post();
-            if($this->MallShop_model->edit_order_state($data['order_id'],$data)){
-                $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了一个订单信息，订单id是：".$data['order_id'],
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopOrder')."';</script>";exit;
+            $order = $this->MallShop_model->get_order_info($data['order_id']);
+            if($order['amount'] + $data['fee'] < 0.01){
+                echo "<script>alert('改价后价格不能少于0.01元！');window.location.href='".site_url('/shop/SingleShop/shopEditOrder/'.$data['order_id'])."';</script>";exit;
             }else{
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/sureOrder'.$data['order_id'])."'</script>";exit;
+            // $price = json_decode($order['PriceCalculation'],true);
+            // $price['PriceCalculValue'] = $this->input->post('amount');
+            // $price['PriceCalculValue'] = $this->input->post('amount');
+                if($this->MallShop_model->edit_order_state($data['order_id'],$data)){
+                    $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
+                        "content" => $_SESSION['users']['username']."修改了一个订单信息，订单id是：".$data['order_id'],
+                        "create_time" => date('Y-m-d H:i:s'),
+                        "userip" => get_client_ip(),
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopOrder')."';</script>";exit;
+                }else{
+                    echo "<script>alert('操作成功！');window.location.href='".site_url('/shop/SingleShop/shopEditOrder/'.$data['order_id'])."'</script>";exit;
+                }
             }
         }else{
             $this->load->view('404.html');

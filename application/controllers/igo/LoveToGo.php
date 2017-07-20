@@ -170,8 +170,6 @@ class LoveToGo extends Default_Controller
                 echo "2";
             }
 
-
-
         }else{
             echo "2";
         }
@@ -180,7 +178,6 @@ class LoveToGo extends Default_Controller
 
     //爱购 订单列表
     function loveToGoOrderList(){
-
         $data['page'] = $this->view_loveToGoOrderList;
         $data['menu'] = array('loveToGo','loveToGoOrderList');
         $this->load->view('template.html',$data);
@@ -200,6 +197,18 @@ class LoveToGo extends Default_Controller
                    $list[$key]['adddress'] = $address;
                 }
                 $list[$key]['id_card'] = $this->Integral_model->ret_user_info($val['buyer']);
+
+                if($val['order_status'] == '3'){
+
+                }
+                $endtime = strtotime($val['updatetime'])+3600*24*15;
+                //获取当前时间
+                $newdata = time();
+                //var_dump($newdata);
+                if($newdata > $endtime && $val['order_status'] == '3'){
+                    $data['order_status'] = '4';
+                    $this->MallShop_model->edit_order_state($val['order_id'],$data);
+                }
             }
             if(empty($list)){
                 echo "2";
@@ -301,8 +310,12 @@ class LoveToGo extends Default_Controller
 
     //爱g购订单导出
     function dowload_love_order(){
-        $id = $this->uri->segment(4);
-        if($id == '1' || $id == '2'){
+        $begin_date = $this->uri->segment(4);
+        $endtime = $this->uri->segment(5);
+            // $bookings = $this->Integral_model->get_love_newOrder('2017-05-06','2017-07-22');
+            // var_dump($endtime);
+            // exit;
+        if($begin_date != '0'){
 
             $this->load->library('excel');
             //activate worksheet number 1
@@ -336,17 +349,10 @@ class LoveToGo extends Default_Controller
             }
             $i = 1;
             //查询数据库得到要导出的内容
-            switch ($id) {
-                //导出今天订单
-                case '1':
-                    $data = date('Y-m-d');
-                    $bookings = $this->Integral_model->get_love_newOrder($data);
-                    break;
-                //导出所有订单
-                case '2':
-                    $bookings = $this->Integral_model->get_LoveOrder();  
-                    break;
-            }
+            // $begin_date = $_POST['begin_date'];
+            // $endtime = $_POST['end_date'];
+            $bookings = $this->Integral_model->get_love_newOrder($begin_date,$endtime);
+          
             if(!empty($bookings)){
             if(count($bookings) > 0)
             {

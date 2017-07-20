@@ -14,6 +14,7 @@ class Igogoods extends CI_Controller
     }
 
 
+
     function goods_list(){
 
         set_time_limit(0);
@@ -23,34 +24,28 @@ class Igogoods extends CI_Controller
         if(!empty($list)){
           $this->db->where('differentiate','3')->delete('hf_mall_goods_igo');
         }
-
-       
         //获取本地的列表
-         $num = '10';
-         for ($i=1; $i < 50; $i++) { 
+         $num = '100';
+         $goods_list = array();
+         for ($i=1; $i < 4; $i++) { 
            $post_data = array(  
             'appkey' => IGOAPPKEY,  
             'appsecret' => IGOAPPSECRET,
             'page_no' => $i,
-            'page_size' => $num
+            'page_size' => $num,
+            'isdown' => '1',
+            'shop_status' => '1',
            );
 
            $post = curl_post(IGOLISTAPIURL, $post_data);  
          
            $goods = json_decode($post,true);
-           $goods_list = array_values($goods['data']['lists']);
-           foreach($goods_list as $k=>$val){
-                $pic = explode(',',$val['pic_url']['pic_url']);
-                $val['thumb'] = str_replace('./','/',$pic[0]);
-                $val['differentiate'] = '3';
-                $val['categoryid'] = $val['category_id'];
-                $val['bussinesno'] = $val['bussinesno'];
-                unset($val['commission_start_time'],$val['commission_end_time'],$val['pic_url'],$val['category_id']);
-                $this->db->insert('hf_mall_goods_igo',$val);
-                sleep(2);
-           }  
+           $goods_list =  array_values($goods['data']['lists']);
+           $a =  insert_db($goods_list);
+
         }
-        echo "1";
+    
+       echo "1";
     }
 
 

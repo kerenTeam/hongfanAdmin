@@ -985,15 +985,22 @@ $('#dispostage').click(function(){
         var kflag=parseInt($('#kkflagNumber').val()) || 0;
         //新增规格项
         $('#addNewPropertybtn').click(function () {
-            
+            console.log(kflag);
             if(kflag==4){
                 alert("最多只能录入四个属性");
                 return false;
             }else {
-                $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option><option value="9">规格</option><option value="10">尺码</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><a data-id="'+ kflag +'" class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</a><a data-id="'+ kflag +'" id="cancleAddNewPropert'+ kflag +'" onclick="canclePropertyValue(this)" class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs" >取消</a></div></div></div>');
+                conflag = kflag -1;
+                if(kflag != 0 && $('.propertycontainer'+ conflag).children('span').length == 0) {
+                    alert("请先输入规格值！");
+                    return false;
+                } else {
+                    $('.addRule').before('<div class="chooseSelectPart" id="chooseSelectPart'+ kflag +'" ><div class="am-u-sm-12 selectList" style="clear:both;margin-bottom:10px;"><select id="ruleSelect'+ kflag +'" data-id="'+ kflag +'" class="ruleSelect" data-am-selected="{searchBox: 1,maxHeight: 800}" name="ruleSelect" onchange="showBtn(this)"><option value="">请选择一个！</option><option value="0">尺寸</option><option value="1">颜色</option><option value="2">包装</option><option value="3">版本</option><option value="4">套餐</option><option value="5">内存</option><option value="6">容量</option><option value="7">净含量</option><option value="8">口味</option><option value="9">规格</option><option value="10">尺码</option><option value="11">属性</option><option value="12">度数</option></select><div class="propertycontainer'+kflag+'"></div><a type="button" class="am-btn am-btn-primary am-btn-xs newpropertyvbtn" onclick="showfun(this)" id="newpropertyvbtn'+ kflag +'" style="display:none;" >新增规格值<span class="am-icon-plus"></span> </a></div><div class="am-u-sm-12 addNewPropertv" id="addNewPropertv'+ kflag +'" style="display:none;"><div class="am-u-sm-6 am-u-end" style="margin-left:-10px;margin-bottom:10px;"><input type="text" id="addNewPropertValue'+ kflag +'" class="addNewPropertValue" name="addNewPropertValue" /></div><a data-id="'+ kflag +'" class="am-u-sm-1 am-u-end am-btn am-btn-warning am-btn-xs sureAddNewPropert" id="sureAddNewPropert'+ kflag +'" onclick="showPropertyValue(this)">确定</a><a data-id="'+ kflag +'" id="cancleAddNewPropert'+ kflag +'" onclick="canclePropertyValue(this)" class="am-u-sm-1 am-u-end am-btn am-btn-default am-btn-xs" >取消</a></div></div></div>');
                     $('.addNewPropertv').css('display','none');
                     kflag++;
-                    return true;    
+                    return true; 
+                }
+                   
             }
         });
     //添加属性

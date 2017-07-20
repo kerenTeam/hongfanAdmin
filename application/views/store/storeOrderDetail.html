@@ -86,15 +86,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                       订单总金额： <?php echo $order['amount'];?>
                     </div>
                      <?php $inter = json_decode($order['PriceCalculation'],true); if(isset($inter['nowIntergal'])):?>
-                    <?php if(isset($inter['nowIntergal']['intergral'])):?>
-                    <div class="am-u-sm-4">
-                        积分抵用金额：￥<?php echo $inter['nowIntergal']['intergral'];?>
-                    </div> 
-                    <?php else:?>
-                     <div class="am-u-sm-4">
-                        积分抵用金额：未使用积分
-                    </div> 
-                    <?php endif;?>
+                   
                     <div class="am-u-sm-4">
                         <?php $goods = json_decode($order['goods_data'],true);?>
                         商品总数量：<?php echo count($goods['goods_Data']);?>
@@ -147,24 +139,39 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 改价后金额：￥<?php echo $order['amount'];?>  
                             </div>
                             <?php endif;?>
-                            
-                            <?php endif;?>
+                              <?php endif;?>
+
+                             <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
                             <div class="am-u-sm-4">
+                                积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
+                            </div> 
+                              <div class="am-u-sm-4">
+                                支付金额：￥<?php echo $goods['total_goods_prices'] - round($inter['nowIntergal']['storenowIntergal'],2);?>
+                            </div>
+                            <?php else:?>
+                            <div class="am-u-sm-4">
+                                积分抵用金额：未使用积分
+                            </div> 
+                              <div class="am-u-sm-4">
                                 支付金额：￥<?php echo $goods['total_goods_prices'];?>
                             </div>
+                            <?php endif;?>
+                          
+                          
                            
                         </div>
                         <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
                                 <div class="am-u-sm-4">用户所选快递模板：<?php echo $express['expressName'];?></div>
                                 <div class="am-u-sm-4">  
-                                    运费：￥<?php echo $goods['postAge'];?>
+                                 
+                                    运费：￥<?php echo $inter['Params']['goodsData'][0]['postAge'];?>
                                 </div>
-                                <?php if(!empty($payData['payData'])):?>
-                                <?php if(stristr($payData['payData'],'wxpay')):?>
+                                <?php if(!empty($payData['payType'])):?>
+                                <?php if($payData['payType'] == 'wxpay'):?>
                                     <div class="am-u-sm-4">
                                         支付方式：微信
                                     </div>
-                                    <?php elseif(stristr($payData['payData'],'alipay')):?>
+                                    <?php elseif($payData['payType'] == 'alipay'):?>
                                       <div class="am-u-sm-4">
                                         支付方式：支付宝
                                     </div>

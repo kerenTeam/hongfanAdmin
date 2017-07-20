@@ -56,7 +56,8 @@ td.am-text-middle img{
                             <div class="am-btn-toolbar">
                                 <div class="am-btn-group am-btn-group-xs">
                                     <a type="button" class="am-btn am-btn-default am-btn-secondary" data-am-modal="{target: '#deleteAll'}"><span class="am-icon-trash " ></span> 批量删除</a>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 更新商品库</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-danger refreshGoodsList"><span class="am-icon-refresh "></span> 更新 商品库</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-green refresh"><span class="am-icon-refresh "></span>刷新</button>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +207,7 @@ td.am-text-middle img{
         success: function(result){  
             console.log(result)       
             var res = eval(result);    
-            if(res!=2){
+            if(res != 2){
                 var listData = ''; //每页出现的数量
                 total_page = Math.ceil(res.length/15); //得到总页数
                 for(var i = 0; i < res.length; i++){
@@ -228,8 +229,10 @@ td.am-text-middle img{
                 }                             
                 otherFunction();    
             }else{
+                //alert('drfdf');
                 $('#dataList').find('tr').remove();
                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                  $('.pagebox').css('display', 'none');
             }  
         },
         error:function(xhr,type,errorThrown){
@@ -244,6 +247,12 @@ $(document).ready(function(){
     $('.refresh').click(function(){
         getList('<?php echo site_url('/igo/loveToGo/get_remote_goods');?>','page=1');
     });
+    
+    $('.refreshGoodsList').click(function(){
+        getList('<?php echo site_url('/Igogoods/goods_list');?>','page=1');
+        alert('请求成功，后台更新中，请稍后刷新界面！');
+    });
+
 
 })
 </script>

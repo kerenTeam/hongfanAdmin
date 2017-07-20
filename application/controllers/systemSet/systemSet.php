@@ -92,7 +92,7 @@ class SystemSet extends Default_Controller {
             foreach($_FILES as $val){
                 if(!empty($_FILES['img'.$a]['tmp_name'])){
                     $config['upload_path']      = 'Upload/banner';
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                    $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
                     $config['max_size']     = 2048;
                     $config['file_name'] = date('Y-m-d_His');
                     $this->load->library('upload', $config);
@@ -346,7 +346,7 @@ class SystemSet extends Default_Controller {
    
             if(!empty($_FILES['img']['tmp_name'])){
                 $config['upload_path']      = 'Upload/adver';
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
@@ -662,7 +662,7 @@ class SystemSet extends Default_Controller {
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
                 $config['upload_path']      = 'Upload/banner/';
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
@@ -727,7 +727,7 @@ class SystemSet extends Default_Controller {
             $data = $this->input->post();
             if(!empty($_FILES['img']['name'])){
                 $config['upload_path']      = 'Upload/banner/';
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
                 $config['max_size']     = 2048;
                 $config['file_name'] = date('Y-m-d_His');
                 $this->load->library('upload', $config);
