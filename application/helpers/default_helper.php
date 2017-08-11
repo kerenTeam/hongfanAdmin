@@ -3,6 +3,10 @@
 /**
 *    公用函数
 */
+//保留两位小数   不四舍五入
+function floor2($n){
+  return (float)preg_replace('/^(\d+)(?:(\.\d{1,2})\d+)?$/','$1$2',$n);     
+}
 
 //获取用户组名
 function group_name($gid){

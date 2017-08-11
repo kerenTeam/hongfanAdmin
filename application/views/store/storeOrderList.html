@@ -138,6 +138,12 @@ td div.am-u-sm-12 {
                         </div>
                         
                     </div>
+                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">订单编号:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <input type="text" id="orderid" name="orderid" />
+                        </div>
+                    </div>
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
                         <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
@@ -395,6 +401,7 @@ td div.am-u-sm-12 {
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         res[i].goods_data = JSON.parse(res[i].goods_data);
+                        res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
                         for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
                             res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
                             if(res[i].goods_data.goods_Data[j].good_tags) {
@@ -447,17 +454,17 @@ td div.am-u-sm-12 {
 $(document).ready(function(){
     //加载列表数数据
     if($isStoreOrderList) {
-        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4');
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),orderid=$('#orderid').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4' +'&orderid='+orderid);
         sessionStorage.setItem('isStoreOrderList', 1);
     } else {
        getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-        console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + "&end_time=" + end_date + "&type=4");
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4');
+        var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(), orderid=$('#orderid').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+        console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + "&end_time=" + end_date + "&type=4"+'&orderid='+orderid);
+        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4' + '&orderid='+orderid);
         sessionStorage.setItem('isStoreOrderList', 1);
         
     });
@@ -520,11 +527,9 @@ $(document).ready(function(){
         </td>
         <td class="am-text-middle"><%= amount %></td>
         <td class="am-text-middle">
-        <%if(username) {%>
-        <%= username%>
-        <%} else {%>
+ 
         <%= nickname%>
-        <%}%>
+  
         </td>
         <td class="am-text-middle"><%= create_time%></td>
          <%if(order_status==1 && trash == 1) {%>

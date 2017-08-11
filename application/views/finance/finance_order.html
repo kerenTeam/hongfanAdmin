@@ -402,12 +402,12 @@ td div div p {
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         res[i].goods_data = JSON.parse(res[i].goods_data);
+                        res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
                         res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
-
                         
 
                         var nowIntergal = eval(res[i].PriceCalculation.nowIntergal);
-                        console.log('数据源',res[i]);
+                        //console.log('数据源',res[i]);
                         for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
                             res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
                             if(res[i].goods_data.goods_Data[j].good_tags) {
