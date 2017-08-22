@@ -243,6 +243,24 @@ function subtree($arr,$a = '',$id=0,$lev=1) {
     }
     return $subs;
 }
+function deep_in_array($value, $array) {   
+    foreach($array as $item) {   
+        if(!is_array($item)) {   
+            if ($item == $value) {  
+                return true;  
+            } else {  
+                continue;   
+            }  
+        }   
+            
+        if(in_array($value, $item)) {  
+            return true;      
+        } else if(deep_in_array($value, $item)) {  
+            return true;      
+        }  
+    }   
+    return false;   
+}
 
 //爱购分类
 function igoCate($data,$parentid=''){

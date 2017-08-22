@@ -1,239 +1,477 @@
-
-<style type="text/css" media="screen">
-    .am-selected{
-        width: 100%!important;
-    }
-    .table-check{
-        width: 30px;
-    }
-    .hf-dropdown{
-        font-size: 12px!important;
-        padding: 5px 6px!important;
-    }
-    #preview{
-        height:200px !important;
-    }
-    #preview #imghead,#preview img{
-        
-        height:190px;
-    }
-
-    .deleteImg{
-        display: inline-block;
-        background: #ff0000;
-        width:60px;
-        height:28px;
-        line-height: 28px;
-        text-align: center;
-        position: absolute;
-        left:330px;
-        top:342px;
-        color:#ffffff;
-        font-size: 1.2rem;
-    }
-    .addpadding{
-        padding-left:10%;
-    }
-    .clickUp{
-        margin-left: 150px;
-    }
-    .tableImg{
-    width:80px;
-}
-
-label.am-u-sm-8, label.am-u-sm-4{
-        font-weight: normal;
-        margin: 0 !important;
-    font-size: 15px !important;
-    padding-top: 5px;
-    }
-    label span.provalue {
-        display: inline-block;
-        padding:2px 5px;
-        background: #1fb5ac;
-        color: #fff;
-    }
-    .background{
-        background: #eaeaea;
-        clear: both;
-        margin-left: -20px;
-    }
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
-                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" style="font-size:16px;">订单管理</a>
-                <small>订单编辑</small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-               <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">修改订单</div>
-                </div>
-                <div class="widget-body am-fr">
-                        <div class="widget-head am-cf ">
-                            <div class="widget-title  am-cf background">商品信息:</div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单单号：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $order['order_id'];?>
-                            </label>
-                        </div>
-                         <?php $goods = json_decode($order['goods_data'],true);?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品种类：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                               <?php echo count($goods['goods_Data']);?>
-                            </label>
-                        </div> 
-                        <?php foreach($goods['goods_Data'] as $val):?>                         
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['title'];?>
-                            </label>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品图片：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                                <img class="tableImg" src="<?php echo $val['thumb'];?>">
-                            </label>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品单价：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                                 <?php echo $val['price']+$val['Floating_price'];?>
-                            </label>
-                        </div> 
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">商品数量：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $val['nums'];?>
-                            </label>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
-                           
-                          <?php for($i =1;$i < 5;$i++){?>
-                            <?php if(!empty($val['stend'.$i])):?>
-                                <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
-                            <?php endif;?>
-                          <?php }?>
-                           
-                        </div>
-                       <?php endforeach;?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                               <?php echo $order['amount'];?>
-                            </label>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">买家：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-
-                                 <?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
-                            </label>
-                        </div>
-                      <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
-                            <label for="user-email" class="am-u-sm-4 am-form-label">卖家：</label>
-                            <label class="am-u-sm-8 am-text-middle">
-                                1234
-                            </label>
-                        </div> -->
-                         <div class="widget-head am-cf">
-                            <div class="widget-title  am-cf background" >修改信息:</div>
-                        </div>
-                         <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
-                        <?php if($order['order_status'] == 1):?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
-                            <label for="user-email" class="am-u-sm-3 am-form-label" >改价说明<span style="color:#ff0000;">*</span>：</label>
-                            <div class="am-u-sm-9">
-                            <?php if(!empty($order['fee_name'])):?>
-                                <?php echo $order['fee_name'];?>
-                            <?php else:?>
-                                <input type="text"  name="fee_name" placeholder="例如补加运费、优惠价格等" required>
-                            <?php endif;?>
-                            </div>
-                        </div>
-
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" >
-                            <label for="user-email" class="am-u-sm-3 am-form-label">修改价格：</label>
-                           <div class="am-u-sm-9">
-                                <input type="text" name="fee" placeholder="请输入修改后的价格！" value="<?php echo $order['fee'];?>" >
-                           </div>
-                        </div>  
-                        <?php else:?>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
-                            <label for="user-email" class="am-u-sm-3 am-form-label" >快递公司:<span style="color:#ff0000;">*</span>：</label>
-                            <div class="am-u-sm-9">
-                                <select class="send_type am-input" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="shipper_code" id="shipper_code">
-                                    <option value="">输入查找/选择</option>
-                                    <option value="EMS" <?php if($order['shipper_code'] == "EMS"){echo "selected";}?>>EMS</option>
-                                    <option value="SF"  <?php if($order['shipper_code'] == "SF"){echo "selected";}?>>顺丰快递</option>
-                                    <option value="STO" <?php if($order['shipper_code'] == "STO"){echo "selected";}?>>申通快递</option>
-                                    <option value="YTO" <?php if($order['shipper_code'] == "YTO"){echo "selected";}?>>圆通速递</option>
-                                    <option value="ZTO" <?php if($order['shipper_code'] == "ZTO"){echo "selected";}?>>中通速递</option>
-                                    <option value="YD" <?php if($order['shipper_code'] == "YD"){echo "selected";}?>>韵达快递</option>
-                                    <option value="HTKY" <?php if($order['shipper_code'] == "HTKY"){echo "selected";}?>>百世汇通</option>  
-                                    <option value="PJ" <?php if($order['shipper_code'] == "PJ"){echo "selected";}?>>品骏快递</option>
-                                    <option value="UAPEX" <?php if($order['shipper_code'] == "UAPEX"){echo "selected";}?>>全一快递</option>
-                                    <option value="HHTT" <?php if($order['shipper_code'] == "HHTT"){echo "selected";}?>>天天快递</option>
-                                    <option value="ZT" <?php if($order['shipper_code'] == "ZT"){echo "selected";}?>>自提</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" id="logistic_code">
-                            <label for="user-email" class="am-u-sm-3 am-form-label">快递单号：</label>
-                           <div class="am-u-sm-9">
-                              <input type="text" placeholder="请输入快递单号！" value="<?php echo $order['logistic_code'];?>" class="send_no" name='logistic_code'>
-                           </div>
-                        </div>  
-                        <?php endif;?>  
-                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                            <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
-                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
-                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-  //点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(0);
-  });
-
-  //点击取消返回上一页
-  $('#cancle').click(function(){
-    history.go(0);
-  });
-
-  //编辑快递
-  $('#shipper_code').change(function () {
-      if($(this).val() == "ZT") {
-        $('#logistic_code').css('display', 'none');
-      } else {
-        $('#logistic_code').css('display', 'block');
-      }
-  });
-  if($('#shipper_code').val() == "ZT") {
-        $('#logistic_code').css('display', 'none');
-      }
+
+
+<style type="text/css" media="screen">
+
+    .am-selected{
+
+        width: 100%!important;
+
+    }
+
+    .table-check{
+
+        width: 30px;
+
+    }
+
+    .hf-dropdown{
+
+        font-size: 12px!important;
+
+        padding: 5px 6px!important;
+
+    }
+
+    #preview{
+
+        height:200px !important;
+
+    }
+
+    #preview #imghead,#preview img{
+
+        
+
+        height:190px;
+
+    }
+
+
+
+    .deleteImg{
+
+        display: inline-block;
+
+        background: #ff0000;
+
+        width:60px;
+
+        height:28px;
+
+        line-height: 28px;
+
+        text-align: center;
+
+        position: absolute;
+
+        left:330px;
+
+        top:342px;
+
+        color:#ffffff;
+
+        font-size: 1.2rem;
+
+    }
+
+    .addpadding{
+
+        padding-left:10%;
+
+    }
+
+    .clickUp{
+
+        margin-left: 150px;
+
+    }
+
+    .tableImg{
+
+    width:80px;
+
+}
+
+
+
+label.am-u-sm-8, label.am-u-sm-4{
+
+        font-weight: normal;
+
+        margin: 0 !important;
+
+    font-size: 15px !important;
+
+    padding-top: 5px;
+
+    }
+
+    label span.provalue {
+
+        display: inline-block;
+
+        padding:2px 5px;
+
+        background: #1fb5ac;
+
+        color: #fff;
+
+    }
+
+    .background{
+
+        background: #eaeaea;
+
+        clear: both;
+
+        margin-left: -20px;
+
+    }
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商家管理
+
+                <a href="<?php echo site_url().'/shop/singleShop/shopOrder';?>" style="font-size:16px;">订单管理</a>
+
+                <small>订单编辑</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+               <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">修改订单</div>
+
+                </div>
+
+                <div class="widget-body am-fr">
+
+                        <div class="widget-head am-cf ">
+
+                            <div class="widget-title  am-cf background">商品信息:</div>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单单号：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $order['order_id'];?>
+
+                            </label>
+
+                        </div>
+
+                         <?php $goods = json_decode($order['goods_data'],true);?>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品种类：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo count($goods['goods_Data']);?>
+
+                            </label>
+
+                        </div> 
+
+                        <?php foreach($goods['goods_Data'] as $val):?>                         
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品名称：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $val['title'];?>
+
+                            </label>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品图片：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                                <img class="tableImg" src="<?php echo $val['thumb'];?>">
+
+                            </label>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品单价：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                                 <?php echo $val['price']+$val['Floating_price'];?>
+
+                            </label>
+
+                        </div> 
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">商品数量：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $val['nums'];?>
+
+                            </label>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品属性：</label>
+
+                           
+
+                          <?php for($i =1;$i < 5;$i++){?>
+
+                            <?php if(!empty($val['stend'.$i])):?>
+
+                                <span><?php echo $val['stend'.$i];?> :   </span><span class="provalue"><?php echo $val['value'.$i];?></span>
+
+                            <?php endif;?>
+
+                          <?php }?>
+
+                           
+
+                        </div>
+
+                       <?php endforeach;?>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $order['amount'];?>
+
+                            </label>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">买家：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+
+
+                                 <?php $name = user_name($order['buyer']);if(empty($name)){echo nick_name($order['buyer']);}else{ echo $name;}?>
+
+                            </label>
+
+                        </div>
+
+                      <!--   <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">卖家：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                                1234
+
+                            </label>
+
+                        </div> -->
+
+                         <div class="widget-head am-cf">
+
+                            <div class="widget-title  am-cf background" >修改信息:</div>
+
+                        </div>
+
+                         <form class="am-form tpl-form-line-form" action="<?php echo site_url('/shop/SingleShop/edit_store_order');?>" method="post" enctype="multipart/form-data" data-am-validator>
+
+                        <?php if($order['order_status'] == 1):?>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
+
+                            <label for="user-email" class="am-u-sm-3 am-form-label" >改价说明<span style="color:#ff0000;">*</span>：</label>
+
+                            <div class="am-u-sm-9">
+
+                            <?php if(!empty($order['fee_name'])):?>
+
+                                <?php echo $order['fee_name'];?>
+
+                            <?php else:?>
+
+                                <input type="text"  name="fee_name" placeholder="例如补加运费、优惠价格等" required>
+
+                            <?php endif;?>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-5 am-u-lg-5" >
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">修改差价（可为正负数）：</label>
+
+                           <div class="am-u-sm-7">
+
+                                <input type="text" name="fee"  value="<?php echo $order['fee'];?>" >
+
+                           </div>
+
+                        </div>  
+
+                        <?php else:?>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4"  style="clear: both;">
+
+                            <label for="user-email" class="am-u-sm-3 am-form-label" >快递公司:<span style="color:#ff0000;">*</span>：</label>
+
+                            <div class="am-u-sm-9">
+
+                                <select class="send_type am-input" required data-am-selected="{searchBox: 1,maxHeight: 200}" name="shipper_code" id="shipper_code">
+
+                                    <option value="">输入查找/选择</option>
+
+                                    <option value="EMS" <?php if($order['shipper_code'] == "EMS"){echo "selected";}?>>EMS</option>
+
+                                    <option value="SF"  <?php if($order['shipper_code'] == "SF"){echo "selected";}?>>顺丰快递</option>
+
+                                    <option value="STO" <?php if($order['shipper_code'] == "STO"){echo "selected";}?>>申通快递</option>
+
+                                    <option value="YTO" <?php if($order['shipper_code'] == "YTO"){echo "selected";}?>>圆通速递</option>
+
+                                    <option value="ZTO" <?php if($order['shipper_code'] == "ZTO"){echo "selected";}?>>中通速递</option>
+
+                                    <option value="YD" <?php if($order['shipper_code'] == "YD"){echo "selected";}?>>韵达快递</option>
+
+                                    <option value="HTKY" <?php if($order['shipper_code'] == "HTKY"){echo "selected";}?>>百世汇通</option>  
+
+                                    <option value="PJ" <?php if($order['shipper_code'] == "PJ"){echo "selected";}?>>品骏快递</option>
+
+                                    <option value="UAPEX" <?php if($order['shipper_code'] == "UAPEX"){echo "selected";}?>>全一快递</option>
+
+                                    <option value="HHTT" <?php if($order['shipper_code'] == "HHTT"){echo "selected";}?>>天天快递</option>
+
+                                    <option value="ZT" <?php if($order['shipper_code'] == "ZT"){echo "selected";}?>>自提</option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" id="logistic_code">
+
+                            <label for="user-email" class="am-u-sm-3 am-form-label">快递单号：</label>
+
+                           <div class="am-u-sm-9">
+
+                              <input type="text" placeholder="请输入快递单号！" value="<?php echo $order['logistic_code'];?>" class="send_no" name='logistic_code'>
+
+                           </div>
+
+                        </div>  
+
+                        <?php endif;?>  
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+
+                            <input type="hidden" name="order_id" value="<?php echo $order['order_id'];?>">
+
+                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success am-btn-sm">确定</button>
+
+                            <button type="button" class="am-btn am-btn-default am-btn-sm" id="cancle">取消</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript">
+
+  //点击取消返回上一页
+
+  $('#cancle').click(function(){
+
+    history.go(0);
+
+  });
+
+
+
+  //点击取消返回上一页
+
+  $('#cancle').click(function(){
+
+    history.go(0);
+
+  });
+
+
+
+  //编辑快递
+
+  $('#shipper_code').change(function () {
+
+      if($(this).val() == "ZT") {
+
+        $('#logistic_code').css('display', 'none');
+
+      } else {
+
+        $('#logistic_code').css('display', 'block');
+
+      }
+
+  });
+
+  if($('#shipper_code').val() == "ZT") {
+
+        $('#logistic_code').css('display', 'none');
+
+      }
+
 </script>

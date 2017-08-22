@@ -1,230 +1,459 @@
-
-<?php $this->load->view('common.html');?>
-
-<script src="assets/js/echarts.min.js"></script>
-<style type="text/css">
-    #paging_list div a{
-    border: 1px solid #19a7f0;
-    color: #19a7f0;
-    }
-    #paging_list div a:hover{
-        background: #19a7f0;
-        color: #fff;
-    }
-    #paging_list div .laypage_curr{
-        background: #19a7f0;
-        color: #fff;
-    }
-    .goTop{
-
-        position: fixed;
-        bottom: 50px;
-        right: 50px;
-    }
-    .deleteImg:hover {
-        cursor: pointer;
-    }
-    
-</style>
-<?php 
-    if(isset($_SESSION['menu'])){
-        $menulist = json_decode($_SESSION['menu'],true);  
-    }else{
-        $menulist = '';
-    }
-    if(empty($menu)){$menu = array('index','index');}
-    if(!isset($_SESSION['businessId'])){
-        $businessId = '';
-    }else{
-        $businessId = $_SESSION['businessId'];
-    }
- ?>
-
-<?php if(!empty($menulist) && empty($businessId)):?>
-<ul class="sidebar-nav">
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/Admin/index';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
-        </a>
-    </li>
-
-    <?php foreach($menulist as $val):?>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == $val['value']['controller']){echo 'active';}?>" >
-            <i class="am-icon-table sidebar-nav-link-logo"></i> <?php echo $val['value']['name'];?>
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == $val['value']['controller']){ echo "style='display:block;'";}?>>
-            <?php foreach($val['chick'] as $v):?>
-                <li class="sidebar-nav-link">
-                    <a href="<?php echo site_url().'/'.$v['controller'];?>" <?php if($menu[1] == $v['other']){ echo "class='sub-active'";}?>>
-                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> <?php echo $v['name'];?>
-                    </a>
-                </li>
-            <?php endforeach;?>
-        </ul>
-    </li>
-    <?php endforeach;?>
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url('/Login/loginOut?id=1');?>">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 退出登录
-        </a>
-    </li>
-</ul>
-<?php else:?>
- <ul class="sidebar-nav">
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url().'/shop/SingleShop/shopAdmin';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
-            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
-        </a>
-    </li>
-    <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'shop'){echo 'active';}?>" >
-            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'shop'){ echo "style='display:block;'";}?>>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopBaseInfo';?>" <?php if($menu[1] == 'shopBaseInfo'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/goodsList';?>" <?php if($menu[1] == 'goodsList'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopOrder';?>" <?php if($menu[1] == 'shopOrder'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopComment';?>" <?php if($menu[1] == 'shopComment'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/systemSet/SystemSet/expressTemplate';?>" <?php if($menu[1] == 'expressTemplate'){ echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 运费 模板
-                </a>
-            </li>
-        </ul>
-    </li>
-<!--      <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'sales'){echo 'active';}?>" >
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 优惠券管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'sales'){echo "style='display:block;'";}?>>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopAddSales';?>" <?php if($menu[1] == 'shopAddSales'){echo "class='sub-active';";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增优惠券
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopSalesList';?>" <?php if($menu[1] == 'shopSalesList'){echo "class='sub-active';";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优惠券列表
-                </a>
-            </li>
-            <li class="sidebar-nav-link" >
-                <a href="<?php echo site_url().'/shop/SingleShop/shopCheckSales';?>" <?php if($menu[1] == 'shopCheckSales'){echo "class='sub-active';";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优惠券验证
-                </a>
-            </li>
-        </ul>
-    </li> -->
-   <!--   <li class="sidebar-nav-link">
-        <a href="login.html">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
-        </a>
-    </li> -->
-<!--     <li class="sidebar-nav-link">
-        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'activity'){echo 'active';}?>">
-            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
-            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
-        </a>
-        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'activity'){echo 'style="display:block;"';}?>>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopAddActivity';?>" <?php if($menu[1] == 'shopAddActivity'){echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增活动
-                </a>
-            </li>
-            <li class="sidebar-nav-link">
-                <a href="<?php echo site_url().'/shop/SingleShop/shopActivityList';?>" <?php if($menu[1] == 'shopActivityList'){echo "class='sub-active'";}?>>
-                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动列表
-                </a>
-            </li>
-        </ul>
-    </li> -->
-    <li class="sidebar-nav-link">
-        <a href="<?php echo site_url('/Login/loginOut?id=1');?>">
-            <i class="am-icon-key sidebar-nav-link-logo"></i> 退出登录
-        </a>
-    </li>
-</ul>
-
-<?php endif;?>
-
-
-
-
-
-
- <!-- 菜单 -->
-        </div>
-
-        <!-- 内容区域 -->
-        <?php $this->load->view($page);?>
-        <!--  -->
-    </div>
-    </div>
-    <script src="assets/js/amazeui.min.js"></script>
-    <script src="assets/js/amazeui.datatables.min.js"></script>
-    <script src="assets/js/dataTables.responsive.min.js"></script>
-    <script src="assets/js/app.js"></script>
-<script src="assets/js/artTemplate-native.js"></script>
-<script src="assets/laypage/laypage.js"></script>
- <script type="text/javascript">
-  
-    //密码验证
-    function confirm1(obj){
-        var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;//密码验证的正则表达式
-        if(reg.test(obj.value)){
-            return true;
-        }else{
-            alert("请输入合法的密码");
-            obj.focus();
-            return false;
-        }
-    }
-    //下拉选框的必须验证
-    function confirmSelect(){
-        if($('select option:selected').val()==""){
-            alert("请至少选择一项");
-            return false;
-        }else{
-            return true;
-        }
-    }
-    //手机号验证
-    function confirmPhone(obj){
-        var regA = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;
-        if(regA.test(obj.value)){
-            return true;
-        }else{
-            alert("请输入合法的手机号");
-            obj.focus();
-            return false;
-        }
-    }
-
-
-
-   
- </script>
-
-
-</body>
-
-</html>
+
+
+<?php $this->load->view('common.html');?>
+
+
+
+<script src="assets/js/echarts.min.js"></script>
+
+<style type="text/css">
+
+    #paging_list div a{
+
+    border: 1px solid #19a7f0;
+
+    color: #19a7f0;
+
+    }
+
+    #paging_list div a:hover{
+
+        background: #19a7f0;
+
+        color: #fff;
+
+    }
+
+    #paging_list div .laypage_curr{
+
+        background: #19a7f0;
+
+        color: #fff;
+
+    }
+
+    .goTop{
+
+
+
+        position: fixed;
+
+        bottom: 50px;
+
+        right: 50px;
+
+    }
+
+    .deleteImg:hover {
+
+        cursor: pointer;
+
+    }
+
+    
+
+</style>
+
+<?php 
+
+    if(isset($_SESSION['menu'])){
+
+        $menulist = json_decode($_SESSION['menu'],true);  
+
+    }else{
+
+        $menulist = '';
+
+    }
+
+    if(empty($menu)){$menu = array('index','index');}
+
+    if(!isset($_SESSION['businessId'])){
+
+        $businessId = '';
+
+    }else{
+
+        $businessId = $_SESSION['businessId'];
+
+    }
+
+ ?>
+
+
+
+<?php if(!empty($menulist) && empty($businessId)):?>
+
+<ul class="sidebar-nav">
+
+    <li class="sidebar-nav-link">
+
+        <a href="<?php echo site_url().'/Admin/index';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
+
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+
+        </a>
+
+    </li>
+
+
+
+    <?php foreach($menulist as $val):?>
+    <li class="sidebar-nav-link">
+
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == $val['value']['controller']){echo 'active';}?>" >
+
+            <i class="am-icon-table sidebar-nav-link-logo"></i> <?php echo $val['value']['name'];?>
+
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+
+        </a>
+
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == $val['value']['controller']){ echo "style='display:block;'";}?>>
+
+            <?php foreach($val['value']['chick'] as $v):?>
+
+                <li class="sidebar-nav-link">
+
+                    <a href="<?php echo site_url().'/'.$v['controller'];?>" <?php if($menu[1] == $v['other']){ echo "class='sub-active'";}?>>
+
+                        <span class="am-icon-angle-right sidebar-nav-link-logo"></span> <?php echo $v['name'];?>
+
+                    </a>
+
+                </li>
+
+            <?php endforeach;?>
+
+        </ul>
+
+    </li>
+
+    <?php endforeach;?>
+
+    <li class="sidebar-nav-link">
+
+        <a href="<?php echo site_url('/Login/loginOut?id=1');?>">
+
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 退出登录
+
+        </a>
+
+    </li>
+
+</ul>
+
+<?php else:?>
+
+ <ul class="sidebar-nav">
+
+    <li class="sidebar-nav-link">
+
+        <a href="<?php echo site_url().'/shop/SingleShop/shopAdmin';?>" <?php if($menu[0] == 'index'){echo "class='active'";}?>>
+
+            <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+
+        </a>
+
+    </li>
+
+    <li class="sidebar-nav-link">
+
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'shop'){echo 'active';}?>" >
+
+            <i class="am-icon-table sidebar-nav-link-logo"></i> 商家管理
+
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+
+        </a>
+
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'shop'){ echo "style='display:block;'";}?>>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopBaseInfo';?>" <?php if($menu[1] == 'shopBaseInfo'){ echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商家基础信息
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/goodsList';?>" <?php if($menu[1] == 'goodsList'){ echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 商品列表
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopOrder';?>" <?php if($menu[1] == 'shopOrder'){ echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 订单管理
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopComment';?>" <?php if($menu[1] == 'shopComment'){ echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 评论管理
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/systemSet/SystemSet/expressTemplate';?>" <?php if($menu[1] == 'expressTemplate'){ echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 运费 模板
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li>
+
+<!--      <li class="sidebar-nav-link">
+
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'sales'){echo 'active';}?>" >
+
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 优惠券管理
+
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+
+        </a>
+
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'sales'){echo "style='display:block;'";}?>>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopAddSales';?>" <?php if($menu[1] == 'shopAddSales'){echo "class='sub-active';";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增优惠券
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopSalesList';?>" <?php if($menu[1] == 'shopSalesList'){echo "class='sub-active';";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优惠券列表
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link" >
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopCheckSales';?>" <?php if($menu[1] == 'shopCheckSales'){echo "class='sub-active';";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 优惠券验证
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li> -->
+
+   <!--   <li class="sidebar-nav-link">
+
+        <a href="login.html">
+
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 团购管理
+
+        </a>
+
+    </li> -->
+
+<!--     <li class="sidebar-nav-link">
+
+        <a href="javascript:;" class="sidebar-nav-sub-title <?php if($menu[0] == 'activity'){echo 'active';}?>">
+
+            <i class="am-icon-tag sidebar-nav-link-logo"></i> 活动管理
+
+            <span class="am-icon-chevron-down am-fr am-margin-right-sm sidebar-nav-sub-ico sidebar-nav-sub-ico-rotate"></span>
+
+        </a>
+
+        <ul class="sidebar-nav sidebar-nav-sub" <?php if($menu[0] == 'activity'){echo 'style="display:block;"';}?>>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopAddActivity';?>" <?php if($menu[1] == 'shopAddActivity'){echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 新增活动
+
+                </a>
+
+            </li>
+
+            <li class="sidebar-nav-link">
+
+                <a href="<?php echo site_url().'/shop/SingleShop/shopActivityList';?>" <?php if($menu[1] == 'shopActivityList'){echo "class='sub-active'";}?>>
+
+                    <span class="am-icon-angle-right sidebar-nav-link-logo"></span> 活动列表
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li> -->
+
+    <li class="sidebar-nav-link">
+
+        <a href="<?php echo site_url('/Login/loginOut?id=1');?>">
+
+            <i class="am-icon-key sidebar-nav-link-logo"></i> 退出登录
+
+        </a>
+
+    </li>
+
+</ul>
+
+
+
+<?php endif;?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- 菜单 -->
+
+        </div>
+
+
+
+        <!-- 内容区域 -->
+
+        <?php $this->load->view($page);?>
+
+        <!--  -->
+
+    </div>
+
+    </div>
+
+    <script src="assets/js/amazeui.min.js"></script>
+
+    <script src="assets/js/amazeui.datatables.min.js"></script>
+
+    <script src="assets/js/dataTables.responsive.min.js"></script>
+
+    <script src="assets/js/app.js"></script>
+
+<script src="assets/js/artTemplate-native.js"></script>
+
+<script src="assets/laypage/laypage.js"></script>
+
+ <script type="text/javascript">
+
+  
+
+    //密码验证
+
+    function confirm1(obj){
+
+        var reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/;//密码验证的正则表达式
+
+        if(reg.test(obj.value)){
+
+            return true;
+
+        }else{
+
+            alert("请输入合法的密码");
+
+            obj.focus();
+
+            return false;
+
+        }
+
+    }
+
+    //下拉选框的必须验证
+
+    function confirmSelect(){
+
+        if($('select option:selected').val()==""){
+
+            alert("请至少选择一项");
+
+            return false;
+
+        }else{
+
+            return true;
+
+        }
+
+    }
+
+    //手机号验证
+
+    function confirmPhone(obj){
+
+        var regA = /^1((3|4|5|8|7){1}\d{1}|70)\d{8}$/;
+
+        if(regA.test(obj.value)){
+
+            return true;
+
+        }else{
+
+            alert("请输入合法的手机号");
+
+            obj.focus();
+
+            return false;
+
+        }
+
+    }
+
+
+
+
+
+
+
+   
+
+ </script>
+
+
+
+
+
+</body>
+
+
+
+</html>
+

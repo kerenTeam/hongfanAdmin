@@ -1,517 +1,1034 @@
-<style type="text/css">
-    td img{
-        width: 100px;
-        height: 100px;
-    }
-    .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-    }
-     .clickUp{
-        display: inline-block;
-        float: left;
-        margin-left: 80px;
-        width:100px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-    }
-
- .preview{
-        height:150px !important;
-    }
-    .preview #imghead,#preview img{
-        
-        height:140px;
-    }
-    select.account_type_name{
-        border: none;
-        border-bottom: 1px solid #c2cad8;
-        font-size: 14px;
-        color: #555;
-        padding-left: 0;
-    }
-    label.am-form-label{
-        font-weight: normal;
-    }
-</style>
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">管理员账号管理</a>
-            <small></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">系统管理员列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
-                                    <button type="button"  class="am-btn am-btn-default am-btn-secondary"><a href="<?php echo site_url().'/systemSet/systemSet/roleManage';?>"><span class="am-icon-list"></span> 管理员类型列表</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--新增账号模态框开始-->
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="addAccount">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增管理员</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' data-am-validator>
-                                    <div class="am-form-group am-form-icon am-form-feedback am-cf ">
-                                        <label class="am-u-sm-3 am-form-label">用户名 <span class="red">*</span>：</label>
-                                        <div class="am-u-sm-8">  
-                                            <input type="text" class="am-form-field" placeholder="请输入用户名,不超过十个字符" name='nickname' minlength="2" maxlength="10" value="" required onblur="validate(this,2,10,1)" />
-                                            
-                                        </div>
-                                        <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                                        <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span>：</label>
-                                        <div class="am-u-sm-8">  
-                                            <input type="text" placeholder="请输入用户昵称,不超过十个字符"  name='username' minlength="2" maxlength="10" required onblur="validate(this,2,10,2)" />
-                                            
-                                        </div>
-                                        <small class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                                        <label class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
-                                        <div class="am-u-sm-8">  
-                                            <input type="password" placeholder="请输入6-16位的账号密码" name='password' minlength="6" maxlength="16" onblur="validate(this,6,16,3)" />
-                                            
-                                        </div>
-                                        <small class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                                        <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8"> 
-                                            <select onblur="validate(this,1,15,4)" id="manageBrand" name="gid" required data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                                <option value="">输入查找/选择</option>
-                                                <?php foreach($group as $val):?>
-                                                <option value="<?php echo $val['gid'];?>" ><?php echo $val['group_name'];?></option>
-                                                <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                        <small class="am-u-sm-1 am-u-end red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 am-u-end green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>   
-                                    </div> 
-                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
-                                        <label for="" class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview" class="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              
-                                            </div> 
-                                            <span class="deleteImg am-text-center">删除</span> 
-                                            <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>
-                                        </div>
-                                        
-                                    </div>
-                                
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-secondary">新增</button>
-                                    </div>
-                                </form>
-                            </div> 
-                        </div>
-                    </div>
-                    <!--新增账号模态框结束-->
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>管理员ID</th>
-                                    <th>用户名</th>
-                                    <th>昵称 </th>
-                                    <th>管理员类型 </th>
-                                    <th>管理员头像 </th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a >2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                        <div claa="am-text-middle">
-                           <span>共<span class="allData">15</span>条数据</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
-
-var total_page=0,pageflag = 1, flag=1,tag=1,str='', $accountManage = parseInt(sessionStorage.getItem('accountManage')) || 0;
-//点击前往某一页的函数
-function go_to_page(page_num){
-    $('.page_link').removeClass('active_page');
-    $('.page_link').eq(page_num).addClass('active_page');
-    $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(15)*parseInt(page_num);
-    var end_page=parseInt(15)*parseInt(page_num+1);
-    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-    current_page=page_num;
-    sessionStorage.setItem('accountManage', current_page);
-    $accountManage = parseInt(sessionStorage.getItem('accountManage'));     
-}
-
-//点击上一页的函数
-function previous(){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(0).html()) - 2;
-    }else {
-        new_page = parseInt($('.current').html()) - 2;
-    }
-    if(new_page >= 0) {
-        go_to_page(new_page);
-    }
-}
-
-//点击下一页的函数
-function next(argu){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(1).html());
-    }else {
-        new_page = parseInt($('.current').html());
-    }     
-    if(new_page < argu){   
-        console.log(new_page + ' ' + argu);
-        go_to_page(new_page);
-    }
-}
-//一些操作函数
-function someOptions() {
-    for(var i=0;i<$('.tpl-del').length;i++){
-        var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editAccount').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-        $('.editAccount').eq(i).attr("data-am-modal","{target: '#ed"+ edDataId +"'}");                        
-    }
-    //账号类型管理
-    var type_name = $('.account_type_name'),jsondata={};
-    //获取管理员类型下拉菜单并默认选中
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/systemSet/systemSet/admin_user_group');?>',
-        data: 'default=1',
-        success: function(data){ 
-            var jsonData=eval(data);
-            if(data){
-                for(var i=0;i<jsonData.length;i++){
-                    str+='<option class="option" value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>';                           
-                } 
-                for(var i = 0;i < type_name.length;i++){
-                   var typeid = type_name.eq(i).attr('data-id'), userid = type_name.eq(i).attr('datatag');
-                   // console.log($('#usertype'+ typeid));
-                   $('#usertype'+ userid).append(str);
-                   var ddd=$('#usertype'+userid).find('option');
-                   for(var j=1;j<ddd.length;j++){
-                       if(ddd.eq(j).val() == typeid){
-                          ddd.eq(j).attr('selected',true);
-                       }
-                   }
-                } 
-                tag=1; 
-            }else{
-                alert("操作失败，请检查网络设置！");
-            }
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-    //保存管理员账号信息
-    for(var i=0;i<$('.sureSave').length;i++){
-        $('.sureSave').eq(i).click(function(){
-            var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/SystemSet/edit_admin_user');?>";//上传文件的后台地址;
-            var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
-            formD.append('user_id',dataId);
-            formD.append('username',name);
-            formD.append('nickname',nickname);
-            formD.append('password',password);
-            formD.append('group_name',group_name);
-            formD.append('picArray',picArray[0]);
-             //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.send(formD);
-            xhr.onreadystatechange = function(data){
-                // console.log(data);
-                if (xhr.readyState===4) {  
-                    if (xhr.status===200) {
-                         alert("保存成功！");
-                        getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
-                    }
-                }
-            } 
-            $('#ed'+dataId).modal('close'); 
-        });
-    }
-    //删除管理员帐户
-    $('.sureDelete').click(function(){
-        var dataId=$(this).attr('data-id');
-        if(dataId == "1"){
-            alert('后台超级管理员，不能删除');
-            return false;
-        }
-        $.ajax({
-            type:'post',
-            url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',
-            data: 'userid='+dataId,
-            success: function(data){
-                if(data==1){
-                    $('#trClass'+ dataId).remove();
-                }else{
-                    alert("操作失败！");
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("操作失败，请检查网络设置！");
-            }
-        });              
-    });
-    
-    //删除图片
-    $(".deleteImg").click(function(){
-        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).siblings('.wx_type_img').find('input').val("");
-        $(this).siblings('.wx_type_img').find('input').files = "";
-    });  
-
-}
-//异步刷新的ajax请求   
-function getList(dataurl,data){
-    $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){    
-            var res = eval(result);
-            console.log(res);  
-            if(res != 2 && res != 3){
-                var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
-                for(var i = 0; i < res.length; i++){
-                    res[i].avatar = JSON.parse(res[i].avatar);
-                    listData+= template('dataModal',res[i]);
-                 }
-                document.getElementById('dataList').innerHTML = listData;
-                $('.allData').html(res.length);
-                $('.pagebox').css('display', 'block');
-                if(total_page <= 1) {
-                       $('#Pagination').css('display', 'none');
-                        $('.searchPage').css('display', 'none');
-                } else {
-                    if(pageflag) {    
-                        var opts={};opts.current_page = $accountManage;
-                        $("#Pagination").pagination(total_page, opts);
-                        go_to_page($accountManage); 
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
-                        $('.searchPage').css('display', 'none');
-                    }
-                }
-                
-                someOptions();
-            }else{
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
-            }
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-            $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员信息！</p></td></tr>').appendTo('#dataList');
-            $('.pagebox').css('display', 'none');
-        }
-    });
-}
-
-
-$(document).ready(function(){
-    //加载列表数数据
-    getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
-    });
-    
-
-})
-</script>
-<script type="text/html" id="dataModal">
-    <tr class="trClass" id="trClass<%= user_id%>" data-id="<%= user_id%>">
-        <td class="am-text-middle"><%= user_id%></td>
-        <td class="am-text-middle"><%= username%></td>
-        
-        <td class="am-text-middle"><%= nickname%></td>
-        <td class="am-text-middle"><%= group_name%></td>
-        <td class="am-text-middle">
-            <%if(avatar) {%>
-            <img src="<%= avatar[0].picImg%>" class="am-img-responsive" alt=""/>
-            <%}else {%>
-            暂无
-            <%}%>
-        </td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= user_id%>" class="editAccount">
-                    <i class="am-icon-pencil"></i> 编辑
-                </a>
-                <a data-id="<%= user_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
-    </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= user_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= user_id %>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="ed<%= user_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">编辑管理员帐户</div>
-            <div class="am-modal-bd">
-                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">用户名 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-8">
-                            <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="用户名2-10位" class="name<%= user_id%>" value="<%= username%>" name='name' minlength="4" required="" onblur="validate(this,2,10,5)" />          
-                        </div>
-                        <small class="am-u-sm-1 am-u-end red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 am-u-end green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-8">
-                            <input type='hidden' name='type_id' />
-                            <input type="text" placeholder="昵称2-10位" class="nickname<%= user_id%>" value="<%= nickname%>" name='name' minlength="2" required="" onblur="validate(this,2,10,6)" >
-                        </div>
-                        <small class="am-u-sm-1 am-u-end red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 am-u-end green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-8">
-                            <input type='hidden' name='type_id' />
-                            <input type="password" placeholder="******6-16位" class="password<%= user_id%>" name='password<%= user_id%>' onblur="validate(this,6,16,7)">
-                        </div>
-                        <small class="am-u-sm-1 am-u-end red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 am-u-end green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
-                        <div class="am-u-sm-8">
-                            <select name="account_type_name<%= user_id%>"  class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= user_id %>" data-id="<%= gid %>" datatag="<%= user_id %>" >
-                            </select>
-                        </div>
-                        <small class="am-u-sm-1 am-u-end red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
-                        <small class="am-u-sm-1 am-u-end green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
-                    </div>
-                    <div class="am-form-group am-cf">
-                        <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
-                        <div class="am-u-sm-8 am-u-end">
-                            <div class="wx_type_img">
-                                <input type="file" id="imgUpload" data-id="<%= user_id%>" onchange="previewImage(this)" name="img[]" class="upload-add imgUp"  required>
-                                  <!-- 图片实时预览 -->
-                                  <div id="preview" class="preview<%= user_id%>">
-                                  <%if(avatar) {%>
-                                    <img src="<%= avatar[0].picImg%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
-                                  <%}else {%>
-                                    <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
-                                  <%}%></div> 
-                            </div>
-                            <span class="deleteImg  am-text-center">删除</span>    
-                        </div>
-                        <span class="red am-u-sm-12" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>   
-                    </div>
-                    
-                    <div class="am-form-group am-btn-group-xs">
-                        <button type="button" class="am-btn am-btn-secondary sureSave" data-id="<%= user_id%>" data-am-modal-confirm style="margin-left: 120px;">保存<tton>
-                        <button type="reset" class="am-btn am-btn-default"  data-am-modal-close style="margin-left: 140px;">取消<tton>
-                        
-                    </div>
-                </form>
-                
-            </div>
-        </div>
-    </div>
-</script>
+<style type="text/css">
+
+    td img{
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+    .deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 80px;
+
+        width:100px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+    }
+
+
+
+ .preview{
+
+        height:150px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:140px;
+
+    }
+
+    select.account_type_name{
+
+        border: none;
+
+        border-bottom: 1px solid #c2cad8;
+
+        font-size: 14px;
+
+        color: #555;
+
+        padding-left: 0;
+
+    }
+
+    label.am-form-label{
+
+        font-weight: normal;
+
+    }
+
+</style>
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">管理员账号管理</a>
+
+            <small></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf" style="clear:both;">系统管理员列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+
+
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a data-am-modal="{target: '#addAccount'}"><span class="am-icon-plus"></span> 新增</a></button>
+
+                                    <button type="button"  class="am-btn am-btn-default am-btn-secondary"><a href="<?php echo site_url().'/systemSet/SystemSet/roleManage';?>"><span class="am-icon-list"></span> 管理员类型列表</a></button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--新增账号模态框开始-->
+
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="addAccount">
+
+                        <div class="am-modal-dialog">
+
+                            <div class="am-modal-hd">新增管理员</div>
+
+                            <div class="am-modal-bd">
+
+                                <!-- 本地生活 信息展示类 -->
+
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" action='<?php echo site_url("/systemSet/systemSet/add_admin_user");?>' method='post' data-am-validator>
+
+                                    <div class="am-form-group am-form-icon am-form-feedback am-cf ">
+
+                                        <label class="am-u-sm-3 am-form-label">用户名 <span class="red">*</span>：</label>
+
+                                        <div class="am-u-sm-8">  
+
+                                            <input type="text" class="am-form-field" placeholder="请输入用户名,不超过十个字符" name='nickname' minlength="2" maxlength="10" value="" required onblur="validate(this,2,10,1)" />
+
+                                            
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+
+                                        <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span>：</label>
+
+                                        <div class="am-u-sm-8">  
+
+                                            <input type="text" placeholder="请输入用户昵称,不超过十个字符"  name='username' minlength="2" maxlength="10" required onblur="validate(this,2,10,2)" />
+
+                                            
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 am-u-end red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 am-u-end green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+
+                                        <label class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
+
+                                        <div class="am-u-sm-8">  
+
+                                            <input type="password" placeholder="请输入6-16位的账号密码" name='password' minlength="6" maxlength="16" onblur="validate(this,6,16,3)" />
+
+                                            
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 am-u-end red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 am-u-end green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+
+                                        <label for="manageBrand" class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8"> 
+
+                                            <select onblur="validate(this,1,15,4)" id="manageBrand" name="gid" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+
+                                                <option value="">输入查找/选择</option>
+
+                                                <?php foreach($group as $val):?>
+
+                                                <option value="<?php echo $val['gid'];?>" ><?php echo $val['group_name'];?></option>
+
+                                                <?php endforeach;?>
+
+                                            </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 am-u-end red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 am-u-end green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>   
+
+                                    </div> 
+
+                                    <div class="am-form-group am-cf am-form-icon am-form-feedback">
+
+                                        <label for="" class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview" class="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              
+
+                                            </div> 
+
+                                            <span class="deleteImg am-text-center">删除</span> 
+
+                                            <span class="red" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>
+
+                                        </div>
+
+                                        
+
+                                    </div>
+
+                                
+
+                                    <div class="am-form-group am-btn-group-xs">
+
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                        <button type="submit" class="am-btn am-btn-secondary">新增</button>
+
+                                    </div>
+
+                                </form>
+
+                            </div> 
+
+                        </div>
+
+                    </div>
+
+                    <!--新增账号模态框结束-->
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>管理员ID</th>
+
+                                    <th>用户名</th>
+
+                                    <th>昵称 </th>
+
+                                    <th>管理员类型 </th>
+
+                                    <th>管理员头像 </th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+                            <div class="pagination">
+
+                                <a class="prev"><i></i>上一页</a>
+
+                                <a class="current">1</a>
+
+                                <a >2</a>
+
+                                <a>3</a>
+
+                                <a>4</a>
+
+                                <span class="pagination-break">...</span>
+
+                                <a class="ep">15</a>
+
+                                <a class="next">下一页 <i></i></a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="searchPage">
+
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+
+                          <span class="page-go">跳转<input type="text">页</span>
+
+                          <a href="javascript:;" class="page-btn">确定</a>
+
+                        </div>
+
+                        <div claa="am-text-middle">
+
+                           <span>共<span class="allData">15</span>条数据</span> 
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript">
+
+//表单验证函数
+
+function validate(obj,minlen,maxlen,i){
+
+    var content=obj.value;
+
+    if(content.length<minlen || content.length>maxlen){
+
+        $('.blacktips'+ i).css('display','none');
+
+        $('.redtips'+ i).css('display','inline-block');
+
+    }else{
+
+        $('.redtips'+ i).css('display','none');
+
+        $('.blacktips'+ i).css('display','inline-block');
+
+    }
+
+}
+
+
+
+var total_page=0,pageflag = 1, flag=1,tag=1,str='', $accountManage = parseInt(sessionStorage.getItem('accountManage')) || 0;
+
+//点击前往某一页的函数
+
+function go_to_page(page_num){
+
+    $('.page_link').removeClass('active_page');
+
+    $('.page_link').eq(page_num).addClass('active_page');
+
+    $("#dataList").children('tr').css("display","none");
+
+    var start_page=parseInt(15)*parseInt(page_num);
+
+    var end_page=parseInt(15)*parseInt(page_num+1);
+
+    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+
+    current_page=page_num;
+
+    sessionStorage.setItem('accountManage', current_page);
+
+    $accountManage = parseInt(sessionStorage.getItem('accountManage'));     
+
+}
+
+
+
+//点击上一页的函数
+
+function previous(){
+
+    if($('.current').length>1) {
+
+        new_page = parseInt($('.current').eq(0).html()) - 2;
+
+    }else {
+
+        new_page = parseInt($('.current').html()) - 2;
+
+    }
+
+    if(new_page >= 0) {
+
+        go_to_page(new_page);
+
+    }
+
+}
+
+
+
+//点击下一页的函数
+
+function next(argu){
+
+    if($('.current').length>1) {
+
+        new_page = parseInt($('.current').eq(1).html());
+
+    }else {
+
+        new_page = parseInt($('.current').html());
+
+    }     
+
+    if(new_page < argu){   
+
+        console.log(new_page + ' ' + argu);
+
+        go_to_page(new_page);
+
+    }
+
+}
+
+//一些操作函数
+
+function someOptions() {
+
+    for(var i=0;i<$('.tpl-del').length;i++){
+
+        var dataId=$('.tpl-del').eq(i).attr('data-id'),edDataId=$('.editAccount').eq(i).attr('data-id');
+
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+
+        $('.editAccount').eq(i).attr("data-am-modal","{target: '#ed"+ edDataId +"'}");                        
+
+    }
+
+    //账号类型管理
+
+    var type_name = $('.account_type_name'),jsondata={};
+
+    //获取管理员类型下拉菜单并默认选中
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/systemSet/systemSet/admin_user_group');?>',
+
+        data: 'default=1',
+
+        success: function(data){ 
+
+            var jsonData=eval(data);
+
+            if(data){
+
+                for(var i=0;i<jsonData.length;i++){
+
+                    str+='<option class="option" value="'+ jsonData[i].gid +'">' + jsonData[i].group_name + '</option>';                           
+
+                } 
+
+                for(var i = 0;i < type_name.length;i++){
+
+                   var typeid = type_name.eq(i).attr('data-id'), userid = type_name.eq(i).attr('datatag');
+
+                   // console.log($('#usertype'+ typeid));
+
+                   $('#usertype'+ userid).append(str);
+
+                   var ddd=$('#usertype'+userid).find('option');
+
+                   for(var j=1;j<ddd.length;j++){
+
+                       if(ddd.eq(j).val() == typeid){
+
+                          ddd.eq(j).attr('selected',true);
+
+                       }
+
+                   }
+
+                } 
+
+                tag=1; 
+
+            }else{
+
+                alert("操作失败，请检查网络设置！");
+
+            }
+
+            
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+    //保存管理员账号信息
+
+    for(var i=0;i<$('.sureSave').length;i++){
+
+        $('.sureSave').eq(i).click(function(){
+
+            var dataId=$(this).attr('data-id'),formD = new FormData(),FileController="<?php echo site_url('/systemSet/SystemSet/edit_admin_user');?>";//上传文件的后台地址;
+
+            var name=document.getElementsByClassName('name'+dataId)[0].value,nickname=document.getElementsByClassName('nickname'+dataId)[0].value,group_name=document.getElementsByName('account_type_name'+dataId)[0].value,password=document.getElementsByName('password'+dataId)[0].value;
+
+            formD.append('user_id',dataId);
+
+            formD.append('username',name);
+
+            formD.append('nickname',nickname);
+
+            formD.append('password',password);
+
+            formD.append('group_name',group_name);
+
+            formD.append('picArray',picArray[0]);
+
+             //实例化XMLHttpRequest对象
+
+            var xhr=new XMLHttpRequest();
+
+            xhr.open('post',FileController,true);
+
+            xhr.send(formD);
+
+            xhr.onreadystatechange = function(data){
+
+                // console.log(data);
+
+                if (xhr.readyState===4) {  
+
+                    if (xhr.status===200) {
+
+                         alert("保存成功！");
+
+                        getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+
+                    }
+
+                }
+
+            } 
+
+            $('#ed'+dataId).modal('close'); 
+
+        });
+
+    }
+
+    //删除管理员帐户
+
+    $('.sureDelete').click(function(){
+
+        var dataId=$(this).attr('data-id');
+
+        if(dataId == "1"){
+
+            alert('后台超级管理员，不能删除');
+
+            return false;
+
+        }
+
+        $.ajax({
+
+            type:'post',
+
+            url:'<?php echo site_url('/systemSet/SystemSet/del_admin_user');?>',
+
+            data: 'userid='+dataId,
+
+            success: function(data){
+
+                if(data==1){
+
+                    $('#trClass'+ dataId).remove();
+
+                }else{
+
+                    alert("操作失败！");
+
+                }
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("操作失败，请检查网络设置！");
+
+            }
+
+        });              
+
+    });
+
+    
+
+    //删除图片
+
+    $(".deleteImg").click(function(){
+
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+        $(this).siblings('.wx_type_img').find('input').val("");
+
+        $(this).siblings('.wx_type_img').find('input').files = "";
+
+    });  
+
+
+
+}
+
+//异步刷新的ajax请求   
+
+function getList(dataurl,data){
+
+    $.ajax({
+
+        type:'post',
+
+        url:dataurl,
+
+        data: data,
+
+        success: function(result){    
+
+            var res = eval(result);
+
+            console.log(res);  
+
+            if(res != 2 && res != 3){
+
+                var listData = ''; //每页出现的数量
+
+                total_page = Math.ceil(res.length/15); //得到总页数
+
+                for(var i = 0; i < res.length; i++){
+
+                    res[i].avatar = JSON.parse(res[i].avatar);
+
+                    listData+= template('dataModal',res[i]);
+
+                 }
+
+                document.getElementById('dataList').innerHTML = listData;
+
+                $('.allData').html(res.length);
+
+                $('.pagebox').css('display', 'block');
+
+                if(total_page <= 1) {
+
+                       $('#Pagination').css('display', 'none');
+
+                        $('.searchPage').css('display', 'none');
+
+                } else {
+
+                    if(pageflag) {    
+
+                        var opts={};opts.current_page = $accountManage;
+
+                        $("#Pagination").pagination(total_page, opts);
+
+                        go_to_page($accountManage); 
+
+                        pageflag = 0;
+
+                    } else {
+
+                        $("#Pagination").pagination(total_page);
+
+                        go_to_page(0);
+
+                        
+
+                    }
+
+                    if(total_page < 5) {
+
+                        $('.searchPage').css('display', 'none');
+
+                    }
+
+                }
+
+                
+
+                someOptions();
+
+            }else{
+
+                $('#dataList').find('tr').remove();
+
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员信息！</p></td></tr>').appendTo('#dataList');
+
+                $('.pagebox').css('display', 'none');
+
+            }
+
+            
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("网络状况不佳，请稍后重试！");
+
+            $('#dataList').find('tr').remove();
+
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无管理员信息！</p></td></tr>').appendTo('#dataList');
+
+            $('.pagebox').css('display', 'none');
+
+        }
+
+    });
+
+}
+
+
+
+
+
+$(document).ready(function(){
+
+    //加载列表数数据
+
+    getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+
+    //刷新页面
+
+    $('.refresh').click(function(){
+
+        getList('<?php echo site_url('/systemSet/systemSet/adminUserList');?>','default=1');
+
+    });
+
+    
+
+
+
+})
+
+</script>
+
+<script type="text/html" id="dataModal">
+
+    <tr class="trClass" id="trClass<%= user_id%>" data-id="<%= user_id%>">
+
+        <td class="am-text-middle"><%= user_id%></td>
+
+        <td class="am-text-middle"><%= username%></td>
+
+        
+
+        <td class="am-text-middle"><%= nickname%></td>
+
+        <td class="am-text-middle"><%= group_name%></td>
+
+        <td class="am-text-middle">
+
+            <%if(avatar) {%>
+
+            <img src="<%= avatar[0].picImg%>" class="am-img-responsive" alt=""/>
+
+            <%}else {%>
+
+            暂无
+
+            <%}%>
+
+        </td>
+
+        <td class="am-text-middle">
+
+            <div class="tpl-table-black-operation">
+
+                <a data-id="<%= user_id%>" class="editAccount">
+
+                    <i class="am-icon-pencil"></i> 编辑
+
+                </a>
+
+                <a data-id="<%= user_id%>" class="tpl-table-black-operation-del tpl-del">
+
+                    <i class="am-icon-trash"></i> 删除
+
+                </a>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= user_id%>">
+
+        <div class="am-modal-dialog">
+
+            <div class="am-modal-hd">删除提示</div>
+
+            <div class="am-modal-bd">
+
+                <p class="black">你，确定要删除这条记录吗？</p>
+
+            </div>
+
+            <div class="am-modal-footer">
+
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+                <span class="am-modal-btn sureDelete" data-id="<%= user_id %>" data-am-modal-confirm>确定</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="ed<%= user_id%>">
+
+        <div class="am-modal-dialog">
+
+            <div class="am-modal-hd">编辑管理员帐户</div>
+
+            <div class="am-modal-bd">
+
+                <form class="am-form tpl-form-line-form"  data-am-validator enctype='multipart/form-data'>
+
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">用户名 <span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-8">
+
+                            <input type='hidden' name='type_id' />
+
+                            <input type="text" placeholder="用户名2-10位" class="name<%= user_id%>" value="<%= username%>" name='name' minlength="4" required="" onblur="validate(this,2,10,5)" />          
+
+                        </div>
+
+                        <small class="am-u-sm-1 am-u-end red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                        <small class="am-u-sm-1 am-u-end green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                    </div>
+
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-8">
+
+                            <input type='hidden' name='type_id' />
+
+                            <input type="text" placeholder="昵称2-10位" class="nickname<%= user_id%>" value="<%= nickname%>" name='name' minlength="2" required="" onblur="validate(this,2,10,6)" >
+
+                        </div>
+
+                        <small class="am-u-sm-1 am-u-end red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+
+                        <small class="am-u-sm-1 am-u-end green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
+
+                    </div>
+
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">密码 <span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-8">
+
+                            <input type='hidden' name='type_id' />
+
+                            <input type="password" placeholder="******6-16位" class="password<%= user_id%>" name='password<%= user_id%>' onblur="validate(this,6,16,7)">
+
+                        </div>
+
+                        <small class="am-u-sm-1 am-u-end red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
+
+                        <small class="am-u-sm-1 am-u-end green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
+
+                    </div>
+
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">管理员类型 <span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-8">
+
+                            <select name="account_type_name<%= user_id%>"  class="am-u-sm-12 account_type_name" data-am-selected="{searchBox: 1,maxHeight: 200}" id="usertype<%= user_id %>" data-id="<%= gid %>" datatag="<%= user_id %>" >
+
+                            </select>
+
+                        </div>
+
+                        <small class="am-u-sm-1 am-u-end red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
+
+                        <small class="am-u-sm-1 am-u-end green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
+
+                    </div>
+
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">头像<span class="red">*</span>： </label>
+
+                        <div class="am-u-sm-8 am-u-end">
+
+                            <div class="wx_type_img">
+
+                                <input type="file" id="imgUpload" data-id="<%= user_id%>" onchange="previewImage(this)" name="img[]" class="upload-add imgUp"  required>
+
+                                  <!-- 图片实时预览 -->
+
+                                  <div id="preview" class="preview<%= user_id%>">
+
+                                  <%if(avatar) {%>
+
+                                    <img src="<%= avatar[0].picImg%>" style="border-radius: 3px;" class="am-img-responsive cardView" alt="管理员头像"/>
+
+                                  <%}else {%>
+
+                                    <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> 
+
+                                  <%}%></div> 
+
+                            </div>
+
+                            <span class="deleteImg  am-text-center">删除</span>    
+
+                        </div>
+
+                        <span class="red am-u-sm-12" style="font-size: 14px;"> 提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</span>   
+
+                    </div>
+
+                    
+
+                    <div class="am-form-group am-btn-group-xs">
+
+                        <button type="button" class="am-btn am-btn-secondary sureSave" data-id="<%= user_id%>" data-am-modal-confirm style="margin-left: 120px;">保存<tton>
+
+                        <button type="reset" class="am-btn am-btn-default"  data-am-modal-close style="margin-left: 140px;">取消<tton>
+
+                        
+
+                    </div>
+
+                </form>
+
+                
+
+            </div>
+
+        </div>
+
+    </div>
+
+</script>
+
