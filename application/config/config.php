@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 */
 
-$config['base_url'] = 'http://localhost/hongfan1';
+$config['base_url'] = 'http://localhost/hongfan';
 
 
 
@@ -1026,3 +1026,49 @@ $config['rewrite_short_tags'] = FALSE;
 
 $config['proxy_ips'] = '';
 
+$config['buckrtGlobal'] = array(
+    'cq' =>array(
+        "ebus"=>"ebus",
+        "local"=>"cqclocal",
+        "other"=>"cqother",
+        "friends"=>"cqcfriends",
+    ),
+    'nj' =>array(
+        "ebus"=>"ebus",
+        "local"=>"njclocal",
+        "other"=>"njcother",
+        "friends"=>"njcfriends",
+    ),
+    'xh' =>array(
+        "ebus"=>"ebus",
+        "local"=>"xhclocal",
+        "other"=>"xhother",
+        "friends"=>"xhcfriends",
+    ),
+    'ls' =>array(
+        "ebus"=>"ebus",
+        "local"=>"lsclocal",
+        "other"=>"lscother",
+        "friends"=>"lscfriends",
+    )
+);
+$config['hostGlobal'] = array(
+    'demo'=>"http://ov2jx0xre.bkt.clouddn.com/",
+    'ebus'=>"http://ov2ipmip7.bkt.clouddn.com/",
+    
+    'cqcfriends'=>"http://ov2ifqo8x.bkt.clouddn.com/",
+    'cqclocal'=>"http://ov2i260vo.bkt.clouddn.com/",
+    'cqcother'=>"http://ov2iqfcmi.bkt.clouddn.com/",
+
+    'lscfriends'=>"http://ovdjzd9fm.bkt.clouddn.com/",
+    'lsclocal'=>"http://ovdj3dla7.bkt.clouddn.com/",
+    'lscother'=>"http://ovdj7es4p.bkt.clouddn.com/",
+
+    'njcfriends'=>"http://ovdjbbmde.bkt.clouddn.com/",
+    'njclocal'=>"http://ovdj5a716.bkt.clouddn.com/",
+    'njcother'=>"http://ovdj7hqgf.bkt.clouddn.com/",
+
+    'xhcfriends'=>"http://ovdjmo7y7.bkt.clouddn.com/",
+    'xhclocal'=>"http://ovdjwkul4.bkt.clouddn.com/",
+    'xhcother'=>"http://ovdj55twx.bkt.clouddn.com/"
+);

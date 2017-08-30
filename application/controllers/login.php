@@ -81,20 +81,20 @@ class Login extends CI_Controller {
                     //正确  缓存
 
                    session_start();
-
-               // $this->session->set_userdata('users',$user);
-
                    $_SESSION['users']  = $user;
 
-                  // $_SESSION['id'] = $user['user_id'];
-
-                  // var_dump($_SESSION);exit;
-
-                    // 判断用户分组
+                   $url = APPLOGIN."/api/useraccount/login";
+                   $arr = array('phone'=>USERPHONE,"password"=>USERPASSWORD);
+                   $token = curl_post_token($url,$arr);
+                   $_SESSION['token'] = trim($token);
 
                    switch ($user['gid']){
 
                         case 2:
+                           //unset($_SESSION['menu']);
+                           $_SESSION['buket'] = 'ebus';
+                           $_SESSION['host'] = $this->config->item('ebus','hostGlobal');
+                        
 
                            redirect( site_url('shop/SingleShop/shopAdmin') );
 
@@ -102,11 +102,11 @@ class Login extends CI_Controller {
 
                         default:
 
-                        $plateid = $this->m_model->group_permiss($_SESSION['users']['gid']);
+                        $group = $this->m_model->group_permiss($_SESSION['users']['gid']);
                         
-                        $plateid = json_decode($plateid,true);
+                        $plateid = json_decode($group['group_permission'],true);
             
-            
+                        $_SESSION['city'] = $group['city'];
                         if(!empty($plateid)){
                                 foreach ($plateid as $key => $value) {
                                     $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
@@ -133,12 +133,7 @@ class Login extends CI_Controller {
                             $this->load->view('login.html',$a);
             
                         }
-            
-            
-
-           
-
-                            $data = array(
+                        $data = array(
 
                                 "userid" => $user['user_id'],
 
@@ -158,10 +153,7 @@ class Login extends CI_Controller {
 
                            break;
 
-                   }
-
-                   
-
+                    }
                 }
 
             }

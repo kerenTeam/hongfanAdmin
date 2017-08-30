@@ -148,7 +148,7 @@ function curl_post($url, $post){
 function curl_post_token($url, $post){
     $options = array(
         CURLOPT_RETURNTRANSFER =>true,
-        CURLOPT_HEADER =>false,
+        CURLOPT_HEADER =>1,
         CURLOPT_POST =>true,
         CURLOPT_POSTFIELDS => $post,
     );
@@ -157,9 +157,10 @@ function curl_post_token($url, $post){
     curl_setopt($ch, CURLOPT_HEADER, 1);
     curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
     $result = curl_exec($ch);
+    $arr = explode("\r\n", $result);
     if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200') {
 	    $header_size	= curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $headers		=substr(substr($result, 79, $header_size),0,148);
+        $headers		=  trim(substr($arr['6'], 6));
         $body		= substr($result, $header_size);
     }
     curl_close($ch);
@@ -184,8 +185,6 @@ function curl_post_express($header,$url, $post){
     }
     return $result;
 }
-
-
 
 
 

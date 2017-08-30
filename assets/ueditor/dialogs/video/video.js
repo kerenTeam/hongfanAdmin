@@ -11,6 +11,17 @@
     var video = {},
         uploadVideoList = [],
         isModifyUploadVideo = false,
+        // widuu 添加上传判断参数
+        uploadType,
+        uploadUrl,
+        isDirect,
+        isChunked = false, // 是否分片上传
+        qiniuCtx = '',     // 块控制信息
+        nextChunkOffset,   // 当前片在整个块中的起始偏移
+        chunkUploadUrl = '', // 分片上传url
+        videoBlockSize,      // 视频块大小
+        makeBlockUploadUrl,  // 创建块url方法
+        // end widuu
         uploadFile;
 
     window.onload = function(){
@@ -18,6 +29,8 @@
         initTabs();
         initVideo();
         initUpload();
+        // widuu 初始化配置
+        initUploadType();
     };
 
     /* 初始化tab标签 */
@@ -39,6 +52,40 @@
             });
         }
     }
+
+    /* widuu初始化上传参数 */
+    function initUploadType(){
+        uploadType = editor.getOpt('uploadType');
+        isDirect   = editor.getOpt('qiniuUploadType');
+        if( (uploadType == 'local' || isDirect == 'php')  && !isChunked ){
+            var params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
+                actionUrl = editor.getActionUrl(editor.getOpt('imageActionName')),
+                url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?':'&') + 'encode=utf-8&' + params);
+            uploadUrl = url;
+        }else{
+            // 视频分块大小
+            videoBlockSize = editor.getOpt('VideoBlockFileSize');
+            // 视频创建块地址
+            makeBlockUploadUrl = editor.getOpt("ChunkUploadQiniuUrl") + '/mkblk/' + videoBlockSize;
+            // 直传地址
+            uploadUrl = editor.getOpt('uploadQiniuUrl');
+            // 分片上传
+            chunkUploadUrl = chunkUploadUrl == '' ? editor.getOpt("ChunkUploadQiniuUrl") : chunkUploadUrl;
+        }
+    }
+
+    /* widuu 格式化日期方法 */
+    Date.prototype.Format = function (fmt) { 
+        var o = {
+            "m+": this.getMonth() + 1,
+            "d+": this.getDate(), 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    /* end widuu */
 
     function initVideo(){
         createAlignButton( ["videoFloat", "upload_alignment"] );
@@ -127,7 +174,7 @@
             align: align
         }, isModifyUploadVideo ? 'upload':null);
     }
-
+ 
     /**
      * 将元素id下的所有代表视频的图片插入编辑器中
      * @param id
@@ -703,10 +750,36 @@
                         break;
                     case 'startUpload':
                         /* 添加额外的GET参数 */
-                        var params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
-                            url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?':'&') + 'encode=utf-8&' + params);
-                        uploader.option('server', url);
+                        //var params = utils.serializeParam(editor.queryCommandValue('serverparam')) || '',
+                         //   url = utils.formatUrl(actionUrl + (actionUrl.indexOf('?') == -1 ? '?':'&') + 'encode=utf-8&' + params);
+                        // widuu 
+                        //uploader.option('server', url);
+                        uploader.option('server', uploadUrl);
+                        // end widuu
                         setState('uploading', files);
+                        break;
+                    case 'uploadStart':
+                        // 文件文件超过多大使用分片上传
+                        videoMaxSize   = editor.getOpt('VideoChunkMaxSize');
+                        // 分片上传的片的大小
+                        videoChunkSize = editor.getOpt('VideoChunkFileSize');
+                        // 判断文件是否大于最大限制
+                        if( files.size >= videoMaxSize ){
+                            // 第一次上传的初始化URl
+                            uploader.option('server' , makeBlockUploadUrl);
+                            // 开启分片上传
+                            uploader.option('chunked', true);
+                            // 每次上传的片的大小
+                            uploader.option('chunkSize' , videoChunkSize );
+                            // 网络重置次数
+                            uploader.option('chunkRetry' ,3 );
+                            // 以二进制内容发送
+                            uploader.option('sendAsBinary' ,true );
+                            // 由于限制问题，使用单线程上传
+                            uploader.option('threads' ,1 );
+                            // 分片上传标记
+                            isChunked = true; 
+                        }
                         break;
                     case 'stopUpload':
                         setState('paused', files);
@@ -717,7 +790,91 @@
             uploader.on('uploadBeforeSend', function (file, data, header) {
                 //这里可以通过data对象添加POST参数
                 header['X_Requested_With'] = 'XMLHttpRequest';
+                // widuu 如果是qiniu上传并且不通过php上传就通过ajax来获取token,分片上传设置header
+                if( (uploadType == 'qiniu' &&  isDirect != 'php') || isChunked  ){
+                    var $file = $('#' + file.id),
+                        type  = editor.getOpt('uploadSaveType'),
+                        path  = editor.getOpt('qiniuUploadPath'),
+                        time  = editor.getOpt('qiniuDatePath');
+
+                    //生成一个随机数目，防止批量上传的时候文件名同名出错
+                    var randNumber = (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+                    var now = new Date();
+                    var filename = '';
+                    if( type == 'date' ){
+                        if( time != '' ){
+                            filename = path + new Date().Format(time) + '/'+ Date.parse(now)+randNumber+"."+file.file.ext;
+                        }else{
+                            filename = path + '/'+ Date.parse(now)+randNumber+"."+file.file.ext;
+                        }
+                        if( !isChunked ) data['key'] = filename;
+                    }else{
+                        filename = path + file.file.name;
+                        if( !isChunked ) data['key'] = filename;
+                    }
+
+                    var token ="";
+                    
+                    var url = editor.getActionUrl(editor.getOpt('getTokenActionName')),
+                        isJsonp = utils.isCrossDomainUrl(url);
+                    
+                    $.ajax({
+                        dataType : isJsonp ? 'jsonp':'json',
+                        async    : false,
+                        method   : 'post',
+                        data     : {"key":filename},
+                        url      : url,
+                        success:function(data) {
+                            if( data.state == 'SUCCESS' ){
+                                token = data.token;
+                            }else{
+                                $file.find('.error').text(data.error).show();
+                            }
+                        }
+                    });
+
+                    if( !isChunked ){
+                        data['token'] = token;
+                    }else{
+                        header['HOST'] = chunkUploadUrl;
+                        header['Content-Type'] = 'application/octet-stream';
+                        header['Authorization'] = "UpToken "+token;
+                    } 
+                }
+                // end widuu
             });
+
+            // widuu 通过接受服务器信息来构造url
+            uploader.on('uploadAccept',function(obj,ret){
+                // 片上传host
+                chunkUploadUrl  = ret.host ? ret.host : chunkUploadUrl;
+                // 下一片的起始位置
+                nextChunkOffset = ret.offset ? ret.offset : 0;
+                // 如果块文件上传满了,创建块
+                if( ret.offset == videoBlockSize ){
+                    // 剩余片大小
+                    $blockSize = obj.total - obj.end;
+                    // 创建块的url
+                    uploadUrl = makeBlockUploadUrl;
+                    // 如果是最后一块,并且最后一块不能与videoBlockSize,设置创建块大小
+                    if( obj.chunks - obj.chunk == 2 ){
+                        uploadUrl = chunkUploadUrl + '/mkblk/' + $blockSize;
+                    }
+                    qiniuCtx = qiniuCtx ? qiniuCtx + ',' + ret.ctx : ret.ctx;
+                }else{
+                    // 上传片url
+                    uploadUrl = chunkUploadUrl + '/bput/' + ret.ctx + '/' + ret.offset;
+                    // 如果是最后一片，添加ctx
+                    if( obj.chunks - obj.chunk == 1 ){
+                        qiniuCtx += ',' + ret.ctx;
+                    }
+                }
+                // 设置上传片或者创建块url
+                uploader.option('server', uploadUrl);
+                
+                return true;
+            });
+            // end widuu
 
             uploader.on('uploadProgress', function (file, percentage) {
                 var $li = $('#' + file.id),
@@ -731,8 +888,27 @@
             uploader.on('uploadSuccess', function (file, ret) {
                 var $file = $('#' + file.id);
                 try {
-                    var responseText = (ret._raw || ret),
+                    var json;
+                    // 分片上传通过服务器合成来返回数据
+                    if( isChunked ){
+                        var url = editor.getActionUrl(editor.getOpt('makeFileActionName')),
+                        isJsonp = utils.isCrossDomainUrl(url);
+                        $.ajax({
+                            dataType : isJsonp ? 'jsonp':'json',
+                            async    : false,
+                            method   : 'post',
+                            data     : { ctx : qiniuCtx, type : file.type, size : file.size, name:file.name, host:chunkUploadUrl},
+                            url      : url,
+                            success:function(data) {
+                                json = data;
+                            }
+                        });
+                    }else{
+                        var responseText = (ret._raw || ret);
                         json = utils.str2json(responseText);
+                    }
+                    // var responseText = (ret._raw || ret),
+                    //     json = utils.str2json(responseText);
                     if (json.state == 'SUCCESS') {
                         uploadVideoList.push({
                             'url': json.url,

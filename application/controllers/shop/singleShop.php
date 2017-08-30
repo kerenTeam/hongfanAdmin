@@ -14,7 +14,7 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 
 
 
-class SingleShop extends Default_Controller {
+class SingleShop extends CI_Controller {
 
     //商家 列表主页
 
@@ -107,7 +107,15 @@ class SingleShop extends Default_Controller {
         $this->load->model('MallShop_model');
 
         $this->load->model('Shop_model');
-
+        date_default_timezone_set("Asia/Shanghai");
+        $this->load->helper('Default_helper');
+		$this->load->helper('Search_helper');
+        session_start();
+        
+        if(!isset($_SESSION['users'])){
+            echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/Login/index')."';</script>";
+            exit;
+        }
        
 
     }
@@ -121,7 +129,8 @@ class SingleShop extends Default_Controller {
     {   //缓存商家id
 
         
-
+        // var_dump($_SESSION['users']);
+        // exit;
         $id = intval($this->uri->segment(4));
 
         if($id == 0){
@@ -253,7 +262,7 @@ class SingleShop extends Default_Controller {
     //商家基础信息操作
 
     function edit_busin_info(){
-
+      
         $store_id =$_SESSION['businessId'];
 
         if(empty($store_id)){
@@ -302,90 +311,46 @@ class SingleShop extends Default_Controller {
 
             $pic = array();
 
-         
-
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
                 if(!empty($_FILES['img1']['name'])){
-
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img1')) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
-
-                    }else{
-
                         unset($data['img1']);
-
-                        $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                   
-
-                    }
+                        $tmpfile = new CURLFile(realpath($_FILES['img1']['tmp_name']));
+                    
+                        $pics = array(
+                            'pics' =>$tmpfile,
+                            'porfix'=>'moll/store/'.$store_id.'/logo',
+                            'bucket'=>BUCKET,
+                        );
+                    
+                        $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                        $img = json_decode($a['data']['img'],true);
+                        $data['logo'] = $img[0]['picImg'];
 
                 }else{
 
                     if(isset($data['img1'])){
-
-                      
-
-                            $data['logo'] = $data['img1'];
-
-                      
-
+                        $data['logo'] = $data['img1'];
                         unset($data['img1']);
 
                     }
-
                 }
 
                 if(!empty($_FILES['img2']['name'])){
-
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img2')) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/shopBaseInfo')."'</script>";exit;
-
-                    }else{
-
                         unset($data['img2']);
-
-                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                   
-
-                    }
-
+                        $tmpfile = new CURLFile(realpath($_FILES['img2']['tmp_name']));
+                        $pics = array(
+                            'pics' =>$tmpfile,
+                            'porfix'=>'moll/store/'.$store_id.'/logo',
+                            'bucket'=>BUCKET,
+                        );
+                    
+                        $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                        $img = json_decode($a['data']['img'],true);
+                        $data['pic'] = $img[0]['picImg'];
                 }else{
 
                     if(isset($data['img2'])){
-
-                      
-
-                            $data['pic'] = $data['img2'];
-
-                      
-
+                        $data['pic'] = $data['img2'];
                         unset($data['img2']);
 
                     }
@@ -396,7 +361,7 @@ class SingleShop extends Default_Controller {
 
                  if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
 
-                    //日志
+                    //日志    
 
                      $log = array(
 
@@ -489,15 +454,9 @@ class SingleShop extends Default_Controller {
                $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'4');
 
            }
-
-
-
             //获取商品库存
-
             foreach($arr as $k=>$v){
-
                 //获取商品属性
-
                 $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
 
                 if(!empty($parent)){
@@ -539,13 +498,6 @@ class SingleShop extends Default_Controller {
         }
 
     }
-
-
-
-
-
-
-
 
 
     //修改商品上下架状态
@@ -751,41 +703,32 @@ class SingleShop extends Default_Controller {
             $pic = array();
 
  
-
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
             for ($i=1; $i < 4; $i++) {
 
                 if(!empty($_FILES['img'.$i]['name'])){
+                    
 
-                    $config['upload_path']      = 'Upload/goods/';
 
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img'.$i)) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['id'])."'</script>";exit;
-
-                    }else{
-
+                    $tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/goods/'.$data['goods_id'].'/thumb',
+                        'bucket'=>BUCKET,
+                    );
+                
+                    $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                    if($a['errno'] == '0'){
                         unset($data['img'.$i]);
-
+                        $img = json_decode($a['data']['img'],true);
                         if($i == '1'){
-
-                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
-
+                            $data['thumb'] = $img[0]['picImg'];
                         }
-
-                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-
+                        $pic[]['bannerPic'] =$img[0]['picImg'];
+                        // $data['logo'] = 
                     }
-
                 }else{
 
                      if(!empty($data['img'.$i])){
@@ -793,14 +736,13 @@ class SingleShop extends Default_Controller {
                          if($i == '1'){
 
                                 $data['thumb'] = $data['img'.$i];
-
                          }
-
                          $pic[]['bannerPic'] = $data['img'.$i];
+                         unset($data['img'.$i]);
 
                      }
 
-                     unset($data['img'.$i]);
+                   
 
                 }
 
@@ -969,41 +911,30 @@ class SingleShop extends Default_Controller {
             $pic = array();
 
             $i =1;
-
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
+            
             foreach($_FILES as $file=>$val){
 
                 if(!empty($_FILES['img'.$i]['name'])){
 
-                    $config['upload_path']      = 'Upload/goods/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img'.$i)) {
-
-                       echo $this->upload->display_errors();
-
-                    }else{
-
-                        if($i == '1'){
-
-                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
-
+                    $tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+                    
+                        $pics = array(
+                            'pics' =>$tmpfile,
+                            'porfix'=>'moll/goods/thumb',
+                            'bucket'=>BUCKET,
+                        );
+                    
+                        $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    
+                        if($a['errno'] == '0'){
+                            $img = json_decode($a['data']['img'],true);
+                            if($i == '1'){
+                                $data['thumb'] = $img[0]['picImg'];
+                            }
+                            $pic[]['bannerPic'] =$img[0]['picImg'];
                         }
-
-                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-
-                        }
-
                 }
-
                 $i++;
 
              }

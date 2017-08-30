@@ -109,6 +109,7 @@ color: #333;
                                     <th>权限名 </th>
 
                                     <th>权限 </th>
+                                    <th>导航显示 </th>
 
                                     <th>操作 </th>
 
@@ -133,7 +134,7 @@ color: #333;
                                     <?php endif;?>
 
                                         <td class="am-text-middle"><?php echo $val['controller'];?></td>
-
+                                        <td class="am-text-middle"><?php if($val['state'] == 1){echo "显示";}else{echo "不显示";};?></td>
                                         <td class="am-text-middle">
 
                                             <div class="am-btn-toolbar">

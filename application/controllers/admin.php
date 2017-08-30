@@ -16,8 +16,6 @@ class Admin extends Default_Controller
 
 {
 
-
-
 	function __construct()
 
 	{
@@ -29,18 +27,18 @@ class Admin extends Default_Controller
 
 
 	function index(){
+            
+            $_SESSION['buket'] = 'demo';
+            $_SESSION['host'] = 'http://ov2jx0xre.bkt.clouddn.com';
+                if(isset($_SESSION['businessId'])){
 
+                    if($_SESSION['users']['user_id'] != $_SESSION['businessId']){
 
+                    unset($_SESSION['businessId']);
 
-            if(isset($_SESSION['businessId'])){
-
-                if($_SESSION['users']['user_id'] != $_SESSION['businessId']){
-
-                   unset($_SESSION['businessId']);
+                    }
 
                 }
-
-            }
 
            
                 //获取用户登录次数

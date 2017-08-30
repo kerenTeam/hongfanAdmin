@@ -1,49 +1,58 @@
 <?php
-//header('Access-Control-Allow-Origin: http://www.baidu.com'); //设置http://www.baidu.com允许跨域访问
-//header('Access-Control-Allow-Headers: X-Requested-With,X_Requested_With'); //设置允许的跨域header
+ session_start();
+ 
+/**
+ * Ueditor 事件处理方法
+ * 
+ * @author   widuu <admin@widuu.com>
+ * @document https://github.com/widuu/qiniu_ueditor_1.4.3
+ */
+
+/**
+ * 设置http://www.widuu.com允许跨域访问
+ * header('Access-Control-Allow-Origin: http://www.baidu.com'); 
+ * header('Access-Control-Allow-Headers: X-Requested-With,X_Requested_With'); 
+ */
+
 date_default_timezone_set("Asia/chongqing");
 error_reporting(E_ERROR);
 header("Content-Type: text/html; charset=utf-8");
 
-$CONFIG = json_decode(preg_replace("/\/\*[\s\S]+?\*\//", "", file_get_contents("config.json")), true);
-$action = $_GET['action'];
+define('DS', DIRECTORY_SEPARATOR);
+define('UEDITOR_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 
-switch ($action) {
-    case 'config':
-        $result =  json_encode($CONFIG);
-        break;
 
-    /* 上传图片 */
-    case 'uploadimage':
-    /* 上传涂鸦 */
-    case 'uploadscrawl':
-    /* 上传视频 */
-    case 'uploadvideo':
-    /* 上传文件 */
-    case 'uploadfile':
-        $result = include("action_upload.php");
-        break;
+// 注册函数方法
+spl_autoload_register(function($class){
+    if( strpos(strtolower($class), "driver") ){
+        $class_path = UEDITOR_PATH . 'vendor'. DS .'driver'. DS . $class. '.class.php';
+    }else{
+        $class_path = UEDITOR_PATH . 'vendor'. DS . $class. '.class.php';
+    }
 
-    /* 列出图片 */
-    case 'listimage':
-        $result = include("action_list.php");
-        break;
-    /* 列出文件 */
-    case 'listfile':
-        $result = include("action_list.php");
-        break;
+    if( file_exists($class_path) ){
+        include_once($class_path);
+    }else{
+        return array(
+            'state' => 'ERROR',
+            'error' => $class.' not exists'
+        );
+    }
+});
 
-    /* 抓取远程文件 */
-    case 'catchimage':
-        $result = include("action_crawler.php");
-        break;
+// php 配置信息
+$config = require_once( UEDITOR_PATH.'config.php' );
 
-    default:
-        $result = json_encode(array(
-            'state'=> '请求地址出错'
-        ));
-        break;
-}
+// 获取方法
+$action = !empty($_GET['action']) ? trim($_GET['action']) : '';
+
+// 实例化处理方法
+$handle = new Channel($config);
+
+// 运行
+$response = $handle->dispatcher($action);
+
+$result = json_encode($response);
 
 /* 输出结果 */
 if (isset($_GET["callback"])) {
@@ -57,3 +66,5 @@ if (isset($_GET["callback"])) {
 } else {
     echo $result;
 }
+
+exit();
