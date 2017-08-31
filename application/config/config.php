@@ -1030,7 +1030,7 @@ $config['buckrtGlobal'] = array(
     'cq' =>array(
         "ebus"=>"ebus",
         "local"=>"cqclocal",
-        "other"=>"cqother",
+        "other"=>"cqcother",
         "friends"=>"cqcfriends",
     ),
     'nj' =>array(

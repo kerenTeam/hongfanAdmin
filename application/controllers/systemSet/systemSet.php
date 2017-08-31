@@ -178,40 +178,57 @@ class SystemSet extends Default_Controller {
 
             $a ='1';
 
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
+          
 
             foreach($_FILES as $val){
-
-                if(!empty($_FILES['img'.$a]['tmp_name'])){
-
-                    $config['upload_path']      = 'Upload/banner';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    //上传
-
-                    if ( ! $this->upload->do_upload('img'.$a)) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage/')."'</script>";
-
-                        exit;
-
-                    } else{
+                if(!empty($_FILES['img'.$a]['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img'.$a]['tmp_name']));
+                  //  var_dump($tmpfile);
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'adver/'.$bucket,
+                        'bucket'=>$bucket,
+                    );
+                
+                    $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                  
+                    if($qiuniu['errno'] == '0'){
+                        $img = json_decode($qiuniu['data']['img'],true);
 
                         $pic[$i]['id'] =$a;
-
+                        
                         $pic[$i]['sort'] = $this->input->post('sort'.$a);
 
-                        $pic[$i]['pic'] = '/Upload/banner/'.$this->upload->data('file_name');
-
+                        $pic[$i]['pic'] =$img[0]['picImg'];
+                        
+                    }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/guideImageManage/')."'</script>";exit;
                     }
-
+    
                 }else{
 
                     if(isset($_POST['img'.$a])){
@@ -394,32 +411,47 @@ class SystemSet extends Default_Controller {
 
             $data = $this->input->post();
 
-            if(!empty($_FILES['img']['tmp_name'])){
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
-                $config['upload_path']      = 'Upload/headPic';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('img')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('systemSet/SystemSet')."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $pic[]['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
-
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
+            if(!empty($_FILES['picArray']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['picArray']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'admin_user/avatar/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $pic[]['picImg'] =$img[0]['picImg'];
                     $data['avatar'] = json_encode($pic);
-
+                }else{
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/')."'</script>";exit;
                 }
 
             }
@@ -506,36 +538,54 @@ class SystemSet extends Default_Controller {
 
             }
 
-            if(!empty($_FILES['picArray']['tmp_name'])){
 
-                $config['upload_path']      = 'Upload/headPic';
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('picArray')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('systemSet/SystemSet')."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $pic[]['picImg'] = '/Upload/headPic/'.$this->upload->data('file_name');
-
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
+            if(!empty($_FILES['picArray']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['picArray']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'admin_user/avatar/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $pic[]['picImg'] =$img[0]['picImg'];
                     $data['avatar'] = json_encode($pic);
-
+                }else{
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/')."'</script>";exit;
                 }
 
             }
 
+
+         
             $data['nickname'] = trim($_POST['nickname']);
 
             $password = trim($_POST['password']);
@@ -688,35 +738,52 @@ class SystemSet extends Default_Controller {
 
             $data = $this->input->post();
 
-   
 
-            if(!empty($_FILES['img']['tmp_name'])){
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
-                $config['upload_path']      = 'Upload/adver';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('img')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/'.$data['id'])."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $data['pic'] = '/Upload/adver/'.$this->upload->data('file_name');
-
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
+            if(!empty($_FILES['img']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'adver/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+               
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['pic'] =$img[0]['picImg'];
+                }else{
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/adverEdit/'.$data['id'])."'</script>";exit;
                 }
 
             }
+
+        
 
             if($this->System_model->edit_adver($data['id'],$data)){
 
@@ -749,137 +816,6 @@ class SystemSet extends Default_Controller {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-    // //系统设置 支付账号管理
-
-    // function apliyManage(){
-
-    //      $data['page'] = $this->view_paymanage;
-
-    //      $data['menu'] = array('systemSet','apliyManage');
-
-    // 	 $this->load->view('template.html',$data);
-
-    // }
-
-
-
-    
-
-    // //系统设置 其他管理
-
-    // function other(){
-
-    //  $data['page'] = $this->view_other;
-
-    //  $data['menu'] = array('systemSet','other');
-
-    //  $this->load->view('template.html',$data);
-
-    // }
-
-    //系统设置 网站信息管理
-
-    function webMessage(){
-
-        //获取web设置
-
-        $system = $this->System_model->get_webSystem();
-
-        $data['webset'] = json_decode($system['system_value'],true);
-
-        $data['page'] = $this->view_web_config;
-
-        $data['menu'] = array('systemSet','webMessage');
-
-        $this->load->view('template.html',$data);
-
-    }
-
-    //网站信息操做
-
-    function edit_WebSystem(){
-
-        if($_POST){
-
-            $data = $this->input->post();
-
-            if(!empty($_FILES['img']['tmp_name'])){
-
-                $config['upload_path']      = 'Upload/logo';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('img')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $data['logo'] = 'Upload/logo/'.$this->upload->data('file_name');
-
-                }
-
-            }
-
-            $json = json_encode($data,JSON_UNESCAPED_UNICODE);
-
-            $arr= array('system_value'=>$json);
-
-            if($this->System_model->edit_WebSystem($arr)){
-
-                $log = array(
-
-                        'userid'=>$_SESSION['users']['user_id'],  
-
-                        "content" => $_SESSION['users']['username']."修改了网站信息",
-
-                        "create_time" => date('Y-m-d H:i:s'),
-
-                        "userip" => get_client_ip(),
-
-                    );
-
-                    $this->db->insert('hf_system_journal',$log);
-
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
-
-            }else{
-
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/webMessage')."'</script>";exit;
-
-            }
-
-        }else{
-
-            $this->load->view('404.html');
-
-        }
-
-    }
-
-
-
       //权限管理
 
     function memberLimit(){
@@ -1271,11 +1207,26 @@ class SystemSet extends Default_Controller {
      //banner列表
 
     function bannerList(){
-
-
-
-        $data['banners'] = $this->System_model->get_bannerlist();
-
+        $data['banners'] = '';
+        switch($_SESSION['city']){
+            case '0':
+            $data['banners'] = $this->System_model->get_bannerlist();
+                break;
+            case "1":
+            $data['banners'] = $this->System_model->get_city_bannerlist('1');
+                break;
+            case "2":
+            $data['banners'] = $this->System_model->get_city_bannerlist('2');
+            
+                break;
+            case "3":
+            $data['banners'] = $this->System_model->get_city_bannerlist('3');
+            
+                break;
+            case "4":
+            $data['banners'] = $this->System_model->get_city_bannerlist('4');
+                break;
+        }
         $data['page'] = $this->view_bannerList;
 
         $data['menu'] = array('systemSet','bannerList');
@@ -1319,40 +1270,55 @@ class SystemSet extends Default_Controller {
         if($_POST){
 
             $id = $this->input->post('id');
+            $data = $this->input->post(); 
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
-            $data = $this->input->post();
-
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
             if(!empty($_FILES['img']['name'])){
-
-                $config['upload_path']      = 'Upload/banner/';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                // 上传
-
-                if(!$this->upload->do_upload('img')) {
-
-                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$data['id'])."'</script>";exit;
-
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'banner/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['bannerPic'] =$img[0]['picImg'];
                 }else{
-
-                   
-
-                    $data['bannerPic'] = '/Upload/banner/'.$this->upload->data('file_name');
-
-                    }
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$id)."'</script>";exit;
+                }
 
             }
 
             unset($data['id']);
 
              $a[] = $data;
+        
 
             //获取原由的banner
 
@@ -1375,7 +1341,6 @@ class SystemSet extends Default_Controller {
                 $arr = array('banner'=>$json);
 
             }
-
             if($this->System_model->edit_banner($id,$arr)){
 
                    $log = array(
@@ -1393,7 +1358,6 @@ class SystemSet extends Default_Controller {
                     $this->db->insert('hf_system_journal',$log);
 
                 echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/bannerList')."'</script>";exit;
-
             }else{
 
                  echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$id)."'</script>";exit;
@@ -1452,31 +1416,47 @@ class SystemSet extends Default_Controller {
 
             $data = $this->input->post();
 
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
+
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
             if(!empty($_FILES['img']['name'])){
-
-                $config['upload_path']      = 'Upload/banner/';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg|webp';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                // 上传
-
-                if(!$this->upload->do_upload('img')) {
-
-                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/editBanner/'.$data['id'].'/'.$num)."'</script>";exit;
-
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'banner/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['bannerPic'] =$img[0]['picImg'];
                 }else{
-
-                   
-
-                    $data['bannerPic'] = '/Upload/banner/'.$this->upload->data('file_name');
-
-                    }
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$id)."'</script>";exit;
+                }
 
             }
 

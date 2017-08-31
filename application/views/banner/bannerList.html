@@ -48,38 +48,40 @@ h4.am-panel-title{
                                 <div class="am-panel-hd">
                               
                                     <h4 class="am-panel-title" data-am-collapse="{parent:'#accordion',target:'#homepage<?php echo $val['type'];?>'}">
+                                        <?php if($val['city'] == 1){
+                                            echo "【重庆】";
+                                        }else if($val['city'] == 2){
+                                            echo "【南江】";
+                                        }else if($val['city'] == 3) {
+                                            echo "【宣汉】";
+                                        }else if($val['city'] == 4) {
+                                            echo "【邻水】";
+                                        }
+                                        ?>
+                                        
                                         <?php switch ($val['type']) {
                                                 case '1':
                                                    echo '首页的banner';
                                                     break;
-                                     ;
+                                                case '2':
+                                                   echo '宏帆广场banner';
+                                                    break;
                                                 case '3':
-                                                   echo '购物中心的banner';
+                                                   echo '本地生活banner';
                                                     break;
                                                 case '4':
-                                                   echo '超市比价的banner';
-                                                    break;
+                                                   echo 'HI拼车';
+                                                    break; 
                                                 case '5':
-                                                   echo '为民服务的banner';
+                                                   echo '跨境优品';
                                                     break; 
                                                 case '6':
-                                                   echo '跨境优品的banner';
+                                                   echo '特色馆';
                                                     break;
                                                 case '7':
-                                                   echo '快递上门的banner';
+                                                   echo '超市优选';
                                                     break;
-                                                case '8':
-                                                   echo '购物的banner';
-                                                    break;
-                                                case '9':
-                                                   echo '本地生活的banner';
-                                                    break;
-                                                case '10':
-                                                   echo '发现板块的banner';
-                                                    break;
-                                                case '11':
-                                                   echo '特色馆的banner';
-                                                    break;
+                                                
                                         }?>
                                         <span class="am-icon-chevron-up am-fr am-margin-right-sm sidebar-nav-sub-ico ulSign"></span>
                                     </h4>
