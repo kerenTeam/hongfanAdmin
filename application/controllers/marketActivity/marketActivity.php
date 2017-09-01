@@ -41,7 +41,7 @@ class MarketActivity extends Default_Controller {
 
          $data['page']= $this->view_marketActivity;
 
-         $data['menu'] = array('marketActivity','activity');
+         $data['menu'] = array('moll','activity');
 
          $this->load->view('template.html',$data);
 
@@ -78,6 +78,18 @@ class MarketActivity extends Default_Controller {
     //新增商场活动
 
     function marketAddActivity(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
 
 
@@ -100,6 +112,7 @@ class MarketActivity extends Default_Controller {
     //新增活动操作
 
     function market_add_activity(){
+        
 
         if($_POST){
 
@@ -202,6 +215,18 @@ class MarketActivity extends Default_Controller {
     //编辑商场活动
 
     function marketEditActivity(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         $id = intval($this->uri->segment(4));
 
@@ -376,6 +401,18 @@ class MarketActivity extends Default_Controller {
     //
 
     function del_Activity(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 

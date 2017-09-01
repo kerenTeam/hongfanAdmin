@@ -93,6 +93,18 @@ class LoveToGo extends Default_Controller
     //更新爱购分裂
 
     function up_igo_cates(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         $data = array(
 
@@ -147,6 +159,18 @@ class LoveToGo extends Default_Controller
     //编辑爱购分类
 
     function edit_igo_cates(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -247,6 +271,18 @@ class LoveToGo extends Default_Controller
     //推荐爱购分类首页显示
 
     function loveToGoCates_recommend(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -309,6 +345,18 @@ class LoveToGo extends Default_Controller
     //删除爱购分类
 
     function del_igo_cate(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -575,6 +623,18 @@ class LoveToGo extends Default_Controller
     //删除 爱购商品
 
     function del_love_goods(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
             if($_POST){
 
@@ -621,6 +681,18 @@ class LoveToGo extends Default_Controller
     //爱g购订单导出
 
     function dowload_love_order(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         $begin_date = $this->uri->segment(4);
 

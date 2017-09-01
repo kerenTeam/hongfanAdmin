@@ -124,17 +124,6 @@ class Store extends Default_Controller {
 
     }
 
-     ////特色馆  HOT推荐管理
-
-    function storeHotRecommand(){
-
-         $data['page'] = $this->view_storeHotRecommand;
-
-         $data['menu'] = array('moll','storeHotRecommand');
-
-         $this->load->view('template.html',$data);
-
-    }
 
     //返回商品列表
 
@@ -239,11 +228,6 @@ class Store extends Default_Controller {
           
 
             $goods_list = $this->MallShop_model->get_godosRecycle();
-
-         
-
-
-
             //获取商品库存
 
             foreach($goods_list as $k=>$v){
@@ -379,6 +363,18 @@ class Store extends Default_Controller {
     //推荐商品到首页
 
     function edit_recommend(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -469,6 +465,18 @@ class Store extends Default_Controller {
     //添加商品
 
     function storeAddGoods(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
        $data['page'] = $this->view_storeAddGoods;
 
@@ -481,6 +489,18 @@ class Store extends Default_Controller {
     //编辑商品
 
     function storeEditGoods(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
          $id = intval($this->uri->segment(4));
 
@@ -831,6 +851,18 @@ class Store extends Default_Controller {
     //添加分类
 
     function storeAddSort(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         //获取顶级分类
 
@@ -919,6 +951,18 @@ class Store extends Default_Controller {
     //编辑分类
 
     function storeEditSort(){
+         $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
          $id = intval($this->uri->segment(4));
 
@@ -1387,6 +1431,18 @@ class Store extends Default_Controller {
     //订单退款成功
 
     function refund_price(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -1461,6 +1517,18 @@ class Store extends Default_Controller {
     //删除订单进回收站
 
     function orderRe(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -1513,6 +1581,18 @@ class Store extends Default_Controller {
     //删除订单
 
     function del_Order(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -1662,349 +1742,6 @@ class Store extends Default_Controller {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //主题展销商品管理
-
-    function storeGoodsSales(){
-
-        //获取所有展销商品
-
-        $sales = $this->MallShop_model->get_active_sales('1');
-
-        foreach ($sales as $key => $value) {
-
-            $goods = explode(',', $value['goods_list']);
-
-            foreach ($goods as $k => $v) {
-
-                 $sales[$key]['goods'][] = $this->MallShop_model->get_goods_title($v);
-
-            }
-
-           
-
-        }
-
-         $data['sales'] = $sales;
-
-         $data['page'] = $this->view_storeGoodsSales;
-
-         $data['menu'] = array('moll','storeGoodsSales');
-
-         $this->load->view('template.html',$data);
-
-     }
-
-     //删除展销
-
-     function del_Sales(){
-
-        $id = intval($this->uri->segment(4));
-
-        if($id == 0){
-
-            $this->load->view('404.html');
-
-        }else{
-
-            if($this->MallShop_model->del_Sales($id)){
-
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
-
-            }else{
-
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
-
-            }
-
-        }
-
-     }
-
-     // 删除展销某个活动的产品
-
-     function del_sales_goods(){
-
-        if($_POST){
-
-            $id = $_POST['id'];
-
-            $goodsid = $_POST['goodsid'];
-
-            if(empty($id) || empty($goodsid)){
-
-                echo "2";
-
-            }else{
-
-                $sale = $this->MallShop_model->get_sales_info($id);
-
-                $goods = explode(',',$sale['goods_list']);
-
-                foreach ($goods as $key => $value) {
-
-                   if($value == $goodsid){
-
-                     unset($goods[$key]);
-
-                   }
-
-                }
-
-                $data['goods_list'] = implode(',',$goods);
-
-                    if($this->MallShop_model->edit_salse($id,$data)){
-
-                           $log = array(
-
-                        'userid'=>$_SESSION['users']['user_id'],  
-
-                        "content" => $_SESSION['users']['username']."删除了id为".$id."的展销商品，商品id是".$goodsid,
-
-                        "create_time" => date('Y-m-d H:i:s'),
-
-                        "userip" => get_client_ip(),
-
-                    );
-
-                    $this->db->insert('hf_system_journal',$log);
-
-                    echo "1";
-
-                }else{
-
-                    echo "2";
-
-                }
-
-            }
-
-        }else{  
-
-            echo "2";
-
-        }
-
-     }
-
-
-
-     //新增某个展销商品
-
-     function add_sales_goods(){
-
-        if($_POST){
-
-            $id = $_POST['id'];
-
-            $goodsid = json_decode($_POST['goodsid'],true);
-
-            $sale = $this->MallShop_model->get_sales_info($id);
-
-            $goods = explode(',',$sale['goods_list']);
-
-            $arr = array_unique(array_merge($goodsid,$goods));
-
-            $data['goods_list'] = implode(',',$arr);
-
-            if($this->MallShop_model->edit_salse($id,$data)){
-
-                  if($this->MallShop_model->edit_salse($id,$data)){
-
-                           $log = array(
-
-                        'userid'=>$_SESSION['users']['user_id'],  
-
-                        "content" => $_SESSION['users']['username']."新增了id为".$id."的展销商品，商品id是".$data['goods_list'],
-
-                        "create_time" => date('Y-m-d H:i:s'),
-
-                        "userip" => get_client_ip(),
-
-                    );
-
-                    $this->db->insert('hf_system_journal',$log);
-
-                echo "1";
-
-            }else{
-
-                echo "2"; 
-
-            }
-
-        }else{
-
-            echo "2";
-
-        }
-
-     }
-
- }
-
-
-
-     //新增展销
-
-     function add_sales(){
-
-        if($_POST){
-
-            $data = $this->input->post();
-
-            if(!empty($_FILES['img']['tmp_name'])){
-
-                $config['upload_path']      = 'Upload/adver';
-
-                $config['allowed_types']    = 'jpg|png|jpeg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                if ( ! $this->upload->do_upload('img')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $img[]['picImg'] =  '/Upload/adver/'.$this->upload->data('file_name');
-
-                }
-
-            }
-
-            $data['goods_list'] = implode(',',json_decode($data['goodsid'],true));
-
-            unset($data['goodsid']);
-
-            $data['picImg'] = json_encode($img);
-
-            $data['type'] = '1';
-
-            if($this->MallShop_model->add_sales($data)){
-
-                    $log = array(
-
-                        'userid'=>$_SESSION['users']['user_id'],  
-
-                        "content" => $_SESSION['users']['username']."新增了一个展销信息，展销名称是：".$data['title'],
-
-                        "create_time" => date('Y-m-d H:i:s'),
-
-                        "userip" => get_client_ip(),
-
-                    );
-
-                    $this->db->insert('hf_system_journal',$log);
-
-
-
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Store/storeGoodsSales')."'</script>";exit;
-
-            }else{
-
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";exit;
-
-            }
-
-       }
-
-    }
-
-
-
-    //展销图片修改
-
-    function edit_sales_img(){
-
-        $id = $_POST['id'];
-
-        if(!empty($_FILES['file']['tmp_name'])){
-
-            $config['upload_path']      = 'Upload/adver';
-
-            $config['allowed_types']    = 'jpg|png|jpeg';
-
-            $config['max_size']     = 2048;
-
-            $config['file_name'] = date('Y-m-d_His');
-
-            $this->load->library('upload', $config);
-
-            if ( ! $this->upload->do_upload('file')) {
-
-                echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Store/storeGoodsList')."'</script>";
-
-                exit;
-
-            } else{
-
-                $img[]['picImg'] =  '/Upload/adver/'.$this->upload->data('file_name');
-
-            }
-
-        }
-
-        $data['picImg'] = json_encode($img);
-
-        if($this->MallShop_model->edit_salse($id,$data)){
-
-             $log = array(
-
-                'userid'=>$_SESSION['users']['user_id'],  
-
-                "content" => $_SESSION['users']['username']."修改了一个商品展销信息图片，展销id是：".$id,
-
-                "create_time" => date('Y-m-d H:i:s'),
-
-                "userip" => get_client_ip(),
-
-            );
-
-            $this->db->insert('hf_system_journal',$log);
-
-            echo "1";exit;
-
-        }else{
-
-            echo "2";exit;
-
-        }
-
-     }
-
-
-
-    //快递管理
-
-    function storeDeliveryList(){
-
-         $data['page'] = $this->view_storeDeliveryList;
-
-         $data['menu'] = array('store','storeDeliveryList');
-
-         $this->load->view('template.html',$data);
-
-     }
 
 
 

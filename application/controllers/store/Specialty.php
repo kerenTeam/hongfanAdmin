@@ -1,267 +1,475 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-/*
- *  特色馆商品
- *
- * */
-require_once(APPPATH.'controllers/Default_Controller.php');
-class Specialty extends Default_Controller {
-    
-    //特色馆分类
-    public $view_specialtyCates = "store/specialty/specialtyCates.html";
-    //新增特色馆分类
-    public $view_specialtyAddCates =  "store/specialty/specialtyAddCates.html";
-    //编辑特色馆分类
-    public $view_specialtyEditCates = "store/specialty/specialtyEditCates.html";
-    //天天特价商品
-    public $view_discountGoods = "store/specialty/discountGoods.html";
-    //推荐商品
-    public $view_recommendGoods = "store/specialty/recommendGoods.html";
-    //HOT管理
-    public $view_hotGoods = "store/storeHotRecommand.html";
-
-    function __construct()
-    {
-        parent::__construct();
-        $this->load->model('MallShop_model');
-        $this->load->model('Shop_model');
-    }
-
-    //特色馆分类
-    function specialtyCate(){
-        $data['page'] = $this->view_specialtyCates;
-        $data['menu'] = array('store','specialtyCate');
-        $this->load->view('template.html',$data);
-    }
-
-    //返回特色馆分类
-    function ret_specialty_cate(){
-        if($_POST){
-           $catelist = $this->MallShop_model->get_goods_cates_list('2');
-           echo json_encode($catelist);
-        }else{
-            echo "2";
-        }
-    }
-
-   //添加特色馆分类
-    function storeAddSort(){
-        //获取特色馆顶级分类
-         $data['cates'] = $this->MallShop_model->get_cate_level('2');
-
-         $data['page'] = $this->view_specialtyAddCates;
-         $data['menu'] = array('store','specialtyCate');
-         $this->load->view('template.html',$data);
-    }
-    //添加特色馆分类操作
-    function add_store_cate(){
-        if($_POST){
-            $data = $this->input->post();
-            $data['type'] = '2';
-            if(!empty($_FILES['icon']['tmp_name'])){
-                $config['upload_path']      = 'Upload/icon';
-                $config['allowed_types']    = 'jpg|png|jpeg|svg';
-                $config['max_size']     = 2048;
-                $config['file_name'] = date('Y-m-d_His');
-                $this->load->library('upload', $config);
-                //上传
-                if ( ! $this->upload->do_upload('icon')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeAddSort/')."'</script>";
-                    exit;
-                } else{
-                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
-                }
-            }
-            if($this->MallShop_model->add_store_cate($data)){
-                 $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."添加了一个特色馆分类，分类名称是：".$data['catname'],
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                echo  "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/specialtyCate')."'</script>";
-            }else{
-                echo  "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/storeAddSort')."'</script>";
-            }
-        }else{
-            $this->load->view('404.html');
-        }
-    }
-    //编辑特色馆分类
-    function storeEditSort(){
-         $id = intval($this->uri->segment(4));
-         if($id == 0){
-            $this->load->view('404.html');
-         }else{
-             //获取特色馆顶级分类
-             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-             $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
-             $data['page'] = $this->view_specialtyEditCates;
-             $data['menu'] = array('store','specialtyCate');
-            $this->load->view('template.html',$data);
-         }
-    }
-    //编辑特色馆分类操作
-    function edit_store_cate(){
-        if($_POST){
-            $data = $this->input->post();
-            if(!empty($_FILES['icon']['tmp_name'])){
-                $config['upload_path']      = 'Upload/icon';
-                $config['allowed_types']    = 'jpg|png|jpeg|svg';
-                $config['max_size']     = 2048;
-                $config['file_name'] = date('Y-m-d_His');
-                $this->load->library('upload', $config);
-                //上传
-                if ( ! $this->upload->do_upload('icon')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeEditSort/'.$data['catid'])."'</script>";
-                    exit;
-                } else{
-                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
-                }
-            }
-            if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
-                $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个特色馆分类，分类名称是：".$data['catname'].",分类id是：".$data['catid'],
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/specialtyCate')."'</script>";
-             }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/storeEditSort/'.$data['catid'])."'</script>";
-             }
-        }else{
-            $this->load->view('404.html');
-        }
-    }
-
-    //删除特色馆分类
-    function del_store_cate(){
-        if($_POST){
-            $id = $_POST['id'];
-            if($this->MallShop_model->del_store_cate($id)){
-                $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."删除了一个特色馆分类，分类id是：".$id,
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                echo "1";
-            }else{
-                echo "2";
-            }
-        }else{
-            echo "2";
-        }
-    }
-    //特色馆分类搜索
-    function search_cate(){
-        if($_POST){
-            $sear = $_POST['sear'];
-            $cates = $this->MallShop_model->search_cates($sear,'2');
-            echo json_encode($cates);
-        }else{
-            echo "2";
-        }
-    }
-
-    //天天特价
-    function discountGoods(){
-        $data['page'] = $this->view_discountGoods;
-        $data['menu'] = array('store','discountGoods');
-        $this->load->view('template.html',$data);
-    }
-    //推荐商品
-    function recommendGoods(){
-     
-        $data['page'] = $this->view_recommendGoods;
-        $data['menu'] = array('store','recommendGoods');
-        $this->load->view('template.html',$data);
-    }
-
-    //修改商品排序
-    function edit_goods_stor(){
-        if($_POST){
-            $data = $this->input->post();
-            //$data['sort'] = $this->input->post('sort');
-            if($this->MallShop_model->edit_goods_state($data['goods_id'],$data)){
-                $log = array(
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."修改了商品排序，商品id是".$data['goods_id'],
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
-                $this->db->insert('hf_system_journal',$log);
-                echo "1";
-            }else{
-                echo "3";
-            }
-        }else{
-            echo "2";
-        }
-    }
-
-    //HOT管理
-    function hot_goods_list(){
-        //获取hot
-        $list = $this->Shop_model->get_hot_goods();
-        foreach ($list as $key => $value) {
-            $goods = explode(',', $value['goods_list']);
-            foreach ($goods as $k => $v) {
-                 $list[$key]['goods'][] = $this->MallShop_model->get_goods_title($v);
-            }
-           
-        }
-        $data['hot'] = $list;
-        
-        $data['page'] = $this->view_hotGoods;
-        $data['menu'] = array('store','hot_goods_list');
-        $this->load->view('template.html',$data);
-    }
-
-        //修改HOT推荐详情
-     function edit_find_info(){
-        if($_POST){
-            $data= $this->input->post();
-            if(!empty($_FILES['img']['tmp_name'])){
-                $config['upload_path']      = 'Upload/adver/';
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
-                $config['max_size']     = 2048;
-                $config['file_name'] = date('Y-m-d_His');
-                $this->load->library('upload', $config);
-                // 上传
-                if(!$this->upload->do_upload('img')) {
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
-                }else{
-                    $img[]['picImg'] = '/Upload/adver/'.$this->upload->data('file_name');
-                    $data['picImg'] = json_encode($img);
-                }
-            }
-           
-            if($this->Shop_model->edit_salse($data['id'],$data)){
-                  $log = array(
-                        'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."修改了一个特色馆HOT详情,id是：".$data['id'],
-                        "create_time" => date('Y-m-d H:i:s'),
-                        "userip" => get_client_ip(),
-                    );
-                    $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
-            }else{
-                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/hot_goods_list')."';</script>";exit;
-            }
-        }else{
-            $this->load->view('404.html');
-        }
-     }
-
-
-
-
-}
-
-
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/*
+
+ *  特色馆商品
+
+ *
+
+ * */
+
+require_once(APPPATH.'controllers/Default_Controller.php');
+
+class Specialty extends Default_Controller {
+
+    
+
+    //特色馆分类
+
+    public $view_specialtyCates = "store/specialty/specialtyCates.html";
+
+    //新增特色馆分类
+
+    public $view_specialtyAddCates =  "store/specialty/specialtyAddCates.html";
+
+    //编辑特色馆分类
+
+    public $view_specialtyEditCates = "store/specialty/specialtyEditCates.html";
+
+    //天天特价商品
+
+    public $view_discountGoods = "store/specialty/discountGoods.html";
+
+    //推荐商品
+
+    public $view_recommendGoods = "store/specialty/recommendGoods.html";
+
+    //HOT管理
+
+    public $view_hotGoods = "store/storeHotRecommand.html";
+
+
+
+    function __construct()
+
+    {
+
+        parent::__construct();
+
+        $this->load->model('MallShop_model');
+
+        $this->load->model('Shop_model');
+
+    }
+
+
+
+    //特色馆分类
+
+    function specialtyCate(){
+
+        $data['page'] = $this->view_specialtyCates;
+
+        $data['menu'] = array('store','specialtyCate');
+
+        $this->load->view('template.html',$data);
+
+    }
+
+
+
+    //返回特色馆分类
+
+    function ret_specialty_cate(){
+
+        if($_POST){
+
+           $catelist = $this->MallShop_model->get_goods_cates_list('2');
+
+           echo json_encode($catelist);
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
+
+
+
+   //添加特色馆分类
+
+    function storeAddSort(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
+
+        //获取特色馆顶级分类
+
+         $data['cates'] = $this->MallShop_model->get_cate_level('2');
+
+
+
+         $data['page'] = $this->view_specialtyAddCates;
+
+         $data['menu'] = array('store','specialtyCate');
+
+         $this->load->view('template.html',$data);
+
+    }
+
+    //添加特色馆分类操作
+
+    function add_store_cate(){
+
+        if($_POST){
+
+            $data = $this->input->post();
+
+            $data['type'] = '2';
+
+            if(!empty($_FILES['icon']['tmp_name'])){
+
+                $config['upload_path']      = 'Upload/icon';
+
+                $config['allowed_types']    = 'jpg|png|jpeg|svg';
+
+                $config['max_size']     = 2048;
+
+                $config['file_name'] = date('Y-m-d_His');
+
+                $this->load->library('upload', $config);
+
+                //上传
+
+                if ( ! $this->upload->do_upload('icon')) {
+
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeAddSort/')."'</script>";
+
+                    exit;
+
+                } else{
+
+                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
+
+                }
+
+            }
+
+            if($this->MallShop_model->add_store_cate($data)){
+
+                 $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."添加了一个特色馆分类，分类名称是：".$data['catname'],
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                echo  "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/specialtyCate')."'</script>";
+
+            }else{
+
+                echo  "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/storeAddSort')."'</script>";
+
+            }
+
+        }else{
+
+            $this->load->view('404.html');
+
+        }
+
+    }
+
+    //编辑特色馆分类
+
+    function storeEditSort(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
+         $id = intval($this->uri->segment(4));
+
+         if($id == 0){
+
+            $this->load->view('404.html');
+
+         }else{
+
+             //获取特色馆顶级分类
+
+             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
+
+             $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
+
+             $data['page'] = $this->view_specialtyEditCates;
+
+             $data['menu'] = array('store','specialtyCate');
+
+            $this->load->view('template.html',$data);
+
+         }
+
+    }
+
+    //编辑特色馆分类操作
+
+    function edit_store_cate(){
+
+        if($_POST){
+
+            $data = $this->input->post();
+
+            if(!empty($_FILES['icon']['tmp_name'])){
+
+                $config['upload_path']      = 'Upload/icon';
+
+                $config['allowed_types']    = 'jpg|png|jpeg|svg';
+
+                $config['max_size']     = 2048;
+
+                $config['file_name'] = date('Y-m-d_His');
+
+                $this->load->library('upload', $config);
+
+                //上传
+
+                if ( ! $this->upload->do_upload('icon')) {
+
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeEditSort/'.$data['catid'])."'</script>";
+
+                    exit;
+
+                } else{
+
+                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
+
+                }
+
+            }
+
+            if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了一个特色馆分类，分类名称是：".$data['catname'].",分类id是：".$data['catid'],
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                 echo "<script>alert('操作成功！');window.location.href='".site_url('/store/Specialty/specialtyCate')."'</script>";
+
+             }else{
+
+                 echo "<script>alert('操作失败！');window.location.href='".site_url('/store/Specialty/storeEditSort/'.$data['catid'])."'</script>";
+
+             }
+
+        }else{
+
+            $this->load->view('404.html');
+
+        }
+
+    }
+
+
+
+    //删除特色馆分类
+
+    function del_store_cate(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
+
+        if($_POST){
+
+            $id = $_POST['id'];
+
+            if($this->MallShop_model->del_store_cate($id)){
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."删除了一个特色馆分类，分类id是：".$id,
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "1";
+
+            }else{
+
+                echo "2";
+
+            }
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
+
+    //特色馆分类搜索
+
+    function search_cate(){
+
+        if($_POST){
+
+            $sear = $_POST['sear'];
+
+            $cates = $this->MallShop_model->search_cates($sear,'2');
+
+            echo json_encode($cates);
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
+
+
+
+    //天天特价
+
+    function discountGoods(){
+
+        $data['page'] = $this->view_discountGoods;
+
+        $data['menu'] = array('store','discountGoods');
+
+        $this->load->view('template.html',$data);
+
+    }
+
+    //推荐商品
+
+    function recommendGoods(){
+
+     
+
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','recommendGoods');
+
+        $this->load->view('template.html',$data);
+
+    }
+
+
+
+    //修改商品排序
+
+    function edit_goods_stor(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
+
+        if($_POST){
+
+            $data = $this->input->post();
+
+            //$data['sort'] = $this->input->post('sort');
+
+            if($this->MallShop_model->edit_goods_state($data['goods_id'],$data)){
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了商品排序，商品id是".$data['goods_id'],
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "1";
+
+            }else{
+
+                echo "3";
+
+            }
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
 ?>

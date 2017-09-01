@@ -131,8 +131,25 @@ class Shop extends Default_Controller {
          if($_POST){
 
             $type = $_POST['typeid'];
-
-            $list = $this->Shop_model->shop_list($type);
+            $list = '';
+            switch($_SESSION['city']){
+                case "0":
+                    $list = $this->Shop_model->shop_list($type);
+                    break;
+                case "1":
+                    $list = $this->Shop_model->city_shop_list($type,'1');
+                    break;
+                case "2":
+                    $list = $this->Shop_model->city_shop_list($type,'2');
+                    break;
+                case "3":
+                    $list = $this->Shop_model->city_shop_list($type,'3');
+                    break;
+                case "4":
+                    $list = $this->Shop_model->city_shop_list($type,'4');
+                    break;
+            }
+         //   $list = $this->Shop_model->shop_list($type);
 
             if(empty($list)){
 
@@ -199,6 +216,18 @@ class Shop extends Default_Controller {
     //商家状态修改
 
     function edit_shop_state(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -307,6 +336,18 @@ class Shop extends Default_Controller {
     //删除商家
 
     function del_shop_store(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -417,6 +458,18 @@ class Shop extends Default_Controller {
     //编辑商场商家
 
     function edit_store(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         $id = intval($this->uri->segment(4));
 
@@ -494,57 +547,83 @@ class Shop extends Default_Controller {
 
 
 
+                $bucketList =  $this->config->item('buckrtGlobal');
+                switch($_SESSION['city']){
+                    case '0':
+                       // $data['city'] = $this->input->post('city');
+                         $city = $this->input->post('city');
+                         $bucket =$bucketList['cq']['other'];
+                        break;
+                    case '1':
+                        $data['city'] = '1';
+                        $city = '1';
+                        $bucket =$bucketList['cq']['other'];
+                        break;
+                    case '2':
+                        $city = '2';
+                        $bucket =$bucketList['nj']['other'];
+                        break;
+                    case '3':
+                    $city = '3';
+                        $bucket =$bucketList['xh']['other'];
+                        break;
+                    case '4':
+                    $city = '4';
+                        $bucket =$bucketList['ls']['other'];
+                        break;
+                    
+                }
+    
+                $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
+
                 if(!empty($_FILES['img1']['name'])){
 
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img1')) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
-
-                    }else{
-
-                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                    }
+                     $tmpfile = new CURLFile(realpath($_FILES['img1']['tmp_name']));
+                    //  var_dump($tmpfile);
+                      $pics = array(
+                          'pics' =>$tmpfile,
+                          'porfix'=>'shop/store/'.$bucket,
+                          'bucket'=>$bucket,
+                      );
+                  
+                      $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    
+                      if($qiuniu['errno'] == '0'){
+                          $img = json_decode($qiuniu['data']['img'],true);
+  
+                        
+  
+                          $data['logo'] =$img[0]['picImg'];
+                          
+                      }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
+                      }
 
                 }
 
                 if(!empty($_FILES['img2']['name'])){
 
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img2')) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
-
-                    }else{
-
-                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                    }
+                    $tmpfile = new CURLFile(realpath($_FILES['img2']['tmp_name']));
+                    //  var_dump($tmpfile);
+                      $pics = array(
+                          'pics' =>$tmpfile,
+                          'porfix'=>'shop/store/'.$bucket,
+                          'bucket'=>$bucket,
+                      );
+                  
+                      $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    
+                      if($qiuniu['errno'] == '0'){
+                          $img = json_decode($qiuniu['data']['img'],true);
+                          $data['pic'] =$img[0]['picImg'];
+                          
+                      }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
+                      }
 
                 }
+                $data['city'] = $city;  
 
      
 
@@ -597,6 +676,18 @@ class Shop extends Default_Controller {
     //新增场内商家
 
     function add_storeInfo(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         if($_POST){
 
@@ -632,59 +723,83 @@ class Shop extends Default_Controller {
 
                 unset($data['password'],$data['username']);
 
+                $bucketList =  $this->config->item('buckrtGlobal');
+                switch($_SESSION['city']){
+                    case '0':
+                       // $data['city'] = $this->input->post('city');
+                         $city = $this->input->post('city');
+                         $bucket =$bucketList['cq']['other'];
+                        break;
+                    case '1':
+                        $data['city'] = '1';
+                        $city = '1';
+                        $bucket =$bucketList['cq']['other'];
+                        break;
+                    case '2':
+                        $city = '2';
+                        $bucket =$bucketList['nj']['other'];
+                        break;
+                    case '3':
+                    $city = '3';
+                        $bucket =$bucketList['xh']['other'];
+                        break;
+                    case '4':
+                    $city = '4';
+                        $bucket =$bucketList['ls']['other'];
+                        break;
+                    
+                }
+    
+                $header = array("token:".$_SESSION['token'],'city:'.$city);   
 
 
                 if(!empty($_FILES['img1']['name'])){
 
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img1')) {
-
+                     $tmpfile = new CURLFile(realpath($_FILES['img1']['tmp_name']));
+                    //  var_dump($tmpfile);
+                      $pics = array(
+                          'pics' =>$tmpfile,
+                          'porfix'=>'shop/store/'.$bucket,
+                          'bucket'=>$bucket,
+                      );
+                  
+                      $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    
+                      if($qiuniu['errno'] == '0'){
+                          $img = json_decode($qiuniu['data']['img'],true);
+  
+                        
+  
+                          $data['logo'] =$img[0]['picImg'];
+                          
+                      }else{
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
-
-                    }else{
-
-                            $data['logo'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                    }
+                      }
 
                 }
 
                 if(!empty($_FILES['img2']['name'])){
 
-                    $config['upload_path']      = 'Upload/logo/';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img2')) {
-
+                    $tmpfile = new CURLFile(realpath($_FILES['img2']['tmp_name']));
+                    //  var_dump($tmpfile);
+                      $pics = array(
+                          'pics' =>$tmpfile,
+                          'porfix'=>'shop/store/'.$bucket,
+                          'bucket'=>$bucket,
+                      );
+                  
+                      $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    
+                      if($qiuniu['errno'] == '0'){
+                          $img = json_decode($qiuniu['data']['img'],true);
+                          $data['pic'] =$img[0]['picImg'];
+                          
+                      }else{
                         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit;
-
-                    }else{
-
-                        $data['pic'] = '/Upload/logo/'.$this->upload->data('file_name');
-
-                    }
+                      }
 
                 }
+                $data['city'] = $city;  
 
                  if($this->Shop_model->add_store($data)){
 
@@ -737,6 +852,7 @@ class Shop extends Default_Controller {
     //新增商家操作
 
     function add_shop_store(){
+        
 
         if($_POST){
 
@@ -853,6 +969,18 @@ class Shop extends Default_Controller {
     //编辑商家信息
 
     function editShop(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
 
         $id = intval($this->uri->segment(4));
 

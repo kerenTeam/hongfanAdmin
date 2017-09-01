@@ -55,6 +55,18 @@ class Member extends Default_Controller {
 
     //新增会员
     function addMember(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
          //获取会员卡类型
        //  $data['cards'] = $this->user_model->get_card_type();
           //获取会员卡类型
@@ -100,6 +112,19 @@ class Member extends Default_Controller {
 
     //编辑会员
     function editMember(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+        }	
+        
          $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -148,6 +173,18 @@ class Member extends Default_Controller {
     }
     //删除会员
     function delMember(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -282,6 +319,18 @@ class Member extends Default_Controller {
 
     //会员卡管理-会员卡详情
     function memberCardDetail(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
         $id=intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -297,6 +346,18 @@ class Member extends Default_Controller {
     }
     //会员卡编辑处理
     function edit_card(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
         if($_POST){
             $data = $this->input->post();
             if(!empty($_FILES['img']['tmp_name'])){
@@ -337,6 +398,18 @@ class Member extends Default_Controller {
 
     //删除会员卡
     function del_card(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
         $id=intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -363,6 +436,18 @@ class Member extends Default_Controller {
 
     //会员卡管理-添加会员卡
     function memberCardAdd(){
+            $q= $this->uri->uri_string();
+            $url = preg_replace('|[0-9]+|','',$q);
+            if(substr($url,-1) == '/'){
+                $url = substr($url,0,-1);
+            }
+                // var_dump($url);
+            $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+            if(!deep_in_array($url,$user_power)){
+                echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                        exit;
+            }	
  
             $data['page'] = $this->view_memberCardAdd;
             $data['menu'] = array('member','memberCard');
@@ -414,6 +499,19 @@ class Member extends Default_Controller {
 
     //屏蔽会员/解除会员屏蔽
     function up_user_state(){
+        $q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+        }	
+        
     	$state=intval($this->uri->segment(4));
     	$id=intval($this->uri->segment(5));
         //是否是修改状态

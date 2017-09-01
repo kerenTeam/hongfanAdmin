@@ -23,18 +23,7 @@ class Default_Controller extends CI_Controller
 		}
 
 
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		//$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-	// if(!deep_in_array($url,$user_power)){
-	//     echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-	//             exit;
-	// }
+		
 
 		
 
