@@ -226,6 +226,29 @@
 
                             </div>
 
+                            <?php if($_SESSION['city'] == 0):?>
+                            <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+                                
+                                <label class="am-u-sm-3 am-text-right">所属城市<span class="red">*</span>：</label>
+
+                                <div class="am-u-sm-6 am-u-end">
+                                    <select name="city" id="" required>
+                                        <option value="">请选择一项</option>
+                                        <option value="1">重庆(凤凰湾)</option>
+                                        <option value="2">南江</option>
+                                        <option value="3">宣汉</option>
+                                        <option value="4">邻水</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></div>
+
+                                <div class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></div>                                    
+
+                            </div>
+                            <?php endif;?>
+
                             <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
 
                                 <label class="am-u-sm-3 am-text-right">活动类型<span class="red">*</span>：</label>
@@ -410,7 +433,7 @@
 
                                     <div class="wx_type_img">
 
-                                     <input type="file" id="    " name="pics" onblur="previewImage(this)" class="upload-add am-form-field"  required>
+                                     <input type="file" id="imgUpload" name="pics" onblur="previewImage(this)" class="upload-add am-form-field"  required>
 
                                       <!-- 图片实时预览 -->
 

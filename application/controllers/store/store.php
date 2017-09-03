@@ -64,9 +64,6 @@ class Store extends Default_Controller {
 
     public $view_storeGoodsSales = "store/storeGoodsSales.html";
 
-    //特色馆 HOT推荐管理
-
-    public $view_storeHotRecommand = "store/storeHotRecommand.html";
 
     //购物中心 订单管理
 
@@ -133,55 +130,55 @@ class Store extends Default_Controller {
 
             //获取所有商品
 
-            $id = $this->input->post('default');
+            // $id = $this->input->post('default');
 
-            if($id ==2){
+            // if($id ==2){
 
-                //推荐商品
+            //     //推荐商品
 
-                 $goods_list = $this->MallShop_model->get_remment_goods();
+            //      $goods_list = $this->MallShop_model->get_remment_goods();
 
-            }else if($id == 3){
+            // }else if($id == 3){
 
-                //特价商品
+            //     //特价商品
 
-                 $goods_list = $this->MallShop_model->get_specials_goods();
+            //      $goods_list = $this->MallShop_model->get_specials_goods();
 
-            }else{
+            // }else{
 
-                $goods_list = $this->MallShop_model->get_goodslist('4');
 
-            }
-
+            // }
+            $goods_list = $this->MallShop_model->get_goodslist('4');
+            
 
 
             //获取商品库存
 
-            foreach($goods_list as $k=>$v){
+            // foreach($goods_list as $k=>$v){
 
-                //获取商品属性
+            //     //获取商品属性
 
-                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+            //     $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
 
-                if(!empty($parent)){
+            //     if(!empty($parent)){
 
-                    $a = '0';
+            //         $a = '0';
 
-                    foreach($parent as $key=>$val){
+            //         foreach($parent as $key=>$val){
 
-                        $a += $val['stock'];
+            //             $a += $val['stock'];
 
-                    }
+            //         }
 
-                    $goods_list[$k]['amount'] = $a;
+            //         $goods_list[$k]['amount'] = $a;
 
-                }else{
+            //     }else{
 
-                    $goods_list[$k]['amount'] = '0';
+            //         $goods_list[$k]['amount'] = '0';
 
-                }
+            //     }
 
-            } 
+            // } 
 
             if(empty($goods_list)){
 
@@ -290,7 +287,7 @@ class Store extends Default_Controller {
 
                 'goods' => $goods_list,
 
-                );
+            );
 
             if(empty($goods_list)){
 

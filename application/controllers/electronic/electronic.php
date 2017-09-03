@@ -48,7 +48,7 @@ class Electronic extends Default_Controller {
 
          $data['page']= $this->view_electronicList;
 
-         $data['menu'] = array('marketActivity','electronicList');
+         $data['menu'] = array('moll','electronicList');
 
          $this->load->view('template.html',$data);
 
@@ -100,7 +100,7 @@ class Electronic extends Default_Controller {
 
          $data['page']= $this->view_addElectronic;
 
-         $data['menu'] = array('marketActivity','electronicList');
+         $data['menu'] = array('moll','electronicList');
 
          $this->load->view('template.html',$data);
 
@@ -208,7 +208,7 @@ class Electronic extends Default_Controller {
 
              $data['page']= $this->view_editElectronic;
 
-             $data['menu'] = array('marketActivity','electronicList');
+             $data['menu'] = array('moll','electronicList');
 
              $this->load->view('template.html',$data);
 
@@ -418,7 +418,7 @@ class Electronic extends Default_Controller {
 
          $data['page']= $this->view_afterSales;
 
-         $data['menu'] = array('marketActivity','electronicList');
+         $data['menu'] = array('moll','electronicList');
 
          $this->load->view('template.html',$data);
 

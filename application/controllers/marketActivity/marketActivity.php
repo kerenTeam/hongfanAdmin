@@ -79,12 +79,13 @@ class MarketActivity extends Default_Controller {
 
     function marketAddActivity(){
         $q= $this->uri->uri_string();
+      
 		$url = preg_replace('|[0-9]+|','',$q);
 		if(substr($url,-1) == '/'){
 			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+        }
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
 
 		if(!deep_in_array($url,$user_power)){
 			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
@@ -125,24 +126,57 @@ class MarketActivity extends Default_Controller {
                 exit;
 
             }
+            
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['other'];
+                    break;
+                case '1':
+                    $data['city'] = '1';
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
 
-          
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
 
-            $header = array("token:".$_SESSION['token'],'city:'.'1');     
+            if(!empty($_FILES['img']['name'])){
+                
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                //  var_dump($tmpfile);
+                  $pics = array(
+                      'pics' =>$tmpfile,
+                      'porfix'=>'store/activity/'.$bucket,
+                      'bucket'=>$bucket,
+                  );
+              
+                  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                  if($qiuniu['errno'] == '0'){
+                      $img = json_decode($qiuniu['data']['img'],true);
+                      $data['picImg']  =$img[0]['picImg'];
+                      
+                  }else{
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
+                  }
 
-            $tmpfile = new CURLFile(realpath($_FILES['pics']['tmp_name']));
-     
-            $data = array(
-                'pics' =>$tmpfile,
-                'porfix'=>$this->uri->uri_string(),
-                'bucket'=>BUCKET,
-            );
-     
-            $a = curl_post_express($header,QINIUUPLOAD,$data);
-            var_dump($a);
-            exit;
-
-     
+            }
 
             if($data['type'] == 1){
 
@@ -306,31 +340,59 @@ class MarketActivity extends Default_Controller {
 
             }
 
+
+            $bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['other'];
+                    break;
+                case '1':
+                    $data['city'] = '1';
+                    $city = '1';
+                    $bucket =$bucketList['cq']['other'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['other'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['other'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['other'];
+                    break;
+                
+            }
+
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
             if(!empty($_FILES['img']['name'])){
-
-                    $config['upload_path']      = 'Upload/image/activity';
-
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img')) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
-
-                    }else{
-
-                        $data['picImg'] = '/Upload/image/activity/'.$this->upload->data('file_name');
-
-                    }
+                
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                //  var_dump($tmpfile);
+                  $pics = array(
+                      'pics' =>$tmpfile,
+                      'porfix'=>'store/activity/'.$bucket,
+                      'bucket'=>$bucket,
+                  );
+              
+                  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                  if($qiuniu['errno'] == '0'){
+                      $img = json_decode($qiuniu['data']['img'],true);
+                      $data['picImg']  =$img[0]['picImg'];
+                      
+                  }else{
+                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/marketActivity/MarketActivity/marketEditActivity/'.$data['id'])."'</script>";exit;
+                }
 
             }
+
+           
 
           
 

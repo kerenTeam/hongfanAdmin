@@ -49,7 +49,8 @@ class Login extends CI_Controller {
     //登陆操作
 
     function login_user(){
-
+        // set_time_limit(0);
+        
         if($_POST){
 
 
@@ -94,18 +95,16 @@ class Login extends CI_Controller {
                            //unset($_SESSION['menu']);
                            $_SESSION['buket'] = 'ebus';
                            $_SESSION['host'] = $this->config->item('ebus','hostGlobal');
-                        
-
                            redirect( site_url('shop/SingleShop/shopAdmin') );
 
                            break;
 
                         default:
 
-                        $group = $this->m_model->group_permiss($_SESSION['users']['gid']);
-                        
+                        $group = $this->m_model->group_permiss($user['gid']);
+                     
                         $plateid = json_decode($group['group_permission'],true);
-            
+               
                         $_SESSION['city'] = $group['city'];
                         if(!empty($plateid)){
                                 foreach ($plateid as $key => $value) {
@@ -113,6 +112,7 @@ class Login extends CI_Controller {
                                     $menu[] = $query->row_array();
                                 }
                                 $arr = array();
+                              
                                 $menus = subtree($menu);
                                 $_SESSION['user_power'] =json_encode($menus);
                                 foreach($menus as $key=>$value){
@@ -125,13 +125,11 @@ class Login extends CI_Controller {
                                     }
                                 }
                                 $_SESSION['menu'] = json_encode($menus_data);
-                            
                         }else{
-            
                             $a['error'] = '你没有权限登录！';
             
                             $this->load->view('login.html',$a);
-            
+                            // exit;
                         }
                         $data = array(
 
