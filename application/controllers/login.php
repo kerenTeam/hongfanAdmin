@@ -89,6 +89,7 @@ class Login extends CI_Controller {
                    $token = curl_post_token($url,$arr);
                    $_SESSION['token'] = trim($token);
 
+                 
                    switch ($user['gid']){
 
                         case 2:
@@ -103,9 +104,12 @@ class Login extends CI_Controller {
 
                         $group = $this->m_model->group_permiss($user['gid']);
                      
+                     
                         $plateid = json_decode($group['group_permission'],true);
                
                         $_SESSION['city'] = $group['city'];
+
+                    
                         if(!empty($plateid)){
                                 foreach ($plateid as $key => $value) {
                                     $query = $this->db->where('modular_id',$value)->get('hf_system_modular');
@@ -125,12 +129,15 @@ class Login extends CI_Controller {
                                     }
                                 }
                                 $_SESSION['menu'] = json_encode($menus_data);
+
+                             
                         }else{
                             $a['error'] = '你没有权限登录！';
             
                             $this->load->view('login.html',$a);
                             // exit;
                         }
+
                         $data = array(
 
                                 "userid" => $user['user_id'],

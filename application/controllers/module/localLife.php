@@ -218,48 +218,33 @@ class LocalLife extends Default_Controller {
 		if(!deep_in_array($url,$user_power)){
 			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
 					exit;
-		}	
-
+		}
+	
         if($_POST){
 
             $data = $this->input->post();
 
-            if(!empty($_FILES['img']['tmp_name'])){
+			$header = array("token:".$_SESSION['token'],'city:'.'1');    
+			
+            if(!empty($_FILES['img']['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/local/icon',
+                        'bucket'=>BUCKET,
+                    );
+				
+					$qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
 
-                $config['upload_path']      = 'Upload/icon';
-
-                $config['allowed_types']    = 'gif|jpg|png|jpeg|svg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                if ( ! $this->upload->do_upload('img')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
-
-                    exit;
-
-                } else {
-
-                    $icon[]['picImg'] =  '/Upload/icon/'.$this->upload->data('file_name');
-
-                    $data['icon'] = json_encode($icon);
-
-                }
-
+					if($qiuniu['errno'] == '0'){
+						$img = json_decode($qiuniu['data']['img'],true);
+						$icon[]['picImg'] =$img[0]['picImg'];
+						$data['icon'] = json_encode($icon);
+					}else{
+					  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";exit;
+					}
             }
-
-            // var_dumP($data);
-
-            // exit;
-
-      
-
-    
-
             if($this->Module_model->edit_cates($data['id'],$data)){
 
             	//日志
@@ -408,21 +393,7 @@ class LocalLife extends Default_Controller {
 
 						break;
 
-					//房产信息
-
-					case '2':
-
-					//	$userid = $_SESSION['users']['user_id'];
-
-						$list = $this->Module_model->get_houst();
-
-						$config['total_rows'] = count($list);
-
-						//分页数据
-
-						$listpage = $this->Module_model->get_houst_page($config['per_page'],$current_page);
-
-						break;
+			
 
 					//二手市场
 
@@ -444,34 +415,7 @@ class LocalLife extends Default_Controller {
 
 						break;
 
-					// 快递上门
-
-					case '4':
-
-						$list = $this->Module_model->get_express();
-
-						$config['total_rows'] = count($list);
-
-						//分页数据
-
-						$listpage = $this->Module_model->get_express_page($config['per_page'],$current_page);
-
-						break;
-
-					//超市比价
-
-					case '5':
-
-						$list = $this->Module_model->get_market_data();
-
-						$config['total_rows'] = count($list);
-
-						//分页数据
-
-						$listpage = $this->Module_model->get_market_data_page($config['per_page'],$current_page);
-
-						break;
-
+				
 				}
 
 
@@ -592,22 +536,6 @@ class LocalLife extends Default_Controller {
 
     				break;
 
-    				//房产
-
-    			case '2':
-
-    				//总数据
-
-    				$list = $this->Module_model->search_houst($sear);
-
-					$config['total_rows'] = count($list);
-
-					// //分页数据
-
-				    $listpage = $this->Module_model->search_houst_page($sear,$config['per_page'],$current_page);
-
-    				break;
-
     			// 二手市场
 
 	    		case '3':
@@ -626,33 +554,7 @@ class LocalLife extends Default_Controller {
 
 	    			break;
 
-                    //快递上门
-
-                case '4':
-
-                    $list = $this->Module_model->search_express($sear);
-
-                    $config['total_rows'] = count($list);
-
-                    // //分页数据
-
-                    $listpage = $this->Module_model->search_express_page($sear,$config['per_page'],$current_page);
-
-                    break;
-
-                    //超市比价
-
-                case '5':
-
-                    $list = $this->Module_model->search_market_data($sear);
-
-                    $config['total_rows'] = count($list);
-
-                    // //分页数据
-
-                    $listpage = $this->Module_model->search_market_data_page($sear,$config['per_page'],$current_page);
-
-                    break;
+                 
 
     		}
 
@@ -717,15 +619,6 @@ class LocalLife extends Default_Controller {
 					$info = $this->Module_model->get_serviceinfo($id);
 
 					break;
-
-				case '2':
-
-					//$title = '房产信息';
-
-					$info = $this->Module_model->get_houstinfo($id);
-
-					break;
-
 				case '3':
 
 					//$title = '二手市场';
@@ -735,15 +628,6 @@ class LocalLife extends Default_Controller {
 					$tag = $this->Module_model->get_mark_type();
 
 					break;
-
-				case '5':
-
-					//$title = '超市比价';
-
-					$info = $this->Module_model->get_market_data_info($id);
-
-					break;
-
 			}
 
 			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
@@ -820,33 +704,7 @@ class LocalLife extends Default_Controller {
 
 					break;
 
-				case '2':
-
-
-
-					$info = $this->Module_model->del_houst($id);
-
-					if($info){
-
-						//日志
-
-			            $log = array(
-
-			                'userid'=>$_SESSION['users']['user_id'],  
-
-			                "content" => $_SESSION['users']['username']."删除了一个房产信息,信息id是".$id,
-
-			                "create_time" => date('Y-m-d H:i:s'),
-
-			                "userip" => get_client_ip(),
-
-			            );
-
-			            $this->db->insert('hf_system_journal',$log);
-
-					}
-
-					break;
+		
 
 				case '3':
 
@@ -861,32 +719,6 @@ class LocalLife extends Default_Controller {
 			                'userid'=>$_SESSION['users']['user_id'],  
 
 			                "content" => $_SESSION['users']['username']."删除了一个二手信息,信息id是".$id,
-
-			                "create_time" => date('Y-m-d H:i:s'),
-
-			                "userip" => get_client_ip(),
-
-			            );
-
-			            $this->db->insert('hf_system_journal',$log);
-
-					}
-
-					break;
-
-				case '5':
-
-					$info = $this->Module_model->del_market_data($id);
-
-					if($info){
-
-						//日志
-
-			            $log = array(
-
-			                'userid'=>$_SESSION['users']['user_id'],  
-
-			                "content" => $_SESSION['users']['username']."删除了一个超市比价信息,信息id是".$id,
 
 			                "create_time" => date('Y-m-d H:i:s'),
 
@@ -944,6 +776,34 @@ class LocalLife extends Default_Controller {
 		}	
 
 		if($_POST){
+			$bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['local'];
+                    break;
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['local'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['local'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['local'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['local'];
+                    break;
+            }
+			$data['city'] = $city;
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
+
 
 			$data = $this->input->post();
 
@@ -955,33 +815,28 @@ class LocalLife extends Default_Controller {
 
 				if(!empty($_FILES['img'.$i]['name'])){
 
-					$config['upload_path']      = 'Upload/service/ordinary';
-
-					$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-					$config['max_size']     = 2048;
-
-					$config['file_name'] = date('Y-m-d_His');
-
-					$this->load->library('upload', $config);
-
-					// 上传
-
-					if(!$this->upload->do_upload('img'.$i)) {
+					$tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+					//  var_dump($tmpfile);
+					  $pics = array(
+						  'pics' =>$tmpfile,
+						  'porfix'=>'local/service/'.$bucket,
+						  'bucket'=>$bucket,
+					  );
+				  
+					  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+					
+					  if($qiuniu['errno'] == '0'){
+						  $img = json_decode($qiuniu['data']['img'],true);
+						  if($i != 4){
+								$pic[]['picImg'] = $img[0]['picImg'];
+	
+							}else{
+								$logo[]['picImg'] = $img[0]['picImg'];
+	
+							}
+					  }else{
 
 					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_name'])."'</script>";exit;
-
-					}else{
-
-						if($i != 4){
-
-						   $pic[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
-
-						}else{
-
-							$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
-
-						}
 
 					}
 
@@ -1040,121 +895,6 @@ class LocalLife extends Default_Controller {
 	}
 
 
-
-	//新增房产信息
-
-	function add_houst(){
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
-
-		if($_POST){
-
-			$data = $this->input->post();
-
-			$pic = array();
-
-			$i =1;
-
-			foreach($_FILES as $file=>$val){
-
-				if(!empty($_FILES['img'.$i]['name'])){
-
-					$config['upload_path']      = 'Upload/service/houst';
-
-					$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-					$config['max_size']     = 2048;
-
-					$config['file_name'] = date('Y-m-d_His');
-
-					$this->load->library('upload', $config);
-
-					//上传
-
-					if(!$this->upload->do_upload('img'.$i)) {
-
-					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['type_id'])."'</script>";exit;
-
-					}else{
-
-						if($i != 4){
-
-							$pic[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
-
-						}else{
-
-							$logo[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
-
-						}
-
-					}
-
-				}
-
-				$i++;
-
-			 }
-
-			 $data['pic'] =json_encode($pic);
-
-			 $data['list_pic'] = json_encode($logo);
-
-			 $data['userid'] = $_SESSION['users']['user_id'];
-
-			 $id = $data['type_id'];
-
-			 unset($data['type_id']);
-
-			 if($this->Module_model->add_houst($data)){
-
-			 		//日志
-
-	            $log = array(
-
-	                'userid'=>$_SESSION['users']['user_id'],  
-
-	                "content" => $_SESSION['users']['username']."新增了一个房产信息,信息名称是".$data['name'],
-
-	                "create_time" => date('Y-m-d H:i:s'),
-
-	                "userip" => get_client_ip(),
-
-	            );
-
-	            $this->db->insert('hf_system_journal',$log);
-
-
-
-				  echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
-
-			 }else{
-
-				  echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$id)."'</script>";exit;
-
-			 }
-
-			
-
-		}else{
-
-			$this->load->view('404.html');
-
-		}
-
-	}
-
-
-
 	//新增二手产品
 
 	function add_market(){
@@ -1172,6 +912,34 @@ class LocalLife extends Default_Controller {
 		}	
 
 		if($_POST){
+			$bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['local'];
+                    break;
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['local'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['local'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['local'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['local'];
+                    break;
+            }
+			$data['city'] = $city;
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
+
 
 			$data = $this->input->post();
 
@@ -1181,39 +949,31 @@ class LocalLife extends Default_Controller {
 
 			foreach($_FILES as $file=>$val){
 
-				if(!empty($_FILES['img'.$i]['name'])){
-
-					$config['upload_path']      = 'Upload/service/mark';
-
-					$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-					$config['max_size']     = 2048;
-
-					$config['file_name'] = date('Y-m-d_His');
-
-					$this->load->library('upload', $config);
-
-					//上传
-
-					if(!$this->upload->do_upload('img'.$i)) {
-
-					    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['id'])."'</script>";exit;
-
-					}else{
-
-						if($i != 4){
-
-							$pic[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
+				$tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+				//  var_dump($tmpfile);
+				  $pics = array(
+					  'pics' =>$tmpfile,
+					  'porfix'=>'local/service/'.$bucket,
+					  'bucket'=>$bucket,
+				  );
+			  
+				  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+				
+				  if($qiuniu['errno'] == '0'){
+					  $img = json_decode($qiuniu['data']['img'],true);
+					  if($i != 4){
+							$pic[]['picImg'] = $img[0]['picImg'];
 
 						}else{
-
-							$logo[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
+							$logo[]['picImg'] = $img[0]['picImg'];
 
 						}
+				  }else{
 
-					}
+					echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['id'])."'</script>";exit;
 
-				}
+				  }
+
 
 				$i++;
 
@@ -1283,6 +1043,35 @@ class LocalLife extends Default_Controller {
 
 		if($_POST){
 
+			$bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['local'];
+                    break;
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['local'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['local'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['local'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['local'];
+                    break;
+            }
+			$data['city'] = $city;
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
+
+
 			$cateid = $this->input->post('cateid');
 
 			$data = $this->input->post();
@@ -1301,38 +1090,33 @@ class LocalLife extends Default_Controller {
 
 						if(!empty($_FILES['img'.$i]['name'])){
 
-							$config['upload_path']      = 'Upload/service/ordinary';
+							$tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+							//  var_dump($tmpfile);
+							  $pics = array(
+								  'pics' =>$tmpfile,
+								  'porfix'=>'local/service/'.$bucket,
+								  'bucket'=>$bucket,
+							  );
+						  
+							  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+															unset($data['img'.$i]);
 
-							$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-							$config['max_size']     = 2048;
-
-							$config['file_name'] = date('Y-m-d_His');
-
-							$this->load->library('upload', $config);
-
-							//上传
-
-							if(!$this->upload->do_upload('img'.$i)) {
-
-							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
-
-							}else{
-
+							  if($qiuniu['errno'] == '0'){
 								unset($data['img'.$i]);
-
-								if($i != 4){
-
-									$pic[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
-
-								}else{
-
-									$logo[]['picImg'] = '/Upload/service/ordinary/'.$this->upload->data('file_name');
-
-								}
-
-							}
-
+								
+								  $img = json_decode($qiuniu['data']['img'],true);
+								  if($i != 4){
+										$pic[]['picImg'] = $img[0]['picImg'];
+			
+									}else{
+										$logo[]['picImg'] = $img[0]['picImg'];
+			
+									}
+							  }else{
+			
+							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
+			
+							  }
 						}else{
 
 							if($i != 4){
@@ -1389,108 +1173,6 @@ class LocalLife extends Default_Controller {
 
 					break;
 
-					//房产
-
-				case '2':
-
-					$i =1;
-
-					foreach($_FILES as $file=>$val){
-
-						if(!empty($_FILES['img'.$i]['name'])){
-
-							$config['upload_path']      = 'Upload/service/houst';
-
-							$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-							$config['max_size']     = 2048;
-
-							$config['file_name'] = date('Y-m-d_His');
-
-							$this->load->library('upload', $config);
-
-							//上传
-
-							if(!$this->upload->do_upload('img'.$i)) {
-
-							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
-
-							}else{
-
-                                unset($data['img'.$i]);
-
-								if($i != 4){
-
-								$pic[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
-
-								}else{
-
-									$logo[]['picImg'] = '/Upload/service/houst/'.$this->upload->data('file_name');
-
-								}
-
-							}
-
-						}else{
-
-                            
-
-							if($i != 4){
-
-								if(!empty($data['img'.$i])){
-
-									$pic[]['picImg'] = $data['img'.$i];
-
-									// /unset($data['img'.$i]);
-
-								}
-
-							}else{
-
-								$logo[]['picImg'] = $data['img'.$i];
-
-							}
-
-                            unset($data['img'.$i]);
-
-						}
-
-						$i++;
-
-					 }
-
-					 $data['pic'] = json_encode($pic);
-
-					 $data['list_pic'] = json_encode($logo);
-
-					 $type = $data['type_id'];
-
-					 unset($data['type_id']);
-
-			 		$isOk = $this->Module_model->edit_houst($data['id'],$data);
-
-			 		 if($isOk){
-
-					 	//日志
-
-			            $log = array(
-
-			                'userid'=>$_SESSION['users']['user_id'],  
-
-			                "content" => $_SESSION['users']['username']."编辑了一个房产信息,信息名称是".$data['name']."，信息id是：".$data['id'],
-
-			                "create_time" => date('Y-m-d H:i:s'),
-
-			                "userip" => get_client_ip(),
-
-			            );
-
-			            $this->db->insert('hf_system_journal',$log);
-
-					 }
-
-					break;
-
 					//二手市场
 
 				case '3':
@@ -1501,38 +1183,33 @@ class LocalLife extends Default_Controller {
 
 						if(!empty($_FILES['img'.$i]['name'])){
 
-							$config['upload_path']      = 'Upload/service/mark';
+							$tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+							//  var_dump($tmpfile);
+							  $pics = array(
+								  'pics' =>$tmpfile,
+								  'porfix'=>'local/service/'.$bucket,
+								  'bucket'=>$bucket,
+							  );
+						  
+							  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+															unset($data['img'.$i]);
 
-							$config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-							$config['max_size']     = 2048;
-
-							$config['file_name'] = date('Y-m-d_His');
-
-							$this->load->library('upload', $config);
-
-							//上传
-
-							if(!$this->upload->do_upload('img'.$i)) {
+							  if($qiuniu['errno'] == '0'){
+								unset($data['img'.$i]);
+								
+								  $img = json_decode($qiuniu['data']['img'],true);
+								  if($i != 4){
+										$pic[]['picImg'] = $img[0]['picImg'];
+			
+									}else{
+										$logo[]['picImg'] = $img[0]['picImg'];
+			
+									}
+							  }else{
 
 							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
 
-							}else{
-
-								unset($data['img'.$i]);
-
-								if($i != 4){
-
-									$pic[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
-
-								}else{
-
-									$logo[]['picImg'] = '/Upload/service/mark/'.$this->upload->data('file_name');
-
-								}
-
 							}
-
 						}else{
 
 							if($i != 4){
@@ -1586,48 +1263,6 @@ class LocalLife extends Default_Controller {
 			            $this->db->insert('hf_system_journal',$log);
 
 					 }
-
-
-
-					break;
-
-					//超市比价
-
-				case '5':
-
-						$type = $data['type_id'];
-
-						$cate = $data['cate'];
-
-						$data['date'] = date('Y-m-d H:i:s');
-
-						unset($data['type_id'],$data['cate']);
-
-						if($this->Module_model->edit_market_info($data['id'],$data)){
-
-							//日志
-
-				            $log = array(
-
-				                'userid'=>$_SESSION['users']['user_id'],  
-
-				                "content" => $_SESSION['users']['username']."编辑了一个超市特价信息,信息名称是".$data['name']."，信息id是：".$data['id'],
-
-				                "create_time" => date('Y-m-d H:i:s'),
-
-				                "userip" => get_client_ip(),
-
-				            );
-
-				            $this->db->insert('hf_system_journal',$log);
-
-							echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
-
-						}else{
-
-							echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$cate)."'</script>";exit;
-
-						}
 
 					break;
 
@@ -1792,6 +1427,27 @@ class LocalLife extends Default_Controller {
 
 		if($_POST){
 
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                    break;
+                case '1':
+                    $city = '1';
+                    break;
+                case '2':
+                    $city = '2';
+                    break;
+                case '3':
+                $city = '3';
+                    break;
+                case '4':
+                $city = '4';
+                    break;
+            }
+			$data['city'] = $city;
+
+
 			$data = $this->input->post();
 
 			$title = $data['name'];
@@ -1871,6 +1527,26 @@ class LocalLife extends Default_Controller {
 		}	
 
 		if($_POST){
+			switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                    break;
+                case '1':
+                    $city = '1';
+                    break;
+                case '2':
+                    $city = '2';
+                    break;
+                case '3':
+                $city = '3';
+                    break;
+                case '4':
+                $city = '4';
+                    break;
+            }
+			$data['city'] = $city;
+
 
 			$data = $this->input->post();
 

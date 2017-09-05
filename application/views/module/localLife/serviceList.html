@@ -1,1299 +1,1443 @@
-<style type="text/css" media="screen">
-.am-selected {
-    width: 100%!important;
-}
-.table-check {
-    width: 30px;
-}
-.hf-dropdown {
-    font-size: 12px!important;
-    padding: 5px 6px!important;
-}
-.am-imgContainer {
-    width:50%;
-}
-.deleteImg {
-    display:inline-block;
-    width:60px;
-    height:25px;
-    line-height: 25px;
-    text-align: center;
-    color: #666;
-    font-size: 1.2rem;
-    border:  1px solid #ddd;
-}
-.clickUp {
-    display: inline-block;
-    float: left;
-    margin-left: 100px;
-}
-
-.preview {
-    height:170px !important;
-}
-.preview #imghead,#preview img {
-    height:160px;
-}
-.am-modal-bd input[type='radio'] {
-    width: 50%;
-    border: none;
-}
-.isRecommand, .isRecommand1, .isRecommand2{
-    border: 1px solid #5eb95e !important;
-    color: #5eb95e !important;
-}
-
-.gray {
-    border: 1px solid #282d2f !important;
-    color: #282d2f !important;
-}
-.isRecommand:hover, .isRecommand1:hover, .isRecommand2:hover{
-    cursor: pointer;
-}
- 
- 
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/LocalLife/localLifeList');?>">本地生活</a> 
-            <small>><?php if(isset($catename)):?><a href="<?php echo site_url('/module/LocalLife/serviceList/').$id;?>"><?php echo $catename;?></a>><?php endif;?> <?php echo $name;?></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <!-- 以下列表 根据传过来的类别进行判断 控制显示和隐藏 -->
-    <?php if($typeid == 1){?>
-    <!-- 服务类 -->
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf"><?php echo $name;?></div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
-                                    
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                     <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
-                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                            <input type="text" name='sear' class="am-form-field" placeholder="名称/联系人/联系号码" required>
-                            <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
-                            <input type="hidden" name='cate' value="<?php echo $id;?>">
-                            <span class="am-input-group-btn">
-                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
-                            </span>
-                          
-                        </div>
-                          </form>
-                    </div>
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 信息展示类 -->
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/LocalLife/add_service')?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-											<input type='hidden' name='type_name' value="<?php echo $id;?>" />	
-                                            <input type="text" placeholder="请输入标题,2-50个字符" name='name' minlength="2" maxlength="50" required onblur="validate(this,2,15,1)">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <textarea rows='4' type="text" minlength="2" maxlength="500" placeholder="如:空调·热水器·洗衣机类维修,2-500个字符" name='content' required onblur="validate(this,2,500,2)"></textarea>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" onblur="validate1(this,0,1,3)" placeholder="请输入评分,1-5之间的数字" name='star' min="1" max="5" minlength="0" maxlength="1" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">服务范围 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" onblur="validate(this,2,40,4)" placeholder="如：邻水xxxx街道,2-40个字符" minlength="2" maxlength="40" name='service_cope' required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" placeholder="例如：8:00-18:00" onblur="validate(this,2,15,5)" name='open_time' required minlength="2" maxlength="15">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" placeholder="请输入联系人，2-10个字符" onblur="validate(this,2,10,6)" maxlength="10" minlength="2" name='link_man' required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="tel" name="phone" onblur="validate(this,11,12,7)" class="js-pattern-mobile" placeholder="输入合法的手机号" minlength="11" maxlength="12" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='address' required placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,8)" minlength="2" maxlength=50">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner1</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                        <div class="am-u-sm-9 am-fr">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner2</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
-                                        </div>
-                                        <div class="am-u-sm-9 am-fr">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner3</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">缩略图</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
-                                        <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
-                                        </div>
-                                        <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-xs-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>名称</th>
-                                    <th>缩略图</th>
-                                    <th>联系人</th>
-                                    <th>联系号码</th>
-                                    <th>评分</th>
-                                    <th>发布人身份</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-								<?php if(!empty($lists)){?>
-								<?php foreach($lists as $key=>$val):?>
-                                <tr>
-                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['name']?></td>
-                                    <?php $logo = json_decode($val['logo'],true);?>
-                                    <td ><img style='width:100px;' src='<?php echo $logo[0]['picImg'];?>' alt='<?php echo $val['name']?>'/></td>
-                                    <td class="am-text-middle"><?php echo $val['link_man'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['phone'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['star']?></td>
-                                    <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle"><?php echo $val['create_time']?></td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            
-                                            <?php if($val['iscommend'] == '1'):?>
-                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand gray">
-                                                <i class="am-icon-star-o"></i> 不推荐
-                                            </a>
-                                            <?php else:?>
-                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand">
-                                                <i class="am-icon-star"></i> 推荐到本地生活首页
-                                            </a>
-                                            <?php endif;?>
-                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- 删除弹框 -->
-                                <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="delete1"> -->
-                                    <!-- <div class="am-modal-dialog"> -->
-                                        <!-- <div class="am-modal-hd">删除提示</div> -->
-                                        <!-- <div class="am-modal-bd"> -->
-                                            <!-- <p class="black">你，确定要删除这条记录吗？</p> -->
-                                        <!-- </div> -->
-                                        <!-- <div class="am-modal-footer"> -->
-                                            <!-- <span class="am-modal-btn" data-am-modal-cancel>取消</span> -->
-                                            <!-- <span class="am-modal-btn" data-am-modal-confirm>确定</span> -->
-                                        <!-- </div> -->
-                                    <!-- </div> -->
-                                <!-- </div> -->
-								<?php endforeach;?>
-								<?php }else{?>
-								<th colspan='9' style='text-align:center;'>暂无内容！</th>
-								<?php }?>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-text-center am-cf">
-                        <div class="">
-                           <?php echo $pages;?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php }else if($typeid == 2){?>
-    <!-- 房产类 -->
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">房产资讯类</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add2'}"><span class="am-icon-plus"></span> 新增</button>
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-arrow-down"></span> 导入</button> -->
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                         <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
-                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                            <input type="text" name='sear' class="am-form-field" placeholder="小区名/户型/地址" required>
-                            <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
-                            <input type="hidden" name='cate' value="<?php echo $id;?>">
-                            <span class="am-input-group-btn">
-                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
-                            </span>
-                          
-                        </div>
-                          </form>
-                    </div>
-
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add2">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 房产资讯类类 -->
-                                <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('/module/LocalLife/add_houst')?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">标题名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-											<input type='hidden' name='type_id' value='<?php echo $id;?>'/>
-                                            <input type="text" placeholder="请输入标题,2-50个字符" onblur="validate(this,2,50,9)" name='name' minlength="2" maxlength="50" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips9" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips9" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">户型 </label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='house_layout' placeholder="请输入户型，2-20个字符" onblur="validate(this,2,20,10)" required minlength="2" maxlength="20">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips10" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips10" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-									<div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">小区名称 </label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='quarters' placeholder="请输入小区名称,2-20个字符" onblur="validate(this,2,20,11)" required minlength="2" maxlength="20">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips11" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips11" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">小区地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='area_address' placeholder="请输入小区地址，2-50个字符" onblur="validate(this,2,50,12)" required minlength="2" maxlength="50">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">房屋类型<span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <select name='house_type' required onchange="validate(this,1,20,13)">
-                                                <option value="">-=请选择一项=-</option>
-                                                <option value="二手房">二手房</option>
-                                                <option value="新房">新房</option>
-                                                <option value="商铺">商铺</option>
-                                                <option value="写字楼">写字楼</option>
-                                                <option value="学区房">学区房</option>
-                                                <option value="其他">其他</option>
-                                            </select>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips13" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips13" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">中介名称 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='intermediary_name' placeholder="请输入中介名称，2-15个字符" required onblur="validate(this,2,15,14)" minlength="2" maxlength="15">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips14" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips14" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">中介地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='address' onblur="validate(this,2,50,15)" placeholder="如：邻水xxxx街道,2-50个字符" required minlength="2" maxlength="50">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips15" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips15" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                   
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="tel" onblur="validate(this,11,12,16)" name="phone" class="js-pattern-mobile" placeholder="输入合法的手机号" required minlength="11" maxlength="12">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips16" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips16" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">面积(平米) <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='house_area' placeholder="请输入面积，2-10个字符" onblur="validate(this,2,10,17)" minlength="2" maxlength="10" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips17"  style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips17" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">售价(元/平米) <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='avg_price' placeholder="请输入平均售价,2-10个字符" onblur="validate(this,2,10,18)" minlength="2" maxlength="10" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips18" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips18" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-									<div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">总售价 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='price' required placeholder="请输入总售价，2-10个字符" onblur="validate(this,2,10,19)" minlength="2" maxlength="10">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips19" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips19" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                        <div class="am-u-sm-9 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner1</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                        <div class="am-u-sm-9 am-fr">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner2</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                        <div class="am-u-sm-9 am-fr">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner3</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">缩略图</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">房屋简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <textarea class="am-validate" placeholder="请输入房屋简介，2-500个字符" onblur="validate(this,2,500,20)" minlength="2" maxlength="500" name="content" id="myue" rows="5" required></textarea>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips20" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips20" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                  
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
-                                        <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
-                                        </div>
-                                        <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-secondary">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-xs-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>标题名</th>
-                                    <th>户型</th>
-                                    <th>房屋类型</th>
-                                    <th>所在小区</th>
-                                    <th>平均售价(元/平米)</th>
-                                    <th>中介名称</th>
-                                    <th>联系号码</th>
-                                    <th>发布人身份</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-							<?php if(!empty($lists)):?>
-								<?php foreach($lists as $val):?>
-                                <tr>
-                                    <td class="am-text-middle"><?php echo $val['house_id'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['name'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['house_layout'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['house_type'];?></td>
-
-                                    <td class="am-text-middle"><?php echo $val['quarters'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['avg_price'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['intermediary_name'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['phone'];?></td>
-                                        <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle"><?php echo $val['create_time'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            
-                                            <?php if($val['recommend_state'] == '1'):?>
-                                            <a data-id="<?php echo $val['house_id'];?>" dataId="<?php echo $val['recommend_state']?>" class="isRecommand1 gray">
-                                                <i class="am-icon-star-o"></i> 不推荐
-                                            </a>
-                                            <?php else:?>
-                                            <a data-id="<?php echo $val['house_id'];?>" dataId="<?php echo $val['recommend_state']?>" class="isRecommand1">
-                                                <i class="am-icon-star"></i> 推荐到本地生活首页
-                                            </a>
-                                            <?php endif;?>
-                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['house_id'].'/'.$typeid.'/'.$id;?>" class="">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['house_id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#h_delete1'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-								<?php endforeach;?>
-								<?php else:?>
-								<th colspan='10' style="text-align:center;">暂无内容！</th>
-								<?php endif;?>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl">
-								<?php echo $pages;?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php }else if($typeid == 3){?>
-    <!--跳蚤市场 二手交易类 -->
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">跳蚤市场</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add3'}"><span class="am-icon-plus"></span> 新增</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add3">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" data-am-validator action="<?php echo site_url('/module/localLife/add_market');?>" method='post' enctype='multipart/form-data' >
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" placeholder="请输入宝贝名，2-50个字符" onblur="validate(this,2,50,22)" name='title'  minlength="2" maxlength="50" required="">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips22" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips22" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">售价 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text"  name='price' placeholder="请输入售价，2-10个字符" onblur="validate(this,2,10,23)" minlength="2" maxlength="10" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips23" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips23" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">新旧程度 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" onblur="validate(this,2,10,24)" name='colour' placeholder="如：9成新，2-10个字符" minlength="2" maxlength="10" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips24" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips24" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <select name='type' required onblur="validate(this,1,15,25)">
-                                                <option value="">-=请选择一项=-</option>
-                                                <?php foreach($type as $v):?>
-                                                <option value="<?php echo $v['tagid'];?>"><?php echo $v['tag'];?></option>
-                                                <?php endforeach;?>
-                                            </select>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips25" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips25" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系地址 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='address' minlength="2" maxlength="50" onblur="validate(this,2,50,26)" placeholder="如：邻水xxxx街道,2-50个字符" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips26" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips26" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                  
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="tel" name="phone" minlength="11" maxlength="12" onblur="validate(this,11,12,27)" class="js-pattern-mobile" placeholder="输入合法的手机号" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips27" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips27" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
-                                
-                                        <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner1</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner2</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
-                                        </div>
-                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">banner3</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
-                                         <div class="am-u-sm-8 am-u-end">
-                                            <div class="wx_type_img">
-                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                              <!-- 图片实时预览 -->
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                              <span class="clickUp">缩略图</span>
-                                            </div>
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">简介 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <textarea class="am-validate" onblur="validate(this,2,500,28)" minlength="2" maxlength="500" placeholder="请输入简介，2-500个字符" name="content" id="myue" rows="5" required></textarea>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips28" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips28" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" onblur="validate1(this,0,1,29)" placeholder="请输入评分，1-5之间的数字" name='star' minlength="0" maxlength="1" min="1" max="5" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips29" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips29" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
-                                        <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
-                                        </div>
-                                        <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-text-center am-btn-group-xs">
-                                        <button type="reset" class="am-btn am-btn-default">重置</button>
-                                        <input type='hidden' name='id' value='<?php echo $id;?>'/>
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-xs-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>宝贝名称</th>
-                                    <th>价格</th>
-                                    <th>商品类别</th>
-                                    <th>新旧</th>
-                                    <th>联系号码</th>
-                                    <th>发布人</th>
-                                    <th>发布人身份</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-							<?php if(!empty($lists)):?>
-								<?php foreach($lists as $v):?>
-                                <tr>
-                                    <td class="am-text-middle"><?php echo $v['id'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['title'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['price'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['tag']?></td>
-                                    <td class="am-text-middle"><?php echo $v['colour'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['phone']?></td>
-                                    <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
-                                      <td class="am-text-middle"><?php if($v['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
-                                    <td class="am-text-middle"><?php echo $v['create_time'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            
-                                            <?php if($v['recommend_state'] == '1'):?>
-                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2 gray">
-                                                <i class="am-icon-star-o"></i> 不推荐
-                                            </a>
-                                            <?php else:?>
-                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2">
-                                                <i class="am-icon-star"></i> 推荐到本地生活首页
-                                            </a>
-                                            <?php endif;?>
-                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$v['id'].'/'.$typeid.'/'.$id;?>" class="">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$v['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?'); class="tpl-table-black-operation-del" data-am-modal="{target: '#b_delete1'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-								<?php endforeach;?>
-								<?php else:?>
-								<th colspan='10' style='text-align:center;'>暂无内容！</th>
-								<?php endif;?>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl">
-                           <?php echo $pages;?>
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <?php }else if($typeid == 4){?>
-    <!-- 快递上门 -->
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">快递上门</div>
-                </div>
-                <div class="am-fr am-u-sm-6 am-margin">
-                        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
-                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                            <input type="text" name='sear' class="am-form-field" placeholder="联系人/寄件人地址/联系号码" required>
-                            <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
-                            <input type="hidden" name='cate' value="<?php echo $id;?>">
-                            <span class="am-input-group-btn">
-                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
-                            </span>
-                          
-                        </div>
-                          </form>
-                </div>
-
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-xs-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>寄件用户</th>
-                                    <th>寄件人地址</th>
-                                    <th>联系人</th>
-                                    <th>联系电话</th>
-                                    <th>分类</th>
-                                    <th>备注</th>
-                                    <th>创建时间</th>
-                                    <!-- <th>操作</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-								<?php if(!empty($lists)):?>
-                                    <?php foreach($lists as $v):?>
-                                <tr>
-                                    <td class="am-text-middle"><?php echo $v['id'];?></td>
-                                    <td class="am-text-middle"><?php echo user_name($v['id']);?></td>
-                                    <td class="am-text-middle"><?php echo $v['sender_address'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['link_man'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['phone'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['type'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['other'];?></td>
-                                    <td class="am-text-middle"><?php echo $v['create_time'];?></td>
-                                   <!--  <td class="am-text-middle">
-                                        <div class="am-dropdown" data-am-dropdown>
-                                            <button class="am-btn am-btn-primary am-dropdown-toggle hf-dropdown" data-am-dropdown-toggle>未发货 <span class="am-icon-caret-down"></span></button>
-                                            <ul class="am-dropdown-content">
-                                                <li><a href="#">未发货</a></li>
-                                                <li><a href="#">已发货</a></li>
-                                                <li><a href="#">派件中</a></li>
-                                                <li><a href="#">已签收</a></li>
-                                            </ul>
-                                        </div>
-                                    </td> -->
-                                 <!--    <td>
-                                        <div class="tpl-table-black-operation">
-                                            <a href="#" class="tpl-table-black-operation-set">
-                                                <i class="am-icon-eye" ></i> 查看
-                                            </a>
-                                        </div>
-                                    </td> -->
-                                </tr>
-                                 <?php endforeach;?>
-                                <!-- 删除弹框 -->
-                              <!--   <div class="am-modal am-modal-confirm" tabindex="-1" id="h_delete1">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">删除提示</div>
-                                        <div class="am-modal-bd">
-                                            <p class="black">你，确定要删除这条记录吗？</p>
-                                        </div>
-                                        <div class="am-modal-footer">
-                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- more data -->
-								<?php else:?>
-								<th colspan='8' style='text-align:center;'>暂无信息！ </th>
-								<?php endif;?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl">
-                          <?php echo $pages;?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php }else if($typeid == 5){ ?>
-    <!-- 超市比价 -->
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">超市比价</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add4'}"><span class="am-icon-plus"></span> 新增</button>
-                                    <div class="wx_type_img am-inline">
-                                         <input type="file" id="imgUpload" name="img[]" onchange="uploadFiles()" class="upload-add fileUpLoad" >
-                                          <!-- 图片实时预览 -->
-                                          <button class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-arrow-down"></span> 导入</button>
-                                    </div>
-                                    <!-- <a href="<?php echo site_url('module/LocalLife/dowload_market_data/1')?>" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 导出</a>
-                                    <a href="upload/xls/import.xlsx" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-arrow-up"></span> 下载导入模板</a> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-                        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
-                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-                            <input type="text" name='sear' class="am-form-field" placeholder="超市名/商品名" required>
-                            <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
-                            <input type="hidden" name='cate' value="<?php echo $id;?>">
-                            <span class="am-input-group-btn">
-                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
-                            </span>
-                        </div>
-                          </form>
-                    </div>
-
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add4">
-                        <div class="am-modal-dialog">
-                            <div class="am-modal-hd">新增</div>
-                            <div class="am-modal-bd">
-                                <!-- 本地生活 跳蚤市场类 -->
-                                <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('module/LocalLife/add_market_data')?>' method='post' enctype='multipart/form-data'>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="hidden" name="id" value="<?php echo $id;?>">
-                                            <input type="text"  name='market_name' required placeholder="请输入超市名，2-15个字符" onblur="validate(this,2,15,30)" minlength="2" maxlength="15">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips30" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips30" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='goods_name' onblur="validate(this,2,15,31)" minlength="2" maxlength="15" placeholder="请输入商品名，2-15个字符" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips31" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips31" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" name='date_price' minlength="2" maxlength="10" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,32)" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips32" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips32" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">原价 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" name='' minlength="2" maxlength="10" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,41)" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips41" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips41" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">单位 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="text" name='unit' onblur="validate(this,1,10,33)" placeholder="斤、瓶、两，1-10个字符" required minlength="1" maxlength="10">
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips33" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips33" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                        <div class="am-u-sm-8">
-                                            <input type="number" onblur="validate1(this,0,1,34)" placeholder="请输入评分,1-5之间的数字" name='star' min="1"  max="5" minlength="0" maxlength="1" required>
-                                        </div>
-                                        <small class="am-u-sm-1 red redtips34" style="display: none;"><i class="am-icon-close"></i></small>
-                                        <small class="am-u-sm-1 green blacktips34" style="display: none;"><i class="am-icon-check"></i></small>
-                                    </div> 
-                                    <div class="am-form-group am-cf">
-                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
-                                        <div class="am-u-sm-3">
-                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
-                                        </div>
-                                        <div class="am-u-sm-3 am-u-end">
-                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
-                                        </div>
-                                    </div>
-                                    <div class="am-form-group am-btn-group-xs">
-                                        <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12 am-u-xs-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号</th>
-                                    <th>超市名</th>
-                                    <th>商品名</th>
-                                    <th>价格</th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php if(!empty($lists)):?>
-                                <?php foreach($lists as $val):?>
-                                <tr>
-                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['market_name'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['goods_name'];?></td>
-                                    <td class="am-text-middle"><?php echo $val['date_price']?>/<?php echo $val['unit']?></td>
-                                    <td class="am-text-middle"><?php echo $val['date'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="tpl-table-black-operation">
-                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['id']?>'}">
-                                                <i class="am-icon-pencil"></i> 编辑
-                                            </a>
-                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#m_delete1'}">
-                                                <i class="am-icon-trash"></i> 删除
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- 编辑弹框 -->
-                                <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<?php echo $val['id']?>">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">编辑</div>
-                                        <div class="am-modal-bd">
-                                            <!-- 本地生活 跳蚤市场类 -->
-                                            <form class="am-form tpl-form-line-form" data-am-validator action='<?php echo site_url('module/LocalLife/edit_service')?>' method='post' enctype='multipart/form-data'>
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">超市名 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="hidden" name="type_id" value="<?php echo $typeid;?>">
-                                                        <input type="hidden" name="cate" value="<?php echo $id;?>">
-                                                        <input type="text" name="market_name" value="<?php echo $val['market_name']?>" placeholder="请输入超市名，2-15个字符" minlength="2" maxlength="15" required onblur="validate(this,2,15,35)">
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips35" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips35" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">商品名 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="text" name="goods_name" minlength="2" maxlength="15" placeholder="请输入商品名，2-15个字符" value="<?php echo $val['goods_name']?>" onblur="validate(this,2,15,36)" required>
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips36" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips36" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">价格 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="text" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,37)" minlength="2" maxlength="10" value="<?php echo $val['date_price']?>" name="date_price" required>
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips37" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips37" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div> 
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">原价 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="number" name='' minlength="2" maxlength="10" placeholder="请输入价格，2-10个字符" onblur="validate(this,2,10,42)" required>
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips42" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips42" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>   
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">单位 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="text" value="<?php echo $val['unit']?>" name='unit' placeholder='如斤、瓶、两,1-10个字符' minlength="1" maxlength="10" onblur="validate(this,2,10,38)" required>
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips38" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips38" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
-                                                    <div class="am-u-sm-8">
-                                                        <input type="number" onblur="validate1(this,1,1,39)" placeholder="请输入评分,1-5之间的数字" name='star' minlength="0" maxlength="1" min="1"  required max="5">
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips39" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips39" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div> 
-                                                <div class="am-form-group am-btn-group-xs">
-                                                    <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                                    <input type="hidden" name="id" value="<?php echo $val['id'];?>" />
-                                                    <button type="submit" class="am-btn am-btn-danger">提交</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="7" style="text-align: center;">暂无内容！</th>
-                                <?php endif;?>
-                                <!-- 删除弹框 -->
-                
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                   
-                    <div class="am-u-lg-12 am-cf">
-                        <div class="am-fl">
-                          <?php echo $pages;?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <?php }?>
-
-
-</div>
-</div>
-<script type="text/javascript">
-    //表单验证函数
-    function validate(obj,minlen,maxlen,i){
-        var content=obj.value;
-        if(content.length<minlen || content.length>maxlen){
-            $('.blacktips'+ i).css('display','none');
-            $('.redtips'+ i).css('display','inline-block');
-        }else{
-            $('.redtips'+ i).css('display','none');
-            $('.blacktips'+ i).css('display','inline-block');
-        }
-    }
-    function validate1(obj,minlen,maxlen,i){
-        var content=obj.value;
-        if(content.length<minlen || content.length>maxlen || parseInt(content)>5 || parseInt(content)<1){
-            $('.blacktips'+ i).css('display','none');
-            $('.redtips'+ i).css('display','inline-block');
-        }else{
-            $('.redtips'+ i).css('display','none');
-            $('.blacktips'+ i).css('display','inline-block');
-        }
-    }
-
-    function uploadFiles(){
-        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
-       // console.log(fileObj.name.split('.')[1]);
-        var FileController="<?php echo site_url('/module/LocalLife/send_market_data');?>";//上传文件的后台地址
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
-           var form=new FormData();
-            form.append('file',fileObj); //文件对象
-            //实例化XMLHttpRequest对象
-            var xhr=new XMLHttpRequest();
-            xhr.open('post',FileController,true);
-            xhr.onload=function(){
-                alert("导入成功！");
-                location.reload();
-            
-            };
-            xhr.send(form); 
-            return true;
-        }else{
-            alert("上传文件的格式错误！");
-            return false;
-        }
-        
-    }
-
-    $(document).ready(function () {
-        //推荐到本地生活首页
-        $('.isRecommand').click(function(){
-            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
-            if(iscommend == "0") {
-                iscommend = 1;
-            } else {
-                iscommend = 0;
-            }
-            // console.log('id='+ dataId + '&iscommend='+ iscommend);
-            $.ajax({ 
-                type:'post',
-                url: "<?php echo site_url('/module/LocalLife/service_recommend');?>",
-                data: 'id='+ dataId + '&iscommend='+ iscommend,
-                success: function(result){    
-                    console.log(result);     
-                    var res = eval(result);
-                    if(res == 1){
-                        alert("设置成功！");
-                        window.location.reload();
-                    }else{
-                       alert("网络状况不佳，请稍后重试！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("网络状况不佳，请稍后重试！");
-                }
-            });
-        });
-        $('.isRecommand1').click(function(){
-            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
-            if(iscommend == "0") {
-                iscommend = 1;
-            } else {
-                iscommend = 0;
-            }
-            console.log('id='+ dataId + '&iscommend='+ iscommend);
-            $.ajax({ 
-                type:'post',
-                url: "<?php echo site_url('/module/LocalLife/house_recommend');?>",
-                data: 'id='+ dataId + '&recommend_state='+ iscommend,
-                success: function(result){    
-                    console.log(result);     
-                    var res = eval(result);
-                    if(res == 1){
-                        alert("设置成功！");
-                        window.location.reload();
-                    }else{
-                       alert("网络状况不佳，请稍后重试！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("网络状况不佳，请稍后重试！");
-                }
-            });
-        });
-        $('.isRecommand2').click(function(){
-            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
-            if(iscommend == "0") {
-                iscommend = 1;
-            } else {
-                iscommend = 0;
-            }
-            console.log('id='+ dataId + '&iscommend='+ iscommend);
-            $.ajax({ 
-                type:'post',
-                url: "<?php echo site_url('/module/LocalLife/market_recommend');?>",
-                data: 'id='+ dataId + '&recommend_state='+ iscommend,
-                success: function(result){    
-                    console.log(result);     
-                    var res = eval(result);
-                    if(res == 1){
-                        alert("设置成功！");
-                        window.location.reload();
-                    }else{
-                       alert("网络状况不佳，请稍后重试！");
-                    }
-                    
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("网络状况不佳，请稍后重试！");
-                }
-            });
-        });
-    })
-    //删除图片
-    $(".deleteImg").click(function(){      
-        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
-        $(this).prevUntil('.preview').find('input').val("");
-    });
-</script>
-</body>
-</html>
-
+<style type="text/css" media="screen">
+
+.am-selected {
+
+    width: 100%!important;
+
+}
+
+.table-check {
+
+    width: 30px;
+
+}
+
+.hf-dropdown {
+
+    font-size: 12px!important;
+
+    padding: 5px 6px!important;
+
+}
+
+.am-imgContainer {
+
+    width:50%;
+
+}
+
+.deleteImg {
+
+    display:inline-block;
+
+    width:60px;
+
+    height:25px;
+
+    line-height: 25px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 1.2rem;
+
+    border:  1px solid #ddd;
+
+}
+
+.clickUp {
+
+    display: inline-block;
+
+    float: left;
+
+    margin-left: 100px;
+
+}
+
+
+
+.preview {
+
+    height:170px !important;
+
+}
+
+.preview #imghead,#preview img {
+
+    height:160px;
+
+}
+
+.am-modal-bd input[type='radio'] {
+
+    width: 50%;
+
+    border: none;
+
+}
+
+.isRecommand, .isRecommand1, .isRecommand2{
+
+    border: 1px solid #5eb95e !important;
+
+    color: #5eb95e !important;
+
+}
+
+
+
+.gray {
+
+    border: 1px solid #282d2f !important;
+
+    color: #282d2f !important;
+
+}
+
+.isRecommand:hover, .isRecommand1:hover, .isRecommand2:hover{
+
+    cursor: pointer;
+
+}
+
+ 
+
+ 
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/LocalLife/localLifeList');?>">本地生活</a> 
+
+            <small>><?php if(isset($catename)):?><a href="<?php echo site_url('/module/LocalLife/serviceList/').$id;?>"><?php echo $catename;?></a>><?php endif;?> <?php echo $name;?></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <!-- 以下列表 根据传过来的类别进行判断 控制显示和隐藏 -->
+
+    <?php if($typeid == 1){?>
+
+    <!-- 服务类 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf"><?php echo $name;?></div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
+
+                                    
+                                </div>
+
+                            </div>
+
+                            
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+
+                     <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
+
+                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+
+                            <input type="text" name='sear' class="am-form-field" placeholder="名称/联系人/联系号码" required>
+
+                            <input type="hidden" name='typeid' value="<?php echo $typeid;?>">
+
+                            <input type="hidden" name='cate' value="<?php echo $id;?>">
+
+                            <span class="am-input-group-btn">
+
+                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="submit"></button>
+
+                            </span>
+
+                          
+
+                        </div>
+
+                          </form>
+
+                    </div>
+
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
+
+                        <div class="am-modal-dialog">
+
+                            <div class="am-modal-hd">新增</div>
+
+                            <div class="am-modal-bd">
+
+                                <!-- 本地生活 信息展示类 -->
+
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action='<?php echo site_url('module/LocalLife/add_service')?>' method='post' enctype='multipart/form-data'>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">名称 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+											<input type='hidden' name='type_name' value="<?php echo $id;?>" />	
+
+                                            <input type="text" placeholder="请输入标题,2-50个字符" name='name' minlength="2" maxlength="50" required onblur="validate(this,2,15,1)">
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <?php if($_SESSION['city'] == '0'):?>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">所属城市 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+                                            <select name="city" id="">
+                                                <option value="">请选择一项</option>
+                                                <option value="1">重庆</option>
+                                                <option value="2">南江</option>
+                                                <option value="3">宣汉</option>
+                                                <option value="4">邻水</option>
+                                            </select>
+
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <?php endif;?>
+
+                                 
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">服务内容 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <textarea rows='4' type="text" minlength="2" maxlength="500" placeholder="如:空调·热水器·洗衣机类维修,2-500个字符" name='content' required onblur="validate(this,2,500,2)"></textarea>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="number" onblur="validate1(this,0,1,3)" placeholder="请输入评分,1-5之间的数字" name='star' min="1" max="5" minlength="0" maxlength="1" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips3" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips3" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> 
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">服务范围 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" onblur="validate(this,2,40,4)" placeholder="如：邻水xxxx街道,2-40个字符" minlength="2" maxlength="40" name='service_cope' required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips4" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips4" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" placeholder="例如：8:00-18:00" onblur="validate(this,2,15,5)" name='open_time' required minlength="2" maxlength="15">
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        
+                                        <label class="am-u-sm-3 am-form-label">营业时间 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" placeholder="例如：8:00-18:00" onblur="validate(this,2,15,5)" name='open_time' required minlength="2" maxlength="15">
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    
+
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系人 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" placeholder="请输入联系人，2-10个字符" onblur="validate(this,2,10,6)" maxlength="10" minlength="2" name='link_man' required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips6" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips6" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="tel" name="phone" onblur="validate(this,11,12,7)" class="js-pattern-mobile" placeholder="输入合法的手机号" minlength="11" maxlength="12" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips7" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips7" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">详细地址 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name='address' required placeholder="请输入详细地址，2-50个字符" onblur="validate(this,2,50,8)" minlength="2" maxlength="50">
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-9 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner1</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                        <div class="am-u-sm-9 am-fr">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner2</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+
+                                        </div>
+
+                                        <div class="am-u-sm-9 am-fr">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner3</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
+
+                                         <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">缩略图</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+
+                                        <div class="am-u-sm-3">
+
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
+
+                                        </div>
+
+                                        <div class="am-u-sm-3 am-u-end">
+
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-btn-group-xs">
+
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号</th>
+
+                                    <th>名称</th>
+
+                                    <th>缩略图</th>
+
+                                    <th>联系人</th>
+
+                                    <th>联系号码</th>
+
+                                    <th>评分</th>
+
+                                    <th>发布人身份</th>
+
+                                    <th>创建时间</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+								<?php if(!empty($lists)){?>
+
+								<?php foreach($lists as $key=>$val):?>
+
+                                <tr>
+
+                                    <td class="am-text-middle"><?php echo $val['id'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $val['name']?></td>
+
+                                    <?php $logo = json_decode($val['logo'],true);?>
+
+                                    <td ><img style='width:100px;' src='<?php echo $logo[0]['picImg'];?>' alt='<?php echo $val['name']?>'/></td>
+
+                                    <td class="am-text-middle"><?php echo $val['link_man'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $val['phone'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $val['star']?></td>
+
+                                    <td class="am-text-middle"><?php if($val['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
+
+                                    <td class="am-text-middle"><?php echo $val['create_time']?></td>
+
+                                    <td class="am-text-middle">
+
+                                        <div class="tpl-table-black-operation">
+
+                                            
+
+                                            <?php if($val['iscommend'] == '1'):?>
+
+                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand gray">
+
+                                                <i class="am-icon-star-o"></i> 不推荐
+
+                                            </a>
+
+                                            <?php else:?>
+
+                                            <a data-id="<?php echo $val['id'];?>" dataId="<?php echo $val['iscommend']?>" class="isRecommand">
+
+                                                <i class="am-icon-star"></i> 推荐到本地生活首页
+
+                                            </a>
+
+                                            <?php endif;?>
+
+                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$val['id'].'/'.$typeid.'/'.$id;?>" class="">
+
+                                                <i class="am-icon-pencil"></i> 编辑
+
+                                            </a>
+
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$val['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del" data-am-modal="{target: '#delete1'}">
+
+                                                <i class="am-icon-trash"></i> 删除
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                <!-- 删除弹框 -->
+
+                                <!-- <div class="am-modal am-modal-confirm" tabindex="-1" id="delete1"> -->
+
+                                    <!-- <div class="am-modal-dialog"> -->
+
+                                        <!-- <div class="am-modal-hd">删除提示</div> -->
+
+                                        <!-- <div class="am-modal-bd"> -->
+
+                                            <!-- <p class="black">你，确定要删除这条记录吗？</p> -->
+
+                                        <!-- </div> -->
+
+                                        <!-- <div class="am-modal-footer"> -->
+
+                                            <!-- <span class="am-modal-btn" data-am-modal-cancel>取消</span> -->
+
+                                            <!-- <span class="am-modal-btn" data-am-modal-confirm>确定</span> -->
+
+                                        <!-- </div> -->
+
+                                    <!-- </div> -->
+
+                                <!-- </div> -->
+
+								<?php endforeach;?>
+
+								<?php }else{?>
+
+								<th colspan='9' style='text-align:center;'>暂无内容！</th>
+
+								<?php }?>
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-text-center am-cf">
+
+                        <div class="">
+
+                           <?php echo $pages;?>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <?php }else if($typeid == 3){?>
+
+    <!--跳蚤市场 二手交易类 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">跳蚤市场</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add3'}"><span class="am-icon-plus"></span> 新增</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add3">
+
+                        <div class="am-modal-dialog">
+
+                            <div class="am-modal-hd">新增</div>
+
+                            <div class="am-modal-bd">
+
+                                <!-- 本地生活 跳蚤市场类 -->
+
+                                <form class="am-form tpl-form-line-form" data-am-validator action="<?php echo site_url('/module/localLife/add_market');?>" method='post' enctype='multipart/form-data' >
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">宝贝名 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" placeholder="请输入宝贝名，2-50个字符" onblur="validate(this,2,50,22)" name='title'  minlength="2" maxlength="50" required="">
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips22" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips22" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <?php if($_SESSION['city'] == '0'):?>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">所属城市 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+                                            <select name="city" id="">
+                                                <option value="">请选择一项</option>
+                                                <option value="1">重庆</option>
+                                                <option value="2">南江</option>
+                                                <option value="3">宣汉</option>
+                                                <option value="4">邻水</option>
+                                            </select>
+
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <?php endif;?>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">售价 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text"  name='price' placeholder="请输入售价，2-10个字符" onblur="validate(this,2,10,23)" minlength="2" maxlength="10" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips23" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips23" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">新旧程度 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" onblur="validate(this,2,10,24)" name='colour' placeholder="如：9成新，2-10个字符" minlength="2" maxlength="10" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips24" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips24" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <select name='type' required onblur="validate(this,1,15,25)">
+
+                                                <option value="">-=请选择一项=-</option>
+
+                                                <?php foreach($type as $v):?>
+
+                                                <option value="<?php echo $v['tagid'];?>"><?php echo $v['tag'];?></option>
+
+                                                <?php endforeach;?>
+
+                                            </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips25" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips25" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系地址 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name='address' minlength="2" maxlength="50" onblur="validate(this,2,50,26)" placeholder="如：邻水xxxx街道,2-50个字符" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips26" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips26" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                  
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="tel" name="phone" minlength="11" maxlength="12" onblur="validate(this,11,12,27)" class="js-pattern-mobile" placeholder="输入合法的手机号" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips27" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips27" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+
+                                
+
+                                        <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" required>
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner1</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner2</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+
+                                        </div>
+
+                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">banner3</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label for="" class="am-u-sm-3 am-form-label">缩略图 <span class="red">*</span></label>
+
+                                         <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img4" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+
+                                              <!-- 图片实时预览 -->
+
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                              <span class="clickUp">缩略图</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">简介 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <textarea class="am-validate" onblur="validate(this,2,500,28)" minlength="2" maxlength="500" placeholder="请输入简介，2-500个字符" name="content" id="myue" rows="5" required></textarea>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips28" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips28" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">评分 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="number" onblur="validate1(this,0,1,29)" placeholder="请输入评分，1-5之间的数字" name='star' minlength="0" maxlength="1" min="1" max="5" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips29" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips29" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> 
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">发布人身份<span class="red">*</span></label>
+
+                                        <div class="am-u-sm-3">
+
+                                            <input type="radio" class="am-inline" name='isbusiness' value='1'>商家
+
+                                        </div>
+
+                                        <div class="am-u-sm-3 am-u-end">
+
+                                            <input type="radio" class="am-inline" name='isbusiness' value="0" >个人
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-text-center am-btn-group-xs">
+
+                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+
+                                        <input type='hidden' name='id' value='<?php echo $id;?>'/>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号</th>
+
+                                    <th>宝贝名称</th>
+
+                                    <th>价格</th>
+
+                                    <th>商品类别</th>
+
+                                    <th>新旧</th>
+
+                                    <th>联系号码</th>
+
+                                    <th>发布人</th>
+
+                                    <th>发布人身份</th>
+
+                                    <th>创建时间</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+							<?php if(!empty($lists)):?>
+
+								<?php foreach($lists as $v):?>
+
+                                <tr>
+
+                                    <td class="am-text-middle"><?php echo $v['id'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['title'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['price'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['tag']?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['colour'];?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['phone']?></td>
+
+                                    <td class="am-text-middle"><?php echo user_name($v['userid']);?></td>
+
+                                      <td class="am-text-middle"><?php if($v['isbusiness'] == '1'){echo "商家";}else{echo "个人";}?></td>
+
+                                    <td class="am-text-middle"><?php echo $v['create_time'];?></td>
+
+                                    <td class="am-text-middle">
+
+                                        <div class="tpl-table-black-operation">
+
+                                            
+
+                                            <?php if($v['recommend_state'] == '1'):?>
+
+                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2 gray">
+
+                                                <i class="am-icon-star-o"></i> 不推荐
+
+                                            </a>
+
+                                            <?php else:?>
+
+                                            <a data-id="<?php echo $v['id'];?>" dataId="<?php echo $v['recommend_state']?>" class="isRecommand2">
+
+                                                <i class="am-icon-star"></i> 推荐到本地生活首页
+
+                                            </a>
+
+                                            <?php endif;?>
+
+                                            <a href="<?php echo site_url().'/module/LocalLife/serviceInfo/'.$v['id'].'/'.$typeid.'/'.$id;?>" class="">
+
+                                                <i class="am-icon-pencil"></i> 编辑
+
+                                            </a>
+
+                                            <a href="<?php echo site_url('/module/LocalLife/del_service/'.$v['id'].'/'.$typeid.'/'.$id);?>" onclick="return confirm('确定删除?')"; class="tpl-table-black-operation-del" data-am-modal="{target: '#b_delete1'}">
+
+                                                <i class="am-icon-trash"></i> 删除
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+								<?php endforeach;?>
+
+								<?php else:?>
+
+								<th colspan='10' style='text-align:center;'>暂无内容！</th>
+
+								<?php endif;?>
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf">
+
+                        <div class="am-fl">
+
+                           <?php echo $pages;?>
+
+                        </div>
+
+                    </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <?php }?>
+
+
+
+
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+    //表单验证函数
+
+    function validate(obj,minlen,maxlen,i){
+
+        var content=obj.value;
+
+        if(content.length<minlen || content.length>maxlen){
+
+            $('.blacktips'+ i).css('display','none');
+
+            $('.redtips'+ i).css('display','inline-block');
+
+        }else{
+
+            $('.redtips'+ i).css('display','none');
+
+            $('.blacktips'+ i).css('display','inline-block');
+
+        }
+
+    }
+
+    function validate1(obj,minlen,maxlen,i){
+
+        var content=obj.value;
+
+        if(content.length<minlen || content.length>maxlen || parseInt(content)>5 || parseInt(content)<1){
+
+            $('.blacktips'+ i).css('display','none');
+
+            $('.redtips'+ i).css('display','inline-block');
+
+        }else{
+
+            $('.redtips'+ i).css('display','none');
+
+            $('.blacktips'+ i).css('display','inline-block');
+
+        }
+
+    }
+
+
+
+    function uploadFiles(){
+
+        var fileObj=document.getElementsByClassName('fileUpLoad')[0].files[0];//获取文件对象
+
+       // console.log(fileObj.name.split('.')[1]);
+
+        var FileController="<?php echo site_url('/module/LocalLife/send_market_data');?>";//上传文件的后台地址
+
+        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
+
+           var form=new FormData();
+
+            form.append('file',fileObj); //文件对象
+
+            //实例化XMLHttpRequest对象
+
+            var xhr=new XMLHttpRequest();
+
+            xhr.open('post',FileController,true);
+
+            xhr.onload=function(){
+
+                alert("导入成功！");
+
+                location.reload();
+
+            
+
+            };
+
+            xhr.send(form); 
+
+            return true;
+
+        }else{
+
+            alert("上传文件的格式错误！");
+
+            return false;
+
+        }
+
+        
+
+    }
+
+
+
+    $(document).ready(function () {
+
+        //推荐到本地生活首页
+
+        $('.isRecommand').click(function(){
+
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+
+            if(iscommend == "0") {
+
+                iscommend = 1;
+
+            } else {
+
+                iscommend = 0;
+
+            }
+
+            // console.log('id='+ dataId + '&iscommend='+ iscommend);
+
+            $.ajax({ 
+
+                type:'post',
+
+                url: "<?php echo site_url('/module/LocalLife/service_recommend');?>",
+
+                data: 'id='+ dataId + '&iscommend='+ iscommend,
+
+                success: function(result){    
+
+                    console.log(result);     
+
+                    var res = eval(result);
+
+                    if(res == 1){
+
+                        alert("设置成功！");
+
+                        window.location.reload();
+
+                    }else{
+
+                       alert("网络状况不佳，请稍后重试！");
+
+                    }
+
+                    
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("网络状况不佳，请稍后重试！");
+
+                }
+
+            });
+
+        });
+
+        $('.isRecommand1').click(function(){
+
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+
+            if(iscommend == "0") {
+
+                iscommend = 1;
+
+            } else {
+
+                iscommend = 0;
+
+            }
+
+            console.log('id='+ dataId + '&iscommend='+ iscommend);
+
+            $.ajax({ 
+
+                type:'post',
+
+                url: "<?php echo site_url('/module/LocalLife/house_recommend');?>",
+
+                data: 'id='+ dataId + '&recommend_state='+ iscommend,
+
+                success: function(result){    
+
+                    console.log(result);     
+
+                    var res = eval(result);
+
+                    if(res == 1){
+
+                        alert("设置成功！");
+
+                        window.location.reload();
+
+                    }else{
+
+                       alert("网络状况不佳，请稍后重试！");
+
+                    }
+
+                    
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("网络状况不佳，请稍后重试！");
+
+                }
+
+            });
+
+        });
+
+        $('.isRecommand2').click(function(){
+
+            var dataId = $(this).attr('data-id'), iscommend = $(this).attr('dataId');
+
+            if(iscommend == "0") {
+
+                iscommend = 1;
+
+            } else {
+
+                iscommend = 0;
+
+            }
+
+            console.log('id='+ dataId + '&iscommend='+ iscommend);
+
+            $.ajax({ 
+
+                type:'post',
+
+                url: "<?php echo site_url('/module/LocalLife/market_recommend');?>",
+
+                data: 'id='+ dataId + '&recommend_state='+ iscommend,
+
+                success: function(result){    
+
+                    console.log(result);     
+
+                    var res = eval(result);
+
+                    if(res == 1){
+
+                        alert("设置成功！");
+
+                        window.location.reload();
+
+                    }else{
+
+                       alert("网络状况不佳，请稍后重试！");
+
+                    }
+
+                    
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("网络状况不佳，请稍后重试！");
+
+                }
+
+            });
+
+        });
+
+    })
+
+    //删除图片
+
+    $(".deleteImg").click(function(){      
+
+        $(this).prevUntil('.preview').find('img').attr('src','assets/img/nullImg.jpg');
+
+        $(this).prevUntil('.preview').find('input').val("");
+
+    });
+
+</script>
+
+</body>
+
+</html>
+
+
+

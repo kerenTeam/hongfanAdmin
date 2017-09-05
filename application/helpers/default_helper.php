@@ -144,6 +144,27 @@ function curl_post($url, $post){
     return $result;
 }
 
+// function curl_post_token($url, $post){
+//     $options = array(
+//         CURLOPT_RETURNTRANSFER =>true,
+//         CURLOPT_HEADER =>false,
+//         CURLOPT_POST =>true,
+//         CURLOPT_POSTFIELDS => $post,
+//     );
+//     $ch = curl_init($url);
+//     curl_setopt_array($ch, $options);
+//     curl_setopt($ch, CURLOPT_HEADER, 1);
+//     curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+//     $result = curl_exec($ch);
+//     if (curl_getinfo($ch, CURLINFO_HTTP_CODE) == '200') {
+// 	    $header_size	= curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+//         $headers		=substr(substr($result, 79, $header_size),0,148);
+//         $body		= substr($result, $header_size);
+//     }
+//     curl_close($ch);
+//     return $headers;
+// }
+
 //模拟post 登陆app
 function curl_post_token($url, $post){
     $options = array(
@@ -245,7 +266,7 @@ function subtree($arr,$a = '',$id=0,$lev=1) {
 function deep_in_array($value, $array) {   
     foreach($array as $item) {   
         if(!is_array($item)) {   
-            if ($item == $value) {  
+            if (strnatcasecmp($item,$value)) {  
                 return true;  
             } else {  
                 continue;   

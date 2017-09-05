@@ -312,28 +312,28 @@ class SingleShop extends CI_Controller {
             $pic = array();
 
             $header = array("token:".$_SESSION['token'],'city:'.'1');     
-                if(!empty($_FILES['img1']['name'])){
-                        unset($data['img1']);
-                        $tmpfile = new CURLFile(realpath($_FILES['img1']['tmp_name']));
-                    
-                        $pics = array(
-                            'pics' =>$tmpfile,
-                            'porfix'=>'moll/store/'.$store_id.'/logo',
-                            'bucket'=>BUCKET,
-                        );
-                    
-                        $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
-                        $img = json_decode($a['data']['img'],true);
-                        $data['logo'] = $img[0]['picImg'];
+            if(!empty($_FILES['img1']['name'])){
+                    unset($data['img1']);
+                    $tmpfile = new CURLFile(realpath($_FILES['img1']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/store/'.$store_id.'/logo',
+                        'bucket'=>BUCKET,
+                    );
+                
+                    $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                    $img = json_decode($a['data']['img'],true);
+                    $data['logo'] = $img[0]['picImg'];
 
-                }else{
+            }else{
 
-                    if(isset($data['img1'])){
-                        $data['logo'] = $data['img1'];
-                        unset($data['img1']);
+                if(isset($data['img1'])){
+                    $data['logo'] = $data['img1'];
+                    unset($data['img1']);
 
-                    }
                 }
+            }
 
                 if(!empty($_FILES['img2']['name'])){
                         unset($data['img2']);
