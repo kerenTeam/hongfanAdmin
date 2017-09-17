@@ -76,7 +76,7 @@ class Specialty extends Default_Controller {
 
         if($_POST){
 
-           $catelist = $this->MallShop_model->get_goods_cates_list('2');
+           $catelist = $this->MallShop_model->get_mall_cates();
 
            echo json_encode($catelist);
 

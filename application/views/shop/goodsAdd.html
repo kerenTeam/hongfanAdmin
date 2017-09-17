@@ -668,19 +668,21 @@ i {
 
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                            <label class="am-u-sm-3 am-form-label">商品一级分类<span class="red">*</span>：</label>
+                            <label class="am-u-sm-3 am-form-label">商品类型<span class="red">*</span>：</label>
 
                             <div class="am-u-sm-8 am-u-end">
 
-                                <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='categoryid'>
+                                <select id="firstSort" required="required" data-am-selected="{searchBox: 1,maxHeight: 300}" name='differentiate'>
 
                                     <option value=''>请选择一个！</option>
+                                    <option value="2">特色馆</option>
+                                    <option value="1">超市优选</option>
 
-                                    <?php foreach($cates as $val):?>
+                                  <!--   <?php foreach($cates as $val):?>
 
                                     <option value="<?php echo $val['catid'];?>"><?php echo $val['catname'];?></option>
 
-                                    <?php endforeach;?>
+                                    <?php endforeach;?> -->
 
                                 </select>
 
@@ -690,13 +692,13 @@ i {
 
                         <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6" id="secondSort" style="display: none;">
 
-                            <label class="am-u-sm-3 am-form-label">商品二级分类<span class="red">*</span>：</label>
+                            <label class="am-u-sm-3 am-form-label">商品分类<span class="red">*</span>：</label>
 
                             <div class="am-u-sm-8 am-u-end">
 
-                                <select id="secondSortSelect"  data-am-selected="{searchBox: 1,maxHeight: 200}" name='soncategoryid'>
+                                <select id="secondSortSelect"  data-am-selected="{searchBox: 1,maxHeight: 200}" name='categoryid'>
 
-                                
+                                    
 
                                 </select>
 
@@ -1972,7 +1974,7 @@ $(".deleteImg").click(function(){
 
                 url:'<?php echo site_url('shop/SingleShop/return_godos_cate');?>',
 
-                data: 'catid='+ firstSort,
+                data: 'type='+ firstSort,
 
                 success: function(data){ 
 

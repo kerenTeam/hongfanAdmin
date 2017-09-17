@@ -36,9 +36,15 @@ class MallShop_model extends CI_Model
     } 
        //返回商品分类列表
     function get_cates_parent($parentid){
-        $query = $this->db->where('parentid',$parentid)->order_by('sort','asc')->get($this->shop_cates);
+        $query = $this->db->where('type',$parentid)->order_by('sort','asc')->get($this->shop_cates);
         return $query->result_array();
     } 
+    //返回所有分类
+    function get_mall_cates(){
+        $query = $this->db->order_by('sort','asc')->get($this->shop_cates);
+        return $query->result_array();
+    }
+
     //返回所有分类
     function get_goods_cates_list($id){
         $where['type'] = $id;
@@ -97,11 +103,11 @@ class MallShop_model extends CI_Model
     }
 
     //商家商品列表
-    function get_goods_list($storeid,$type){
+    function get_goods_list($storeid){
         $this->db->select('a.*, b.catname');
         $this->db->from('hf_mall_goods a');
         $this->db->join('hf_mall_category b', 'b.catid = a.categoryid','left');
-        $query = $this->db->where('storeid',$storeid)->where('goods_state !=','2')->where('differentiate',$type)->order_by('a.goods_id','desc')->get();
+        $query = $this->db->where('storeid',$storeid)->where('goods_state !=','2')->order_by('a.goods_id','desc')->get();
         return $query->result_array(); 
     }
     

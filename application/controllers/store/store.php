@@ -130,55 +130,55 @@ class Store extends Default_Controller {
 
             //获取所有商品
 
-            // $id = $this->input->post('default');
+            $id = $this->input->post('default');
 
-            // if($id ==2){
+            if($id ==2){
 
-            //     //推荐商品
+                //推荐商品
 
-            //      $goods_list = $this->MallShop_model->get_remment_goods();
+                 $goods_list = $this->MallShop_model->get_remment_goods();
 
-            // }else if($id == 3){
+            }else if($id == 3){
 
-            //     //特价商品
+                //特价商品
 
-            //      $goods_list = $this->MallShop_model->get_specials_goods();
+                 $goods_list = $this->MallShop_model->get_specials_goods();
 
-            // }else{
+            }else{
 
+                $goods_list = $this->MallShop_model->get_goodslist('4');
 
-            // }
-            $goods_list = $this->MallShop_model->get_goodslist('4');
+            }
             
 
 
             //获取商品库存
 
-            // foreach($goods_list as $k=>$v){
+            foreach($goods_list as $k=>$v){
 
-            //     //获取商品属性
+                //获取商品属性
 
-            //     $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
 
-            //     if(!empty($parent)){
+                if(!empty($parent)){
 
-            //         $a = '0';
+                    $a = '0';
 
-            //         foreach($parent as $key=>$val){
+                    foreach($parent as $key=>$val){
 
-            //             $a += $val['stock'];
+                        $a += $val['stock'];
 
-            //         }
+                    }
 
-            //         $goods_list[$k]['amount'] = $a;
+                    $goods_list[$k]['amount'] = $a;
 
-            //     }else{
+                }else{
 
-            //         $goods_list[$k]['amount'] = '0';
+                    $goods_list[$k]['amount'] = '0';
 
-            //     }
+                }
 
-            // } 
+            } 
 
             if(empty($goods_list)){
 
@@ -2068,7 +2068,238 @@ class Store extends Default_Controller {
     }
 
 
+    //到处订单
+    function Import_mollOrder(){
+          if($_POST){
 
+            $storeid = $this->input->post('mollseller');
+
+            $start_time = $this->input->post('begin_time').' 00:00:00:00';
+
+            $end_time = $this->input->post('end_time').' 23:59:59';
+            $list = store_order_list($storeid,$start_time,$end_time);
+         
+
+            $this->load->library('excel');
+
+            //activate worksheet number 1
+
+            $this->excel->setActiveSheetIndex(0);
+
+            //name the worksheet
+
+            $this->excel->getActiveSheet()->setTitle('ImportOrder');
+
+
+            $this->excel->getActiveSheet()->mergeCells('A1:N1');  
+
+            $this->excel->getActiveSheet()->setCellValue('A1','销售明细'); 
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(13);
+
+            
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);      
+
+            $this->excel->getActiveSheet()->getDefaultColumnDimension('A1')->setWidth(20);
+
+
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);  
+
+           
+
+                $arr_title = array(
+
+                    'A' => '商家名称',
+
+                    'B' => '订单编号',
+
+                    'C' => '成交时间',
+
+                    'D' => '商品编码',
+
+                    'E' => '商品名称',
+
+                    'F' => '单价',
+
+                    'G' => '数量',
+
+                    'H' => '总价',
+
+                    'I' => '成交价格',
+
+                    'J' => '邮资',
+
+                    'K' => '成交总额',
+
+                    'L' => '佣金比率',
+
+                    'M' => '佣金总额',
+
+                    'N' => '结算金额',
+
+                    'O' => '备注'
+
+                );
+            //设置excel 表头
+
+            foreach ($arr_title as $key => $value) {
+
+                $this->excel->getActiveSheet()->setCellValue($key . '2', $value);
+
+                $this->excel->getActiveSheet()->getStyle($key . '2')->getFont()->setSize(13);
+
+                $this->excel->getActiveSheet()->getStyle($key . '2')->getFont()->setBold(true);
+
+                $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                $this->excel->getActiveSheet()->getStyle($key . '2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            }
+
+           // var_dump($start_time,$end_time);
+
+            //获取要导出的订单
+
+
+           // exit;
+
+            if(!empty($list)){
+
+              if(count($list) > 0)
+
+              {
+
+                  $i ='2';
+
+                 
+
+
+                    foreach($list as $book){
+
+                        $i++;
+
+                      
+
+                        $goods = json_decode($book['goods_data'],true);
+
+                        
+
+                        foreach ($goods['goods_Data'] as $key => $value) {
+
+                            $k[$i][$key]= $value['goods_id'];
+
+                            $c[$i][$key]= $value['title'];
+
+                            $n[$i][$key]= $value['nums'];
+
+                            $p[$i][$key]= $value['price'];
+
+                        }
+
+                        $good = implode('|',$k[$i]);
+
+                        $name = implode('|',$c[$i]);
+
+                        $num = implode('|',$n[$i]);
+
+                        $price = implode('|',$p[$i]);
+
+                        //佣金
+
+                       $points=  $goods['total_goods_prices'] * ($goods['stores']['points']/100);
+
+
+
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $goods['stores']['store_name']);
+
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
+
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['create_time']);
+
+
+
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $good);
+
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $name);
+
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $price);
+
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $num);
+
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $book['amount']);
+
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $goods['total_goods_prices']- $goods['postAge']);
+
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $goods['postAge']);
+
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['total_goods_prices']);
+
+                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['stores']['points']);
+
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $points);
+
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $goods['total_goods_prices'] - $points);
+
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '');
+
+                    }
+
+            }
+
+
+
+            //日志
+
+            $log = array(
+
+                'userid'=>$_SESSION['users']['user_id'],  
+
+                "content" => $_SESSION['users']['username']."导出了订单信息",
+
+                "create_time" => date('Y-m-d H:i:s'),
+
+                "userip" => get_client_ip(),
+
+            );
+
+            $this->db->insert('hf_system_journal',$log);
+
+
+
+            $filename = 'ImportOrder.xls'; //save our workbook as this file name
+
+           /// var_dump($filename);
+
+            header('Content-Type: application/vnd.ms-excel'); //mime type
+
+            header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+            header('Cache-Control: max-age=0'); //no cache
+
+
+
+             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+             $objWriter->save('php://output');
+
+             echo "<script>alert('导出成功！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
+
+             exit;
+
+            }else{
+
+                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
+
+            }
+
+
+
+        }
+    }
 
 
 

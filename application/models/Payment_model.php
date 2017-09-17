@@ -5,6 +5,7 @@
 class Payment_model extends CI_Model
 {
     public $payment = "hf_qianmi_order";
+    public $recharge = "hf_tool_recharge";
 
     function __construct()
     {
@@ -41,6 +42,29 @@ class Payment_model extends CI_Model
         return $this->db->where($where)->delete($this->payment);
     }
 
+    //返回充值设置
+    function ret_recharge(){
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_tool_recharge a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.createUserid','left');
+        $query = $this->db->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }
+
+    //新增充值设置
+    function add_recharge($data){
+        return $this->db->insert($this->recharge,$data);
+    }
+
+    //编辑话费这只
+    function edit_recharge($id,$data){
+        return $this->db->where('id',$id)->update($this->recharge,$data);
+    }
+
+    //删除充值套惨
+    function del_recharge($id){
+        return $this->db->where('id',$id)->delete($this->recharge);
+    }
 }
 
 

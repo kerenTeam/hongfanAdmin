@@ -32,7 +32,8 @@ class LocalLife extends Default_Controller {
 
 	public $view_recruit = "module/localLife/recruitList.html";
 
-
+	//HI拼车
+	public $view_carpooling = "module/localLife/hiCarpooling.html";
 
 
 
@@ -118,89 +119,89 @@ class LocalLife extends Default_Controller {
 
     //新增分类操作
 
-    function add_cates(){
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+  //   function add_cates(){
+		// $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// 	// var_dump($url);
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+		// 			exit;
+		// }	
 
-        if($_POST){
+  //       if($_POST){
 
-            $data = $this->input->post();
+  //           $data = $this->input->post();
 
-            if(!empty($_FILES['img']['tmp_name'])){
+  //           if(!empty($_FILES['img']['tmp_name'])){
 
-                $config['upload_path']      = 'Upload/icon';
+  //               $config['upload_path']      = 'Upload/icon';
 
-                $config['allowed_types']    = 'gif|jpg|png|jpeg';
+  //               $config['allowed_types']    = 'gif|jpg|png|jpeg';
 
-                $config['max_size']     = 2048;
+  //               $config['max_size']     = 2048;
 
-                $config['file_name'] = date('Y-m-d_His');
+  //               $config['file_name'] = date('Y-m-d_His');
 
-                $this->load->library('upload', $config);
+  //               $this->load->library('upload', $config);
 
-                if ( ! $this->upload->do_upload('img')) {
+  //               if ( ! $this->upload->do_upload('img')) {
 
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
+  //                   echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
 
-                    exit;
+  //                   exit;
 
-                } else {
+  //               } else {
 
-                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
+  //                   $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
 
-                }
+  //               }
 
-            }
+  //           }
 
-            $data['c_id'] = '本地生活';
+  //           $data['c_id'] = '本地生活';
 
-            if($this->Module_model->add_cates($data)){
+  //           if($this->Module_model->add_cates($data)){
 
-            	//日志
+  //           	//日志
 
-	            $log = array(
+	 //            $log = array(
 
-	                'userid'=>$_SESSION['users']['user_id'],  
+	 //                'userid'=>$_SESSION['users']['user_id'],  
 
-	                "content" => $_SESSION['users']['username']."新增了一个本地生活分类,分类名称是".$data['name'],
+	 //                "content" => $_SESSION['users']['username']."新增了一个本地生活分类,分类名称是".$data['name'],
 
-	                "create_time" => date('Y-m-d H:i:s'),
+	 //                "create_time" => date('Y-m-d H:i:s'),
 
-	                "userip" => get_client_ip(),
+	 //                "userip" => get_client_ip(),
 
-	            );
+	 //            );
 
-	            $this->db->insert('hf_system_journal',$log);
+	 //            $this->db->insert('hf_system_journal',$log);
 
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
+  //               echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
 
-                exit;
+  //               exit;
 
-            }else{
+  //           }else{
 
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
+  //               echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/localLifeList')."'</script>";
 
-                exit;
+  //               exit;
 
-            }
+  //           }
 
-        }else{
+  //       }else{
 
-            $this->load->view('404.html');
+  //           $this->load->view('404.html');
 
-        }
+  //       }
 
-    }
+  //   }
 
 
 
@@ -749,14 +750,6 @@ class LocalLife extends Default_Controller {
 		}
 
 	}
-
-	
-
-
-
-
-
-
 
 	//新增普通信息
 
@@ -1602,6 +1595,211 @@ class LocalLife extends Default_Controller {
 
 	}
 
+	//HI拼合
+	function Hi_Carpooling(){
+
+		$config['per_page'] = 10;
+
+			//获取页码
+
+			$current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+
+			//var_dump($current_page);
+
+				//配置
+
+			$config['base_url'] = site_url('/module/LocalLife/Hi_Carpooling');
+
+			//分页配置
+
+			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+			$config['full_tag_close'] = '</ul>';
+
+			$config['first_tag_open'] = '<li>';
+
+			$config['first_tag_close'] = '</li>';
+
+			$config['prev_tag_open'] = '<li>';
+
+			$config['prev_tag_close'] = '</li>';
+
+			$config['next_tag_open'] = '<li>';
+
+			$config['next_tag_close'] = '</li>';
+
+			$config['cur_tag_open'] = '<li class="am-active"><a>';
+
+			$config['cur_tag_close'] = '</a></li>';
+
+			$config['last_tag_open'] = '<li>';
+
+			$config['last_tag_close'] = '</li>';
+
+			$config['num_tag_open'] = '<li>';
+
+			$config['num_tag_close'] = '</li>';
+
+
+
+			$config['first_link']= '首页';
+
+			$config['next_link']= '下一页';
+
+			$config['prev_link']= '上一页';
+
+			$config['last_link']= '末页';
+
+
+
+			$list = $this->Module_model->ret_hicarpooling();
+
+			$config['total_rows'] = count($list);
+
+			// //分页数据
+
+		    $listpage = $this->Module_model->ret_hicarpooling_page($config['per_page'],$current_page);
+
+		    $this->load->library('pagination');//加载ci pagination类
+
+			$this->pagination->initialize($config);
+
+    		$data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+    	
+		$data['page'] = $this->view_carpooling;
+		$data['menu'] = array('localLife','hicar');
+
+		$this->load->view('template.html',$data);
+	}
+
+
+	//新增HI拼车
+	function add_Carpooling(){
+		$q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }  
+		if($_POST){
+			$data = $this->input->post();
+			$data['userId'] = $_SESSION['users']['user_id'];
+			if($this->Module_model->insert("hf_local_transport",$data)){
+				$log = array(
+
+					'userid'=>$_SESSION['users']['user_id'],  
+
+					"content" => $_SESSION['users']['username']."新增了一个HI拼车信息",
+
+					"create_time" => date('Y-m-d H:i:s'),
+
+					"userip" => get_client_ip(),
+
+				);
+
+				$this->db->insert('hf_system_journal',$log);
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+				exit;
+
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+			}
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//编辑HI拼车
+	function edit_Carpooling(){
+		$q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }  
+        if($_POST){
+        	$data = $this->input->post();
+        	if($this->Module_model->updata("hf_local_transport",'id',$data['id'],$data)){
+				$log = array(
+
+					'userid'=>$_SESSION['users']['user_id'],  
+
+					"content" => $_SESSION['users']['username']."编辑了一个HI拼车信息",
+
+					"create_time" => date('Y-m-d H:i:s'),
+
+					"userip" => get_client_ip(),
+
+				);
+
+				$this->db->insert('hf_system_journal',$log);
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+				exit;
+
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+			}
+
+        }else{
+        	$this->load->view('404.html');
+        }
+	}
+
+
+	//删除hi拼车
+	function del_Carpooling(){
+		$q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }  
+
+       	$id = intval($this->uri->segment('4'));
+       	if($id == '0'){
+       		$this->load->view('404.html');
+       	}else{
+			 if($this->Module_model->delete("hf_local_transport",'id',$id)){
+				$log = array(
+
+					'userid'=>$_SESSION['users']['user_id'],  
+
+					"content" => $_SESSION['users']['username']."删除了一个HI拼车信息",
+
+					"create_time" => date('Y-m-d H:i:s'),
+
+					"userip" => get_client_ip(),
+
+				);
+
+				$this->db->insert('hf_system_journal',$log);
+				echo "<script>alert('操作成功！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+				exit;
+
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('module/LocalLife/Hi_Carpooling')."'</script>";
+			}       
+
+       	}
+	}
 
 
 	//推荐普通信息到首页显示
@@ -1669,76 +1867,6 @@ class LocalLife extends Default_Controller {
 		}
 
 	}
-
-
-
-	//推荐房产信息到本地生活
-
-	function house_recommend(){
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
-
-		if($_POST){
-
-			$id = $this->input->post('id');
-
-			$data['recommend_state'] = $this->input->post('recommend_state');
-
-			if($this->Module_model->edit_houst($id,$data)){
-
-				if($data['recommend_state'] == 1){
-
-					$title =  "推荐";
-
-				}else{
-
-					$title =  "取消推荐";
-
-				}
-
-				//日志
-
-				$log = array(
-
-					'userid'=>$_SESSION['users']['user_id'],  
-
-					"content" => $_SESSION['users']['username'].$title."了一个房产信息到本地生活首页,信息id是：".$id,
-
-					"create_time" => date('Y-m-d H:i:s'),
-
-					"userip" => get_client_ip(),
-
-				);
-
-				$this->db->insert('hf_system_journal',$log);
-
-				echo "1";
-
-			}else{
-
-				echo "2";
-
-			}
-
-		}else{
-
-			echo "2";
-
-		}
-
-	}
-
-
 
 	//推荐跳蚤市场信息到本地生活
 

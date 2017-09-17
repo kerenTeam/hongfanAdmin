@@ -2677,6 +2677,62 @@ function findContent_search($cateid,$sear,$special,$time,$endtime,$likenum){
 
 }
 
+function store_order_list($storeid,$time,$endtime){
+
+      $CI = &get_instance();
+
+      $res= '';
+
+      if(empty($time)){
+
+            if($storeid == '0'){
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `order_type` != '0'  ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);
+
+                $res = $query->result_array();
+
+            }else{
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `seller` = '$storeid' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+
+            }
+
+      }else{
+
+            if($storeid == '0'){
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);
+
+                $res = $query->result_array();
+
+            }else{
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `seller` = '$storeid' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime'  ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);                
+
+                $res = $query->result_array();
+
+            }
+
+
+
+      }
+
+
+
+      return $res;
+
+
+
+}
 
 
  ?>

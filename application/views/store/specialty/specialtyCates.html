@@ -1,336 +1,680 @@
-<style type="text/css" media="screen">
-.am-selected {
-    width: 100%!important;
-} 
-.table-check {
- width: 30px;
-} 
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-}
-.am-u-sm6{
-    width:60px !important;
-    margin:0;
-}
-.am-form-group div{
-    line-height: 37px;
-}
-.tpl-del{
-    border: 1px solid #ff0000 !important;
-    color: #ff0000 !important;
-}
-.refresh{
-    cursor: pointer;
-}
-
-.pagebox {
-        width: 100%;
-        padding-left: 37%;
-        margin: 0 auto;
-    }
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/Specialty/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf">分类搜索</div>
-                </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
-                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
-                        <label for="source_state" class="am-u-sm-4 am-form-label">分类搜索:</label>
-                        <div class="am-u-sm-8">
-                            <input type="text" id="searchKey" placeholder="请输入搜素的关键字">
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-9 am-u-md-9 am-u-lg-9 am-text-left">
-                        <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
-                    </div>
-                </form>
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">商品列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/Specialty/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>分类编号</th>
-                                    <th>分类名 </th>
-                                    <th>ICON </th>
-                                    <th>ICON背景色 </th>
-                                    <th>索引 </th>
-                                    <th>上级ID </th>
-                                    <th>排序 </th>
-                                    <th>创建时间</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a >2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                        <div claa="am-text-middle">
-                           <span>共<span class="allData">15</span>条数据</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script src="assets/js/artTemplate-native.js"></script>
-
-<script type="text/javascript">
-var total_page = 0,pageflag = 1,current_page=0,$storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort')) || 0, $isStoreGoodsSort = parseInt(sessionStorage.getItem('isStoreGoodsSort')) || 0;
-function otherFunction() {
-    $('.editSort').click(function(){//编辑分类信息
-        var dataId=$(this).attr('data-id');
-        $(this).attr("href","<?php echo site_url('/store/Specialty/storeEditSort/" + dataId + "');?>");
-    });
-    for(var i=0;i<$('.tpl-del').length;i++){
-        var dataId=$('.tpl-del').eq(i).attr('data-id');
-        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
-    }
-    $('.sureDelete').click(function(){
-        var dataId=$(this).attr('data-id');
-        for(var i=0;i<$('.trClass').length;i++){
-            if($('table tbody tr').eq(i).attr('data-id')==dataId){
-                $.ajax({
-                    type:'post',
-                    url:'<?php echo site_url('/store/Specialty/del_store_cate');?>',
-                    data: 'id='+dataId,
-                    success: function(data){
-                        if(data==1){
-                            for(var i=0;i<$('.trClass').length;i++){
-                                if($('.trClass').eq(i).attr('data-id')==dataId){
-                                    $('.trClass').eq(i).remove();
-                                    getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
-                                }
-                            }
-                        }else{
-                            alert("操作失败！");
-                        }
-                        
-                    },
-                    error:function(xhr,type,errorThrown){
-                        alert("操作失败，请检查网络设置！");
-                    }
-                });
-                getList();
-            }
-        }
-        
-    })
-}
-//点击前往某一页的函数
-function go_to_page(page_num){
-    $('.page_link').removeClass('active_page');
-    $('.page_link').eq(page_num).addClass('active_page');
-    $("#dataList").children('tr').css("display","none");
-    var start_page=parseInt(15)*parseInt(page_num);
-    var end_page=parseInt(15)*parseInt(page_num+1);
-    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-    current_page=page_num;
-    sessionStorage.setItem('storeGoodsSort', current_page);
-    $storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort'));
-    
-}
-
-//点击上一页的函数
-function previous(){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(0).html()) - 2;
-    }else {
-        new_page = parseInt($('.current').html()) - 2;
-    }
-    if(new_page >= 0) {
-        go_to_page(new_page);
-    }
-}
-
-//点击下一页的函数
-function next(argu){
-    if($('.current').length>1) {
-        new_page = parseInt($('.current').eq(1).html());
-    }else {
-        new_page = parseInt($('.current').html());
-    }
-    
-    
-    if(new_page < argu){   
-        console.log(new_page + ' ' + argu);
-        go_to_page(new_page);
-    }
-}
-//异步刷新的ajax请求 
-function getList(dataurl,data){
-    $.ajax({
-        type:'post',
-        url:dataurl,
-        data: data,
-        success: function(result){         
-            var res = eval(result);
-            // console.log(res);
-            if(res != 2 && res != 3){
-                var listData = ''; //每页出现的数量
-                total_page = Math.ceil(res.length/15); //得到总页数
-                for(var i = 0; i < res.length; i++){
-                    listData += template('dataModal',res[i]);
-                 }
-                document.getElementById('dataList').innerHTML = listData;
-                $('.allData').html(res.length);
-                $('.pagebox').css('display', 'block');
-                if(total_page <= 1) {
-                        $('#Pagination').css('display', 'none');
-                        $('.searchPage').css('display', 'none');
-                } else {
-                    if(pageflag) {    
-                        var opts={};
-                        opts.current_page = $storeGoodsSort;
-                        $("#Pagination").pagination(total_page, opts);
-                        go_to_page($storeGoodsSort);
-                        pageflag = 0;
-                    } else {
-                        $("#Pagination").pagination(total_page);
-                        go_to_page(0);
-                        
-                    }
-                    if(total_page < 5) {
-                        $('.searchPage').css('display', 'none');
-                    }
-                }
-                
-                otherFunction();
-            }else{
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无分类信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
-            }
-
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("网络状况不佳，请稍后重试！");
-            $('#dataList').find('tr').remove();
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无分类信息！</p></td></tr>').appendTo('#dataList');
-            $('.pagebox').css('display', 'none');
-        }
-    });
-}
-$(document).ready(function(){
-    //加载列表数数据
-    if($isStoreGoodsSort) {
-        var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/Specialty/search_cate');?>','sear='+keywords);
-        sessionStorage.setItem('isStoreGoodsSort', 1);
-    } else {
-        getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
-    }
-    
-    //刷新页面
-    $('.refresh').click(function(){
-        getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
-    });
-    //点击搜索
-    $('.searchSort').click(function(){
-        var keywords=$('#searchKey').val();
-        getList('<?php echo site_url('/store/Specialty/search_cate');?>','sear='+keywords);
-        sessionStorage.setItem('isStoreGoodsSort', 1);
-    });
-})
-</script>
-<script type="text/html" id="dataModal">
-    <tr class="trClass" data-id="<%= catid%>">
-        <td class="am-text-middle"><%= catid%></td>
-        <td class="am-text-middle"><%= catname%></td>
-        <%if(icon) {%>
-        <td class="am-text-middle">
-            <img src="<%= icon%>" class="am-img-responsive" alt=""/>
-        </td>
-        <%} else {%>
-        <td class="am-text-middle">
-            
-        </td>
-        <%}%>
-        <td class="am-text-middle"><input type="color" value="<%= icon_color%>" name="" /></td>
-        <td class="am-text-middle"><%= letter%></td>
-        <%if(parentid==0) {%>
-        <td class="am-text-middle">--</td>
-        <%} else {%>
-        <td class="am-text-middle"><%= parentid%></td>
-        <%}%>
-        <td class="am-text-middle"><%= sort%></td>
-        <td class="am-text-middle"><%= create_time%></td>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a  data-id="<%= catid%>" class="editSort">
-                    <i class="am-icon-pencil"></i> 编辑
-                </a>
-                <a data-id="<%= catid%>" class="tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
-    </tr>
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= catid%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= catid%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-</script>
+<style type="text/css" media="screen">
+
+.am-selected {
+
+    width: 100%!important;
+
+} 
+
+.table-check {
+
+ width: 30px;
+
+} 
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+td.am-text-middle img{
+
+    width:80px;
+
+}
+
+.am-u-sm6{
+
+    width:60px !important;
+
+    margin:0;
+
+}
+
+.am-form-group div{
+
+    line-height: 37px;
+
+}
+
+.tpl-del{
+
+    border: 1px solid #ff0000 !important;
+
+    color: #ff0000 !important;
+
+}
+
+.refresh{
+
+    cursor: pointer;
+
+}
+
+
+
+.pagebox {
+
+        width: 100%;
+
+        padding-left: 37%;
+
+        margin: 0 auto;
+
+    }
+
+
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>商城管理 &nbsp;&nbsp;<a href="<?php echo site_url().'/store/Specialty/specialtyCate';?>" style="font-size:16px;">特色馆分类</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">分类搜索</div>
+
+                </div>
+
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm">
+
+                    <div class="am-form-group am-inline am-u-sm-3 am-u-md-3 am-u-lg-3">
+
+                        <label for="source_state" class="am-u-sm-4 am-form-label">分类搜索:</label>
+
+                        <div class="am-u-sm-8">
+
+                            <input type="text" id="searchKey" placeholder="请输入搜素的关键字">
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-form-group am-u-sm-9 am-u-md-9 am-u-lg-9 am-text-left">
+
+                        <button type="button" class="am-btn am-btn-secondary am-btn-xs searchSort"><i class="am-icon-search"></i> 搜索</button>
+
+                    </div>
+
+                </form>
+
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">商品列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/store/Specialty/storeAddSort';?>"><span class="am-icon-plus"></span> 新增</a></button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    
+
+                                    <th>分类编号</th>
+
+                                    <th>分类名 </th>
+                                    <th>所属类型 </th>
+
+                                    <th>ICON </th>
+
+                                    <th>ICON背景色 </th>
+
+                                    <th>索引 </th>
+
+                                    <th>上级ID </th>
+
+                                    <th>排序 </th>
+
+                                    <th>创建时间</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+                            <div class="pagination">
+
+                                <a class="prev"><i></i>上一页</a>
+
+                                <a class="current">1</a>
+
+                                <a >2</a>
+
+                                <a>3</a>
+
+                                <a>4</a>
+
+                                <span class="pagination-break">...</span>
+
+                                <a class="ep">15</a>
+
+                                <a class="next">下一页 <i></i></a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="searchPage">
+
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+
+                          <span class="page-go">跳转<input type="text">页</span>
+
+                          <a href="javascript:;" class="page-btn">确定</a>
+
+                        </div>
+
+                        <div claa="am-text-middle">
+
+                           <span>共<span class="allData">15</span>条数据</span> 
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script src="assets/js/artTemplate-native.js"></script>
+
+
+
+<script type="text/javascript">
+
+var total_page = 0,pageflag = 1,current_page=0,$storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort')) || 0, $isStoreGoodsSort = parseInt(sessionStorage.getItem('isStoreGoodsSort')) || 0;
+
+function otherFunction() {
+
+    $('.editSort').click(function(){//编辑分类信息
+
+        var dataId=$(this).attr('data-id');
+
+        $(this).attr("href","<?php echo site_url('/store/Specialty/storeEditSort/" + dataId + "');?>");
+
+    });
+
+    for(var i=0;i<$('.tpl-del').length;i++){
+
+        var dataId=$('.tpl-del').eq(i).attr('data-id');
+
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#"+ dataId +"'}");
+
+    }
+
+    $('.sureDelete').click(function(){
+
+        var dataId=$(this).attr('data-id');
+
+        for(var i=0;i<$('.trClass').length;i++){
+
+            if($('table tbody tr').eq(i).attr('data-id')==dataId){
+
+                $.ajax({
+
+                    type:'post',
+
+                    url:'<?php echo site_url('/store/Specialty/del_store_cate');?>',
+
+                    data: 'id='+dataId,
+
+                    success: function(data){
+
+                        if(data==1){
+
+                            for(var i=0;i<$('.trClass').length;i++){
+
+                                if($('.trClass').eq(i).attr('data-id')==dataId){
+
+                                    $('.trClass').eq(i).remove();
+
+                                    getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
+
+                                }
+
+                            }
+
+                        }else{
+
+                            alert("操作失败！");
+
+                        }
+
+                        
+
+                    },
+
+                    error:function(xhr,type,errorThrown){
+
+                        alert("操作失败，请检查网络设置！");
+
+                    }
+
+                });
+
+                getList();
+
+            }
+
+        }
+
+        
+
+    })
+
+}
+
+//点击前往某一页的函数
+
+function go_to_page(page_num){
+
+    $('.page_link').removeClass('active_page');
+
+    $('.page_link').eq(page_num).addClass('active_page');
+
+    $("#dataList").children('tr').css("display","none");
+
+    var start_page=parseInt(15)*parseInt(page_num);
+
+    var end_page=parseInt(15)*parseInt(page_num+1);
+
+    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+
+    current_page=page_num;
+
+    sessionStorage.setItem('storeGoodsSort', current_page);
+
+    $storeGoodsSort = parseInt(sessionStorage.getItem('storeGoodsSort'));
+
+    
+
+}
+
+
+
+//点击上一页的函数
+
+function previous(){
+
+    if($('.current').length>1) {
+
+        new_page = parseInt($('.current').eq(0).html()) - 2;
+
+    }else {
+
+        new_page = parseInt($('.current').html()) - 2;
+
+    }
+
+    if(new_page >= 0) {
+
+        go_to_page(new_page);
+
+    }
+
+}
+
+
+
+//点击下一页的函数
+
+function next(argu){
+
+    if($('.current').length>1) {
+
+        new_page = parseInt($('.current').eq(1).html());
+
+    }else {
+
+        new_page = parseInt($('.current').html());
+
+    }
+
+    
+
+    
+
+    if(new_page < argu){   
+
+        console.log(new_page + ' ' + argu);
+
+        go_to_page(new_page);
+
+    }
+
+}
+
+//异步刷新的ajax请求 
+
+function getList(dataurl,data){
+
+    $.ajax({
+
+        type:'post',
+
+        url:dataurl,
+
+        data: data,
+
+        success: function(result){         
+
+            var res = eval(result);
+
+            // console.log(res);
+
+            if(res != 2 && res != 3){
+
+                var listData = ''; //每页出现的数量
+
+                total_page = Math.ceil(res.length/15); //得到总页数
+
+                for(var i = 0; i < res.length; i++){
+
+                    listData += template('dataModal',res[i]);
+
+                 }
+
+                document.getElementById('dataList').innerHTML = listData;
+
+                $('.allData').html(res.length);
+
+                $('.pagebox').css('display', 'block');
+
+                if(total_page <= 1) {
+
+                        $('#Pagination').css('display', 'none');
+
+                        $('.searchPage').css('display', 'none');
+
+                } else {
+
+                    if(pageflag) {    
+
+                        var opts={};
+
+                        opts.current_page = $storeGoodsSort;
+
+                        $("#Pagination").pagination(total_page, opts);
+
+                        go_to_page($storeGoodsSort);
+
+                        pageflag = 0;
+
+                    } else {
+
+                        $("#Pagination").pagination(total_page);
+
+                        go_to_page(0);
+
+                        
+
+                    }
+
+                    if(total_page < 5) {
+
+                        $('.searchPage').css('display', 'none');
+
+                    }
+
+                }
+
+                
+
+                otherFunction();
+
+            }else{
+
+                $('#dataList').find('tr').remove();
+
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无分类信息！</p></td></tr>').appendTo('#dataList');
+
+                $('.pagebox').css('display', 'none');
+
+            }
+
+
+
+            
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("网络状况不佳，请稍后重试！");
+
+            $('#dataList').find('tr').remove();
+
+            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无分类信息！</p></td></tr>').appendTo('#dataList');
+
+            $('.pagebox').css('display', 'none');
+
+        }
+
+    });
+
+}
+
+$(document).ready(function(){
+
+    //加载列表数数据
+
+    if($isStoreGoodsSort) {
+
+        var keywords=$('#searchKey').val();
+
+        getList('<?php echo site_url('/store/Specialty/search_cate');?>','sear='+keywords);
+
+        sessionStorage.setItem('isStoreGoodsSort', 1);
+
+    } else {
+
+        getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
+
+    }
+
+    
+
+    //刷新页面
+
+    $('.refresh').click(function(){
+
+        getList('<?php echo site_url('/store/Specialty/ret_specialty_cate');?>','id=1');
+
+    });
+
+    //点击搜索
+
+    $('.searchSort').click(function(){
+
+        var keywords=$('#searchKey').val();
+
+        getList('<?php echo site_url('/store/Specialty/search_cate');?>','sear='+keywords);
+
+        sessionStorage.setItem('isStoreGoodsSort', 1);
+
+    });
+
+})
+
+</script>
+
+<script type="text/html" id="dataModal">
+
+    <tr class="trClass" data-id="<%= catid%>">
+
+        <td class="am-text-middle"><%= catid%></td>
+
+        <td class="am-text-middle"><%= catname%></td>
+         <%if(type == 1) {%>
+        <td class="am-text-middle">超市优选</td>
+
+        <%}else{%>
+        <td class="am-text-middle">特色馆</td>
+
+        <%}%>
+
+        <%if(icon) {%>
+
+        <td class="am-text-middle">
+
+            <img src="<%= icon%>" class="am-img-responsive" alt=""/>
+
+        </td>
+
+        <%} else {%>
+
+        <td class="am-text-middle">
+
+            
+
+        </td>
+
+        <%}%>
+
+        <td class="am-text-middle"><input type="color" value="<%= icon_color%>" name="" /></td>
+
+        <td class="am-text-middle"><%= letter%></td>
+
+        <%if(parentid==0) {%>
+
+        <td class="am-text-middle">--</td>
+
+        <%} else {%>
+
+        <td class="am-text-middle"><%= parentid%></td>
+
+        <%}%>
+
+        <td class="am-text-middle"><%= sort%></td>
+
+        <td class="am-text-middle"><%= create_time%></td>
+
+        <td class="am-text-middle">
+
+            <div class="tpl-table-black-operation">
+
+                <a  data-id="<%= catid%>" class="editSort">
+
+                    <i class="am-icon-pencil"></i> 编辑
+
+                </a>
+
+                <a data-id="<%= catid%>" class="tpl-del">
+
+                    <i class="am-icon-trash"></i> 删除
+
+                </a>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+     <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= catid%>">
+
+        <div class="am-modal-dialog">
+
+            <div class="am-modal-hd">删除提示</div>
+
+            <div class="am-modal-bd">
+
+                <p class="black">你，确定要删除这条记录吗？</p>
+
+            </div>
+
+            <div class="am-modal-footer">
+
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+                <span class="am-modal-btn sureDelete" data-id="<%= catid%>" data-am-modal-confirm>确定</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</script>
+

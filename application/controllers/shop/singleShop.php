@@ -443,17 +443,11 @@ class SingleShop extends CI_Controller {
 
            //获取商家信息
 
-           $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
+          
 
-           if($store['store_type'] == 1){
+               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId']);
 
-               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'1');
-
-           }else{
-
-               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId'],'4');
-
-           }
+           
             //获取商品库存
             foreach($arr as $k=>$v){
                 //获取商品属性
@@ -568,20 +562,18 @@ class SingleShop extends CI_Controller {
 
 
 
-            $data['goods'] = $this->MallShop_model->get_goodsInfo($id);
+            $goods = $this->MallShop_model->get_goodsInfo($id);
 
-            //所有商品分类
+            if($goods['differentiate'] == '4'){
+                $type = '2';
+            }else{
+                $type = '1';
+            }
+            //获取商品分类
+            $data['cates'] = $this->MallShop_model->get_cates_parent($type);
+           //  var_Dump($data);
 
-              if($store_type == '2'){
-
-                    $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-
-                }else{
-
-                    $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-
-                }
-
+            $data['goods'] = $goods;
 
 
             //获取商品属性
@@ -635,12 +627,6 @@ class SingleShop extends CI_Controller {
                 $data['parent'] = '';
 
             }
-
-              //返回快递模板
-
-            //$data['express'] = $this->MallShop_model->get_express_temp();
-
-            $data['store_type'] = $store_type;
 
             $data['shuxing'] = $parent;
 
@@ -701,6 +687,9 @@ class SingleShop extends CI_Controller {
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
 
             $pic = array();
+            if($data['differentiate'] == '2'){
+                $data['differentiate'] = '4';
+            }
 
  
             $header = array("token:".$_SESSION['token'],'city:'.'1');     
@@ -862,7 +851,7 @@ class SingleShop extends CI_Controller {
 
         if($_POST){
 
-            $c_id = $_POST['catid'];
+            $c_id = $_POST['type'];
 
             if(empty($c_id)){
 
@@ -906,7 +895,9 @@ class SingleShop extends CI_Controller {
 
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
 
-
+            if($data['differentiate'] == "2"){
+                $data['differentiate']  == '4';
+            }
 
             $pic = array();
 
@@ -961,20 +952,20 @@ class SingleShop extends CI_Controller {
 
             
 
-            $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
+            // $store = $this->MallShop_model->get_basess_info($_SESSION['businessId']);
 
-            if($store['store_type'] == 1){
+            // if($store['store_type'] == 1){
 
-                $data['differentiate'] = '1';
+            //     $data['differentiate'] = '1';
 
-            }else{
+            // }else{
 
-                $data['differentiate'] = '4';
+            //     $data['differentiate'] = '4';
 
-            }
+            // }
 
-            
-
+//             var_Dump($data);
+// exit;
              $goodsid = $this->MallShop_model->add_shop_goods($data);
 
              if(!empty($goodsid)){

@@ -8,100 +8,167 @@ require_once(APPPATH.'controllers/Default_Controller.php');
 
 class Payment extends Default_Controller
 {
-	public $view_payment = 'module/payment/payment.html';	
-	public $view_waterRate = 'module/payment/waterRate.html';
+	public $view_payment = 'module/payment/recharge_settings.html';	
 	public $view_energyCharge = 'module/payment/energyCharge.html';
-	public $view_casFee = 'module/payment/casFee.html';
-	public $view_phoneCharge = 'module/payment/phoneCharge.html';
-	public $view_planeTicket = 'module/payment/planeTicket.html';
-	public $view_trainTicket = 'module/payment/trainTicket.html';
 	function __construct()
 	{
 		 parent::__construct();
          $this->load->model('Payment_model');  
 	}
 
-	//充值缴费 主页
-    function payment(){
-
+    //充值设置
+    function recharge(){
+        //获取充值设置
+        $data['lists'] = $this->Payment_model->ret_recharge();
         $data['page'] = $this->view_payment;
-        $data['menu'] = array('localLife','payment');
+        $data['menu'] = array('payment','recharge');
         $this->load->view('template.html',$data);
     }
+    //新增手机设置
+    function add_recharge(){
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-	//充值缴费  生活缴费
-    function waterRate(){
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
 
-        $Utilities = $this->Payment_model->get_qianmi_order('2');
-        $data['page'] = $this->view_waterRate;
-        $data['menu'] = array('payment','waterRate');
-        $this->load->view('template.html',$data);
+        if($_POST){
+            $data = $this->input->post();
+            $data['createUserid'] = $_SESSION['users']['user_id'];
+            if($this->Payment_model->add_recharge($data)){
+                 //日志    
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."新增了话费\流量套餐，套餐额度是：".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+
+            }
+
+        }
     }
 
-    //手机充值
+    //编辑充值设置
+    function edit_recharge(){
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
+
+        if($_POST){
+            $data = $this->input->post();
+            $data['createUserid'] = $_SESSION['users']['user_id'];
+            if($this->Payment_model->edit_recharge($data['id'],$data)){
+                 //日志    
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了话费\流量套餐，套餐额度是：".$data['name'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //删除套餐
+    function del_recharge(){
+         $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
+        $id = intval($this->uri->segment('4'));
+       // var_Dump($id);
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            if($this->Payment_model->del_recharge($id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."删除了话费\流量套餐，套餐id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/payment/Payment/recharge')."'</script>";exit;
+            }
+        }
+
+
+    }
+
+
+
+
+    //手机充值记录
     function energyCharge(){
         $data['page'] = $this->view_energyCharge;
         $data['menu'] = array('payment','energyCharge');
         $this->load->view('template.html',$data);
     }
 
-    //充值缴费 飞机票
-    function phoneCharge(){
-        $data['page'] = $this->view_phoneCharge;
-        $data['menu'] = array('payment','phoneCharge');
-        $this->load->view('template.html',$data);
-    }
-
-    //充值缴费 火车票
-    function trainTicket(){
-        $data['page'] = $this->view_trainTicket;
-        $data['menu'] = array('payment','trainTicket');
-        $this->load->view('template.html',$data);
-    }
-
-    //返回飞机票购买订单列表
+    //返回充值记录
     function qianmi_order_list(){
         if($_POST){
-            $type = $_POST['type'];
-            if($type == 1){
-             $list = $this->Payment_model->get_phone_order($type);
-            }else{
+            $type = $this->input->post('type');
             $list = $this->Payment_model->get_qianmi_order($type);
-            }
-            if(empty($list)){
-                echo "2";
-            }else{
+            if(!empty($list)){
                 echo json_encode($list);
+            }else{
+                echo "2";
             }
+
         }else{
             echo "2";
         }
+
     }
 
-    //删除千米订单
-    function del_qianmi_order(){
-        if($_POST){
-            $id = $_POST['id'];
-            if(empty($id)){
-                echo "2";
-            }else{
-                if($this->Payment_model->del_qianmi_order($id)){
-                    $log = array(
-                        'userid'=>$_SESSION['users']['user_id'],  
-                        "content" => $_SESSION['users']['username']."删除了一个千米订单，订单id是".$id,
-                        "create_time" => date('Y-m-d H:i:s'),
-                        "userip" => get_client_ip(),
-                    );
-                    $this->db->insert('hf_system_journal',$log);
-                    echo "1";
-                }else{
-                    echo "2";
-                }
-            }
-        }else{
-            echo "2";
-        }
-    }
+
 
 
 }
+ 

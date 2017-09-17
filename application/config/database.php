@@ -152,37 +152,15 @@ $db['default'] = array(
 
 	'dsn'	=> '',
 
-	// 'hostname' => 'localhost',
 
-	// 'username' => 'root',
+	'hostname' => '120.78.73.217',
 
-	// 'password' => '',
-	
-	// 'database' => 'hiji',
+	'username' => 'hijiv2mysql',
 
-	// 'hostname' => '211.149.195.183',
+	'password' => 'hijiv2mysql',
 
-	// 'username' => 'hiji',
+	'database' => 'hijiv2mysql',
 
-	// 'password' => 'hiji',
-
-	// 'database' => 'hiji',
-
-	'hostname' => 'hiji.hifete.com',
-
-	'username' => 'hijimysql',
-
-	'password' => 'hijimysql',
-
-	'database' => 'Hijiv2',
-
-	// 'hostname' => '192.168.0.139',
-
-	// 'username' => 'hijimysql',
-
-	// 'password' => 'hijimysql',
-
-	// 'database' => 'hiji',
 
 	'dbdriver' => 'mysqli',
 

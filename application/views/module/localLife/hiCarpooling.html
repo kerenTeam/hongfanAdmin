@@ -1,0 +1,665 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> <a href="<?php echo site_url('/module/LocalLife/localLifeList');?>">本地生活</a> 
+
+            <small>HI拼车</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">HI拼车</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+
+              <!--        <form action="<?php echo site_url('module/LocalLife/search')?>" method="post">
+
+                        <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+
+                            <input type="text" name='sear' class="am-form-field" placeholder="标题/联系人" required id="searchKey">
+
+                            <span class="am-input-group-btn">
+
+                                <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search searchSort" type="button"></button>
+
+                            </span>
+
+                          
+
+                        </div>
+
+                          </form> -->
+
+                    </div>
+
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
+
+                        <div class="am-modal-dialog">
+
+                            <div class="am-modal-hd">新增</div>
+
+                            <div class="am-modal-bd"> 
+
+                                <!-- 本地生活 信息展示类 -->
+
+                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('module/LocalLife/add_Carpooling')?>" method='post' enctype='multipart/form-data'>
+
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">类型 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                           <select name="type" required>
+                                               <option value="1">人找车</option>
+                                               <option value="2">车找人</option>
+                                           </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="tel" name="phoneNumber" onblur="validate(this,11,12,5)" class="js-pattern-mobile" placeholder="输入合法的手机号" minlength="11" maxlength="12" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">出发地点 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="startPlace"  class="js-pattern-mobile" placeholder="输入出发地点"  required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">途径地点 </label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="pathLocation"  class="js-pattern-mobile" placeholder="输入途径地点" >
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">目的地 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="endPlace" class="js-pattern-mobile" placeholder="输入目的地" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">出发时间 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="goTime"  class="js-pattern-mobile" placeholder="输入出发时间" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">人数 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="persons"  class="js-pattern-mobile" placeholder="输入人数" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">价格 </label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="price" class="js-pattern-mobile" placeholder="输入价格" >
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">备注</label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <textarea  name='other' rows="8"  placeholder="请输入备注，2-200个字符" ></textarea>
+
+                                        </div>
+
+                                       
+
+                                    </div>
+
+                             
+
+
+                                    <div class="am-form-group am-btn-group-xs">
+
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号</th>
+
+                                    <th>类型</th>
+
+                                    <th>发布人</th>
+                                    <th>联系电话</th>
+
+
+                                    <th>出发地点</th>
+
+                                    <th>途径地点</th>
+                                    <th>目的地</th>
+
+                                    <th>出发时间</th>
+                                    <th>人数</th>
+
+                                    <!--<th>本地生活推荐</th>-->
+
+                                    <th>价格</th>
+                                    <th>备注</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <!-- more data -->
+                                <?php foreach($lists as $val):?>
+                                <tr>
+                                    <td><?php echo $val['id'];?></td>
+                                    <td><?php if($val['type'] == '1'){echo "找车";}else{echo "找人";}?></td>
+                                    <td><?php echo $val['nickname'];?></td>
+                                    <td><?php echo $val['phoneNumber'];?></td>
+                                    <td><?php echo $val['startPlace'];?></td>
+                                    <td><?php echo $val['pathLocation'];?></td>
+                                    <td><?php echo $val['endPlace'];?></td>
+                                    <td><?php echo $val['goTime'];?></td>
+                                    <td><?php echo $val['persons'];?></td>
+                                    <td><?php echo $val['price'];?></td>
+                                    <td><?php echo $val['other'];?></td>
+                                    <td>
+                                         <div class="tpl-table-black-operation">
+
+                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['id']?>'}">
+
+                                                <i class="am-icon-pencil"></i> 编辑
+
+                                            </a>
+
+                                            <a href="<?php echo site_url('/module/LocalLife/del_Carpooling/'.$val['id']);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                <i class="am-icon-trash"></i> 删除
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                 <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<?php echo $val['id']?>">
+
+                                    <div class="am-modal-dialog">
+
+                                        <div class="am-modal-hd">编辑</div>
+
+                                        <div class="am-modal-bd">
+
+                                           <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('module/LocalLife/edit_Carpooling')?>" method='post' enctype='multipart/form-data'>
+
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">类型 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                           <select name="type" required>
+                                               <option value="1" <?php if($val['type'] == 1){echo "selected";}?>>人找车</option>
+                                               <option value="2" <?php if($val['type'] == 2){echo "selected";}?>>车找人</option>
+                                           </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips2" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips2" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="tel" name="phoneNumber" value="<?php echo $val['phoneNumber'];?>" onblur="validate(this,11,12,5)" class="js-pattern-mobile" placeholder="输入合法的手机号" minlength="11" maxlength="12" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">出发地点 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="startPlace" value="<?php echo $val['startPlace'];?>"  class="js-pattern-mobile" placeholder="输入出发地点"  required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">途径地点 </label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="pathLocation" value="<?php echo $val['pathLocation'];?>"   class="js-pattern-mobile" placeholder="输入途径地点" >
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div> <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">目的地 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="endPlace" value="<?php echo $val['endPlace'];?>"  class="js-pattern-mobile" placeholder="输入目的地" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">出发时间 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="goTime" value="<?php echo $val['goTime'];?>"   class="js-pattern-mobile" placeholder="输入出发时间" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">人数 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="persons" value="<?php echo $val['persons'];?>"   class="js-pattern-mobile" placeholder="输入人数" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                     <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">价格 </label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="price" value="<?php echo $val['price'];?>"  class="js-pattern-mobile" placeholder="输入价格" >
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">备注</label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <textarea  name='other' rows="8"  placeholder="请输入备注，2-200个字符" ><?php echo $val['other'];?></textarea>
+
+                                        </div>
+
+                                       
+
+                                    </div>
+
+                             
+
+
+                                    <div class="am-form-group am-btn-group-xs">
+                                <input type="hidden" name="id" value="<?php echo $val['id'];?>">
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+
+                                </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <?php endforeach;?>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+
+                               <?php echo $pages;?>
+
+
+                        </div>
+
+                      
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+
+
+
