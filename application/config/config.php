@@ -1054,21 +1054,22 @@ $config['buckrtGlobal'] = array(
 );
 $config['hostGlobal'] = array(
     'demo'=>"http://ov2jx0xre.bkt.clouddn.com/",
-    'ebus'=>"http://ov2ipmip7.bkt.clouddn.com/",
-    
-    'cqcfriends'=>"http://ov2ifqo8x.bkt.clouddn.com/",
-    'cqclocal'=>"http://ov2i260vo.bkt.clouddn.com/",
-    'cqcother'=>"http://ov2iqfcmi.bkt.clouddn.com/",
+    "ebus"=> "http://ebus.zlzmm.com/",
 
-    'lscfriends'=>"http://ovdjzd9fm.bkt.clouddn.com/",
-    'lsclocal'=>"http://ovdj3dla7.bkt.clouddn.com/",
-    'lscother'=>"http://ovdj7es4p.bkt.clouddn.com/",
+    "cqcfriends"=> "http://cqcfriends.zlzmm.com/",
+    "cqclocal"=> "http://cqclocal.zlzmm.com/",
+    "cqcother"=> "http://cqcother.zlzmm.com/",
 
-    'njcfriends'=>"http://ovdjbbmde.bkt.clouddn.com/",
-    'njclocal'=>"http://ovdj5a716.bkt.clouddn.com/",
-    'njcother'=>"http://ovdj7hqgf.bkt.clouddn.com/",
+    "lscfriends"=> "http://lscfriends.zlzmm.com/",
+    "lsclocal"=> "http://lsclocal.zlzmm.com/",
+    "lscother"=> "http://lscother.zlzmm.com/",
 
-    'xhcfriends'=>"http://ovdjmo7y7.bkt.clouddn.com/",
-    'xhclocal'=>"http://ovdjwkul4.bkt.clouddn.com/",
-    'xhcother'=>"http://ovdj55twx.bkt.clouddn.com/"
+    "njcfriends"=> "http://njcfriends.zlzmm.com/",
+    "njclocal"=> "http://njclocal.zlzmm.com/",
+    "njcother"=> "http://njcother.zlzmm.com/",
+
+    "xhcfriends"=> "http://xhcfriends.zlzmm.com/",
+    "xhclocal"=> "http://xhclocal.zlzmm.com/",
+    "xhcother"=> "http://xhcother.zlzmm.com/",
+
 );

@@ -300,6 +300,16 @@ class MallShop_model extends CI_Model
         $query = $this->db->where('a.recommend','1')->where('goods_state !=','2')->group_start()->where('a.differentiate','4') ->group_end()->order_by("a.sort",'asc')->get();
         return $query->result_array();
     }
+
+    //返回首页推荐数据
+    function ret_recommentType($type){
+        $this->db->select('a.*,b.store_name,c.catname');
+        $this->db->from('hf_mall_goods as a');
+        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+        $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+        $query = $this->db->where('a.recommentType',$type)->order_by("a.sort",'asc')->get();
+        return $query->result_array();
+    }
     
     //返回分页商品列表
     function get_goodslist_page($page,$off){

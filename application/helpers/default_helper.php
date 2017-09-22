@@ -263,10 +263,12 @@ function subtree($arr,$a = '',$id=0,$lev=1) {
     }
     return $subs;
 }
+
 function deep_in_array($value, $array) {   
     foreach($array as $item) {   
+
         if(!is_array($item)) {   
-            if (strnatcasecmp($item,$value)) {  
+            if ($item == $value) {  
                 return true;  
             } else {  
                 continue;   

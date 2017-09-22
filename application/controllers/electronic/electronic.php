@@ -30,6 +30,14 @@ class Electronic extends Default_Controller {
 
     public $view_afterSales = "electronic/afterSales.html";
 
+    //招商信息
+    public $view_attract = "electronic/attract.html";
+
+    //县志
+    public $view_annals = "electronic/annals.html";
+    public $view_editAnnals = "electronic/edit_annals.html";
+
+
     function __construct()
 
     {
@@ -123,8 +131,24 @@ class Electronic extends Default_Controller {
 		}	
 
         if($_POST){
-
             $data = $this->input->post();
+            switch ($_SESSION['city']) {
+                case '0':
+                    $data['city'] = $this->input->post('city');
+                    break;
+                case '1':
+                     $data['city'] = '1';
+                    break;
+                case '2':
+                     $data['city'] = '2';
+                    break;
+                case '3':
+                     $data['city'] = '3';
+                    break;
+                case '4':
+                     $data['city'] = '4';
+                    break;
+            }
 
            if($data['typeid'] == 2){
 
@@ -141,8 +165,27 @@ class Electronic extends Default_Controller {
             }
 
    
+            $header = array("token:".$_SESSION['token'],'city:'.$data['city']);    
+            if(!empty($_FILES['img']['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'shop/coupon',
+                        'bucket'=>"ebus",
+                    );
+                
+                    $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
 
-            //
+                    if($qiuniu['errno'] == '0'){
+                        $img = json_decode($qiuniu['data']['img'],true);
+                        $icon[]['picImg'] =$img[0]['picImg'];
+                        $data['pic'] = json_encode($icon);
+                    }else{
+                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/electronic/Electronic/addElectronic')."'</script>";exit;
+                    }
+            }
+
 
             if($this->Activity_model->add_electronic($data)){
 
@@ -237,6 +280,23 @@ class Electronic extends Default_Controller {
         if($_POST){
 
             $data = $this->input->post();
+            switch ($_SESSION['city']) {
+                case '0':
+                    $data['city'] = $this->input->post('city');
+                    break;
+                case '1':
+                     $data['city'] = '1';
+                    break;
+                case '2':
+                     $data['city'] = '2';
+                    break;
+                case '3':
+                     $data['city'] = '3';
+                    break;
+                case '4':
+                     $data['city'] = '4';
+                    break;
+            }
 
             if($data['typeid'] == 2){
 
@@ -250,6 +310,26 @@ class Electronic extends Default_Controller {
 
                     unset($data['overflow'],$data['cut']);
 
+            }
+            $header = array("token:".$_SESSION['token'],'city:'.$data['city']);    
+            if(!empty($_FILES['img']['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'shop/coupon',
+                        'bucket'=>"ebus",
+                    );
+                
+                    $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+
+                    if($qiuniu['errno'] == '0'){
+                        $img = json_decode($qiuniu['data']['img'],true);
+                        $icon[]['picImg'] =$img[0]['picImg'];
+                        $data['pic'] = json_encode($icon);
+                    }else{
+                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/electronic/Electronic/addElectronic')."'</script>";exit;
+                    }
             }
 
             //日志
@@ -508,6 +588,227 @@ class Electronic extends Default_Controller {
 
     }
 
+
+    //招商信息
+    function attract(){
+
+       
+
+        $config['per_page'] = 10;
+
+        //获取页码
+
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+
+        //var_dump($current_page);
+
+            //配置
+
+        $config['base_url'] = site_url('/module/LocalLife/Hi_Carpooling');
+
+        //分页配置
+
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+
+
+
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+
+
+
+        
+
+        switch ($_SESSION['city']) {
+            case '0':
+                $list = $this->Activity_model->select_attract('');
+                $config['total_rows'] = count($list);
+                // //分页数据
+                $listpage = $this->Activity_model->select_attract_page($config['per_page'],$current_page);  
+                break;
+            case '1':
+                 $list = $this->Activity_model->select_attract('1');
+                $config['total_rows'] = count($list);
+                // //分页数据
+                $listpage = $this->Activity_model->select_attract_where_page('1',$config['per_page'],$current_page);  
+                break;
+            case '2':
+                 $list = $this->Activity_model->select_attract('2');
+                $config['total_rows'] = count($list);
+                // //分页数据
+                $listpage = $this->Activity_model->select_attract_where_page('2',$config['per_page'],$current_page);  
+                break;
+            case '3':
+                 $list = $this->Activity_model->select_attract('3');
+                $config['total_rows'] = count($list);
+                // //分页数据
+                $listpage = $this->Activity_model->select_attract_where_page('3',$config['per_page'],$current_page);  
+                break;
+            case '4':
+                $list = $this->Activity_model->select_attract('4');
+                $config['total_rows'] = count($list);
+                // //分页数据
+                $listpage = $this->Activity_model->select_attract_where_page('4',$config['per_page'],$current_page);  
+                break;
+            
+        }
+
+        
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+
+        $data['page'] = $this->view_attract;
+        $data['menu'] = array('moll','attract');
+        $this->load->view('template.html',$data);
+    }
+
+    //联系
+    function edit_attract_state(){
+        $id = intval($this->uri->segment('4'));
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $data['state'] = '1';
+            if($this->Activity_model->updata_attract($id,$data)){
+             echo "<script>alert('操作成功');window.history.go(-1);</script>";
+
+            }else{
+                echo "<script>alert('操作失败');window.history.go(-1);</script>";
+            }
+        }
+    }
+
+
+    //县志
+    function annals(){
+         switch ($_SESSION['city']) {
+            case '0':
+                $list = $this->Activity_model->select_annals('');
+         
+                break;
+            case '1':
+                 $list = $this->Activity_model->select_where_annals('1');
+       
+                break;
+            case '2':
+                 $list = $this->Activity_model->select_where_annals('2');
+ 
+                break;
+            case '3':
+                 $list = $this->Activity_model->select_where_annals('3');
+          
+                break;
+            case '4':
+                $list = $this->Activity_model->select_where_annals('4');
+          
+                break;
+            
+        }
+        $data['lists'] = $list;
+        $data['page'] = $this->view_annals;
+        $data['menu'] = array('moll','annals');
+        $this->load->view('template.html',$data);
+    }
+
+    //编辑县志
+    function edit_annals(){
+
+        $id = intval($this->uri->segment('4'));
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $_SESSION['buket'] = "cqclocal";
+            $_SESSION['host'] = "http://cqclocal.zlzmm.com/";
+            $news = $this->Activity_model->select_annals_info($id);
+            $data['annals'] = $news;
+            $data['page'] = $this->view_editAnnals;
+            $data['menu'] = array('moll','annals');
+            $this->load->view('template.html',$data);
+        }
+
+    }
+        
+    function editAnnals(){
+        if($_POST){
+            $data = $this->input->post();
+
+            $header = array("token:".$_SESSION['token'],'city:'.'1');    
+            if(!empty($_FILES['img']['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'shop/annals',
+                        'bucket'=>"cqclocal",
+                    );
+                
+                    $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+
+                    if($qiuniu['errno'] == '0'){
+                        $img = json_decode($qiuniu['data']['img'],true);
+                        $icon[]['picImg'] =$img[0]['picImg'];
+                        $data['pic'] = json_encode($icon);
+                    }else{
+                      echo "<script>alert('图片上传失败！');window.location.href='".site_url('/electronic/Electronic/edit_annals/'.$data['id'])."'</script>";exit;
+                    }
+            }
+
+            if($this->Activity_model->edit_annals($data['id'],$data)){
+
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了县志信息，县志id是：".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "<script>alert('操作成功');window.location.href='".site_url('/electronic/Electronic/annals/')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/electronic/Electronic/edit_annals/'.$data['id'])."'</script>";exit;
+            }
+
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 
 
 

@@ -91,8 +91,8 @@ class MarketActivity extends Default_Controller {
 			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
 					exit;
 		}	
-
-
+        $_SESSION['buket'] = 'ebus';
+        $_SESSION['host'] = $this->config->item('ebus','hostGlobal');
 
          //获取商场所有优惠劵
 
@@ -102,7 +102,7 @@ class MarketActivity extends Default_Controller {
 
          $data['page']= $this->view_marketAddActivity;
 
-         $data['menu'] = array('marketActivity','activity');
+         $data['menu'] = array('moll','activity');
 
          $this->load->view('template.html',$data);
 
@@ -119,13 +119,7 @@ class MarketActivity extends Default_Controller {
 
             $data = $this->input->post();
 
-            if(empty($data['type'])){
-
-                echo "<script>alert('活动类型不能为空！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";
-
-                exit;
-
-            }
+            
             
             $bucketList =  $this->config->item('buckrtGlobal');
             switch($_SESSION['city']){
@@ -177,30 +171,6 @@ class MarketActivity extends Default_Controller {
                   }
 
             }
-
-            if($data['type'] == 1){
-
-                $cou = array_filter($data['couponid']);
-
-                if(!empty($cou)){
-
-                    $data['couponid'] = implode(',',$cou);
-
-                }else{
-
-                    $data['couponid'] = '';
-
-                 }
-
-             }else{
-
-                $data['couponid'] = '';
-
-             }
-
-
-
-
 
             //日志
 
@@ -261,6 +231,8 @@ class MarketActivity extends Default_Controller {
 			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
 					exit;
 		}	
+        $_SESSION['buket'] = 'ebus';
+        $_SESSION['host'] = $this->config->item('ebus','hostGlobal');
 
         $id = intval($this->uri->segment(4));
 
@@ -274,49 +246,13 @@ class MarketActivity extends Default_Controller {
 
             //获取活动详情
 
-            $info = $this->Activity_model->get_activity_info($id);
+            $data['info'] = $this->Activity_model->get_activity_info($id);
+           // $data['info'] = $info;
 
-          
+            $data['page']= $this->view_marketEditActivity;
 
-            $time = date('Y-m-d');
-
-            $coupon = $this->Activity_model->get_coupon_list($time);
-
-               if(!empty($info['couponid'])){
-
-                $couponid = explode(',',$info['couponid']);
-
-                foreach ($coupon as $key => $value) {
-
-                   if(in_array($value['id'],$couponid)){
-
-                        $coupon[$key]['check'] = '1'; 
-
-                   }else{
-
-                        $coupon[$key]['check'] = '0';  
-
-                   }
-
-                }
-
-            }
-
-            $data['coupon'] = $coupon;
-
-            $data['info'] = $info;
-
-
-
-          
-
-
-
-             $data['page']= $this->view_marketEditActivity;
-
-             $data['menu'] = array('marketActivity','activity');
-
-             $this->load->view('template.html',$data);
+            $data['menu'] = array('moll','activity');
+            $this->load->view('template.html',$data);
 
         }
 
@@ -331,15 +267,6 @@ class MarketActivity extends Default_Controller {
         if($_POST){
 
             $data = $this->input->post();
-
-             if(empty($data['type'])){
-
-                echo "<script>alert('活动类型不能为空！');window.location.href='".site_url('/shop/SingleShop/shopAddActivity')."'</script>";
-
-                exit;
-
-            }
-
 
             $bucketList =  $this->config->item('buckrtGlobal');
             switch($_SESSION['city']){
@@ -391,32 +318,6 @@ class MarketActivity extends Default_Controller {
                 }
 
             }
-
-           
-
-          
-
-            if($data['type'] == 1){
-
-                $cou = array_unique(array_filter($data['couponid']));
-
-                if(!empty($cou)){
-
-                    $data['couponid'] = implode(',',$cou);
-
-                }else{
-
-                    $data['couponid'] = '';
-
-                }
-
-            }else{
-
-                $data['couponid'] = '';
-
-            }
-
-
 
             //日志
 

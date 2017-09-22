@@ -1581,12 +1581,9 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_id',$orderid)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.order_type',$type)->where('a.order_id',$orderid)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
-
-
-
       }else
 
       if(empty($state) && empty($buyer) && empty($seller) && !empty($time) && empty($orderid)){

@@ -458,19 +458,7 @@ class Shop extends Default_Controller {
     //编辑商场商家
 
     function edit_store(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
-
+       
         $id = intval($this->uri->segment(4));
 
         if($id  == '0'){
@@ -852,7 +840,18 @@ class Shop extends Default_Controller {
     //新增商家操作
 
     function add_shop_store(){
-        
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
 
         if($_POST){
 
@@ -969,18 +968,7 @@ class Shop extends Default_Controller {
     //编辑商家信息
 
     function editShop(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+       
 
         $id = intval($this->uri->segment(4));
 
@@ -1017,7 +1005,18 @@ class Shop extends Default_Controller {
     //编辑商家操作
 
     function edit_shop_store(){
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
 
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
         if($_POST){
 
             $data = $this->input->post();
@@ -1127,36 +1126,6 @@ class Shop extends Default_Controller {
         }
 
     }
-
-
-
-    //达人探店
-
-    function findshop(){
-
-        $list = $this->Shop_model->get_find_shop();
-
-        foreach ($list as $key => $value) {
-
-            $store_list = explode(',',$value['store_list']);
-
-            foreach ($store_list as $k => $v) {
-
-                $list[$key]['store'][] = $this->Shop_model->get_store_find($v);
-
-            }
-
-        }
-
-        $data['find'] = $list;
-
-        $data['page'] = $this->view_findshop;
-
-        $data['menu']= array('store','findshop');
-
-        $this->load->view('template.html',$data);
-
-     }
 
 
 

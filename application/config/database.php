@@ -153,7 +153,7 @@ $db['default'] = array(
 	'dsn'	=> '',
 
 
-	'hostname' => '120.78.73.217',
+	'hostname' => 'abcd.zlzmm.com',
 
 	'username' => 'hijiv2mysql',
 

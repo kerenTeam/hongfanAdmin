@@ -1,0 +1,245 @@
+<style type="text/css">
+
+    #preview{
+
+        height:200px !important;
+
+    }
+
+    #preview #imghead,#preview img{
+
+        
+
+        height:190px;
+
+    }
+
+
+
+   .deleteImg{
+
+        display: inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:1px solid #ddd;
+
+    }
+
+     .deleteImg:hover{
+
+        cursor: pointer;
+
+     }
+
+    .addpadding{
+
+        margin-left:10%;
+
+    }
+
+    .widget-title{
+
+    font-size:18px;
+
+    color:#000;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon">
+
+            <a href="<?php echo site_url().'/electronic/Electronic/annals';?>">县志列表</a></span>&nbsp;&nbsp;<small>编辑县志</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <form class="am-form" action="<?php echo site_url('/electronic/Electronic/editAnnals');?>" method="post" enctype="multipart/form-data" data-am-validator>
+
+                <div class="widget am-cf">
+
+                    <div class="widget-head am-cf">
+
+                        <div class="widget-title  am-cf">编辑县志</div>
+
+                    </div>
+
+                    <div class="widget-body  am-fr">
+
+
+                        <div class="memberInfo am-u-xs-12 am-u-sm-6 am-u-md-6 am-u-lg-6 padding-horizontal-lg">
+
+                            <div class="am-form-group">
+
+                                <label for="shopName">名称 ：</label>
+
+                                <input type="text" id="shopName" name="title" value="<?php echo $annals['title'];?>" maxlength="10" minlength="2" class="am-form-field" placeholder="建议输入2-10位字符" required onblur="validate(this,2,10,1)" />
+
+                                <small class="red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                <small class="green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                            </div>
+
+                            <div class="am-form-group">
+
+                                <label for="user-weibo">图片：</label>
+
+                                <div class="wx_type_img">
+
+                                         <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add" multiple="multiple" >
+
+                                          <!-- 图片实时预览 -->
+
+                                          <?php $pic = json_decode($annals['pic'],true);?>
+                                          <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+
+                                          <br />
+
+                                  </div>
+                                  
+
+                                  <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                  <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif、webp，图片大小不超过800kb；</small>  
+
+                            </div>
+
+                            <div class="am-form-group">
+
+                                      <label for="shopName">内容 ：</label>
+
+                                    <div id="editorContent">
+
+                                        <textarea id="editor" type="text/plain" name='content'><?php echo $annals['content'];?></textarea>
+
+                                    </div> 
+
+                                    
+                                  </div>
+
+                    
+                        </div>
+
+                        </div>
+
+                        <div class="am-form-group addpadding">
+
+                        <input type="hidden" name="id" value='<?php echo $annals["id"];?>'>
+
+
+                          <button class="am-btn am-btn-secondary" type="submit">保存</button><button class="am-btn am-btn-default addpadding" id="cancle" type="reset">取消</button> 
+
+                      </div>
+
+                    </div>
+
+
+
+                    
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+<script type="text/javascript">
+        var editorContent= UE.getEditor('editor').getContent();
+
+//表单验证函数
+
+function validate(obj,minlen,maxlen,i){
+
+    var content=obj.value;
+
+    if(content.length<minlen || content.length>maxlen){
+
+        $('.blacktips'+ i).css('display','none');
+
+        $('.redtips'+ i).css('display','inline-block');
+
+    }else{
+
+        $('.redtips'+ i).css('display','none');
+
+        $('.blacktips'+ i).css('display','inline-block');
+
+    }
+
+}
+
+
+
+ 
+
+   //点击取消返回上一页
+
+  $('#cancle').click(function(){
+
+    history.go(0);
+
+  });
+
+  
+
+  //删除图片
+
+  $(".deleteImg").click(function(){
+
+      $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+      $(this).siblings('.wx_type_img').find('input').val("");
+
+  });
+
+</script>
+
+
+

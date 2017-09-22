@@ -298,11 +298,7 @@
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                <?php if(!empty($saleid)):?>
-
-                                    <a id="add_sales" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 加入HOT推荐</a>
-
-                                <?php endif;?>
+                             
                                 <a href="<?php echo site_url('store/Store/Dow_goodsList');?>" class="am-btn am-btn-default am-btn-success">导出商品信息</a>
 
                                 </div>
@@ -356,7 +352,7 @@
 
                                     <th>商品状态</th>
 
-                                    <th>是否推荐</th>
+                                    <th>首页展示</th>
 
                                     <th>是否特价</th>
 
@@ -834,17 +830,16 @@
 
         $('.recommend').change(function(){
 
-            var dataId=$(this).attr('data-id'), state = 0;
+            var dataId=$(this).attr('data-id');
+            var state = $(this).val();
 
-            if($(this).find('option:selected').val()=="1"){
+            if($(this).find('option:selected').val() !="0"){
 
-                state = 1;
 
                 $(this).css({'background':' #15b5ac','border-radius':'5px','border':'1px solid #15b5ac','padding':'5px 5px','color': '#fff'}); 
 
             }else{
 
-                state = 0;
 
                 $(this).css({'background':' #e0690c','border-radius':'5px','border':'1px solid #e0690c','padding':'5px 5px','color': '#fff'}); 
 
@@ -861,7 +856,7 @@
                 success: function(data){
 
                     if(data==1){
-
+                        
                     }else{
 
                         alert("操作失败！");
@@ -1460,31 +1455,28 @@ $(document).ready(function(){
 
         <td class="am-text-middle">
 
-        <%if(recommend=="1"){%>
 
-            <select class="recommend" name="recommend" data-id="<%= goods_id%>">
+            <select class="recommend" name="recommentType" data-id="<%= goods_id%>">
 
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1" selected="selected">是</option>
-
-                <option value="0">否</option>
+                 <%if(recommentType == "0"){%>
+                    <option value="0" selected="selected">否</option>
+                    <option value="1HI抢购">HI抢购</option>
+                    <option value="2HI货榜">HI货榜</option>
+                    <option value="3HI土货">HI土货</option>
+                    <option value="4">HI洋货</option>
+                    <option value="5">HI特色</option>
+                    <option value="6">HI推荐</option>
+                <%}else{%>
+                    <option value="0">否</option>
+                    <option value="1" selected="<%if(recommentType == '1'){%>selected<%}%>">HI抢购</option>
+                    <option value="2" selected="<%if(recommentType == '2'){%>selected<%}%>">HI货榜</option>
+                    <option value="3" selected="<%if(recommentType == '3'){%>selected<%}%>">HI土货</option>
+                    <option value="4" selected="<%if(recommentType == '4'){%>selected<%}%>">HI洋货</option>
+                    <option value="5" selected="<%if(recommentType == '5'){%>selected<%}%>">HI特色</option>
+                    <option value="6" selected="<%if(recommentType == '6'){%>selected<%}%>">HI推荐</option>
+                <%}%>
 
             </select>
-
-        <%}else{%>
-
-            <select class="recommend" name="recommend" data-id="<%= goods_id%>">
-
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1">是</option>
-
-                <option value="0" selected="selected">否</option>
-
-            </select>
-
-        <%}%>
 
         </td>
 

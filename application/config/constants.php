@@ -91,8 +91,8 @@ defined('IGOAPPSECRET')           OR define('IGOAPPSECRET', '47accd33cafb73548e1
 defined('IGOLISTAPIURL')           OR define('IGOLISTAPIURL', 'http://api.igetmall.net/DRP_getProList');//爱购商品列表api
 defined('IGOINFOAPIURL')           OR define('IGOINFOAPIURL', 'http://api.igetmall.net/DRP_getProDetail'); //爱购商品详情api
 defined('IGOCATEAPIURL')           OR define('IGOCATEAPIURL', 'http://api.igetmall.net/DRP_getCategory'); //爱购商品详情api
-defined('APPLOGIN')           OR define('APPLOGIN', 'http://192.168.199.191:7200'); //APP登陆
-defined('QINIUUPLOAD')           OR define('QINIUUPLOAD', 'http://192.168.199.191:7200/api/index/qiniuimg'); //七牛上次
+defined('APPLOGIN')           OR define('APPLOGIN', 'http://abcd.zlzmm.com:7200'); //APP登陆
+defined('QINIUUPLOAD')           OR define('QINIUUPLOAD', 'http://abcd.zlzmm.com:7200/api/index/qiniuimg'); //七牛上次
 defined('USERPHONE')           OR define('USERPHONE', '18180924082'); //七牛上次
 defined('USERPASSWORD')           OR define('USERPASSWORD', '12345a'); //七牛上次
 defined('BUCKET')           OR define('BUCKET', 'ebus'); //七牛上次

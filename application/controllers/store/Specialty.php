@@ -36,11 +36,6 @@ class Specialty extends Default_Controller {
 
     public $view_recommendGoods = "store/specialty/recommendGoods.html";
 
-    //HOT管理
-
-    public $view_hotGoods = "store/storeHotRecommand.html";
-
-
 
     function __construct()
 
@@ -123,7 +118,18 @@ class Specialty extends Default_Controller {
     //添加特色馆分类操作
 
     function add_store_cate(){
+         $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
 
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
         if($_POST){
 
             $data = $this->input->post();
@@ -193,18 +199,7 @@ class Specialty extends Default_Controller {
     //编辑特色馆分类
 
     function storeEditSort(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+       
          $id = intval($this->uri->segment(4));
 
          if($id == 0){
@@ -232,6 +227,18 @@ class Specialty extends Default_Controller {
     //编辑特色馆分类操作
 
     function edit_store_cate(){
+           $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
 
         if($_POST){
 
@@ -388,9 +395,7 @@ class Specialty extends Default_Controller {
     //推荐商品
 
     function recommendGoods(){
-
-     
-
+        $data['type'] = '6';
         $data['page'] = $this->view_recommendGoods;
 
         $data['menu'] = array('store','recommendGoods');
@@ -399,23 +404,58 @@ class Specialty extends Default_Controller {
 
     }
 
+    //HI抢购
+    function hi_buying(){
+        $data['type'] = '1';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','hi_buying');
+
+        $this->load->view('template.html',$data);
+    }
+    //hi货帮
+    function hi_goods(){
+        $data['type'] = '2';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','hi_goods');
+
+        $this->load->view('template.html',$data);
+    }
+    //HI土货
+    function hi_Tuhuo(){
+        $data['type'] = '3';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','hi_Tuhuo');
+
+        $this->load->view('template.html',$data);
+    }
+
+    //HI洋货
+    function hi_overseas(){
+        $data['type'] = '4';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','hi_overseas');
+
+        $this->load->view('template.html',$data);
+    }
+    //HI特色
+    function hi_characteristic(){
+        $data['type'] = '5';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','hi_characteristic');
+
+        $this->load->view('template.html',$data);
+    }
 
 
     //修改商品排序
 
     function edit_goods_stor(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+     
 
         if($_POST){
 
@@ -455,6 +495,90 @@ class Specialty extends Default_Controller {
 
     }
 
+    //返回推荐商品
+    function recommentGoods(){
+         if($_POST){
+
+            //获取所有商品
+
+            $id = $this->input->post('default');
+            $goods_list = $this->MallShop_model->ret_recommentType($id);
+
+            //获取商品库存
+
+            foreach($goods_list as $k=>$v){
+
+                //获取商品属性
+
+                $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
+
+                if(!empty($parent)){
+
+                    $a = '0';
+
+                    foreach($parent as $key=>$val){
+
+                        $a += $val['stock'];
+
+                    }
+
+                    $goods_list[$k]['amount'] = $a;
+
+                }else{
+
+                    $goods_list[$k]['amount'] = '0';
+
+                }
+
+            } 
+
+            if(empty($goods_list)){
+
+                echo "2";
+
+            }else{
+
+                echo json_encode($goods_list,JSON_UNESCAPED_UNICODE);
+
+            }
+
+        }else{
+
+            echo "2";
+
+        }
+    }
+
+
+    //取消商品推荐
+    function edit_recomment(){
+        if($_POST){
+            $id = $this->input->post('goodsid');
+            $data['recommentType'] = '0';
+
+            if($this->MallShop_model->edit_goods($id,$data)){
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."取消了一个商品推荐，商品id是：".$id,
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
 
 
 

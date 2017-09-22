@@ -99,6 +99,8 @@ class Login extends CI_Controller {
                            break;
 
                         default:
+                        $_SESSION['buket'] = 'ebus';
+                        $_SESSION['host'] = $this->config->item('ebus','hostGlobal');
 
                         $group = $this->m_model->group_permiss($user['gid']);
                      
