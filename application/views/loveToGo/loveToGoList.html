@@ -68,6 +68,7 @@ td.am-text-middle img{
                                 <tr>
                                     <th class="tablecheck"><input type="checkbox" /></th>
                                     <th>商品编号 </th>
+                                    <th>商家编号 </th>
                                     <th>缩略图 </th>
                                     <th>商品名称 </th>
                                     <th>商品价格</th>
@@ -260,6 +261,7 @@ $(document).ready(function(){
     <tr class="trClass<%= open_iid%>" id="trClass<%= open_iid%>" data-id="<%= open_iid%>">
         <td  class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= open_iid%>" name="commentBox"></td>
         <td class="am-text-middle"><%= open_iid%></td>
+        <td class="am-text-middle"><%= bussinesno%></td>
         <td class="am-text-middle">
             <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
         </td>

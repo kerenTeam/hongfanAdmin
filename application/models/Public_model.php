@@ -8,6 +8,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Public_model extends CI_Model
 {
 	
+	//获取今日会员
+	function ret_new_member(){
+		$sql = "select * from hf_user_member where gid='5' and TO_DAYS(create_time) = to_days(now())";
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+
 	//新增
 	function insert($table,$data){
 		return $this->db->insert($table,$data);
@@ -41,6 +49,17 @@ class Public_model extends CI_Model
         return $query->result_array();
 	}
 
+	//fanhui huiyuan 
+	function select_where_member($table,$where,$data,$sort){
+		$query = $this->db->where($where,$data)->where('gid','5')->order_by($sort,'desc')->get($table);
+        return $query->result_array();
+	}
+
+	function select_where_member_page($table,$where,$id,$size,$page,$sort){
+		$query = $this->db->where($where,$id)->where('gid','5')->order_by($sort,"asc")->order_by('create_time','desc')->limit($size,$page)->get($table);
+        return $query->result_array();
+	}
+
 	//返回圈子
 	function select_circle_page($size,$page){
 		$this->db->select('a.*,b.nickname');
@@ -60,12 +79,12 @@ class Public_model extends CI_Model
 	}
 
 	//返回所有动态
-	function select_news_page($where,$id,$size,$page){
+	function select_news_page($where,$id,$size,$page,$sort){
 		$this->db->select('a.*,b.nickname,c.name');
         $this->db->from('hf_friends_news as a');
         $this->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
         $this->db->join('hf_faqs_space as c', 'c.id = a.spaceType','left');
-        $query = $this->db->where($where,$id)->order_by('a.create_time','desc')->limit($size,$page)->get();
+        $query = $this->db->where($where,$id)->order_by($sort,'desc')->limit($size,$page)->get();
         return $query->result_array();
 	}
 
@@ -125,12 +144,21 @@ class Public_model extends CI_Model
 
 	//返回交友会员
 	function select_frirnds_user(){
-		$query = $this->db->where('gender !=','3')->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+		$query = $this->db->where('gender','1')->or_where('gender','2')->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
 		return $query->result_array();
 	}
 	function select_frirnds_user_page($size,$page){
-		$query = $this->db->where('gender !=','3')->where('gid','5')->order_by('create_time','desc')->limit($size,$page)->get('hf_user_member');
+		$query = $this->db->where('gender','1')->or_where('gender','2')->where('gid','5')->order_by('create_time','desc')->limit($size,$page)->get('hf_user_member');
 		return $query->result_array();
+	}
+	
+	//返回资料审核
+	function select_friends_dataAudit($id,$size,$page){
+		$this->db->select('a.*,b.nickname');
+        $this->db->from('hf_friends_my_photo as a');
+        $this->db->join('hf_user_member as b', 'b.user_id = a.userId','left');
+        $query = $this->db->where('a.needReview',$id)->order_by('a.create_time','desc')->limit($size,$page)->get();
+        return $query->result_array();
 	}
 	
 

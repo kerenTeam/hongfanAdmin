@@ -177,7 +177,8 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <select name="typeid" id='salesType' onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="typeid" id='salesType' disabled="disabled" onchange="changeSalesType()" required data-am-selected="{searchBox: 1,maxHeight: 200}" >
+
 
                                 <option value="">输入查找/选择</option>
 
@@ -186,6 +187,7 @@ padding: 5px 6px!important;
                                 <option value="<?php echo $val['id']?>" <?php if($coupon['typeid'] == $val['id']){echo "selected";}?>><?php echo $val['name'];?></option>
 
                                 <?php endforeach;?>
+                                <input type="hidden" name="typeid" value="<?php echo $coupon['typeid'];?>">
 
                             </select>
 
@@ -193,9 +195,8 @@ padding: 5px 6px!important;
 
                     </div>
 
-                    <?php $sale = explode(',',$coupon['coupon_amount']);?>
 
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: <?php if($coupon['typeid'] == '1'){echo "block";}else{echo "none";}?>;float: left !important; ">
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: <?php if($coupon['typeid'] == '1'){echo 'block';}else{echo 'none';}?>;float: left !important; ">
 
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
 
@@ -205,13 +206,12 @@ padding: 5px 6px!important;
 
                             <input type="number" class="stable" required  id="meetMoney" name="coupon_amount" min="1" onmousewheel="return false;" value="<?php echo $coupon['coupon_amount'];?>"  />
 
-                        
-
                         </div>
 
                     </div>
-
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: <?php if($coupon['typeid'] == '2'){echo "block";}else{echo "none";}?>;float:left !important;">
+               <?php if($coupon['typeid'] == '2'):?>
+                    <?php $sale = explode(',',$coupon['coupon_amount']);?>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: block;float:left !important;">
 
                         <label for="user-email" class="am-u-sm-3 am-form-label">折扣<span class="red">*</span>：</label>
 
@@ -219,16 +219,16 @@ padding: 5px 6px!important;
 
                             <span class="linkWord">满</span>
 
-                            <input type="number" class="stable" required  onmousewheel="return false;"  value="<?php echo $sale[0];?>" id="zheMeetMoney" name="overflow" min="1" onmousewheel="return false;"  />
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="zheMeetMoney" name="overflow" value="<?php echo $sale[0];?>" min="1" onmousewheel="return false;"  />
 
                             <span class="linkWord">折</span>
 
-                            <input type="number" name="cut"  class="stable" placeholder="请输入0-1之间的小数" min="0" max="1"  value="<?php echo $sale[1];?>" required onmousewheel="return false;" >
+                            <input type="number" name="cut"  class="stable" placeholder="请输入0-1之间的小数" min="0" value="<?php echo $sale[1];?>"  max="1" required onmousewheel="return false;" >
 
                         </div>
 
                     </div>
-
+                  <?php endif;?>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
@@ -239,9 +239,9 @@ padding: 5px 6px!important;
 
                                 <option value="">输入查找/选择</option>
 
-                                <option value="0" <?php if($coupon['receive_limit'] == 0){echo "selected";}?>>不限制</option>
+                                <option value="999" <?php if($coupon['receive_limit'] == '999'){echo "selected";}?>>不限制</option>
 
-                                <option value="1" <?php if($coupon['receive_limit'] == 1){echo "selected";}?>>仅一次</option>
+                                <option value="1" <?php if($coupon['receive_limit'] == "1"){echo "selected";}?>>仅一次</option>
 
                             </select>
 
@@ -323,22 +323,22 @@ padding: 5px 6px!important;
 
                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12" style="width: 50%">
 
-                        <label class="am-u-sm-3 am-text-right">缩略图<span class="red">*</span>：</label>
+                        <label class="am-u-sm-3 am-text-right">缩略图：</label>
 
                          <div class="am-u-sm-6 am-u-end">
 
                             <div class="wx_type_img">
 
-                             <input type="file" id="imgUpload" name="img" onblur="previewImage(this)" class="upload-add am-form-field"  required>
+                             <input type="file" id="imgUpload" name="img" onblur="previewImage(this)" class="upload-add am-form-field" >
 
                               <!-- 图片实时预览 -->
                               <?php $pic = json_decode($coupon['pic'],true);?>
                               <?php if(!isset($pic[0]['picImg'])):?>
 
                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                          <?php else:?>
-                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                          <?php endif;?>
+                              <?php else:?>
+                                  <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $pic[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                              <?php endif;?>
 
                             </div>
 
@@ -346,6 +346,17 @@ padding: 5px 6px!important;
 
                             <small class="red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb；</small> 
 
+                        </div>
+
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+                        <label for="user-email" class="am-u-sm-3 am-form-label">卡券详情：</label>
+
+                        <div class="am-u-sm-9">
+
+                        <textarea type="text" name="content" class="am-form-field tpl-form-no-bg"  id="editor"><?php echo $coupon['content'];?>
+                            </textarea>
                         </div>
 
                     </div>
@@ -371,41 +382,17 @@ padding: 5px 6px!important;
 </div>
 
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.all.min.js"> </script>
+
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 
 <script type="text/javascript">
+  var ue = UE.getEditor('editor');
 
-  function changeSalesType() {
-
-    if($('#salesType option:selected').val()=="1"){
-
-        $('#discount').css('display','none');
-
-        $('#voucher').css('display','block');
-
-    }else if($('#salesType option:selected').val()=="2"){
-
-        $('#voucher').css('display','none');
-
-        $('#discount').css('display','block');
-
-    }else if($('#salesType option:selected').val() != '1' && $('#salesType option:selected').val() != '2'){
-
-        $('#voucher').css('display','none');
-
-         $('#discount').css('display','none');
-
-       
-
-    }else if($('#salesType option:selected').val() == ''){
-
-         alert("请选择卡券类型！");
-
-    }
-
-  
-
-  }
-
+ 
     //点击取消返回上一页
 
   $('#cancle').click(function(){

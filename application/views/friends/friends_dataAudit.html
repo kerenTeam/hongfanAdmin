@@ -1,0 +1,309 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 交友
+
+            <small> > 资料审核</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">资料审核</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button> -->
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号</th>
+
+                                    <th>提交人</th>
+
+                                    <th>图片</th>
+
+
+
+                                    <th>提交时间</th>
+                                
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <!-- more data -->
+                                <?php if(!empty($lists)):?>
+                                    <?php foreach($lists as $val):?>
+                                        <tr>
+                                            <td><?php echo $val['id'];?></td>
+                                            <td><?php echo $val['nickname'];?></td>
+                                          
+                                            <?php $logo = json_decode($val['picImg'],true);?>
+                                          
+                                               <td>
+                                                <?php foreach($logo as $v):?>
+                                                <img src="<?php echo $v['picImg'];?>" style="width: 100px;height: 100px;">
+                                                <?php endforeach;?>
+                                                </td> 
+                                          
+                                            <td><?php echo $val['create_time'];?></td>
+                                            <td>
+                                               <div class="tpl-table-black-operation">
+                                               
+                                                     <a href="<?php echo site_url('/friends/Friends/edit_dataAudit/'.$val['id']);?>"  class="tpl-table-black-operation-green">
+                                                        <i class="am-icon-pencil"></i> 通过审核
+
+                                                    </a>
+                                                    <a href="<?php echo site_url('/friends/Friends/del_dataAudit/'.$val['id']);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+
+                                                </div>  
+                                            </td>
+                                        </tr>
+                                     
+                                    <?php endforeach;?>
+                                <?php else:?>
+                                    <th colspan="9">暂无内容！</th>
+                                <?php endif;?>
+        
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+
+                               <?php echo $pages;?>
+
+
+                        </div>
+
+                      
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+
+
+

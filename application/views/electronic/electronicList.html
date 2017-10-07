@@ -78,37 +78,49 @@ td img{
 
                 </div>
 
-               <!--  <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
 
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
 
-                        <label for="source_state" class="am-u-sm-3 am-form-label">类型：</label>
+                        <label for="source_state" class="am-u-sm-3 am-form-label">城市：</label>
 
                         <div class="am-u-sm-9">
 
-                            <select id="source_state">
+                            <select id="city" name="city">
 
-                                <option value="请选择">请选择</option>
-
-                                <option value="礼品券">礼品券</option>
-
-                                <option value="代金券">代金券</option>
-
-                                <option value="折扣券">折扣券</option>
+                                <option value="">请选择</option>
+                                <option value="1">重庆</option>
+                                <option value="2">南江</option>
+                                <option value="3">宣汉</option>
+                                <option value="4">邻水</option>
 
                             </select>
 
                         </div>
 
                     </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
 
-                    <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6 am-text-center">
+                        <label for="source_state" class="am-u-sm-3 am-form-label">商家：</label>
 
-                        <button type="submit" class="am-btn am-btn-secondary"><i class="am-icon-search"></i> 查询</button>
+                        <div class="am-u-sm-9">
+
+                            <select id="store_id" name="store_id"  data-am-selected="{searchBox: 1,maxHeight: 100}">
+                                <option value="">请选择</option>
+                                <?php foreach($store as $val):?>
+                                    <option value="<?php echo $val['store_id'];?>"><?php echo $val['store_name'];?></option>
+                                <?php endforeach;?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-text-center">
+
+                        <button type="button" class="am-btn am-btn-secondary searchSales"><i class="am-icon-search"></i> 查询</button>
 
                     </div>
 
-                </form> -->
+                </form>
 
                 <div class="widget-head am-cf">
 
@@ -126,15 +138,77 @@ td img{
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>"><span class="am-icon-plus"></span> 新增</a></button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>"><span class="am-icon-plus"></span> 新增</a></button>  
+                                    <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+
 
                                 </div>
 
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                             <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/Dow_electronicAfterSales');?>" method="post">
+                            <div class="am-modal-hd">导出核销记录</div>
+                             
+                                 <div class="am-modal-bd">
+                                  
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">商家：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="mollseller" name="store_id" data-am-selected="{searchBox: 1,maxHeight:200}">
+                                                <option value="">请选择/搜索</option>
+                                                <?php foreach($store as $val): ?>
+                                                <option value="<?php echo $val['business_id'];?>"><?php echo $val['store_name']?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div> 
+                                 
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">优惠卷：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="mollseller"  name="couponid" data-am-selected="{searchBox: 1,maxHeight:200}">
+                                                <option value="">请选择/搜索</option>
+                                                <?php foreach($coupon as $val): ?>
+                                                <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'. $val['name']?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                              <p>开始日期应小于结束日期！</p>
+                                            </div>
+                                            <div class="am-g">
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                              </div>
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                              </div>
+                                              <small class="red redtips">请先选择结束日期</small>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
+                               
                             </div>
+                           </form>
+                        </div>
+    </div>
+
+                            </div>
+          
 
                         </div>
 
                     </div>
+
 
                     <div class="am-u-sm-12">
 
@@ -160,6 +234,8 @@ td img{
                                     <th class="brand">领取限制</th>
 
                                     <th class="brand">购买价格</th>
+                                    <th class="brand">领取数</th>
+                                    <th class="brand">核销数</th>
 
                                     <th>操作</th>
 
@@ -236,6 +312,46 @@ td img{
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 
 <script type="text/javascript">
+
+$(function() {
+
+    var startDate = new Date(2014, 01, 01);
+
+    var endDate = new Date(2014, 01, 30);
+
+    var $alert = $('#my-alert');
+
+
+    $('#my-start1').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate1').text($('#my-start1').data('date'));
+          $('#begin_date1').val($('#my-start1').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end1').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate1').text($('#my-end1').data('date'));
+          $('#end_date1').val($('#my-end1').data('date'));
+        }
+        $(this).datepicker('close');
+      }); 
+
+  });
+
+
+
 
     var total_page = 0,pageflag = 1,current_page=0,$electronicList = parseInt(sessionStorage.getItem('electronicList')) || 0;
 
@@ -372,9 +488,6 @@ td img{
                         alert("操作失败，请检查网络设置！");
 
                     }
-
-                    
-
                 },
 
                 error:function(xhr,type,errorThrown){
@@ -401,9 +514,10 @@ td img{
 
             data: data,
 
-            success: function(result){         
+            success: function(result){   
+                //    console.log(result);      
 
-                var res = eval(result);
+                var res = JSON.parse(result);
 
                 // console.log(res);
 
@@ -411,7 +525,9 @@ td img{
 
                     var listData = ''; //每页出现的数量
 
-                    total_page = Math.ceil(res.length/8); //得到总页数
+                    total_page = Math.ceil(res.length/15); //得到总页数
+                    console.log(total_page)
+                    console.log(res.length)
 
                     for(var i = 0; i < res.length; i++){
 
@@ -446,13 +562,8 @@ td img{
                             pageflag = 0;
 
                         } else {
-
                             $("#Pagination").pagination(total_page);
-
                             go_to_page(0);
-
-                            
-
                         }
 
                         if(total_page < 5) {
@@ -497,78 +608,6 @@ td img{
 
 $(document).ready(function(){
 
-    var startDate = new Date(2014, 11, 20);
-
-    var endDate = new Date(2014, 11, 25);
-
-    var $alert = $('#my-alert');
-
-    $('#my-start').datepicker().
-
-      on('changeDate.datepicker.amui', function(event) {
-
-        if (event.date.valueOf() > endDate.valueOf()) {
-
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-
-        } else {
-
-          $alert.hide();
-
-          startDate = new Date(event.date);
-
-          $('#my-startDate').text($('#my-start').data('date'));
-
-          $('#begin_date').val($('#my-start').data('date'));
-
-        }
-
-        $(this).datepicker('close');
-
-      });
-
-
-
-    $('#my-end').datepicker().
-
-      on('changeDate.datepicker.amui', function(event) {
-
-        if (event.date.valueOf() < startDate.valueOf()) {
-
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-
-        } else {
-
-          $alert.hide();
-
-          endDate = new Date(event.date);
-
-          $('#my-endDate').text($('#my-end').data('date'));
-
-          $('#end_date').val($('#my-end').data('date'));
-
-        }
-
-        $(this).datepicker('close');
-
-      });
-
-      $('#my-start').hover(function(){
-
-        $('.redtips').css('display','block');
-
-      },function(){
-
-        $('.redtips').css('display','none');
-
-      });
-
-
-
-
-
-    
-
     //加载列表数数据
 
     getList('<?php echo site_url('/electronic/Electronic/get_electr_list');?>','default=1');
@@ -577,23 +616,10 @@ $(document).ready(function(){
 
     $('.searchSales').click(function(){
 
-        var salesType=$('#salesType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
-
-     //   var startDate=$('#startDate').val(),endDate=$('#endDate').val();
-
-        if((startDate=="" && endDate!="") || (startDate!="" && endDate=="")){
-
-            alert("交易总额必须是一个范围！");
-
-            return false;
-
-        }else{
-
-            getList('<?php echo site_url('/electronic/Electronic/search_electronic');?>','cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-
-        }
-
-        
+        var city=$('#city option:selected').val(),store_id=$('#store_id option:selected').val();
+        console.log(city,store_id);
+     
+        getList('<?php echo site_url('/electronic/Electronic/search_electronic');?>','city='+city+'&store_id='+store_id);
 
     });
 
@@ -631,24 +657,16 @@ $(document).ready(function(){
 
         <%if(typeid=="1") {%>
 
-        <td class="am-text-middle">代金券</td>
+        <td class="am-text-middle">电商代金券</td>
 
         <%}else if(typeid=="2") {%>
 
-        <td class="am-text-middle">折扣券</td>
-
-        <%}else if(typeid=="3") {%>
-
-        <td class="am-text-middle">活动券</td>
-
-        <%}else if(typeid=="4") {%>
-
-        <td class="am-text-middle">礼品券</td>
+        <td class="am-text-middle">电商折扣券</td>
 
         <%}else {%>
 
 
-        <td class="am-text-middle">购买券</td>
+        <td class="am-text-middle">线下团购券</td>
 
         <%}%>
 
@@ -664,20 +682,21 @@ $(document).ready(function(){
 
         <%}%>
         <td><%= price%></td>
+
+        <% if(lin == ''){%>
+            <td>0</td>
+        <%}else{%>
+            <td><%= lin%></td>
+        <%}%>
+
+        <% if(he == ''){%>
+            <td>0</td>
+        <%}else{%>
+            <td><%= he%></td>
+        <%}%>
     
-        <!-- <%if(verification=="1") {%>
+    
 
-        <td class="am-text-middle">不限制</td>
-
-        <%}else if(verification=="2") {%>
-
-        <td class="am-text-middle">在线抵用</td>
-
-        <%}else {%>
-
-        <td class="am-text-middle">到店核销</td>
-
-        <%}%> -->
 
         <td class="am-text-middle">
 

@@ -146,8 +146,8 @@ class MallShop_model extends CI_Model
     }
 
     //返回商家订单列表
-    function get_store_orders($storeid,$type){
-        $sql = "SELECT a.*,b.user_id,b.username,b.nickname from hf_mall_order as a,hf_user_member as b where order_type = '$type' and a.buyer = b.user_id and seller = '$storeid' order by a.create_time desc";
+    function get_store_orders($storeid){
+        $sql = "SELECT a.*,b.user_id,b.nickname from hf_mall_order as a,hf_user_member as b where a.buyer = b.user_id and a.seller = '$storeid' order by a.create_time desc";
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -257,7 +257,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->where('goods_state !=','2')->group_start()->where('a.goods_state',$type)->group_end()->order_by("a.create_time",'desc')->get();
+        $query = $this->db->where('goods_state !=','2')->group_start()->where('a.goods_state',$type)->group_end()->order_by("a.create_time",'desc')->get();
         return $query->result_array();
     }
 
@@ -273,12 +273,12 @@ class MallShop_model extends CI_Model
     }
 
     //返回所有商品列表
-    function get_goodslist($type){
+    function get_goodslist(){
         $this->db->select('a.*,b.store_name,c.catname');
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate',$type)->where('goods_state !=','2')->order_by("a.create_time",'desc')->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.create_time",'desc')->get();
         return $query->result_array();
     }
     //返回特价商品列表
@@ -287,7 +287,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('specials_state','1')->where('goods_state !=','2')->group_start()->where('a.differentiate','4')->group_end()->order_by("a.sort",'asc')->get();
+        $query = $this->db->where('a.specials_state','1')->where('a.goods_state','1')->order_by("a.sort",'asc')->get();
         return $query->result_array();
     }
     
@@ -297,7 +297,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('a.recommend','1')->where('goods_state !=','2')->group_start()->where('a.differentiate','4') ->group_end()->order_by("a.sort",'asc')->get();
+        $query = $this->db->where('a.recommend','1')->where('goods_state','1')->order_by("a.sort",'asc')->get();
         return $query->result_array();
     }
 
@@ -317,17 +317,17 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->where('goods_state !=','2')->order_by("a.create_time",'desc')->limit($off,$page)->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.create_time",'desc')->limit($off,$page)->get();
         return $query->result_array();
     }
 
     //返回所有订单
-    function get_order_list($type){
+    function get_order_list(){
         $this->db->select('a.*,b.store_name,c.nickname');
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('order_type',$type)->where('a.admin_delOrder','1')->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('a.admin_delOrder','1')->where('a.order_type !=','0')->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }
 
@@ -443,7 +443,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->where('goods_state !=','2')->order_by("a.create_time",$time)->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.create_time",$time)->get();
         return $query->result_array();
     }
 
@@ -453,7 +453,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->where('goods_state !=','2')->order_by("a.amount",$sort)->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.amount",$sort)->get();
         return $query->result_array();
     } 
     //返回商品库存数排序
@@ -462,7 +462,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('differentiate','1')->where('goods_state !=','2')->order_by("a.price",$sort)->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.price",$sort)->get();
         return $query->result_array();
     }
 

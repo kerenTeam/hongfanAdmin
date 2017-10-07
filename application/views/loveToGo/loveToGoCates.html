@@ -1,262 +1,523 @@
-<style type="text/css" media="screen">
-.am-selected{
-    width: 100%!important;
-} 
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-} 
-.am-u-sm6{
-    width:60px !important;
-    margin:0;
-}
-.am-form-group div{
-    line-height: 37px;
-}
-.tpl-del{
-    border: 1px solid #ff0000 !important;
-    color: #ff0000 !important;
-}
-.refresh{
-    cursor: pointer;
-}
-
-.pagebox {
-        width: 100%;
-        padding-left: 37%;
-        margin: 0 auto;
-}
-
-label {
-    font-weight: normal;
-    font-size: 16px;
-}
-#searchKey {
-    height: 28px;
-}
-
-
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>优品汇 &nbsp;&nbsp;<a href="<?php echo site_url().'/LoveToGo/loveToGoCates';?>" style="font-size:16px;">商品分类</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">分类列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                  <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <div class="am-form-group">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <a href="<?php echo site_url('/igo/LoveToGo/up_igo_cates');?>" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 更新</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>分类名 </th>
-                                    <th>分类LOGO </th>
-                                    <th>分类编号</th>
-                                    <th>更新时间 </th>
-                                    <th>操作(首页推荐仅限一个)</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <?php foreach($cates as $val):?>
-                                <tr class="trClass" id="trClass<?php echo $val['catid'];?>" >
-                                    <?php if($val['parentid'] == '0'):?>
-                                        <td class="am-text-middle">├<?php echo $val['catname']?></td>
-                                    <?php else:?>
-                                        <td class="am-text-middle">│<?php echo str_repeat(' &nbsp;&nbsp; ',$val['lev']),' └─  '.$val['catname'];?></td>
-                                    <?php endif;?>
-                                    <?php if(!empty($val['icon'])):?>
-                                    <td class="am-text-middle"><img style="border-radius: 3px;" src="<?php echo $val['icon'];?>" class="am-img-responsive cardView"></td>
-                                    <?php else:?>
-                                    <td class="am-text-middle"><img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></td>
-                                    <?php endif;?>
-                                    <td class="am-text-middle"><?php echo $val['catid']?></td>
-                                    <td class="am-text-middle"><?php echo $val['create_time'];?></td>
-                                    <td class="am-text-middle">
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                   <?php if($val['parentid'] == '0'):?>
-                                                <?php if($val['recommend_state'] == '1'):?>
-                                                    <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-warning isRecommand">
-                                                        <i class="am-icon-star-o"></i> 不推荐
-                                                    </a>
-                                                <?php else:?>
-                                                <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-success isRecommand">
-                                                    <i class="am-icon-star"></i> 推荐到首页
-                                                </a>
-                                                <?php endif;?>
-                                                <?php endif;?>
-                                                <a data-am-modal="{target:'#edit<?php echo $val['catid'];?>'}" class="am-btn am-btn-secondary edit_sort"><span class="am-icon-pencil"></span> 编辑分类</a>&nbsp;&nbsp;
-                                                <a data-am-modal="{target:'#deleteSort<?php echo $val['catid'];?>'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr> 
-                                <!--编辑分类开始-->
-                                <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<?php echo $val['catid'];?>">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">编辑分类</div>
-                                        <div class="am-modal-bd">
-                                            <form class="am-form tpl-form-line-form"  data-am-validator action="<?php echo site_url('/igo/LoveToGo/edit_igo_cates');?>" method="post" enctype='multipart/form-data'> 
-                                                <div class="am-form-group am-cf">
-                                                    <label class="am-u-sm-3 am-form-label">分类名<span class="red">*</span>：</label>
-                                                    <div class="am-u-sm-8 am-u-end">
-                                                        <input type="text" id="name<?php echo $val['catid'];?>" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="<?php echo $val['catname']?>" />
-                                                        
-                                                    </div>
-                                                    <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
-                                                    <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
-                                                </div>
-                                                <div class="am-form-group am-cf">
-                                                    <label for="" class="am-u-sm-3 am-form-label"> 分类LOGO<span class="red">*</span>：</label>
-                                                    <div class="am-u-sm-8 am-u-end">
-                                                        <div class="wx_type_img">
-                                                            <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-                                                            <!-- 图片实时预览 -->
-                                                            <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                                        </div>
-                                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-                                                        <small class="red">提示：图片格式支持：png、jpg、jpeg、svg，图片大小不超过800kb；</small> 
-                                                    </div>
-                                                </div>
-                                                <div class="am-form-group am-btn-group-xs">
-                                                    <input type="hidden" name="catid" value="<?php echo $val['catid']?>">
-                                                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-                                                    <button type="submit" class="am-btn am-btn-secondary sureSave" data-id="<?php echo $val['catid'];?>" data-am-modal-confirm>保存</button>
-                                                </div>
-                                            </form>      
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <!--编辑分类结束-->
-                                <!--删除分类开始-->
-                                <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteSort<?php echo $val['catid'];?>">
-                                    <div class="am-modal-dialog">
-                                        <div class="am-modal-hd">删除提示</div>
-                                        <div class="am-modal-bd">
-                                            <p class="black">你，确定要删除该分类吗？</p>
-                                        </div>
-                                        <div class="am-modal-footer">
-                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                                            <span class="am-modal-btn sureDelete" data-id="<?php echo $val['catid'];?>" data-am-modal-confirm>确定</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--删除分类结束-->
-                            <?php endforeach;?>
-                                
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script src="assets/js/artTemplate-native.js"></script>
-
-<script type="text/javascript">
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length < minlen || content.length > maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
- //删除图片
-$(".deleteImg").click(function(){
-    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
-    $(this).siblings('.wx_type_img').find('input').val("");
-});
-//删除
-$('.sureDelete').click(function(){
-    var dataId = $(this).attr('data-id');
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/igo/LoveToGo/del_igo_cate');?>',
-        data: 'id='+ dataId,
-        success: function(data){
-            if(data==1){
-                 $("#trClass"+dataId).remove(); 
-            }else{
-                alert("操作失败！");
-            }
-            
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-});
-$(document).ready(function () {
-    //推荐到首页
-    $('.isRecommand').click(function(){
-        var dataId=$(this).attr('data-id'), recommend = $(this).attr('dataId');
-        if(recommend == "0") {
-            recommend_state = 1;
-        } else {
-            recommend_state = 0;
-        }
-        console.log('catid='+ dataId + '&recommend_state='+ recommend_state);
-        $.ajax({ 
-            type:'post',
-            url: "<?php echo site_url('/igo/LoveToGo/loveToGoCates_recommend');?>",
-            data: 'catid='+ dataId + '&recommend_state='+ recommend_state,
-            success: function(result){    
-                console.log(result);     
-                var res = eval(result);
-                if(res == 1){
-                    alert("设置成功！");
-                    $('#de'+dataId).fadeOut();
-                    $('.am-dimmer').removeClass('am-active');
-                    window.location.reload();
-                }else{
-                   alert("网络状况不佳，请稍后重试！");
-                }
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    });
-})
-
-
-
+<style type="text/css" media="screen">
+
+.am-selected{
+
+    width: 100%!important;
+
+} 
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+td.am-text-middle img{
+
+    width:80px;
+
+} 
+
+.am-u-sm6{
+
+    width:60px !important;
+
+    margin:0;
+
+}
+
+.am-form-group div{
+
+    line-height: 37px;
+
+}
+
+.tpl-del{
+
+    border: 1px solid #ff0000 !important;
+
+    color: #ff0000 !important;
+
+}
+
+.refresh{
+
+    cursor: pointer;
+
+}
+
+
+
+.pagebox {
+
+        width: 100%;
+
+        padding-left: 37%;
+
+        margin: 0 auto;
+
+}
+
+
+
+label {
+
+    font-weight: normal;
+
+    font-size: 16px;
+
+}
+
+#searchKey {
+
+    height: 28px;
+
+}
+
+
+
+
+
+
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>优品汇 &nbsp;&nbsp;<a href="<?php echo site_url().'/LoveToGo/loveToGoCates';?>" style="font-size:16px;">商品分类</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">分类列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                  <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                    <a href="<?php echo site_url('/igo/LoveToGo/up_igo_cates');?>" class="am-btn am-btn-default am-btn-danger refresh"><span class="am-icon-refresh "></span> 更新</a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>分类名 </th>
+
+                                    <th>分类LOGO </th>
+
+                                    <th>分类编号</th>
+
+                                    <th>更新时间 </th>
+
+                                    <th>操作(首页推荐仅限一个)</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <?php foreach($cates as $val):?>
+
+                                <tr class="trClass" id="trClass<?php echo $val['catid'];?>" >
+
+                                    <?php if($val['parentid'] == '0'):?>
+
+                                        <td class="am-text-middle">├<?php echo $val['catname']?></td>
+
+                                    <?php else:?>
+
+                                        <td class="am-text-middle">│<?php echo str_repeat(' &nbsp;&nbsp; ',$val['lev']),' └─  '.$val['catname'];?></td>
+
+                                    <?php endif;?>
+
+                                    <?php if(!empty($val['icon'])):?>
+
+                                    <td class="am-text-middle"><img style="border-radius: 3px;" src="<?php echo $val['icon'];?>" class="am-img-responsive cardView"></td>
+
+                                    <?php else:?>
+
+                                    <td class="am-text-middle"><img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"></td>
+
+                                    <?php endif;?>
+
+                                    <td class="am-text-middle"><?php echo $val['catid']?></td>
+
+                                    <td class="am-text-middle"><?php echo $val['create_time'];?></td>
+
+                                    <td class="am-text-middle">
+
+                                        <div class="am-btn-toolbar">
+
+                                            <div class="am-btn-group am-btn-group-xs">
+
+                                                   <?php if($val['parentid'] == '0'):?>
+
+                                                <?php if($val['recommend_state'] == '1'):?>
+
+                                                    <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-warning isRecommand">
+
+                                                        <i class="am-icon-star-o"></i> 不推荐
+
+                                                    </a>
+
+                                                <?php else:?>
+
+                                                <a data-id="<?php echo $val['catid'];?>" dataId="<?php echo $val['recommend_state']?>" class="am-btn am-btn-success isRecommand">
+
+                                                    <i class="am-icon-star"></i> 推荐到首页
+
+                                                </a>
+
+                                                <?php endif;?>
+
+                                                <?php endif;?>
+
+                                                <a data-am-modal="{target:'#edit<?php echo $val['catid'];?>'}" class="am-btn am-btn-secondary edit_sort"><span class="am-icon-pencil"></span> 编辑分类</a>&nbsp;&nbsp;
+
+                                                <a data-am-modal="{target:'#deleteSort<?php echo $val['catid'];?>'}" class="am-btn am-btn-danger delete_sort"><span class="am-icon-trash"></span> 删除</a>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr> 
+
+                                <!--编辑分类开始-->
+
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="edit<?php echo $val['catid'];?>">
+
+                                    <div class="am-modal-dialog">
+
+                                        <div class="am-modal-hd">编辑分类</div>
+
+                                        <div class="am-modal-bd">
+
+                                            <form class="am-form tpl-form-line-form"  data-am-validator action="<?php echo site_url('/igo/LoveToGo/edit_igo_cates');?>" method="post" enctype='multipart/form-data'> 
+
+                                                <div class="am-form-group am-cf">
+
+                                                    <label class="am-u-sm-3 am-form-label">分类名<span class="red">*</span>：</label>
+
+                                                    <div class="am-u-sm-8 am-u-end">
+
+                                                        <input type="text" id="name<?php echo $val['catid'];?>" name="name" required minlength="2" maxlength="15" onblur="validate(this,2,15,0)" value="<?php echo $val['catname']?>" />
+
+                                                        
+
+                                                    </div>
+
+                                                    <small class="am-u-sm-1 red redtips0" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                                    <small class="am-u-sm-1 green blacktips0" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                                </div>
+
+                                                <div class="am-form-group am-cf">
+
+                                                    <label for="" class="am-u-sm-3 am-form-label"> 分类LOGO<span class="red">*</span>：</label>
+
+                                                    <div class="am-u-sm-8 am-u-end">
+
+                                                        <div class="wx_type_img">
+
+                                                            <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+
+                                                            <!-- 图片实时预览 -->
+
+                                                            <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+
+                                                        </div>
+
+                                                        <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                                        <small class="red">提示：图片格式支持：png、jpg、jpeg、svg，图片大小不超过800kb；</small> 
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="am-form-group am-btn-group-xs">
+
+                                                    <input type="hidden" name="catid" value="<?php echo $val['catid']?>">
+
+                                                    <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                                    <button type="submit" class="am-btn am-btn-secondary sureSave" data-id="<?php echo $val['catid'];?>" data-am-modal-confirm>保存</button>
+
+                                                </div>
+
+                                            </form>      
+
+                                        </div>
+
+                                        
+
+                                    </div>
+
+                                </div>
+
+                                <!--编辑分类结束-->
+
+                                <!--删除分类开始-->
+
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="deleteSort<?php echo $val['catid'];?>">
+
+                                    <div class="am-modal-dialog">
+
+                                        <div class="am-modal-hd">删除提示</div>
+
+                                        <div class="am-modal-bd">
+
+                                            <p class="black">你，确定要删除该分类吗？</p>
+
+                                        </div>
+
+                                        <div class="am-modal-footer">
+
+                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+                                            <span class="am-modal-btn sureDelete" data-id="<?php echo $val['catid'];?>" data-am-modal-confirm>确定</span>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <!--删除分类结束-->
+
+                            <?php endforeach;?>
+
+                                
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script src="assets/js/artTemplate-native.js"></script>
+
+
+
+<script type="text/javascript">
+
+//表单验证函数
+
+function validate(obj,minlen,maxlen,i){
+
+    var content=obj.value;
+
+    if(content.length < minlen || content.length > maxlen){
+
+        $('.blacktips'+ i).css('display','none');
+
+        $('.redtips'+ i).css('display','inline-block');
+
+    }else{
+
+        $('.redtips'+ i).css('display','none');
+
+        $('.blacktips'+ i).css('display','inline-block');
+
+    }
+
+}
+
+ //删除图片
+
+$(".deleteImg").click(function(){
+
+    $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+    $(this).siblings('.wx_type_img').find('input').val("");
+
+});
+
+//删除
+
+$('.sureDelete').click(function(){
+
+    var dataId = $(this).attr('data-id');
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/igo/LoveToGo/del_igo_cate');?>',
+
+        data: 'id='+ dataId,
+
+        success: function(data){
+
+            if(data==1){
+
+                 $("#trClass"+dataId).remove(); 
+
+            }else{
+
+                alert("操作失败！");
+
+            }
+
+            
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+});
+
+$(document).ready(function () {
+
+    //推荐到首页
+
+    $('.isRecommand').click(function(){
+
+        var dataId=$(this).attr('data-id'), recommend = $(this).attr('dataId');
+
+        if(recommend == "0") {
+
+            recommend_state = 1;
+
+        } else {
+
+            recommend_state = 0;
+
+        }
+
+        console.log('catid='+ dataId + '&recommend_state='+ recommend_state);
+
+        $.ajax({ 
+
+            type:'post',
+
+            url: "<?php echo site_url('/igo/LoveToGo/loveToGoCates_recommend');?>",
+
+            data: 'catid='+ dataId + '&recommend_state='+ recommend_state,
+
+            success: function(result){    
+
+                console.log(result);     
+
+                var res = eval(result);
+
+                if(res == 1){
+
+                    alert("设置成功！");
+
+                    $('#de'+dataId).fadeOut();
+
+                    $('.am-dimmer').removeClass('am-active');
+
+                    window.location.reload();
+
+                }else{
+
+                   alert("网络状况不佳，请稍后重试！");
+
+                }
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("网络状况不佳，请稍后重试！");
+
+            }
+
+        });
+
+    });
+
+})
+
+
+
+
+
+
+
 </script>

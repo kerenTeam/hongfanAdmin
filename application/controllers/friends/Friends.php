@@ -24,6 +24,7 @@ class Friends extends Default_Controller
 	public $view_lable = "friends/friends_lable.html";//标签
     public $view_friends_member = "friends/friends_member.html";//会员
     public $view_fictitious_goods = "friends/fictitious_goods.html";//虚拟商品
+    public $view_friends_dataAudit = 'friends/friends_dataAudit.html';
 
 
 
@@ -32,11 +33,19 @@ class Friends extends Default_Controller
 		# code...
 		parent::__construct();
 		$this->load->model('Public_model');
-	}
+	}  
 
 
 	//圈子
 	function circle(){
+        // $data =  strtotime('2017-09-29 00:00:00');
+        // var_Dump(strtotime('2017-09-29 00:00:00'));
+        // //var_Dump(microtime());
+        //  list($msec, $sec) = explode(' ', microtime());
+        //  $msectime =  (float)sprintf('%.0f', (floatval($msec) + floatval($sec)) * 1000);
+ 
+        // exit;
+      
 		$config['per_page'] = 10;
         //获取页码
         $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
@@ -352,7 +361,7 @@ class Friends extends Default_Controller
         $config['total_rows'] = count($list);
 
         // //分页数据
-        $listpage = $this->Public_model->select_news_page('typeId','1',$config['per_page'],$current_page);
+        $listpage = $this->Public_model->select_news_page('typeId','1',$config['per_page'],$current_page,'create_time');
           $this->load->library('pagination');//加载ci pagination类
 
             $this->pagination->initialize($config);
@@ -411,7 +420,7 @@ class Friends extends Default_Controller
         $config['total_rows'] = count($list);
 
         // //分页数据
-        $listpage = $this->Public_model->select_news_page('typeId','3',$config['per_page'],$current_page);
+        $listpage = $this->Public_model->select_news_page('typeId','3',$config['per_page'],$current_page,'create_time');
           $this->load->library('pagination');//加载ci pagination类
 
             $this->pagination->initialize($config);
@@ -466,12 +475,12 @@ class Friends extends Default_Controller
         $config['prev_link']= '上一页';
 
         $config['last_link']= '末页';
-        $list = $this->Public_model->select_where($this->dynamic,'typeId','4','');
+        $list = $this->Public_model->select_where($this->dynamic,'typeId','5','id');
 
         $config['total_rows'] = count($list);
 
         // //分页数据
-        $listpage = $this->Public_model->select_news_page('typeId','4',$config['per_page'],$current_page);
+        $listpage = $this->Public_model->select_news_page('typeId','5',$config['per_page'],$current_page,'report_time');
           $this->load->library('pagination');//加载ci pagination类
 
             $this->pagination->initialize($config);
@@ -483,6 +492,68 @@ class Friends extends Default_Controller
         $this->load->view('template.html',$data);
 
 	}
+
+    //圈子举报动态
+    function report_circle(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/friends/Friends/report');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->Public_model->select_where($this->dynamic,'typeId','5','id');
+
+        $config['total_rows'] = count($list);
+
+        // //分页数据
+        $listpage = $this->Public_model->select_news_page('typeId','5',$config['per_page'],$current_page,'report_time');
+          $this->load->library('pagination');//加载ci pagination类
+
+            $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+
+        $data['page'] = $this->view_report_news;
+        $data['menu'] = array('friends','report');
+        $this->load->view('template.html',$data);
+    }
+
+
+
 
 	//新增动态
 	function add_friends_news(){
@@ -597,15 +668,15 @@ class Friends extends Default_Controller
 
 	//删除动态
 	function del_friends_news(){
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";exit;
-		}
+		// $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";exit;
+		// }
 		$id = intval($this->uri->segment('4'));
 		if($id == '0'){
 			$this->load->view('404.html');
@@ -747,6 +818,35 @@ class Friends extends Default_Controller
 		}
 	}
 
+    //回复动态显示
+    function edit_news_state(){
+        $id = intval($this->uri->segment('4'));
+        $state = intval($this->uri->segment('5'));
+
+        if($id == "0" || $state == "0"){
+            $this->load->view('404.html');
+        }else{
+            $data['typeId'] = $state;
+            if($this->Public_model->updata($this->dynamic,'id',$id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."恢复了举报动态,动态id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/report')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/report')."'</script>";exit;
+            }
+        }
+    }
+
+
 	//删除动态
 	function del_circle_news(){
 		$q= $this->uri->uri_string();
@@ -780,8 +880,6 @@ class Friends extends Default_Controller
   				echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/circle_news/').$spaceType."'</script>";exit;
 			}
 		}
-
-
 
 	}
 
@@ -842,7 +940,7 @@ class Friends extends Default_Controller
         $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
 
         $data['page'] = $this->view_lable;
-        $data['menu'] = array('friends','circle');
+        $data['menu'] = array('friends','lable');
         $this->load->view('template.html',$data);
 	}
 
@@ -999,14 +1097,17 @@ class Friends extends Default_Controller
         $list = $this->Public_model->select_frirnds_user();
 
         $config['total_rows'] = count($list);
- 
+
+        //获取今日的注册用户
+
+        $member = $this->Public_model->ret_new_member();
         // //分页数据
         $listpage = $this->Public_model->select_frirnds_user_page($config['per_page'],$current_page);
-          $this->load->library('pagination');//加载ci pagination类
+        $this->load->library('pagination');//加载ci pagination类
 
-            $this->pagination->initialize($config);
+        $this->pagination->initialize($config);
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list),'newNum'=>count($member));
 
         $data['page'] = $this->view_friends_member;
         $data['menu'] = array('friends','friends_member');
@@ -1025,11 +1126,11 @@ class Friends extends Default_Controller
 
     //男神榜
     function schoolboy(){
-         $config['per_page'] = 10;
+        $config['per_page'] = 10;
         //获取页码
         $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
         //配置
-        $config['base_url'] = site_url('/friends/Friends/friends_member');
+        $config['base_url'] = site_url('/friends/Friends/schoolboy');
         //分页配置
         $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 
@@ -1065,32 +1166,210 @@ class Friends extends Default_Controller
         $config['prev_link']= '上一页';
 
         $config['last_link']= '末页';
-        $list = $this->Public_model->select_frirnds_user();
+        $list = $this->Public_model->select_where_member($this->member,'gender','1','resommendOnHomeIndex');
 
         $config['total_rows'] = count($list);
  
         // //分页数据
-        $listpage = $this->Public_model->select_frirnds_user_page($config['per_page'],$current_page);
-          $this->load->library('pagination');//加载ci pagination类
+        $listpage = $this->Public_model->select_where_member_page($this->member,'gender','1',$config['per_page'],$current_page,'resommendOnHomeIndex');
+        $this->load->library('pagination');//加载ci pagination类
 
-            $this->pagination->initialize($config);
+        $this->pagination->initialize($config);
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list));
 
         $data['page'] = $this->view_friends_member;
-        $data['menu'] = array('friends','friends_member');
+        $data['menu'] = array('friends','schoolboy');
         $this->load->view('template.html',$data);
     }
 
     //女神榜
     function goddess(){
+         $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/friends/Friends/goddess');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->Public_model->select_where_member($this->member,'gender','2','');
+
+        $config['total_rows'] = count($list);
+ 
+        // //分页数据
+        $listpage = $this->Public_model->select_where_member_page($this->member,'gender','2',$config['per_page'],$current_page,'resommendOnHomeIndex');
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list));
+
+        $data['page'] = $this->view_friends_member;
+        $data['menu'] = array('friends','goddess');
+        $this->load->view('template.html',$data);
     }
 
     //推荐榜
     function recomment(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/friends/Friends/recomment');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->Public_model->select_where($this->member,'recommend','1','');
+
+        $config['total_rows'] = count($list);
+ 
+        // //分页数据
+        $listpage = $this->Public_model->select_where_member_page($this->member,'recommend','1',$config['per_page'],$current_page,'resommendOnHomeIndex');
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list),'recomd'=>
+            '1');
+
+        $data['page'] = $this->view_friends_member;
+        $data['menu'] = array('friends','recomment');
+        $this->load->view('template.html',$data);
     }
+
+
+    //推荐到推荐榜
+    function edit_recommend_state(){
+        $id = intval($this->uri->segment('4'));
+        $state = intval($this->uri->segment('5'));
+        if($id == "0" || $state == "0"){
+            $this->load->view('404.html');
+        }else{
+            if($state == "1"){
+                $data['recommend'] = '1';
+                $title = "推荐了会员到推荐榜展示";
+            }else{
+                $data['recommend'] = '0';
+                $title ="取消了会员在推荐榜展示";
+            }
+            if($this->Public_model->updata($this->member,'user_id',$id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username'].$title.",会员id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+            }
+        }
+    }
+    //推荐到APP首页
+    function recommend_home(){
+        $id = intval($this->uri->segment('4'));
+        $state = intval($this->uri->segment('5'));
+        if($id == "0" || $state == "0"){
+            $this->load->view('404.html');
+        }else{
+            if($state == "1"){
+                $data['resommendOnHome'] = '1';
+                $title = "推荐了会员到APP首页展示";
+            }else{
+                $data['resommendOnHome'] = '0';
+                $title ="取消了会员在APP首页展示";
+            }
+            if($this->Public_model->updata($this->member,'user_id',$id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username'].$title.",会员id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+            }
+        }
+    }
+
+
+
     //虚拟商品
     function fictitious_goods(){
         $data['lists'] = $this->Public_model->select($this->gift,'id');
@@ -1188,6 +1467,304 @@ class Friends extends Default_Controller
             $this->load->view('404.html');
         }
     }
+
+    //删除虚拟商品
+    function del_fictitius(){
+        $id = intval($this->uri->segment(4));
+        if($id == '0'){
+            $this->load->view('404.html');
+
+        }else{
+             if($this->Public_model->delete($this->gift,'id',$id)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了虚拟礼物,礼物id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/fictitious_goods')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/fictitious_goods')."'</script>";exit;
+            }
+        }
+    }
+
+    //男神女神搜索
+    function search_friends(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->input->get("size"));//index.php 后数第4个/
+
+        $age = $this->input->get('ages');
+        $startTime = $this->input->get('begin_time');
+        $endTime = $this->input->get('end_time');
+        $sear = $this->input->get('sear');
+        $gender = $this->input->get('gender');
+        // var_dump($_GET);
+
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+
+
+
+        $list = friends_member_search($age,$gender,$startTime,$endTime,$sear);
+       // var_dump($startTime);
+       //  var_dump($endTime);
+       //  var_dump($list);
+       //  var_dump($gender);
+       //  exit;
+
+        $config['total_rows'] = count($list);
+
+        $config['page_query_string'] = TRUE;//关键配置
+        // $config['reuse_query_string'] = FALSE;
+        $config['query_string_segment'] = 'size';
+        $config['base_url'] = site_url('/friends/Friends/search_friends?').'ages='.$age.'&gender='.$gender.'&begin_time='.$startTime.'&end_time='.$endTime.'&sear='.$sear;
+
+        // //分页数据
+        $listpage = friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$config['per_page'],$current_page);
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list));
+        // var_dump($data);
+        // exit;
+
+        $data['page'] = $this->view_friends_member;
+        $data['menu'] = array('friends','friends_member');
+        $this->load->view('template.html',$data);
+    }
+
+
+    //审核交友照片
+    function data_audit(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/friends/Friends/data_audit');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->Public_model->select_where('hf_friends_my_photo','needReview','0','');
+
+        $config['total_rows'] = count($list);
+ 
+        // //分页数据
+        $listpage = $this->Public_model->select_friends_dataAudit('0',$config['per_page'],$current_page);
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list),'recomd'=>
+            '1');
+
+        $data['page'] = $this->view_friends_dataAudit;
+        $data['menu'] = array('friends','data_audit');
+        $this->load->view('template.html',$data);
+
+    }
+
+
+    //修改交友资料状态
+    function edit_dataAudit(){
+        $id = intval($this->uri->segment(4));
+
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $data['needReview'] = '1';
+            if($this->Public_model->updata('hf_friends_my_photo','id',$id,$data)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."审核通过了一个交友照片,id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/data_audit')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/data_audit')."'</script>";exit;
+
+            }
+
+        }
+    }
+    //删除交友资料
+    function del_dataAudit(){
+        $id = intval($this->uri->segment(4));
+
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            if($this->Public_model->delete('hf_friends_my_photo','id',$id)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."删除了一个交友照片,id是".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/data_audit')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/data_audit')."'</script>";exit;
+
+            }
+
+        }
+    }
+
+    //修改会员排序
+    function edit_member_info(){
+        if($_POST){
+            $data = $this->input->post();
+            $header = array("token:".$_SESSION['token'],'city:'.'1');    
+            if(!empty($_FILES['img']['name'])){
+                    $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'friends/fictitious/avatar',
+                        'bucket'=>'cqcfriends',
+                    );
+                
+                    $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+
+                    if($qiuniu['errno'] == '0'){
+                        $img = json_decode($qiuniu['data']['img'],true);
+                        $icon[]['picImg'] =$img[0]['picImg'];
+                        $data['avatar'] = json_encode($icon);
+                    }else{
+                      echo "<script>alert('图片上传失败！');window.history.go(-1);</script>";exit;
+                    }
+            }
+            if($this->Public_model->updata($this->member,"user_id",$data['user_id'],$data)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了用户信息,用户id是".$data['user_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+     function edit_member_sort(){
+        if($_POST){
+            $data = $this->input->post();
+
+            if($this->Public_model->updata($this->member,"user_id",$data['user_id'],$data)){
+                 $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了用户排序,用户id是".$data['user_id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
 
     //统计信息
     function statistics(){

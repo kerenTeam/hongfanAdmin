@@ -173,22 +173,24 @@ padding: 5px 6px!important;
                                     <th>编号 </th>
 
                                     <th>支付订单号 </th>
+                                    <th>充值类型 </th>
 
                                     <th>用户名 </th>
 
                                     <th>手机号</th>
 
-                                    <th>充值金额(元) </th>
+                                    <th>充值面额(元/流量) </th>
 
                                     <!-- <th>优惠金额(元) </th> -->
 
-                                    <th>成交金额(元) </th>
+                                    <th>支付金额(元) </th>
+                                    <th>支付方式 </th>
 
                                     <th>充值时间</th>
 
-                                    <th>供应商编号</th>
+                                    <th>支付状态</th>
 
-                                    <th>操作</th>
+                                    <!-- <th>操作</th> -->
 
                                 </tr>
 
@@ -422,7 +424,7 @@ padding: 5px 6px!important;
 
                 var res = eval(result);
 
-                console.log(res);
+              
 
                 if(res != 2 && res != 3){
 
@@ -432,7 +434,9 @@ padding: 5px 6px!important;
 
                     for(var i = 0; i < res.length; i++){
 
+                        res[i].userPostData=JSON.parse(res[i].userPostData);
                         res[i].payment_data=JSON.parse(res[i].payment_data);
+                          //console.log( res[i].userPostData);
 
                         if(!res[i].payment_data.errorToken) {
 
@@ -536,43 +540,31 @@ padding: 5px 6px!important;
 
 <script type="text/html" id="dataModal">
 
-<% if(!payment_data.message) {%>
 
     <tr class="trClass" data-id="<%= id %>">
 
         <td class="am-text-middle"><%= id %></td>
-
-        <td class="am-text-middle"><%= nickname %></td>
-
         <td class="am-text-middle"><%= uuid %></td>
-
-        <% if(payment_data.data.mobileNo){%>
-
-        <td class="am-text-middle"><%= payment_data.data.mobileNo%></td>
-
-        <td class="am-text-middle"><%= payment_data.data.rechargeAmount%></td>
-
-        <td class="am-text-middle"><%= payment_data.data.advicePrice %></td>
-
-        <td class="am-text-middle"><%= create_time%></td>
-
-        <td class="am-text-middle"><%= payment_data.data.itemId%></td>
-
+        <%if(type =='1'){%>
+        <td class="am-text-middle">话费</td>
         <%}else{%>
-
-             <td class="am-text-middle"><%= payment_data.data.rechargeAccount%></td>
-
-             <td class="am-text-middle"><%= payment_data.data.saleAmount%></td>
-
-             <td class="am-text-middle"><%= payment_data.data.orderCost%></td>
-
-             <td class="am-text-middle"><%= create_time%></td>
-
-             <td class="am-text-middle"><%= payment_data.data.supId%></td>
-
+        <td class="am-text-middle">流量</td>
         <%}%>
+        <td class="am-text-middle"><%= nickname %></td>
+        
+        <td class="am-text-middle"><%= userPostData.mobileNo %></td>
+        <td class="am-text-middle"><%= userPostData.rechargeAmount %></td>
+        <td class="am-text-middle"><%= payment_data.advicePrice %></td>
+        <td class="am-text-middle"><%= userPostData.payType %></td>
+        <td class="am-text-middle"><%= create_time %></td>
 
-        <td class="am-text-middle">
+         <%if(state =='1'){%>
+        <td class="am-text-middle">成功</td>
+        <%}else{%>
+        <td class="am-text-middle">失败</td>
+        <%}%>
+        
+       <!--  <td class="am-text-middle">
 
             <div class="tpl-table-black-operation">
 
@@ -584,7 +576,7 @@ padding: 5px 6px!important;
 
             </div>
 
-        </td>
+        </td> -->
 
     </tr>
 
@@ -616,7 +608,6 @@ padding: 5px 6px!important;
 
 </div>
 
-<% } %>
 
 </script>
 

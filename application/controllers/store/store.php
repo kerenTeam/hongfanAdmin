@@ -132,13 +132,7 @@ class Store extends Default_Controller {
 
             $id = $this->input->post('default');
 
-            if($id ==2){
-
-                //推荐商品
-
-                 $goods_list = $this->MallShop_model->get_remment_goods();
-
-            }else if($id == 3){
+            if($id == 3){
 
                 //特价商品
 
@@ -146,11 +140,10 @@ class Store extends Default_Controller {
 
             }else{
 
-                $goods_list = $this->MallShop_model->get_goodslist('4');
+                $goods_list = $this->MallShop_model->get_goodslist();
 
             }
             
-
 
             //获取商品库存
 
@@ -308,6 +301,59 @@ class Store extends Default_Controller {
     }
 
 
+    function del_goods(){
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
+
+        if($_POST){
+
+            $id = $_POST['goodsid'];
+
+            $data['goods_state'] = '2';
+
+            
+
+            if($this->MallShop_model->edit_goods($id,$data)){
+
+                $log = array(
+
+                'userid'=>$_SESSION['users']['user_id'],  
+
+                "content" => $_SESSION['users']['username']."删除一个商品到回收站，商品id是：".$id,
+
+                "create_time" => date('Y-m-d H:i:s'),
+
+                "userip" => get_client_ip(),
+
+                );
+
+             $this->db->insert('hf_system_journal',$log);
+
+                echo "1";
+
+            }else{
+
+                echo "2";
+
+            }
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
 
 
 
@@ -360,15 +406,36 @@ class Store extends Default_Controller {
     //推荐商品到首页
 
     function edit_recommend(){
-       	
+       	$q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
 
         if($_POST){
 
             $goods_id = $_POST['goodsid'];
 
             $recommend = $_POST['state'];
+            if($recommend == "6"){
+
+                $data['recommend'] = '1';
+            }
 
             $data['recommentType'] = $recommend;
+            
+
+            if($recommend == '0'){
+                $data['recommend'] = '0';
+                $data['recommentType'] = '0';
+            }
 
             if($this->MallShop_model->edit_goods_state($goods_id,$data)){
 
@@ -705,43 +772,37 @@ class Store extends Default_Controller {
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
 
             $pic = array();
+            if($data['differentiate'] == '2'){
+                $data['differentiate'] = '4';
+            }
 
  
-
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
             for ($i=1; $i < 4; $i++) {
 
                 if(!empty($_FILES['img'.$i]['name'])){
+                    
 
-                    $config['upload_path']      = 'Upload/goods/';
 
-                    $config['allowed_types']    = 'gif|jpg|png|jpeg';
-
-                    $config['max_size']     = 2048;
-
-                    $config['file_name'] = date('Y-m-d_His');
-
-                    $this->load->library('upload', $config);
-
-                    // 上传
-
-                    if(!$this->upload->do_upload('img'.$i)) {
-
-                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/store/storeEditGoods/'.$data['id'])."'</script>";exit;
-
-                    }else{
-
+                    $tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/goods/'.$data['goods_id'].'/thumb',
+                        'bucket'=>BUCKET,
+                    );
+                
+                    $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                    if($a['errno'] == '0'){
                         unset($data['img'.$i]);
-
+                        $img = json_decode($a['data']['img'],true);
                         if($i == '1'){
-
-                            $data['thumb'] = '/Upload/goods/'.$this->upload->data('file_name');
-
+                            $data['thumb'] = $img[0]['picImg'];
                         }
-
-                        $pic[]['bannerPic'] = '/Upload/goods/'.$this->upload->data('file_name');
-
+                        $pic[]['bannerPic'] =$img[0]['picImg'];
+                        // $data['logo'] = 
                     }
-
                 }else{
 
                      if(!empty($data['img'.$i])){
@@ -749,14 +810,13 @@ class Store extends Default_Controller {
                          if($i == '1'){
 
                                 $data['thumb'] = $data['img'.$i];
-
                          }
-
                          $pic[]['bannerPic'] = $data['img'.$i];
 
                      }
 
-                     unset($data['img'.$i]);
+                    unset($data['img'.$i]);
+
 
                 }
 
@@ -765,6 +825,12 @@ class Store extends Default_Controller {
             if(empty(json_decode($data['reduction_rule']))){
 
                 $data['reduction_rule'] = NULL;
+
+            }
+
+            if(empty($data['maxTorder'])){
+
+                $data['maxTorder'] = NULL;
 
             }
 
@@ -1132,7 +1198,7 @@ class Store extends Default_Controller {
 
             $type =  $this->input->post('default');
 
-            $order = $this->MallShop_model->get_order_list($type);
+            $order = $this->MallShop_model->get_order_list();
 
           
 
@@ -1214,7 +1280,7 @@ class Store extends Default_Controller {
 
             //获取收货地址
 
-            $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
+           // $data['address'] = $this->MallShop_model->ret_user_address($order['buyer_address']);
 
             //后去运费模板
 
@@ -2072,11 +2138,25 @@ class Store extends Default_Controller {
 
             $storeid = $this->input->post('mollseller');
 
-            $start_time = $this->input->post('begin_time').' 00:00:00:00';
+            $start_time = $this->input->post('begin_time');
 
-            $end_time = $this->input->post('end_time').' 23:59:59';
-            $list = store_order_list($storeid,$start_time,$end_time);
-         
+            $end_time = $this->input->post('end_time');
+
+            if(!empty($start_time)){
+                $start_time = $this->input->post('begin_time').' 00:00:00:00';
+
+                $end_time = $this->input->post('end_time').' 23:59:59';
+            }
+            $type = $this->input->post('order_type');
+            if($type == '0'){
+                $type = '';
+            }
+
+
+
+
+            $list = store_order_list($storeid,$start_time,$end_time,$type);
+
 
             $this->load->library('excel');
 
@@ -2111,35 +2191,27 @@ class Store extends Default_Controller {
 
                 $arr_title = array(
 
-                    'A' => '商家名称',
+                    'A' => '序列编号',
 
                     'B' => '订单编号',
+                    'C' => '关联订单号',
 
-                    'C' => '成交时间',
 
-                    'D' => '商品编码',
+                    'D' => '销售时间',
 
-                    'E' => '商品名称',
+                    'E' => '所属大类',
 
-                    'F' => '单价',
+                    'F' => '商家编号',
 
-                    'G' => '数量',
+                    'G' => '商家名称',
 
-                    'H' => '总价',
+                    'H' => '单品名称(多个、隔开)',
 
-                    'I' => '成交价格',
+                    'I' => '销售单品数量',
 
-                    'J' => '邮资',
+                    'J' => '单品各销售金额',
 
                     'K' => '成交总额',
-
-                    'L' => '佣金比率',
-
-                    'M' => '佣金总额',
-
-                    'N' => '结算金额',
-
-                    'O' => '备注'
 
                 );
             //设置excel 表头
@@ -2172,16 +2244,9 @@ class Store extends Default_Controller {
               {
 
                   $i ='2';
-
-                 
-
-
                     foreach($list as $book){
 
                         $i++;
-
-                      
-
                         $goods = json_decode($book['goods_data'],true);
 
                         
@@ -2198,51 +2263,48 @@ class Store extends Default_Controller {
 
                         }
 
-                        $good = implode('|',$k[$i]);
+                        $good = implode('、',$k[$i]);
 
-                        $name = implode('|',$c[$i]);
+                        $name = implode('、',$c[$i]);
 
-                        $num = implode('|',$n[$i]);
+                        $num = implode('、',$n[$i]);
 
-                        $price = implode('|',$p[$i]);
+                        $price = implode('、',$p[$i]);
 
-                        //佣金
+            
 
-                       $points=  $goods['total_goods_prices'] * ($goods['stores']['points']/100);
-
-
-
-                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $goods['stores']['store_name']);
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $i-2);
 
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
-
-                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['create_time']);
-
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['order_UUID']);
 
 
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $good);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $book['create_time']);
 
-                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $name);
 
-                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $price);
+                        if($book['order_type'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '超市优选');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '特色馆');
+                        }
 
-                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $num);
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $book['seller']);
 
-                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $book['amount']);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $goods['stores']['store_name']);
 
-                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $goods['total_goods_prices']- $goods['postAge']);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $name);
 
-                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $goods['postAge']);
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $num);
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i,$price);
 
-                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['total_goods_prices']);
+                        if($book['order_status'] == '8'){
+                            $this->excel->getActiveSheet()->setCellValue('K' . $i, '-'.$goods['actualPrice']);
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['actualPrice']);
 
-                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['stores']['points']);
+                        }
 
-                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $points);
 
-                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $goods['total_goods_prices'] - $points);
-
-                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '');
 
                     }
 
@@ -2268,7 +2330,7 @@ class Store extends Default_Controller {
 
 
 
-            $filename = 'ImportOrder.xls'; //save our workbook as this file name
+            $filename = 'ImportOrder.xlsx'; //save our workbook as this file name
 
            /// var_dump($filename);
 
@@ -2284,13 +2346,13 @@ class Store extends Default_Controller {
 
              $objWriter->save('php://output');
 
-             echo "<script>alert('导出成功！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
+             echo "<script>alert('导出成功！');window.location.href='".site_url('store/Store/storeOrderList')."'</script>";
 
              exit;
 
             }else{
 
-                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/finance/Finance/mallOrder')."'</script>";
+                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('store/Store/storeOrderList')."'</script>";
 
             }
 

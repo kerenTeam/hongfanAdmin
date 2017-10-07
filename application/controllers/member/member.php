@@ -31,8 +31,13 @@ class Member extends Default_Controller {
     function memberList()
     {
        
-          $data['userNum'] = $this->user_model->get_users('5');
-        //视图界面
+        $data['userNum'] = $this->user_model->get_users('5');
+        //获取今天
+        $data['newNum'] = $this->user_model->new_member_num();
+
+        //获取昨天
+        $data['yesterday'] = $this->user_model->member_num();
+        
         $data['page'] = $this->view_memberList;
         $data['menu'] = array('member','memberList');
     	$this->load->view('template.html',$data);

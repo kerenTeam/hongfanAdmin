@@ -1,0 +1,360 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+} 
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+width:50%;
+
+}
+
+.deleteImg{
+
+        display: inline-block;
+
+        border:1px solid #ddd;
+
+        width:60px;
+
+        height:20px;
+
+        line-height: 20px;
+
+        text-align: center;
+
+        color:#666;
+
+        font-size: 1.2rem;
+
+        margin-left: 50px;
+
+    }
+
+    .am-form-group.am-cf .am-u-sm-9 {
+
+        float: right;
+
+    }
+
+</style>
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活 <small> > 跳蚤市场</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">跳蚤市场 <small>详情</small></div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-9">
+
+					
+
+                        <!-- 跳蚤市场 -->
+
+                        <form class="am-form tpl-form-line-form" data-am-validator action="<?php echo site_url('/module/LocalLife/edit_market');?>" method='post' enctype='multipart/form-data' >
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">描述 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                              <textarea class="am-validate" onblur="validate(this,2,500,28)" minlength="2" maxlength="500" placeholder="请输入简介，2-500个字符" name="content" id="myue" rows="5" required><?php echo $info['content'];?></textarea>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips22" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips22" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <?php if($_SESSION['city'] == '0'):?>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">所属城市 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+                                            <select name="city" id="">
+                                                <option value="">请选择一项</option>
+                                                <option value="1" <?php if($info['city'] == "1"){echo "selected";}?>>重庆</option>
+                                                <option value="2" <?php if($info['city'] == "2"){echo "selected";}?>>南江</option>
+                                                <option value="3" <?php if($info['city'] == "3"){echo "selected";}?>>宣汉</option>
+                                                <option value="4" <?php if($info['city'] == "4"){echo "selected";}?>>邻水</option>
+                                            </select>
+
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <?php endif;?>
+
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">售价 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text"  name='price' value="<?php echo $info['price'];?>" placeholder="请输入售价，2-10个字符" onblur="validate(this,2,10,23)" minlength="2" maxlength="10" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips23" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips23" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                   
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">商品类别<span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <select name='goodsType' required onblur="validate(this,1,15,25)">
+
+                                                <option value="">-=请选择一项=-</option>
+
+                                                <?php foreach($type as $v):?>
+
+                                                <option value="<?php echo $v['tagid'];?>" <?php if($info['goodsType'] == $v['tagid']){echo "selected";}?>><?php echo $v['tag'];?></option>
+
+                                                <?php endforeach;?>
+
+                                            </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips25" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips25" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">联系电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="tel" name="phone" value="<?php echo $info['phone'];?>" minlength="11" maxlength="12" onblur="validate(this,11,12,27)" class="js-pattern-mobile" placeholder="输入合法的手机号" required>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips27" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips27" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+
+                                    <?php $banner = json_decode($info['pic'],true);?>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">详情banner图 <span class="red">*</span></label>
+
+                                
+
+                                        <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img1" onchange="previewImage(this)" class="upload-add am-form-field" multiple="multiple" >
+
+                                              <!-- 图片实时预览 -->
+                                            <?php if(isset($banner[0]['picImg'])):?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                              <input type="hidden" name="img1" value="<?php echo $banner[0]['picImg'];?>">
+                                          <?php else:?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
+
+                                              <span class="clickUp">banner1</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img2" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                            <?php if(isset($banner[1]['picImg'])):?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[1]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                               <input type="hidden" name="img2" value="<?php echo $banner[0]['picImg'];?>">
+
+                                          <?php else:?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
+                                              <span class="clickUp">banner2</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span>
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small> 
+
+                                        </div>
+
+                                        <div class="am-u-sm-8 am-u-sm-push-3 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img3" onchange="previewImage(this)" class="upload-add" multiple="multiple">
+
+                                              <!-- 图片实时预览 -->
+
+                                              <?php if(isset($banner[2]['picImg'])):?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $banner[2]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                             <input type="hidden" name="img3" value="<?php echo $banner[0]['picImg'];?>">
+
+                                          <?php else:?>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
+
+                                              <span class="clickUp">banner3</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="am-form-group am-text-center am-btn-group-xs">
+                                        <input type="hidden" name="id" value="<?php echo $info['id'];?>">
+
+                                        <button type="reset" class="am-btn am-btn-default">重置</button>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+
+                                </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+
+
+<script type="text/javascript">
+
+    //表单验证函数
+
+    function validate(obj,minlen,maxlen,i){
+
+        var content=obj.value;
+
+        if(content.length<minlen || content.length>maxlen){
+
+            $('.blacktips'+ i).css('display','none');
+
+            $('.redtips'+ i).css('display','inline-block');
+
+        }else{
+
+            $('.redtips'+ i).css('display','none');
+
+            $('.blacktips'+ i).css('display','inline-block');
+
+        }
+
+    }
+
+
+    //删除图片
+
+    $(".deleteImg").click(function(){
+
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+        $(this).siblings('.wx_type_img').find('input').eq(0).val("");
+
+    });
+
+</script>
+
+</body>
+
+</html>
+
+
+

@@ -172,6 +172,16 @@ td div.am-u-sm-12 {
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">商品类别<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="mollseller" name="order_type">
+                                                <option value="0">全部类别</option>
+                                                <option value="1">超市优选</option>
+                                                <option value="2">特色馆</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="am-form-group am-cf">
                                         <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
                                         <div class="am-u-sm-9 am-u-end">
@@ -355,8 +365,9 @@ td div.am-u-sm-12 {
                 success: function(data){
                     // console.log(data);
                     if(data==1){ 
-                        getList('<?php echo site_url('store/store/Order_page');?>','default=4');
                         alert("操作成功！");
+                        getList('<?php echo site_url('store/store/Order_page');?>','default=4');
+
                     }else{
                         alert("操作失败！");
                     }
@@ -370,6 +381,8 @@ td div.am-u-sm-12 {
 
         $('.confirmGot').click(function(){
             var dataId = $(this).attr('data-id');
+            console.log(dataId);
+
             $.ajax({
                 type:'post',
                 url:'<?php echo site_url('/store/Store/refund_price');?>',
@@ -401,7 +414,18 @@ td div.am-u-sm-12 {
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         res[i].goods_data = JSON.parse(res[i].goods_data);
-                        res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+                        res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
+                       // res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+
+                        if(res[i].PriceCalculation.nowIntergal){
+                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee) - res[i].PriceCalculation.nowIntergal.intergral;
+
+                        }else{
+                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+
+                        }
+
+
                         for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
                             res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
                             if(res[i].goods_data.goods_Data[j].good_tags) {
@@ -410,7 +434,7 @@ td div.am-u-sm-12 {
                         }
                         listData+= template('dataModal',res[i]);
                     } 
-                    console.log(res);
+                   // console.log(res);
                     document.getElementById('dataList').innerHTML = listData;
                     $('.allData').html(res.length);
                     if(total_page <= 1) {
@@ -575,7 +599,7 @@ $(document).ready(function(){
         <%}else if(order_status==10 && admin_orderState == 1){%>
             <td class="am-text-middle">
                 <p>商家已确认，等待退款</p>
-                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
             </td>
         <%}else if(order_status==10 && admin_orderState == 0){%>
             <td class="am-text-middle">

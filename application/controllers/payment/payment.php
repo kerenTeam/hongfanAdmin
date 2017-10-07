@@ -42,6 +42,13 @@ class Payment extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             $data['createUserid'] = $_SESSION['users']['user_id'];
+
+            // $rule = round($data['originalPrice'] - $data['advicePrice'],2);
+          
+            // $pay = array("Condition"=>$data['originalPrice'],'rule'=>'-'.$rule);
+            // $data['discountsRule'] = json_encode($pay);
+
+
             if($this->Payment_model->add_recharge($data)){
                  //日志    
                  $log = array(
@@ -81,6 +88,11 @@ class Payment extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             $data['createUserid'] = $_SESSION['users']['user_id'];
+           // $rule = round($data['originalPrice'] - $data['advicePrice'],2);
+          
+            // $pay = array("Condition"=>$data['originalPrice'],'rule'=>'-'.$rule);
+            // $data['discountsRule'] = json_encode($pay);
+          
             if($this->Payment_model->edit_recharge($data['id'],$data)){
                  //日志    
                  $log = array(

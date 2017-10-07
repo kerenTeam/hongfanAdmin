@@ -167,6 +167,19 @@ td div div p {
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">订单状态：<span class="red">*</span>：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
+                                                <option value="">请选择/搜索</option>
+                                                <option value="-2">全部订单</option>
+                                                <option value="-1">爱购订单</option>
+                                                <?php foreach($store as $val): ?>
+                                                <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="am-form-group am-cf">
                                         <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
                                         <div class="am-u-sm-9 am-u-end">
@@ -402,8 +415,14 @@ td div div p {
                     var total_page = Math.ceil(res.length/15); //得到总页数
                     for(var i = 0; i < res.length; i++){
                         res[i].goods_data = JSON.parse(res[i].goods_data);
-                        res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
-                        res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
+                         res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
+                         if(res[i].PriceCalculation.nowIntergal){
+                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee) - res[i].PriceCalculation.nowIntergal.intergral;
+
+                        }else{
+                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+
+                        }
                         
 
                         var nowIntergal = eval(res[i].PriceCalculation.nowIntergal);

@@ -17,6 +17,7 @@ class Login extends CI_Controller {
     function __construct()
 
     {
+        
 
         parent::__construct();
 
@@ -86,7 +87,7 @@ class Login extends CI_Controller {
                    $arr = array('phone'=>USERPHONE,"password"=>USERPASSWORD);
                    $token = curl_post_token($url,$arr);
                    $_SESSION['token'] = trim($token);
-
+           
                  
                    switch ($user['gid']){
 

@@ -498,463 +498,6 @@ function search_store_goods($storeid,$cate,$startPrice,$endPrice,$startRepertory
 
 }
 
-//帮帮团成员搜索
-
-function search_help_user($name,$area,$address,$occupation,$sear){
-
-      $CI = &get_instance();
-
-      $res= '';
-
-      if(!empty($name) && empty($area) && empty($address) && empty($occupation) && empty($sear)){
-
-            $query = $CI->db->where('name',$name)->where('profession_type','1')->get('hf_service_help_user');
-
-            $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && !empty($area) && empty($address) && empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('area',$area)->where('profession_type','1')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('address',$address)->where('profession_type','1')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('occupation',$occupation)->where('profession_type','1')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && !empty($area) && empty($address) && empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-
-         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('name',$name)->like('name',$sear,'both')->like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(empty($name) && !empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(empty($name) && !empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && !empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-
-        $query = $CI->db->where('profession_type','1')->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && !empty($area) && !empty($address) && empty($occupation) && empty($sear)){
-
-         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && !empty($area) && empty($address) && !empty($occupation) && empty($sear)){
-
-         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && !empty($area) && empty($address) && empty($occupation) && !empty($sear)){
-
-         $query = $CI->db->where('profession_type','1')->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(empty($name) && !empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(empty($name) && empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('name',$name)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && !empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-
-          $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && !empty($area) && !empty($address) && !empty($occupation) && empty($sear)){
-
-            $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->get('hf_service_help_user');
-
-            $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && !empty($area) && !empty($address) && empty($occupation) && !empty($sear)){
-
-        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-         $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && !empty($area) && empty($address) && !empty($occupation) && !empty($sear)){
-
-
-
-        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('occupation',$occupation)->or_like('name',$sear,'both')->or_like('occupation',$sear,'both')->like('competency',$sear,'both')->get('hf_service_help_user');
-
-         $res = $query->result_array();
-
-      }else
-
-       if(!empty($name) && empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-
-        $query = $CI->db->where('profession_type','1')->where('name',$name)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-         $res = $query->result_array();
-
-      }else
-
-      if(empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-
-        $query = $CI->db->where('profession_type','1')->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-         $res = $query->result_array();
-
-      }else
-
-      if(!empty($name) && !empty($area) && !empty($address) && !empty($occupation) && !empty($sear)){
-
-         $query = $CI->db->where('profession_type','1')->where('name',$name)->where('area',$area)->where('address',$address)->where('occupation',$occupation)->like('name',$sear,'both')->or_like('occupation',$sear,'both')->or_like('competency',$sear,'both')->get('hf_service_help_user');
-
-          $res = $query->result_array();
-
-      }
-
-      return $res;
-
-}
-
-
-
-//帮帮团请求搜索
-
-function search_help_request($userid,$helperid,$state,$sear){
-
-    $CI = &get_instance();
-
-    $res = '';
-
-    if(!empty($userid) && empty($helperid) && $state == '' && empty($sear)){
-
-        $query = $CI->db->where('user_id',$userid)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && !empty($helperid) && $state == '' && empty($sear)){
-
-        $query = $CI->db->where('helper_id',$helperid)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && empty($helperid) && $state != '' && empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where('state',$state)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && empty($helperid) && $state == '' && !empty($sear)){
-
-        $query = $CI->db->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    //二组
-
-    if(!empty($userid) && !empty($helperid) && $state == '' && empty($sear)){
-
-        $query = $CI->db->where('user_id',$userid)->where('helper_id',$helperid)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(!empty($userid) && empty($helperid) && $state != '' && empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where('user_id',$userid)->where('state',$state)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(!empty($userid) && empty($helperid) && $state == '' && !empty($sear)){
-
-         $query = $CI->db->where('user_id',$userid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-         $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && !empty($helperid) && $state != '' && empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where('helper_id',$helperid)->where('state',$state)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && !empty($helperid) && $state == '' && !empty($sear)){
-
-         $query = $CI->db->where('helper_id',$helperid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-         $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && empty($helperid) && $state != '' && !empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-         $res = $query->result_array();
-
-    }else
-
-    //三组
-
-    if(!empty($userid) && !empty($helperid) && $state != '' && empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where("user_id",$userid)->where('helper_id',$helperid)->where('state',$state)->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(!empty($userid) && !empty($helperid) && $state == '' && !empty($sear)){
-
-        $query = $CI->db->where("user_id",$userid)->where('helper_id',$helperid)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(!empty($userid) && empty($helperid) && $state != '' && !empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where("user_id",$userid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && !empty($helperid) && $state != '' && !empty($sear)){
-
-        if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where("helper_id",$helperid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(!empty($userid) && !empty($helperid) && $state != '' && !empty($sear)){
-
-          if($state == ''){
-
-            $state = '0';
-
-        }
-
-        $query = $CI->db->where('user_id',$userid)->where("helper_id",$helperid)->where('state',$state)->like('title',$sear,'both')->like('content',$sear,'both')->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }else
-
-    if(empty($userid) && empty($helperid) && $state == '' && empty($sear)){
-
-        $query = $CI->db->get('hf_service_request');
-
-        $res = $query->result_array();
-
-    }
-
-    return $res;
-
-}
-
-
 
 
 
@@ -976,7 +519,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -992,7 +535,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1008,7 +551,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1030,7 +573,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where("goods_state",$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where("goods_state",$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1046,7 +589,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->like("title",$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->like("title",$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1062,7 +605,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1078,7 +621,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('categoryid',$cate)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1100,7 +643,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1116,7 +659,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1134,7 +677,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1158,7 +701,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1176,7 +719,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1200,7 +743,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1218,7 +761,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1242,7 +785,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('goods_state',$state)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('goods_state',$state)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1260,7 +803,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1282,7 +825,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1298,7 +841,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1320,7 +863,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1338,7 +881,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                  $query = $CI->db->where('differentiate',$diff)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                  $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1360,7 +903,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1382,7 +925,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1398,7 +941,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1420,7 +963,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1442,7 +985,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                 $res = $query->result_array();
 
@@ -1464,7 +1007,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                  $res = $query->result_array();
 
@@ -1486,7 +1029,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                   $res = $query->result_array();
 
@@ -1502,7 +1045,7 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
 
                 $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
 
-                 $query = $CI->db->where('differentiate',$diff)->order_by('create_time','desc')->order_by('create_time','desc')->get();
+                 $query = $CI->db->order_by('create_time','desc')->order_by('create_time','desc')->get();
 
                   $res = $query->result_array();
 
@@ -1532,7 +1075,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1548,7 +1091,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1564,7 +1107,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('seller',$seller)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('seller',$seller)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1596,7 +1139,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1616,7 +1159,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1632,7 +1175,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1648,7 +1191,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1666,7 +1209,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('seller',$seller)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1682,7 +1225,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1698,7 +1241,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1718,7 +1261,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1734,7 +1277,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1750,7 +1293,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1766,7 +1309,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1784,7 +1327,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1800,7 +1343,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_type',$type)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 
@@ -1811,12 +1354,9 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 }
 
 
-
-
-
 //管理员搜索商家
 
-function search_store_list($yetai,$state,$floor,$berth,$sear){
+function search_store_list($yetai,$state,$floor,$berth,$sear,$type){
 
     $CI = &get_instance();
 
@@ -1826,7 +1366,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(!empty($yetai) && $state == '' && empty($floor) && empty($berth) && empty($sear)){
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->order_by('create_time','desc')->get('hf_shop_store');
 
         $res = $query->result_array();
 
@@ -1840,7 +1380,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-         $query = $CI->db->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
+         $query = $CI->db->where('store_distinction',$type)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
 
         $res = $query->result_array();
 
@@ -1848,7 +1388,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(empty($yetai) && $state == '' && !empty($floor) && empty($berth) && empty($sear)){
 
-         $query = $CI->db->where('floor_name',$floor)->order_by('create_time','desc')->get('hf_shop_store');
+         $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1856,7 +1396,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(empty($yetai) && $state == '' && empty($floor) && !empty($berth) && empty($sear)){
 
-        $query = $CI->db->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1864,7 +1404,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(empty($yetai) && $state == '' && empty($floor) && empty($berth) && !empty($sear)){
 
-        $query = $CI->db->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->like('store_name',$sear,'both')->where('store_distinction',$type)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1880,7 +1420,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1888,7 +1428,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(!empty($yetai) && $state == '' && !empty($floor) && empty($berth) && empty($sear)){
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('floor_name',$floor)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('city',$floor)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1896,7 +1436,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(!empty($yetai) && $state == '' && empty($floor) && !empty($berth) && empty($sear)){
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1904,7 +1444,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(!empty($yetai) && $state == '' && empty($floor) && empty($berth) && !empty($sear)){
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1918,7 +1458,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('floor_name',$floor)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1932,7 +1472,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('door_no',$berth)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door_no',$berth)->where('state',$state)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1946,7 +1486,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('state',$state)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('state',$state)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1956,7 +1496,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
 
 
-        $query = $CI->db->where('floor_name',$floor)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1964,7 +1504,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(empty($yetai) && $state == '' && empty($floor) && !empty($berth) && !empty($sear)){
 
-        $query = $CI->db->where('door_no',$berth)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door_no',$berth)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1980,7 +1520,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('state',$state)->where('floor_name',$floor)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('state',$state)->where('city',$floor)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -1994,7 +1534,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('state',$state)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('state',$state)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2008,7 +1548,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('state',$state)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('state',$state)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2022,7 +1562,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('floor_name',$floor)->where('state',$state)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->where('state',$state)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2036,7 +1576,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('floor_name',$floor)->where('state',$state)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->where('state',$state)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2050,7 +1590,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('door_no',$berth)->where('state',$state)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door_no',$berth)->where('state',$state)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2060,7 +1600,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
        
 
-        $query = $CI->db->where('floor_name',$floor)->where('door_no',$berth)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('city',$floor)->where('door_no',$berth)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2070,7 +1610,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         
 
-        $query = $CI->db->where('commercial_type_name',$yetai)->where('door_no',$berth)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yetai)->where('door_no',$berth)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2080,7 +1620,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
          
 
-        $query = $CI->db->where('commercial_type_name',$yeai)->where('floor_name',$floor)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yeai)->where('city',$floor)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2096,7 +1636,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yeai)->where('state',$state)->where('floor_name',$floor)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yeai)->where('state',$state)->where('city',$floor)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2110,7 +1650,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('commercial_type_name',$yeai)->where('state',$state)->where('floor_name',$floor)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('commercial_type_name',$yeai)->where('state',$state)->where('city',$floor)->where('door_no',$berth)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2124,7 +1664,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('door',$berth)->where('state',$state)->where('floor_name',$floor)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door',$berth)->where('state',$state)->where('city',$floor)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2138,7 +1678,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-         $query = $CI->db->where('door',$berth)->where('commercial_type_name',$yetai)->where('floor_name',$floor)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+         $query = $CI->db->where('store_distinction',$type)->where('door',$berth)->where('commercial_type_name',$yetai)->where('city',$floor)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2152,7 +1692,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('door',$berth)->where('commercial_type_name',$yetai)->where('state',$state)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door',$berth)->where('commercial_type_name',$yetai)->where('state',$state)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2166,7 +1706,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
         }
 
-        $query = $CI->db->where('door',$berth)->where('commercial_type_name',$yetai)->where('state',$state)->where('floor_name',$floor)->like('store_name',$sear,'both')->or_like('barnd_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->where('door',$berth)->where('commercial_type_name',$yetai)->where('state',$state)->where('city',$floor)->like('store_name',$sear,'both')->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2174,7 +1714,7 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
 
     if(empty($yetai) && $state == '' && empty($floor) && empty($berth) && empty($sear)){
 
-        $query = $CI->db->order_by('create_time','desc')->get('hf_shop_store');
+        $query = $CI->db->where('store_distinction',$type)->order_by('create_time','desc')->get('hf_shop_store');
 
          $res = $query->result_array();
 
@@ -2183,9 +1723,6 @@ function search_store_list($yetai,$state,$floor,$berth,$sear){
     return $res;
 
 }
-
-
-
 
 
 //财务导出订单
@@ -2265,422 +1802,13 @@ function moll_order_list($storeid,$time,$endtime){
 
 
 }
-
-
-
-//发现帖子搜所
-
-function findContent_search($cateid,$sear,$special,$time,$endtime,$likenum){
-
-        $CI = &get_instance();
-
-        $res= '';
-
-        //判断条件
-
-        if(!empty($cateid) && empty($sear) && empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(empty($cateid) && !empty($sear) && empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->like('content',$sear,'both')->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(empty($cateid) && empty($sear) && !empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->like('q_id',$special,'both')->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(empty($cateid) && empty($sear) && empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(empty($cateid) && empty($sear) && empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          //er
-
-        }elseif(!empty($cateid) && !empty($sear) && empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(!empty($cateid) && empty($sear) && !empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(!empty($cateid) && empty($sear) && empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(!empty($cateid) && empty($sear) && empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && !empty($special) && empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->like('content',$sear,'both')->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && empty($sear) && empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        //san
-
-        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('q_id',$special)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(!empty($cateid) && !empty($sear) && empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(!empty($cateid) && !empty($sear) && empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-
-
-         //si 
-
-        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(!empty($cateid) && empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }elseif(!empty($cateid) && !empty($sear) && empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-            
-
-          //wu
-
-        }elseif(!empty($cateid) && !empty($sear) && !empty($special) && !empty($time) && !empty($likenum)){
-
-            $CI->db->select('a.*,b.username,b.nickname');
-
-            $CI->db->from('hf_friend_news as a');
-
-            $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-            $query = $CI->db->where('categoryid',$cateid)->where('q_id',$special)->like('content',$sear,'both')->where('likeNumber >=',$likenum)->where('create_news_time >=',$time)->where('create_news_time <=',$endtime)->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-          
-
-        }elseif(empty($cateid) && empty($sear) && empty($special) && empty($time) && empty($likenum)){
-
-             $CI->db->select('a.*,b.username,b.nickname');
-
-        $CI->db->from('hf_friend_news as a');
-
-        $CI->db->join('hf_user_member as b','a.userid = b.user_id','left');
-
-        $query = $CI->db->order_by('type_name','desc')->order_by('a.create_news_time','desc')->get();
-
-            $res = $query->result_array();
-
-        }
-
-        return $res;
-
-}
-
-function store_order_list($storeid,$time,$endtime){
+function store_order_list($storeid,$time,$endtime,$type){
 
       $CI = &get_instance();
 
       $res= '';
 
-      if(empty($time)){
+      if(empty($time) && empty($type)){
 
             if($storeid == '0'){
 
@@ -2699,7 +1827,7 @@ function store_order_list($storeid,$time,$endtime){
 
             }
 
-      }else{
+      }else if(!empty($time) && empty($type)){
 
             if($storeid == '0'){
 
@@ -2721,6 +1849,44 @@ function store_order_list($storeid,$time,$endtime){
 
 
 
+      }else if(empty($time) && !empty($type)){
+
+            if($storeid == '0'){
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `order_type` != '0' AND `a`.`order_type` = '$type' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);
+
+                $res = $query->result_array();
+
+            }else{
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `seller` = '$storeid' AND `a`.`order_type` = '$type' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);                
+
+                $res = $query->result_array();
+
+            }
+      }else if(!empty($time) && !empty($type)){
+
+            if($storeid == '0'){
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `order_type` != '0' AND `a`.`order_type` = '$type' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);
+
+                $res = $query->result_array();
+
+            }else{
+
+                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` != '1' AND `seller` = '$storeid' AND `a`.`order_type` = '$type' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+
+                $query = $CI->db->query($sql);                
+
+                $res = $query->result_array();
+                
+            }
       }
 
 
@@ -2731,5 +1897,604 @@ function store_order_list($storeid,$time,$endtime){
 
 }
 
+
+
+
+//交友会员搜索
+function friends_member_search($age,$gender,$startTime,$endTime,$sear){
+    $CI = &get_instance();
+    $res= '';
+
+    //1
+    if(!empty($age) && empty($startTime) && empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->get('hf_user_member');
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->get('hf_user_member');
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && !empty($startTime) && empty($sear)){
+        if($gender == ''){
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' AND `create_time` between '$startTime' and '$endTime'";
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+        }else{
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender = '$gender' AND `create_time` between '$startTime' and '$endTime'";
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+
+        }
+
+    }else if(empty($age) && empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+        }else{
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->get('hf_user_member');
+            $res = $query->result_array();
+        }
+    //2
+    }else if(!empty($age) && !empty($startTime) && empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);                
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);  
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);  
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                 $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'";
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '46' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(!empty($age) && empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->get('hf_user_member');
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && !empty($startTime) && !empty($sear)){
+        if($gender == ''){
+             $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime'";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+          
+        }else{
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime'";
+
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+        
+        }
+    //3
+    }else if(!empty($age) && !empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime'";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && empty($startTime) && empty($sear)){
+        if($gender == ''){
+            $query = $CI->db->where('gid','5')->get('hf_user_member');
+                $res = $query->result_array();
+        }else{
+            $query = $CI->db->where('gid','5')->where('gender',$gender)->get('hf_user_member');
+            $res = $query->result_array();
+        }
+    }
+    return $res;
+
+}
+function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size,$page){
+    $CI = &get_instance();
+    $res= '';
+
+    //1
+    if(!empty($age) && empty($startTime) && empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && !empty($startTime) && empty($sear)){
+        if($gender == ''){
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+        }else{
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender = '$gender' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+
+        }
+
+    }else if(empty($age) && empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+        }else{
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+            $res = $query->result_array();
+        }
+    //2
+    }else if(!empty($age) && !empty($startTime) && empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);                
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);  
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);  
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                 $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '46' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(!empty($age) && empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '2'){
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '3'){
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && !empty($startTime) && !empty($sear)){
+        if($gender == ''){
+             $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+                $query = $CI->db->query($sql);
+                $res = $query->result_array();
+          
+        }else{
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+            $query = $CI->db->query($sql);
+            $res = $query->result_array();
+        
+        }
+    //3
+    }else if(!empty($age) && !empty($startTime) && !empty($sear)){
+        if($gender == ''){
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+        }else{
+            if($age == '1'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '2'){
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '3'){
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }else if($age == '4'){
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+
+               $query = $CI->db->query($sql);
+                $res = $query->result_array();
+            }
+
+        }
+
+    }else if(empty($age) && empty($startTime) && empty($sear)){
+        if($gender == ''){
+            $query = $CI->db->where('gid','5')->limit($size,$page)->get('hf_user_member');
+                $res = $query->result_array();
+        }else{
+            $query = $CI->db->where('gid','5')->where('gender',$gender)->limit($size,$page)->get('hf_user_member');
+            $res = $query->result_array();
+        }
+    }
+    return $res;
+
+}
+// function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size,$page){
+//     $CI = &get_instance();
+//     $res= '';
+
+//     //1
+//     if(!empty($age) && empty($startTime) && empty($sear)){
+//         if($gender == ''){
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+//         }else{
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+
+//         }
+
+//     }else if(empty($age) && !empty($startTime) && empty($sear)){
+//         if($gender == ''){
+//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//         }else{
+//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//             $res = $query->result_array();
+//         }
+//     }else if(empty($age) && empty($startTime) && !empty($sear)){
+//         if($gender == ''){
+//             $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//         }else{
+//             $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+//             $res = $query->result_array();
+//         }
+//     //2
+//     }else if(!empty($age) && !empty($startTime) && empty($sear)){
+//         if($gender == ''){
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+//         }else{
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+
+//         }
+
+//     }else if(!empty($age) && empty($startTime) && !empty($sear)){
+//         if($gender == ''){
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+//         }else{
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+
+//         }
+
+//     }else if(empty($age) && !empty($startTime) && !empty($sear)){
+//         if($gender == ''){
+//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//         }else{
+//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//             $res = $query->result_array();
+//         }
+//     //3
+//     }else if(!empty($age) && !empty($startTime) && !empty($sear)){
+//         if($gender == ''){
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+//         }else{
+//             if($age == '1'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '2'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '3'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }else if($age == '4'){
+//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//             }
+
+//         }
+
+//     }else if(empty($age) && empty($startTime) && empty($sear)){
+//         if($gender == ''){
+//             $query = $CI->db->where('gid','5')->limit($size,$page)->get('hf_user_member');
+//                 $res = $query->result_array();
+//         }else{
+//             $query = $CI->db->where('gid','5')->where('gender',$gender)->limit($size,$page)->get('hf_user_member');
+//             $res = $query->result_array();
+//         }
+//     }
+//     return $res;
+
+// }
 
  ?>

@@ -1,5 +1,4 @@
 <?php 
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -129,10 +128,6 @@ class Api_goods extends CI_Controller
 
             // var_dump($data);
 
-    
-
-
-
 		}else{
 
 			echo "2";
@@ -217,9 +212,25 @@ class Api_goods extends CI_Controller
 
                 $ret = curl_post($sdqc,$data);
 
-            }else{
+            }else if($type == 'hfjp'){
 
-                
+                $sdqc = APPLOGIN."/api/index/couponpaybillpost";
+
+
+                $data = array('UUID'=>$order_uuid,'rebackData'=>$pay_data);
+
+                $ret = curl_post($sdqc,$data);
+
+            }else if($type == 'hfhd'){
+
+                $sdqc = APPLOGIN."/api/index/hibeansbillpost";
+
+                $data = array('UUID'=>$order_uuid,'rebackData'=>$pay_data);
+                //file_put_contents('text.log',json_encode($data));
+                $ret = curl_post($sdqc,$data);
+
+            }else {
+
 
                 if($a['result_code'] == "SUCCESS"){
 
@@ -243,14 +254,22 @@ class Api_goods extends CI_Controller
 
             }
 
+    }
 
 
-       
+    //huoqu token
+    function web_token(){
 
-         
+        header('Access-Control-Allow-Origin:*');
 
-            
-
+        if($_POST){
+           $url = APPLOGIN."/api/useraccount/login";
+           $arr = array('phone'=>USERPHONE,"password"=>USERPASSWORD);
+           $token = curl_post_token($url,$arr);
+           echo trim($token);
+        }else{
+            echo "2";
+        }
     }
 
 

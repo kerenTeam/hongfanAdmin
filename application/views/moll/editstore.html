@@ -108,7 +108,7 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="text" placeholder="请输入登录手机号"  name="username" value="<?php echo $user['username']?>"  required onblur="validate(this,1,11,2)" />
+                            <input type="number" placeholder="请输入登录手机号"  name="username" value="<?php echo $user['phone']?>"  required onblur="validate(this,11,11,7)" />
 
                         </div>
 
@@ -138,11 +138,11 @@
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="password" class="am-u-sm-3 am-form-label">登录密码<span class="red">*</span>：</label>
+                        <label for="password" class="am-u-sm-3 am-form-label">登录密码：</label>
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="password" placeholder="6-16位密码"  name="password"  onblur="validate(this,6,16,4)" />
+                            <input type="password" placeholder="******"  name="password"  onblur="validate(this,6,16,4)" />
 
                         </div>
 
@@ -412,11 +412,11 @@
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号<span class="red">*</span>： </label>
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号： </label>
 
                         <div class="am-u-sm-8 am-u-end">
 
-                           <input type="text" name="qq" required class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['qq']?>" onblur="validate(this,3,20,8)">
+                           <input type="text" name="qq" class="am-form-field tpl-form-no-bg" placeholder="" value="<?php echo $busin['qq']?>" onblur="validate(this,3,20,8)">
 
                         </div>
 
@@ -463,6 +463,18 @@
                         <div class="am-u-sm-8 am-u-end">
 
                             <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"  value="<?php echo $busin['floor_name']?>" />
+                              <select name="floor_name">
+                                <option value="UG" <?php if($busin['floor_name'] == "UG"){echo "selected";}?>>UG</option>
+                                <option value="LG" <?php if($busin['floor_name'] == "LG"){echo "selected";}?>>LG</option>
+                                <option value="L1" <?php if($busin['floor_name'] == "L1"){echo "selected";}?>>L1</option>
+                                <option value="L2" <?php if($busin['floor_name'] == "L2"){echo "selected";}?>>L2</option>
+                                <option value="L3" <?php if($busin['floor_name'] == "L3"){echo "selected";}?>>L3</option>
+                                <option value="L4" <?php if($busin['floor_name'] == "L4"){echo "selected";}?>>L4</option>
+                                <option value="L5" <?php if($busin['floor_name'] == "L5"){echo "selected";}?>>L5</option>
+                                <option value="L6" <?php if($busin['floor_name'] == "L6"){echo "selected";}?>>L6</option>
+                                <option value="L7" <?php if($busin['floor_name'] == "L7"){echo "selected";}?>>L7</option>
+                                <option value="L8" <?php if($busin['floor_name'] == "L8"){echo "selected";}?>>L8</option>
+                            </select>
 
                         </div>
 

@@ -48,7 +48,6 @@ class Shop_model extends CI_Model
 
         $where['store_distinction'] = $type;
         $query = $this->db->where($where)->order_by('store_id','desc')->get($this->shop_store);
-
         return $query->result_array();
 
     }
@@ -214,9 +213,9 @@ class Shop_model extends CI_Model
 
     function get_user_info($name){
 
-        $where['username'] = $name;
+        $where['phone'] = $name;
 
-        $query = $this->db->where('gid','2')->where($where)->get($this->member);
+        $query = $this->db->where($where)->get($this->member);
 
         return $query->row_array();
 
@@ -246,7 +245,7 @@ class Shop_model extends CI_Model
 
     function get_member_info($userid,$username){
 
-        $sql = "SELECT * From $this->member where gid='2' and user_id != '$userid' and username = '$username'";
+        $sql = "SELECT * From $this->member where gid='2' and user_id != '$userid' and phone = '$username'";
 
         $query = $this->db->query($sql);
 

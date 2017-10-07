@@ -96,6 +96,9 @@ class SystemSet extends Default_Controller {
 
     public $view_express = "systemSet/expressTemplate.html";
 
+    //邀请码
+    public $view_invitation = "systemSet/invitation_code.html";
+
     function __construct()
 
     {
@@ -146,15 +149,14 @@ class SystemSet extends Default_Controller {
 
         //返回首页标题图
 
-        $homeTitle = $this->System_model->get_start_advertising('13');
+        // $homeTitle = $this->System_model->get_start_advertising('13');
 
-        $data['homeTitle'] = json_decode($homeTitle['banner'],true);
+        // $data['homeTitle'] = json_decode($homeTitle['banner'],true);
 
         
 
         $data['id'] = $adver['id'];
 
-        $data['bannerid'] = $homeTitle['id'];
 
         $data['page'] = $this->view_guideImage;
 
@@ -336,31 +338,13 @@ class SystemSet extends Default_Controller {
     }
 
 
-
-    //系统设置  HI集头条管理
-
-    function hiHeadline()
-
-    {
-
-         $data['page'] = $this->view_hiHeadline;
-
-         $data['menu'] = array('systemSet','hiHeadline');
-
-         $this->load->view('template.html',$data);
-
-    }
-
-    
-
     //系统设置 角色管理
 
     function roleManage()
 
     {   
 
-     
-
+    
         //所有角色
 
         $data['group'] = $this->System_model->get_member_group();
@@ -411,50 +395,50 @@ class SystemSet extends Default_Controller {
 
             $data = $this->input->post();
 
-            $bucketList =  $this->config->item('buckrtGlobal');
-            switch($_SESSION['city']){
-                case '0':
-                case '1':
-                    $city = '1';
-                    $bucket =$bucketList['cq']['other'];
-                    break;
-                case '2':
-                $city = '2';
-                    $bucket =$bucketList['nj']['other'];
-                    break;
-                case '3':
-                $city = '3';
-                    $bucket =$bucketList['xh']['other'];
-                    break;
-                case '4':
-                $city = '4';
-                    $bucket =$bucketList['ls']['other'];
-                    break;
+            // $bucketList =  $this->config->item('buckrtGlobal');
+            // switch($_SESSION['city']){
+            //     case '0':
+            //     case '1':
+            //         $city = '1';
+            //         $bucket =$bucketList['cq']['other'];
+            //         break;
+            //     case '2':
+            //     $city = '2';
+            //         $bucket =$bucketList['nj']['other'];
+            //         break;
+            //     case '3':
+            //     $city = '3';
+            //         $bucket =$bucketList['xh']['other'];
+            //         break;
+            //     case '4':
+            //     $city = '4';
+            //         $bucket =$bucketList['ls']['other'];
+            //         break;
                 
-            }
+            // }
 
-            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            // $header = array("token:".$_SESSION['token'],'city:'.$city);     
             
-            if(!empty($_FILES['picArray']['name'])){
-                $tmpfile = new CURLFile(realpath($_FILES['picArray']['tmp_name']));
+            // if(!empty($_FILES['picArray']['name'])){
+            //     $tmpfile = new CURLFile(realpath($_FILES['picArray']['tmp_name']));
             
-                $pics = array(
-                    'pics' =>$tmpfile,
-                    'porfix'=>'admin_user/avatar/'.$bucket,
-                    'bucket'=>$bucket,
-                );
+            //     $pics = array(
+            //         'pics' =>$tmpfile,
+            //         'porfix'=>'admin_user/avatar/'.$bucket,
+            //         'bucket'=>$bucket,
+            //     );
             
-                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
-                // var_dump($a);
-                if($qiuniu['errno'] == '0'){
-                    $img = json_decode($qiuniu['data']['img'],true);
-                    $pic[]['picImg'] =$img[0]['picImg'];
-                    $data['avatar'] = json_encode($pic);
-                }else{
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/')."'</script>";exit;
-                }
+            //     $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+            //     // var_dump($a);
+            //     if($qiuniu['errno'] == '0'){
+            //         $img = json_decode($qiuniu['data']['img'],true);
+            //         $pic[]['picImg'] =$img[0]['picImg'];
+            //         $data['avatar'] = json_encode($pic);
+            //     }else{
+            //         echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/')."'</script>";exit;
+            //     }
 
-            }
+            // }
 
             $data['password'] = md5($data['password']);
 
@@ -826,9 +810,6 @@ class SystemSet extends Default_Controller {
 
         $arr = $query->result_array();
 
-        // var_dumP($arr);
-
-        // exit;
 
         //返回整理好的数组
 
@@ -1455,7 +1436,7 @@ class SystemSet extends Default_Controller {
                     $img = json_decode($qiuniu['data']['img'],true);
                     $data['bannerPic'] =$img[0]['picImg'];
                 }else{
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/systemSet/SystemSet/addBanner/'.$id)."'</script>";exit;
+                     echo "<script>alert('操作失败!');window.location.href='".site_url('/systemSet/SystemSet/editBanner/'.$id.'/'.$num)."'</script>";exit;
                 }
 
             }
@@ -1693,62 +1674,6 @@ class SystemSet extends Default_Controller {
     }
 
 
-
-    //返回APP温馨提示
-
-    function get_prompt(){
-
-        if($_POST){
-
-            $list = $this->System_model->get_prompt();
-
-            if($list){
-
-                echo json_encode($list);
-
-            }else{
-
-                echo "2";
-
-            }
-
-        }else{
-
-            echo "2";
-
-        }
-
-    }
-
-
-
-    //修改温馨提示
-
-    function edit_prompt(){
-
-        if($_POST){
-
-            $id = $this->input->post('id');
-
-            $data['content'] = $this->input->post('content');
-
-            if($this->System_model->edit_prompt($id,$data)){
-
-                echo "1";
-
-            }else{
-
-                echo "2";
-
-            }
-
-        }else{
-
-            echo "2";
-
-        }
-
-    }
 
 
 
@@ -2015,7 +1940,182 @@ class SystemSet extends Default_Controller {
 
 
 
+    //邀请码
+    function invitation_code(){
 
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/systemSet/SystemSet/invitation_code');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->System_model->select_invitation();
+
+        $config['total_rows'] = count($list);
+
+        // //分页数据
+        $listpage = $this->System_model->select_invitation_page($config['per_page'],$current_page);
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+
+        $data['page'] = $this->view_invitation;
+        $data['menu'] = array('systemSet','invitation_code');
+        $this->load->view('template.html',$data);
+    }
+
+    //新增邀请码
+    function add_invitation_code(){
+        if($_POST){ 
+            $data = $this->input->post();
+            if($this->System_model->insert('hf_system_invitation',$data)){
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."新增了一个邀请码,归属姓名是".$data['name'],
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+    //编辑邀请码
+     function edit_invitation_code(){
+        if($_POST){ 
+            $data = $this->input->post();
+            if($this->System_model->updata('hf_system_invitation','id',$data['id'],$data)){
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了一个邀请码,归属姓名是".$data['name'].',记录id是：'.$data['id'],
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //状态
+    function edit_invitation_state(){
+        $id = intval($this->uri->segment('4'));
+        $state = intval($this->uri->segment('5'));
+
+        if($id == "0" || $state == "0"){
+            $this->load->view('404.html');
+        }else{
+            if($state == '1'){
+                $data['state'] = '1';
+            }else{
+                $data['state'] = '0';
+            }
+
+            if($this->System_model->updata('hf_system_invitation','id',$id,$data)){
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."编辑了一个邀请码,记录id是：".$id,
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+            }
+        }
+    }
+
+    //删除激励
+    function del_invitation(){
+        $id = intval($this->uri->segment(4));
+
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            if($this->System_model->delete('hf_system_invitation','id',$id)){
+                 $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+                    "content" => $_SESSION['users']['username']."删除了一个邀请码,记录id是：".$id,
+                    "create_time" => date('Y-m-d H:i:s'),
+                    "userip" => get_client_ip(),
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+
+            }
+        }
+    }
+
+    
 
 
 }

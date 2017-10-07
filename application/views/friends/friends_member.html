@@ -171,6 +171,105 @@ padding: 5px 6px!important;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
 
             <div class="widget am-cf">
+                 <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">会员查询</div>
+
+                </div>
+
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data" action="<?php echo site_url('friends/Friends/search_friends');?>" method="get" data-am-validator>
+
+                    
+                    
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+
+                        <label for="gender" class="am-u-sm-2 am-form-label">年龄阶段</label>
+
+                        <div class="am-u-sm-10">
+
+                            <select id="source_state" name="ages">
+
+                                <option value>请选择</option>
+                                <!-- <option value="1">18-25</option> -->
+                                <option value="1">18-25</option>
+                                <option value="2">26-35</option>
+                                <option value="3">36-45</option>
+                                <option value="4">45以上</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+
+                        <label for="gender" class="am-u-sm-2 am-form-label">性别</label>
+
+                        <div class="am-u-sm-10">
+
+                            <select id="source_state" name="gender">
+
+                                <option value>请选择</option>
+                                <!-- <option value="1">18-25</option> -->
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">加入时间：</label>
+
+                        <div class="am-u-sm-9  am-u-end">
+
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+
+                              <p>开始日期应小于结束日期！</p>
+
+                            </div>
+
+                            <div class="am-g">
+
+                              <div class="am-u-sm-6">
+
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-01</span>
+
+                              </div>
+
+                              <div class="am-u-sm-6">
+
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-12-31</span>
+
+                              </div>
+
+                              <small class="red redtips">请先选择结束日期</small>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+
+                        <label class="am-u-sm-2 am-form-label">关键字</label>
+
+                        <div class="am-u-sm-10">
+
+                            <input type="text" placeholder="姓名 昵称 手机号" id="searchKey" name="sear">
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <!-- <input type="hidden" name="gender" value="0"> -->
+                        <button type="submit" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
+
+                    </div>
+
+                </form>
 
                 <div class="widget-head am-cf">
 
@@ -187,9 +286,12 @@ padding: 5px 6px!important;
                             <div class="am-btn-toolbar">
 
                                 <div class="am-btn-group am-btn-group-xs">
-
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
-
+                                    <?php if(!empty($userNum)):?>
+                                        总会员数：<b><?php echo $userNum;?></b>
+                                    <?php endif;?> 
+                                    <?php if(!empty($newNum)):?>
+                                        今日新增会员数：<b><?php echo $newNum;?></b>
+                                    <?php endif;?>
                                 </div>
 
                             </div>
@@ -197,112 +299,6 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
-
-                 <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
-
-                        <div class="am-modal-dialog">
-
-                            <div class="am-modal-hd">新增</div>
-
-                            <div class="am-modal-bd"> 
-
-                                <!-- 本地生活 信息展示类 -->
-
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Question/add_problem')?>" method='post' enctype='multipart/form-data'>
-
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                           <select name="faqsType" required>
-                                               <option value="">请选择一项</option>
-                                               
-                                           </select>
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">提问内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <textarea type="text" rows="4" name="content" class="js-pattern-mobile" placeholder="输入提问内容"  required></textarea> 
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-
-                                    <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">悬赏HI豆 </label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <input type="number" name="price" class="js-pattern-mobile" placeholder="输入悬赏HI豆"  > 
-
-                                        </div>
-                                         <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                                 
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label for="" class="am-u-sm-3 am-form-label">动态图片 <span class="red">*</span></label>
-
-                                         <div class="am-u-sm-8 am-u-end">
-
-                                            <div class="wx_type_img">
-
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
-
-                                              <!-- 图片实时预览 -->
-
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-
-                                              <span class="clickUp">缩略图</span>
-
-                                            </div>
-
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div class="am-form-group am-btn-group-xs">
-                                    <!-- <input type="hidden" name="spaceType" value="<?php echo $spaceType;?>"> -->
-
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
 
                     <div class="am-u-sm-12 am-u-xs-12">
 
@@ -313,6 +309,8 @@ padding: 5px 6px!important;
                                 <tr>
 
                                     <th>编号</th>
+
+                                    <th>排序</th>
 
                                     <th>账号</th>
 
@@ -349,6 +347,7 @@ padding: 5px 6px!important;
                                     <?php foreach($lists as $val):?>
                                         <tr>
                                             <td><?php echo $val['user_id'];?></td>
+                                            <td><?php echo $val['resommendOnHomeIndex'];?></td>
                                             <td><?php echo $val['phone'];?></td>
                                             <td><?php echo $val['nickname'];?></td>
                                              <?php $logo = json_decode($val['avatar'],true);?>
@@ -364,7 +363,6 @@ padding: 5px 6px!important;
                                             <?php elseif($val['gender'] == '2'):?>
                                             <td>女</td>
                                             <?php endif;?>    
-                                            <td><?php echo $val['intergral'];?></td>
                                             <td><?php echo $val['intergral'];?></td>
 
                                             <td><?php echo $val['create_time'];?></td>
@@ -384,7 +382,38 @@ padding: 5px 6px!important;
                                             <td></td>
                                             <td></td>   
                                             <td>
-                                               <div class="tpl-table-black-operation">
+                                                <div class="tpl-table-black-operation">
+                                                    <?php if($val['recommend']=='1'):?>
+                                                         <a href="<?php echo site_url('/friends/Friends/edit_recommend_state/'.$val['user_id'].'/2');?>" class="tpl-table-black-operation-del" >
+                                                             取消推荐榜推荐
+                                                        </a>
+                                                       
+                                                    <?php else:?>
+                                                        <a href="<?php echo site_url('/friends/Friends/edit_recommend_state/'.$val['user_id'].'/1');?>" class="tpl-table-black-operation-sccess" >
+                                                             推荐到推荐榜
+                                                        </a>
+                                                    <?php endif;?>
+                                                    <?php if(!empty($recomd)):?>
+                                                        <?php if($val['resommendOnHome'] == "1"):?>
+                                                            <a href="<?php echo site_url('/friends/Friends/recommend_home/'.$val['user_id'].'/2');?>" class="tpl-table-black-operation-blue" >
+                                                                 取消APP首页推荐
+                                                            </a>
+                                                        <?php else:?>
+                                                             <a href="<?php echo site_url('/friends/Friends/recommend_home/'.$val['user_id'].'/1');?>" class="tpl-table-black-operation-sccess" >
+                                                                 APP首页推荐
+                                                            </a>
+                                                        <?php endif;?>
+                                                     <?php endif;?>
+                                                <!--      <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_info<?php echo $val['user_id']?>'}">
+                                                        <i class="am-icon-pencil"></i> 查看详情
+                                                     </a>
+ -->
+                                                     <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_sort<?php echo $val['user_id']?>'}">
+                                                        <i class="am-icon-pencil"></i> 修改排序
+                                                     </a>
+                                                     
+    
+    
                                                     <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['user_id']?>'}">
                                                         <i class="am-icon-pencil"></i> 编辑
                                                     </a>
@@ -393,18 +422,200 @@ padding: 5px 6px!important;
                                         </tr>
                                         <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<?php echo $val['user_id']?>">
 
-                                    <div class="am-modal-dialog">
+                                            <div class="am-modal-dialog">
 
-                                        <div class="am-modal-hd">编辑</div>
+                                                <div class="am-modal-hd">编辑</div>
+                                                      <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Friends/edit_member_info')?>" method='post' enctype='multipart/form-data'>
 
-                                        <div class="am-modal-bd">
+                                    
 
-                                        
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+                                            <input type="text" name="nickname" value="<?php echo $val['nickname'];?>" class="js-pattern-mobile" placeholder="输入昵称" >
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">电话 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="phone" value="<?php echo $val['phone'];?>" class="js-pattern-mobile" placeholder="输入昵称" >
+
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">性别 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                           <select name="gender">
+                                               <option value="1" <?php if($val['gender'] == '1'){echo "selected";}?>>男</option>
+                                               <option value="2" <?php if($val['gender'] == '2'){echo "selected";}?>>女</option>
+                                           </select>
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">年龄 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="age" value="<?php echo $val['age'];?>" class="js-pattern-mobile" placeholder="输入昵称" >
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">星座 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+
+                                            <input type="text" name="horoscope" value="<?php echo $val['horoscope'];?>" class="js-pattern-mobile" placeholder="输入昵称" >
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+                                      <div class="am-form-group am-cf">
+
+                                        <label for="" class="am-u-sm-3 am-form-label">头像 <span class="red">*</span></label>
+
+                                         <div class="am-u-sm-8 am-u-end">
+
+                                            <div class="wx_type_img">
+
+                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+
+                                              <!-- 图片实时预览 -->
+                                               <?php if(!isset($logo[0]['picImg'])):?>
+                                            
+                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
+                                          <?php else:?>
+<div id="preview"> <img style="border-radius: 3px;" src="<?php echo $logo[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
+                                          <?php endif;?>
+
+                                              <span class="clickUp">缩略图</span>
+
+                                            </div>
+
+                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
+
                                         </div>
 
                                     </div>
+                                    <div class="am-form-group am-cf">
 
-                                </div>
+                                         <div class="am-modal-hd">交友照片(仅供查看)</div>
+                                        <div class="am-u-sm-10">
+                                                <?php $num =  $this->Public_model->select_where('hf_friends_my_photo','userId',$val['user_id'],'');?>
+                                                <?php foreach($num as $v):?>
+                                                        <?php $pic = json_decode($v['picImg'],true);?>
+                                                        <?php foreach($pic as $z):?>
+                                                            <img src="<?php echo $z['picImg'];?>" style="width: 100px;height: 100px;">
+                                                        <?php endforeach;?>
+
+                                                <?php endforeach;?>
+                                          
+
+                                        </div>
+
+
+                                    </div>
+                                    
+                                    <div class="am-form-group am-btn-group-xs">
+                                        <input type="hidden" name="user_id" value="<?php echo $val['user_id'];?>">
+                                    <!-- <input type="hidden" name="spaceType" value="<?php echo $spaceType;?>"> -->
+                            <!--  -->
+                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                    </div>
+                                    
+
+                                </form>
+
+
+                                                <div class="am-modal-bd">
+
+                                                
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="am-modal am-modal-confirm" tabindex="-1" id="m_sort<?php echo $val['user_id']?>">
+
+                                            <div class="am-modal-dialog">
+
+                                                <div class="am-modal-hd">修改排序</div>
+
+                                                <div class="am-modal-bd">
+                                                    <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Friends/edit_member_sort')?>" method='post' enctype='multipart/form-data'>
+
+                                                    <div class="am-form-group am-cf">
+
+                                                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
+
+                                                        <div class="am-u-sm-8">
+
+                                                            <input type="number"  name="resommendOnHomeIndex" value="<?php echo $val['resommendOnHomeIndex'];?>" class="js-pattern-mobile" placeholder="排序"  required> 
+
+                                                        </div>
+
+                                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                                    </div>
+                                                     <div class="am-form-group am-btn-group-xs">
+                                                        <input type="hidden" name="user_id" value="<?php echo $val['user_id'];?>">
+
+                                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+                                                    </div>
+
+                                                </div>
+                                                </form>
+
+                                            </div>
+
+                                        </div>
                                     <?php endforeach;?>
                                 <?php else:?>
                                     <th colspan="9">暂无内容！</th>
@@ -445,6 +656,68 @@ padding: 5px 6px!important;
 </div>
 
 </div>
+<script type="text/javascript">
+    $(function() {
+
+    var startDate = new Date(2017, 04, 01);
+
+    var endDate = new Date(2017, 04, 30);
+
+    var $alert = $('#my-alert');
+
+    $('#my-start').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() > endDate.valueOf()) {
+
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          startDate = new Date(event.date);
+
+          $('#my-startDate').text($('#my-start').data('date'));
+
+          $('#begin_date').val($('#my-start').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+
+
+    $('#my-end').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() < startDate.valueOf()) {
+
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          endDate = new Date(event.date);
+
+          $('#my-endDate').text($('#my-end').data('date'));
+
+          $('#end_date').val($('#my-end').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+});
+
+</script>
 
 </body>
 

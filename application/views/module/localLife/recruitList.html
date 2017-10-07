@@ -231,6 +231,30 @@ padding: 5px 6px!important;
                                 <!-- 本地生活 信息展示类 -->
 
                                 <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('module/LocalLife/add_recruit')?>" method='post' enctype='multipart/form-data'>
+                                    <?php if($_SESSION['city'] == '0'):?>
+                                    <div class="am-form-group am-cf">
+
+                                        <label class="am-u-sm-3 am-form-label">所属城市 <span class="red">*</span></label>
+
+                                        <div class="am-u-sm-8">
+                                            <select name="city" id="">
+                                                <option value="">请选择一项</option>
+                                                <option value="1">重庆</option>
+                                                <option value="2">南江</option>
+                                                <option value="3">宣汉</option>
+                                                <option value="4">邻水</option>
+                                            </select>
+
+
+                                        </div>
+
+                                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                    </div>
+
+                                    <?php endif;?>
 
                                      <div class="am-form-group am-cf">
 
@@ -379,6 +403,7 @@ padding: 5px 6px!important;
                                     <th>编号</th>
 
                                     <th width="15%">标题</th>
+                                    <th width="15%">所属城市</th>
 
                                     <th>联系人</th>
 
@@ -695,6 +720,7 @@ function otherOperation() {
             title = $('.title'+ dataId).val();  
 
             address = $('.address'+ dataId).val();  
+            city = $('#city'+ dataId).val();  
 
         $.ajax({
 
@@ -702,7 +728,7 @@ function otherOperation() {
 
             url: "<?php echo site_url('/module/LocalLife/edit_recruit');?>",
 
-            data: 'id='+ dataId +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness+'&title='+title + '&address='+address,
+            data: 'id='+ dataId + "&city="+ city +"&name="+ name +"&content="+ content  +"&link_man="+ link_man +"&phone="+ phone +"&type_name="+ isbusiness+'&title='+title + '&address='+address,
 
             success: function(result){       
 
@@ -967,6 +993,17 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= id %></td>
 
         <td class="am-text-middle"><%= name %></td>
+        <%if(city == '1'){%>
+            <td class="am-text-middle">重庆</td>
+        <%}else if(city == '2'){%>
+            <td class="am-text-middle">南江</td>
+        <%}else if(city == '3'){%>
+            <td class="am-text-middle">宣汉</td>
+        <%}else if(city == '4'){%>
+            <td class="am-text-middle">邻水</td>
+
+        <%}%>
+
 
         <td class="am-text-middle"><%= link_man %></td>
 
@@ -1075,6 +1112,27 @@ $(document).ready(function(){
                         <small class="am-u-sm-1 red redtips8" style="display: none;"><i class="am-icon-close"></i></small>
 
                         <small class="am-u-sm-1 green blacktips8" style="display: none;"><i class="am-icon-check"></i></small>
+
+                    </div>
+                    <div class="am-form-group am-cf">
+
+                        <label class="am-u-sm-3 am-form-label">所属城市 <span class="red">*</span></label>
+
+                        <div class="am-u-sm-8">
+                            <select name="city" id="city<%= id %>" required>
+                                <option value="">请选择一项</option>
+                                <option value="1" <% if(city == '1'){%>selected <%}%>>重庆</option>
+                                <option value="2" <% if(city == '2'){%>selected <%}%>>南江</option>
+                                <option value="3" <% if(city == '3'){%>selected <%}%>>宣汉</option>
+                                <option value="4" <% if(city == '4'){%>selected <%}%>>邻水</option>
+                            </select>
+
+
+                        </div>
+
+                        <small class="am-u-sm-1 red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                        <small class="am-u-sm-1 green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
 
                     </div>
 

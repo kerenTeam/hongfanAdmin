@@ -138,7 +138,7 @@ class Integral_model extends CI_Model
 
         $where['differentiate'] = '3';
 
-        $this->db->select('goods_id,open_iid,title,price,thumb,commission_price,commission_rate');
+        $this->db->select('goods_id,bussinesno,open_iid,title,price,thumb,commission_price,commission_rate');
 
         $query = $this->db->where($where)->get($this->lovetogoods);
 

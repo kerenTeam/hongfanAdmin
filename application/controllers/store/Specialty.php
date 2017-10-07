@@ -89,23 +89,19 @@ class Specialty extends Default_Controller {
 
     function storeAddSort(){
         $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }  
 
         //获取特色馆顶级分类
-
-         $data['cates'] = $this->MallShop_model->get_cate_level('2');
-
-
 
          $data['page'] = $this->view_specialtyAddCates;
 
@@ -118,51 +114,36 @@ class Specialty extends Default_Controller {
     //添加特色馆分类操作
 
     function add_store_cate(){
-         $q= $this->uri->uri_string();
-        $url = preg_replace('|[0-9]+|','',$q);
-        if(substr($url,-1) == '/'){
-            $url = substr($url,0,-1);
-        }
-            // var_dump($url);
-        $user_power = json_decode($_SESSION['user_power'],TRUE);
-
-        if(!deep_in_array($url,$user_power)){
-            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-                    exit;
-        }   
+         
         if($_POST){
 
             $data = $this->input->post();
 
-            $data['type'] = '2';
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
+            if(!empty($_FILES['icon']['name'])){
+                    
+                    $tmpfile = new CURLFile(realpath($_FILES['icon']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/category/icon',
+                        'bucket'=>BUCKET,
+                    );
+                
+                    $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                    if($a['errno'] == '0'){
+                        $img = json_decode($a['data']['img'],true);
+                       
+                         $data['icon'] =$img[0]['picImg'];
+                        // $data['logo'] = 
+                    }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeAddSort/')."'</script>";
 
-            if(!empty($_FILES['icon']['tmp_name'])){
-
-                $config['upload_path']      = 'Upload/icon';
-
-                $config['allowed_types']    = 'jpg|png|jpeg|svg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('icon')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeAddSort/')."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
-
-                }
-
+                    }
             }
+
+             
 
             if($this->MallShop_model->add_store_cate($data)){
 
@@ -199,6 +180,18 @@ class Specialty extends Default_Controller {
     //编辑特色馆分类
 
     function storeEditSort(){
+           $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        } 
        
          $id = intval($this->uri->segment(4));
 
@@ -210,7 +203,6 @@ class Specialty extends Default_Controller {
 
              //获取特色馆顶级分类
 
-             $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
 
              $data['cateinfo'] = $this->MallShop_model->get_cateInfo($id);
 
@@ -227,49 +219,35 @@ class Specialty extends Default_Controller {
     //编辑特色馆分类操作
 
     function edit_store_cate(){
-           $q= $this->uri->uri_string();
-        $url = preg_replace('|[0-9]+|','',$q);
-        if(substr($url,-1) == '/'){
-            $url = substr($url,0,-1);
-        }
-            // var_dump($url);
-        $user_power = json_decode($_SESSION['user_power'],TRUE);
-
-        if(!deep_in_array($url,$user_power)){
-            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-                    exit;
-        }   
+          
 
         if($_POST){
 
             $data = $this->input->post();
 
-            if(!empty($_FILES['icon']['tmp_name'])){
+           
+            $header = array("token:".$_SESSION['token'],'city:'.'1');     
+            if(!empty($_FILES['icon']['name'])){
+                    
+                    $tmpfile = new CURLFile(realpath($_FILES['icon']['tmp_name']));
+                
+                    $pics = array(
+                        'pics' =>$tmpfile,
+                        'porfix'=>'moll/category/icon',
+                        'bucket'=>BUCKET,
+                    );
+                
+                    $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                    if($a['errno'] == '0'){
+                        $img = json_decode($a['data']['img'],true);
+                       
+                         $data['icon'] =$img[0]['picImg'];
+                        // $data['logo'] = 
+                    }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeAddSort/')."'</script>";
 
-                $config['upload_path']      = 'Upload/icon';
-
-                $config['allowed_types']    = 'jpg|png|jpeg|svg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('icon')) {
-
-                    echo "<script>alert('图片上传失败！');window.location.href='".site_url('/store/Specialty/storeEditSort/'.$data['catid'])."'</script>";
-
-                    exit;
-
-                } else{
-
-                    $data['icon'] =  '/Upload/icon/'.$this->upload->data('file_name');
-
-                }
-
+                    }
             }
 
             if($this->MallShop_model->edit_store_cate($data['catid'],$data)){
@@ -502,14 +480,14 @@ class Specialty extends Default_Controller {
             //获取所有商品
 
             $id = $this->input->post('default');
-            $goods_list = $this->MallShop_model->ret_recommentType($id);
-
+            if($id == '6'){
+                $goods_list = $this->MallShop_model->get_remment_goods();
+            }else{
+                $goods_list = $this->MallShop_model->ret_recommentType($id);
+            }
             //获取商品库存
-
             foreach($goods_list as $k=>$v){
-
                 //获取商品属性
-
                 $parent=  $this->MallShop_model->get_goods_parent($v['goods_id']);
 
                 if(!empty($parent)){
@@ -555,6 +533,7 @@ class Specialty extends Default_Controller {
         if($_POST){
             $id = $this->input->post('goodsid');
             $data['recommentType'] = '0';
+            $data['recommend'] = '0';
 
             if($this->MallShop_model->edit_goods($id,$data)){
                 $log = array(

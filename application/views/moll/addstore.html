@@ -105,7 +105,7 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="text" placeholder="请输入登录手机号"  name="username"  required onblur="validate(this,1,11,1)" />
+                            <input type="number" placeholder="请输入登录手机号"  name="username"  required onblur="validate(this,11,11,7)" />
 
                         </div>
 
@@ -139,7 +139,7 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="password" placeholder="请输入6-16个字符"  name="password" value="" required onblur="validate(this,6,16,3)" />
+                            <input type="text" placeholder="请输入6-16个字符,字母和数字结合"  name="password" value="" required onblur="validate(this,6,16,3)" />
 
                         </div>
 
@@ -363,11 +363,11 @@
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号<span class="red">*</span>： </label>
+                        <label for="user-phone" class="am-u-sm-3 am-form-label">QQ号： </label>
 
                         <div class="am-u-sm-8 am-u-end">
 
-                           <input type="text" name="qq" required onblur="validate(this,3,20,11)"  class="am-form-field tpl-form-no-bg" placeholder="">
+                           <input type="text" name="qq" onblur="validate(this,3,20,11)"  class="am-form-field tpl-form-no-bg" placeholder="">
 
                         </div>
 
@@ -413,7 +413,19 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"   />
+                            <!-- <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"   /> -->
+                            <select name="floor_name">
+                                <option value="UG">UG</option>
+                                <option value="LG">LG</option>
+                                <option value="L1">L1</option>
+                                <option value="L2">L2</option>
+                                <option value="L3">L3</option>
+                                <option value="L4">L4</option>
+                                <option value="L5">L5</option>
+                                <option value="L6">L6</option>
+                                <option value="L7">L7</option>
+                                <option value="L8">L8</option>
+                            </select>
 
                         </div>
 

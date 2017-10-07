@@ -161,6 +161,14 @@ $db['default'] = array(
 
 	'database' => 'hijiv2mysql',
 
+	// 'hostname' => 'localhost',
+
+	// 'username' => 'root',
+
+	// 'password' => '',
+
+	// 'database' => 'hiji',
+
 
 	'dbdriver' => 'mysqli',
 

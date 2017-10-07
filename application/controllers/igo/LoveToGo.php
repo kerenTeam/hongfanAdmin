@@ -103,7 +103,7 @@ class LoveToGo extends Default_Controller
 
 		if(!deep_in_array($url,$user_power)){
 			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
+			exit;
 		}	
 
         $data = array(
@@ -178,33 +178,31 @@ class LoveToGo extends Default_Controller
 
             $data['catid'] = $this->input->post('catid');
 
-            if(!empty($_FILES['img']['tmp_name'])){
+            
+            $header = array("token:".$_SESSION['token'],'city:'.'1');   
 
-                $config['upload_path']      = 'Upload/icon';
-
-                $config['allowed_types']    = 'svg|jpg|png|jpeg';
-
-                $config['max_size']     = 2048;
-
-                $config['file_name'] = date('Y-m-d_His');
-
-                $this->load->library('upload', $config);
-
-                //上传
-
-                if ( ! $this->upload->do_upload('img')) {
-
+            if(!empty($_FILES['img']['name'])){
+                
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                //  var_dump($tmpfile);
+                  $pics = array(
+                      'pics' =>$tmpfile,
+                      'porfix'=>'igo/cates/icon',
+                      'bucket'=>'ebus',
+                  );
+              
+                  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                
+                  if($qiuniu['errno'] == '0'){
+                      $img = json_decode($qiuniu['data']['img'],true);
+                       $data['icon']   =$img[0]['picImg'];
+                      
+                  }else{
                     echo "<script>alert('图片上传失败！');window.location.href='".site_url('/igo/LoveToGo/loveToGoCates/')."'</script>";
-
-                    exit;
-
-                } else{
-
-                     $data['icon'] = '/Upload/icon/'.$this->upload->data('file_name');
-
-                }
+                  }
 
             }
+           
 
             if($this->db->where('catid',$data['catid'])->update('hf_mall_category_igo',$data)){
 
@@ -280,7 +278,7 @@ class LoveToGo extends Default_Controller
 		$user_power = json_decode($_SESSION['user_power'],TRUE);
 
 		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+			echo "2";
 					exit;
 		}	
 
@@ -354,7 +352,7 @@ class LoveToGo extends Default_Controller
 		$user_power = json_decode($_SESSION['user_power'],TRUE);
 
 		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+			echo "2";
 					exit;
 		}	
 
@@ -632,8 +630,8 @@ class LoveToGo extends Default_Controller
 		$user_power = json_decode($_SESSION['user_power'],TRUE);
 
 		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
+			echo "3";
+			exit;
 		}	
 
             if($_POST){
@@ -681,18 +679,7 @@ class LoveToGo extends Default_Controller
     //爱g购订单导出
 
     function dowload_love_order(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
-
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+      	
 
         $begin_date = $this->uri->segment(4);
 
@@ -794,7 +781,7 @@ class LoveToGo extends Default_Controller
 
                     //地址
 
-                   $address = $this->Integral_model->get_user_address($booking['buyer_address']);
+                   // $address = $this->Integral_model->get_user_address($booking['buyer_address']);
 
                    //省份证
 
@@ -803,6 +790,7 @@ class LoveToGo extends Default_Controller
                    //留言
 
                    $notice = json_decode($booking['userPostData'],true);
+                   $address = json_decode($booking['buyer_address'],true);
 
                    
 
@@ -824,7 +812,7 @@ class LoveToGo extends Default_Controller
 
                     $this->excel->getActiveSheet()->setCellValue('C' . $i, ' '.$id_card);
 
-                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['address']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['province'].$address['city'].$address['area'].$address['address']);
 
                     $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
 
@@ -956,7 +944,7 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.order_status',$order_status)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.order_status',$order_status)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array();              
 
@@ -970,11 +958,13 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.buyer',$buyer)->order_by('a.create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.buyer',$buyer)->order_by('a.create_time','desc')->get();  
 
                 $res = $query->result_array();    
 
             }else if(empty($order_status) && empty($buyer) && !empty($start_time)){
+                $time =$start_time .' 00:00:00';
+                $end_time =$endtime .' 23:59:59';
 
                 $where['order_type'] = '0';
 
@@ -984,7 +974,7 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.create_time >=',$time)->where('a.create_time <=',$end_time)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
@@ -998,11 +988,13 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.order_status',$order_status)->where('a.buyer <=',$buyer)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.order_status',$order_status)->where('a.buyer <=',$buyer)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
             }else if(empty($order_status) && !empty($buyer) && !empty($start_time)){
+                $time =$start_time .' 00:00:00';
+                $end_time =$endtime .' 23:59:59';
 
                 $where['order_type'] = '0';
 
@@ -1012,13 +1004,15 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->where('a.buyer',$buyer)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.create_time >=',$time)->where('a.create_time <=',$end_time)->where('a.buyer',$buyer)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
 
 
             }else if(!empty($order_status) && empty($buyer) && !empty($start_time)){
+                $time =$start_time .' 00:00:00';
+                $end_time =$endtime .' 23:59:59';
 
                  $where['order_type'] = '0';
 
@@ -1028,11 +1022,13 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->where('a.order_status',$order_status)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.create_time >=',$time)->where('a.create_time <=',$end_time)->where('a.order_status',$order_status)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
             }else if(!empty($order_status) && !empty($buyer) && !empty($start_time)){
+                 $time =$start_time .' 00:00:00';
+                $end_time =$endtime .' 23:59:59';
 
                 $where['order_type'] = '0';
 
@@ -1042,7 +1038,7 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->where('a.order_status',$order_status)-where('buyer',$buyer)->where('a.create_time >=',$start_time)->where('a.create_time <=',$endtime)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->where('a.order_status',$order_status)-where('buyer',$buyer)->where('a.create_time >=',$time)->where('a.create_time <=',$end_time)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
@@ -1056,7 +1052,7 @@ class LoveToGo extends Default_Controller
 
                 $this->db->join('hf_user_member b','b.user_id = a.buyer','left');
 
-                $query = $this->db->where($where)->order_by('create_time','asc')->get();  
+                $query = $this->db->where($where)->order_by('create_time','desc')->get();  
 
                 $res = $query->result_array(); 
 
@@ -1068,7 +1064,7 @@ class LoveToGo extends Default_Controller
 
             foreach($res as $key=>$val){
 
-                $res[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
+                // $res[$key]['adddress'] = $this->Integral_model->get_user_address($val['buyer_address']);
 
                 $res[$key]['id_card'] = $this->Integral_model->ret_user_info($val['buyer']);
 

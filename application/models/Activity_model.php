@@ -33,6 +33,33 @@ class Activity_model extends CI_Model
 
     }
 
+    //
+    function select_where($table,$where,$id){
+        $query = $this->db->where($where,$id)->get($table);
+        return $query->result_array();
+    }    
+    function select_where_one($table,$where,$id){
+        $query = $this->db->where($where,$id)->get($table);
+        return $query->row_array();
+    }
+
+    //
+    function select_where_may($table,$where,$id,$where1,$id1){
+        $query = $this->db->where($where,$id)->where($where1,$id1)->get($table);
+        return $query->result_array();
+    }
+    function select_where_three($table,$where,$id,$where1,$id1,$time,$endtime){
+        $query = $this->db->where($where,$id)->where($where1,$id1)->where('create_time >=',$time)->where('create_time <=',$endtime)->get($table);
+        return $query->result_array();
+    }
+
+
+    //删除核销记录
+    function del_afterSales($id){
+        return $this->db->where('id',$id)->delete('hf_shop_couponverify');
+    }
+
+
     //返回所有卡卷类型
 
     function get_coupon_type(){
@@ -53,7 +80,7 @@ class Activity_model extends CI_Model
 
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
 
-        $query = $this->db->order_by('id','desc')->get();
+        $query = $this->db->where('a.city !=','0')->order_by('id','desc')->get();
 
         return $query->result_array();
 
@@ -239,7 +266,7 @@ class Activity_model extends CI_Model
     function get_store_name($id){
 
         $where['business_id'] = $id;
-
+        
         $query = $this->db->where($where)->get('hf_shop_store');
 
         $res = $query->row_array();
@@ -334,6 +361,9 @@ class Activity_model extends CI_Model
     function edit_annals($id,$data){
         return $this->db->where('id',$id)->update($this->annals,$data);
     }
+
+
+    //
 
 
 }

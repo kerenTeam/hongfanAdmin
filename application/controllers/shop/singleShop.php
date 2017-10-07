@@ -105,6 +105,7 @@ class SingleShop extends CI_Controller {
         parent::__construct();
 
         $this->load->model('MallShop_model');
+        $this->load->model('Member_model');
 
         $this->load->model('Shop_model');
         date_default_timezone_set("Asia/Shanghai");
@@ -144,6 +145,8 @@ class SingleShop extends CI_Controller {
                 $_SESSION['businessId'] = $storeid['store_id'];
 
                 $_SESSION['businesstype'] = $storeid['store_type'];
+
+
 
                 //$_SESSION['set_userda']ta('businessId',$storeid['store_id']);
 
@@ -282,13 +285,9 @@ class SingleShop extends CI_Controller {
             $arr['password'] =trim($this->input->post('password'));
 
             if(!empty($arr['password'])){
-
                 $arr['password'] = md5($arr['password']);
-
             }else{
-
-              unset($arr['password']);  
-
+                unset($arr['password']);  
             }
 
             $arr['user_id'] = $this->input->post('user_id');
@@ -357,6 +356,16 @@ class SingleShop extends CI_Controller {
 
                 }
 
+
+            $a = array('maxMoney'=>$data['maxMoney'],"maxNums"=>$data['maxNums']);
+            unset($data['maxMoney'],$data['maxNums']);
+
+            $data['mailRules'] = json_encode($a);   
+
+            // var_dump($data);
+            // exit;
+
+
             if($this->Shop_model->edit_store_member($arr['user_id'],$arr)){
 
                  if($this->MallShop_model->edit_store_info($data['store_id'],$data)){
@@ -413,22 +422,11 @@ class SingleShop extends CI_Controller {
 
         //分类
 
-        if($store_type == '2'){
-
-            $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
-
-        }else{
-
-            $data['cates'] = $this->MallShop_model->get_goods_cates('0','1');
-
-        }
-
-       
+        $data['cates'] = $this->MallShop_model->get_cates_parent('0');
 
         $data['page'] = $this->view_goodsList;
 
         $data['menu'] = array('shop','goodsList');
-
         $this->load->view('template.html',$data);
 
     }
@@ -442,12 +440,7 @@ class SingleShop extends CI_Controller {
         if($_POST){
 
            //获取商家信息
-
-          
-
-               $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId']);
-
-           
+            $arr = $this->MallShop_model->get_goods_list($_SESSION['businessId']);
             //获取商品库存
             foreach($arr as $k=>$v){
                 //获取商品属性
@@ -731,9 +724,8 @@ class SingleShop extends CI_Controller {
 
                      }
 
-                   
-
                 }
+                unset($data['img'.$i]);
 
              }
 
@@ -896,9 +888,10 @@ class SingleShop extends CI_Controller {
             unset($data['parameter'],$data['ruleSelect'],$data['addNewPropertValue']);
 
             if($data['differentiate'] == "2"){
-                $data['differentiate']  == '4';
+               
+                $data['differentiate'] = '4';
             }
-
+         
             $pic = array();
 
             $i =1;
@@ -929,7 +922,7 @@ class SingleShop extends CI_Controller {
                 $i++;
 
              }
-
+   
 
 
             if(empty(json_decode($data['reduction_rule']))){
@@ -966,6 +959,10 @@ class SingleShop extends CI_Controller {
 
 //             var_Dump($data);
 // exit;
+            if($data['differentiate'] == "2"){
+               
+                $data['differentiate'] = '4';
+            }
              $goodsid = $this->MallShop_model->add_shop_goods($data);
 
              if(!empty($goodsid)){
@@ -2645,12 +2642,9 @@ class SingleShop extends CI_Controller {
             echo "<script>alert('登录信息过时！请重新登录！');window.location.href='".site_url('/login/index')."'</script>";exit;
 
         }
+            
 
-
-
-        $data['storeid'] =$_SESSION['businessId'];
-
-       
+        $data['storeid'] =$store_id;
 
         $data['page'] = $this->view_shopOrder;
 
@@ -2672,21 +2666,10 @@ class SingleShop extends CI_Controller {
 
             $storeid = $_POST['storeid'];
 
-             $storetype =$_SESSION['businesstype'];
-
-             if($storetype == 2){
-
-                 $type = '4';
-
-             }else{
-
-                 $type = '1';
-
-             }
 
             //h获取订单
 
-            $orders = $this->MallShop_model->get_store_orders($storeid,$type);
+            $orders = $this->MallShop_model->get_store_orders($storeid);
 
 
 
@@ -2962,19 +2945,9 @@ class SingleShop extends CI_Controller {
 
                     //获取用户电话
 
-                    $user = $this->user_model->get_user_info($order['buyer']);
+                    $user = $this->Member_model->get_user_info($order['buyer']);
 
-                    //模拟登陆APP
-
-                    $url = APPLOGIN."/api/useraccount/login";
-
-                    // var_dump($url);
-
-                    $arr = array('phone'=>"15828277232","password"=>"123456a");
-
-                    $token = curl_post_token($url,$arr);
-
-                    $header = array("token:".trim($token)); 
+                    $header = array("token:".$_SESSION['token']); 
 
                     if($data['shipper_code'] == "EMS"){
 
@@ -3014,14 +2987,14 @@ class SingleShop extends CI_Controller {
 
                     }else if($data['shipper_code'] == "HHTT"){
 
-                        $exporess  = "天天快递";
+                        $exporess  = "天天";
 
                     }
 
                     $post_url = APPLOGIN."/api/index/sendsms";
+                    //echo $_SESSION['token'];
 
                     $ret = 'phoneNum='.$user['phone'].'&SMScontent='."hi，小主，感谢您惠顾HI集，您所购买的宝贝已穿戴整齐，向您飞奔而来，请注意查收。".$exporess."快递:".$data['logistic_code'].'【HI集】';
-
                      $a = curl_post_express($header,$post_url,$ret);
 
                 }
@@ -3447,6 +3420,18 @@ class SingleShop extends CI_Controller {
     //设置商品特价
 
     function specials_goods(){
+        // $q= $this->uri->uri_string();
+        // $url = preg_replace('|[0-9]+|','',$q);
+        // if(substr($url,-1) == '/'){
+        //     $url = substr($url,0,-1);
+        // }
+        //     // var_dump($url);
+        // $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        // if(!deep_in_array($url,$user_power)){
+        //     echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+        //             exit;
+        // }   
 
         if($_POST){
 

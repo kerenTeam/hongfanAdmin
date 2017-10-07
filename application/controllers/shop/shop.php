@@ -55,6 +55,7 @@ class Shop extends Default_Controller {
         $this->load->model('Shop_model');
 
         $this->load->model('MallShop_model');
+        $this->load->model('Member_model');
 
     }
 
@@ -131,6 +132,8 @@ class Shop extends Default_Controller {
          if($_POST){
 
             $type = $_POST['typeid'];
+            // var_dump($type);
+            // exit;
             $list = '';
             switch($_SESSION['city']){
                 case "0":
@@ -181,15 +184,52 @@ class Shop extends Default_Controller {
 
             $state = $_POST['state'];
 
-            $floor = $_POST['floor'];
+            $floor = '';
 
-            $berth = $_POST['berth'];
+            $berth = '';
 
             $sear = $_POST['sear'];
 
+            $list = search_store_list($yetai,$state,$floor,$berth,$sear,'2');
 
 
-            $list = search_store_list($yetai,$state,$floor,$berth,$sear);
+            if(empty($list)){
+
+                echo "2";
+
+            }else{
+
+                echo json_encode($list);
+
+            }
+
+
+
+        }else{
+
+            echo "2";
+
+        }
+
+    }
+
+    //  找店收搜索
+    function moll_search_store(){
+
+        if($_POST){
+
+            $yetai = $_POST['yetai'];
+
+            $state = $_POST['state'];
+
+            $floor = $_POST['floor'];
+
+            $berth = '';
+
+            $sear = $_POST['sear'];
+
+            $list = search_store_list($yetai,$state,$floor,$berth,$sear,'1');
+
 
             if(empty($list)){
 
@@ -363,7 +403,8 @@ class Shop extends Default_Controller {
 
                 if($this->Shop_model->del_shop_store($id)){
 
-                     //日志
+                    
+                    //日志
 
                     $log = array(
 
@@ -501,8 +542,8 @@ class Shop extends Default_Controller {
 
             $data = $this->input->post();
 
-            $arr['username'] = trim($this->input->post('username'));
-
+            $arr['username'] = trim($this->input->post('store_name'));
+            $arr['nickname'] = trim($this->input->post('store_name'));
             $arr['phone'] = trim($this->input->post('username'));
 
             $arr['password'] =trim($this->input->post('password'));
@@ -521,9 +562,9 @@ class Shop extends Default_Controller {
 
             unset($data['username'],$data['password'],$data['user_id']);
 
-            if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
+            if($this->Shop_model->get_member_info($arr['user_id'],$arr['phone'])){
 
-                echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
+                echo "<script>alert('手机账户已被注册！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
 
             }
 
@@ -681,7 +722,8 @@ class Shop extends Default_Controller {
 
             $data = $this->input->post();
 
-            $arr['username'] = trim($this->input->post('username'));
+            $arr['username'] = trim($this->input->post('store_name'));
+            $arr['nickname'] = trim($this->input->post('store_name'));
 
             $arr['phone'] = trim($this->input->post('username'));
 
@@ -689,27 +731,13 @@ class Shop extends Default_Controller {
 
             $arr['password'] = md5(trim($this->input->post('password')));
 
-            $username = $this->Shop_model->get_user_info($arr['username']);
+            $username = $this->Shop_model->get_user_info($arr['phone']);
 
             if(!empty($username)){
 
-                    echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
+                    echo "<script>alert('手机账号已被注册！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
 
             }
-
-            //新增商家用户账号
-
-           $userid = $this->Shop_model->add_store_member($arr);
-
-           if(!empty($userid)){
-
-                $data['business_id'] = $userid;
-
-                $data['send_userid'] = $_SESSION['users']['user_id'];
-
-                $data['create_time'] = date('Y-m-d');
-
-                unset($data['password'],$data['username']);
 
                 $bucketList =  $this->config->item('buckrtGlobal');
                 switch($_SESSION['city']){
@@ -787,6 +815,22 @@ class Shop extends Default_Controller {
                       }
 
                 }
+
+            //新增商家用户账号
+
+           $userid = $this->Shop_model->add_store_member($arr);
+
+           if(!empty($userid)){
+
+                $data['business_id'] = $userid;
+
+                $data['send_userid'] = $_SESSION['users']['user_id'];
+
+                $data['create_time'] = date('Y-m-d H:i:s');
+
+                unset($data['password'],$data['username']);
+
+            
                 $data['city'] = $city;  
 
                  if($this->Shop_model->add_store($data)){
@@ -1084,10 +1128,6 @@ class Shop extends Default_Controller {
                 }
 
             }
-
-           
-
-
 
         }else{
 
@@ -1715,7 +1755,11 @@ class Shop extends Default_Controller {
 
                 'D' => '联系电话',
 
-                'E' => '创建时间'
+                'E' => '创建时间',
+                'F' => '所属城市',
+
+                'G'=>'登陆手机号',
+                'H'=>'登陆密码(不能用来直接登陆)',
 
             );
 
@@ -1760,6 +1804,26 @@ class Shop extends Default_Controller {
                     $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['phone']); 
 
                     $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['create_time']);
+
+                    if($booking['city'] == '1'){
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, '重庆');
+
+                    }else if($booking['city'] == '2'){
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, '南江');
+
+                    }else if($booking['city'] == '3'){
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, '宣汉');
+
+                    }else if($booking['city'] == '4'){
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, '邻水');
+
+                    }
+
+                    //获取用户信息
+                    $user = $this->Member_model->get_user_info($booking['business_id']);
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $user['phone']);
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, $user['password']);
+
 
                 }
 

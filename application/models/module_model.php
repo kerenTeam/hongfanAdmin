@@ -26,7 +26,7 @@ class Module_model extends CI_Model{
 
 	//二手市场
 
-	public $mark = 'hf_local_used_market';
+	public $mark = 'hf_friends_news';
 
 	//二手市场 fenlei 
 
@@ -309,41 +309,6 @@ class Module_model extends CI_Model{
 
 	}
 
-	//二手市场 分页
-
-	function get_mark_page($off,$page){
-
-		$sql ="SELECT a.id,a.userid,a.isbusiness,a.recommend_state,a.colour,a.title,a.phone,a.type,a.price,a.address,a.brand,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid order by create_time desc limit $page,$off";
-
-		$query = $this->db->query($sql);
-
-		return $query->result_array();
-
-	}
-
-    //二手市场 搜索
-
-    function search_mark($sear){
-
-        $sql = "SELECT a.id,a.userid,a.title,a.phone,a.type,a.price,a.address,a.brand_new,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid and a.title like '%$sear%' order by create_time desc";
-
-        $query = $this->db->query($sql);
-
-        return $query->result_array();
-
-    }
-
-    function search_mark_page($sear,$off,$page){
-
-        $sql = "SELECT a.id,a.userid,a.title,a.phone,a.type,a.price,a.address,a.brand_new,a.create_time,b.tagid,b.tag FROM hf_local_used_market as a,hf_local_used_market_type as b where a.type = b.tagid and a.title like '%$sear%' order by create_time desc limit $page,$off";
-
-        $query = $this->db->query($sql);
-
-        return $query->result_array();
-
-    }
-
-
 
 	//新增二手市场信息
 
@@ -437,7 +402,7 @@ class Module_model extends CI_Model{
 	}
 		//返回HI拼车
 	function ret_hicarpooling_page($size,$page){
-		 $this->db->select('a.*,b.nickname');
+		$this->db->select('a.*,b.nickname');
         $this->db->from('hf_local_transport a');
         $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
         $query = $this->db->limit($size,$page)->order_by('a.createTime','desc')->get();
@@ -458,6 +423,49 @@ class Module_model extends CI_Model{
 	function delete($table,$id,$where){
 		return $this->db->where($id,$where)->delete($table);
 	}
+
+
+
+	//返回调着市场
+	function select_market_page($size,$page){
+		$this->db->select('a.*,b.nickname');
+        $this->db->from('hf_friends_news a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('typeId','4')->order_by('a.create_time','desc')->limit($size,$page)->get();
+        return $query->result_array();
+	}
+	function select_market(){
+		$this->db->select('a.*,b.nickname');
+        $this->db->from('hf_friends_news a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('typeId','4')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+	}
+	function select_market_where_page($city,$size,$page){
+		$this->db->select('a.*,b.nickname');
+        $this->db->from('hf_friends_news a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('a.city',$city)->where('typeId','4')->order_by('a.create_time','desc')->limit($size,$page)->get();
+        return $query->result_array();
+	}
+	function select_market_where($city){
+		$this->db->select('a.*,b.nickname');
+        $this->db->from('hf_friends_news a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('a.city',$city)->where('typeId','4')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+	}
+
+	function select_where_info($where,$id){	
+		$query = $this->db->where($where,$id)->get($this->mark);
+		return $query->row_array();
+	}
+
+
+	//
+
+
+
 
 
 }

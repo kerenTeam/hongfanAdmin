@@ -27,6 +27,7 @@ class LocalLife extends Default_Controller {
     public $view_serviceInfo = "module/localLife/serviceInfo.html";
 
     public $view_marketList = "module/localLife/marketList.html";
+    public $view_marketInfo = "module/localLife/marketInfo.html";
 
 	//招聘信息
 
@@ -370,62 +371,26 @@ class LocalLife extends Default_Controller {
 
 			}else{
 
-				$type = '';
 
 				//根据分类查询列表
 
-				switch($cate['typeid']){
-
-					//普通信息  保姆、保洁、维修、咨询、开锁
-
-					case '1':
 
 						//总条数
 
-						$list = $this->Module_model->get_serviceList($cate['id']);
+				$list = $this->Module_model->get_serviceList($cate['id']);
 
-						 $config['total_rows'] = count($list);
+				 $config['total_rows'] = count($list);
 
-						//分页数据
+				//分页数据
 
-						$listpage = $this->Module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
-
-					
-
-						break;
+				$listpage = $this->Module_model->get_serviceList_page($cate['id'],$config['per_page'],$current_page);
 
 			
-
-					//二手市场
-
-					case '3':
-
-						$list = $this->Module_model->get_mark();
-
-						$config['total_rows'] = count($list);
-
-						//分页数据
-
-
-
-						$listpage = $this->Module_model->get_mark_page($config['per_page'],$current_page);
-
-						//分类信息
-
-						$type = $this->Module_model->get_mark_type();
-
-						break;
-
-				
-				}
-
-
-
 				$this->load->library('pagination');//加载ci pagination类
 
 				$this->pagination->initialize($config);
 
-				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
+				$data = array('id'=>$id,'typeid'=>$cate['typeid'],'name'=>$cate['name'],'lists'=>$listpage,'pages' => $this->pagination->create_links());
 
 				//视图
 
@@ -519,46 +484,17 @@ class LocalLife extends Default_Controller {
 
             $cates = $this->Module_model->get_cateinfo($cate);
 
-    		switch ($typeid) {
-
-    			//普通信息
-
-    			case '1':
-
     				//总数据
 
-    				$list = $this->Module_model->search_service($sear,$cate);
+			$list = $this->Module_model->search_service($sear,$cate);
 
-					$config['total_rows'] = count($list);
+			$config['total_rows'] = count($list);
 
-					// //分页数据
+			// //分页数据
 
-				    $listpage = $this->Module_model->search_service_page($sear,$cate,$config['per_page'],$current_page);
+		    $listpage = $this->Module_model->search_service_page($sear,$cate,$config['per_page'],$current_page);
 
-    				break;
-
-    			// 二手市场
-
-	    		case '3':
-
-	    			$list = $this->Module_model->search_mark($sear);
-
-					$config['total_rows'] = count($list);
-
-					// //分页数据
-
-				    $listpage = $this->Module_model->search_mark_page($sear,$config['per_page'],$current_page);
-
-                    //分类信息
-
-                    $type = $this->Module_model->get_mark_type();
-
-	    			break;
-
-                 
-
-    		}
-
+    				
 			$this->load->library('pagination');//加载ci pagination类
 
 			$this->pagination->initialize($config);
@@ -607,29 +543,13 @@ class LocalLife extends Default_Controller {
 
 		}else{
 
-				$tag = '';
+			$tag = '';
 
             $cate = $this->Module_model->get_cateinfo($cateid);
 
-			switch($type){
+			
+			$info = $this->Module_model->get_serviceinfo($id);
 
-				case '1':
-
-					//$title = '普通信息';
-
-					$info = $this->Module_model->get_serviceinfo($id);
-
-					break;
-				case '3':
-
-					//$title = '二手市场';
-
-					$info = $this->Module_model->get_markinfo($id);
-
-					$tag = $this->Module_model->get_mark_type();
-
-					break;
-			}
 
 			$data = array('type_id'=>$type,'info'=>$info,'title'=>$cate['name'],'cateid'=>$cateid,'type'=>$tag);
 
@@ -648,46 +568,33 @@ class LocalLife extends Default_Controller {
 	//删除本地服务信息
 
 	function del_service(){
-		$q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+		// $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// 	// var_dump($url);
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+		// 			exit;
+		// }	
 
 
 
 		$id=intval($this->uri->segment(4));
 
-		$type=intval($this->uri->segment(5));
+		$cate=intval($this->uri->segment(6));
 
-			$cate=intval($this->uri->segment(6));
-
-		if($id == 0 || $type == 0){
+		if($id == 0 || $cate == 0){
 
 			$this->load->view('404.html');
 
 		}else{
 
-		
-
-			switch($type){
-
-				case '1':
-
-					$info = $this->Module_model->del_service($id);
-
-					if($info){
-
-						//日志
-
-			            $log = array(
+			if($this->Module_model->del_service($id)){
+				  $log = array(
 
 			                'userid'=>$_SESSION['users']['user_id'],  
 
@@ -697,45 +604,10 @@ class LocalLife extends Default_Controller {
 
 			                "userip" => get_client_ip(),
 
-			            );
+			        );
 
 			            $this->db->insert('hf_system_journal',$log);
 
-					}
-
-					break;
-
-		
-
-				case '3':
-
-					$info = $this->Module_model->del_mark($id);
-
-					if($info){
-
-						//日志
-
-			            $log = array(
-
-			                'userid'=>$_SESSION['users']['user_id'],  
-
-			                "content" => $_SESSION['users']['username']."删除了一个二手信息,信息id是".$id,
-
-			                "create_time" => date('Y-m-d H:i:s'),
-
-			                "userip" => get_client_ip(),
-
-			            );
-
-			            $this->db->insert('hf_system_journal',$log);
-
-					}
-
-					break;
-
-			}
-
-			if($info){
 
 
 
@@ -888,6 +760,134 @@ class LocalLife extends Default_Controller {
 	}
 
 
+	//二手市场
+	function market(){
+		//条数
+
+			$config['per_page'] = 10;
+
+			//获取页码
+
+			$current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+
+			//var_dump($current_page);
+
+				//配置
+
+			$config['base_url'] = site_url('/module/LocalLife/market');
+
+			//分页配置
+
+			$config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+			$config['full_tag_close'] = '</ul>';
+
+			$config['first_tag_open'] = '<li>';
+
+			$config['first_tag_close'] = '</li>';
+
+			$config['prev_tag_open'] = '<li>';
+
+			$config['prev_tag_close'] = '</li>';
+
+			$config['next_tag_open'] = '<li>';
+
+			$config['next_tag_close'] = '</li>';
+
+			$config['cur_tag_open'] = '<li class="am-active"><a>';
+
+			$config['cur_tag_close'] = '</a></li>';
+
+			$config['last_tag_open'] = '<li>';
+
+			$config['last_tag_close'] = '</li>';
+
+			$config['num_tag_open'] = '<li>';
+
+			$config['num_tag_close'] = '</li>';
+
+			$config['first_link']= '首页';
+
+			$config['next_link']= '下一页';
+
+			$config['prev_link']= '上一页';
+
+			$config['last_link']= '末页';
+			switch($_SESSION['city']){
+                case '0':
+                  	$list = $this->Module_model->select_market();
+
+					$config['total_rows'] = count($list);
+
+					//分页数据
+					$listpage = $this->Module_model->select_market_page($config['per_page'],$current_page);
+                    break;
+                case '1':
+                    $list = $this->Module_model->select_market_where('1');
+
+					$config['total_rows'] = count($list);
+
+					//分页数据
+					$listpage = $this->Module_model->select_market_where_page('1',$config['per_page'],$current_page);
+                    break;
+                case '2':
+                    $list = $this->Module_model->select_market_where('2');
+
+					$config['total_rows'] = count($list);
+
+					//分页数据
+					$listpage = $this->Module_model->select_market_where_page('2',$config['per_page'],$current_page);
+                    break;
+                case '3':
+                $city = '3';
+                    $list = $this->Module_model->select_market_where('3');
+
+					$config['total_rows'] = count($list);
+
+					//分页数据
+					$listpage = $this->Module_model->select_market_where_page('3',$config['per_page'],$current_page);
+                    break;
+                case '4':
+                $city = '4';
+                     $list = $this->Module_model->select_market_where('4');
+
+					$config['total_rows'] = count($list);
+
+					//分页数据
+					$listpage = $this->Module_model->select_market_where_page('4',$config['per_page'],$current_page);
+                    break;
+            }
+
+
+				
+
+				//分类信息
+
+				$type = $this->Module_model->get_mark_type();
+
+
+
+
+				$this->load->library('pagination');//加载ci pagination类
+
+				$this->pagination->initialize($config);
+
+				//
+
+				$data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'type'=>$type);
+
+				//视图
+
+
+
+				$data['page'] = $this->view_marketList;
+
+				$data['menu'] = array('localLife','market');
+
+				$this->load->view('template.html',$data);
+	}
+
+
 	//新增二手产品
 
 	function add_market(){
@@ -946,7 +946,7 @@ class LocalLife extends Default_Controller {
 				//  var_dump($tmpfile);
 				  $pics = array(
 					  'pics' =>$tmpfile,
-					  'porfix'=>'local/service/'.$bucket,
+					  'porfix'=>'local/market/'.$bucket,
 					  'bucket'=>$bucket,
 				  );
 			  
@@ -954,35 +954,23 @@ class LocalLife extends Default_Controller {
 				
 				  if($qiuniu['errno'] == '0'){
 					  $img = json_decode($qiuniu['data']['img'],true);
-					  if($i != 4){
-							$pic[]['picImg'] = $img[0]['picImg'];
-
-						}else{
-							$logo[]['picImg'] = $img[0]['picImg'];
-
-						}
+					  $pic[]['picImg'] = $img[0]['picImg'];
+					  // $data['pic'] = json_encode($pic);
 				  }else{
 
-					echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$data['id'])."'</script>";exit;
+					echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/market/')."'</script>";exit;
 
 				  }
-
-
 				$i++;
 
 			}
 
 			$data['pic'] = json_encode($pic);
 
-			$data['list_pic'] = json_encode($logo);
-
 			$data['userid'] = $_SESSION['users']['user_id'];
 
-			$type= $data['id'];
-
-			unset($data['id']);
-
-
+			$data['typeId'] = '4';
+		
 
 			if($this->Module_model->add_market($data)){
 
@@ -1002,11 +990,11 @@ class LocalLife extends Default_Controller {
 
 	            $this->db->insert('hf_system_journal',$log);
 
-				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$type)."'</script>";exit;
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
 
 			}else{
 
-				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceList/'.$type)."'</script>";exit;
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
 
 			}
 
@@ -1017,6 +1005,171 @@ class LocalLife extends Default_Controller {
 		}
 
 	}
+
+	//编辑二手市场
+	function marketInfo(){
+		$id = intval($this->uri->segment('4'));
+
+		if($id == '0'){
+			$this->load->view('404.html');
+		}else{
+			//获取跳蚤市场
+			$data['info'] = $this->Module_model->select_where_info('id',$id);
+
+			$data['type'] = $this->Module_model->get_mark_type();
+
+			$data['page'] = $this->view_marketInfo;
+
+
+			$data['menu'] = array('localLife','market');
+
+			$this->load->view('template.html',$data);
+		}
+
+	}
+
+	//编辑二手市场操作
+	function edit_market(){
+		$q= $this->uri->uri_string();
+		$url = preg_replace('|[0-9]+|','',$q);
+		if(substr($url,-1) == '/'){
+			$url = substr($url,0,-1);
+		}
+			// var_dump($url);
+		$user_power = json_decode($_SESSION['user_power'],TRUE);
+
+		if(!deep_in_array($url,$user_power)){
+			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+					exit;
+		}	
+
+		
+		if($_POST){
+			$bucketList =  $this->config->item('buckrtGlobal');
+            switch($_SESSION['city']){
+                case '0':
+                   // $data['city'] = $this->input->post('city');
+                     $city = $this->input->post('city');
+                     $bucket =$bucketList['cq']['local'];
+                    break;
+                case '1':
+                    $city = '1';
+                    $bucket =$bucketList['cq']['local'];
+                    break;
+                case '2':
+                    $city = '2';
+                    $bucket =$bucketList['nj']['local'];
+                    break;
+                case '3':
+                $city = '3';
+                    $bucket =$bucketList['xh']['local'];
+                    break;
+                case '4':
+                $city = '4';
+                    $bucket =$bucketList['ls']['local'];
+                    break;
+            }
+			$data['city'] = $city;
+            $header = array("token:".$_SESSION['token'],'city:'.$city);   
+
+
+
+			$data = $this->input->post();
+
+			$pic = array();
+
+			$i =1;
+
+			foreach($_FILES as $file=>$val){
+				if(!empty($_FILES['img'.$i]['name'])){
+
+					  $tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
+					//  var_dump($tmpfile);
+					  $pics = array(
+						  'pics' =>$tmpfile,
+						  'porfix'=>'local/market/'.$bucket,
+						  'bucket'=>$bucket,
+					  );
+				  
+					  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+					
+					  if($qiuniu['errno'] == '0'){
+						  $img = json_decode($qiuniu['data']['img'],true);
+						  $pic[]['picImg'] = $img[0]['picImg'];
+						  unset($data['img'.$i]);
+						  // $data['pic'] = json_encode($pic);
+					  }else{
+
+						echo "<script>alert('图片上传失败！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
+
+					  }																		
+				 }else{
+				 		if(!empty($data['img'.$i])){
+
+							$pic[]['picImg'] = $data['img'.$i];
+
+						}
+						unset($data['img'.$i]);
+				 }
+				$i++;
+
+			}
+
+			$data['pic'] = json_encode($pic);
+	
+			//$data['userid'] = $_SESSION['users']['user_id'];
+
+			// $data['typeId'] = '4';
+		
+
+			if($this->Module_model->edit_markinfo($data['id'],$data)){
+
+					//日志
+
+	            $log = array(
+
+	                'userid'=>$_SESSION['users']['user_id'],  
+
+	                "content" => $_SESSION['users']['username']."编辑了一个二手信息,信息内容是".$data['content'],
+
+	                "create_time" => date('Y-m-d H:i:s'),
+
+	                "userip" => get_client_ip(),
+
+	            );
+
+	            $this->db->insert('hf_system_journal',$log);
+
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
+
+			}else{
+
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
+
+			}
+
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//删除二手市场
+	function del_market(){
+		$id = intval($this->uri->segment('4'));
+		if($id == '0'){
+			$this->load->view('404.html');
+		}else{
+			if($this->Module_model->del_mark($id)){
+				echo "<script>alert('操作成功！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
+			}else{
+				echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/market')."'</script>";exit;
+			}
+		}
+
+	}
+
+
+
 
 	//编辑
 
@@ -1073,9 +1226,6 @@ class LocalLife extends Default_Controller {
 
 			$pic = array();
 
-			switch($data['type_id']){
-
-				case '1':
 
 					$i =1;
 
@@ -1163,104 +1313,6 @@ class LocalLife extends Default_Controller {
 			            $this->db->insert('hf_system_journal',$log);
 
 					 }
-
-					break;
-
-					//二手市场
-
-				case '3':
-
-					$i = '1';
-
-					foreach($_FILES as $file=>$val){
-
-						if(!empty($_FILES['img'.$i]['name'])){
-
-							$tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
-							//  var_dump($tmpfile);
-							  $pics = array(
-								  'pics' =>$tmpfile,
-								  'porfix'=>'local/service/'.$bucket,
-								  'bucket'=>$bucket,
-							  );
-						  
-							  $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
-															unset($data['img'.$i]);
-
-							  if($qiuniu['errno'] == '0'){
-								unset($data['img'.$i]);
-								
-								  $img = json_decode($qiuniu['data']['img'],true);
-								  if($i != 4){
-										$pic[]['picImg'] = $img[0]['picImg'];
-			
-									}else{
-										$logo[]['picImg'] = $img[0]['picImg'];
-			
-									}
-							  }else{
-
-							     echo "<script>alert('操作失败！');window.location.href='".site_url('/module/LocalLife/serviceInfo/'.$data['id'].'/'.$type)."'</script>";exit;
-
-							}
-						}else{
-
-							if($i != 4){
-
-								if(!empty($data['img'.$i])){
-
-									$pic[]['picImg'] = $data['img'.$i];
-
-								}
-
-							}else{
-
-								$logo[]['picImg'] = $data['list_pic'];
-
-							}
-
-							unset($data['img'.$i]);
-
-						}
-
-						$i++;
-
-					}
-
-					$data['pic'] = json_encode($pic);
-
-					$data['list_pic'] =json_encode($logo);
-
-					$type = $data['type_id'];
-
-					unset($data['type_id']);
-
-					$isOk = $this->Module_model->edit_markinfo($data['id'],$data);
-
-						if($isOk){
-
-					 	//日志
-
-			            $log = array(
-
-			                'userid'=>$_SESSION['users']['user_id'],  
-
-			                "content" => $_SESSION['users']['username']."编辑了一个二手信息,信息名称是".$data['title']."，信息id是：".$data['id'],
-
-			                "create_time" => date('Y-m-d H:i:s'),
-
-			                "userip" => get_client_ip(),
-
-			            );
-
-			            $this->db->insert('hf_system_journal',$log);
-
-					 }
-
-					break;
-
-			}
-
 
 
 			if($isOk){

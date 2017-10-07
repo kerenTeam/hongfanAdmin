@@ -1,343 +1,685 @@
-<style type="text/css" media="screen">
-.am-selected{
-width: 100%!important;
-}
-.table-check{
-width: 30px;
-}
-.hf-dropdown{
-font-size: 12px!important;
-padding: 5px 6px!important;
-}
-td.am-text-middle img{
-    width:80px;
-}
-.am-u-sm6{
-    width:60px !important;
-    margin:0;
-}
-.stable{
-    display: inline-block !important;
-    width: 45% !important;
-} 
-.linkWord{
-    width: 10% !important;
-}
-.stable{
-    display: inline-block !important;
-    width: 45% !important;
-}
-.linkWord{
-    width: 10% !important;
-}
-.tableImg{
-    width:80px;
-}
-.am-table>tbody>tr.noBorder>td{
-    border-top: none;
-}
-
-
-   /*分页部分的css样式*/
-    .current {
-        background: #1fb5ac;
-        color: #fff;
-    }
-    .pagebox {
-        width: 100%;
-        padding-left: 25%;
-        margin: 0 auto;
-    }
-    #Pagination {
-      float: left;
-      overflow: hidden;
-    }
-    #Pagination .pagination {
-      height: 40px;
-      text-align: right;
-      font-family: \u5b8b\u4f53,Arial;
-    }
-    #Pagination .pagination a,
-    #Pagination .pagination span {
-      float: left;
-      display: inline;
-      padding: 11px 13px;
-      border: 1px solid #e6e6e6;
-      border-right: none;
-      background: #f6f6f6;
-      color: #666666;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 14px;
-      cursor: pointer;
-    }
-    #Pagination .pagination .current {
-      background: #1fb5ac;
-      color: #fff;
-    }
-    #Pagination .pagination .prev,
-    #Pagination .pagination .next {
-      float: left;
-      padding: 11px 13px;
-      border: 1px solid #e6e6e6;
-      background: #f6f6f6;
-      color: #666666;
-      cursor: pointer;
-    }
-    #Pagination .pagination .prev i,
-    #Pagination .pagination .next i {
-      display: inline-block;
-      width: 4px;
-      height: 11px;
-      margin-right: 5px;
-    }
-    #Pagination .pagination .prev {
-      border-right: none;
-    }
-    #Pagination .pagination .prev i {
-      background-position: -144px -1px;
-      *background-position: -144px -4px;
-    }
-    #Pagination .pagination .next i {
-      background-position: -156px -1px;
-      *background-position: -156px -4px;
-    }
-    #Pagination .pagination .pagination-break {
-      padding: 11px 5px;
-      border: none;
-      border-left: 1px solid #e6e6e6;
-      background: none;
-      cursor: default;
-    }
-    .searchPage {
-      float: left;
-      padding: 8px 0;
-    }
-    .searchPage .page-sum {
-      padding: 11px 13px;
-      color: #999999;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 16px;
-    }
-    .searchPage .page-go {
-      padding: 6px 0;
-      color: #999999;
-      font-family: \u5b8b\u4f53,Arial;
-      font-size: 16px;
-      padding: 10px 0\9;
-      *padding: 6px 0;
-    }
-    .searchPage .page-go input {
-      width: 50px;
-      height: 30px;
-      margin: 0 5px;
-      padding: 2px 5px;
-      border: 1px solid #ccc;
-    }
-    .searchPage .page-btn {
-      margin: 9px 0 5px 5px;
-      padding: 5px 10px;
-      background: #1fb5ac;
-      border-radius: 2px;
-      color: #ffffff;
-      font-family: Arial, 'Microsoft YaHei';
-      font-size: 16px;
-      text-decoration: none;
-    } 
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置 <small>app反馈记录</small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">反馈记录列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>编号 </th>
-                                    <th>用户名 </th>
-                                    <th width="400">反馈内容 </th>
-                                    <th>反馈时间 </th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a >2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                        <div claa="am-text-middle">
-                           <span>共<span class="allData">15</span>条数据</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-  var pageflag = 1,$feedback = parseInt(sessionStorage.getItem('feedback')) || 0,total_page=0;
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-  });
-    //点击前往某一页的函数
-    function go_to_page(page_num){
-        $('.page_link').removeClass('active_page');
-        $('.page_link').eq(page_num).addClass('active_page');
-        $("#dataList").children('tr').css("display","none");
-        var start_page=parseInt(15)*parseInt(page_num);
-        var end_page=parseInt(15)*parseInt(page_num+1);
-        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-        current_page = page_num;
-        sessionStorage.setItem('feedback', current_page);
-        $feedback = sessionStorage.setItem('feedback', current_page);
-
-    }
-
-    //点击上一页的函数
-    function previous() {
-        new_page = current_page-1;
-        if($('.active_page').prev('.page_link').length==true) {
-            go_to_page(new_page);
-        }
-    }
-
-    //点击下一页的函数
-    function next() {
-        new_page = current_page+1;
-        if($('.active_page').next('.page_link').length==true) {
-            go_to_page(new_page);
-        }
-    }
-    //时间戳转日期的函数
-    function changeToDate(datetime) {
-    	var date = new Date(parseInt(datetime));
-    	var Y = date.getFullYear() + '-',
-    	M = (date.getMonth()+1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth()+1) + '-',
-    	D = date.getDate() + ' ',
-    	h = date.getHours() + ':',
-    	m = date.getMinutes() + ':',
-    	s = date.getSeconds();
-    	return Y+M+D+h+m+s;
-    }
-    //异步刷新的ajax请求   
-    function getList(dataurl,data,changeIndex) {
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result) {        
-                var res = eval(result);
-                console.log(res);
-                if(res != 2 && res != 3){
-                    var listData = ''; //每页出现的数量
-                    var total_page = Math.ceil(res.length/15); //得到总页数
-                    for(var i = 0; i < res.length; i++){
-                    	res[i].feedback_data = changeToDate(res[i].feedback_data);
-                        listData+= template('dataModal',res[i]);
-                     }
-                    document.getElementById('dataList').innerHTML = listData;
-                    $('.allData').html(res.length);
-                    $('.pagebox').css('display', 'block');
-                    if(total_page <= 1) {
-                       $('#Pagination').css('display', 'none');
-                        $('.searchPage').css('display', 'none');
-                    } else { 
-                      if(pageflag) {
-                          var opts={};opts.current_page = $feedback;
-                          $("#Pagination").pagination(total_page, opts);
-                          go_to_page($feedback);
-                          pageflag = 0;
-                      } else {
-                          $("#Pagination").pagination(total_page);
-                          go_to_page(0);
-                          
-                      }
-                      if(total_page < 5) {
-                          $('.searchPage').css('display', 'none');
-                      }
-                    }
-                    
-                }else{
-                    $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
-                    $('.pagebox').css('display', 'none');
-                }
-
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-            }
-        });
-    }
-    
-$(document).ready(function(){
-    //加载列表数数据
-    getList('<?php echo site_url('/systemSet/SystemSet/ret_feedback');?>','default=1');
-})
-</script>
-<script type="text/html" id="dataModal">   
-    <tr class="trClass">
-        <td class="am-text-middle"><%= id %></td>
-        <td class="am-text-middle"><%= username %></td>
-        <td class="am-text-middle"><%= content %></td>
-        <td class="am-text-middle"><%= feedback_data %></td>
-    </tr>
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+td.am-text-middle img{
+
+    width:80px;
+
+}
+
+.am-u-sm6{
+
+    width:60px !important;
+
+    margin:0;
+
+}
+
+.stable{
+
+    display: inline-block !important;
+
+    width: 45% !important;
+
+} 
+
+.linkWord{
+
+    width: 10% !important;
+
+}
+
+.stable{
+
+    display: inline-block !important;
+
+    width: 45% !important;
+
+}
+
+.linkWord{
+
+    width: 10% !important;
+
+}
+
+.tableImg{
+
+    width:80px;
+
+}
+
+.am-table>tbody>tr.noBorder>td{
+
+    border-top: none;
+
+}
+
+
+
+
+
+   /*分页部分的css样式*/
+
+    .current {
+
+        background: #1fb5ac;
+
+        color: #fff;
+
+    }
+
+    .pagebox {
+
+        width: 100%;
+
+        padding-left: 25%;
+
+        margin: 0 auto;
+
+    }
+
+    #Pagination {
+
+      float: left;
+
+      overflow: hidden;
+
+    }
+
+    #Pagination .pagination {
+
+      height: 40px;
+
+      text-align: right;
+
+      font-family: \u5b8b\u4f53,Arial;
+
+    }
+
+    #Pagination .pagination a,
+
+    #Pagination .pagination span {
+
+      float: left;
+
+      display: inline;
+
+      padding: 11px 13px;
+
+      border: 1px solid #e6e6e6;
+
+      border-right: none;
+
+      background: #f6f6f6;
+
+      color: #666666;
+
+      font-family: \u5b8b\u4f53,Arial;
+
+      font-size: 14px;
+
+      cursor: pointer;
+
+    }
+
+    #Pagination .pagination .current {
+
+      background: #1fb5ac;
+
+      color: #fff;
+
+    }
+
+    #Pagination .pagination .prev,
+
+    #Pagination .pagination .next {
+
+      float: left;
+
+      padding: 11px 13px;
+
+      border: 1px solid #e6e6e6;
+
+      background: #f6f6f6;
+
+      color: #666666;
+
+      cursor: pointer;
+
+    }
+
+    #Pagination .pagination .prev i,
+
+    #Pagination .pagination .next i {
+
+      display: inline-block;
+
+      width: 4px;
+
+      height: 11px;
+
+      margin-right: 5px;
+
+    }
+
+    #Pagination .pagination .prev {
+
+      border-right: none;
+
+    }
+
+    #Pagination .pagination .prev i {
+
+      background-position: -144px -1px;
+
+      *background-position: -144px -4px;
+
+    }
+
+    #Pagination .pagination .next i {
+
+      background-position: -156px -1px;
+
+      *background-position: -156px -4px;
+
+    }
+
+    #Pagination .pagination .pagination-break {
+
+      padding: 11px 5px;
+
+      border: none;
+
+      border-left: 1px solid #e6e6e6;
+
+      background: none;
+
+      cursor: default;
+
+    }
+
+    .searchPage {
+
+      float: left;
+
+      padding: 8px 0;
+
+    }
+
+    .searchPage .page-sum {
+
+      padding: 11px 13px;
+
+      color: #999999;
+
+      font-family: \u5b8b\u4f53,Arial;
+
+      font-size: 16px;
+
+    }
+
+    .searchPage .page-go {
+
+      padding: 6px 0;
+
+      color: #999999;
+
+      font-family: \u5b8b\u4f53,Arial;
+
+      font-size: 16px;
+
+      padding: 10px 0\9;
+
+      *padding: 6px 0;
+
+    }
+
+    .searchPage .page-go input {
+
+      width: 50px;
+
+      height: 30px;
+
+      margin: 0 5px;
+
+      padding: 2px 5px;
+
+      border: 1px solid #ccc;
+
+    }
+
+    .searchPage .page-btn {
+
+      margin: 9px 0 5px 5px;
+
+      padding: 5px 10px;
+
+      background: #1fb5ac;
+
+      border-radius: 2px;
+
+      color: #ffffff;
+
+      font-family: Arial, 'Microsoft YaHei';
+
+      font-size: 16px;
+
+      text-decoration: none;
+
+    } 
+
+
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置 <small>app反馈记录</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">反馈记录列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号 </th>
+
+                                    <th>用户名 </th>
+
+                                    <th width="400">反馈内容 </th>
+
+                                    <th>反馈时间 </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+                            <div class="pagination">
+
+                                <a class="prev"><i></i>上一页</a>
+
+                                <a class="current">1</a>
+
+                                <a >2</a>
+
+                                <a>3</a>
+
+                                <a>4</a>
+
+                                <span class="pagination-break">...</span>
+
+                                <a class="ep">15</a>
+
+                                <a class="next">下一页 <i></i></a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="searchPage">
+
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+
+                          <span class="page-go">跳转<input type="text">页</span>
+
+                          <a href="javascript:;" class="page-btn">确定</a>
+
+                        </div>
+
+                        <div claa="am-text-middle">
+
+                           <span>共<span class="allData">15</span>条数据</span> 
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript">
+
+  var pageflag = 1,$feedback = parseInt(sessionStorage.getItem('feedback')) || 0,total_page=0;
+
+  $(function() {
+
+    var startDate = new Date(2014, 11, 20);
+
+    var endDate = new Date(2014, 11, 25);
+
+    var $alert = $('#my-alert');
+
+    $('#my-start').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() > endDate.valueOf()) {
+
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          startDate = new Date(event.date);
+
+          $('#my-startDate').text($('#my-start').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+
+
+    $('#my-end').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() < startDate.valueOf()) {
+
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          endDate = new Date(event.date);
+
+          $('#my-endDate').text($('#my-end').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+  });
+
+    //点击前往某一页的函数
+
+    function go_to_page(page_num){
+
+        $('.page_link').removeClass('active_page');
+
+        $('.page_link').eq(page_num).addClass('active_page');
+
+        $("#dataList").children('tr').css("display","none");
+
+        var start_page=parseInt(15)*parseInt(page_num);
+
+        var end_page=parseInt(15)*parseInt(page_num+1);
+
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+
+        current_page = page_num;
+
+        sessionStorage.setItem('feedback', current_page);
+
+        $feedback = sessionStorage.setItem('feedback', current_page);
+
+
+
+    }
+
+
+
+    //点击上一页的函数
+
+    function previous() {
+
+        new_page = current_page-1;
+
+        if($('.active_page').prev('.page_link').length==true) {
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+
+
+    //点击下一页的函数
+
+    function next() {
+
+        new_page = current_page+1;
+
+        if($('.active_page').next('.page_link').length==true) {
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+    //时间戳转日期的函数
+
+    function changeToDate(datetime) {
+
+    	var date = new Date(parseInt(datetime));
+
+    	var Y = date.getFullYear() + '-',
+
+    	M = (date.getMonth()+1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth()+1) + '-',
+
+    	D = date.getDate() + ' ',
+
+    	h = date.getHours() + ':',
+
+    	m = date.getMinutes() + ':',
+
+    	s = date.getSeconds();
+
+    	return Y+M+D+h+m+s;
+
+    }
+
+    //异步刷新的ajax请求   
+
+    function getList(dataurl,data,changeIndex) {
+
+        $.ajax({
+
+            type:'post',
+
+            url:dataurl,
+
+            data: data,
+
+            success: function(result) {        
+
+                var res = eval(result);
+
+                console.log(res);
+
+                if(res != 2 && res != 3){
+
+                    var listData = ''; //每页出现的数量
+
+                    var total_page = Math.ceil(res.length/15); //得到总页数
+
+                    for(var i = 0; i < res.length; i++){
+
+                    	res[i].feedback_data = changeToDate(res[i].feedback_data);
+
+                        listData+= template('dataModal',res[i]);
+
+                     }
+
+                    document.getElementById('dataList').innerHTML = listData;
+
+                    $('.allData').html(res.length);
+
+                    $('.pagebox').css('display', 'block');
+
+                    if(total_page <= 1) {
+
+                       $('#Pagination').css('display', 'none');
+
+                        $('.searchPage').css('display', 'none');
+
+                    } else { 
+
+                      if(pageflag) {
+
+                          var opts={};opts.current_page = $feedback;
+
+                          $("#Pagination").pagination(total_page, opts);
+
+                          go_to_page($feedback);
+
+                          pageflag = 0;
+
+                      } else {
+
+                          $("#Pagination").pagination(total_page);
+
+                          go_to_page(0);
+
+                          
+
+                      }
+
+                      if(total_page < 5) {
+
+                          $('.searchPage').css('display', 'none');
+
+                      }
+
+                    }
+
+                    
+
+                }else{
+
+                    $('#dataList').find('tr').remove();
+
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+
+                    $('.pagebox').css('display', 'none');
+
+                }
+
+
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("网络状况不佳，请稍后重试！");
+
+            }
+
+        });
+
+    }
+
+    
+
+$(document).ready(function(){
+
+    //加载列表数数据
+
+    getList('<?php echo site_url('/systemSet/SystemSet/ret_feedback');?>','default=1');
+
+})
+
+</script>
+
+<script type="text/html" id="dataModal">   
+
+    <tr class="trClass">
+
+        <td class="am-text-middle"><%= id %></td>
+
+        <td class="am-text-middle"><%= nickname %></td>
+
+        <td class="am-text-middle"><%= content %></td>
+
+        <td class="am-text-middle"><%= feedback_data %></td>
+
+    </tr>
+
 </script>

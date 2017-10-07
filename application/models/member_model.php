@@ -42,6 +42,20 @@ class member_model extends CI_Model{
 
     }
 
+    //返回今天新增用户
+    function new_member_num(){
+        $sql = "SELECT * from hf_user_member where gid='5' and to_days(create_time) = to_days(now())";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
+    //返回昨天新增用户
+    function member_num(){
+        $sql = "SELECT * FROM hf_user_member WHERE gid='5' and TO_DAYS( NOW( ) ) - TO_DAYS( create_time) <= 1";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+
 
 
     //根据用户id返回用户信息

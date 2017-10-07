@@ -14,7 +14,7 @@ class Question extends Default_Controller
 	public $expert = "hf_faqs_expert";//专家
 
 
-	//
+	//23
 	public $view_question_list = "friends/question_list.html";//问题泪飙
 	public $view_question_cates = "friends/question_cates.html";//问题泪飙
 	public $view_question_comment = "friends/question_comment.html";//问题泪飙
@@ -743,10 +743,10 @@ class Question extends Default_Controller
 			$data = $this->input->post();
 
 			//多条件查询
-			$true = $this->Public_model->select_manWhere($this->expert,$data['groupId'],$data['userId']);
-			if(!empty($true)){
-				echo "<script>alert('该类别下，专家以存在！');window.location.href='".site_url('/friends/Question/question_expert')."'</script>";exit;
-			}
+			// $true = $this->Public_model->select_manWhere($this->expert,$data['groupId'],$data['userId']);
+			// if(!empty($true)){
+			// 	echo "<script>alert('该类别下，专家以存在！');window.location.href='".site_url('/friends/Question/question_expert')."'</script>";exit;
+			// }
 
 			
             if($this->Public_model->updata($this->expert,'id',$data['id'],$data)){

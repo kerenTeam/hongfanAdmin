@@ -479,6 +479,26 @@ class System_model extends CI_Model
 
     }
 
+    //邀请码
+    function select_invitation(){
+        $query = $this->db->order_by('create_time','desc')->get('hf_system_invitation');
+        return $query->result_array();
+    }
+     function select_invitation_page($size,$page){
+        $query = $this->db->order_by('create_time','desc')->limit($size,$page)->get('hf_system_invitation');
+        return $query->result_array();
+    }
+
+    function insert($table,$data){
+        return $this->db->insert($table,$data);
+    }
+    function updata($table,$id,$where,$data){
+        return $this->db->where($id,$where)->update($table,$data);
+
+    }
+    function delete($table,$id,$where){
+        return $this->db->where($id,$where)->delete($table);
+    }
 
 
 }

@@ -230,7 +230,7 @@ label.am-u-sm-8, label.am-u-sm-4{
 
                         <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
                             <div class="am-u-sm-4">
-                                运费：￥<?php echo $goods['postAge'];?>     运费税费：<?php echo floor2($goods['postAge']*$suilu);?> 
+                                运费：￥<?php echo $goods['postAge']['postage'];?>     运费税费：<?php echo floor2($goods['postAge']['postage']*$suilu);?> 
                             </div>
                             <div class="am-u-sm-4">
 
@@ -246,11 +246,19 @@ label.am-u-sm-8, label.am-u-sm-4{
 
                             </div>
 
+                              <?php $inter = json_decode($order['PriceCalculation'],true);?>
+
                               <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
 
                             <div class="am-u-sm-4">
 
                                 积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
+                                <br/>
+                                <?php if(isset($inter['Params']['couponData']['coupon_amount'])):?>
+                                优惠卷抵扣金额：￥<?php echo $inter['Params']['couponData']['coupon_amount'];?>
+                            <?php else:?>
+                                优惠卷抵扣金额：￥￥0
+                            <?php endif;?>
 
                             </div> 
 
@@ -259,6 +267,13 @@ label.am-u-sm-8, label.am-u-sm-4{
                             <div class="am-u-sm-4">
 
                                 积分抵用金额：未使用积分
+                                <br/>
+                                <?php if(isset($inter['Params']['couponData']['coupon_amount'])):?>
+                                优惠卷抵扣金额：￥<?php echo $inter['Params']['couponData']['coupon_amount'];?>
+                                <?php else:?>
+
+                                    优惠卷抵扣金额：￥￥￥0
+                                <?php endif;?>
 
                             </div> 
 
@@ -296,7 +311,14 @@ label.am-u-sm-8, label.am-u-sm-4{
 
                             <div class="am-u-sm-4">
 
+                              <?php if(!empty($address)):?>
+
                                地址： <?php echo $address['province'].$address['city'].$address['area'].$address['address'];?>
+                            <?php else:?>
+                                 <?php $address = json_decode($order['buyer_address'],true);?>
+                                地址： <?php echo $address['province'].$address['city'].$address['area'].$address['address'];?>
+
+                            <?php endif;?>
 
                             </div>
 

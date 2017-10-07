@@ -261,9 +261,104 @@ label.am-u-sm-8, label.am-u-sm-4{
                            
 
                         </div>
+                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商品满减规则：</label>
+
+                                 <label class="am-u-sm-4 am-text-left am-u-end">
+
+                                        <?php if(!empty($val['reduction_rule'])):?>
+
+                                            <?php $re = json_decode($val['reduction_rule'],true); foreach($re as $v):?>满<?php echo $v['reachPrice'];?>减<?php echo $v['reducePrice']?>&nbsp;<?php endforeach;?>
+                                        <?php else:?>
+                                            无
+                                        <?php endif;?>
+
+                                </label>
+                        </div>
 
                        <?php endforeach;?>
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
 
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商家满减规则：</label>
+                                 <label class="am-u-sm-4 am-text-left am-u-end">
+
+                                        <?php if(!empty($goods['stores']['store_reduction'])):?>
+
+                                            <?php $re = json_decode($goods['stores']['store_reduction'],true); foreach($re as $v):?>满<?php echo $v['reachPrice'];?>减<?php echo $v['reducePrice']?>&nbsp;<?php endforeach;?>
+                                        <?php else:?>
+                                            无
+                                        <?php endif;?>
+                                </label>
+                        </div>  
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label am-text-right">商家满包邮规则：</label>
+                                 <label class="am-u-sm-5 am-text-left am-u-end">
+
+                                        <?php if(!empty($goods['stores']['mailRules'])):?>
+
+                                            <?php $rusl = json_decode($goods['stores']['mailRules'],true); ?>
+                                            满<?php echo $rusl['maxMoney'];?> 元包邮<br/>
+                                            满<?php echo $rusl['maxNums'];?> 件包邮
+                                        <?php else:?>
+                                            无
+                                        <?php endif;?>
+                                </label>
+                        </div>
+
+
+                         <?php $inter = json_decode($order['PriceCalculation'],true); ?>
+                        <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
+
+                            <div class="am-u-sm-4">
+
+                                积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
+                                <br/>
+                                <?php if(isset($inter['Params']['couponData']['coupon_amount'])):?>
+                                优惠卷抵扣金额：<?php $coupon = $inter['Params']['couponData']['coupon_amount']; echo $inter['Params']['couponData']['coupon_amount'];?>
+                            <?php else:?>
+                                <?php $coupon = '0';?>
+                                优惠卷抵扣金额：0
+                            <?php endif;?>
+
+                            </div> 
+                              <div class="am-u-sm-4">
+
+                                支付金额：￥<?php echo $goods['total_goods_prices'] + $order['fee'] - round($inter['nowIntergal']['storenowIntergal'],2) - $coupon;?>
+
+                            </div>
+
+                            <?php else:?>
+
+                            <div class="am-u-sm-4">
+
+                                积分抵用金额：未使用积分
+
+                            </div> 
+
+                              <div class="am-u-sm-4">
+
+                                支付金额：￥<?php echo $goods['total_goods_prices'] + $order['fee'];?>
+
+                            </div>
+
+                            <?php endif;?>
+                        <?php if(isset($inter['nowIntergal'])):?>
+
+
+                        <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
+
+                            <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
+
+                            <label class="am-u-sm-8 am-text-middle">
+
+                               <?php echo $order['amount'] - $inter['nowIntergal']['intergral'];?>
+
+                            </label>
+
+                        </div>
+                    <?php else:?>
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4" style="clear: both;">
 
                             <label for="user-email" class="am-u-sm-4 am-form-label">订单总金额：</label>
@@ -275,6 +370,7 @@ label.am-u-sm-8, label.am-u-sm-4{
                             </label>
 
                         </div>
+                    <?php endif;?>
 
                         <div class="am-form-group am-u-sm-12 am-u-md-4 am-u-lg-4">
 

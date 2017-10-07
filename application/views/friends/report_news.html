@@ -212,8 +212,6 @@ padding: 5px 6px!important;
 
                                     <th>编号</th>
 
-                                    <th>所属圈子</th>
-
                                     <th>发布人</th>
 
                                     <th>内容</th>
@@ -240,7 +238,6 @@ padding: 5px 6px!important;
                                     <?php foreach($lists as $val):?>
                                         <tr>
                                             <td><?php echo $val['id'];?></td>
-                                            <td><?php echo $val['name'];?></td>
                                             <td><?php echo $val['nickname'];?></td>
                                           
                                             <td><?php echo $val['content'];?></td>
@@ -255,8 +252,9 @@ padding: 5px 6px!important;
                                             <td><?php echo $val['create_time'];?></td>
                                             <td>
                                                <div class="tpl-table-black-operation">
+                                                    <a href="<?php echo site_url('/friends/Friends/edit_news_state/'.$val['id'].'/4');?>"  class="am-btn am-btn-warning">恢复正常显示</a>
                                                       
-                                                
+                                                    <a href="<?php echo site_url('/friends/Friends/edit_news_state/'.$val['id'].'/4');?>"  class="tpl-table-black-operation-green">恢复正常显示</a>
                                                     <a href="<?php echo site_url('/friends/Friends/del_friends_news/'.$val['id'].'/'.$val['spaceType']);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
                                                         <i class="am-icon-trash"></i> 删除
 
