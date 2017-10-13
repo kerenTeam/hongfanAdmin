@@ -214,59 +214,70 @@ class Finance extends Default_Controller {
 
             $seller = trim($_POST['seller']);
 
-            $time = trim($_POST['start_time']) .' 00:00:00';
+            $start_time = trim($_POST['start_time']);
 
-            $endtime = trim($_POST['end_time']) . ' 23:59:59';
+            $end_time = trim($_POST['end_time']);
 
             $sear = trim($_POST['sear']);
+
+            $paytype = trim($_POST['paytype']);
+
+            if(!empty($start_time)){
+                $time = $start_time .' 00:00:00';
+                $endtime = $end_time . ' 23:59:59';
+            }
 
 
 
             $res= '';
 
-            if(!empty($state) && empty($seller) && empty($time) && empty($sear)){
+            if(!empty($state) && empty($seller) && empty($time) && empty($sear) && empty($paytype)){
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
-                $this->db->from('hf_mall_order as a');
-
-                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
-                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+        $this->db->from('hf_mall_order as a');
+        $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+        $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+        $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
-            }elseif(empty($state ) && !empty($seller) && empty($time) && empty($sear)){
+            }elseif(empty($state ) && !empty($seller) && empty($time) && empty($sear) && empty($paytype)){
 
                 if($seller == '-1'){
 
-                    $seller = '0';
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                    $this->db->from('hf_mall_order as a');
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
+                    $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
+
+                }else{
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                    $this->db->from('hf_mall_order as a');
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                    $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
                 }
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+             
 
+            }elseif(empty($state ) && empty($seller) && !empty($time) && empty($sear) && empty($paytype)){
+
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
                 $this->db->from('hf_mall_order as a');
-
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-
-                $query = $this->db->where('order_status !=','1')->where('seller',$seller)->order_by('a.create_time','desc')->get();
-
-                $res = $query->result_array();
-
-            }elseif(empty($state ) && empty($seller) && !empty($time) && empty($sear)){
-
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
-                $this->db->from('hf_mall_order as a');
-
-                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
-                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
@@ -274,171 +285,609 @@ class Finance extends Default_Controller {
 
 
 
-            }elseif(empty($state ) && empty($seller) && empty($time) && !empty($sear)){
+            }elseif(empty($state ) && empty($seller) && empty($time) && !empty($sear) && empty($paytype)){
 
            
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
                 $this->db->from('hf_mall_order as a');
-
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
+            }elseif(empty($state ) && empty($seller) && empty($time) && empty($sear) && !empty($paytype)){
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                $query = $this->db->where('order_status !=','1')->where('d.payType',$paytype)->get();
+
+                $res = $query->result_array();
             }
 
             //二个    
 
-            elseif(!empty($state ) && !empty($seller) && empty($time) && empty($sear)){
+            elseif(!empty($state ) && !empty($seller) && empty($time) && empty($sear) && empty($paytype)){
 
                  if($seller == '-1'){
 
-                    $seller = '0';
+                     
+                     $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                    $this->db->from('hf_mall_order as a');
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
+                    $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('a.order_type','0')->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
+
+                }else{
+
+                     $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                    $this->db->from('hf_mall_order as a');
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                    $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('seller',$seller)->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
                 }
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+            }elseif(!empty($state ) && empty($seller) && !empty($time) && empty($sear) && empty($paytype)){
 
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
                 $this->db->from('hf_mall_order as a');
-
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-
-                $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('seller',$seller)->order_by('a.create_time','desc')->get();
-
-                $res = $query->result_array();
-
-            }elseif(!empty($state ) && empty($seller) && !empty($time) && empty($sear)){
-
-                 if($seller == '-1'){
-
-                    $seller = '0';
-
-                }
-
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
-                $this->db->from('hf_mall_order as a');
-
-                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
-                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
-            }elseif(!empty($state ) && empty($seller) && empty($time) && !empty($sear)){
+            }elseif(!empty($state ) && empty($seller) && empty($time) && !empty($sear) && empty($paytype)){
 
-                 if($seller == '-1'){
+             
 
-                    $seller = '0';
-
-                }
-
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
                 $this->db->from('hf_mall_order as a');
-
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('order_status',$state)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
-            }elseif(empty($state ) && !empty($seller) && !empty($time) && empty($sear)){
-
-           
-
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+            }elseif(!empty($state) && empty($seller) && empty($time) && empty($sear) && !empty($paytype)){
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
                 $this->db->from('hf_mall_order as a');
 
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                $query = $this->db->where('order_status !=','1')->where('order_status',$state)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+
+                $res = $query->result_array();
+
+            }elseif(empty($state ) && !empty($seller) && !empty($time) && empty($sear) && empty($paytype)){
+                if($seller == '-1'){
+
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                    $this->db->from('hf_mall_order as a');
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                    $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
+                }
 
-            }elseif(empty($state ) && !empty($seller) && empty($time) && !empty($sear)){
+            }elseif(empty($state ) && !empty($seller) && empty($time) && !empty($sear) && empty($paytype)){
+                if($seller == '-1'){
 
-           
-
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
-
+                  $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
                 $this->db->from('hf_mall_order as a');
-
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
-
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
-                $query = $this->db->where('order_status !=','1')->where('seller',$seller)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
-            }elseif(empty($state ) && empty($seller) && !empty($time) && !empty($sear)){
-
+                }else{
            
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+
+                $res = $query->result_array();
+                }
+
+            }elseif(empty($state ) && !empty($seller) && empty($time) && empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                      $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                    $this->db->from('hf_mall_order as a');
+
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                    $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+
+                    $res = $query->result_array();
+
+                }else{
+           
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
                 $this->db->from('hf_mall_order as a');
 
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+
+                $res = $query->result_array();
+                }
+
+            }elseif(empty($state ) && empty($seller) && !empty($time) && !empty($sear) && empty($paytype)){
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                $this->db->from('hf_mall_order as a');
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
                 $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
 
-            }else{   
+            }elseif(empty($state ) && empty($seller) && !empty($time) && empty($sear) && !empty($paytype)){
 
-                $this->db->select('a.*,b.store_name,c.username,c.nickname');
+           
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
                 $this->db->from('hf_mall_order as a');
 
                 $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
 
-                $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
+                $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+
+                $res = $query->result_array();  
+
+            }elseif(empty($state ) && empty($seller) && empty($time) && !empty($sear) && !empty($paytype)){
+
+           
+
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+
+                $query = $this->db->where('order_status !=','1')->like('a.order_UUID',$sear,'both')->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
 
                 $res = $query->result_array();
-
-            }
-
-
-
             //三个
+            }else if(!empty($state ) && !empty($seller) && !empty($time) && empty($sear) && empty($paytype)){
+                if($seller == '-1'){
 
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                    $this->db->from('hf_mall_order as a');
+
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+                   
+                    $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+                    $res = $query->result_array();
+
+                }else{
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(!empty($state ) && !empty($seller) && empty($time) && !empty($sear) && empty($paytype)){
+                if($seller == '-1'){
+
+                   $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                    $this->db->from('hf_mall_order as a');
+
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+                   
+                    $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->like('a.order_UUID',$sear,"both")->order_by('a.create_time','desc')->get();
+                    $res = $query->result_array();
+
+                }else{
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->like('a.order_UUID',$sear,"both")->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(!empty($state ) && !empty($seller) && empty($time) && empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                   $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                     $this->db->from('hf_mall_order as a');
+
+                    $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                    $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                    $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+                   
+                    $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                    $res = $query->result_array();  
+
+                }else{
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(!empty($state ) && empty($seller) && !empty($time) && !empty($sear) && empty($paytype)){
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                
+            }else if(!empty($state ) && empty($seller) && !empty($time) && empty($sear) && !empty($paytype)){
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                
+            }else if(!empty($state ) && empty($seller) && empty($time) && !empty($sear) && !empty($paytype)){
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                
+            }else if(empty($state ) && !empty($seller) && !empty($time) && !empty($sear) && empty($paytype)){
+                if($seller == '-1'){
+
+                      $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+               
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+               
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                 }
+
+            }else if(empty($state ) && !empty($seller) && !empty($time) && empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(empty($state ) && empty($seller) && !empty($time) && !empty($sear) && !empty($paytype)){
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+             //四个   
+            }else if(!empty($state ) && !empty($seller) && !empty($time) && !empty($sear) && empty($paytype)){
+                if($seller == '-1'){
+
+                   $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+               
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+               
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                 }
+
+            }else if(!empty($state ) && !empty($seller) && !empty($time) && empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                  $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(!empty($state ) && empty($seller) && !empty($time) && !empty($sear) && !empty($paytype)){
+                $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }else if(!empty($state ) && !empty($seller) && empty($time) && !empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+           
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+           
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                     }
+            }else if(empty($state ) && !empty($seller) && !empty($time) && !empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                   $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+                
+            //五个
+            }else if(!empty($state ) && !empty($seller) && !empty($time) && !empty($sear) && !empty($paytype)){
+                if($seller == '-1'){
+
+                    $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+
+                }else{
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+                
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.seller',$seller)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->where('d.payType',$paytype)->like('a.order_UUID',$sear,'both')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+                }
+            }else if(empty($state ) && empty($seller) && empty($time) && empty($sear) && empty($paytype)){
+                 $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+                $this->db->from('hf_mall_order as a');
+
+                $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+                $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+               
+                $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
+                $res = $query->result_array();
+            }
 
 
             //四个
 
-
-
-    
-
-
-
-
-
-
-
-
-
-          // var_dumP($res);
 
             if(!empty($res)){
 
@@ -475,6 +924,8 @@ class Finance extends Default_Controller {
         if($_POST){
 
             $storeid = $this->input->post('mollseller');
+
+            $state = $this->input->post('state');
 
             $start_time = $this->input->post('begin_time');
 
@@ -546,7 +997,13 @@ class Finance extends Default_Controller {
 
                     'N' => '支付方式',
 
-                    'O' => '运输方式'
+                    'O' => '运输方式',
+                    'P' => '销售金额',
+                    'Q' => '支付金额',
+                    'R' => '积分抵用金额',
+                    'S' => '优惠卷抵用金额',
+                    'T' => '成交时间',
+                    'U' => '订单状态',
 
                 );
 
@@ -558,31 +1015,35 @@ class Finance extends Default_Controller {
 
                     'B' => '订单编号',
 
-                    'C' => '成交时间',
+                    'C' => '支付订单号',
+                    'D' => '订单状态',
 
-                    'D' => '商品编码',
+                    'E' => '成交时间',
 
-                    'E' => '商品名称',
+                    'F' => '商品编码',
 
-                    'F' => '单价',
+                    'G' => '商品名称',
 
-                    'G' => '数量',
+                    'H' => '单价',
 
-                    'H' => '总价',
+                    'I' => '数量',
 
-                    'I' => '成交价格',
+                    'J' => '总价',
 
-                    'J' => '邮资',
+                    'K' => '成交价格',
 
-                    'K' => '成交总额',
+                    'L' => '邮资',
 
-                    'L' => '佣金比率',
+                    'M' => '积分抵用金额',
+                    'N' => '优惠卷抵用金额',
+                    'O' => '商家修改价格',
+                    'P' => '商家修改价格原因',
 
-                    'M' => '佣金总额',
 
-                    'N' => '结算金额',
-
-                    'O' => '备注'
+                    'Q' => '佣金比率',
+                    'R' => '佣金总额',
+                    'S' => '结算金额',
+                    'T' => '备注'
 
                 );
 
@@ -608,7 +1069,16 @@ class Finance extends Default_Controller {
 
             //获取要导出的订单
 
-            $list = moll_order_list($storeid,$start_time,$end_time);
+            if(!empty($start_time)){
+                $time = $start_time . ' 00:00:00';
+                $endtime = $end_time . ' 23:59:59';
+            }else{
+                $time = '';
+                $endtime = '';
+            }
+
+
+            $list = moll_order_list($storeid,$time,$endtime,$state);
 
 
 
@@ -632,7 +1102,7 @@ class Finance extends Default_Controller {
 
                         //地址
 
-                        $address = $this->Integral_model->get_user_address($booking['buyer_address']);
+                        $address = json_decode($booking['buyer_address'],true);
 
                         //省份证
 
@@ -678,11 +1148,66 @@ class Finance extends Default_Controller {
 
                             $this->excel->getActiveSheet()->setCellValue('M' . $i, $good);
 
-                            $this->excel->getActiveSheet()->setCellValue('N' . $i, 'allinpay');
+                            $this->excel->getActiveSheet()->setCellValue('N' . $i, $booking['payType']);
 
                             $this->excel->getActiveSheet()->setCellValue('O' . $i, 'EMS');
+                            $coupon = json_decode($booking['PriceCalculation'],true);
 
-                        
+                            $zong = round($user['total_goods_prices'],2);
+                            if(isset($coupon['Params']['couponData']['coupon_amount'])){
+
+                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            }else{
+                                $coupon_amount = '0';
+                            }   
+                            if(isset($coupon['nowIntergal']['storenowIntergal'])){
+
+                            $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+                            }else{
+                                $nowIntergal = '0';
+                            }
+                            $zhi = $zong - $coupon_amount - $nowIntergal;
+
+                            $this->excel->getActiveSheet()->setCellValue('P' . $i, round($user['total_goods_prices'],2));
+
+
+                            $this->excel->getActiveSheet()->setCellValue('Q' . $i, $zhi);
+
+
+                            $this->excel->getActiveSheet()->setCellValue('R' . $i,$nowIntergal);
+                       
+                            $this->excel->getActiveSheet()->setCellValue('S' . $i,$coupon_amount);
+                            $this->excel->getActiveSheet()->setCellValue('T' . $i, $booking['create_time']);
+                            switch ($booking['order_status']) {
+                                   case '2':
+                                        $state = '已支付';
+                                       break;
+                                       case '3':
+                                        $state = '已发货';
+                                       break;
+                                       case '4':
+                                        $state = '已收货';
+                                       break;
+                                       case '5':
+                                        $state = '已评价';
+                                       break;
+                                       case '6':
+                                        $state = '求退货';
+                                       break;
+                                       case '7':
+                                        $state = '退货中';
+                                       break;
+                                       case '8':
+                                        $state = '退款成功';
+                                       break;
+                                       case '9':
+                                        $state = '其他';
+                                       break;  
+                                    case '10':
+                                        $state = '等待退款';
+                                       break;
+                               }
+                               $this->excel->getActiveSheet()->setCellValue('U' . $i, $state);
 
                     }
 
@@ -693,9 +1218,6 @@ class Finance extends Default_Controller {
                     foreach($list as $book){
 
                         $i++;
-
-                      
-
                         $goods = json_decode($book['goods_data'],true);
 
                         
@@ -729,34 +1251,76 @@ class Finance extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('A' . $i, $goods['stores']['store_name']);
 
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['order_UUID']);
+                       switch ($book['order_status']) {
+                           case '2':
+                                $state = '已支付';
+                               break;
+                               case '3':
+                                $state = '已发货';
+                               break;
+                               case '4':
+                                $state = '已收货';
+                               break;
+                               case '5':
+                                $state = '已评价';
+                               break;
+                               case '6':
+                                $state = '求退货';
+                               break;
+                               case '7':
+                                $state = '退货中';
+                               break;
+                               case '8':
+                                $state = '退款成功';
+                               break;
+                               case '9':
+                                $state = '其他';
+                               break;  
+                            case '10':
+                                $state = '等待退款';
+                               break;
+                       }
 
-                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['create_time']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $state);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $book['create_time']);
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $good);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $name);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $price);
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $num);
 
+                        $coupon = json_decode($book['PriceCalculation'],true);
 
+                        $zong = round($goods['total_goods_prices'],2);
+                        if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                        }else{
+                            $coupon_amount = '0';
+                        }   
+                        if(isset($coupon['nowIntergal']['storenowIntergal'])){
 
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $good);
+                        $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+                        }else{
+                            $nowIntergal = '0';
+                        }
+                        $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
 
-                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $name);
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $zong);
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $zhi);
+                        if(isset($goods['postAge']['postage'])){
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['postAge']['postage']);
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, '0');
 
-                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $price);
-
-                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $num);
-
-                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $book['amount']);
-
-                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $goods['total_goods_prices']- $goods['postAge']);
-
-                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $goods['postAge']);
-
-                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['total_goods_prices']);
-
-                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['stores']['points']);
-
-                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $points);
-
-                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $goods['total_goods_prices'] - $points);
-
-                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '');
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $nowIntergal);
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $coupon_amount);
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, $book['fee']);
+                        $this->excel->getActiveSheet()->setCellValue('P' . $i, $book['fee_name']);
+                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, $goods['stores']['points']/100);
+                        $this->excel->getActiveSheet()->setCellValue('R' . $i, $points);
+                        $this->excel->getActiveSheet()->setCellValue('S' . $i, $zong - $points);
+                        $this->excel->getActiveSheet()->setCellValue('T' . $i, '');
 
                     }
 

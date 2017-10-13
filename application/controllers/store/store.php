@@ -2195,23 +2195,29 @@ class Store extends Default_Controller {
 
                     'B' => '订单编号',
                     'C' => '关联订单号',
+                    'D' => '订单状态',
 
+                    'E' => '销售时间',
 
-                    'D' => '销售时间',
+                    'F' => '所属大类',
 
-                    'E' => '所属大类',
+                    'G' => '商家编号',
 
-                    'F' => '商家编号',
+                    'H' => '商家名称',
 
-                    'G' => '商家名称',
+                    'I' => '单品名称(多个、隔开)',
 
-                    'H' => '单品名称(多个、隔开)',
+                    'J' => '销售单品数量(多个、隔开)',
 
-                    'I' => '销售单品数量',
+                    'K' => '单品各销售金额(多个、隔开)',
 
-                    'J' => '单品各销售金额',
-
-                    'K' => '成交总额',
+                    'L' => '销售金额',
+                    'M' => '支付金额',
+                    'N' => '积分抵用金额',
+                    'O' => '优惠卷抵用金额',
+                    'P' => '商家修改价格',
+                    'Q' => '商家修改价格原因',
+                    'R' => '收货地址',
 
                 );
             //设置excel 表头
@@ -2277,33 +2283,94 @@ class Store extends Default_Controller {
 
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['order_UUID']);
+                         switch ($book['order_status']) {
+                                   case '1':
+                                        $state = '未支付';
+                                       break;
+                                   case '2':
+                                        $state = '已支付';
+                                       break;
+                                       case '3':
+                                        $state = '已发货';
+                                       break;
+                                       case '4':
+                                        $state = '已收货';
+                                       break;
+                                       case '5':
+                                        $state = '已评价';
+                                       break;
+                                       case '6':
+                                        $state = '求退货';
+                                       break;
+                                       case '7':
+                                        $state = '退货中';
+                                       break;
+                                       case '8':
+                                        $state = '退款成功';
+                                       break;
+                                       case '9':
+                                        $state = '其他';
+                                       break;  
+                                    case '10':
+                                        $state = '等待退款';
+                                       break;
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $state);
 
 
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $book['create_time']);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $book['create_time']);
 
 
                         if($book['order_type'] == '1'){
-                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '超市优选');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '超市优选');
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '特色馆');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '特色馆');
                         }
 
-                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $book['seller']);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $book['seller']);
 
-                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $goods['stores']['store_name']);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $goods['stores']['store_name']);
 
-                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $name);
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $name);
 
-                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $num);
-                        $this->excel->getActiveSheet()->setCellValue('J' . $i,$price);
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $num);
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i,$price);
+
+                        $coupon = json_decode($book['PriceCalculation'],true);
+
+                        $zong = round($goods['total_goods_prices'],2);
+                        if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                        }else{
+                            $coupon_amount = '0';
+                        }   
+                        if(isset($coupon['nowIntergal']['storenowIntergal'])){
+
+                        $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+                        }else{
+                            $nowIntergal = '0';
+                        }
+                        $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
+
+
 
                         if($book['order_status'] == '8'){
-                            $this->excel->getActiveSheet()->setCellValue('K' . $i, '-'.$goods['actualPrice']);
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, '-'.$zong);
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['actualPrice']);
-
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $zong);
                         }
 
+
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $zhi);
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $nowIntergal);
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, $coupon_amount);
+                        $this->excel->getActiveSheet()->setCellValue('P' . $i, $book['fee']);
+                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, $book['fee_name']);
+
+
+                        $address = json_decode($book['buyer_address'],true);
+
+                        $this->excel->getActiveSheet()->setCellValue('R' . $i,$address['province'].'-'.$address['city'].'-'.$address['city'].'-'.$address['area'].'-'.$address['address']);
 
 
                     }
@@ -2330,7 +2397,7 @@ class Store extends Default_Controller {
 
 
 
-            $filename = 'ImportOrder.xlsx'; //save our workbook as this file name
+            $filename = 'ImportOrder.xls'; //save our workbook as this file name
 
            /// var_dump($filename);
 

@@ -230,8 +230,6 @@ class Api_goods extends CI_Controller
                 $ret = curl_post($sdqc,$data);
 
             }else {
-
-
                 if($a['result_code'] == "SUCCESS"){
 
                     $data['wechatReturn'] = $pay_data;

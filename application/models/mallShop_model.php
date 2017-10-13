@@ -489,10 +489,11 @@ class MallShop_model extends CI_Model
 
     //返回所有以支付订单
     function get_moll_order(){
-        $this->db->select('a.*,b.store_name,c.username,c.nickname');
+        $this->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
         $this->db->from('hf_mall_order as a');
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+        $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
         $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
         return $query->result_array();
     }

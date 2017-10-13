@@ -136,7 +136,17 @@ td div div p {
                             </select>
                         </div>
                     </div>
-                 
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">支付方式:</label>
+                        <div class="am-u-sm-9">
+                            <select id="paytype" name="paytype">
+                                <option value="">-=请选择一项=-</option>
+                                <!--<option value="1">未支付</option>-->
+                                <option value="alipay">支付宝</option>
+                                <option value="wxpay">微信</option>
+                            </select>
+                        </div>
+                    </div>
                   
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end">
                         <button type="button" class="am-btn am-btn-secondary am-btn-xs searchOrder"><i class="am-icon-search"></i> 查询</button>
@@ -157,7 +167,7 @@ td div div p {
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
                                         <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
                                         <div class="am-u-sm-9 am-u-end">
-                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
+                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}" required>
                                                 <option value="">请选择/搜索</option>
                                                 <option value="-2">全部订单</option>
                                                 <option value="-1">爱购订单</option>
@@ -165,18 +175,26 @@ td div div p {
                                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                                 <?php endforeach;?>
                                             </select>
+
                                         </div>
+                                           <small class="am-u-sm-1 red redtips12" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                <small class="am-u-sm-1 green blacktips12" style="display: none;"><i class="am-icon-check"></i></small>
                                     </div>
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
-                                        <label class="am-u-sm-2 am-form-label">订单状态：<span class="red">*</span>：</label>
+                                        <label class="am-u-sm-2 am-form-label">订单状态：</label>
                                         <div class="am-u-sm-9 am-u-end">
-                                            <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
-                                                <option value="">请选择/搜索</option>
-                                                <option value="-2">全部订单</option>
-                                                <option value="-1">爱购订单</option>
-                                                <?php foreach($store as $val): ?>
-                                                <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
-                                                <?php endforeach;?>
+                                            <select id="mollseller" name="state">
+                                                <option value="">请选择状态</option>
+                                                <option value="2">已支付</option>
+                                                <option value="3">已发货</option>
+                                                <option value="4">已收货</option>
+                                                <option value="5">已评价</option>
+                                                <option value="6">求退货</option>
+                                                <option value="7">退货中</option>
+                                                <option value="8">退款成功</option>
+                                                <option value="9">其他</option>
+                                                <option value="10">等待退款</option>
                                             </select>
                                         </div>
                                     </div>
@@ -213,7 +231,8 @@ td div div p {
                                 <tr>
                                     <th>订单编号 </th>
                                     <th>支付订单号 </th>
-                                    <th width="30%" class="am-text-center">购买商品 </th>
+                                    <th>支付方式 </th>
+                                    <th class="am-text-center">购买商品 </th>
                                     <th>订单总额 </th>
                                     <th>积分抵扣金额</th>
                                     <th>买家 </th>
@@ -493,10 +512,10 @@ $(document).ready(function(){
     }
     //点击搜索
     $('.searchOrder').click(function(){
-        var order_status = $('#orderState option:selected').val(),seller= $('#seller option:selected').val(),sear= $('#sear').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-          console.log(begin_date,end_date,seller,order_status,sear);
-        getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller+ '&sear='+ sear +"&start_time="+ begin_date + '&end_time=' + end_date);
-        sessionStorage.setItem('isfinance_order', 1);
+        var order_status = $('#orderState option:selected').val(),seller= $('#seller option:selected').val(),sear= $('#sear').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val(),paytype=$('#paytype option:selected').val();
+          console.log('order_status='+ order_status +"&seller="+ seller+ '&paytype='+paytype + '&sear='+ sear +"&start_time="+ begin_date + '&end_time=' + end_date);
+       getList('<?php echo site_url('/finance/Finance/search_mollOrder');?>','order_status='+ order_status +"&seller="+ seller+ '&paytype='+paytype + '&sear='+ sear +"&start_time="+ begin_date + '&end_time=' + end_date);
+       // sessionStorage.setItem('isfinance_order', 1);
         
     });
    
@@ -508,11 +527,12 @@ $(document).ready(function(){
     <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
         <td class="am-text-middle"><%= order_id %></td>
         <td class="am-text-middle"><%= order_UUID %></td>
+        <td class="am-text-middle"><%= payType %></td>
         <td class="am-text-middle">
         <% for(var j = 0; j < goods_data.goods_Data.length; j++) {%>    
             <div class="am-u-sm-12">
                 <div class="am-u-sm-10 smallSize">
-                    <p class="goodsTitle"><%= goods_data.goods_Data[j].title %></p>
+                    <p class="goodsTitle"><%= goods_data.goods_Data[j].title.substr(0,15) %>...</p>
                     <p class="gray">
                         <% if(goods_data.goods_Data[j].stend1) { %>
                         <span><%= goods_data.goods_Data[j].stend1 %>:

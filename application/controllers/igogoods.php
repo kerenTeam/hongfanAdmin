@@ -42,6 +42,8 @@ class Igogoods extends CI_Controller
            $goods = json_decode($post,true);
            $goods_list =  array_values($goods['data']['lists']);
            $a =  insert_db($goods_list);
+           // echo "<pre>";
+           // var_dump($a);
 
         }
     

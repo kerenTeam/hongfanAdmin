@@ -236,6 +236,7 @@ td img{
                                     <th class="brand">购买价格</th>
                                     <th class="brand">领取数</th>
                                     <th class="brand">核销数</th>
+                                    <th class="brand">使用数</th>
 
                                     <th>操作</th>
 
@@ -452,6 +453,12 @@ $(function() {
             var dataId=$(this).attr('data-id');
 
             $(this).attr("href","<?php echo site_url('/electronic/Electronic/afterSales/"+ dataId +"');?>");
+
+        }); 
+        $('.receive').click(function(){//查看领取
+            var dataId=$(this).attr('data-id');
+
+            $(this).attr("href","<?php echo site_url('/electronic/Electronic/coupon_electronic/"+ dataId +"');?>");
 
         });
 
@@ -693,6 +700,11 @@ $(document).ready(function(){
             <td>0</td>
         <%}else{%>
             <td><%= he%></td>
+        <%}%> 
+        <% if(receive == ''){%>
+            <td>0</td>
+        <%}else{%>
+            <td><%= receive%></td>
         <%}%>
     
     
@@ -701,6 +713,11 @@ $(document).ready(function(){
         <td class="am-text-middle">
 
             <div class="tpl-table-black-operation">
+                <a data-id="<%= id%>" class="receive">
+
+                    <i class="am-icon-eye"></i> 查看领取信息
+
+                </a>
 
                 <a data-id="<%= id%>" class="afterSales">
 

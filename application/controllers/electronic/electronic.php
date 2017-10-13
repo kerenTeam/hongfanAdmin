@@ -37,6 +37,10 @@ class Electronic extends Default_Controller {
     public $view_annals = "electronic/annals.html";
     public $view_editAnnals = "electronic/edit_annals.html";
 
+    //优惠卷领取数
+    public $view_coupon_electronic = 'electronic/coupon_electronic.html';
+
+
 
     function __construct()
 
@@ -81,6 +85,8 @@ class Electronic extends Default_Controller {
                  $list[$key]['he'] = count($this->Activity_model->get_WriteNum($value['id']));
                  //返回领取数
                  $list[$key]['lin'] = count($this->Activity_model->get_ReceiveNum($value['id']));
+
+                 $list[$key]['receive'] = count($this->Activity_model->search_receive($value['id'],'0'));
             }
 
             if(empty($list)){
@@ -1187,6 +1193,216 @@ class Electronic extends Default_Controller {
             $this->load->view('404.html');
         }
     }
+
+
+    //优惠卷领取信息
+    function coupon_electronic(){
+        //
+        $id = intval($this->uri->segment('4'));
+        if( $id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $data['id'] = $id;
+            //获取领取数
+            $data['lin'] = $this->Activity_model->receive_coupon($id);
+            //获取已使用
+            $data['receive'] =  $this->Activity_model->search_receive($id,'0');
+
+
+            $data['page']= $this->view_coupon_electronic;
+
+            $data['menu'] = array('moll','electronicList');
+
+            $this->load->view('template.html',$data);
+        }        
+    }
+
+    //返回领取信息列表
+    function receive_coupon(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $list = $this->Activity_model->receive_coupon($id);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
+
+
+        }else{
+            echo "2";
+        }
+    }
+
+    //搜索优惠卷领取信息
+    function search_receive(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $state = $this->input->post('state');
+
+            $list = $this->Activity_model->search_receive($id,$state);
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
+
+        }else{
+            echo "2";
+        }
+    }
+
+    //删除领取信息
+    function del_receive(){
+        if($_POST){
+            $id = $this->input->post('id');
+            if($this->Activity_model->del_receive($id)){
+               $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."删除了一个优惠卷领取信息，编号是：".$id,
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+                echo "1";
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
+
+
+    //导出领取信息
+    function dow_receive_coupom(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $state = $this->input->post('state');
+            if(!empty($state)){
+                $list = $this->Activity_model->search_receive($id,$state);
+            }else{
+                $list = $this->Activity_model->receive_coupon($id);
+            }
+
+            if(!empty($list)){
+                    $this->load->library('excel');
+
+                    $this->excel->setActiveSheetIndex(0);
+
+                    //name the worksheet
+
+                    $this->excel->getActiveSheet()->setTitle('coupon');
+
+                    $arr_title = array(
+
+                        'A' => '编号',
+
+                        'B' => '领取用户',
+
+                        'C' => '用户电话',
+
+                        'D' => '领取时间',
+
+                        'E' => '使用状态'
+                    );
+
+                     //设置excel 表头
+
+                    foreach ($arr_title as $key => $value) {
+
+                        $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                       $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                    }
+
+                    $i = 1;
+
+                    //查询数据库得到要导出的内容
+
+                   // $bookings = $this->Shop_model->shop_list($id);
+
+
+                    foreach ($list as $booking) {
+
+                        $i++;
+                       
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_coupon_id']);
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['createTime']);
+                        if($booking['user_coupon_state'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '未使用');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '已使用');
+                        }
+                    }
+
+                    
+                    //获取卷信息
+                    $coupon = $this->Activity_model->get_electr_info($id);
+
+
+                    $filename = $coupon['title'].'-'.$coupon['name'].'.xls'; //save our workbook as this file name
+
+
+
+                    header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                    header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                    header('Cache-Control: max-age=0'); //no cache
+
+
+
+                     $log = array(
+
+                        'userid'=>$_SESSION['users']['user_id'],  
+
+                        "content" => $_SESSION['users']['username']."导出了优惠卷领取信息",
+
+                        "create_time" => date('Y-m-d H:i:s'),
+
+                        "userip" => get_client_ip(),
+
+                    );
+
+                    $this->db->insert('hf_system_journal',$log);
+
+
+
+
+
+                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                    $objWriter->save('php://output');
+            }else{
+                echo "<script>alert('暂无核销信息！');window.history.go(-1);</script>";
+            }
+
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+
+
+
+
 
 
 }

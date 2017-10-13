@@ -23,6 +23,9 @@ class Activity_model extends CI_Model
     //县志
     public $annals = "hf_city_annals";
 
+    //用户卡卷
+    public $usercoupon = "hf_user_coupon";
+
 
 
     function __construct()
@@ -80,7 +83,7 @@ class Activity_model extends CI_Model
 
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
 
-        $query = $this->db->where('a.city !=','0')->order_by('id','desc')->get();
+        $query = $this->db->order_by('id','desc')->get();
 
         return $query->result_array();
 
@@ -363,7 +366,33 @@ class Activity_model extends CI_Model
     }
 
 
-    //
+    //返回领取记录
+    function receive_coupon($id){
+        $this->db->select('a.*,c.nickname,c.phone');
+
+        $this->db->from('hf_user_coupon as a');
+
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+
+        $query = $this->db->where('a.store_coupon_id',$id)->order_by('a.user_coupon_id','desc')->get();
+        return $query->result_array();
+    }
+    //搜索领取记录
+    function search_receive($id,$state){
+        $this->db->select('a.*,c.nickname,c.phone');
+
+        $this->db->from('hf_user_coupon as a');
+
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+
+        $query = $this->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
+        return $query->result_array();
+    }
+
+    //删除领取记录
+    function del_receive($id){
+        return $this->db->where('user_coupon_id',$id)->delete('hf_user_coupon');
+    }
 
 
 }

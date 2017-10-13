@@ -1727,75 +1727,316 @@ function search_store_list($yetai,$state,$floor,$berth,$sear,$type){
 
 //财务导出订单
 
-function moll_order_list($storeid,$time,$endtime){
+function moll_order_list($storeid,$time,$endtime,$state){
 
       $CI = &get_instance();
 
       $res= '';
 
-      if(empty($time)){
+      if(!empty($time) && empty($state)){
+        if($storeid == '-2'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-            if($storeid == '-2'){
+            $CI->db->from('hf_mall_order as a');
 
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `order_type` != '0' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `order_type` != '0' ORDER BY `create_time` DESC";
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-                $query = $CI->db->query($sql);
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type !=','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
-                $res = $query->result_array();
+            $res = $query->result_array();
 
-            }elseif($storeid == '-1'){
+        }elseif($storeid == '-1'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' ORDER BY `create_time` DESC";
+            $CI->db->from('hf_mall_order as a');
 
-                $query = $CI->db->query($sql);
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-                $res = $query->result_array();
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
-            }else{
+            $res = $query->result_array();
+        }else{
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `seller` = '$storeid' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `seller` = '$storeid' ORDER BY `create_time` DESC";
+            $CI->db->from('hf_mall_order as a');
 
-                $query = $CI->db->query($sql);
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-              //  $query = $CI->db->where('order_status =','4,5')->where('seller',$storeid)->order_by('a.create_time','desc')->get();
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
-                $res = $query->result_array();
+            $res = $query->result_array();
+        }
+      }elseif(empty($time) && !empty($state)){
+        if($storeid == '-2'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-            }
+            $CI->db->from('hf_mall_order as a');
 
-      }else{
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-            if($storeid == '-2'){
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type !=','0')->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
 
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+            $res = $query->result_array();
 
-                $query = $CI->db->query($sql);
+        }elseif($storeid == '-1'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-                $res = $query->result_array();
+            $CI->db->from('hf_mall_order as a');
 
-            }elseif($storeid == '-1'){
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-                $sql = "SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '4' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' union all SELECT * FROM `hf_mall_order` WHERE `seller` = '0' AND `order_status` = '5' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
 
-                $query = $CI->db->query($sql);
+            $res = $query->result_array();
+        }else{
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-                $res = $query->result_array();
+            $CI->db->from('hf_mall_order as a');
 
-            }else{
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
-                $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '4' AND `seller` = '$storeid' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' union all SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_status` = '5' AND `seller` = '$storeid' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
 
-                $query = $CI->db->query($sql);                
+            $res = $query->result_array();
+        }
+      }elseif(!empty($time) && !empty($state)){
+        if($storeid == '-2'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
-                $res = $query->result_array();
+            $CI->db->from('hf_mall_order as a');
 
-            }
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
 
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type !=','0')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
 
+            $res = $query->result_array();
 
+        }elseif($storeid == '-1'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+            $CI->db->from('hf_mall_order as a');
+
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+            $res = $query->result_array();
+        }else{
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+            $CI->db->from('hf_mall_order as a');
+
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+            $res = $query->result_array();
+        }
+      }elseif(empty($time) && empty($state)){
+        if($storeid == '-2'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+            $CI->db->from('hf_mall_order as a');
+
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type !=','0')->order_by('a.create_time','desc')->get();
+
+            $res = $query->result_array();
+
+        }elseif($storeid == '-1'){
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+            $CI->db->from('hf_mall_order as a');
+
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->order_by('a.create_time','desc')->get();
+
+            $res = $query->result_array();
+        }else{
+            $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+            $CI->db->from('hf_mall_order as a');
+
+            $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+            $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+            $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+            $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->order_by('a.create_time','desc')->get();
+
+            $res = $query->result_array();
+        }
       }
+      // elseif(!empty($time) && empty($state)){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
 
+      //       $CI->db->from('hf_mall_order as a');
 
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+
+      // }elseif(empty($storeid) && empty($time) && !empty($state)){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
+      //       $res = $query->result_array();
+      //   //laingge
+      // }elseif(!empty($storeid) && !empty($time) && empty($state)){
+      //   if($storeid == '-1'){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }else{
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }
+      // }if(!empty($storeid) && empty($time) && !empty($state)){
+      //    if($storeid == '-1'){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }else{
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }
+      // }if(empty($storeid) && !empty($time) && !empty($state)){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.order_status',$state)->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
+      //       $res = $query->result_array();
+      // }if(!empty($storeid) && !empty($time) && !empty($state)){
+
+      //   if($storeid == '-1'){
+      //       $CI->db->select('a.*,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.order_type','0')->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }else{
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->where('a.seller',$storeid)->where('a.order_status',$state)->where('a.create_time >=',$time)->where('a.create_time <=',$endtime)->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      //   }
+      // }if(empty($storeid) && empty($time) && empty($state)){
+      //       $CI->db->select('a.*,b.store_name,c.username,c.nickname,d.payType');
+
+      //       $CI->db->from('hf_mall_order as a');
+
+      //       $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+
+      //       $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
+      //       $CI->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
+           
+      //       $query = $CI->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
+
+      //       $res = $query->result_array();
+      // }
 
       return $res;
 
