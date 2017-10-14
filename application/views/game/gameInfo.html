@@ -1,0 +1,81 @@
+
+ <div class="tpl-content-wrapper" style="margin-top: 20px">
+
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+        <div class="widget am-cf">
+			<form class="am-form tpl-form-border-form tpl-form-border-br">
+				
+				<div class="am-form-group">
+					 <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
+                        <p>开始日期应小于结束日期！</p>
+                    </div>
+					<label class="am-u-sm-3 am-form-label">起止时间</label>
+					<div class="am-u-sm-9">
+						 <div class="am-u-sm-6">
+                                           
+                            <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start"><span class="am-icon-calendar"></span></button>
+                            <span
+                                id="my-startDate">选择日期</span>
+                        </div>
+                        <div class="am-u-sm-6">
+                            <button type="button" class="am-btn am-btn-default am-margin-right" id="my-end"><span class="am-icon-calendar"></span></button>
+                            <span
+                                id="my-endDate">选择日期</span>
+                        </div>
+					</div>
+				</div>
+				<div class="am-form-group">
+					<label for="user-intro" class="am-u-sm-3 am-form-label">游戏规则</label>
+					<div class="am-u-sm-9">
+						<textarea class="" rows="4" id="gameRule" placeholder="请输入游戏规则"></textarea>
+					</div>
+				</div>
+				<div class="am-form-group">
+					<label for="user-intro" class="am-u-sm-3 am-form-label">奖品内容</label>
+					<div class="am-u-sm-9">
+						<textarea class="" rows="10" id="gameAwards" placeholder="请输入奖品内容"></textarea>
+					</div>
+				</div>
+				<div class="am-form-group">
+					<div class="am-u-sm-9 am-u-sm-push-3">
+						<button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+					</div>
+				</div>
+			</form>	
+		</div>
+	</div>
+</div>
+
+<script>
+	 $(function () {
+        // 日期组件
+        var startDate = new Date();
+        var endDate = new Date();
+        var $alert = $('#my-alert');
+        $('#my-start').datepicker().
+            on('changeDate.datepicker.amui', function (event) {
+                if (event.date.valueOf() > endDate.valueOf()) {
+                    $alert.find('p').text('开始日期应小于结束日期！').end().show();
+                } else {
+                    $alert.hide();
+                    startDate = new Date(event.date);
+                    $('#my-startDate').text($('#my-start').data('date'));
+                }
+                $(this).datepicker('close');
+            });
+
+        $('#my-end').datepicker().
+            on('changeDate.datepicker.amui', function (event) {
+                if (event.date.valueOf() < startDate.valueOf()) {
+                    $alert.find('p').text('结束日期应大于开始日期！').end().show();
+                } else {
+                    $alert.hide();
+                    endDate = new Date(event.date);
+                    $('#my-endDate').text($('#my-end').data('date'));
+                }
+                $(this).datepicker('close');
+            });
+
+
+    });
+</script>
