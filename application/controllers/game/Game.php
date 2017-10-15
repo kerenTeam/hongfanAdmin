@@ -10,6 +10,7 @@ class Game extends Default_Controller
 
 	public $view_gameList = 'game/gameList.html';
 	public $view_gameInfo = 'game/gameInfo.html';
+	public $view_awardRecord = 'game/awardRecord.html';
 
 
 	function __construct()
@@ -29,6 +30,14 @@ class Game extends Default_Controller
 	function gameInfo(){
 
 		$data['page'] = $this->view_gameInfo;
+        $data['menu'] = array('game','gameList');
+        $this->load->view('template.html',$data);
+
+	}
+
+	function awardRecord(){
+
+		$data['page'] = $this->view_awardRecord;
         $data['menu'] = array('game','gameList');
         $this->load->view('template.html',$data);
 

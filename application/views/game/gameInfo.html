@@ -4,7 +4,12 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
         <div class="widget am-cf">
 			<form class="am-form tpl-form-border-form tpl-form-border-br">
-				
+				<div class="am-form-group">
+					<label for="user-intro" class="am-u-sm-3 am-form-label">游戏名称</label>
+					<div class="am-u-sm-9">
+						<input type="text" required="">
+					</div>
+				</div>
 				<div class="am-form-group">
 					 <div class="am-alert am-alert-danger" id="my-alert" style="display: none">
                         <p>开始日期应小于结束日期！</p>
@@ -23,22 +28,51 @@
                                 id="my-endDate">选择日期</span>
                         </div>
 					</div>
-				</div>
+				</div> 
+				<div class="am-form-group upimg">
+                    <label class="am-u-sm-3 am-form-label">转盘背景图</label>
+                    <div class="am-u-sm-9">
+                        <div class="am-form-group am-form-file">
+                            <div class="tpl-form-file-img">
+                                <img src="../assets/img/img.svg" class="bannerView" alt="">
+                            </div>
+                            <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                            <i class="am-icon-cloud-upload"></i> 修改转盘背景图</button>
+                            <input class="doc-form-file" type="file" multiple required>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="am-form-group upimg">
+                    <label class="am-u-sm-3 am-form-label">指针图片</label>
+                    <div class="am-u-sm-9">
+                        <div class="am-form-group am-form-file">
+                            <div class="tpl-form-file-img">
+                                <img src="../assets/img/img.svg" class="bannerView" alt="">
+                            </div>
+                            <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                            <i class="am-icon-cloud-upload"></i> 修改指针图片</button>
+                            <input class="doc-form-file" type="file" multiple required>
+                        </div>
+
+                    </div>
+                </div>
 				<div class="am-form-group">
 					<label for="user-intro" class="am-u-sm-3 am-form-label">游戏规则</label>
 					<div class="am-u-sm-9">
-						<textarea class="" rows="4" id="gameRule" placeholder="请输入游戏规则"></textarea>
+						<textarea class="" rows="4" id="gameRule" placeholder="请输入游戏规则" required></textarea>
 					</div>
 				</div>
 				<div class="am-form-group">
 					<label for="user-intro" class="am-u-sm-3 am-form-label">奖品内容</label>
 					<div class="am-u-sm-9">
-						<textarea class="" rows="10" id="gameAwards" placeholder="请输入奖品内容"></textarea>
+						<textarea class="" rows="10" id="gameAwards" placeholder="请输入奖品内容" required></textarea>
 					</div>
 				</div>
 				<div class="am-form-group">
 					<div class="am-u-sm-9 am-u-sm-push-3">
-						<button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+						<button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
 					</div>
 				</div>
 			</form>	
@@ -76,6 +110,24 @@
                 $(this).datepicker('close');
             });
 
-
+        $(".doc-form-file").change(function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            console.log("objUrl = "+objUrl) ;
+            if (objUrl) {
+                $(this).parentsUntil('.upimg').find('.bannerView').attr("src", objUrl) ;
+            }
+        }) ;
+        //建立一個可存取到該file的url
+        function getObjectURL(file) {
+            var url = null ; 
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
     });
 </script>
