@@ -20,11 +20,12 @@
 	                            </tr>
 	                        </thead>
 	                        <tbody id="doc-modal-list">
+	                        	<?php foreach($lists as $val):?>
 	                            <tr class="gradeX">
-	                                <td>1</td> 
-	                                <td>thefin</td> 
-	                                <td class="awName">50HI豆</td> 
-	                                <td>2017-08-09 12:00:00</td> 
+	                                <td><?php echo $val['id'];?></td> 
+	                                <td><?php echo $val['id'];?></td> 
+	                                <td class="awName"><?php echo $val['id'];?></td> 
+	                                <td><?php echo  date('Y-m-d H:i:s', $val['createTime'] / 1000);?></td> 
 	                                <td>
 	                                    <div class="tpl-table-black-operation"> 
 
@@ -42,6 +43,7 @@
 	                                    </div>
 	                                </td>
 	                            </tr>
+	                        <?php endforeach;?>
 	                          
 
 	                            <!-- more data -->
@@ -53,15 +55,7 @@
 	                <div class="am-u-lg-12 am-cf">
 
 	                    <div class="am-fr">
-	                        <ul class="am-pagination tpl-pagination">
-	                            <li class="am-disabled"><a href="#">«</a></li>
-	                            <li class="am-active"><a href="#">1</a></li>
-	                            <li><a href="#">2</a></li>
-	                            <li><a href="#">3</a></li>
-	                            <li><a href="#">4</a></li>
-	                            <li><a href="#">5</a></li>
-	                            <li><a href="#">»</a></li>
-	                        </ul>
+	                       <?php echo $pages;?>
 	                    </div>
 	                </div>
 	            </div>

@@ -3,11 +3,11 @@
 
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
         <div class="widget am-cf">
-			<form class="am-form tpl-form-border-form tpl-form-border-br">
+			<form class="am-form tpl-form-border-form tpl-form-border-br" action="<?php echo site_url('game/Game/edit_game');?>" method="post" enctype="multipart/form-data">
 				<div class="am-form-group">
 					<label for="user-intro" class="am-u-sm-3 am-form-label">游戏名称</label>
 					<div class="am-u-sm-9">
-						<input type="text" required="">
+						<input type="text" name="name" value="<?php echo $game['name'];?>" required="">
 					</div>
 				</div>
 				<div class="am-form-group">
@@ -19,13 +19,14 @@
 						 <div class="am-u-sm-6">
                                            
                             <button type="button" class="am-btn am-btn-default am-margin-right" id="my-start"><span class="am-icon-calendar"></span></button>
-                            <span
-                                id="my-startDate">选择日期</span>
+                            <input type="hidden" name="starttime" id="starttime" value="<?php echo  date('Y-m-d', $game['startTime'] / 1000);?>">
+                            <span id="my-startDate"><?php echo  date('Y-m-d H:i:s', $game['startTime'] / 1000);?></span>
                         </div>
                         <div class="am-u-sm-6">
                             <button type="button" class="am-btn am-btn-default am-margin-right" id="my-end"><span class="am-icon-calendar"></span></button>
-                            <span
-                                id="my-endDate">选择日期</span>
+                            <input type="hidden" name="endtime" id="endtime" value="<?php echo  date('Y-m-d', $game['endTime'] / 1000);?>">
+
+                            <span id="my-endDate"><?php echo  date('Y-m-d H:i:s', $game['endTime'] / 1000);?></span>
                         </div>
 					</div>
 				</div> 
@@ -34,11 +35,15 @@
                     <div class="am-u-sm-9">
                         <div class="am-form-group am-form-file">
                             <div class="tpl-form-file-img">
+                                <?php $bgi = json_decode($game['BGI'],true);  if(!empty($bgi)):?>
+                                <img src="<?php echo $bgi[0]['picImg']?>" class="bannerView" alt="">
+                            <?php else:?>
                                 <img src="../assets/img/img.svg" class="bannerView" alt="">
+                            <?php endif;?>
                             </div>
                             <button type="button" class="am-btn am-btn-danger am-btn-sm">
                             <i class="am-icon-cloud-upload"></i> 修改转盘背景图</button>
-                            <input class="doc-form-file" type="file" multiple required>
+                            <input class="doc-form-file" name="bgi" type="file" multiple >
                         </div>
 
                     </div>
@@ -49,11 +54,16 @@
                     <div class="am-u-sm-9">
                         <div class="am-form-group am-form-file">
                             <div class="tpl-form-file-img">
+
+                              <?php $fei = json_decode($game['FEI'],true); if(!empty($fei)):?>
+                                <img src="<?php echo $fei[0]['picImg']?>" class="bannerView" alt="">
+                            <?php else:?>
                                 <img src="../assets/img/img.svg" class="bannerView" alt="">
+                            <?php endif;?>
                             </div>
                             <button type="button" class="am-btn am-btn-danger am-btn-sm">
                             <i class="am-icon-cloud-upload"></i> 修改指针图片</button>
-                            <input class="doc-form-file" type="file" multiple required>
+                            <input class="doc-form-file" name="fei" type="file" multiple >
                         </div>
 
                     </div>
@@ -61,17 +71,18 @@
 				<div class="am-form-group">
 					<label for="user-intro" class="am-u-sm-3 am-form-label">游戏规则</label>
 					<div class="am-u-sm-9">
-						<textarea class="" rows="4" id="gameRule" placeholder="请输入游戏规则" required></textarea>
+						<textarea class="" rows="4" id="gameRule" name="descrtipion" placeholder="请输入游戏规则" required><?php echo $game['descrtipion'];?></textarea>
 					</div>
 				</div>
 				<div class="am-form-group">
 					<label for="user-intro" class="am-u-sm-3 am-form-label">奖品内容</label>
 					<div class="am-u-sm-9">
-						<textarea class="" rows="10" id="gameAwards" placeholder="请输入奖品内容" required></textarea>
+						<textarea class="" rows="10" id="gameAwards" name="content" placeholder="请输入奖品内容" required><?php echo $game['content'];?></textarea>
 					</div>
 				</div>
 				<div class="am-form-group">
 					<div class="am-u-sm-9 am-u-sm-push-3">
+                        <input type="hidden" name="id" value="<?php echo $game['id'];?>">
 						<button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
 					</div>
 				</div>
@@ -94,6 +105,7 @@
                     $alert.hide();
                     startDate = new Date(event.date);
                     $('#my-startDate').text($('#my-start').data('date'));
+                    $('#starttime').val($('#my-start').data('date'));
                 }
                 $(this).datepicker('close');
             });
@@ -106,6 +118,7 @@
                     $alert.hide();
                     endDate = new Date(event.date);
                     $('#my-endDate').text($('#my-end').data('date'));
+                    $('#endtime').val($('#my-end').data('date'));
                 }
                 $(this).datepicker('close');
             });
