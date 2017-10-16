@@ -190,15 +190,96 @@ class Game extends Default_Controller
 
             $this->pagination->initialize($config);
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+        //获取所有奖品
+        $prize = $this->Game_model->select_prize('2');
 
-
+        $data = array('lists'=>$listpage,'count'=>count($list),'pages' => $this->pagination->create_links(),'prize'=>$prize);
 
 
 		$data['page'] = $this->view_awardRecord;
-        $data['menu'] = array('game','gameList');
+        $data['menu'] = array('game','awardRecord');
         $this->load->view('template.html',$data);
 
+	}
+
+	//
+	function search_history(){
+		$config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->input->get("size"));//index.php 后数第4个/
+
+      
+        $startTime = $this->input->get('begin_time');
+        $endTime = $this->input->get('end_time');
+        $prize = $this->input->get('prize');
+        // var_dump($_GET);
+
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+
+        $config['page_query_string'] = TRUE;//关键配置
+        // $config['reuse_query_string'] = FALSE;
+        $config['query_string_segment'] = 'size';
+        $config['base_url'] = site_url('/game/Game/search_history?').'prize='.$prize.'&begin_time='.$startTime.'&end_time='.$endTime;
+
+        if(!empty($startTime)){
+    		$time = strtotime($startTime.' 00:00:00')*1000;
+    		$endtime = strtotime($endTime.' 23:59:59')*1000;
+    	}else{
+    		$time= '';
+    		$endtime='';
+    	}
+    	var_dump($time,$endtime,$prize);
+    	$list = search_history($time,$endtime,$prize);
+    	$config['total_rows'] = count($list);
+
+    	//分页数据
+    	$listpage = search_history_page($time,$endtime,$prize,$config['per_page'],$current_page);
+       	$prize = $this->Game_model->select_prize('2');
+
+      
+        $this->load->library('pagination');//加载ci pagination类
+
+        $this->pagination->initialize($config);
+
+        $data = array('lists'=>$listpage,'count'=>count($list),'pages' => $this->pagination->create_links(),'prize'=>$prize);
+
+		$data['page'] = $this->view_awardRecord;
+        $data['menu'] = array('game','awardRecord');
+        $this->load->view('template.html',$data);
 	}
 
 

@@ -1,4 +1,5 @@
 <?php
+                   session_start();
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -80,7 +81,6 @@ class Login extends CI_Controller {
 
                     //正确  缓存
 
-                   session_start();
                    $_SESSION['users']  = $user;
 
                    $url = APPLOGIN."/api/useraccount/login";

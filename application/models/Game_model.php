@@ -35,13 +35,24 @@ class Game_model extends CI_Model
 
     //获取所有中奖纪录
     function select_history($id){
-    	$query = $this->db->where('gameId',$id)->order_by('createTime','desc')->get($this->history);
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $this->db->order_by('a.createTime','desc')->get();
+    	$query = $this->db->where('a.gameId',$id)->order_by('a.createTime','desc')->get();
     	return $query->result_array();
     }
     function select_history_page($id,$page,$size){
-    	$query = $this->db->where('gameId',$id)->order_by('createTime','desc')->limit($page,$size)->get($this->history);
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+    	$query = $this->db->where('a.gameId',$id)->order_by('a.createTime','desc')->limit($page,$size)->get();
     	return $query->result_array();
     }
+
+ 
 
 
 

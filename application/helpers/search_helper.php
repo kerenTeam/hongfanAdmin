@@ -2139,8 +2139,6 @@ function store_order_list($storeid,$time,$endtime,$type){
 }
 
 
-
-
 //交友会员搜索
 function friends_member_search($age,$gender,$startTime,$endTime,$sear){
     $CI = &get_instance();
@@ -2566,176 +2564,87 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
     return $res;
 
 }
-// function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size,$page){
-//     $CI = &get_instance();
-//     $res= '';
 
-//     //1
-//     if(!empty($age) && empty($startTime) && empty($sear)){
-//         if($gender == ''){
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-//         }else{
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
+//中奖纪录搜索
+function search_history($startTime,$endTime,$prize){
+    $CI = &get_instance();
+    $res= '';
 
-//         }
+    if(!empty($startTime) && empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.createTime >=',$startTime)->where('a.createTime <=',$endTime)->order_by('a.createTime','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($startTime) && !empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.prizeId',$prize)->order_by('a.createTime','desc')->get();
+        $res = $query->result_array();
+    }elseif(!empty($startTime) && !empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.prizeId',$prize)->where('a.createTime >=',$startTime)->where('a.createTime <=',$endTime)->order_by('a.createTime','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($startTime) && empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->get();
+        $query = $CI->db->where('a.gameId','2')->order_by('a.createTime','desc')->get();
+        $res = $query->result_array();
+    }
+    return $res;
 
-//     }else if(empty($age) && !empty($startTime) && empty($sear)){
-//         if($gender == ''){
-//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//         }else{
-//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//             $res = $query->result_array();
-//         }
-//     }else if(empty($age) && empty($startTime) && !empty($sear)){
-//         if($gender == ''){
-//             $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//         }else{
-//             $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
-//             $res = $query->result_array();
-//         }
-//     //2
-//     }else if(!empty($age) && !empty($startTime) && empty($sear)){
-//         if($gender == ''){
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-//         }else{
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
 
-//         }
-
-//     }else if(!empty($age) && empty($startTime) && !empty($sear)){
-//         if($gender == ''){
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-//         }else{
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-
-//         }
-
-//     }else if(empty($age) && !empty($startTime) && !empty($sear)){
-//         if($gender == ''){
-//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//         }else{
-//             $query = $CI->db->where('gid','5')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//             $res = $query->result_array();
-//         }
-//     //3
-//     }else if(!empty($age) && !empty($startTime) && !empty($sear)){
-//         if($gender == ''){
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-//         }else{
-//             if($age == '1'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '2'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '3'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }else if($age == '4'){
-//                 $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->where('create_time >=',$startTime)->where('create_time <=',$endTime)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//             }
-
-//         }
-
-//     }else if(empty($age) && empty($startTime) && empty($sear)){
-//         if($gender == ''){
-//             $query = $CI->db->where('gid','5')->limit($size,$page)->get('hf_user_member');
-//                 $res = $query->result_array();
-//         }else{
-//             $query = $CI->db->where('gid','5')->where('gender',$gender)->limit($size,$page)->get('hf_user_member');
-//             $res = $query->result_array();
-//         }
-//     }
-//     return $res;
-
-// }
+}
+function search_history_page($startTime,$endTime,$prize,$page,$size){
+     $CI = &get_instance();
+    $res= '';
+    if(!empty($startTime) && empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.createTime >=',$startTime)->where('a.createTime <=',$endTime)->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $res = $query->result_array();
+    }elseif(empty($startTime) && !empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.prizeId',$prize)->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $res = $query->result_array();
+    }elseif(!empty($startTime) && !empty($prize)){
+        //echo "2";
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $query = $CI->db->where('a.gameId','2')->where('a.prizeId',$prize)->where('a.createTime >=',$startTime)->where('a.createTime <=',$endTime)->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $res = $query->result_array();
+    }elseif(empty($startTime) && empty($prize)){
+        $CI->db->select('a.*,b.nickname,c.title');
+        $CI->db->from('hf_game_wining_history a');
+        $CI->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $CI->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        // $query = $CI->db->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $query = $CI->db->where('a.gameId','2')->order_by('a.createTime','desc')->limit($page,$size)->get();
+        $res = $query->result_array();
+    }
+    return $res;
+}
 
  ?>
