@@ -128,12 +128,9 @@
                     <label for="couponType" class="am-u-sm-3 am-form-label">券类型</label>
                     <div class="am-u-sm-9">
                     	<select id="couponType" required="">
-				        <option value="1">xxxxx</option>
-				        <option value="2">xxxxxxx</option>
-				        <option value="3">xxxxx</option>
-				        <option value="4">xxxxxx</option>
-				        <option value="5">xxxxxx</option>
-				      </select>
+				       
+
+				        </select>
                     </div>
                 </div>
 
@@ -180,11 +177,7 @@
 	                <label for="upcouponType" class="am-u-sm-3 am-form-label">券类型</label>
 	                <div class="am-u-sm-9">
 	                	<select id="upcouponType" required="">
-				        <option value="1">xxxxx</option>
-				        <option value="2">xxxxxxx2</option>
-				        <option value="3">xxxxx</option>
-				        <option value="4">xxxxxx</option>
-				        <option value="5">xxxxxx</option>
+				        
 				      </select>
 	                </div>
 	            </div>	
@@ -221,7 +214,50 @@
                 $('#upaccountName').val($(this).parentsUntil('tbody').find('.awName').html());
                	if($(this).parentsUntil('tbody').find('.awType').html() == '现金券(元)'){
                		$('#upneedChoose').css('display','block')
-   					$('#upneedWrite').css('display','none')
+   					$('#upneedWrite').css('display','none');
+   					var str='',sttr='';
+		   			$.ajax({
+
+		                type:'post',
+		                data:'id=1',
+
+		                url:'<?php echo site_url('/game/Game/ret_shop_coupon');?>', 
+
+		                success: function(data){ 
+
+		                    var jsonData=eval(data);
+		                    console.log('优惠券',jsonData);
+
+		                    // $("#couponType").html('<option value="">-=请选择一项=-</option>');
+
+		                    if(jsonData){ 
+
+		                            for(var i=0;i<jsonData.length;i++){
+
+		                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+
+		                                sttr=sttr+str;
+
+		                            }
+
+		                            console.log(sttr);
+
+		                            $("#couponType").append(sttr);
+		  
+
+		                    }
+
+		                    
+
+		                },
+
+		                error:function(xhr,type,errorThrown){
+
+		                    alert("操作失败，请检查网络设置！");
+
+		                }
+
+		            });
                	}else if($(this).parentsUntil('tbody').find('.awType').html()== 'HI豆值(个)' || $(this).parentsUntil('tbody').find('.awType').html() == '红包(元)'){
                		$('#upneedChoose').css('display','none')
    					$('#upneedWrite').css('display','block')
@@ -283,8 +319,51 @@
    //礼物类型选择
    $('#giftType').change(function(){
    		if($(this).val() == 1){
-   			$('#needChoose').css('display','block')
-   			$('#needWrite').css('display','none')
+   			$('#needChoose').css('display','block');
+   			$('#needWrite').css('display','none');
+   			var str='',sttr='';
+   			$.ajax({
+
+                type:'post',
+                data:'id=1',
+
+                url:'<?php echo site_url('/game/Game/ret_shop_coupon');?>', 
+
+                success: function(data){ 
+
+                    var jsonData=eval(data);
+                    console.log('优惠券',jsonData);
+
+                    // $("#couponType").html('<option value="">-=请选择一项=-</option>');
+
+                    if(jsonData){ 
+
+                            for(var i=0;i<jsonData.length;i++){
+
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+
+                                sttr=sttr+str;
+
+                            }
+
+                            console.log(sttr);
+
+                            $("#couponType").append(sttr);
+  
+
+                    }
+
+                    
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });
 
    		}else if($(this).val() == 2 || $(this).val() == 3){
    			$('#needChoose').css('display','none')
@@ -299,7 +378,50 @@
    $('#upgiftType').change(function(){
    		if($(this).val() == 1){
    			$('#upneedChoose').css('display','block')
-   			$('#upneedWrite').css('display','none')
+   			$('#upneedWrite').css('display','none');
+   			var str='',sttr='';
+   			$.ajax({
+
+                type:'post',
+                data:'id=1',
+
+                url:'<?php echo site_url('/game/Game/ret_shop_coupon');?>', 
+
+                success: function(data){ 
+
+                    var jsonData=eval(data);
+                    console.log('优惠券',jsonData);
+
+                    // $("#couponType").html('<option value="">-=请选择一项=-</option>');
+
+                    if(jsonData){ 
+
+                            for(var i=0;i<jsonData.length;i++){
+
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+
+                                sttr=sttr+str;
+
+                            }
+
+                            console.log(sttr);
+
+                            $("#upcouponType").append(sttr);
+  
+
+                    }
+
+                    
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });
 
    		}else if($(this).val() == 2 || $(this).val() == 3){
    			$('#upneedChoose').css('display','none')
