@@ -30,6 +30,33 @@ class Game extends Default_Controller
         $this->load->view('template.html',$data);
 
 	}
+	//新增奖品
+	function add_prize(){
+		if($_POST){
+			$data = $this->input->post();
+
+
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
+	//返回卷
+	function ret_shop_coupon(){
+		if($_POST){
+			$list = $this->Game_model->select_coupon();
+			if(!empty($list)){
+				echo json_encode($list);
+			}else{
+				echo "2";
+			}
+
+		}else{	
+			echo "2";
+		}
+	}
+
+
 	//删除游戏奖品
 	function del_prize(){
 		if($_POST){
@@ -262,7 +289,6 @@ class Game extends Default_Controller
     		$time= '';
     		$endtime='';
     	}
-    	var_dump($time,$endtime,$prize);
     	$list = search_history($time,$endtime,$prize);
     	$config['total_rows'] = count($list);
 

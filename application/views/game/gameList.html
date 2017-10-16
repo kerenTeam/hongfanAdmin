@@ -24,11 +24,27 @@
 	                            </tr>
 	                        </thead>
 	                        <tbody id="doc-modal-list">
+	                        	<?php foreach($prize as $val):?>
 	                            <tr class="gradeX">
-	                                <td>1</td> 
-	                                <td class="awName">50HI豆</td> 
-	                                <td class="awType">HI豆值(个)</td> 
-	                                <td class="awValue">50</td> 
+	                                <td><?php echo $val['id'];?></td> 
+	                                <td class="awName"><?php echo $val['title'];?></td> 
+	                                <?php if(!empty($val['hiValue'])):?>
+	                                <td class="awType">HI豆奖励</td> 
+	                                <td class="awValue"><?php echo $val['hiValue'];?></td> 
+
+	                            <?php elseif(!empty($val['redPocket'])):?>
+	                            	<td class="awType">现金红包</td> 
+	                            	<td class="awValue"><?php echo $val['redPocket'];?></td> 
+
+	                            <?php elseif(!empty($val['couponId'])):?>
+	                            	<td class="awType">优惠卷</td> 
+	                            	<td class="awValue"><?php echo $val['couponId'];?></td> 
+
+	                            <?php else:?>
+	                            	<td class="awType">其他类型</td> 
+	                            	 <td class="awValue">谢谢参与</td> 
+
+	                            <?php endif;?>
 	                                <td>
 	                                    <div class="tpl-table-black-operation"> 
 	                                        <a href="javascript:;" class="tpl-table-black-operation update">
@@ -40,61 +56,16 @@
 	                                    </div>
 	                                </td>
 	                            </tr>
-	                            <tr class="gradeX">
-	                                <td>2</td>
-	                                <td class="awName">5元现金券</td>
-	                                <td class="awType">现金券(元)</td> 
-	                                <td class="awValue">xxxxxxx2</td>
-	                                <td>
-	                                    <div class="tpl-table-black-operation"> 
-	                                        <a href="javascript:;" class="tpl-table-black-operation update">
-	                                            <i class="am-icon-pencil"></i> 修改
-	                                        </a>
-	                                        <a href="javascript:;" id="2" class="tpl-table-black-operation-del">
-	                                            <i class="am-icon-trash"></i> 删除
-	                                        </a>
-	                                    </div>
-	                                </td>
-	                            </tr>
-	                            <tr class="gradeX">
-	                                <td>2</td>
-	                                <td class="awName">5元红包</td>
-	                                <td class="awType">红包(元)</td> 
-	                                <td class="awValue">5</td>
-	                                <td>
-	                                    <div class="tpl-table-black-operation"> 
-	                                        <a href="javascript:;" class="tpl-table-black-operation update">
-	                                            <i class="am-icon-pencil"></i> 修改
-	                                        </a>
-	                                        <a href="javascript:;" id="2" class="tpl-table-black-operation-del">
-	                                            <i class="am-icon-trash"></i> 删除
-	                                        </a>
-	                                    </div>
-	                                </td>
-	                            </tr>
-	                            <tr class="gradeX">
-	                                <td>2</td>
-	                                <td class="awName">谢谢参与</td>
-	                                <td class="awType">其他</td> 
-	                                <td class="awValue">谢谢参与</td>
-	                                <td>
-	                                    <div class="tpl-table-black-operation"> 
-	                                        <a href="javascript:;" class="tpl-table-black-operation update">
-	                                            <i class="am-icon-pencil"></i> 修改
-	                                        </a>
-	                                        <a href="javascript:;" id="2" class="tpl-table-black-operation-del">
-	                                            <i class="am-icon-trash"></i> 删除
-	                                        </a>
-	                                    </div>
-	                                </td>
-	                            </tr>
+	                        <?php endforeach;?>
+	                           
+	                           
 	                            <!-- more data -->
 	                        </tbody>
 	                    </table>
 	                </div>
 
 	             
-	                <div class="am-u-lg-12 am-cf">
+	               <!--  <div class="am-u-lg-12 am-cf">
 
 	                    <div class="am-fr">
 	                        <ul class="am-pagination tpl-pagination">
@@ -107,7 +78,7 @@
 	                            <li><a href="#">»</a></li>
 	                        </ul>
 	                    </div>
-	                </div>
+	                </div> -->
 	            </div>
         </div>
     
@@ -118,21 +89,27 @@
 <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
 	<div class="am-modal-dialog">
 		<div class="am-modal-hd">添加奖品</div>
-		<form class="am-form am-form-horizontal">
+		<form class="am-form am-form-horizontal" action="<?php echo site_url('/game/Game/');?>" method="post">
 			 
             <div class="am-modal-bd">
                	<div class="am-form-group">
                     <label for="accountName" class="am-u-sm-3 am-form-label">奖品名称</label>
                     <div class="am-u-sm-9">
-                    	 <input type="text" value="" required="">
+                    	 <input type="text" name="title" value="" required="">
+                    </div>
+                </div>
+                 <div class="am-form-group">
+                    <label for="giftValue" class="am-u-sm-3 am-form-label">库存量</label>
+                    <div class="am-u-sm-9">
+                    	 <input type="text" name="stock"  required="">
                     </div>
                 </div>
                 <div class="am-form-group">
 			      <label for="giftType" class="am-u-sm-3 am-form-label">奖品类型</label>
                   <div class="am-u-sm-9">
-				      <select id="giftType" required="">
+				      <select id="giftType" name='type' required="">
 				        <option value="1">现金券(元)</option>
-				        <option value="2">HI豆值(个)</option>
+				        <option value="2" selected="">HI豆值(个)</option>
 				        <option value="3">红包(元)</option>
 				        <option value="4">实体礼物(个)</option>
 				        <option value="5">其他</option>
@@ -140,13 +117,14 @@
 				    </div>
 			      <span class="am-form-caret"></span>
 			    </div>
- 				<div class="am-form-group" id='needWrite' style="display: none;">
+ 				<div class="am-form-group" id='needWrite' style="display:;">
                     <label for="giftValue" class="am-u-sm-3 am-form-label">奖品数值</label>
                     <div class="am-u-sm-9">
-                    	 <input type="text" value="" required="">
+                    	 <input type="text" name="value"  required="">
                     </div>
                 </div>
-                <div class="am-form-group" id='needChoose' style="display:;">
+               
+                <div class="am-form-group" id='needChoose' style="display:none;">
                     <label for="couponType" class="am-u-sm-3 am-form-label">券类型</label>
                     <div class="am-u-sm-9">
                     	<select id="couponType" required="">

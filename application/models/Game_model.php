@@ -51,8 +51,13 @@ class Game_model extends CI_Model
     	$query = $this->db->where('a.gameId',$id)->order_by('a.createTime','desc')->limit($page,$size)->get();
     	return $query->result_array();
     }
+    //返回优惠卷
+    function select_coupon(){
+        $query = $this->db->where('city','1')->get('h_shop_coupon');
+        return $query->result_array();
+    }
 
- 
+
 
 
 
