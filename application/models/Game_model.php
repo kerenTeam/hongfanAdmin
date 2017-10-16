@@ -53,7 +53,7 @@ class Game_model extends CI_Model
     }
     //返回优惠卷
     function select_coupon(){
-        $query = $this->db->where('city','1')->get('h_shop_coupon');
+        $query = $this->db->where('city','1')->get('hf_shop_coupon');
         return $query->result_array();
     }
 
