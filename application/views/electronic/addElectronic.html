@@ -207,14 +207,18 @@ padding: 5px 6px!important;
 
                         <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
 
-                        <div class="am-u-sm-9">
+                        <div class="am-u-sm-9"><!-- 
 
-                            <span class="linkWord">直接抵扣（元）</span>
+                            <span class="linkWord">直接抵扣（元）</span> -->
 
-                            <input type="number" class="stable" required  id="meetMoney" name="coupon_amount" min="1" onmousewheel="return false;"  />
+                           <!--  <input type="number" class="stable" required  id="meetMoney" name="coupon_amount" min="1" onmousewheel="return false;"  /> -->
+                            <span class="linkWord">满</span>
 
-                        
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="meetMoney" name="meetMoney" min="1" onmousewheel="return false;"  />
 
+                            <span class="linkWord">减</span>
+
+                            <input type="number" name="reduceMoney" id="reduceMoney"  class="stable"  required onmousewheel="return false;" >
                         </div>
 
                     </div>

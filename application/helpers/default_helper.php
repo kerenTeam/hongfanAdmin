@@ -392,4 +392,55 @@ return $val;
 } 
 
 
+//修改游戏奖品几率
+function edit_game_prize(){
+        $CI = &get_instance();
+        $query = $CI->db->where('gameId','2')->order_by('stock','asc')->get('hf_game_prize');
+        $list = $query->result_array();
+        $stock = 0;
+        //总库存
+        foreach ($list as $key => $value) {
+            $stock = $stock + $value['stock'];
+        }
+
+        $e = '1000000';
+
+        //几率
+        foreach ($list as $key => $value) {
+            if($key == '0'){
+                $list[$key]['RandomMax'] = '999999';
+                $list[$key]['probability'] = $list[$key]['stock']/$stock;
+                $list[$key]['RandomMin'] = $e-$list[$key]['probability']*1000000;
+            }else{
+                
+                $list[$key]['RandomMax'] = $list[$key-1]['RandomMin']-1;
+                $list[$key]['probability'] = $list[$key]['stock']/$stock;
+                $list[$key]['RandomMin'] = $e-$list[$key]['probability']*1000000;
+            }
+            // var_dump($list[$key]['RandomMin']);
+            if($key+1 == count($list)){
+                $list[$key]['RandomMin'] = '1';
+            }
+            $ci = $CI->db->where('id',$value['id'])->update('hf_game_prize',$list[$key]);
+        }
+
+        echo "1";
+}
+
+//返回coupon 名称   
+function ret_coupon_name($id){
+        $CI = &get_instance();
+        $query = $CI->db->where('id',$id)->get('hf_shop_coupon');
+        $res = $query->row_array();
+        return $res['title'];
+}
+//返回奖品抽中数
+function select_prizeNum($id){
+    $CI = &get_instance();
+    $query = $CI->db->where('prizeId',$id)->get('hf_game_wining_history');
+    $res = $query->result_array();
+    return count($res);
+}
+
+
  ?>

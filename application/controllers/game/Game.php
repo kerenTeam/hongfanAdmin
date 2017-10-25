@@ -30,16 +30,107 @@ class Game extends Default_Controller
         $this->load->view('template.html',$data);
 
 	}
+
+
 	//新增奖品
 	function add_prize(){
 		if($_POST){
 			$data = $this->input->post();
 
+            if($data['type'] == '2'){
+                $data['hiValue'] = $data['value'];
+            }else if($data['type'] =='3'){
+                $data['redPocket'] = $data['value']; 
+            }else if($data['type'] =='4'){
+                $data['giftId'] = '23'; 
+            }
+            unset($data['value'],$data['type']);
+            $data['gameId'] = '2';
+   
+            //所有奖品库存
+            $prize = $this->Game_model->select_prize('2');
+            // $stock = 0;
+            // foreach ($prize as $key => $value) {
+            //     $stock = $stock + $value['stock'];
+            // }
+            if(count($prize) < '8'){
+                if($this->Game_model->add_prize($data)){
+                     $a = edit_game_prize();
+                     $log = array(
+                        'userid'=>$_SESSION['users']['user_id'],  
 
+                        "content" => $_SESSION['users']['username']."新增了一个游戏奖品，奖品名称是".$data['title'],
+                        "create_time" => date('Y-m-d H:i:s'),
+
+                        "userip" => get_client_ip(),
+
+                    );
+                    $this->db->insert('hf_system_journal',$log);
+                     echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/gameList')."'</script>";exit;
+                }else{
+                     echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/gameList')."'</script>";exit;
+                }
+            }else{
+                echo "<script>alert('奖品类别数量超过APP限制！');window.location.href='".site_url('/game/Game/gameList')."'</script>";exit;
+            }
 		}else{
 			$this->load->view('404.html');
 		}
 	}
+
+    //编辑奖品
+    function edit_prize(){
+        if($_POST){
+            $data = $this->input->post();            
+            if($data['type'] == '2'){
+                unset($data['couponId']);
+                $data['hiValue'] = $data['value'];
+                $data['redPocket']=NULL;
+                $data['giftId'] =NULL;
+                $data['couponId']=NULL;
+            }else if($data['type'] =='3'){
+                unset($data['couponId']);
+                $data['redPocket'] = $data['value']; 
+                $data['giftId'] =NULL;
+                $data['hiValue'] =NULL;
+                $data['couponId']=NULL;
+            }else if($data['type'] =='4'){
+                unset($data['couponId']);
+                $data['giftId'] = '23'; 
+                $data['hiValue']=NULL;
+                $data['redPocket']=NULL;
+                $data['couponId']=NULL;
+            }else if($data['type'] == '5'){
+                unset($data['couponId']);
+                $data['hiValue']=NULL;
+                $data['redPocket']=NULL;
+                $data['giftId'] =NULL;
+                $data['couponId']=NULL;
+            }
+            unset($data['value'],$data['type']);
+    
+            if($this->Game_model->edit_prize($data['id'],$data)){
+                $a = edit_game_prize();
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了游戏奖品，奖品名称是".$data['title'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/gameList')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/gameList')."'</script>";exit;
+            }
+        }else{
+            $this->load->view('404.html');
+        }
+
+    }
+
 
 	//返回卷
 	function ret_shop_coupon(){
@@ -88,7 +179,7 @@ class Game extends Default_Controller
 		
 
 		$data['page'] = $this->view_gameInfo;
-        $data['menu'] = array('game','gameList');
+        $data['menu'] = array('game','gameInfo');
         $this->load->view('template.html',$data);
 
 	}
@@ -310,7 +401,184 @@ class Game extends Default_Controller
 
 
 
+    //红包提现
+    function withdrawals(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
+        //配置
+        $config['base_url'] = site_url('/game/Game/withdrawals');
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+        $list = $this->Game_model->select_withdrawals();
+
+        $config['total_rows'] = count($list);
+
+        // //分页数据
+        $listpage = $this->Game_model->select_withdrawals_page($config['per_page'],$current_page);
+        $this->load->library('pagination');//加载ci pagination类
+        $this->pagination->initialize($config);
+
+    
+        $data = array('lists'=>$listpage,'count'=>count($list),'pages' => $this->pagination->create_links());
+
+        $data['page'] = 'game/withdrawals.html';
+        $data['menu'] = array('game','withdrawals');
+        $this->load->view('template.html',$data);
+    }
+
+    //修改提现状态
+    function edit_withdrawals(){
+        $id = intval($this->uri->segment('4'));
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $data['withsrawls'] = '2';
+
+            if($this->Game_model->edit_withdrawals($id,$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了红包提现状态",
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/withdrawals')."'</script>";exit;
+            } else{
+
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/withdrawals')."'</script>";exit;
+            }
+        }
+    }
+
+    //搜索红包提现纪录
+    function search_withsrawls(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->input->get("size"));//index.php 后数第4个/
+
+      
+        $prizeId = $this->input->get('prizeId');
+        $withdrawals = $this->input->get('withsrawls');
+        // var_dump($_GET);
+
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+
+        $config['full_tag_close'] = '</ul>';
+
+        $config['first_tag_open'] = '<li>';
+
+        $config['first_tag_close'] = '</li>';
+
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+
+        $config['page_query_string'] = TRUE;//关键配置
+        // $config['reuse_query_string'] = FALSE;
+        $config['query_string_segment'] = 'size';
+        $config['base_url'] = site_url('/game/Game/search_withsrawls?').'prizeId='.$prizeId.'&withsrawls='.$withdrawals;
+
+        if(!empty($prizeId) && empty($withdrawals)){
+            $list = $this->Game_model->search_where_withsrawls('prizeId',$prizeId);
+            $config['total_rows'] = count($list);
+
+            //分页数据
+            $listpage = $this->Game_model->search_where_withsrawls_page('prizeId',$prizeId,$config['per_page'],$current_page);
+        }else  if(empty($prizeId) && !empty($withdrawals)){
+            $withdrawals = '0';
+            $list = $this->Game_model->search_where_withsrawls('withsrawls',$withdrawals);
+            $config['total_rows'] = count($list);
+
+            //分页数据
+            $listpage = $this->Game_model->search_where_withsrawls_page('withsrawls',$withdrawals,$config['per_page'],$current_page);
+        }else  if(!empty($prizeId) && !empty($withdrawals)){
+             $withdrawals = '0';
+            $list = $this->Game_model->search_withsrawls($prizeId,$withdrawals);
+            $config['total_rows'] = count($list);
+
+            //分页数据
+            $listpage = $this->Game_model->search_withsrawls_page($prizeId,$withdrawals,$config['per_page'],$current_page);
+        }else if(empty($prizeId) && empty($withdrawals)){
+            $list = $this->Game_model->select_withdrawals($prizeId,$withdrawals);
+            $config['total_rows'] = count($list);
+
+            //分页数据
+            $listpage = $this->Game_model->select_withdrawals_page($config['per_page'],$current_page);
+        }
+       
+
+        $this->load->library('pagination');//加载ci pagination类
+        $this->pagination->initialize($config);
+
+    
+        $data = array('lists'=>$listpage,'count'=>count($list),'pages' => $this->pagination->create_links());
+
+        $data['page'] = 'game/withdrawals.html';
+        $data['menu'] = array('game','withdrawals');
+        $this->load->view('template.html',$data);
+    }
 
 
 

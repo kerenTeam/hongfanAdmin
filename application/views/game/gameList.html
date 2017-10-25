@@ -19,32 +19,41 @@
 	                                <th>ID</th> 
 	                                <th>奖品名称</th>
 	                                <th>类型</th>
-	                                <th>数值</th>
+                                  <th>数值</th>
+                                  <th>排序</th>
+                                  <th>库存</th>
+                                  <th>几率</th>
+	                                <th>抽中数</th>
 	                                <th>操作</th>
 	                            </tr>
 	                        </thead>
 	                        <tbody id="doc-modal-list">
 	                        	<?php foreach($prize as $val):?>
 	                            <tr class="gradeX">
-	                                <td><?php echo $val['id'];?></td> 
+	                                <td class="awId"><?php echo $val['id'];?></td> 
 	                                <td class="awName"><?php echo $val['title'];?></td> 
 	                                <?php if(!empty($val['hiValue'])):?>
-	                                <td class="awType">HI豆奖励</td> 
+	                                <td class="awType">HI豆值(个)</td> 
 	                                <td class="awValue"><?php echo $val['hiValue'];?></td> 
 
 	                            <?php elseif(!empty($val['redPocket'])):?>
-	                            	<td class="awType">现金红包</td> 
+	                            	<td class="awType">红包(元)</td> 
 	                            	<td class="awValue"><?php echo $val['redPocket'];?></td> 
 
 	                            <?php elseif(!empty($val['couponId'])):?>
 	                            	<td class="awType">优惠卷</td> 
-	                            	<td class="awValue"><?php echo $val['couponId'];?></td> 
+	                            	<td class="awValue"><?php echo ret_coupon_name($val['couponId']);?></td> 
 
 	                            <?php else:?>
-	                            	<td class="awType">其他类型</td> 
+	                            	<td class="awType">其他</td> 
 	                            	 <td class="awValue">谢谢参与</td> 
 
 	                            <?php endif;?>
+                                  <td class="awIndex"><?php echo $val['orderIndex'];?></td> 
+                                  <td class="awstock"><?php echo $val['stock'];?></td> 
+                                  <td class="awprobability"><?php echo $val['probability'];?></td> 
+                                  <td class="awprobability"><?php echo select_prizeNum($val['id']);?></td> 
+
 	                                <td>
 	                                    <div class="tpl-table-black-operation"> 
 	                                        <a href="javascript:;" class="tpl-table-black-operation update">
@@ -89,8 +98,8 @@
 <div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
 	<div class="am-modal-dialog">
 		<div class="am-modal-hd">添加奖品</div>
-		<form class="am-form am-form-horizontal" action="<?php echo site_url('/game/Game/');?>" method="post">
-			 
+		<form class="am-form am-form-horizontal" action="<?php echo site_url('/game/Game/add_prize');?>" method="post">
+			     
             <div class="am-modal-bd">
                	<div class="am-form-group">
                     <label for="accountName" class="am-u-sm-3 am-form-label">奖品名称</label>
@@ -101,14 +110,14 @@
                  <div class="am-form-group">
                     <label for="giftValue" class="am-u-sm-3 am-form-label">库存量</label>
                     <div class="am-u-sm-9">
-                    	 <input type="text" name="stock"  required="">
+                    	 <input type="text" name="stock"  required>
                     </div>
                 </div>
                 <div class="am-form-group">
 			      <label for="giftType" class="am-u-sm-3 am-form-label">奖品类型</label>
                   <div class="am-u-sm-9">
 				      <select id="giftType" name='type' required="">
-				        <option value="1">现金券(元)</option>
+				        <option value="1">优惠卷</option>
 				        <option value="2" selected="">HI豆值(个)</option>
 				        <option value="3">红包(元)</option>
 				        <option value="4">实体礼物(个)</option>
@@ -120,16 +129,20 @@
  				<div class="am-form-group" id='needWrite' style="display:;">
                     <label for="giftValue" class="am-u-sm-3 am-form-label">奖品数值</label>
                     <div class="am-u-sm-9">
-                    	 <input type="text" name="value"  required="">
+                    	 <input type="text"  name="value" >
                     </div>
                 </div>
+            <div class="am-form-group">
+                  <label for="giftValue" class="am-u-sm-3 am-form-label">奖品顺序</label>
+                  <div class="am-u-sm-9">
+                     <input type="text"  name="orderIndex" required>
+                  </div>
+              </div>
                
                 <div class="am-form-group" id='needChoose' style="display:none;">
                     <label for="couponType" class="am-u-sm-3 am-form-label">券类型</label>
                     <div class="am-u-sm-9">
-                    	<select id="couponType" required="">
-				       
-
+                    	<select id="couponType" name="couponId">
 				        </select>
                     </div>
                 </div>
@@ -147,38 +160,51 @@
 <div class="am-modal am-modal-confirm" tabindex="-1" id="my-update-confirm">
     <div class="am-modal-dialog">
         <div class="am-modal-hd">编辑</div>
-        <form class="am-form am-form-horizontal">
+        <form class="am-form am-form-horizontal" action="<?php echo site_url('/game/Game/edit_prize');?>" method="post">
+          <input type="hidden" id="amId" value='' name="id">
             <div class="am-modal-bd">
                 <div class="am-form-group">
                     <label for="upaccountName" class="am-u-sm-3 am-form-label">奖品名称</label>
                     <div class="am-u-sm-9">
-                    	<input type="text" id="upaccountName" value="" required="">
+                    	<input type="text" id="upaccountName" name="title" value="" required>
                     </div>
                 </div>
                 <div class="am-form-group">
-				    <label for="upgiftType" class="am-u-sm-3 am-form-label">奖品类型</label>
-	                <div class="am-u-sm-9">
-					    <select id="upgiftType" required="">
-					        <option value="1">现金券(元)</option>
-					        <option value="2">HI豆值(个)</option>
-					        <option value="3">红包(元)</option>
-					        <option value="4">实体礼物(个)</option>
-					        <option value="5">其他</option>
-					      </select>
-					</div> 
-				</div>
-	 			<div class="am-form-group" id='upneedWrite' style="display: none;">
+        				    <label for="upgiftType" class="am-u-sm-3 am-form-label">奖品类型</label>
+        	                <div class="am-u-sm-9">
+        					    <select id="upgiftType" name='type' required="">
+        					        <option value="1">优惠卷</option>
+        					        <option value="2">HI豆值(个)</option>
+        					        <option value="3">红包(元)</option>
+        					        <option value="4">实体礼物(个)</option>
+        					        <option value="5">其他</option>
+        					      </select>
+        					</div> 
+        				</div>
+	 			      <div class="am-form-group" id='upneedWrite' style="display: none;">
 	                <label for="upgiftValue" class="am-u-sm-3 am-form-label">奖品数值</label>
 	                <div class="am-u-sm-9">
-	                	 <input type="text" id='upgiftValue' value="" required="">
+	                	 <input type="text" id='upgiftValue' name="value">
 	                </div>
 	            </div>
+              <div class="am-form-group">
+                  <label for="upgiftInedex" class="am-u-sm-3 am-form-label">奖品顺序</label>
+                  <div class="am-u-sm-9">
+                     <input type="text" id='upgiftInedex' name="orderIndex" value="" required="">
+                  </div>
+              </div>
+              <div class="am-form-group">
+                  <label for="upgiftKc" class="am-u-sm-3 am-form-label">奖品库存</label>
+                  <div class="am-u-sm-9">
+                     <input type="text" id='upgiftKc' value="" name="stock" required="">
+                  </div>
+              </div>
 	            <div class="am-form-group" id='upneedChoose' style="display:none;">
 	                <label for="upcouponType" class="am-u-sm-3 am-form-label">券类型</label>
 	                <div class="am-u-sm-9">
-	                	<select id="upcouponType" required="">
+	                	<select id="upcouponType" name="couponId">
 				        
-				      </select>
+				            </select>
 	                </div>
 	            </div>	
             </div>
@@ -210,57 +236,18 @@
          // 编辑模态框操作 
         $('#doc-modal-list').find('.update').add('#doc-confirm-toggle').
             on('click', function () { 
-
+                $('#amId').val($(this).parentsUntil('tbody').find('.awId').html())
                 $('#upaccountName').val($(this).parentsUntil('tbody').find('.awName').html());
-               	if($(this).parentsUntil('tbody').find('.awType').html() == '现金券(元)'){
+                $('#upgiftInedex').val($(this).parentsUntil('tbody').find('.awIndex').html());
+                $('#upgiftValue').val($(this).parentsUntil('tbody').find('.awValue').html());
+                $('#upgiftKc').val($(this).parentsUntil('tbody').find('.awstock').html());
+               	if($(this).parentsUntil('tbody').find('.awType').html() == '优惠卷'){
                		$('#upneedChoose').css('display','block')
    					$('#upneedWrite').css('display','none');
-   					var str='',sttr='';
-		   			$.ajax({
-
-		                type:'post',
-		                data:'id=1',
-
-		                url:'<?php echo site_url('/game/Game/ret_shop_coupon');?>', 
-
-		                success: function(data){ 
-
-		                    var jsonData=eval(data);
-		                    console.log('优惠券',jsonData);
-
-		                    // $("#couponType").html('<option value="">-=请选择一项=-</option>');
-
-		                    if(jsonData){ 
-
-		                            for(var i=0;i<jsonData.length;i++){
-
-		                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
-
-		                                sttr=sttr+str;
-
-		                            }
-
-		                            console.log(sttr);
-
-		                            $("#couponType").append(sttr);
-		  
-
-		                    }
-
-		                    
-
-		                },
-
-		                error:function(xhr,type,errorThrown){
-
-		                    alert("操作失败，请检查网络设置！");
-
-		                }
-
-		            });
+   					
                	}else if($(this).parentsUntil('tbody').find('.awType').html()== 'HI豆值(个)' || $(this).parentsUntil('tbody').find('.awType').html() == '红包(元)'){
                		$('#upneedChoose').css('display','none')
-   					$('#upneedWrite').css('display','block')
+   					      $('#upneedWrite').css('display','block')
                	}else{
                		$('#upneedChoose').css('display','none')
    					$('#upneedWrite').css('display','none')
@@ -277,6 +264,51 @@
                			$(this).attr('selected',true);
                		}
                	})
+
+                var str='',sttr='';
+                $.ajax({
+
+                        type:'post',
+                        data:'id=1',
+
+                        url:'<?php echo site_url('/game/Game/ret_shop_coupon');?>', 
+
+                        success: function(data){ 
+
+                            var jsonData=eval(data);
+                            // console.log('优惠券'+ JSON.stringify(jsonData));
+
+                            // $("#couponType").html('<option value="">-=请选择一项=-</option>');
+
+                            if(jsonData){ 
+
+                                    for(var i=0;i<jsonData.length;i++){
+
+                                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+
+                                        sttr=sttr+str;
+
+                                    }
+
+                                    console.log(sttr);
+
+                                    $("#upcouponType").html(sttr);
+          
+
+                            }
+
+                            
+
+                        },
+
+                        error:function(xhr,type,errorThrown){
+
+                            alert("操作失败，请检查网络设置！");
+
+                        }
+
+                    });
+
                 $('#my-update-confirm').modal({
                     relatedTarget: this,
                     onConfirm: function (options) { 
@@ -349,7 +381,7 @@
 
                             console.log(sttr);
 
-                            $("#couponType").append(sttr);
+                            $("#couponType").html(sttr);
   
 
                     }
@@ -407,7 +439,7 @@
 
                             console.log(sttr);
 
-                            $("#upcouponType").append(sttr);
+                            $("#upcouponType").html(sttr);
   
 
                     }

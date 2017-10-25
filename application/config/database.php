@@ -153,21 +153,21 @@ $db['default'] = array(
 	'dsn'	=> '',
 
 
-	'hostname' => 'abcd.zlzmm.com',
+	// 'hostname' => 'abcd.zlzmm.com',
 
-	'username' => 'hijiv2mysql',
+	// 'username' => 'hijiv2mysql',
 
-	'password' => 'hijiv2mysql',
+	// 'password' => 'hijiv2mysql',
 
-	'database' => 'hijiv2mysql',
+	// 'database' => 'hijiv2mysql',
 
-	// 'hostname' => 'localhost',
+	'hostname' => 'localhost',
 
-	// 'username' => 'root',
+	'username' => 'root',
 
-	// 'password' => '',
+	'password' => 'root',
 
-	// 'database' => 'hiji',
+	'database' => 'hongfan',
 
 
 	'dbdriver' => 'mysqli',

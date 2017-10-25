@@ -163,18 +163,16 @@ class Electronic extends Default_Controller {
                     break;
             }
 
-           if($data['typeid'] == 2){
-
-                  $arr = array($data['overflow'],$data['cut']);
-
-                    $data['coupon_amount'] = implode(',',$arr);
-
-                   unset($data['overflow'],$data['cut']);
-
+            if($data['typeid'] == 1){
+                $arr = array($data['meetMoney'],$data['reduceMoney']);
+                $data['coupon_amount'] = implode(',',$arr);
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
+            }else if($data['typeid'] == 2){
+                $arr = array($data['overflow'],$data['cut']);
+                $data['coupon_amount'] = implode(',',$arr);
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }else{
-
-                    unset($data['overflow'],$data['cut']);
-
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }
 
    
@@ -312,18 +310,16 @@ class Electronic extends Default_Controller {
                     break;
             }
 
-            if($data['typeid'] == 2){
-
-                  $arr = array($data['overflow'],$data['cut']);
-
-                    $data['coupon_amount'] = implode(',',$arr);
-
-                   unset($data['overflow'],$data['cut']);
-
+            if($data['typeid'] == 1){
+                $arr = array($data['meetMoney'],$data['reduceMoney']);
+                $data['coupon_amount'] = implode(',',$arr);
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
+            }else if($data['typeid'] == 2){
+                $arr = array($data['overflow'],$data['cut']);
+                $data['coupon_amount'] = implode(',',$arr);
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }else{
-
-                    unset($data['overflow'],$data['cut']);
-
+                unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }
             $header = array("token:".$_SESSION['token'],'city:'.$data['city']);    
             if(!empty($_FILES['img']['name'])){

@@ -32,6 +32,15 @@ class Game_model extends CI_Model
     function del_prize($id){
     	return $this->db->where('id',$id)->delete($this->prize);
     }
+    //新增奖品
+    function add_prize($data){
+        return $this->db->insert($this->prize,$data);
+    }
+    //编辑游戏奖品
+    function edit_prize($id,$data){
+        return $this->db->where('id',$id)->update($this->prize,$data);
+    }
+
 
     //获取所有中奖纪录
     function select_history($id){
@@ -57,6 +66,64 @@ class Game_model extends CI_Model
         return $query->result_array();
     }
 
+    //获取提现纪录
+    function select_withdrawals(){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId','29')->or_where('prizeId','30')->or_where('prizeId','31')->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }
+    function select_withdrawals_page($page,$size){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId','29')->or_where('prizeId','30')->or_where('prizeId','31')->order_by('a.createTime','desc')->limit($page,$size)->get();
+        return $query->result_array();
+    }
+    //修改提现纪录状态
+    function edit_withdrawals($id,$data){
+        return $this->db->where('id',$id)->update('hf_game_wining_history',$data);
+    }
+    //搜索红包提现纪录
+    function search_withsrawls($prizeId,$state){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        $query = $this->db->where('a.prizeId',$prizeId)->where('a.withsrawls',$state)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }  
+      //搜索红包提现纪录
+    function search_withsrawls_page($prizeId,$state,$page,$size){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        $query = $this->db->where('a.prizeId',$prizeId)->where('a.withsrawls',$state)->limit($page,$size)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    } 
+    //
+    function search_where_withsrawls($where,$id){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        $query = $this->db->where($where,$id)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }
+    function search_where_withsrawls_page($where,$id,$page,$size){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+        $query = $this->db->where($where,$id)->order_by('a.createTime','desc')->limit($page,$size)->get();
+        return $query->result_array();
+    }
 
 
 

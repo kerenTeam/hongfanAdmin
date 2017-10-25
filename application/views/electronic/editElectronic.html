@@ -202,9 +202,15 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <span class="linkWord">直接抵扣（元）</span>
+                            <!-- <span class="linkWord">直接抵扣（元）</span> -->
+                            <?php $amount = explode(',',$coupon['coupon_amount']);?>
+                             <span class="linkWord">满</span>
 
-                            <input type="number" class="stable" required  id="meetMoney" name="coupon_amount" min="1" onmousewheel="return false;" value="<?php echo $coupon['coupon_amount'];?>"  />
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="meetMoney" name="meetMoney" value="<?php echo $amount[0];?>" min="1" onmousewheel="return false;"  />
+
+                            <span class="linkWord">减</span>
+
+                            <input type="number" name="reduceMoney" value="<?php echo $amount[1];?>" id="reduceMoney"  class="stable"  required onmousewheel="return false;" >
 
                         </div>
 
