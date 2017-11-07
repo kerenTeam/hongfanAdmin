@@ -77,13 +77,12 @@ class Activity_model extends CI_Model
 
     function get_coupons(){
 
-        $this->db->select('a.*,b.store_name');
+        // $this->db->select('a.*,b.store_name');
 
-        $this->db->from('hf_shop_coupon as a');
+        // $this->db->from('hf_shop_coupon as a');
 
-        $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
 
-        $query = $this->db->order_by('id','desc')->get();
+        $query = $this->db->order_by('id','desc')->get('hf_shop_coupon');
 
         return $query->result_array();
 
@@ -228,11 +227,12 @@ class Activity_model extends CI_Model
 
         $where['shop_coupon_id']= $id;
 
-        $this->db->select('a.*,c.nickname');
+        $this->db->select('a.*,c.nickname,b.orderUUID');
 
         $this->db->from('hf_shop_couponverify as a');
 
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $this->db->join('hf_user_coupon as b','a.user_coupon_id = b.user_coupon_id','left');
 
         $query = $this->db->where($where)->order_by('create_time','desc')->get();
 

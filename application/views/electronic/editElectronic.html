@@ -125,6 +125,7 @@ padding: 5px 6px!important;
                         <div class="am-u-sm-9">
 
                            <select name="city" required>
+                               <option value="0" <?php if($coupon['city'] == '0'){echo "selected";}?>>电商通用卷</option>
                                <option value="1" <?php if($coupon['city'] == '1'){echo "selected";}?>>重庆</option>
                                <option value="2" <?php if($coupon['city'] == '2'){echo "selected";}?>>南江</option>
                                <option value="3" <?php if($coupon['city'] == '3'){echo "selected";}?>>宣汉</option>
@@ -198,24 +199,18 @@ padding: 5px 6px!important;
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: <?php if($coupon['typeid'] == '1'){echo 'block';}else{echo 'none';}?>;float: left !important; ">
 
-                        <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">抵用券使用规则<span class="red">*</span>：</label>
 
                         <div class="am-u-sm-9">
 
-                            <!-- <span class="linkWord">直接抵扣（元）</span> -->
-                            <?php $amount = explode(',',$coupon['coupon_amount']);?>
-                             <span class="linkWord">满</span>
+                            <span class="linkWord">直接抵扣（元）</span>
 
-                            <input type="number" class="stable" required  onmousewheel="return false;" id="meetMoney" name="meetMoney" value="<?php echo $amount[0];?>" min="1" onmousewheel="return false;"  />
-
-                            <span class="linkWord">减</span>
-
-                            <input type="number" name="reduceMoney" value="<?php echo $amount[1];?>" id="reduceMoney"  class="stable"  required onmousewheel="return false;" >
+                            <input type="number" class="stable" required  id="coupon_amount" name="coupon_amount" min="1" onmousewheel="return false;" value="<?php echo $coupon['coupon_amount'];?>"  />
 
                         </div>
 
                     </div>
-               <?php if($coupon['typeid'] == '2'):?>
+                    <?php if($coupon['typeid'] == '2'):?>
                     <?php $sale = explode(',',$coupon['coupon_amount']);?>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="discount" style="display: block;float:left !important;">
 
@@ -235,24 +230,53 @@ padding: 5px 6px!important;
 
                     </div>
                   <?php endif;?>
+                  <?php if($coupon['typeid'] == '3'):?>
+                    <?php $sale = explode(',',$coupon['coupon_amount']);?>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="fullcut" style="display: block;float:left !important;">
+
+                        <label for="user-email" class="am-u-sm-3 am-form-label">满减规则<span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-9">
+
+                            <span class="linkWord">满</span>
+
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="meetMoney" name="meetMoney" min="1" onmousewheel="return false;" value="<?php echo $sale[0];?>"  />
+
+                            <span class="linkWord">减</span>
+
+                            <input type="number" name="reduceMoney" id="reduceMoney" value="<?php echo $sale[1];?>"  class="stable"  required onmousewheel="return false;" >
+
+                        </div>
+
+                    </div>
+                  <?php endif;?>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">每次领取数量限制<span class="red">*</span>:</label>
 
                         <div class="am-u-sm-9">
 
                             <select name="receive_limit" required id="receive_limit" class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-
-                                <option value="">输入查找/选择</option>
-
+                                <option value="1" <?php if($coupon['receive_limit'] == "1"){echo "selected";}?>>一张</option>
                                 <option value="999" <?php if($coupon['receive_limit'] == '999'){echo "selected";}?>>不限制</option>
-
-                                <option value="1" <?php if($coupon['receive_limit'] == "1"){echo "selected";}?>>仅一次</option>
 
                             </select>
 
                         </div>
 
+                    </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">领取时间限制<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                            <select name="frequency" id="frequency" required class="am-form-field tpl-form-no-bg" >
+                                <option value="">输入查找/选择</option>
+                                <option value="0" <?php if($coupon['frequency'] == "0"){echo "selected";}?>>仅一次</option>
+                                <option value="1" <?php if($coupon['frequency'] == "1"){echo "selected";}?>>一天一次</option>
+                                <option value="2" <?php if($coupon['frequency'] == "2"){echo "selected";}?>>二天一次</option>
+                                <option value="7" <?php if($coupon['frequency'] == "7"){echo "selected";}?>>一周一次</option>
+                                <option value="30" <?php if($coupon['frequency'] == "30"){echo "selected";}?>>一月一次</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
@@ -300,22 +324,39 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="" class="am-u-sm-3 am-form-label">卡券归属:</label>
+
+                        <div class="am-u-sm-9">
+
+                            <select name="isGamePrize" >
+
+                                <option value="0" <?php if($coupon['isGamePrize'] == '0'){echo "selected";}?>>线上或线下卷</option>
+                                <option value="1" <?php if($coupon['isGamePrize'] == '1'){echo "selected";}?>>首页转盘游戏</option>
+                                <option value="2" <?php if($coupon['isGamePrize'] == '2'){echo "selected";}?>>分享</option>
+                                <option value="3" <?php if($coupon['isGamePrize'] == '3'){echo "selected";}?>>爱购专用</option>
+                            </select>
+
+                        </div>
+
+                    </div>
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="" class="am-u-sm-3 am-form-label">商家<span class="red">*</span>:</label>
 
                         <div class="am-u-sm-9">
+                            <?php $s = json_decode($coupon['storeid'],true)?>
+                            <select name="store[]" multiple required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
 
-                            <select name="storeid" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-
-                                <option value="0">输入查找/选择</option>
+                                <option value="0" <?php if($s == '0'){echo "selected";}?>>所有商家</option>
 
                                 <?php if(!empty($store)):?>
 
                                 <?php foreach($store as $k=>$v):?>
-
-                                <option value="<?php echo $v['store_id'];?>" <?php if($coupon['storeid'] == $v['store_id']){echo "selected";}?>><?php echo $v['store_name'];?></option>
+                               
+                                <option value="<?php echo $v['store_id'];?>" <?php if(strpos($coupon['storeid'],$v['store_id'])){echo "selected";}?>><?php echo $v['store_name'];?></option>
 
                                 <?php endforeach;?>
 

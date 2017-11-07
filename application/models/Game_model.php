@@ -125,6 +125,48 @@ class Game_model extends CI_Model
         return $query->result_array();
     }
 
+    //根据时间返回数据
+    function select_where_with_time($time,$endtime){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId','29')->or_where('prizeId','30')->or_where('prizeId','31')->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }    
+
+
+        //根据时间返回数据
+    function select_where_prizeid_time($prizeId,$time,$endtime){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId',$prizeId)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }    
+    function select_where_wi_time($where,$id,$time,$endtime){
+        $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId',$prizeId)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }    
+    function select_wining_time($prizeId,$where,$id,$time,$endtime){
+         $this->db->select('a.*,b.nickname,c.title');
+        $this->db->from('hf_game_wining_history a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+        $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+        $query = $this->db->where('prizeId',$prizeId)->where($where,$id)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.createTime','desc')->get();
+        return $query->result_array();
+    }
+    
+
 
 
 

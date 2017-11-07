@@ -441,6 +441,13 @@ function select_prizeNum($id){
     $res = $query->result_array();
     return count($res);
 }
+//返回商家名称
+function get_store_name($id){
+    $CI = &get_instance();
+    $query = $CI->db->where('store_id',$id)->get('hf_shop_store');
+    $res = $query->row_array();
+    return $res['store_name'];
+}
 
 
  ?>

@@ -1,4 +1,4 @@
-    <?php 
+<?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -157,6 +157,9 @@ class Payment extends Default_Controller
 
     //手机充值记录
     function energyCharge(){
+        //获取充值面额
+
+        $data['lists'] = $this->Payment_model->ret_recharge();        
         $data['page'] = $this->view_energyCharge;
         $data['menu'] = array('payment','energyCharge');
         $this->load->view('template.html',$data);
@@ -176,6 +179,222 @@ class Payment extends Default_Controller
         }else{
             echo "2";
         }
+
+    }
+
+    function searchCharge(){
+        if($_POST){
+            $phone = trim($this->input->post('phone'));
+            $order = trim($this->input->post('payorder'));
+            $time = $this->input->post('start_time');
+            $endtime = $this->input->post('end_time');
+
+            if(!empty($time)){
+                $t= $time.' 00:00:00';
+                $e= $endtime.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+            if(!empty($phone) && empty($order) && empty($t)){
+
+                $list = $this->Payment_model->pay_qianmi_order($phone);
+            }else if(empty($phone) && !empty($order) && empty($t)){
+
+                $list = $this->Payment_model->payorder_qianmi_order($order);
+            }else if(empty($phone) && empty($order) && !empty($t)){
+                $list = $this->Payment_model->time_qianmi_order($t,$e);
+            }else if(!empty($phone) && !empty($order) && empty($t)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_qianmi_order a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query = $this->db->where('type','1')->where('uuid',$order)->like('userPostData',$phone,'both')->order_by('create_time','desc')->get();
+                $list = $query->result_array();
+            }else if(!empty($phone) && empty($order) && !empty($t)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_qianmi_order a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query = $this->db->where('type','1')->like('userPostData',$phone,'both')->where('a.create_time >=',$t)->where("a.create_time <=",$e)->order_by('create_time','desc')->get();
+                $list = $query->result_array();
+            }else if(empty($phone) && !empty($order) && !empty($t)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_qianmi_order a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query = $this->db->where('type','1')->where('uuid',$order)->where('a.create_time >=',$t)->where("a.create_time <=",$e)->order_by('create_time','desc')->get();
+                $list = $query->result_array();
+            }else if(!empty($phone) && !empty($order) && !empty($t)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_qianmi_order a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query = $this->db->where('type','1')->where('uuid',$order)->where('a.create_time >=',$t)->where("a.create_time <=",$e)->like('userPostData',$phone,'both')->order_by('create_time','desc')->get();
+                $list = $query->result_array();
+            }else if(empty($phone) && empty($order) && empty($t)){
+                $list = $this->Payment_model->get_qianmi_order('1');
+            }
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "3";
+            }
+
+
+
+        }else{
+            echo "2";
+        }
+    }
+
+
+
+
+
+    //导出充值纪录
+    function Dow_Charge(){
+        if($_POST){
+            $pay = $this->input->post('type');
+            $time = $this->input->post('begin_time');
+            $endtime = $this->input->post('end_time');
+
+            $this->load->library('excel');
+
+            //activate worksheet number 1
+
+            $this->excel->setActiveSheetIndex(0);
+
+            //name the worksheet
+
+            $this->excel->getActiveSheet()->setTitle('ImportOrder');
+
+            $arr_title = array(
+
+                'A' => '商品编号',
+
+                'B' => '支付单号',
+
+                'C' => '用户名称',
+
+                'D' => '充值手机号码',
+
+                'E' => '面额',
+
+                'F' => '支付金额',
+                
+                'G' => '支付方式',
+                'H' => '支付状态',
+                'I' => '充值时间',
+            );
+             //设置excel 表头
+
+            foreach ($arr_title as $key => $value) {
+
+                $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            }
+            $i = 1;
+            if(!empty($time)){
+                $start = $time . ' 00:00:00';
+                $ennd = $endtime . ' 23:59:59';
+            }else{
+                 $start ='';
+                 $ennd = '';
+            }
+            if(!empty($pay) && empty($start)){
+                $list = $this->Payment_model->pay_qianmi_order($pay);
+            }elseif(empty($pay) && !empty($start)){
+
+                $list = $this->Payment_model->time_qianmi_order($start,$ennd);
+            }elseif(!empty($pay) && !empty($start)){
+                $list = $this->Payment_model->Paytime_qianmi_order($pay,$start,$ennd);
+            }elseif(empty($pay) && empty($start)){
+                $list = $this->Payment_model->get_qianmi_order('1');
+            }
+
+            if(count($list) > 0)
+
+            {
+
+                foreach ($list as $booking) {
+
+                    $i++;
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['uuid']);
+
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
+                    $data = json_decode($booking['userPostData'],true);
+
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $data['mobileNo']);
+
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $data['rechargeAmount']);
+                    $paydata = json_decode($booking['payment_data'],true);
+
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $paydata['advicePrice']);
+
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $data['payType']);
+                    if($booking['state'] == '1'){
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, '成功');
+
+                    }else{
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, '失败');
+
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('I' . $i, $booking['create_time']);
+
+                }
+                 //日志
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."导出了话费充值信息",
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+
+
+
+
+                $filename = 'ImportOrder.xls'; //save our workbook as this file name
+
+               /// var_dump($filename);
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                 $objWriter->save('php://output');
+
+                 exit;
+
+            }else{
+                echo "<script>alert('没有记录');window.location.href='".site_url('/payment/Payment/energyCharge')."'</script>";
+            }
+
+        }else{
+            $this->load->view('404.html');
+        }
+
 
     }
 

@@ -547,14 +547,18 @@ class Game extends Default_Controller
             //分页数据
             $listpage = $this->Game_model->search_where_withsrawls_page('prizeId',$prizeId,$config['per_page'],$current_page);
         }else  if(empty($prizeId) && !empty($withdrawals)){
+            if($withdrawals == '3'){
             $withdrawals = '0';
+            }
             $list = $this->Game_model->search_where_withsrawls('withsrawls',$withdrawals);
             $config['total_rows'] = count($list);
 
             //分页数据
             $listpage = $this->Game_model->search_where_withsrawls_page('withsrawls',$withdrawals,$config['per_page'],$current_page);
         }else  if(!empty($prizeId) && !empty($withdrawals)){
-             $withdrawals = '0';
+            if($withdrawals == '3'){
+            $withdrawals = '0';
+            }
             $list = $this->Game_model->search_withsrawls($prizeId,$withdrawals);
             $config['total_rows'] = count($list);
 
@@ -580,6 +584,181 @@ class Game extends Default_Controller
         $this->load->view('template.html',$data);
     }
 
+    //导出红包纪录
+    function Import_withdrawals(){
+        if($_POST){
+            $prizeId = $this->input->post('prizeid'); 
+            $withdrawals = $this->input->post('state'); 
+            $starttime = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
 
+            if(!empty($starttime)){
+                $time = strtotime($starttime.' 00:00:00')*1000;
+                $endtime = strtotime($end_time.' 23:59:59')*1000;
+            }else{
+                $time= '';
+                $endtime='';
+            }
+
+            $this->load->library('excel');
+
+            //activate worksheet number 1
+
+            $this->excel->setActiveSheetIndex(0);
+
+            //name the worksheet
+
+            $this->excel->getActiveSheet()->setTitle('ImportOrder');
+
+            $arr_title = array(
+
+                'A' => '编号',
+
+                'B' => '奖品名称',
+
+                'C' => '用户名称',
+
+                'D' => '用户手机号',
+
+                'E' => '提现状态',
+
+                'F' => '支付宝账户',
+
+                'G' => '微信账户',
+
+                'H' => '中奖时间',
+
+            );
+
+             //设置excel 表头
+
+            foreach ($arr_title as $key => $value) {
+
+                $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            }
+
+            $i = 1;
+
+            //查询数据库得到要导出的内容
+
+            if(!empty($prizeId) && empty($withdrawals) && empty($time)){
+                $list = $this->Game_model->search_where_withsrawls('prizeId',$prizeId);
+              
+            }else  if(empty($prizeId) && !empty($withdrawals) && empty($time)){
+                 if($withdrawals == '3'){
+                    $withdrawals = '0';
+                    }
+                $list = $this->Game_model->search_where_withsrawls('withsrawls',$withdrawals);
+
+            }else if(empty($prizeId) && empty($withdrawals) && !empty($time)){
+
+                $list = $this->Game_model->select_where_with_time($time,$endtime);
+
+            }else if(!empty($prizeId) && !empty($withdrawals) && empty($time)){
+                if($withdrawals == '3'){
+                    $withdrawals = '0';
+                }
+                $list = $this->Game_model->search_withsrawls($prizeId,$withdrawals);
+
+            }else  if(!empty($prizeId) && empty($withdrawals) && !empty($time)){
+                $list = $this->Game_model->select_where_prizeid_time($prizeId,$time,$endtime);   
+            }else  if(empty($prizeId) && !empty($withdrawals) && !empty($time)){
+                 if($withdrawals == '3'){
+                    $withdrawals = '0';
+                    }
+                $list = $this->Game_model->select_where_wi_time('withsrawls',$withdrawals,$time,$endtime);   
+
+            }else  if(!empty($prizeId) && !empty($withdrawals) && !empty($time)){
+                
+                 if($withdrawals == '3'){
+                    $withdrawals = '0';
+                    }
+                $list = $this->Game_model->select_where_wi_time($prizeId,'withsrawls',$withdrawals,$time,$endtime);   
+
+            }else if(empty($prizeId) && empty($withdrawals) && empty($time)){
+                $list = $this->Game_model->select_withdrawals($prizeId,$withdrawals);
+               
+            }
+           
+
+          
+
+            if(!empty($list)){
+                foreach ($list as $booking) {
+
+                    $i++;
+
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['title']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['phone']);
+                    if($booking['withsrawls'] == '1'){
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, '申请提现');
+
+                    }else if($booking['withsrawls'] =='2'){
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, '提现成功');
+
+                    }else{
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, '未申请提现');
+
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['aliPay']);
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['wxpay']);
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, date('Y-m-d H:i:s', $booking['createTime'] / 1000));
+                }
+                //日志
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."导出了红包中奖纪录",
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                $filename = 'ImportOrder.xls'; //save our workbook as this file name
+
+               /// var_dump($filename);
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                 $objWriter->save('php://output');
+
+                 exit;
+
+            }else{
+
+                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/igo/LoveToGo/')."'</script>";
+
+            }
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
 
 }

@@ -93,6 +93,7 @@ td img{
                                 <option value="2">南江</option>
                                 <option value="3">宣汉</option>
                                 <option value="4">邻水</option>
+                                <option value="5">电商通用卷</option>
 
                             </select>
 
@@ -231,7 +232,8 @@ td img{
 
                                     <th class="shop_yetai">使用期限</th>
 
-                                    <th class="brand">领取限制</th>
+                                    <th class="brand">领取数量</th>
+                                    <th class="brand">次数限制</th>
 
                                     <th class="brand">购买价格</th>
                                     <th class="brand">领取数</th>
@@ -647,28 +649,33 @@ $(document).ready(function(){
             <td>宣汉</td>
         <%}else if(city == '4'){%>
             <td>邻水</td>
+        <%}else if(city == '0'){%>
+            <td>电商通用卷</td>
         <%}%>
         <td class="am-text-middle"><%= name%></td>
 
-        <td class="am-text-middle"><%= title%></td>
+        <td class="am-text-middle"><%if(isGamePrize == '1'){%>游戏使用-<%}else if(isGamePrize == '2'){%>分享专用-<%}else if(isGamePrize =='3'){%>爱购专用-<%}%><%= title%></td>
 
-         <%if(store_name== null) {%>
+         <%if(storename == ',') {%>
 
         <td class="am-text-middle">宏帆广场</td>
 
         <%}else{%>
 
-        <td class="am-text-middle"><%= store_name%></td>
+        <td class="am-text-middle"><%= storename%></td>
 
         <%}%>
 
         <%if(typeid=="1") {%>
 
-        <td class="am-text-middle">电商代金券</td>
+        <td class="am-text-middle">电商抵扣券</td>
 
         <%}else if(typeid=="2") {%>
 
-        <td class="am-text-middle">电商折扣券</td>
+        <td class="am-text-middle">电商折扣券</td>  
+        <%}else if(typeid=="3") {%>
+
+        <td class="am-text-middle">电商满减券</td>
 
         <%}else {%>
 
@@ -680,13 +687,20 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= begin_date%>至<%= end_date%></td>
 
         <%if(receive_limit=="1") {%>
-
-        <td class="am-text-middle">限领一次</td>
-
+        <td class="am-text-middle">一张</td>
         <%}else {%>
-
         <td class="am-text-middle">不限制</td>
-
+        <%}%>
+        <%if(frequency=="1") {%>
+        <td class="am-text-middle">一天一次</td>
+        <%}else if(frequency=="2") {%>
+        <td class="am-text-middle">两天一次</td> 
+        <%}else if(frequency=="7") {%>
+        <td class="am-text-middle">一周一次</td> 
+        <%}else if(frequency=="30") {%>
+        <td class="am-text-middle">一月一次</td>
+        <%}else {%>
+        <td class="am-text-middle">仅领一次</td>
         <%}%>
         <td><%= price%></td>
 

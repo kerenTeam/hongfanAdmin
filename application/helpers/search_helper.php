@@ -1091,7 +1091,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.buyer',$buyer)->order_by('a.create_time','desc')->get();
 
             $res = $query->result_array();
 

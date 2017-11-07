@@ -27,7 +27,7 @@ class Igogoods extends CI_Controller
         //获取本地的列表
          $num = '100';
          $goods_list = array();
-         for ($i=1; $i < 4; $i++) { 
+         for ($i=1; $i < 5; $i++) { 
            $post_data = array(  
             'appkey' => IGOAPPKEY,  
             'appsecret' => IGOAPPSECRET,

@@ -306,6 +306,7 @@ td.am-text-middle img{
                                     <th>领取用户 </th>
 
                                     <th>领取时间 </th>
+                                    <th>购买订单号 </th>
 
                                     <th>状态 </th>
 
@@ -661,6 +662,7 @@ function getList(dataurl,data){
                 for(var i = 0; i < res.length; i++){
 
                   //  res[i].qrcode = JSON.parse(res[i].qrcode);
+                    res[i].createTime = new Date(parseInt(res[i]['createTime'])).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
 
                     listData += template('dataModal',res[i]);
 
@@ -755,6 +757,8 @@ $(document).ready(function(){
         <td class="am-text-middle"><%= nickname %></td>
 
         <td class="am-text-middle"><%= createTime %></td>
+        <td class="am-text-middle"><%= orderUUID %></td>
+
 		<%if(user_coupon_state == '1'){%>
         	<td class="am-text-middle">未使用</td>
         <%}else{%>

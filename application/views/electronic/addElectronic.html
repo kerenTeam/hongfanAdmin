@@ -135,6 +135,7 @@ padding: 5px 6px!important;
                         <div class="am-u-sm-9">
 
                            <select name="city" required>
+                               <option value="0">电商通用</option>
                                <option value="1">重庆</option>
                                <option value="2">南江</option>
                                <option value="3">宣汉</option>
@@ -205,7 +206,26 @@ padding: 5px 6px!important;
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="voucher" style="display: none;float: left !important; ">
 
-                        <label for="user-email" class="am-u-sm-3 am-form-label">代金券使用规则<span class="red">*</span>：</label>
+                        <label for="user-email" class="am-u-sm-3 am-form-label">抵用卷使用规则<span class="red">*</span>：</label>
+
+                        <div class="am-u-sm-9">
+
+                            <span class="linkWord">直接抵扣（元）</span>
+
+                            <input type="number" class="stable" required  id="coupon_amount" name="coupon_amount" min="1" onmousewheel="return false;"  />
+                           <!--  <span class="linkWord">满</span>
+
+                            <input type="number" class="stable" required  onmousewheel="return false;" id="meetMoney" name="meetMoney" min="1" onmousewheel="return false;"  />
+
+                            <span class="linkWord">减</span>
+
+                            <input type="number" name="reduceMoney" id="reduceMoney"  class="stable"  required onmousewheel="return false;" > -->
+                        </div>
+
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-fl" id="fullcut" style="display: none;float: left !important; ">
+
+                        <label for="user-email" class="am-u-sm-3 am-form-label">满减使用规则<span class="red">*</span>：</label>
 
                         <div class="am-u-sm-9"><!-- 
 
@@ -243,24 +263,34 @@ padding: 5px 6px!important;
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">每次领取数量限制<span class="red">*</span>:</label>
 
                         <div class="am-u-sm-9">
 
-                            <select name="receive_limit" id="receive_limit" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="receive_limit" id="receive_limit" required class="am-form-field tpl-form-no-bg" >
 
-                                <option value="">输入查找/选择</option>
-
+                                <!-- <option value="">输入查找/选择</option> -->
+                                <option value="1">一张</option>
                                 <option value="999">不限制</option>
-
-                                <option value="1">仅一次</option>
-
                             </select>
 
                         </div>
 
                     </div>
-
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                            <select name="frequency" id="frequency" required class="am-form-field tpl-form-no-bg" >
+                                <option value="">输入查找/选择</option>
+                                <option value="0">仅领一次</option>
+                                <option value="1">一天一次</option>
+                                <option value="2">二天一次</option>
+                                <option value="7">一周一次</option>
+                                <option value="30">一月一次</option>
+                            </select>
+                        </div>
+                    </div>
+                   
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="businessTime" class="am-form-label am-u-sm-3">使用时间：</label>
@@ -306,6 +336,23 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="" class="am-u-sm-3 am-form-label">卡券归属:</label>
+
+                        <div class="am-u-sm-9">
+
+                            <select name="isGamePrize" >
+
+                                <option value="0" >线上或线下卷</option>
+                                <option value="1" >首页转盘游戏</option>
+                                <option value="2" >分享</option>
+                                <option value="3" >爱购专用</option>
+                            </select>
+
+                        </div>
+
+                    </div>
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
@@ -313,9 +360,9 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <select name="storeid" required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
+                            <select name="store[]" multiple required class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
 
-                                <option value="0">输入查找/选择</option>
+                                <option value="0">全部商家 </option>
 
                                 <?php if(!empty($store)):?>
 
@@ -417,20 +464,30 @@ padding: 5px 6px!important;
         $('#discount').css('display','none');
 
         $('#voucher').css('display','block');
+        $('#fullcut').css('display','none');
+
 
     }else if($('#salesType option:selected').val()=="2"){
 
         $('#voucher').css('display','none');
 
         $('#discount').css('display','block');
+        $('#fullcut').css('display','none');
+
+
+    }else if($('#salesType option:selected').val()=="3"){
+
+        $('#voucher').css('display','none');
+
+        $('#discount').css('display','nono');
+        $('#fullcut').css('display','block');
 
     }else if($('#salesType option:selected').val() != '1' && $('#salesType option:selected').val() != '2'){
 
         $('#voucher').css('display','none');
 
          $('#discount').css('display','none');
-
-       
+        $('#fullcut').css('display','none');
 
     }else if($('#salesType option:selected').val() == ''){
 

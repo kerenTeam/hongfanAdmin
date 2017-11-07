@@ -270,6 +270,46 @@ class Api_goods extends CI_Controller
         }
     }
 
+    //乐意装图文列表
+    function lyzNews(){
+        if($_POST){
+
+            $page = $_POST['page'];
+            $size = $_POST['size'];
+            $q = $this->db->get('lyz_news');
+            $l= $q->result_array();
+
+            $arr['pageNum'] = ceil(count($l)/$size);
+
+
+            $query = $this->db->order_by('createTime','desc')->limit($size,$page)->get('lyz_news');
+            $list = $query->result_array();
+            if(!empty($list)){
+                $arr['data'] = $list; 
+                echo json_encode($arr);
+            }else{
+                echo "2";
+            }
+        }else{
+            echo '2';
+        }
+    }
+
+    //返回图文详情
+    function lyzNewsInfo(){
+        if($_POST){
+            $id = $_POST['newId'];
+            $query = $this->db->where('id',$id)->get('lyz_news');
+            $list = $query->row_array();
+            if(!empty($list)){
+                echo json_encode($list);
+            }else{
+                echo "2";
+            }
+        }else{
+            echo '2';
+        }
+    }
 
 
 

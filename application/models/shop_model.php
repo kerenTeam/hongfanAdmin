@@ -245,7 +245,7 @@ class Shop_model extends CI_Model
 
     function get_member_info($userid,$username){
 
-        $sql = "SELECT * From $this->member where gid='2' and user_id != '$userid' and phone = '$username'";
+        $sql = "SELECT * From $this->member where user_id != '$userid' and phone = '$username'";
 
         $query = $this->db->query($sql);
 

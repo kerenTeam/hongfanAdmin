@@ -60,18 +60,18 @@ class Member extends Default_Controller {
 
     //新增会员
     function addMember(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+  //       $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// 	// var_dump($url);
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+		// 			exit;
+		// }	
          //获取会员卡类型
        //  $data['cards'] = $this->user_model->get_card_type();
           //获取会员卡类型
@@ -117,18 +117,18 @@ class Member extends Default_Controller {
 
     //编辑会员
     function editMember(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+  //       $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// 	// var_dump($url);
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-        }	
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+		// 			exit;
+  //       }	
         
          $id = intval($this->uri->segment(4));
         if($id == 0){
@@ -178,18 +178,18 @@ class Member extends Default_Controller {
     }
     //删除会员
     function delMember(){
-        $q= $this->uri->uri_string();
-		$url = preg_replace('|[0-9]+|','',$q);
-		if(substr($url,-1) == '/'){
-			$url = substr($url,0,-1);
-		}
-			// var_dump($url);
-		$user_power = json_decode($_SESSION['user_power'],TRUE);
+  //       $q= $this->uri->uri_string();
+		// $url = preg_replace('|[0-9]+|','',$q);
+		// if(substr($url,-1) == '/'){
+		// 	$url = substr($url,0,-1);
+		// }
+		// 	// var_dump($url);
+		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		if(!deep_in_array($url,$user_power)){
-			echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-					exit;
-		}	
+		// if(!deep_in_array($url,$user_power)){
+		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+		// 			exit;
+		// }	
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');

@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -111,7 +110,7 @@ class SingleShop extends CI_Controller {
         date_default_timezone_set("Asia/Shanghai");
         $this->load->helper('Default_helper');
 		$this->load->helper('Search_helper');
-        session_start();
+        
         
         if(!isset($_SESSION['users'])){
             echo "<script>alert('您还没有登陆！');window.location.href='".site_url('/Login/index')."';</script>";

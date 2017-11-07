@@ -63,6 +63,8 @@ class Electronic extends Default_Controller {
          $data['store']= $this->Shop_model->shop_list('1');
     
          $data['coupon'] = $this->Activity_model->get_coupons();
+
+
          $data['page']= $this->view_electronicList;
 
          $data['menu'] = array('moll','electronicList');
@@ -87,6 +89,15 @@ class Electronic extends Default_Controller {
                  $list[$key]['lin'] = count($this->Activity_model->get_ReceiveNum($value['id']));
 
                  $list[$key]['receive'] = count($this->Activity_model->search_receive($value['id'],'0'));
+                 //获取商家名字
+                 $storename[$key] = '';
+                 $a = json_decode($value['storeid'],true);
+
+                 foreach ($a as $k => $v) {
+                     $storename[$key] .= get_store_name($v).',';
+                 }
+                 $list[$key]['storename'] = $storename[$key];
+
             }
 
             if(empty($list)){
@@ -163,20 +174,27 @@ class Electronic extends Default_Controller {
                     break;
             }
 
-            if($data['typeid'] == 1){
-                $arr = array($data['meetMoney'],$data['reduceMoney']);
+            if($data['typeid'] == 2){
+                $arr = array($data['overflow'],$data['cut']);
                 $data['coupon_amount'] = implode(',',$arr);
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
-            }else if($data['typeid'] == 2){
-                $arr = array($data['overflow'],$data['cut']);
+            }else if($data['typeid'] == 3){
+                $arr = array($data['meetMoney'],$data['reduceMoney']);
                 $data['coupon_amount'] = implode(',',$arr);
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }else{
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }
 
+            if(!empty($data['store'])){
+                $data['storeid'] = json_encode($data['store']);
+
+            }
+             unset($data['store']);
+            
+      
    
-            $header = array("token:".$_SESSION['token'],'city:'.$data['city']);    
+            $header = array("token:".$_SESSION['token'],'city:'.'1');    
             if(!empty($_FILES['img']['name'])){
                     $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
                 
@@ -251,12 +269,9 @@ class Electronic extends Default_Controller {
             //获取卡卷信息
 
             $data['coupon'] = $this->Activity_model->get_electr_info($id);
+            //获取找点商家
+            $data['store']  =  $this->Shop_model->shop_list('1');
 
-
-
-                //获取找点商家
-
-             $data['store']  =  $this->Shop_model->shop_list('1');
 
 
 
@@ -310,18 +325,24 @@ class Electronic extends Default_Controller {
                     break;
             }
 
-            if($data['typeid'] == 1){
-                $arr = array($data['meetMoney'],$data['reduceMoney']);
+            if($data['typeid'] == 2){
+                $arr = array($data['overflow'],$data['cut']);
                 $data['coupon_amount'] = implode(',',$arr);
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
-            }else if($data['typeid'] == 2){
-                $arr = array($data['overflow'],$data['cut']);
+            }else if($data['typeid'] == 3){
+                $arr = array($data['meetMoney'],$data['reduceMoney']);
                 $data['coupon_amount'] = implode(',',$arr);
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }else{
                 unset($data['meetMoney'],$data['reduceMoney'],$data['overflow'],$data['cut']);
             }
-            $header = array("token:".$_SESSION['token'],'city:'.$data['city']);    
+
+            if(!empty($data['store'])){
+                $data['storeid'] = json_encode($data['store']);
+
+            }
+            unset($data['store']);
+            $header = array("token:".$_SESSION['token'],'city:1');    
             if(!empty($_FILES['img']['name'])){
                     $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
                 
@@ -423,7 +444,7 @@ class Electronic extends Default_Controller {
             $this->db->insert('hf_system_journal',$log);
 
             if($this->Activity_model->del_coupon($id)){
-
+               // $this->Activity_model-
                 echo "1";
 
             }else{
@@ -450,12 +471,19 @@ class Electronic extends Default_Controller {
 
             $store_id = $_POST['store_id'];
             $city = $_POST['city'];
+
             if(!empty($store_id) && empty($city)){
                 $list = $this->Activity_model->select_where('hf_shop_coupon','storeid',$store_id);
             }else if(empty($store_id) && !empty($city)){
+                if($city == '5'){
+                    $city ='0';
+                }
                 $list = $this->Activity_model->select_where('hf_shop_coupon','city',$city);
 
             }else if(!empty($store_id) && !empty($city)){
+                if($city == '5'){
+                    $city ='0';
+                }
                 $list = $this->Activity_model->select_where_may('hf_shop_coupon','storeid',$store_id,'city',$city);
             }else if(empty($store_id) && empty($city)){
                 $list = $this->Activity_model->get_coupons();
@@ -517,7 +545,7 @@ class Electronic extends Default_Controller {
          $data['coupon'] = $this->Activity_model->get_electr_info($id);
 
          //返回所有商家
-        $data['store']= $this->Shop_model->shop_list('1');
+         $data['store']= $this->Shop_model->shop_list('1');
 
          $data['page']= $this->view_afterSales;
 
@@ -673,14 +701,15 @@ class Electronic extends Default_Controller {
                 'B' => '核销用户',
 
                 'C' => '用户电话',
+                'D' => '用户购买单号',
 
-                'D' => '核销商家名称',
+                'E' => '核销商家名称',
 
-                'E' => '优惠卷名称',
+                'F' => '优惠卷名称',
 
-                'F' => '优惠卷价格',
+                'G' => '优惠卷价格',
 
-                'G'=>'核销时间',
+                'H'=>'核销时间',
 
             );
 
@@ -709,19 +738,22 @@ class Electronic extends Default_Controller {
 
             foreach ($list as $booking) {
 
+
                 $i++;
                 $storename = $this->Activity_model->get_store_name($booking['store_id']);
                 $coupon = $this->Activity_model->select_where_one('hf_shop_coupon','id',$booking['shop_coupon_id']);
                 $user = $this->Activity_model->select_where_one('hf_user_member','user_id',$booking['userid']);
+                $usercoupon = $this->Activity_model->select_where_one('hf_user_coupon','user_coupon_id',$booking['user_coupon_id']);
         
 
                 $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
                 $this->excel->getActiveSheet()->setCellValue('B' . $i, $user['nickname']);
                 $this->excel->getActiveSheet()->setCellValue('C' . $i, $user['phone']);
-                $this->excel->getActiveSheet()->setCellValue('D' . $i, $storename);
-                $this->excel->getActiveSheet()->setCellValue('E' . $i, $coupon['name']);
-                $this->excel->getActiveSheet()->setCellValue('F' . $i, $coupon['price']);
-                $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['create_time']);
+                $this->excel->getActiveSheet()->setCellValue('D' . $i, $usercoupon['orderUUID']);
+                $this->excel->getActiveSheet()->setCellValue('E' . $i, $storename);
+                $this->excel->getActiveSheet()->setCellValue('F' . $i, $coupon['name']);
+                $this->excel->getActiveSheet()->setCellValue('G' . $i, $coupon['price']);
+                $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['create_time']);
 
 
             }
@@ -1305,8 +1337,9 @@ class Electronic extends Default_Controller {
                         'C' => '用户电话',
 
                         'D' => '领取时间',
+                        'E' => '购买单号',
 
-                        'E' => '使用状态'
+                        'F' => '使用状态'
                     );
 
                      //设置excel 表头
@@ -1340,10 +1373,11 @@ class Electronic extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
                         $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['createTime']);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['orderUUID']);
                         if($booking['user_coupon_state'] == '1'){
-                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '未使用');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '未使用');
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '已使用');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '已使用');
                         }
                     }
 

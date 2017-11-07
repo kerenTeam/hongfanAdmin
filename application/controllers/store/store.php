@@ -1723,7 +1723,7 @@ class Store extends Default_Controller {
 
                 //获取买家id
 
-                $query = $this->db->where('nickname',$buyer)->get('hf_user_member');
+                $query = $this->db->where('phone',$buyer)->get('hf_user_member');
 
                 $res = $query->row_array();
 
@@ -1734,6 +1734,7 @@ class Store extends Default_Controller {
                 $buyer = '';
 
             }
+
 
             $list = order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid);
 

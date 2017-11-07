@@ -188,7 +188,8 @@ padding: 5px 6px!important;
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                    <!-- <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button> -->
+                                    <button type="button" class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> 审核通过</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> 审核不通过</button>
 
                                 </div>
 
@@ -209,6 +210,7 @@ padding: 5px 6px!important;
 
                                 <tr>
 
+                                    <th><input type="checkbox" name=""> 全选</th>
                                     <th>编号</th>
 
                                     <th>提交人</th>
@@ -232,6 +234,8 @@ padding: 5px 6px!important;
                                 <?php if(!empty($lists)):?>
                                     <?php foreach($lists as $val):?>
                                         <tr>
+                                             <th><input type="checkbox" name="id" value="<?php echo $val['id'];?>"></th>
+
                                             <td><?php echo $val['id'];?></td>
                                             <td><?php echo $val['nickname'];?></td>
                                           

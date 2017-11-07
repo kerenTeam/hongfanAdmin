@@ -27,6 +27,43 @@ class Payment_model extends CI_Model
         $query = $this->db->where($where)->order_by('create_time','desc')->get();
         return $query->result_array();
     }
+    //
+    function payorder_qianmi_order($order){
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('type','1')->where('a.uuid',$order)->order_by('create_time','desc')->get();
+        return $query->result_array();
+    }
+
+    //导出
+    function pay_qianmi_order($pay){
+      
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('type','1')->like('userPostData',$pay,'both')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    } 
+    //导出
+    function time_qianmi_order($time,$end){
+      
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('type','1')->where('a.create_time >=',$time)->where("a.create_time <=",$end)->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    } 
+    //导出
+    function Paytime_qianmi_order($pay,$time,$end){
+      
+        $this->db->select('a.*,b.nickname');
+        $this->db->from('hf_qianmi_order a');
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->where('type','1')->where('a.create_time >=',$time)->where("a.create_time <=",$end)->like('userPostData',$pay,'both')->order_by('a.create_time','desc')->get();
+        return $query->result_array();
+    }
+
     function get_phone_order($type){
         $where['type'] = $type;
         $this->db->select('a.*,b.nickname');
