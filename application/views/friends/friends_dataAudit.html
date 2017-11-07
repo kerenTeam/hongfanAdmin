@@ -188,8 +188,8 @@ padding: 5px 6px!important;
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe" >审核通过</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe" >审核不通过</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe tt" >审核通过</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe btt" >审核不通过</button>
 
                                 </div>
 
@@ -337,12 +337,22 @@ padding: 5px 6px!important;
 
     //批量删除
     $('.shenhe').click(function () {
+        var doshehe = $(this);
         if ($('.singleddl:checked').length == 0) {
             alert('至少勾选一个')
-        } else {
-            
 
-
+        } else { 
+            var allChecked = [];//选中的
+            $('.singleddl:checked').each(function(){
+                allChecked.push($(this).val())
+            })
+            alert(allChecked);
+            if(doshehe.hasClass('tt')){
+               //审核通过
+            }else{
+               //审核不通过
+                
+            }
         }
     })
 </script>
