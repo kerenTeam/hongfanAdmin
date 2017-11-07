@@ -140,68 +140,127 @@ td img{
                                 <div class="am-btn-group am-btn-group-xs">
 
                                     <button type="button" class="am-btn am-btn-default am-btn-success"><a href="<?php echo site_url().'/electronic/electronic/addElectronic';?>"><span class="am-icon-plus"></span> 新增</a></button>  
-                                    <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+                                    <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出核销纪录</a>  
+                                    <a type="button" class="am-btn am-btn-default am-btn-delete" data-am-modal="{target: '#receive'}"><span class="am-icon-arrow-up" ></span> 导出领取纪录</a>  
 
 
                                 </div>
 
-                    <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
-                        <div class="am-modal-dialog">
-                             <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/Dow_electronicAfterSales');?>" method="post">
-                            <div class="am-modal-hd">导出核销记录</div>
-                             
-                                 <div class="am-modal-bd">
-                                  
-                                    <div class="am-form-group am-cf" style="min-height: 100px;">
-                                        <label class="am-u-sm-2 am-form-label">商家：</label>
-                                        <div class="am-u-sm-9 am-u-end">
-                                            <select id="mollseller" name="store_id" data-am-selected="{searchBox: 1,maxHeight:200}">
-                                                <option value="">请选择/搜索</option>
-                                                <?php foreach($store as $val): ?>
-                                                <option value="<?php echo $val['business_id'];?>"><?php echo $val['store_name']?></option>
-                                                <?php endforeach;?>
-                                            </select>
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                                    <div class="am-modal-dialog">
+                                         <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/Dow_electronicAfterSales');?>" method="post">
+                                        <div class="am-modal-hd">导出核销记录</div>
+                                         
+                                             <div class="am-modal-bd">
+                                              
+                                                <div class="am-form-group am-cf" style="min-height: 100px;">
+                                                    <label class="am-u-sm-2 am-form-label">商家：</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                        <select id="mollseller" name="store_id" data-am-selected="{searchBox: 1,maxHeight:200}">
+                                                            <option value="">请选择/搜索</option>
+                                                            <?php foreach($store as $val): ?>
+                                                            <option value="<?php echo $val['business_id'];?>"><?php echo $val['store_name']?></option>
+                                                            <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div> 
+                                             
+                                                <div class="am-form-group am-cf" style="min-height: 100px;">
+                                                    <label class="am-u-sm-2 am-form-label">优惠卷：</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                        <select id="mollseller"  name="couponid" data-am-selected="{searchBox: 1,maxHeight:200}">
+                                                            <option value="">请选择/搜索</option>
+                                                            <?php foreach($coupon as $val): ?>
+                                                            <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'. $val['name']?></option>
+                                                            <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="am-form-group am-cf">
+                                                    <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                        <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                                          <p>开始日期应小于结束日期！</p>
+                                                        </div>
+                                                        <div class="am-g">
+                                                          <div class="am-u-sm-6">
+                                                            <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                                          </div>
+                                                          <div class="am-u-sm-6">
+                                                            <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                                          </div>
+                                                          <small class="red redtips">请先选择结束日期</small>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="am-form-group am-cf">
+                                                    <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
+                                                    <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
+                                                </div>
+                                           
                                         </div>
-                                    </div> 
-                                 
-                                    <div class="am-form-group am-cf" style="min-height: 100px;">
-                                        <label class="am-u-sm-2 am-form-label">优惠卷：</label>
-                                        <div class="am-u-sm-9 am-u-end">
-                                            <select id="mollseller"  name="couponid" data-am-selected="{searchBox: 1,maxHeight:200}">
-                                                <option value="">请选择/搜索</option>
-                                                <?php foreach($coupon as $val): ?>
-                                                <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'. $val['name']?></option>
-                                                <?php endforeach;?>
-                                            </select>
+                                       </form>
+                                    </div>
+                                </div>
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="receive">
+                                    <div class="am-modal-dialog">
+                                         <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/Dow_AllReceive');?>" method="post">
+                                        <div class="am-modal-hd">导出核销记录</div>
+                                             <div class="am-modal-bd">
+                                                <div class="am-form-group am-cf" style="min-height: 100px;">
+                                                    <label class="am-u-sm-2 am-form-label">优惠卷：</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                        <select id="mollseller"  name="couponid" data-am-selected="{searchBox: 1,maxHeight:200}">
+                                                            <option value="">请选择/搜索</option>
+                                                            <?php foreach($coupon as $val): ?>
+                                                            <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'. $val['name']?></option>
+                                                            <?php endforeach;?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="am-form-group am-cf" style="min-height: 100px;">
+                                                    <label class="am-u-sm-2 am-form-label">状态</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                       <select id="" name="state">
+                                                            <option value="">请选择</option>
+                                                            <option value="2">已使用</option>
+                                                            <option value="1">未使用</option>
+                                                       </select>
+                                                    </div>
+                                                </div>
+                                                <div class="am-form-group am-cf">
+                                                    <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                                    <div class="am-u-sm-9 am-u-end">
+                                                        <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                                          <p>开始日期应小于结束日期！</p>
+                                                        </div>
+                                                        <div class="am-g">
+                                                          <div class="am-u-sm-6">
+                                                            <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button>
+                                                            <input type="hidden" id="starttime" name="starttime" value="" />
+                                                            <span id="my-startDate">2017-01-01</span>
+                                                          </div>
+                                                          <div class="am-u-sm-6">
+                                                            <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button>
+                                                            <input type="hidden" id="endtime" name="endtime" value="" />
+                                                            <span id="my-endDate">2017-12-31</span>
+                                                          </div>
+                                                          <small class="red redtips">请先选择结束日期</small>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="am-form-group am-cf">
+                                                    <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
+                                                    <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
+                                                </div>
+                                           
                                         </div>
+                                       </form>
                                     </div>
-                                    <div class="am-form-group am-cf">
-                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
-                                        <div class="am-u-sm-9 am-u-end">
-                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
-                                              <p>开始日期应小于结束日期！</p>
-                                            </div>
-                                            <div class="am-g">
-                                              <div class="am-u-sm-6">
-                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
-                                              </div>
-                                              <div class="am-u-sm-6">
-                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
-                                              </div>
-                                              <small class="red redtips">请先选择结束日期</small>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="am-form-group am-cf">
-                                        <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
-                                        <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
-                                    </div>
-                               
-                            </div>
-                           </form>
-                        </div>
-    </div>
+                                </div>
+
 
                             </div>
           
@@ -325,7 +384,35 @@ $(function() {
     var $alert = $('#my-alert');
 
 
-    $('#my-start1').datepicker().
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          // console.log($('#my-start').data('date'));
+          $('#starttime').val($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+            // console.log($('#my-end').data('date'));
+          $('#endtime').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      }); 
+
+      $('#my-start1').datepicker().
       on('changeDate.datepicker.amui', function(event) {
         if (event.date.valueOf() > endDate.valueOf()) {
           $alert.find('p').text('开始日期应小于结束日期！').end().show();

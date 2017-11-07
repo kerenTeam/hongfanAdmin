@@ -2607,6 +2607,7 @@ function search_history($startTime,$endTime,$prize){
 
 
 }
+//
 function search_history_page($startTime,$endTime,$prize,$page,$size){
      $CI = &get_instance();
     $res= '';
@@ -2646,5 +2647,88 @@ function search_history_page($startTime,$endTime,$prize,$page,$size){
     }
     return $res;
 }
+
+
+//返回领取纪录
+function AllReceive($id,$state,$time,$endtime){
+    $CI = &get_instance();
+    $res= '';
+    if(!empty($id) && empty($state) && empty($time)){
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.store_coupon_id',$id)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($id) && !empty($state) && empty($time)){
+        if($state == '2'){
+            $state = '0';
+        }
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($id) && empty($state) && !empty($time)){
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(!empty($id) && !empty($state) && empty($time)){
+        if($state == '2'){
+            $state = '0';
+        }
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(!empty($id) && empty($state) && !empty($time)){
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.store_coupon_id',$id)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($id) && !empty($state) && !empty($time)){
+        if($state == '2'){
+            $state = '0';
+        }
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.user_coupon_state',$state)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(!empty($id) && !empty($state) && !empty($time)){
+        if($state == '2'){
+            $state = '0';
+        }
+        $CI->db->select('a.*,c.nickname,c.phone,b.name,b.title');
+        $CI->db->from('hf_user_coupon as a');
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $CI->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }elseif(empty($id) && empty($state) && empty($time)){
+        $CI->db->select('a.*,c.nickname,c.phone');
+
+        $CI->db->from('hf_user_coupon as a,b.name,b.title');
+
+        $CI->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $CI->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+
+        $query = $CI->db->order_by('a.user_coupon_id','desc')->get();
+        $res = $query->result_array();
+    }
+    return $res;
+
+}
+
+
 
  ?>

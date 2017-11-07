@@ -1430,7 +1430,110 @@ class Electronic extends Default_Controller {
     }
 
 
+    //导出所有卷的领取纪录
+    function Dow_AllReceive(){
+        if($_POST){
+            $id = $this->input->post('couponid');
+            $state = $this->input->post('state');
+            $time = $this->input->post('starttime');
+            $end_time = $this->input->post('endtime');  
+            if(!empty($time)){
+                $t = strtotime($time .' 00:00:00')*1000;
+                $e = strtotime($end_time .' 23:59:59')*1000;
+            }else{
+                $t = '';
+                $e = '';
+            }
 
+            $list = AllReceive($id,$state,$t,$e);
+            if(!empty($list)){
+                    $this->load->library('excel');
+
+                    $this->excel->setActiveSheetIndex(0);
+
+                    //name the worksheet
+                    $this->excel->getActiveSheet()->setTitle('coupon');
+
+                    $arr_title = array(
+
+                        'A' => '编号',
+
+                        'B' => '领取用户',
+
+                        'C' => '用户电话',
+
+                        'D' => '领取时间',
+                        'E' => '购买单号',
+
+                        'F' => '使用状态',
+                        'G' => '优惠卷名称'
+                    );
+                     //设置excel 表头
+                    foreach ($arr_title as $key => $value) {
+
+                        $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                       $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    }
+
+                    $i = 1;
+
+                    //查询数据库得到要导出的内容
+                    foreach ($list as $booking) {
+                        $i++;
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_coupon_id']);
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, date('Y-m-d H:i:s', $booking['createTime'] / 1000));
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['orderUUID']);
+                        if($booking['user_coupon_state'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '未使用');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '已使用');
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['name'].'-'.$booking['title']);
+
+                    }
+
+                    $filename = 'ReceiveRecords.xls'; //save our workbook as this file name
+
+                    header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                    header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+                    header('Cache-Control: max-age=0'); //no cache
+
+                     $log = array(
+
+                        'userid'=>$_SESSION['users']['user_id'],  
+
+                        "content" => $_SESSION['users']['username']."导出了优惠卷领取信息",
+
+                        "create_time" => date('Y-m-d H:i:s'),
+
+                        "userip" => get_client_ip(),
+
+                    );
+
+                    $this->db->insert('hf_system_journal',$log);
+
+                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                    $objWriter->save('php://output');
+            }else{
+                echo "<script>alert('暂无核销信息！');window.history.go(-1);</script>";
+            }
+
+
+        }else{
+            $this->laod->view('404.html');
+        }
+    }
 
 
 
