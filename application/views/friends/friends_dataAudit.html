@@ -188,8 +188,8 @@ padding: 5px 6px!important;
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> 审核通过</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" ><span class="am-icon-plus"></span> 审核不通过</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe" >审核通过</button>
+                                    <button type="button" class="am-btn am-btn-default am-btn-success shenhe" >审核不通过</button>
 
                                 </div>
 
@@ -210,7 +210,7 @@ padding: 5px 6px!important;
 
                                 <tr>
 
-                                    <th><input type="checkbox" name=""> 全选</th>
+                                    <th><input class="tpl-table-fz-check" type="checkbox" name=""> 全选</th>
                                     <th>编号</th>
 
                                     <th>提交人</th>
@@ -234,7 +234,7 @@ padding: 5px 6px!important;
                                 <?php if(!empty($lists)):?>
                                     <?php foreach($lists as $val):?>
                                         <tr>
-                                             <th><input type="checkbox" name="id" value="<?php echo $val['id'];?>"></th>
+                                             <th><input type="checkbox" class="singleddl" name="id" value="<?php echo $val['id'];?>"></th>
 
                                             <td><?php echo $val['id'];?></td>
                                             <td><?php echo $val['nickname'];?></td>
@@ -311,3 +311,36 @@ padding: 5px 6px!important;
 
 
 
+<script>
+     //全选
+    $('.tpl-table-fz-check').click(function () {
+        if ($(this).prop('checked') == true) {
+            $('.singleddl').prop('checked', true)
+        } else {
+            $('.singleddl').prop('checked', false)
+        }
+    })
+    //单个选择
+    $('.singleddl').click(function () {
+
+        if ($(this).is(':checked')) {
+            var checkLength = $('.singleddl').length;
+            var checkedLength = $('.singleddl:checked').length;
+            if (checkedLength == checkLength) {
+                $('.tpl-table-fz-check').prop('checked', true)
+            }
+        } else {
+            $('.tpl-table-fz-check').prop('checked', false)
+        }
+
+    })
+
+    //批量删除
+    $('.shenhe').click(function () {
+        if ($('.singleddl:checked').length == 0) {
+            alert('至少勾选一个')
+        } else {
+            // 执行删除方法....
+        }
+    })
+</script>
