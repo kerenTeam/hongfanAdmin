@@ -346,13 +346,48 @@ padding: 5px 6px!important;
             $('.singleddl:checked').each(function(){
                 allChecked.push($(this).val())
             })
-            alert(allChecked);
             if(doshehe.hasClass('tt')){
                //审核通过
+               var state='1';
+                // alert('1');
             }else{
                //审核不通过
-                
+                // alert('2');
+                var state='2';
             }
+   
+            $.ajax({
+
+                type:'post',
+
+                url:'<?php echo site_url("/friends/Friends/edit_dataState");?>',
+
+                data: 'id='+allChecked+'&state='+state,
+
+                success: function(data){
+                    // console.log(data)
+                    if(data==1){                 
+                       alert('操作成功！');
+                       window.location.reload()
+                    }else{
+
+                        alert("操作失败，请检查网络设置！");
+
+                    }
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });
+
+
+
+
+
         }
     })
 </script>

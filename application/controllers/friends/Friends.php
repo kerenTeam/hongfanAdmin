@@ -1665,6 +1665,26 @@ class Friends extends Default_Controller
 
         }
     }
+
+    //审核交友资料
+    function edit_dataState(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data['needReview'] = $this->input->post('state');
+            // 是否审核   0待审   1审过
+            $ids = explode(',',$id);
+            foreach ($ids as $key => $value) {
+                $this->Public_model->updata('hf_friends_my_photo','id',$value,$data);
+            }
+
+            echo "1";
+        }else{
+            echo "3";
+        }
+    }
+
+
+
     //删除交友资料
     function del_dataAudit(){
         $id = intval($this->uri->segment(4));
@@ -1763,6 +1783,8 @@ class Friends extends Default_Controller
             $this->load->view('404.html');
         }
     }
+
+
 
 
 
