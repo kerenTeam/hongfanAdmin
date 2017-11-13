@@ -545,6 +545,7 @@ class Shop extends Default_Controller {
             $arr['username'] = trim($this->input->post('store_name'));
             $arr['nickname'] = trim($this->input->post('store_name'));
             $arr['phone'] = trim($this->input->post('username'));
+            $arr['gid'] = trim($this->input->post('gid'));
 
             $arr['password'] =trim($this->input->post('password'));
 
@@ -560,7 +561,7 @@ class Shop extends Default_Controller {
 
             }
 
-            unset($data['username'],$data['password'],$data['user_id']);
+            unset($data['username'],$data['password'],$data['user_id'],$data['gid']);
 
             if($this->Shop_model->get_member_info($arr['user_id'],$arr['phone'])){
 
@@ -727,7 +728,7 @@ class Shop extends Default_Controller {
 
             $arr['phone'] = trim($this->input->post('username'));
 
-            $arr['gid'] = '2';
+            $arr['gid'] = trim($this->input->post('gid'));
 
             $arr['password'] = md5(trim($this->input->post('password')));
 
@@ -828,7 +829,7 @@ class Shop extends Default_Controller {
 
                 $data['create_time'] = date('Y-m-d H:i:s');
 
-                unset($data['password'],$data['username']);
+                unset($data['password'],$data['username'],$data['gid']);
 
             
                 $data['city'] = $city;  

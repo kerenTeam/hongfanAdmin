@@ -285,7 +285,8 @@ label.am-u-sm-8, label.am-u-sm-4{
 
 
 
-                             <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
+                             <?php $inter = json_decode($order['PriceCalculation'],true); ?>
+                        <?php if(isset($inter['nowIntergal']['storenowIntergal'])):?>
 
                             <div class="am-u-sm-4">
 
@@ -301,21 +302,35 @@ label.am-u-sm-8, label.am-u-sm-4{
                             </div> 
                               <div class="am-u-sm-4">
 
-                                支付金额：￥<?php echo $goods['total_goods_prices'] + $order['fee'] - round($inter['nowIntergal']['storenowIntergal'],2) - $coupon;?>
-
+                                <?php $payPrice =  $goods['total_goods_prices'] + $order['fee'] - round($inter['nowIntergal']['storenowIntergal'],2) - $coupon;?>
+                                <?php if($payPrice < '0'):?>
+                                支付金额：￥0.01
+                                <?php else:?>
+                                    支付金额：￥<?php echo $payPrice;?>
+                                <?php endif;?>
                             </div>
 
                             <?php else:?>
 
                             <div class="am-u-sm-4">
 
-                                积分抵用金额：未使用积分
-
+                                积分抵用金额：未使用积分<br>
+                                <?php if(isset($inter['Params']['couponData']['coupon_amount'])):?>
+                                    优惠卷抵扣金额：<?php $coupon = $inter['Params']['couponData']['coupon_amount']; echo $inter['Params']['couponData']['coupon_amount'];?>
+                                <?php else:?>
+                                    <?php $coupon = '0';?>
+                                    优惠卷抵扣金额：0
+                                <?php endif;?>
                             </div> 
 
                               <div class="am-u-sm-4">
 
-                                支付金额：￥<?php echo $goods['total_goods_prices'] + $order['fee'];?>
+                                <?php $payPrice =  $goods['total_goods_prices'] + $order['fee']  - $coupon;?>
+                                <?php if($payPrice < '0'):?>
+                                    支付金额：￥0.01
+                                <?php else:?>
+                                    支付金额：￥<?php echo $payPrice;?>
+                                <?php endif;?>
 
                             </div>
 

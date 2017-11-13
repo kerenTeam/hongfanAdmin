@@ -1004,6 +1004,8 @@ class Finance extends Default_Controller {
                     'S' => '优惠卷抵用金额',
                     'T' => '成交时间',
                     'U' => '订单状态',
+                    'V' => '改价金额',
+                    'W' => '改价原因',
 
                 );
 
@@ -1038,7 +1040,6 @@ class Finance extends Default_Controller {
                     'N' => '优惠卷抵用金额',
                     'O' => '商家修改价格',
                     'P' => '商家修改价格原因',
-
 
                     'Q' => '佣金比率',
                     'R' => '佣金总额',
@@ -1082,7 +1083,6 @@ class Finance extends Default_Controller {
 
 
 
-        // exit;
 
             if(!empty($list)){
 
@@ -1154,19 +1154,48 @@ class Finance extends Default_Controller {
                             $coupon = json_decode($booking['PriceCalculation'],true);
 
                             $zong = round($user['total_goods_prices'],2);
-                            if(isset($coupon['Params']['couponData']['coupon_amount'])){
 
-                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            if(isset($user['boxa'])){
+                                $lu = $user['boxa']['value'];
+                            }else{
+                                $lu = '1';
+                            }
+
+                            // var_dump($booking['order_id']);
+                            if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                                if($coupon['Params']['couponData']['typeid'] == '3'){
+                                    $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
+                                   // var_dump($p);
+                                   // var_dump($lu);
+                                    if(isset($p['1'])){
+                                        $coupon_amount = round($p['1'] * $lu,'2');
+                                    }
+                                }elseif($coupon['Params']['couponData']['typeid'] == '2'){
+                                    if(isset($p['1'])){
+                                        $coupon_amount = round($zong * $p['1'],'2');
+                                    }
+                                }else{
+                                    $coupon_amount = '0';
+                                }
                             }else{
                                 $coupon_amount = '0';
                             }   
-                            if(isset($coupon['nowIntergal']['storenowIntergal'])){
+                            // var_dump($coupon_amount);
 
-                            $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+
+                            if(isset($coupon['nowIntergal']['storenowIntergal'])){
+                                $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
                             }else{
                                 $nowIntergal = '0';
                             }
-                            $zhi = $zong - $coupon_amount - $nowIntergal;
+
+
+                            $zhi = $zong - $coupon_amount - $nowIntergal + $booking['fee'];
+                            // $zhi = $booking['amount'];
+                            if($zhi < '0'){
+                                $zhi = '0.01';
+                            }
+
 
                             $this->excel->getActiveSheet()->setCellValue('P' . $i, round($user['total_goods_prices'],2));
 
@@ -1208,6 +1237,8 @@ class Finance extends Default_Controller {
                                        break;
                                }
                                $this->excel->getActiveSheet()->setCellValue('U' . $i, $state);
+                               $this->excel->getActiveSheet()->setCellValue('V' . $i, $booking['fee']);
+                               $this->excel->getActiveSheet()->setCellValue('W' . $i, $booking['fee_name']);
 
                     }
 
@@ -1292,8 +1323,29 @@ class Finance extends Default_Controller {
                         $coupon = json_decode($book['PriceCalculation'],true);
 
                         $zong = round($goods['total_goods_prices'],2);
+
+                        if(isset($user['boxa'])){
+                            $lu = $user['boxa']['value'];
+                        }else{
+                            $lu = '1';
+                        }
+
+
                         if(isset($coupon['Params']['couponData']['coupon_amount'])){
-                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            if($coupon['Params']['couponData']['typeid'] == '3'){
+                                $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
+                               // var_dump($p);
+                               // var_dump($lu);
+                                if(isset($p['1'])){
+                                    $coupon_amount = round($p['1'] * $lu,'2');
+                                } 
+                            }elseif($coupon['Params']['couponData']['typeid'] == '2'){
+                                if(isset($p['1'])){
+                                    $coupon_amount = $zong * $p['1'];
+                                }
+                            }else{
+                                $coupon_amount = '0';
+                            }
                         }else{
                             $coupon_amount = '0';
                         }   
@@ -1305,6 +1357,9 @@ class Finance extends Default_Controller {
                         }
                         $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
 
+                        if($zhi < '0'){
+                            $zhi = '0.01';
+                        }
                         $this->excel->getActiveSheet()->setCellValue('J' . $i, $zong);
                         $this->excel->getActiveSheet()->setCellValue('K' . $i, $zhi);
                         if(isset($goods['postAge']['postage'])){
@@ -1327,8 +1382,7 @@ class Finance extends Default_Controller {
                 }
 
             }
-
-
+            // exit;
 
             //日志
 

@@ -126,7 +126,7 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="text" placeholder="请输入2-20个字符" minlength="2" maxlength="20"  name="store_name" value="<?php echo $busin['barnd_name']?>" required onblur="validate(this,2,20,3)" />
+                            <input type="text" placeholder="请输入2-20个字符" minlength="2" maxlength="20"  name="store_name" value="<?php echo $busin['store_name']?>" required onblur="validate(this,2,20,3)" />
 
                         </div> 
 
@@ -168,6 +168,7 @@
 
                     </div>
 
+
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="en_name" class="am-u-sm-3 am-form-label">用户自提地址 ：</label>
@@ -190,8 +191,8 @@
 
                         </div>
 
-                    </div>     
-
+                    </div>    
+                    
                       <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="en_name" class="am-u-sm-3 am-form-label">积分获取比率 ：</label>
@@ -202,7 +203,19 @@
 
                         </div>
 
-                    </div>             
+                    </div> 
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="en_name" class="am-u-sm-3 am-form-label">核销权限 ：</label>
+
+                        <div class="am-u-sm-8 am-u-end">
+
+                            <input type="radio"  name="gid"  value="2" <?php if($user['gid'] == '2'){echo "checked";}?>/>开启
+                            <input type="radio"  name="gid"  value="5" <?php if($user['gid'] == '5'){echo "checked";}?> />关闭
+
+                        </div>
+
+                    </div>              
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
@@ -462,7 +475,7 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"  value="<?php echo $busin['floor_name']?>" />
+                            <!-- <input type="text" name="floor_name" placeholder="例如：宏帆广场1层"  value="<?php echo $busin['floor_name']?>" /> -->
                               <select name="floor_name">
                                 <option value="UG" <?php if($busin['floor_name'] == "UG"){echo "selected";}?>>UG</option>
                                 <option value="LG" <?php if($busin['floor_name'] == "LG"){echo "selected";}?>>LG</option>

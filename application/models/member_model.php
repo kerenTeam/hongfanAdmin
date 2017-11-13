@@ -42,19 +42,29 @@ class member_model extends CI_Model{
 
     }
 
-    //返回今天新增用户
-    function new_member_num(){
-        $sql = "SELECT * from hf_user_member where gid='5' and to_days(create_time) = to_days(now())";
+    function selectMember(){
+        $sql = "select * FROM ".$this->member." where gid = 5";
+
         $query = $this->db->query($sql);
+
+        return $query->result_array();
+    } 
+    function selectMember_page($page,$size){
+        $sql = "select * FROM ".$this->member." where gid = 5 order by create_time desc limit $page,$size";
+
+        $query = $this->db->query($sql);
+
         return $query->result_array();
     }
 
-    //返回昨天新增用户
-    function member_num(){
-        $sql = "SELECT * FROM hf_user_member WHERE gid='5' and TO_DAYS( NOW( ) ) - TO_DAYS( create_time) <= 1";
+
+    //返回新增用户
+    function new_member_num($time){
+        $sql = "SELECT * from hf_user_member where gid='5' and create_time >='".$time.' 00:00:00'."' and create_time <='".$time.' 23:59:59'."'";
         $query = $this->db->query($sql);
-        return $query->result_array();
+        return $query->num_rows();
     }
+
 
 
 
@@ -80,7 +90,7 @@ class member_model extends CI_Model{
 
         $query = $this->db->where($where)->order_by('create_time','desc')->get($this->member);
 
-        return $query->result_array();
+        return $query->num_rows();
 
     }
 

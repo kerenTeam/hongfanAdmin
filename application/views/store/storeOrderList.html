@@ -425,7 +425,6 @@ td div.am-u-sm-12 {
 
                         }
 
-
                         for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
                             res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
                             if(res[i].goods_data.goods_Data[j].good_tags) {
@@ -549,7 +548,11 @@ $(document).ready(function(){
             </div>
         <% } %>
         </td>
+        <% if(amount < 0){%>
+        <td class="am-text-middle">0.01</td>
+        <%}else{%>
         <td class="am-text-middle"><%= amount %></td>
+        <%}%>
         <td class="am-text-middle">
  
         <%= nickname%>

@@ -31,12 +31,14 @@ class Member extends Default_Controller {
     function memberList()
     {
        
-        $data['userNum'] = $this->user_model->get_users('5');
+        $data['userNum'] = count($this->user_model->selectMember());
         //获取今天
-        $data['newNum'] = $this->user_model->new_member_num();
+        $time = date('Y-m-d',time());
+        $data['newNum'] = $this->user_model->new_member_num($time);
 
         //获取昨天
-        $data['yesterday'] = $this->user_model->member_num();
+        $d = date("Y-m-d",strtotime("-1 day"));
+        $data['yesterday'] = $this->user_model->new_member_num($d);
         
         $data['page'] = $this->view_memberList;
         $data['menu'] = array('member','memberList');
@@ -46,7 +48,9 @@ class Member extends Default_Controller {
     //返回会员列表
     function ret_member_list(){
         if($_POST){
-            $num = $this->user_model->get_users('5');
+            $page = $this->input->post('page');
+            $size = $this->input->post('size');
+            $num = $this->user_model->selectMember_page($page,$size);
             if(!empty($num)){
                 echo json_encode($num);
             }else{
@@ -60,21 +64,7 @@ class Member extends Default_Controller {
 
     //新增会员
     function addMember(){
-  //       $q= $this->uri->uri_string();
-		// $url = preg_replace('|[0-9]+|','',$q);
-		// if(substr($url,-1) == '/'){
-		// 	$url = substr($url,0,-1);
-		// }
-		// 	// var_dump($url);
-		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		// if(!deep_in_array($url,$user_power)){
-		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-		// 			exit;
-		// }	
-         //获取会员卡类型
-       //  $data['cards'] = $this->user_model->get_card_type();
-          //获取会员卡类型
         $data['cards'] = $this->user_model->get_card_type( );
           //视图界面
         $data['page'] = $this->view_addMember;
@@ -117,19 +107,7 @@ class Member extends Default_Controller {
 
     //编辑会员
     function editMember(){
-  //       $q= $this->uri->uri_string();
-		// $url = preg_replace('|[0-9]+|','',$q);
-		// if(substr($url,-1) == '/'){
-		// 	$url = substr($url,0,-1);
-		// }
-		// 	// var_dump($url);
-		// $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-		// if(!deep_in_array($url,$user_power)){
-		// 	echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-		// 			exit;
-  //       }	
-        
          $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -151,17 +129,18 @@ class Member extends Default_Controller {
     function edit_userinfo(){
         if($_POST){
             $data = $this->input->post();
-            if(!empty($this->input->post('password'))){
+            if(!empty(trim($data['password']))){
                 $data['password'] = md5($this->input->post('password'));
+            }else{
+                unset($data['password']);
             }
             
-
-
+            // 9cbf8a4dcb8e30682b927f352d6559a0
             if($this->user_model->edit_userinfo($data['user_id'],$data)){
                 //日志
                 $log = array(
                     'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."编辑了一个普通用户。用户名是".$data['username']."用户id是：".$data['user_id'],
+                    "content" => $_SESSION['users']['username']."编辑了一个普通用户。用户名是".$data['nickname']."用户id是：".$data['user_id'],
                     "create_time" => date('Y-m-d H:i:s'),
                     "userip" => get_client_ip(),
                 );

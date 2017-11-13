@@ -156,9 +156,9 @@
 
                     <div class="widget-title  am-cf" style="clear: both;">会员列表</div>
 
-                    <div class="widget-title  am-cf" style="clear: both;">会员注册总数：<?php echo count($userNum);?></div>  
-                    <div class="widget-title  am-cf" style="clear: both;">今天会员注册数：<?php echo count($newNum);?></div> 
-                    <div class="widget-title  am-cf" style="clear: both;">昨天会员注册数：<?php echo count($yesterday) - count($newNum);?></div>
+                    <div class="widget-title  am-cf" style="clear: both;">会员注册总数：<?php echo $userNum;?></div>  
+                    <div class="widget-title  am-cf" style="clear: both;">今天会员注册数：<?php echo $newNum;?></div> 
+                    <div class="widget-title  am-cf" style="clear: both;">昨天会员注册数：<?php echo $yesterday;?></div>
 
                 </div> 
 
@@ -506,27 +506,47 @@ $(function() {
 
             success: function(result){
 
-
-
                 var res = eval(result);
 
-                // console.log(res); 
+                // console.log(result); 
+                var str = '';
 
                 if(res != 2 && res != 3){
 
-                    var listData = ''; //每页出现的数量
+                    // var listData = '15'; //每页出现的数量
 
-                    total_page = Math.ceil(res.length/15); //得到总页数
+                    total_page = "<?php echo $userNum/15;?>"; //得到总页数
 
                     for(var i = 0; i < res.length; i++){
 
                         res[i].avatar = eval(res[i].avatar);
-
-                        listData+= template('dataModal',res[i]);
+                        if(res[i].avatar){
+                            headpic = res[i].avatar[0].picImg;
+                        }else{
+                            headpic = '';
+                        }
+                        str += ' <tr class="trClass" id="trClass" data-id="'+res[i].user_id+'">';
+                        str += '<td class="am-text-middle">'+res[i].user_id+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].nickname+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].nickname+'</td>';
+                        str += '<td class="am-text-middle">'
+                                if(headpic){
+                                    str += '<img class="avatar" alt="" src="'+headpic+'">';
+                                }else{
+                                    str += 'zaneu';
+                                }
+                        str += '</td>';
+                        str += '<td class="am-text-middle">'+res[i].phone+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].gender+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].intergral+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].create_time+'</td>';
+                        str += '<td class="am-text-middle">'+res[i].gender+'</td>';
 
                      }
+                     // console.log(str)
 
-                    document.getElementById('dataList').innerHTML = listData;
+
+                    document.getElementById('dataList').innerHTML = str;
 
                     $('.pagebox').css('display', 'block');
 

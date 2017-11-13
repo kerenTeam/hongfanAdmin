@@ -50,6 +50,25 @@ class Welcome extends CI_Controller {
     	}
     }
 
+    //
+    function coupon(){
+        $query = $this->db->where('shop_coupon_id','165')->get('hf_shop_couponverify');
+        $res = $query->result_array();
+        $a =array();
+        foreach ($res as $key => $value) {
+            $query1 = $this->db->where('user_coupon_id',$value['user_coupon_id'])->get('hf_user_coupon');
+            $res1 = $query1->row_array();
+            if(!empty($res1)){
+                var_dump($value['user_coupon_id']);
+
+                $a[$key] = $res;
+            }
+            
+        }
+        echo "<pre>";
+        var_dump($a);
+    }
+
 
 
 }

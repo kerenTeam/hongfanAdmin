@@ -54,25 +54,17 @@
 
                             <div class="am-form-group">
 
-                                <label for="doc-vld-name-2">密码 <span class="red">*</span>：</label>
+                                <label for="doc-vld-name-2">密码：</label>
 
                                 <input type="password" id="doc-vld-name-2" name="password" placeholder="不输入就是不修改"/>
 
                             </div>
 
-                           <!--  <div class="am-form-group">
-
-                                <label for="doc-vld-name-2">昵称：</label>
-
-                                <input type="text" id="doc-vld-email-2" minlength="2" maxlength="15" name="nickname" placeholder="输入昵称（至少 2 个字符,至多15个字符）" value="<?php echo $userinfo['nickname']?>"/>
-
-                            </div>
- -->
                             <div class="am-form-group">
 
-                                <label for="doc-vld-name-2">QQ <span class="red">*</span>：</label>
+                                <label for="doc-vld-name-2">QQ ：</label>
 
-                                <input type="text" id="doc-vld-name-2" name="qq" minlength="8" maxlength="12" placeholder="请输入QQ" value="<?php echo $userinfo['qq']?>" required/>
+                                <input type="text" id="doc-vld-name-2" name="qq" placeholder="请输入QQ" value="<?php echo $userinfo['qq']?>"/>
 
                             </div>
 
@@ -94,21 +86,10 @@
 
                             <div class="am-form-group">
 
-                                <label for="doc-select-1">会员卡等级 <span class="red">*</span>：</label>
+                                <label for="doc-vld-name-2">手机号码：</label>
 
-                                <select id="doc-select-1" name="card_id" required>
-
-                                    <option value="">-=请选择一项=-</option>
-
-                                    <?php foreach($cards as $val){?>
-
-                                    <option value="<?php echo $val['id']?>" <?php if($userinfo['card_id'] == $val['id']){echo "selected";}?>><?php echo $val['name'];?></option>
-
-                                    <?php }?>
-
-                                </select>
-
-                                <span class="am-form-caret"></span>
+                                <input type="text" id="doc-vld-email-2" value="<?php echo $userinfo['phone']?>"  readonly />
+                                
 
                             </div>
 

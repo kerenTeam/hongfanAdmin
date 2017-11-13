@@ -691,9 +691,7 @@ class Friends extends Default_Controller
                     "userip" => get_client_ip(),
 
                 );
-                				$this->db->insert('hf_system_journal',$log);
-
-
+                $this->db->insert('hf_system_journal',$log);
 				echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/dynamic')."'</script>";exit;
 			}else{
   				echo "<script>alert('操作失败！');window.location.href='".site_url('/friends/Friends/dynamic')."'</script>";exit;
