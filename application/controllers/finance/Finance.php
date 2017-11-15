@@ -1330,12 +1330,12 @@ class Finance extends Default_Controller {
                             $lu = '1';
                         }
 
-
+                       
                         if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                           
                             if($coupon['Params']['couponData']['typeid'] == '3'){
                                 $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
-                               // var_dump($p);
-                               // var_dump($lu);
+               
                                 if(isset($p['1'])){
                                     $coupon_amount = round($p['1'] * $lu,'2');
                                 } 
@@ -1343,12 +1343,15 @@ class Finance extends Default_Controller {
                                 if(isset($p['1'])){
                                     $coupon_amount = $zong * $p['1'];
                                 }
+                            }elseif($coupon['Params']['couponData']['typeid'] == '1'){
+                                $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
                             }else{
                                 $coupon_amount = '0';
                             }
                         }else{
                             $coupon_amount = '0';
                         }   
+
                         if(isset($coupon['nowIntergal']['storenowIntergal'])){
 
                         $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);

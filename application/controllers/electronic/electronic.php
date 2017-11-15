@@ -1372,7 +1372,7 @@ class Electronic extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_coupon_id']);
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['createTime']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, date('Y-m-d H:i:s',$booking['createTime']/1000));
                         $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['orderUUID']);
                         if($booking['user_coupon_state'] == '1'){
                             $this->excel->getActiveSheet()->setCellValue('F' . $i, '未使用');

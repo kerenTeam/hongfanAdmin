@@ -752,9 +752,118 @@ class Game extends Default_Controller
 
             }else{
 
-                echo "<script>alert('暂无订单记录！');window.location.href='".site_url('/igo/LoveToGo/')."'</script>";
+                echo "<script>alert('暂无红包记录！');window.location.href='".site_url('/Game/withdrawals/')."'</script>";
 
             }
+
+        }else{
+            $this->load->view('404.html');
+        }
+    }
+
+    //导出中奖纪录
+    function DowAwardRecord(){
+        if($_POST){
+            $prizeId = $this->input->post('prizeId');
+            $begin_time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+
+            if(!empty($begin_time)){
+                $time = strtotime($begin_time.' 00:00:00')*1000;
+                $endtime = strtotime($end_time.' 23:59:59')*1000;
+            }else{
+                $time= '';
+                $endtime='';
+            }
+
+
+            $this->load->library('excel');
+            $this->excel->setActiveSheetIndex(0);
+            $this->excel->getActiveSheet()->setTitle('ImportOrder');
+
+            $arr_title = array(
+
+                'A' => '编号',
+
+                'B' => '奖品名称',
+
+                'C' => '用户名称',
+
+                'D' => '用户手机号',
+
+                'E' => '中奖时间',
+
+            );
+             //设置excel 表头
+            foreach ($arr_title as $key => $value) {
+
+                $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+               $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            }
+
+            $i = 1;
+
+            $list  = search_history($time,$endtime,$prizeId);
+            if(!empty($list)){
+                foreach ($list as $booking) {
+
+                    $i++;
+
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['title']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['phone']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, date('Y-m-d H:i:s', $booking['createTime'] / 1000));
+                }
+                //日志
+
+                $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."导出了中奖纪录",
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                $filename = '中奖纪录.xls'; //save our workbook as this file name
+
+               /// var_dump($filename);
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                 $objWriter->save('php://output');
+
+                 exit;
+
+            }else{
+
+                echo "<script>alert('404！');window.location.href='".site_url('/Game/awardRecord/')."'</script>";
+
+            }
+
 
         }else{
             $this->load->view('404.html');

@@ -68,7 +68,24 @@ class Welcome extends CI_Controller {
         echo "<pre>";
         var_dump($a);
     }
-
+    function member(){
+        $time = '2017-11-08 00:00:00';
+        $end = '2017-11-13 23:59:59';
+        $query = $this->db->where('typeId','1')->where('create_time >=',$time)->where('create_time <=',$end)->get('hf_friends_news');
+        // $query = $this->db->query();
+        $res = $query->result_array();
+        $a ='0';
+        foreach ($res as $key => $value) {
+            $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+            // $query = $this->db->query();
+            $res1 = $query1->result_array();
+            $a += count($res1);
+            // var_dump($a);
+        }
+        // echo "<pre>";
+        var_dump($a);
+        var_dump(count($res));
+    }
 
 
 }

@@ -1,174 +1,357 @@
-<style type="text/css">
-    td img{
-        width: 100px;
-        height: 100px;
-    }
-    .deleteImg{
-        display:inline-block;
-        width:60px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-    }
-     .clickUp{
-        display: inline-block;
-        float: left;
-        margin-left: 80px;
-        width:100px;
-        height:25px;
-        line-height: 25px;
-        text-align: center;
-        color: #666;
-        font-size: 1.2rem;
-    }
-
- .preview{
-        height:150px !important;
-    }
-    .preview #imghead,#preview img{
-        
-        height:140px;
-    }
-    select.account_type_name{
-        border: none;
-        border-bottom: 1px solid #c2cad8;
-        font-size: 14px;
-        color: #555;
-        padding-left: 0;
-    }
-    label.am-form-label {
-        font-weight: normal;
-    }
-    .sureSave {
-        margin-right: 20px;
-    }
-    .tpl-table-black-operation{
-        display: none;
-    }
-    td:nth-child(2) input, td:nth-child(3) input {
-        width: 300px;
-    }
-</style>
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
-            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">app信息管理</a>
-            <small></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">app版本信息管理</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-
-                            <thead>
-                                <tr>
-                                    <th>安卓下载点击量：<?php echo $app['dowAndroid'];?></th>
-                                    <th>ios下载点击量：<?php echo $app['dowIso'];?> </th>
-                                </tr>
-                            </thead>
-                            <thead>
-                                <tr>
-                                    <th>版本号</th>
-                                    <th>安卓更新地址 </th>
-                                    <th>ios版本号 </th>
-                                    <th>ios更新地址</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <form action="<?php echo site_url('/systemSet/SystemSet/edit_app_version');?>" method="post" enctype="multipart/form-data">
-                            <tbody id="accountList">
-                           
-                         
-                                    <tr class="trClass" id="trClass" >
-                                        <td class="am-text-middle">
-                                            <input type="text" name="versionNum" value="<?php echo $app['versionNum'];?>" id="versionNum" />
-                                        </td>
-                                        <td>
-                                            <a class="wx_type_img am-inline" >
-                                                <input type="file" id="imgUpload" name="file" class="upload-add fileUpLoad">
-                                                <button type="button" class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新</button>
-                                            </a>
-                                            <input type="text" value="<?php echo $app['android_path_url']?>"  />
-                                        </td>
-                                        <td class="am-text-middle">
-                                        <input type="text" value="<?php echo $app['ios_versionNum']?>" name="ios_versionNum"  id="ios_versionNum" style="width:40%;"/>
-                                        </td>
-                                        <td class="am-text-middle">
-                                        <input type="text" value="<?php echo $app['ios_path_url']?>" name="ios_path_url" />
-                                        </td>
-                                        <td class="am-text-middle">
-                                            <input type="hidden" name="id" value="<?php echo $app['id'];?>">
-                                            <button type="submit" class="am-btn-primary">确定</button> 
-                                        </td>
-                                    </tr>
-                            </tbody>
-                            
-                             </form>
-                        </table>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-                <div class="widget-head am-cf">
-                    <div class="widget-title  am-cf" style="clear:both;">app温馨提示管理</div>
-                </div>
-                <div class="widget-body  am-fr">
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>所属模块</th>
-                                    <th>提示内容 </th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-
-//表单验证函数
-function validate(obj,minlen,maxlen,i){
-    var content=obj.value;
-    if(content.length<minlen || content.length>maxlen){
-        $('.blacktips'+ i).css('display','none');
-        $('.redtips'+ i).css('display','inline-block');
-    }else{
-        $('.redtips'+ i).css('display','none');
-        $('.blacktips'+ i).css('display','inline-block');
-    }
-}
-
-
-
-</script>
+<style type="text/css">
+
+    td img{
+
+        width: 100px;
+
+        height: 100px;
+
+    }
+
+    .deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 80px;
+
+        width:100px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+    }
+
+
+
+ .preview{
+
+        height:150px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:140px;
+
+    }
+
+    select.account_type_name{
+
+        border: none;
+
+        border-bottom: 1px solid #c2cad8;
+
+        font-size: 14px;
+
+        color: #555;
+
+        padding-left: 0;
+
+    }
+
+    label.am-form-label {
+
+        font-weight: normal;
+
+    }
+
+    .sureSave {
+
+        margin-right: 20px;
+
+    }
+
+    .tpl-table-black-operation{
+
+        display: none;
+
+    }
+
+    td:nth-child(2) input, td:nth-child(3) input {
+
+        width: 300px;
+
+    }
+
+</style>
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+
+            <a href="<?php echo site_url().'/systemSet/systemSet';?>" style="font-size:16px;">app信息管理</a>
+
+            <small></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf" style="clear:both;">app版本信息管理</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>安卓下载点击量：<?php echo $app['dowAndroid'];?></th>
+
+                                    <th>ios下载点击量：<?php echo $app['dowIso'];?> </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>版本号</th>
+
+                                    <th>安卓更新地址 </th>
+
+                                    <th>ios版本号 </th>
+
+                                    <th>ios更新地址</th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <form action="<?php echo site_url('/systemSet/SystemSet/edit_app_version');?>" method="post" enctype="multipart/form-data">
+
+                            <tbody id="accountList">
+
+                           
+
+                         
+
+                                    <tr class="trClass" id="trClass" >
+
+                                        <td class="am-text-middle">
+
+                                            <input type="text" name="versionNum" value="<?php echo $app['versionNum'];?>" id="versionNum" />
+
+                                        </td>
+
+                                        <td>
+
+                                            <a class="wx_type_img am-inline" >
+
+                                                <input type="file" id="imgUpload" name="file" class="upload-add fileUpLoad">
+
+                                                <button type="button" class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新</button>
+
+                                            </a>
+
+                                            <input type="text" value="<?php echo $app['android_path_url']?>"  />
+
+                                        </td>
+
+                                        <td class="am-text-middle">
+
+                                        <input type="text" value="<?php echo $app['ios_versionNum']?>" name="ios_versionNum"  id="ios_versionNum" style="width:40%;"/>
+
+                                        </td>
+
+                                        <td>
+
+                                            <a class="wx_type_img am-inline" >
+
+                                                <input type="file" id="imgUpload" name="ios" class="upload-add fileUpLoad">
+
+                                                <button type="button" class="am-btn am-btn-secondary am-btn-xs"><span class="am-icon-refresh"></span> 更新</button>
+
+                                            </a>
+
+                                            <input type="text" value="<?php echo $app['ios_path_url']?>"  />
+
+                                        </td>
+
+
+                                        <td class="am-text-middle">
+
+                                            <input type="hidden" name="id" value="<?php echo $app['id'];?>">
+
+                                            <button type="submit" class="am-btn-primary">确定</button> 
+
+                                        </td>
+
+                                    </tr>
+
+                            </tbody>
+
+                            
+
+                             </form>
+
+                        </table>
+
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf" style="clear:both;">app温馨提示管理</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>所属模块</th>
+
+                                    <th>提示内容 </th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>-->
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript">
+
+
+
+//表单验证函数
+
+function validate(obj,minlen,maxlen,i){
+
+    var content=obj.value;
+
+    if(content.length<minlen || content.length>maxlen){
+
+        $('.blacktips'+ i).css('display','none');
+
+        $('.redtips'+ i).css('display','inline-block');
+
+    }else{
+
+        $('.redtips'+ i).css('display','none');
+
+        $('.blacktips'+ i).css('display','inline-block');
+
+    }
+
+}
+
+
+
+
+
+
+
+</script>
+

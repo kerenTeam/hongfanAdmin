@@ -1,502 +1,1004 @@
-<style type="text/css" media="screen">
-.am-selected {
-    width: 100%!important;
-} 
-.table-check {
-    width: 30px;
-}   
-.hf-dropdown {
-    font-size: 12px!important;
-    padding: 5px 6px!important;
-}   
-/*td.am-text-middle img {
-    width:80px;
-} */
-.am-u-sm6 {
-    width: 60px !important;
-    margin: 0;
-}
-.stable {
-    display: inline-block !important;
-    width: 45% !important;
-}  
-.linkWord {
-    width: 10% !important;
-} 
-.stable {
-    display: inline-block !important;
-    width: 45% !important;
-}
-.linkWord {
-    width: 10% !important;
-}
-.tableImg {
-    width: 80px;
-}
-.am-table>tbody>tr.noBorder>td {
-    border-top: none;
-}
-.smallSize {
-    font-size: 14px;
-}
-td div div p {
-    padding:0;
-    margin:0;
-}
-.goodsTitle,.goods_price {
-    color: #32323a;
-}    
-.goods_tags {
-    display: inline-block;
-    padding: 0 2px;
-    border: 1px solid #1fb5ac;
-    color: #1fb5ac ;
-    font-size: 10px;
-}
-td div.am-u-sm-12 {
-    padding-bottom: 5px;
-}
-.goodsImg {
-    width: 100%;
-}
-.agreeOrder,.confirmGot,.agreeRefund {
-    border:1px solid #e0690c;
-    padding:2px 5px;
-    color: #e0690c;
-}
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>订单列表</small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="widget am-cf">
-  
-                <div class="widget-head am-cf" style="clear:both;">
-                    <div class="widget-title  am-cf">订单列表</div>
-                </div>
-                <div class="widget-body  am-fr">
-                 
-                    <div class="am-u-sm-12">
-                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
-                            <thead>
-                                <tr>
-                                    <th>订单编号 </th>
-                                    <th>支付订单号 </th>
-                                    <th width="40%" class="am-text-center">购买商品 </th>
-                                    <th>订单金额 </th>
-                                    <th>买家 </th>
-                                    <th>下单时间 </th>
-                                    <th>订单状态 </th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dataList">
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-                                <!-- more data -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a>2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                        <div claa="am-text-middle">
-                           <span>共<span class="allData">15</span>条数据</span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-<script type="text/javascript">
-  var pageflag = 1,$storeOrderList = parseInt(sessionStorage.getItem('storeOrderList')) || 0, $isStoreOrderList = parseInt(sessionStorage.getItem('isStoreOrderList')) || 0, total_page=0;
-  $(function() {
-    var startDate = new Date(2014, 11, 20);
-    var endDate = new Date(2014, 11, 25);
-    var $alert = $('#my-alert');
-    $('#my-start').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate').text($('#my-start').data('date'));
-          $('#begin_date').val($('#my-start').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate').text($('#my-end').data('date'));
-          $('#end_date').val($('#my-end').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-    $('#my-start1').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() > endDate.valueOf()) {
-          $alert.find('p').text('开始日期应小于结束日期！').end().show();
-        } else {
-          $alert.hide();
-          startDate = new Date(event.date);
-          $('#my-startDate1').text($('#my-start1').data('date'));
-          $('#begin_date1').val($('#my-start1').data('date'));
-        }
-        $(this).datepicker('close');
-      });
-
-    $('#my-end1').datepicker().
-      on('changeDate.datepicker.amui', function(event) {
-        if (event.date.valueOf() < startDate.valueOf()) {
-          $alert.find('p').text('结束日期应大于开始日期！').end().show();
-        } else {
-          $alert.hide();
-          endDate = new Date(event.date);
-          $('#my-endDate1').text($('#my-end1').data('date'));
-          $('#end_date1').val($('#my-end1').data('date'));
-        }
-        $(this).datepicker('close');
-      }); 
-  });
-    //点击前往某一页的函数
-    function go_to_page(page_num){
-        $('.page_link').removeClass('active_page');
-        $('.page_link').eq(page_num).addClass('active_page');
-        $("#dataList").children('tr').css("display","none");
-        var start_page=parseInt(15)*parseInt(page_num);
-        var end_page=parseInt(15)*parseInt(page_num+1);
-        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-        current_page=page_num;
-        sessionStorage.setItem('storeOrderList', current_page);
-        $storeOrderList =  sessionStorage.setItem('storeOrderList', current_page);
-    }
-
-    //点击上一页的函数
-    function previous(){
-        if($('.current').length>1) {
-            new_page = parseInt($('.current').eq(0).html()) - 2;
-        }else {
-            new_page = parseInt($('.current').html()) - 2;
-        }
-        if(new_page >= 0) {
-            go_to_page(new_page);
-        }
-    }
- 
-    //点击下一页的函数
-    function next(){
-        new_page = current_page+1;
-        if($('.active_page').next('.page_link').length==true){
-            go_to_page(new_page);
-        }
-    }
-    function otherFunction() {
-        $('.editOrder').click(function(){//查看订单信息
-            var dataId=$(this).attr('data-id');
-            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
-        });
-        for(var i=0;i<$('.tpl-del').length;i++){
-            var dataId=$('.tpl-del').eq(i).attr('data-id');
-            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
-        }
-        //删除订单的AJAX请求
-        $('.sureDelete').click(function(){
-            var dataId=$(this).attr('data-id');
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/store/Store/del_Order');?>',
-                data: 'id='+dataId+'&state=0',
-                success: function(data){
-                    // console.log(data);
-                    if(data==1){ 
-                        getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4');
-                        alert("操作成功！");
-                    }else{
-                        alert("操作失败！");
-                    }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-        
-        });
-        //恢复订单
-         $('.orderRe').click(function(){
-            var dataId=$(this).attr('data-id');
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/store/Store/orderRe');?>',
-                data: 'id='+dataId+'&state=1',
-                success: function(data){
-                    // console.log(data);
-                    if(data==1){ 
-                        getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4');
-                        alert("操作成功！");
-                    }else{
-                        alert("操作失败！");
-                    }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });
-        
-        });
-
-        $('.confirmGot').click(function(){
-            var dataId = $(this).attr('data-id');
-            $.ajax({
-                type:'post',
-                url:'<?php echo site_url('/store/Store/refund_price');?>',
-                data: 'order_id='+dataId,
-                success: function(data){
-                  if(data == 1) {
-                      alert('操作成功！');
-                       getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4'); 
-                  }
-                },
-                error:function(xhr,type,errorThrown){
-                    alert("操作失败，请检查网络设置！");
-                }
-            });     
-            $('#agreeSales'+ dataId).modal('close');
-            return true;
-        });
-    }
-    //异步刷新的ajax请求   
-    function getList(dataurl,data,changeIndex){
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result){   
-                var res = eval(result);
-                if(res != 2 && res != 3){
-                    var listData = ''; //每页出现的数量
-                    var total_page = Math.ceil(res.length/15); //得到总页数
-                    for(var i = 0; i < res.length; i++){
-                        res[i].goods_data = JSON.parse(res[i].goods_data);
-                        for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
-                            res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
-                            if(res[i].goods_data.goods_Data[j].good_tags) {
-                                res[i].goods_data.goods_Data[j].good_tags = res[i].goods_data.goods_Data[j].good_tags.split(',');
-                            }
-                        }
-                        listData+= template('dataModal',res[i]);
-                    } 
-                    console.log(res);
-                    document.getElementById('dataList').innerHTML = listData;
-                    $('.allData').html(res.length);
-                    if(total_page <= 1) {
-                       $('#Pagination').css('display', 'none');
-                        $('.searchPage').css('display', 'none');
-                    } else {
-                        $('.allData').html(res.length);
-                        $('.pagebox').css('display', 'block');
-                        if(pageflag) {  
-                            var opts={};opts.current_page = $storeOrderList;
-                            $("#Pagination").pagination(total_page, opts);
-                            go_to_page($storeOrderList);
-                            pageflag = 0;
-                        } else {
-                            $("#Pagination").pagination(total_page);
-                            go_to_page(0);
-                            
-                        }
-                        if(total_page < 5) {
-                            $('.searchPage').css('display', 'none');
-                        }
-                    }
-                    otherFunction();
-                         
-                }else{
-                    $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
-                    $('.pagebox').css('display', 'none');
-                }
-
-                
-            },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
-            }
-        });
-    }
-$(document).ready(function(){
- 
-       getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4'); 
-  
-})
-</script>
-<script type="text/html" id="dataModal">   
-    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
-        <td class="am-text-middle"><%= order_id %></td>
-        <td class="am-text-middle"><%= order_UUID %></td>
-        <td class="am-text-middle">
-        <% for(var j = 0; j < goods_data.goods_Data.length; j++) {%>    
-            <div class="am-u-sm-12">
-                <div class="am-u-sm-2">
-                <% if(goods_data.goods_Data[j].thumb) {%>
-                    <img src="<%= goods_data.goods_Data[j].thumb %>" class="goodsImg">
-                <% } else { %>
-                    <img src="assets/img/nullImg.jpg" class="goodsImg">
-                <% } %>
-                </div>
-                <div class="am-u-sm-8 smallSize">
-                    <p class="goodsTitle"><%= goods_data.goods_Data[j].title %></p>
-                    <p class="gray">
-                        <% if(goods_data.goods_Data[j].stend1) { %>
-                        <span><%= goods_data.goods_Data[j].stend1 %>:
-<%= goods_data.goods_Data[j].value1 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend2) { %>
-                        <span><%= goods_data.goods_Data[j].stend2 %>:
-<%= goods_data.goods_Data[j].value2 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend3) { %>
-                        <span><%= goods_data.goods_Data[j].stend3 %>:
-<%= goods_data.goods_Data[j].value3 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend4) { %>
-                        <span><%= goods_data.goods_Data[j].stend4 %>:
-<%= goods_data.goods_Data[j].value4 %></span>
-                        <% } %>
-                        <span class="am-fr"><%= goods_data.stores.store_name %> </span>
-                    </p>
-                    <% if(goods_data.goods_Data[j].good_tags) { %>
-                        <p><% for(var k = 0;k < goods_data.goods_Data[j].good_tags.length; k++) { %>    
-                            <span class="goods_tags"><%= goods_data.goods_Data[j].good_tags[k] %></span>
-                                
-                        <% } %>
-
-                        </p>
-                    <% } %>
-                </div>
-                <div class="am-u-sm-2 am-text-right">
-                    <p class="goods_price">￥<%= goods_data.goods_Data[j].price %></p>
-                    <p class="gray">x<%= goods_data.goods_Data[j].nums %></p>
-                </div>
-            </div>
-        <% } %>
-        </td>
-        <td class="am-text-middle"><%= amount %></td>
-        <td class="am-text-middle">
-        <%if(username) {%>
-        <%= username%>
-        <%} else {%>
-        <%= nickname%>
-        <%}%>
-        </td>
-        <td class="am-text-middle"><%= create_time%></td>
-         <%if(order_status==1) {%>
-            <td class="am-text-middle red">
-                未支付
-            </td>
-     
-        <%}else if(order_status==2){%>
-            <td class="am-text-middle">
-                已支付
-            </td>
-        <%}else if(order_status==3){%>
-            <td class="am-text-middle warning">
-                已发货
-            </td>
-        <%}else if(order_status==4){%>
-            <td class="am-text-middle">
-                已收货
-            </td>
-        <%}else if(order_status==5){%>
-            <td class="am-text-middle success">
-                已评价
-            </td>
-        <%}else if(order_status==6){%>
-            <td class="am-text-middle">
-                等待商家同意退货
-            </td>
-        <%}else if(order_status==7){%>
-            <td class="am-text-middle">
-                等待退货物流
-            </td>
-        <%}else if(order_status==8){%>
-            <td class="am-text-middle">
-                退款成功
-            </td>
-        <%}else if(order_status==9){%>
-            <td class="am-text-middle">
-                其他
-            </td>
-        <%}else if(order_status==10 && admin_orderState == 1){%>
-            <td class="am-text-middle">
-                <p>商家已确认，等待退款</p>
-                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
-            </td>
-        <%}else if(order_status==10 && admin_orderState == 0){%>
-            <td class="am-text-middle">
-                等待商家确认退款
-            </td>
-        <%}%>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= order_id%>" class="editOrder">
-                    <i class="am-icon-eye"></i> 详情
-                </a>
-                <a data-id="<%= order_id%>" class="orderRe">
-                    <i class="am-icon-pencil"></i> 恢复订单
-                </a>
-                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
-    </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= order_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= order_id%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
-</script>
-
+<style type="text/css" media="screen">
+
+.am-selected {
+
+    width: 100%!important;
+
+} 
+
+.table-check {
+
+    width: 30px;
+
+}   
+
+.hf-dropdown {
+
+    font-size: 12px!important;
+
+    padding: 5px 6px!important;
+
+}   
+
+/*td.am-text-middle img {
+
+    width:80px;
+
+} */
+
+.am-u-sm6 {
+
+    width: 60px !important;
+
+    margin: 0;
+
+}
+
+.stable {
+
+    display: inline-block !important;
+
+    width: 45% !important;
+
+}  
+
+.linkWord {
+
+    width: 10% !important;
+
+} 
+
+.stable {
+
+    display: inline-block !important;
+
+    width: 45% !important;
+
+}
+
+.linkWord {
+
+    width: 10% !important;
+
+}
+
+.tableImg {
+
+    width: 80px;
+
+}
+
+.am-table>tbody>tr.noBorder>td {
+
+    border-top: none;
+
+}
+
+.smallSize {
+
+    font-size: 14px;
+
+}
+
+td div div p {
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.goodsTitle,.goods_price {
+
+    color: #32323a;
+
+}    
+
+.goods_tags {
+
+    display: inline-block;
+
+    padding: 0 2px;
+
+    border: 1px solid #1fb5ac;
+
+    color: #1fb5ac ;
+
+    font-size: 10px;
+
+}
+
+td div.am-u-sm-12 {
+
+    padding-bottom: 5px;
+
+}
+
+.goodsImg {
+
+    width: 100%;
+
+}
+
+.agreeOrder,.confirmGot,.agreeRefund {
+
+    border:1px solid #e0690c;
+
+    padding:2px 5px;
+
+    color: #e0690c;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 商城管理 <small>订单列表</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+  
+
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">订单列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                 
+
+                    <div class="am-u-sm-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>订单编号 </th>
+
+                                    <th>支付订单号 </th>
+
+                                    <th width="40%" class="am-text-center">购买商品 </th>
+
+                                    <th>订单金额 </th>
+
+                                    <th>买家 </th>
+
+                                    <th>下单时间 </th>
+
+                                    <th>订单状态 </th>
+
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="dataList">
+
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
+
+                                <!-- more data -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+                            <div class="pagination">
+
+                                <a class="prev"><i></i>上一页</a>
+
+                                <a class="current">1</a>
+
+                                <a>2</a>
+
+                                <a>3</a>
+
+                                <a>4</a>
+
+                                <span class="pagination-break">...</span>
+
+                                <a class="ep">15</a>
+
+                                <a class="next">下一页 <i></i></a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="searchPage">
+
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+
+                          <span class="page-go">跳转<input type="text">页</span>
+
+                          <a href="javascript:;" class="page-btn">确定</a>
+
+                        </div>
+
+                        <div claa="am-text-middle">
+
+                           <span>共<span class="allData">15</span>条数据</span> 
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script type="text/javascript">
+
+  var pageflag = 1,$storeOrderList = parseInt(sessionStorage.getItem('storeOrderList')) || 0, $isStoreOrderList = parseInt(sessionStorage.getItem('isStoreOrderList')) || 0, total_page=0;
+
+  $(function() {
+
+    var startDate = new Date(2014, 11, 20);
+
+    var endDate = new Date(2014, 11, 25);
+
+    var $alert = $('#my-alert');
+
+    $('#my-start').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() > endDate.valueOf()) {
+
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          startDate = new Date(event.date);
+
+          $('#my-startDate').text($('#my-start').data('date'));
+
+          $('#begin_date').val($('#my-start').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+
+
+    $('#my-end').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() < startDate.valueOf()) {
+
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          endDate = new Date(event.date);
+
+          $('#my-endDate').text($('#my-end').data('date'));
+
+          $('#end_date').val($('#my-end').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+    $('#my-start1').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() > endDate.valueOf()) {
+
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          startDate = new Date(event.date);
+
+          $('#my-startDate1').text($('#my-start1').data('date'));
+
+          $('#begin_date1').val($('#my-start1').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+
+
+    $('#my-end1').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() < startDate.valueOf()) {
+
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          endDate = new Date(event.date);
+
+          $('#my-endDate1').text($('#my-end1').data('date'));
+
+          $('#end_date1').val($('#my-end1').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      }); 
+
+  });
+
+    //点击前往某一页的函数
+
+    function go_to_page(page_num){
+
+        $('.page_link').removeClass('active_page');
+
+        $('.page_link').eq(page_num).addClass('active_page');
+
+        $("#dataList").children('tr').css("display","none");
+
+        var start_page=parseInt(15)*parseInt(page_num);
+
+        var end_page=parseInt(15)*parseInt(page_num+1);
+
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+
+        current_page=page_num;
+
+        sessionStorage.setItem('storeOrderList', current_page);
+
+        $storeOrderList =  sessionStorage.setItem('storeOrderList', current_page);
+
+    }
+
+
+
+    //点击上一页的函数
+
+    function previous(){
+
+        if($('.current').length>1) {
+
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+
+        }else {
+
+            new_page = parseInt($('.current').html()) - 2;
+
+        }
+
+        if(new_page >= 0) {
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+ 
+
+    //点击下一页的函数
+
+    function next(){
+
+        new_page = current_page+1;
+
+        if($('.active_page').next('.page_link').length==true){
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+    function otherFunction() {
+
+        $('.editOrder').click(function(){//查看订单信息
+
+            var dataId=$(this).attr('data-id');
+
+            $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
+
+        });
+
+        for(var i=0;i<$('.tpl-del').length;i++){
+
+            var dataId=$('.tpl-del').eq(i).attr('data-id');
+
+            $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");                        
+
+        }
+
+        //删除订单的AJAX请求
+
+        $('.sureDelete').click(function(){
+
+            var dataId=$(this).attr('data-id');
+
+            $.ajax({
+
+                type:'post',
+
+                url:'<?php echo site_url('/store/Store/del_Order');?>',
+
+                data: 'id='+dataId+'&state=0',
+
+                success: function(data){
+
+                    console.log(data);
+
+                    if(data==1){ 
+
+                        getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4');
+
+                        alert("操作成功！");
+
+                    }else{
+
+                        alert("操作失败！");
+
+                    }
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });
+
+        
+
+        });
+
+        //恢复订单
+
+         $('.orderRe').click(function(){
+
+            var dataId=$(this).attr('data-id');
+
+            $.ajax({
+
+                type:'post',
+
+                url:'<?php echo site_url('/store/Store/orderRe');?>',
+
+                data: 'id='+dataId+'&state=1',
+
+                success: function(data){
+
+                    // console.log(data);
+
+                    if(data==1){ 
+
+                        getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4');
+
+                        alert("操作成功！");
+
+                    }else{
+
+                        alert("操作失败！");
+
+                    }
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });
+
+        
+
+        });
+
+
+
+        $('.confirmGot').click(function(){
+
+            var dataId = $(this).attr('data-id');
+
+            $.ajax({
+
+                type:'post',
+
+                url:'<?php echo site_url('/store/Store/refund_price');?>',
+
+                data: 'order_id='+dataId,
+
+                success: function(data){
+
+                  if(data == 1) {
+
+                      alert('操作成功！');
+
+                       getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4'); 
+
+                  }
+
+                },
+
+                error:function(xhr,type,errorThrown){
+
+                    alert("操作失败，请检查网络设置！");
+
+                }
+
+            });     
+
+            $('#agreeSales'+ dataId).modal('close');
+
+            return true;
+
+        });
+
+    }
+
+    //异步刷新的ajax请求   
+
+    function getList(dataurl,data,changeIndex){
+
+        $.ajax({
+
+            type:'post',
+
+            url:dataurl,
+
+            data: data,
+
+            success: function(result){   
+
+                var res = eval(result);
+
+                if(res != 2 && res != 3){
+
+                    var listData = ''; //每页出现的数量
+
+                    var total_page = Math.ceil(res.length/15); //得到总页数
+
+                    for(var i = 0; i < res.length; i++){
+
+                        res[i].goods_data = JSON.parse(res[i].goods_data);
+
+                        for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
+
+                            res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
+
+                            if(res[i].goods_data.goods_Data[j].good_tags) {
+
+                                res[i].goods_data.goods_Data[j].good_tags = res[i].goods_data.goods_Data[j].good_tags.split(',');
+
+                            }
+
+                        }
+
+                        listData+= template('dataModal',res[i]);
+
+                    } 
+
+                    console.log(res);
+
+                    document.getElementById('dataList').innerHTML = listData;
+
+                    $('.allData').html(res.length);
+
+                    if(total_page <= 1) {
+
+                       $('#Pagination').css('display', 'none');
+
+                        $('.searchPage').css('display', 'none');
+
+                    } else {
+
+                        $('.allData').html(res.length);
+
+                        $('.pagebox').css('display', 'block');
+
+                        if(pageflag) {  
+
+                            var opts={};opts.current_page = $storeOrderList;
+
+                            $("#Pagination").pagination(total_page, opts);
+
+                            go_to_page($storeOrderList);
+
+                            pageflag = 0;
+
+                        } else {
+
+                            $("#Pagination").pagination(total_page);
+
+                            go_to_page(0);
+
+                            
+
+                        }
+
+                        if(total_page < 5) {
+
+                            $('.searchPage').css('display', 'none');
+
+                        }
+
+                    }
+
+                    otherFunction();
+
+                         
+
+                }else{
+
+                    $('#dataList').find('tr').remove();
+
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+
+                    $('.pagebox').css('display', 'none');
+
+                }
+
+
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("网络状况不佳，请稍后重试！");
+
+                $('#dataList').find('tr').remove();
+
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
+
+                $('.pagebox').css('display', 'none');
+
+            }
+
+        });
+
+    }
+
+$(document).ready(function(){
+
+ 
+
+       getList('<?php echo site_url('store/store/ret_orderRecycle');?>','default=4'); 
+
+  
+
+})
+
+</script>
+
+<script type="text/html" id="dataModal">   
+
+    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
+
+        <td class="am-text-middle"><%= order_id %></td>
+
+        <td class="am-text-middle"><%= order_UUID %></td>
+
+        <td class="am-text-middle">
+
+        <% for(var j = 0; j < goods_data.goods_Data.length; j++) {%>    
+
+            <div class="am-u-sm-12">
+
+                <div class="am-u-sm-2">
+
+                <% if(goods_data.goods_Data[j].thumb) {%>
+
+                    <img src="<%= goods_data.goods_Data[j].thumb %>" class="goodsImg">
+
+                <% } else { %>
+
+                    <img src="assets/img/nullImg.jpg" class="goodsImg">
+
+                <% } %>
+
+                </div>
+
+                <div class="am-u-sm-8 smallSize">
+
+                    <p class="goodsTitle"><%= goods_data.goods_Data[j].title %></p>
+
+                    <p class="gray">
+
+                        <% if(goods_data.goods_Data[j].stend1) { %>
+
+                        <span><%= goods_data.goods_Data[j].stend1 %>:
+
+<%= goods_data.goods_Data[j].value1 %></span>
+
+                        <% } %>
+
+                        <% if(goods_data.goods_Data[j].stend2) { %>
+
+                        <span><%= goods_data.goods_Data[j].stend2 %>:
+
+<%= goods_data.goods_Data[j].value2 %></span>
+
+                        <% } %>
+
+                        <% if(goods_data.goods_Data[j].stend3) { %>
+
+                        <span><%= goods_data.goods_Data[j].stend3 %>:
+
+<%= goods_data.goods_Data[j].value3 %></span>
+
+                        <% } %>
+
+                        <% if(goods_data.goods_Data[j].stend4) { %>
+
+                        <span><%= goods_data.goods_Data[j].stend4 %>:
+
+<%= goods_data.goods_Data[j].value4 %></span>
+
+                        <% } %>
+
+                        <span class="am-fr"><%= goods_data.stores.store_name %> </span>
+
+                    </p>
+
+                    <% if(goods_data.goods_Data[j].good_tags) { %>
+
+                        <p><% for(var k = 0;k < goods_data.goods_Data[j].good_tags.length; k++) { %>    
+
+                            <span class="goods_tags"><%= goods_data.goods_Data[j].good_tags[k] %></span>
+
+                                
+
+                        <% } %>
+
+
+
+                        </p>
+
+                    <% } %>
+
+                </div>
+
+                <div class="am-u-sm-2 am-text-right">
+
+                    <p class="goods_price">￥<%= goods_data.goods_Data[j].price %></p>
+
+                    <p class="gray">x<%= goods_data.goods_Data[j].nums %></p>
+
+                </div>
+
+            </div>
+
+        <% } %>
+
+        </td>
+
+        <td class="am-text-middle"><%= amount %></td>
+
+        <td class="am-text-middle">
+
+        <%if(username) {%>
+
+        <%= username%>
+
+        <%} else {%>
+
+        <%= nickname%>
+
+        <%}%>
+
+        </td>
+
+        <td class="am-text-middle"><%= create_time%></td>
+
+         <%if(order_status==1) {%>
+
+            <td class="am-text-middle red">
+
+                未支付
+
+            </td>
+
+     
+
+        <%}else if(order_status==2){%>
+
+            <td class="am-text-middle">
+
+                已支付
+
+            </td>
+
+        <%}else if(order_status==3){%>
+
+            <td class="am-text-middle warning">
+
+                已发货
+
+            </td>
+
+        <%}else if(order_status==4){%>
+
+            <td class="am-text-middle">
+
+                已收货
+
+            </td>
+
+        <%}else if(order_status==5){%>
+
+            <td class="am-text-middle success">
+
+                已评价
+
+            </td>
+
+        <%}else if(order_status==6){%>
+
+            <td class="am-text-middle">
+
+                等待商家同意退货
+
+            </td>
+
+        <%}else if(order_status==7){%>
+
+            <td class="am-text-middle">
+
+                等待退货物流
+
+            </td>
+
+        <%}else if(order_status==8){%>
+
+            <td class="am-text-middle">
+
+                退款成功
+
+            </td>
+
+        <%}else if(order_status==9){%>
+
+            <td class="am-text-middle">
+
+                其他
+
+            </td>
+
+        <%}else if(order_status==10 && admin_orderState == 1){%>
+
+            <td class="am-text-middle">
+
+                <p>商家已确认，等待退款</p>
+
+                  <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+
+            </td>
+
+        <%}else if(order_status==10 && admin_orderState == 0){%>
+
+            <td class="am-text-middle">
+
+                等待商家确认退款
+
+            </td>
+
+        <%}%>
+
+        <td class="am-text-middle">
+
+            <div class="tpl-table-black-operation">
+
+                <a data-id="<%= order_id%>" class="editOrder">
+
+                    <i class="am-icon-eye"></i> 详情
+
+                </a>
+
+                <a data-id="<%= order_id%>" class="orderRe">
+
+                    <i class="am-icon-pencil"></i> 恢复订单
+
+                </a>
+
+                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
+
+                    <i class="am-icon-trash"></i> 删除
+
+                </a>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= order_id%>">
+
+        <div class="am-modal-dialog">
+
+            <div class="am-modal-hd">删除提示</div>
+
+            <div class="am-modal-bd">
+
+                <p class="black">你，确定要删除这条记录吗？</p>
+
+            </div>
+
+            <div class="am-modal-footer">
+
+                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+                <span class="am-modal-btn sureDelete" data-id="<%= order_id%>" data-am-modal-confirm>确定</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</script>
+
+
+

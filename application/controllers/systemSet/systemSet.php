@@ -1617,7 +1617,7 @@ class SystemSet extends Default_Controller {
 
             $data['ios_versionNum']= $this->input->post('ios_versionNum');
 
-            $data['ios_path_url']= $this->input->post('ios_path_url');
+            // $data['ios_path_url']= $this->input->post('ios_path_url');
 
             $data['create_time'] = date('Y-m-d H:i:s');
 
@@ -1627,37 +1627,48 @@ class SystemSet extends Default_Controller {
 
                 move_uploaded_file($_FILES["file"]["tmp_name"],  $file_path);
 
-                  if(!file_exists($file_path)){
+             
+
+                if(!file_exists($file_path)){
 
                     echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
 
                     exit;
 
                  }
+                 $data['android_path_url']= $file_path;
 
-                $data['android_path_url']= $file_path;
 
-                if($this->System_model->edit_app_version($id,$data)){
+            } 
+            if(!empty($_FILES['ios']['tmp_name'])){
 
-                    echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+              
 
-                }else{
+                $ios_path = "Upload/xls/".$_FILES["ios"]['name']; 
 
-                    echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+                move_uploaded_file($_FILES["ios"]["tmp_name"],  $ios_path);
 
-                }
+                  if(!file_exists($ios_path)){
+
+                    echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
+
+                    exit;
+
+                 }
+                 $data['ios_path_url']= $ios_path;
+
+
+            }
+
+
+
+            if($this->System_model->edit_app_version($id,$data)){
+
+                echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
 
             }else{
 
-                if($this->System_model->edit_app_version($id,$data)){
-
-                    echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
-
-                }else{
-
-                    echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
-
-                }
+                echo "<script>alert('操作失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
 
             }
 
