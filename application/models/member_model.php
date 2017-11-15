@@ -47,7 +47,7 @@ class member_model extends CI_Model{
 
         $query = $this->db->query($sql);
 
-        return $query->result_array();
+        return $query->num_rows();
     } 
     function selectMember_page($page,$size){
         $sql = "select * FROM ".$this->member." where gid = 5 order by create_time desc limit $page,$size";

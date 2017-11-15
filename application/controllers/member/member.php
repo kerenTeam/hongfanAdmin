@@ -31,7 +31,7 @@ class Member extends Default_Controller {
     function memberList()
     {
        
-        $data['userNum'] = count($this->user_model->selectMember());
+        $data['userNum'] = $this->user_model->selectMember();
         //获取今天
         $time = date('Y-m-d',time());
         $data['newNum'] = $this->user_model->new_member_num($time);
