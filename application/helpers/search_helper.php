@@ -1,4 +1,40 @@
 <?php 
+//搜索用户返回数据
+function selectMember_page($gender,$t,$e,$sear,$page,$size){
+        $CI = &get_instance();
+
+        $res= '';
+        if(!empty($gender) && empty($t) && empty($sear)){
+            $query = $CI->db->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && !empty($t) && empty($sear)){
+            $query = $CI->db->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && empty($t) && !empty($sear)){
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && !empty($t) && empty($sear)){
+            $query = $CI->db->where('gender',$gender)->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && empty($t) && !empty($sear)){
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && !empty($t) && !empty($sear)){
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && !empty($t) && !empty($sear)){
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('create_time >=',$t)->where('create_time <=',$e)->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+
+        }elseif(empty($gender) && empty($t) && empty($sear)){
+            $query = $CI->db->where('gid','5')->order_by('create_time','desc')->limit($page,$size)->get('hf_user_member');
+            $res = $query->result_array();
+        }
+        return $res;
+
+}
+
+
 
 
 

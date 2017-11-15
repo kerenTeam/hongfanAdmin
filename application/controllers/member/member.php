@@ -50,7 +50,22 @@ class Member extends Default_Controller {
         if($_POST){
             $page = $this->input->post('page');
             $size = $this->input->post('size');
-            $num = $this->user_model->selectMember_page($page,$size);
+
+            $gender = $this->input->post('gender');
+            $start_time = $this->input->post('begin_date');
+            $end_time = $this->input->post('end_date');
+            $sear = trim($this->input->post('sear'));
+
+            if(!empty($start_time)){
+                $t = $start_time .' 00:00:00';
+                $e = $end_time .' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+
+            $num = selectMember_page($gender,$t,$e,$sear,$size,$page);
+
             if(!empty($num)){
                 echo json_encode($num);
             }else{
@@ -263,26 +278,7 @@ class Member extends Default_Controller {
         }
     }
 
-    //会员搜索
-    function search(){
-        if($_POST){
-             $card_type = '';
-            $gender = $this->input->post('gender');
-            $start_time = $this->input->post('start_time');
-            $end_time = $this->input->post('end_time');
-            $sear = trim($this->input->post('sear'));
 
-            //总共多少
-            $num = $this->user_model->search_users('5',$card_type,$gender,$start_time,$end_time,$sear);
-            if(!empty($num)){
-                echo json_encode($num);
-            }else{
-                echo "3";
-            }
-        }else{
-            echo "2";
-        }
-    }
 
     //会员组
     function memberGroup()

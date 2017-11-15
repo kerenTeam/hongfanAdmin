@@ -97,7 +97,7 @@
 
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
 
-                        <label for="businessTime" class="am-u-sm-3 am-text-right">下单时间：</label>
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">注册时间：</label>
 
                         <div class="am-u-sm-9  am-u-end">
 
@@ -221,15 +221,27 @@
                                     </td>
                                     <td class="am-text-middle">
                                         <div class="tpl-table-black-operation">
-                                            <a href="" class="tpl-table-black-operation-look lookDetail">
+                                            <a href="<?php echo site_url().'/member/Member/memberInfo/<%= list[i].user_id %>';?>" class="tpl-table-black-operation-look lookDetail">
                                                 <i class="am-icon-eye" ></i> 查看详情
                                             </a>
-                                            <a class="editMember" href="';?>">
+                                            <a class="editMember" href="<?php echo site_url().'/member/Member/editMember/<%= list[i].user_id %>';?>">
                                                 <i class="am-icon-pencil"></i> 编辑
                                             </a>
-                                            <a class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<%= user_id %>'}">
+                                            <a class="tpl-table-black-operation-del" data-am-modal="{target: '#delete<%= list[i].user_id %>'}">
                                                 <i class="am-icon-trash"></i> 删除
                                             </a>
+                                            <div class="am-modal am-modal-confirm" tabindex="-1" id="delete<%= list[i].user_id %>">
+                                                <div class="am-modal-dialog">
+                                                    <div class="am-modal-hd">删除提示</div>
+                                                    <div class="am-modal-bd">
+                                                        <p class="black">你，确定要删除这条记录吗？</p>
+                                                    </div>
+                                                    <div class="am-modal-footer">
+                                                        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                                        <span class="am-modal-btn sureDelete" data-id="<%= goods_id%>" data-am-modal-confirm>确定</span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr> 
@@ -430,82 +442,11 @@ $(function() {
         });
     }
 
-    //异步刷新的ajax请求（李洁的）   
-    // function getList(dataurl,data){
-    //     $.ajax({
-    //         type:'post',
-    //         url:dataurl,
-    //         data: data,
-    //         success: function(result){
-    //             var res = eval(result);
-    //             console.log(res);
-    //             var str = '';
-    //             if(res != 2 && res != 3){
-    //                 total_page = "<?php echo $userNum/15;?>"; //得到总页数
-    //                 for(var i = 0; i < res.length; i++){
-    //                     res[i].avatar = eval(res[i].avatar);
-    //                     if(res[i].avatar){
-    //                         headpic = res[i].avatar[0].picImg;
-    //                     }else{
-    //                         headpic = '';
-    //                     }
-    //                     str += ' <tr class="trClass" id="trClass" data-id="'+res[i].user_id+'">';
-    //                     str += '<td class="am-text-middle">'+res[i].user_id+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].nickname+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].nickname+'</td>';
-    //                     str += '<td class="am-text-middle">'
-    //                             if(headpic){
-    //                                 str += '<img class="avatar" alt="" src="'+headpic+'">';
-    //                             }else{
-    //                                 str += 'zaneu';
-    //                             }
-    //                     str += '</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].phone+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].gender+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].intergral+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].create_time+'</td>';
-    //                     str += '<td class="am-text-middle">'+res[i].gender+'</td>';
 
-    //                  }
-    //                 document.getElementById('dataList').innerHTML = str;
-    //                 $('.pagebox').css('display', 'block');
-    //                 $('.allData').html(res.length);
-    //                 if(total_page <= 1) {
-    //                     $('#Pagination').css('display', 'none');
-    //                     $('.searchPage').css('display', 'none');
-    //                 } else {
-    //                     if(pageflag) {
-    //                         var opts={};opts.current_page = $memeberList;
-    //                         $("#Pagination").pagination(total_page, opts);
-    //                         go_to_page($memeberList);
-    //                         pageflag = 0;
-    //                     } else {
-    //                         $("#Pagination").pagination(total_page);
-    //                         go_to_page(0);
-    //                     }
-    //                     if(total_page < 5) {
-    //                         $('.searchPage').css('display', 'none');
-    //                     }
-    //                 }
-    //                 someOptions();
-    //             }else{
-    //                 $('#dataList').find('tr').remove();
-    //                 $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
-    //                 $('.pagebox').css('display', 'none');
-    //             }
-    //         },
-    //         error:function(xhr,type,errorThrown){
-    //             alert("网络状况不佳，请稍后重试！");
-    //             $('#dataList').find('tr').remove();
-    //             $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关商品信息！</p></td></tr>').appendTo('#dataList');
-    //             $('.pagebox').css('display', 'none');
-    //         }
-
-    //     });
-
-    // }
 
 $(document).ready(function(){
+
+    //加载列表数数据
     
     // 初始化节点，无数据关联
     $("#page").paging({
@@ -517,18 +458,23 @@ $(document).ready(function(){
         }
     })
     // 初始化,加载第一页
-    getListinfo(1,'例子');
+    getListinfo(1,'','','','');
 
     // 新分页方法
-    function getListinfo(num,example) {
+    function getListinfo(num,gender,begin_date,end_date,keywords) {
         var pagenum10 = (num-1) *10;
         var sizeAll = "<?php echo $userNum;?>"; //总页数
+        // console.log('12='+gender,begin_date,end_date,keywords);
         $.ajax({
             url: "<?php echo site_url('/member/Member/ret_member_list');?>",
             type: "post",
             data: {
                 'page':pagenum10,
-                'size':10
+                'size':10,
+                'gender':gender,
+                'begin_date':begin_date,
+                'end_date':end_date,
+                'sear':keywords
             },
             dataType: "json",
             success: function(data) {
@@ -540,7 +486,7 @@ $(document).ready(function(){
                     totalPage: allpage,
                     totalSize: sizeAll,
                     callback: function(num) { //点击页码的 回调 方法
-                        getListinfo(num,example);
+                        getListinfo(num,gender,begin_date,end_date,keywords);
                     }
                 })
                 // 铺数据
@@ -556,6 +502,9 @@ $(document).ready(function(){
                 dataobj.list = data;
                 var html=template("infolist",dataobj);
                 document.getElementById("infolistDiv").innerHTML = html;
+            },
+            error:function(data){
+                console.log(data);
             }
         })
     }
@@ -570,13 +519,8 @@ $(document).ready(function(){
 
         var gender=$('#source_state option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), keywords = $('#searchKey').val();
 
-        // console.log('gender='+ gender +'&start_time='+ begin_date  +'&end_time='+ end_date  +'&sear='+ keywords);
-
-         getList('<?php echo site_url('/member/Member/search');?>','gender='+ gender +'&start_time='+ begin_date  +'&end_time='+ end_date  +'&sear='+ keywords);
-
-        sessionStorage.setItem('ismemeberList', 1);
-
-        
+        console.log('gender='+ gender +'&start_time='+ begin_date  +'&end_time='+ end_date  +'&sear='+ keywords);
+        getListinfo(1,gender,begin_date,end_date,keywords);
 
     });
 
