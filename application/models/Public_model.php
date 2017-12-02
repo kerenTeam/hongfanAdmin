@@ -161,6 +161,12 @@ class Public_model extends CI_Model
         return $query->result_array();
 	}
 	
+	//
+	function select_info($phone){
+		$query = $this->db->where('phone',$phone)->get('hf_user_member');
+		return $query->row_array();
+	}
+
 
 }
 

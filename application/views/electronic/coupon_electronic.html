@@ -234,7 +234,8 @@ td.am-text-middle img{
 
                                         <option value="">请选择</option>
                                        	<option value="0">已使用</option>
-                                       	<option value="1">未使用</option>
+                                        <option value="1">未使用</option>
+                                       	<option value="2">已作废</option>
                                     </select>
 
                                 </div>
@@ -274,7 +275,8 @@ td.am-text-middle img{
                                             <select id="mollseller" name="state" >
                                                 <option value="">导出所有</option>
                                                	<option value="1">未使用</option>
-                                               	<option value="0">已使用</option>
+                                                <option value="0">已使用</option>
+                                               	<option value="2">已作废</option>
                                             </select>
                                         </div>
                                     </div>
@@ -571,6 +573,31 @@ function otherFunction() {
     }
 
 
+    $('.abolish').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='2';
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });    
+    $('.used').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='3';
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });    
+    $('.notused').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='1';
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });
+
 
     //删除图片
 
@@ -761,13 +788,27 @@ $(document).ready(function(){
 
 		<%if(user_coupon_state == '1'){%>
         	<td class="am-text-middle">未使用</td>
-        <%}else{%>
-		    <td class="am-text-middle">已使用</td>
+        <%}else if(user_coupon_state == '0'){%>
+            <td class="am-text-middle">已使用</td>
+        <%}else if(user_coupon_state == '2'){%>
+		    <td class="am-text-middle">已作废</td>
         <%}%>
 
         <td class="am-text-middle">
 
             <div class="tpl-table-black-operation">
+                <% if(user_coupon_state == '2'){%>
+                <a data-id="<%= user_coupon_id %>" class="notused">
+                    <i class="am-icon-pencil"></i> 恢复成未使用
+                </a>  
+                <a data-id="<%= user_coupon_id %>" class="used">
+                    <i class="am-icon-pencil"></i> 恢复成已使用
+                </a>
+                <%}else{%>
+                <a data-id="<%= user_coupon_id %>" class="abolish">
+                    <i class="am-icon-pencil"></i> 作废
+                </a>
+                <%}%>
 
                 <a data-id="<%= user_coupon_id %>" class="tpl-table-black-operation-del tpl-del">
 

@@ -50,7 +50,42 @@ td.am-text-middle img{
                 <div class="widget-head am-cf" style="clear:both;">
                     <div class="widget-title  am-cf">爱购 · 商品列表</div>
                 </div>
-                <div class="widget-body  am-fr">
+              
+
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+
+                    <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
+
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">编号:</label>
+
+                        <div class="am-u-sm-9">
+                            <input type="text" id="openId" name="openId" />
+                         
+                        </div>
+
+                    </div>
+
+                 
+
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
+
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">商品名:</label>
+
+                        <div class="am-u-sm-9 am-u-end">
+
+                            <input type="text" id="title" name="title" />
+
+                        </div>
+
+                    </div>
+
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+
+                    </div>
+
+                </form>
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <div class="am-form-group">
                             <div class="am-btn-toolbar">
@@ -206,7 +241,7 @@ td.am-text-middle img{
         url:dataurl,
         data: data,
         success: function(result){  
-            console.log(result)       
+            // console.log(result)       
             var res = eval(result);    
             if(res != 2){
                 var listData = ''; //每页出现的数量
@@ -230,9 +265,9 @@ td.am-text-middle img{
                 }                             
                 otherFunction();    
             }else{
-                alert('drfdf');
+                // alert('drfdf');
                 $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关订单信息！</p></td></tr>').appendTo('#dataList');
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关信息！</p></td></tr>').appendTo('#dataList');
                   $('.pagebox').css('display', 'none');
             }  
         },
@@ -250,8 +285,34 @@ $(document).ready(function(){
     });
     
     $('.refreshGoodsList').click(function(){
-        getList('<?php echo site_url('/Igogoods/goods_list');?>','page=1');
-        alert('请求成功，后台更新中，请稍后刷新界面！');
+        var mass = confirm('非管理员请勿操作,更新过程中会导致APP商品看不见。');
+        if(mass == true){
+            getList('<?php echo site_url('/Igogoods/goods_list');?>','page=1');
+            alert('请求成功，后台更新中，请稍后刷新界面！');
+        }
+
+        // getList('<?php echo site_url('/Igogoods/goods_list');?>','page=1');
+        // alert('请求成功，后台更新中，请稍后刷新界面！');
+    });
+
+
+
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var  openid=$('#openId').val(),title=$('#title').val();
+
+    //   / console.log('order_status='+ order_status +'&buyer='+ buyer  +"&start_time="+ begin_date + '&end_time=' + end_date);    
+        // console.log(openid,title);
+        getList('<?php echo site_url('igo/LoveToGo/searchIgogoods');?>','openid='+ openid +'&title='+ title);
+
+        sessionStorage.setItem('isloveToGoList', 1);
+
+        
+
     });
 
 

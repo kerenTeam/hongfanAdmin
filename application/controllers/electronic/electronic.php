@@ -1279,6 +1279,27 @@ class Electronic extends Default_Controller {
             echo "2";
         }
     }
+    //修改领取信息状态
+    function editCouponState(){
+        $id = intval($this->uri->segment(4));
+        $state = intval($this->uri->segment(5));
+        if($id == '0' || $state == '0'){
+            $this->load->view('404.html');
+        }else{
+            if($state == '3'){
+                $data['user_coupon_state'] = '0';
+            }else{
+                $data['user_coupon_state'] = $state;
+
+            }
+            if($this->Activity_model->updataCoupon($id,$data)){
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+            }
+        }
+    }
+
 
     //删除领取信息
     function del_receive(){

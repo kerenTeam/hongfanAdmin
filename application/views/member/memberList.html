@@ -187,6 +187,7 @@
                             <thead>
                                 <tr>
                                     <th>编号</th>
+                                    <th>所属城市</th>
                                     <th>姓名</th>
                                     <th>昵称</th>
                                     <th>头像</th>
@@ -207,6 +208,20 @@
                             <% for(var i=0; i<list.length; i++){ %>
                                 <tr class="trClass" id="trClass" data-id="<%= user_id %>">
                                     <td class="am-text-middle" ><%= list[i].user_id%></td>
+                                    <td class="am-text-middle" >
+                                        <%if(list[i]['city'] == '1'){%>
+                                            重庆
+                                        <%}else if(list[i]['city'] == '2'){%>
+                                            南江
+                                        <%}else if(list[i]['city'] == '3'){%>
+                                            宣汉
+                                        <%}else if(list[i]['city'] == '4'){%>
+                                            邻水
+                                        <%}else{%>
+                                            无
+                                        <%}%>
+                                        
+                                    </td>
                                     <td class="am-text-middle"><%= list[i].username || '暂无' %></td>
                                     <td class="am-text-middle"><%= list[i].nickname || '暂无' %></td>
                                     <td class="am-text-middle">
@@ -214,7 +229,7 @@
                                     </td>
                                     <td class="am-text-middle"><%= list[i].phone || '暂无' %></td>
                                     <td class="am-text-middle"><%= list[i].gender || '暂无' %></td>
-                                    <td class="am-text-middle">积分</td>
+                                    <td class="am-text-middle"><%= list[i].intergral%></td>
                                     <td class="am-text-middle"><%= list[i].create_time || '暂无' %></td>
                                     <td class="am-text-middle">
                                         <span style="color:red;">正常</span>

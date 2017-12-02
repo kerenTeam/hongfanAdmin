@@ -235,11 +235,14 @@ padding: 5px 6px!important;
                                         <label class="am-u-sm-3 am-form-label">选择用户 <span class="red">*</span></label>
 
                                         <div class="am-u-sm-8">
-                                            <select name="userId" data-am-selected="{searchBox: 1,maxHeight: 100}" required>
-                                                <option value="">请选择一项</option>
-                                                <?php foreach($users as $v):?>
+                                            <input type="text"  id="comment" placeholder="输入手机号搜索用户" >
+                                            <select name="userId" id="userList"  required>
+                                                
+
+                                                <!-- <option value="">请选择一项</option> -->
+                                          <!--       <?php foreach($users as $v):?>
                                                     <option value="<?php echo $v['user_id'];?>"><?php echo $v['nickname'];?></option>
-                                                <?php endforeach;?>
+                                                <?php endforeach;?> -->
                                             </select>
                                           
                                         </div>
@@ -468,6 +471,22 @@ padding: 5px 6px!important;
     </div>
 
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#comment').on('input propertychange', function() {
+            var count = $(this).val();
+            $.post("<?php echo site_url('friends/Question/retMenber');?>",{name:count},function(result){
+                if(result != 2){
+                    var res = $.parseJSON(result);
+                    // console.log(res.user_id);
+                    $("#userList").append("<option value='"+res.user_id+"'>"+res.nickname+"</option>");
+                }
+            });
+        });
+      });
+
+
+</script>
 
 
 

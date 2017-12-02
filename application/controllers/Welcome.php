@@ -68,23 +68,57 @@ class Welcome extends CI_Controller {
         echo "<pre>";
         var_dump($a);
     }
+
+
+
+
     function member(){
-        $time = '2017-11-08 00:00:00';
-        $end = '2017-11-13 23:59:59';
-        $query = $this->db->where('typeId','1')->where('create_time >=',$time)->where('create_time <=',$end)->get('hf_friends_news');
+        $time = '2017-11-20 00:00:00';
+        $end = '2017-11-26 23:59:59';
+        $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->get('hf_user_member');
         // $query = $this->db->query();
         $res = $query->result_array();
         $a ='0';
         foreach ($res as $key => $value) {
-            $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
-            // $query = $this->db->query();
-            $res1 = $query1->result_array();
-            $a += count($res1);
+            // $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+            // // $query = $this->db->query();
+            // $res1 = $query1->result_array();
+            $a += $value['intergral'];
             // var_dump($a);
         }
         // echo "<pre>";
         var_dump($a);
-        var_dump(count($res));
+        // var_dump(count($res));
+    }
+
+
+
+    function order(){
+        $sql = "select* from hf_mall_order where order_type='0' and order_status !='1' and `PriceCalculation` like '%\"coupon_amount\":\"199,100\"%' order by order_id desc";
+        $query = $this->db->query($sql);
+         $res = $query->result_array();
+         $a = array();
+         foreach ($res as $key => $value) {
+             $pay = json_decode($value['PriceCalculation'],true);
+             $couponid = $pay['coupon'];
+            
+            $sql1 = "select * from hf_user_coupon where user_coupon_id = $couponid and user_coupon_state = 1";
+            $query1 = $this->db->query($sql1);
+            $res1 = $query1->row_array();
+            // var_dump($res1);
+            if(!empty($res1)){
+                $a[] = $res1['user_coupon_id'];
+
+            }
+
+         }
+         echo "<pre>";
+         var_dump(count($a));
+         var_dump(array_unique($a));
+    }
+
+    function aabcd(){
+        echo "3434";
     }
 
 

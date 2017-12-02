@@ -584,7 +584,7 @@ $(document).ready(function(){
         <%= nickname%>
         <%}%>
         </td>
-        <% if(goods_data.stores.store_name){%>
+        <% if(goods_data.store_id.length < 10){%>
         <td class="am-text-middle"><%= goods_data.stores.store_name %></td>
         <%}else{%>
         <td class="am-text-middle">跨境优品</td>

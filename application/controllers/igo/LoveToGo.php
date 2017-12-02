@@ -85,7 +85,39 @@ class LoveToGo extends Default_Controller
             echo "2";
 
         }
+    }
 
+
+
+    function searchIgogoods(){
+        if($_POST){
+            $id= $this->input->post('openid');
+            $title= $this->input->post('title');
+            $res = '';
+            if(!empty($id) && empty($title)){
+                $query = $this->db->where('open_iid',$id)->get('hf_mall_goods_igo');
+                $res = $query->result_array();
+            }elseif(empty($id) && !empty($title)){
+                $query = $this->db->like('title',$title,'both')->get('hf_mall_goods_igo');
+                $res = $query->result_array();
+            }elseif(!empty($id) && !empty($title)){
+                 $query = $this->db->like('title',$title,'both')->where('open_iid',$id)->get('hf_mall_goods_igo');
+                $res = $query->result_array();
+            }elseif(empty($id) && empty($title)){
+                $res = $this->Integral_model->get_igo_goods();
+            }
+
+            if(!empty($res)){
+                echo json_encode($res);
+            }else{
+                echo "2";
+            }
+
+
+
+        }else{
+            echo "2";
+        }
     }
 
 

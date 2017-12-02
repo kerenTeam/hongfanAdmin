@@ -670,30 +670,34 @@ class Question extends Default_Controller
 
         $this->pagination->initialize($config);
 
-        $user = $this->Public_model->select_where("hf_user_member",'gid','5','');
+        // $user = $this->Public_model->select_where("hf_user_member",'gid','5','');
 
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'cates'=>$cates,'users'=>$user,'cateid'=>$cateid);
+        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'cates'=>$cates,'cateid'=>$cateid);
 
         $data['page'] = $this->view_question_expert;
         $data['menu'] = array('question','question_expert');
         $this->load->view('template.html',$data);
 	}
+    //返回用户信息
+    function retMenber(){
+        if($_POST){
+            $name = $this->input->post('name');
+            //获取用户
+            $user = $this->Public_model->select_info($name);
+            if(!empty($user)){
+                echo json_encode($user);
+            }else{
+                echo "2";
+            }
+
+        }
+    }
+
 
 	//新增专家组
 	function add_expert(){
-        $q= $this->uri->uri_string();
-        $url = preg_replace('|[0-9]+|','',$q);
-        if(substr($url,-1) == '/'){
-            $url = substr($url,0,-1);
-        }
-            // var_dump($url);
-        $user_power = json_decode($_SESSION['user_power'],TRUE);
 
-        if(!deep_in_array($url,$user_power)){
-            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-                    exit;
-        }
 		if($_POST){
 			$data = $this->input->post();
 
@@ -727,18 +731,7 @@ class Question extends Default_Controller
 
 	//编辑专家
 	function edit_expert(){
-         $q= $this->uri->uri_string();
-        $url = preg_replace('|[0-9]+|','',$q);
-        if(substr($url,-1) == '/'){
-            $url = substr($url,0,-1);
-        }
-            // var_dump($url);
-        $user_power = json_decode($_SESSION['user_power'],TRUE);
-
-        if(!deep_in_array($url,$user_power)){
-            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-                    exit;
-        }
+ 
 		if($_POST){
 			$data = $this->input->post();
 
@@ -772,18 +765,7 @@ class Question extends Default_Controller
 
 	//删除专家
 	function del_expert(){
-         $q= $this->uri->uri_string();
-        $url = preg_replace('|[0-9]+|','',$q);
-        if(substr($url,-1) == '/'){
-            $url = substr($url,0,-1);
-        }
-            // var_dump($url);
-        $user_power = json_decode($_SESSION['user_power'],TRUE);
-
-        if(!deep_in_array($url,$user_power)){
-            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
-                    exit;
-        }
+ 
 		$id = intval($this->uri->segment('4'));
 		if($id == '0'){
 			$this->load->view('404.html');

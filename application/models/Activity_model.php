@@ -388,6 +388,10 @@ class Activity_model extends CI_Model
         $query = $this->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
         return $query->result_array();
     }
+    //修改领取状态
+    function updataCoupon($id,$data){
+        return $this->db->where('user_coupon_id',$id)->update('hf_user_coupon',$data);
+    }
 
     //删除领取记录
     function del_receive($id){
