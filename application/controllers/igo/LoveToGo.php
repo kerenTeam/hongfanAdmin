@@ -50,7 +50,8 @@ class LoveToGo extends Default_Controller
 
     function loveToGoList(){
 
-
+        //获取所有爱购商品列表
+        $data['goodsNum'] = count($this->Integral_model->get_igo_goods());
 
         $data['page'] = $this->view_loveToGoList;
 

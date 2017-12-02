@@ -168,6 +168,7 @@ $db['default'] = array(
 	// 'password' => 'root',
 
 	// 'database' => 'hongfan',
+	
 	// 'hostname' => '120.78.73.217',
 
 	// 'username' => 'spiderv1',

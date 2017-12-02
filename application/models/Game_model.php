@@ -14,6 +14,11 @@ class Game_model extends CI_Model
        parent::__construct();
 
     }
+    //返回游戏列表
+    function selectGame(){
+        $query = $this->db->get($this->gameList);
+        return $query->result_array();
+    }
 
     //获取游戏信息
     function select_game_info($id){

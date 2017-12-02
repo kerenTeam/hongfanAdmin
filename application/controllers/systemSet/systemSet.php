@@ -111,6 +111,17 @@ class SystemSet extends Default_Controller {
 
     }
 
+    //icon guanli 
+    function iconList(){
+
+        $data['icon'] = $this->System_model->get_member_group();
+
+        $data['page'] = 'systemSet/iconList.html';
+
+        $data['menu'] = array('systemSet', 'iconList');
+
+        $this->load->view('template.html', $data);
+    }
 
 
 
@@ -2126,6 +2137,14 @@ class SystemSet extends Default_Controller {
         }
     }
 
+    //消息推送
+    function newsPush(){
+        
+        
+        $data['page'] = '/systemSet/puth.html';
+        $data['menu'] = array('systemSet', 'newsPush');
+        $this->load->view('template.html', $data);
+    }
     
 
 

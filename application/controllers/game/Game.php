@@ -22,13 +22,17 @@ class Game extends Default_Controller
 
 	//游戏奖品
 	function gameList(){
-		//返回所有奖品
-		$data['prize'] = $this->Game_model->select_prize('2');
+        //返回所有奖品
+        $id = intval($this->uri->segment('4'));
+        if($id =='0'){
+            $this->load->view('404.html');
+        }else{
+            $data['prize'] = $this->Game_model->select_prize($id);
 
-		$data['page'] = $this->view_gameList;
-        $data['menu'] = array('game','gameList');
-        $this->load->view('template.html',$data);
-
+            $data['page'] = $this->view_gameList;
+            $data['menu'] = array('game', 'gameList');
+            $this->load->view('template.html', $data);
+        }       
 	}
 
 
@@ -128,7 +132,6 @@ class Game extends Default_Controller
         }else{
             $this->load->view('404.html');
         }
-
     }
 
 
@@ -172,17 +175,32 @@ class Game extends Default_Controller
 		}
 	}
 
+    //返回游戏列表
+    function gameLists(){
+        $data['game'] = $this->Game_model->selectGame();
+        $data['page'] = '/game/gameLists.html';
+        $data['menu'] = array('game', 'gameInfo');
+        $this->load->view('template.html', $data);
+    }
+
+
+
 	//y=游戏内容
 	function gameInfo(){
-		//获取游戏详情
-		$data['game'] = $this->Game_model->select_game_info('2');
-		
+        //获取游戏详情
+        $id = intval($this->uri->segment(4));
+        if($id == '0'){
+            $this->load->view('404.html');
+        }else{
+            $data['game'] = $this->Game_model->select_game_info($id);
+            $data['page'] = $this->view_gameInfo;
+            $data['menu'] = array('game', 'gameInfo');
+            $this->load->view('template.html', $data);
+        }
+    }
+    
 
-		$data['page'] = $this->view_gameInfo;
-        $data['menu'] = array('game','gameInfo');
-        $this->load->view('template.html',$data);
 
-	}
 
 	//编辑游戏详情
 	function edit_game(){
@@ -206,7 +224,7 @@ class Game extends Default_Controller
 						$icon[]['picImg'] =$img[0]['picImg'];
 						$data['BGI'] = json_encode($icon);
 					}else{
-					  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/friends/Friends/circle')."'</script>";exit;
+					  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/game/Game/gameLists')."'</script>";exit;
 					}
             }
             if(!empty($_FILES['fei']['name'])){
@@ -225,7 +243,7 @@ class Game extends Default_Controller
 						$icon[]['picImg'] =$img[0]['picImg'];
 						$data['FEI'] = json_encode($icon);
 					}else{
-					  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/game/Game/gameInfo')."'</script>";exit;
+					  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/game/Game/gameLists')."'</script>";exit;
 					}
             }
 
@@ -245,9 +263,9 @@ class Game extends Default_Controller
                 );
                 $this->db->insert('hf_system_journal',$log);
 
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/gameInfo')."'</script>";exit;
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/gameLists')."'</script>";exit;
             }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/gameInfo')."'</script>";exit;
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/gameLists')."'</script>";exit;
 
             }
 		}else{
