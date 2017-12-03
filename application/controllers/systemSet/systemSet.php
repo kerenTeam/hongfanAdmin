@@ -114,13 +114,56 @@ class SystemSet extends Default_Controller {
     //icon guanli 
     function iconList(){
 
-        $data['icon'] = $this->System_model->get_member_group();
+        $data['icon'] = $this->System_model->selectIcon();
 
         $data['page'] = 'systemSet/iconList.html';
 
         $data['menu'] = array('systemSet', 'iconList');
 
         $this->load->view('template.html', $data);
+    }
+    function edit_icon(){
+        if($_POST){
+            $id = $this->input->post('id');
+            $data['iconName'] = $this->input->post('iconName');
+            $bucketList = $this->config->item('buckrtGlobal');
+            $bucket = $bucketList['cq']['other'];
+            $header = array("token:" . $_SESSION['token'], 'city:1');     
+            $data['create_time'] = date('Y-m-d H:i:s',time());
+            if (!empty($_FILES['img']['name'])) {
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+                  //  var_dump($tmpfile);
+                $pics = array(
+                    'pics' => $tmpfile,
+                    'porfix' => 'adver/' . $bucket,
+                    'bucket' => $bucket,
+                );
+
+                $qiuniu = json_decode(curl_post_express($header, QINIUUPLOAD, $pics), true);
+
+                if ($qiuniu['errno'] == '0') {
+                    $img = json_decode($qiuniu['data']['img'], true);
+                    $data['icon'] = $img[0]['picImg'];
+                } else {
+                    echo "<script>alert('图片上传失败！');window.location.href='" . site_url('/systemSet/SystemSet/iconList/') . "'</script>";
+                    exit;
+                }
+            }
+            
+            if($this->System_model->editIcon($id,$data)){
+                echo "<script>alert('操作成功！');window.location.href='" . site_url('/systemSet/SystemSet/iconList') . "'</script>";
+
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='" . site_url('/systemSet/SystemSet/iconList') . "'</script>";
+
+            }
+
+
+
+
+        }else{
+            $this->load->view('404.html');
+        }
     }
 
 

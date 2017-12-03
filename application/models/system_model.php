@@ -28,10 +28,6 @@ class System_model extends CI_Model
 
     public $adver = "hf_ads";
 
-    //家乡话
-
-    public $report = "hf_local_hometown_reports";
-
     //app版本
 
     public $version = "hf_system_version";
@@ -40,10 +36,7 @@ class System_model extends CI_Model
 
     public $express = "hf_mall_goods_express";
 
-    //家乡话分类
-
-    public $report_cates = "hf_local_hometown_reports_cates";
-
+    //icon
 
 
     function __construct()
@@ -54,6 +47,13 @@ class System_model extends CI_Model
 
     }
 
+    function selectIcon(){
+        $query = $this->db->get('hf_system_icon');
+        return $query->result_array();
+    }
+    function editIcon($id,$data){
+        return $this->db->where('id',$id)->update('hf_system_icon',$data);
+    }
 
 
     //返回所有管理员账户
@@ -253,67 +253,6 @@ class System_model extends CI_Model
 
 
 
-    //返回所有系统公告
-
-    function get_notice_list(){
-
-        $query = $this->db->order_by('create_time','desc')->get($this->report);
-
-        return $query->result_array();
-
-    }
-
-    //删除系统公告
-
-    function del_notice($id){
-
-        $where['id'] = $id;
-
-        return $this->db->where($where)->delete($this->report);
-
-    }
-
-    //新增系统公告
-
-    function add_notice($data){
-
-        return $this->db->insert($this->report,$data);
-
-    }
-
-    //编辑系统公告
-
-    function edit_notice($id,$data){
-
-        $where['id'] = $id;
-
-        return $this->db->where($where)->update($this->report,$data);
-
-    }
-
-    //修改家乡话状态
-
-    function edit_notice_state($id,$data){
-
-        $where['id'] = $id;
-
-        return $this->db->where($where)->update($this->report,$data);
-
-    }
-
-
-
-    //返回编辑新闻内容
-
-    function get_notice_info($id){
-
-        $where['id'] = $id;
-
-        $query = $this->db->where($where)->get($this->report);
-
-        return $query->row_array();
-
-    }
 
 
 
@@ -423,45 +362,7 @@ class System_model extends CI_Model
 
 
 
-    //返回家乡话 分类
-
-    function get_reportCates(){
-
-        $query = $this->db->order_by("sort","desc")->get($this->report_cates);
-
-        return $query->result_array();
-
-    }
-
-    //新增家乡话分类
-
-    function add_reportCates($data){
-
-        return $this->db->insert($this->report_cates,$data);
-
-    }
-
-
-
-    //编辑家乡话分类
-
-    function edit_report_cates($id,$data){
-
-        $where['cate_id'] = $id;
-
-        return $this->db->where($where)->update($this->report_cates,$data);
-
-    }
-
-    //删除家乡话分类
-
-    function del_report_cates($id){
-
-        $where['cate_id'] = $id;
-
-        return $this->db->where($where)->delete($this->report_cates);
-
-    }
+  
 
 
 
