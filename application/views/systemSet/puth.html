@@ -1,0 +1,286 @@
+<link rel="stylesheet" type="text/css" href="assets/css/styles.css" media="all">
+<link rel="stylesheet" type="text/css" href="assets/css/timePicker.css" media="all">
+
+<style>
+    input[type='text'],input[type='url'],textarea{
+        width: 400px!important;
+        display: inline-block!important;
+    }
+    input,textarea{border-radius: 3px!important}
+</style>
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+    <div class="container-fluid am-cf">
+
+        <div class="row">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+                <div class="page-header-heading">
+                    <span class="am-icon-home page-header-heading-icon"></span>系统设置
+
+                    <a href="" style="font-size: 18px;">消息推送
+
+                    </a>
+
+                    <small>
+                        <a href="">推送管理</a>
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row-content am-cf">
+
+
+
+
+
+    </div>
+
+    <div class="row-content am-cf">
+
+        <div class="row">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+                <form class="am-form" onsubmit="return check(this)" action="" method="post">
+
+                    <div class="widget am-cf">
+
+                        <div class="widget-head am-cf">
+
+                            <div class="widget-title  am-cf">消息推送</div>
+
+                        </div>
+
+                        <div class="widget-body">
+
+                        <fieldset>
+                            <div class="am-form-group">
+                                <span>目标平台：</span>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="" name="plateform" checked> 安卓
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" name="plateform"> ios
+                                </label>
+                               
+                            </div>
+                            <div class="am-form-group">
+                                <span>*通知标题：</span>
+                                <input type="text" class="" maxlength="20" required placeholder="通知标题">
+                                <small>最多20个字</small>
+                            </div>
+                        
+                            <div class="am-form-group">
+                                <span>*通知内容：</span>
+                                <textarea name="" id="" cols="30" rows="2" maxlength="50" required></textarea>
+                                <small>最多50个字</small>
+                            </div>
+                            <div class="am-form-group">
+                                <span>*后续动作：</span>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="1" name="laterOpt" checked> 启动应用
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="2" name="laterOpt"> 打开链接
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="3" name="laterOpt"> 下载应用
+                                </label>
+                                <div style="padding:10px;display:none" class="openUrl">
+                                    *链接地址:
+                                    <input type="url" class="" required placeholder="" style="width:220px;height:30px;display:inline;">
+                                    <small> (有效可访问链接以http://或https://开头)</small><br>
+                                    <label class="am-checkbox-inline">
+                                        <input type="checkbox" name=""> 打开网页前需要用户确认
+                                    </label>
+                                </div>
+                                <div style="padding:10px;display:none" class="download">
+                                    <div class="am-form-group">
+                                        <span>*应用名称：</span>
+                                        <input type="text" class="" maxlength="40" required placeholder="请输入应用名称">
+                                        <small>最多40个字</small>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <span>*弹框标题：</span>
+                                        <input type="text" class="" maxlength="20" required placeholder="请输入弹框标题">
+                                        <small>最多20个字</small>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <span>*弹框内容：</span>
+                                        <textarea name="" id="" maxlength="600" cols="30" rows="2" required></textarea>
+                                        <small>最多600个字</small>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <span>*下载地址：</span>
+                                        <input type="url" class="" required placeholder="下载地址">
+                                        <small>有效可访问链接以http://或https://开头</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group pushWay">
+                                <span> &nbsp;&nbsp;推送方式：</span>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="1" name="pushWay" checked> 即时
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="2" name="pushWay"> 定时
+                                </label>
+                                <div class="pushTime" style="display:none;padding:10px">
+                                    <span> 时间选择:</span>
+                                    <div class="iDate full" style="width:208px">
+                                        <input type="text" style="width:inherit!important">
+                                        <button type="button" class="addOn"></button>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <div class="am-form-group pushWay">
+                                <span>&nbsp;&nbsp;定时展示：</span>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="1" name="ontimeShow" checked> 即时
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="2" name="ontimeShow"> 定时
+                                </label>
+                                <div class="ontimeShow" style="display:none;padding:10px">
+                                    <span>日期选择:</span>
+                                    <div class="iDate date" style="width:208px">
+                                        <input type="text" id="dateshow" style="width:inherit!important">
+                                        <button type="button" class="addOn"></button>
+                                    </div>
+                                    <span>时间选择:</span>
+                                    <input type="text" id="timePicker" name="1" style="width:80px!important" readonly >
+                                    ～
+                                    <input type="text" class="time-picker" style="width:80px!important" name="2" readonly>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <span>消息有效期：</span>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="1" name="validTime" checked> 是
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" value="2" name="validTime"> 否
+                                </label>
+                                <div style="padding:10px" class="validTime">
+                                    *有效时长：<input type="number" class="" min=0 max=72 required placeholder="" style="width:50px;height:30px;display:inline;">
+                                    <small> (请输入0- 72 小时内的正整数，该时间段内cid在线过的用户均可收到通知)</small>
+                                </div>
+                            
+                            </div>
+                            <p>
+                                <button type="submit" class="am-btn am-btn-default">发送</button>
+                            </p>
+                        </fieldset>
+
+                        </div>
+ 
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<div class="goTop">
+    <a href="javascript:scroll(0,0)" type="button">
+        <img src="assets/img/top.png" alt="点我回到顶部">
+    </a>
+</div>
+<script type="text/javascript" src="assets/js/moment2.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-datetimepicker.js"></script>
+<script src="assets/js/jquery-timepicker.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/ueditor/ueditor.config.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // date time picker
+        if ($(".iDate.full").length > 0) {
+            $(".iDate.full").datetimepicker({
+                locale: "zh-cn",
+                format: "YYYY-MM-DD a hh:mm",
+                dayViewHeaderFormat: "YYYY年 MMMM"
+            });
+        }
+        if ($(".iDate.date").length > 0) {
+            $(".iDate.date").datetimepicker({
+                locale: "zh-cn",
+                format: "YYYY-MM-DD",
+                dayViewHeaderFormat: "YYYY年 MMMM"
+            });
+        } 
+        
+        $("#timePicker").hunterTimePicker();
+        $(".time-picker").hunterTimePicker();
+
+    })
+    $("input[name='pushWay']").change(function () {
+        var delivery = $("input[name='pushWay']:checked").val();
+        
+        if (delivery == 2) { 
+            $('.pushTime').show()
+        } else {
+                $('.pushTime').hide()
+        }
+    })
+    $("input[name='ontimeShow']").change(function () {
+        var delivery = $("input[name='ontimeShow']:checked").val();
+
+        if (delivery == 2) {
+            $('.ontimeShow').show()
+        } else {
+            $('.ontimeShow').hide()
+        }
+    })
+    $("input[name='validTime']").change(function () {
+        var delivery = $("input[name='validTime']:checked").val();
+
+        if (delivery == 1) {
+            $('.validTime').show()
+        } else {
+            $('.validTime').hide()
+        }
+    })
+    // $("input[name='laterOpt']").change(function () {
+    //     var delivery = $("input[name='laterOpt']:checked").val();
+
+    //     if (delivery == 1) { 
+    //         $('.download,.openUrl').hide()
+    //     } else if(delivery == 2){
+    //         $('.download').hide();
+    //         $('.openUrl').show()
+    //     }else{
+    //         $('.download').show();
+    //         $('.openUrl').hide()
+    //     }
+    // })
+
+    function check() {
+        alert(2)
+        if($("input[name='pushWay']:checked").val()==2){
+            alert(1)
+        }
+    }
+</script>
+
+</body>
+
+</html>
