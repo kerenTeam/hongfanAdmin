@@ -111,7 +111,6 @@ padding: 5px 6px!important;
     </div>
 
 </div>
-
 <div class="row-content am-cf">
 
     <div class="row">
@@ -261,32 +260,28 @@ padding: 5px 6px!important;
 
                     </div>
 
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-
-                        <label for="" class="am-u-sm-3 am-form-label">每次领取数量限制<span class="red">*</span>:</label>
-
-                        <div class="am-u-sm-9">
-
-                            <select name="receive_limit" id="receive_limit" required class="am-form-field tpl-form-no-bg" >
-
-                                <!-- <option value="">输入查找/选择</option> -->
-                                <option value="1">一张</option>
-                                <option value="999">不限制</option>
-                            </select>
-
-                        </div>
-
-                    </div>
+                   
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="frequency" id="frequency" required class="am-form-field tpl-form-no-bg" >
                                 <option value="">输入查找/选择</option>
-                                <option value="0">仅领一次</option>
+                                <option value="0">仅一次</option>
                                 <option value="1">一天一次</option>
                                 <option value="2">二天一次</option>
                                 <option value="7">一周一次</option>
                                 <option value="30">一月一次</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">领取频率<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                            <select name="receiveNum" id="receiveNum" required class="am-form-field tpl-form-no-bg" >
+                                <option value="">输入查找/选择</option>
+                                <option value="0">无限制</option>
+                                <option value="1">只能领取一次</option>
+                              
                             </select>
                         </div>
                     </div>
@@ -338,16 +333,38 @@ padding: 5px 6px!important;
                     </div>
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="" class="am-u-sm-3 am-form-label">卡券归属:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">卡卷使用板块:</label>
+
+                        <div class="am-u-sm-9">
+
+                            <select name="applicableType" >
+                                <!-- 使用类型 1爱购商品 2HI货榜 3HI土货 4HI洋货 5HI特色 6HI推荐 7HI邀请有礼 -->
+                                <option value="0" >线上或线下卷</option>
+                                <option value="1" >爱购商品</option>
+                                <option value="2" >HI货榜</option>
+                                <option value="3" >HI土货</option>
+                                <option value="4" >HI洋货</option>
+                                <option value="5" >HI特色</option>
+                                <option value="6" >HI推荐</option>
+                                <option value="7" >HI邀请有礼</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="" class="am-u-sm-3 am-form-label">卡卷归属:</label>
 
                         <div class="am-u-sm-9">
 
                             <select name="isGamePrize" >
-
+                                <!-- 使用类型 游戏劵 2分享劵 3海购劵 4邀请有礼劵 -->
                                 <option value="0" >线上或线下卷</option>
-                                <option value="1" >首页转盘游戏</option>
-                                <option value="2" >分享</option>
-                                <option value="3" >爱购专用</option>
+                                <option value="1" >游戏劵</option>
+                                <option value="2" >分享劵 </option>
+                                <option value="3" >海购劵</option>
+                                <option value="4" >邀请有礼劵</option>
                             </select>
 
                         </div>

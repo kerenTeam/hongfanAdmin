@@ -287,29 +287,34 @@ label.am-u-sm-8, label.am-u-sm-4{
                                 积分抵用金额：￥<?php echo round($inter['nowIntergal']['storenowIntergal'],2);?>
                                 <br/>
                                            <?php if(isset($inter['Params']['couponData']['coupon_amount'])):?>
-                                    <?php 
+                                 <?php 
 
-                                    if(isset($goods['boxa'])){
-                                        $lu = $goods['boxa']['value'];
-                                    }else{
-                                        $lu = '1';
-                                    }
-                             if($inter['Params']['couponData']['typeid'] == '3'){
-                                        $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
-                                       // var_dump($p);
-                                       // var_dump($lu);
-                                        if(isset($p['1'])){
-                                            $coupon_amount = round($p['1'] * $lu,'2');
+                                        if(isset($goods['boxa'])){
+                                            $lu = $goods['boxa']['value'];
+                                        }else{
+                                            $lu = '1';
+                                        }
+                                        if($inter['Params']['couponData']['typeid'] == '3'){
+                                            $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
+                                         
+                                            if(isset($p['1'])){
+                                                $coupon_amount = round($p['1'] * $lu,'2');
+                                            }
                                         }elseif($inter['Params']['couponData']['typeid'] == '2'){
+                                            $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
+
                                             if(isset($p['1'])){
                                                 $coupon_amount = round($zong * $p['1'],'2');
                                             }
+                                        }elseif($inter['Params']['couponData']['typeid'] == '1'){
+                                            $coupon_amount = $inter['Params']['couponData']['coupon_amount'];
+
                                         }else{
                                             $coupon_amount = '0';
                                         }
 
 
-                                    }?>
+                                    ?>
                                 优惠卷抵扣金额：<?php  $coupon= $coupon_amount; echo $coupon_amount;?>
                                 <?php else:?>
                                 <?php $coupon = '0';?>

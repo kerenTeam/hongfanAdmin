@@ -288,10 +288,11 @@ td img{
                                     <th class="shop_name">所属商家 </th>
 
                                     <th class="shop_type">类型 </th>
+                                    <th class="shop_type">使用类型 </th>
+
 
                                     <th class="shop_yetai">使用期限</th>
 
-                                    <th class="brand">领取数量</th>
                                     <th class="brand">次数限制</th>
 
                                     <th class="brand">购买价格</th>
@@ -724,7 +725,7 @@ $(document).ready(function(){
 
 <script type="text/html" id="dataModal">
 
-    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>">
+    <tr class="trClass" id="trClass<%= id%>" data-id="<%= id%>" <%if(state == '0'){%> style="color:red;"<%}%> >
 
         <td class="am-text-middle"><%= id%></td>
         <%if(city == '1'){%>
@@ -740,7 +741,7 @@ $(document).ready(function(){
         <%}%>
         <td class="am-text-middle"><%= name%></td>
 
-        <td class="am-text-middle"><%if(isGamePrize == '1'){%>游戏使用-<%}else if(isGamePrize == '2'){%>分享专用-<%}else if(isGamePrize =='3'){%>爱购专用-<%}%><%= title%></td>
+        <td class="am-text-middle"><%if(isGamePrize == '1'){%>游戏劵-<%}else if(isGamePrize == '2'){%>分享劵-<%}else if(isGamePrize =='3'){%>海购劵-<%}else if(isGamePrize =='4'){%>邀请有礼劵<%}%><%= title%></td>
 
          <%if(storename == ',') {%>
 
@@ -769,14 +770,11 @@ $(document).ready(function(){
         <td class="am-text-middle">线下团购券</td>
 
         <%}%>
+        <td><%if(applicableType == '0'){%>通用<%}else if(applicableType == '1'){%>爱购专用-<%}else if(applicableType == '2'){%>HI货榜-<%}else if(applicableType =='3'){%>HI土货-<%}else if(applicableType =='4'){%>HI洋货<%}else if(applicableType =='5'){%>HI特色-<%}else if(applicableType =='6'){%>HI推荐-<%}else if(applicableType =='7'){%>HI邀请有礼-<%}%></td>
 
         <td class="am-text-middle"><%= begin_date%>至<%= end_date%></td>
 
-        <%if(receive_limit=="1") {%>
-        <td class="am-text-middle">一张</td>
-        <%}else {%>
-        <td class="am-text-middle">不限制</td>
-        <%}%>
+
         <%if(frequency=="1") {%>
         <td class="am-text-middle">一天一次</td>
         <%}else if(frequency=="2") {%>
@@ -786,7 +784,7 @@ $(document).ready(function(){
         <%}else if(frequency=="30") {%>
         <td class="am-text-middle">一月一次</td>
         <%}else {%>
-        <td class="am-text-middle">仅领一次</td>
+        <td class="am-text-middle">仅一次</td>
         <%}%>
         <td><%= price%></td>
 

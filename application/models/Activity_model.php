@@ -82,7 +82,7 @@ class Activity_model extends CI_Model
         // $this->db->from('hf_shop_coupon as a');
 
 
-        $query = $this->db->order_by('id','desc')->get('hf_shop_coupon');
+        $query = $this->db->order_by('state,id','desc')->get('hf_shop_coupon');
 
         return $query->result_array();
 

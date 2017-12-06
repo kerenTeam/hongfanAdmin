@@ -83,26 +83,31 @@ class Electronic extends Default_Controller {
         if($_POST){
 
             $list = $this->Activity_model->get_coupons();
-            foreach ($list as $key => $value) {
-                 $list[$key]['he'] = count($this->Activity_model->get_WriteNum($value['id']));
-                 //返回领取数
-                 $list[$key]['lin'] = count($this->Activity_model->get_ReceiveNum($value['id']));
-
-                 $list[$key]['receive'] = count($this->Activity_model->search_receive($value['id'],'0'));
-                 //获取商家名字
-                 $storename[$key] = '';
-                 $a = json_decode($value['storeid'],true);
-
-                 foreach ($a as $k => $v) {
-                     $storename[$key] .= get_store_name($v).',';
-                 }
-                 $list[$key]['storename'] = $storename[$key];
-
-            }
+           
 
             if(empty($list)){
                 echo "2";
             }else{
+                 foreach ($list as $key => $value) {
+                     if(date('Y-m-d',time()) > $value['end_date']){
+                        $arr['state'] = '0';
+                        $this->Activity_model->edit_electronic($value['id'],$arr);
+                     }
+                     $list[$key]['he'] = count($this->Activity_model->get_WriteNum($value['id']));
+                     //返回领取数
+                     $list[$key]['lin'] = count($this->Activity_model->get_ReceiveNum($value['id']));
+
+                     $list[$key]['receive'] = count($this->Activity_model->search_receive($value['id'],'0'));
+                     //获取商家名字
+                     $storename[$key] = '';
+                     $a = json_decode($value['storeid'],true);
+
+                     foreach ($a as $k => $v) {
+                         $storename[$key] .= get_store_name($v).',';
+                     }
+                     $list[$key]['storename'] = $storename[$key];
+
+                }
                 echo json_encode($list);
             }
 

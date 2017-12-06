@@ -73,8 +73,8 @@ class Welcome extends CI_Controller {
 
 
     function member(){
-        $time = '2017-11-20 00:00:00';
-        $end = '2017-11-26 23:59:59';
+        $time = '2017-11-27 00:00:00';
+        $end = '2017-12-03 23:59:59';
         $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->get('hf_user_member');
         // $query = $this->db->query();
         $res = $query->result_array();
@@ -88,7 +88,47 @@ class Welcome extends CI_Controller {
         }
         // echo "<pre>";
         var_dump($a);
-        // var_dump(count($res));
+        var_dump(count($res));
+    }
+
+    //问答数
+    function question(){
+        $time = '2017-11-27 00:00:00';
+        $end = '2017-12-03 23:59:59';
+        $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->where('typeId','2')->get('hf_friends_news');
+        // $query = $this->db->query();
+        $res = $query->result_array();
+        $a ='0';
+        foreach ($res as $key => $value) {
+            $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+            // // $query = $this->db->query();
+            $res1 = $query1->result_array();
+            $a += count($res1);
+            // var_dump($a);
+        }
+        // echo "<pre>";
+        var_dump($a);
+        var_dump(count($res));
+    }
+
+    //发帖数1交友动态 2问答动态  3圈子动态 4二手信息 5举报动态
+    function findest(){
+        $time = '2017-11-27 00:00:00';
+        $end = '2017-12-03 23:59:59';
+        $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->where('typeId','1')->get('hf_friends_news');
+        // $query = $this->db->query();
+        $res = $query->result_array();
+        $a ='0';
+        foreach ($res as $key => $value) {
+            $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+            // // $query = $this->db->query();
+            $res1 = $query1->result_array();
+            $a += count($res1);
+            // var_dump($a);
+        }
+        // echo "<pre>";
+        var_dump($a);
+        var_dump(count($res));
     }
 
 

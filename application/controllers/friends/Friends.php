@@ -359,6 +359,9 @@ class Friends extends Default_Controller
         $list = $this->Public_model->select_where($this->dynamic,'typeId','1','');
 
         $config['total_rows'] = count($list);
+        if(!isset($_SESSION['friendsNews'])){
+            $_SESSION['friendsNews'] = '0';
+        }
 
         // //分页数据
         $listpage = $this->Public_model->select_news_page('typeId','1',$config['per_page'],$current_page,'create_time');
@@ -372,6 +375,29 @@ class Friends extends Default_Controller
         $data['menu'] = array('friends','dynamic');
         $this->load->view('template.html',$data);
 	}
+
+    //返回交友动态
+    function retFriendsNews(){
+        if($_POST){
+            $start = $this->input->post('start');
+            if($start != '0'){
+                $_SESSION['friendsNews'] = $start;
+            }
+            // var_dump($_SESSION['pageNum']);
+            $count = $this->input->post('count');
+            $list = $this->Public_model->select_where($this->dynamic,'typeId','1','');
+
+            $listpage = $this->Public_model->select_news_page('typeId','1',$count,$start,'create_time');
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+        }else{
+            echo "2";
+        }
+    }
 
 	//圈子动态
 	function friends_circle_news(){
@@ -1564,8 +1590,6 @@ class Friends extends Default_Controller
         $this->pagination->initialize($config);
 
         $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'userNum'=>count($list));
-        // var_dump($data);
-        // exit;
 
         $data['page'] = $this->view_friends_member;
         $data['menu'] = array('friends','friends_member');
@@ -1788,7 +1812,113 @@ class Friends extends Default_Controller
 
     //统计信息
     function statistics(){
-        
+        if($_POST){
+            $time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+           
+                $new = date('Y-m-d',time()).' 00:00:00';
+                $endnew = date('Y-m-d',time()).' 23:59:59';
+
+                //获取今日新增帖子
+                $query = $this->db->where('create_time >=',$new)->where('create_time <=',$endnew)->where('typeId','1')->get('hf_friends_news');
+                // $query = $this->db->query();
+                $res = $query->result_array(); 
+
+              
+
+                //获取今日新增问答 
+                $query2 = $this->db->where('create_time >=',$new)->where('create_time <=',$endnew)->where('typeId','2')->get('hf_friends_news');
+                // $query = $this->db->query();
+                $res2 = $query2->result_array(); 
+                $a = '0';
+                foreach ($res2 as $key => $value) {
+                    $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+                    // // $query = $this->db->query();
+                    $res1 = $query1->result_array();
+                    $a += count($res1);
+                    // var_dump($a);
+                }
+
+                $data['friends'] = count($res);
+                $data['question'] = count($res2);
+                $data['questionData'] = $a;
+                $data['time'] = '';
+            if($time != ''){
+                $new = $time.' 00:00:00';
+                $endnew = $end_time.' 23:59:59';
+
+                //获取今日新增帖子
+                $friends = $this->db->where('create_time >=',$new)->where('create_time <=',$endnew)->where('typeId','1')->get('hf_friends_news');
+                // $query = $this->db->query();
+                $friendsList = $friends->result_array(); 
+
+              
+
+                //获取今日新增问答 
+                $Question = $this->db->where('create_time >=',$new)->where('create_time <=',$endnew)->where('typeId','2')->get('hf_friends_news');
+                // $query = $this->db->query();
+                $QuestionList = $Question->result_array(); 
+                $b = '0';
+                foreach ($QuestionList as $key => $value) {
+                    $query3 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+                    // // $query = $this->db->query();
+                    $res3 = $query3->result_array();
+                    $b += count($res3);
+                    // var_dump($a);
+                }
+
+                $data['friends'] = count($res);
+                $data['question'] = count($res2);
+                $data['questionData'] = count($a);
+
+                $data['time'] = $time;
+                $data['endtime'] = $end_time;
+
+                $data['friendsList'] = count($friendsList);
+                $data['questionList'] = count($QuestionList);
+                $data['questData'] = $b;
+            }
+
+            $data['page'] = "friends/statistics.html";
+            $data['menu'] = array('friends','statistics');
+            $this->load->view('template.html',$data);
+
+
+        }else{
+            $time = date('Y-m-d',time()).' 00:00:00';
+            $end = date('Y-m-d',time()).' 23:59:59';
+
+            //获取今日新增帖子
+            $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->where('typeId','1')->get('hf_friends_news');
+            // $query = $this->db->query();
+            $res = $query->result_array(); 
+
+          
+
+            //获取今日新增问答 
+            $query2 = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->where('typeId','2')->get('hf_friends_news');
+            // $query = $this->db->query();
+            $res2 = $query2->result_array(); 
+            $a = '0';
+            foreach ($res2 as $key => $value) {
+                $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+                // // $query = $this->db->query();
+                $res1 = $query1->result_array();
+                $a += count($res1);
+                // var_dump($a);
+            }
+
+            $data['friends'] = count($res);
+            $data['question'] = count($res2);
+            $data['questionData'] = $a;
+
+
+
+
+            $data['page'] = "friends/statistics.html";
+            $data['menu'] = array('friends','statistics');
+            $this->load->view('template.html',$data);
+        }
     }
 
 

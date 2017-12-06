@@ -250,21 +250,7 @@ padding: 5px 6px!important;
 
                     </div>
                   <?php endif;?>
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-
-                        <label for="" class="am-u-sm-3 am-form-label">每次领取数量限制<span class="red">*</span>:</label>
-
-                        <div class="am-u-sm-9">
-
-                            <select name="receive_limit" required id="receive_limit" class="am-form-field tpl-form-no-bg" data-am-selected="{searchBox: 1,maxHeight: 200}">
-                                <option value="1" <?php if($coupon['receive_limit'] == "1"){echo "selected";}?>>一张</option>
-                                <option value="999" <?php if($coupon['receive_limit'] == '999'){echo "selected";}?>>不限制</option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
+                   
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
                         <label for="" class="am-u-sm-3 am-form-label">领取时间限制<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
@@ -326,22 +312,54 @@ padding: 5px 6px!important;
                     </div>
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                        <label for="" class="am-u-sm-3 am-form-label">卡券归属:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">卡券使用板块:</label>
+
+                        <div class="am-u-sm-9">
+
+                            <select name="applicableType" >
+                                <option value="0" <?php if($coupon['applicableType'] == '0'){echo "selected";}?>>线上或线下卷</option>
+                                <option value="1" <?php if($coupon['applicableType'] == '1'){echo "selected";}?>>爱购商品</option>
+                                <option value="2" <?php if($coupon['applicableType'] == '2'){echo "selected";}?>>HI货榜</option>
+                                <option value="3" <?php if($coupon['applicableType'] == '3'){echo "selected";}?>>HI土货</option>
+                                <option value="4" <?php if($coupon['applicableType'] == '4'){echo "selected";}?>>HI洋货</option>
+                                <option value="5" <?php if($coupon['applicableType'] == '5'){echo "selected";}?>>HI特色</option>
+                                <option value="6" <?php if($coupon['applicableType'] == '6'){echo "selected";}?>>HI推荐</option>
+                                <option value="7" <?php if($coupon['applicableType'] == '7'){echo "selected";}?>>HI邀请有礼</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="" class="am-u-sm-3 am-form-label">卡卷归属:</label>
 
                         <div class="am-u-sm-9">
 
                             <select name="isGamePrize" >
-
+                                <!-- 使用类型 游戏劵 2分享劵 3海购劵 4邀请有礼劵 -->
                                 <option value="0" <?php if($coupon['isGamePrize'] == '0'){echo "selected";}?>>线上或线下卷</option>
-                                <option value="1" <?php if($coupon['isGamePrize'] == '1'){echo "selected";}?>>首页转盘游戏</option>
-                                <option value="2" <?php if($coupon['isGamePrize'] == '2'){echo "selected";}?>>分享</option>
-                                <option value="3" <?php if($coupon['isGamePrize'] == '3'){echo "selected";}?>>爱购专用</option>
+                                <option value="1" <?php if($coupon['isGamePrize'] == '1'){echo "selected";}?>>游戏劵</option>
+                                <option value="2" <?php if($coupon['isGamePrize'] == '2'){echo "selected";}?>>分享劵 </option>
+                                <option value="3" <?php if($coupon['isGamePrize'] == '3'){echo "selected";}?>>海购劵</option>
+                                <option value="4" <?php if($coupon['isGamePrize'] == '4'){echo "selected";}?>>邀请有礼劵</option>
                             </select>
 
                         </div>
 
                     </div>
 
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">领取频率<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                            <select name="receiveNum" id="receiveNum" required class="am-form-field tpl-form-no-bg" >
+                                <option value="">输入查找/选择</option>
+                                <option value="0" <?php if($coupon['receiveNum'] == '0'){echo "selected";}?>>无限制</option>
+                                <option value="1" <?php if($coupon['receiveNum'] == '1'){echo "selected";}?>>只能领取一次</option>
+                              
+                            </select>
+                        </div>
+                    </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="" class="am-u-sm-3 am-form-label">商家<span class="red">*</span>:</label>

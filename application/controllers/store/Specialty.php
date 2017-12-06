@@ -428,7 +428,15 @@ class Specialty extends Default_Controller {
 
         $this->load->view('template.html',$data);
     }
+    //HI邀请有礼
+    function hi_Invitation(){
+        $data['type'] = '7';
+        $data['page'] = $this->view_recommendGoods;
 
+        $data['menu'] = array('store','hi_Invitation');
+
+        $this->load->view('template.html',$data);
+    }
 
     //修改商品排序
 

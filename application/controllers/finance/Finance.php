@@ -1006,6 +1006,7 @@ class Finance extends Default_Controller {
                     'U' => '订单状态',
                     'V' => '改价金额',
                     'W' => '改价原因',
+                    'X' => '支付方式',
 
                 );
 
@@ -1044,7 +1045,8 @@ class Finance extends Default_Controller {
                     'Q' => '佣金比率',
                     'R' => '佣金总额',
                     'S' => '结算金额',
-                    'T' => '备注'
+                    'T' => '备注',
+                    'U' => '支付方式'
 
                 );
 
@@ -1174,6 +1176,8 @@ class Finance extends Default_Controller {
                                     if(isset($p['1'])){
                                         $coupon_amount = round($zong * $p['1'],'2');
                                     }
+                                }elseif($coupon['Params']['couponData']['typeid'] == '1'){
+                                    $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
                                 }else{
                                     $coupon_amount = '0';
                                 }
@@ -1239,6 +1243,14 @@ class Finance extends Default_Controller {
                                $this->excel->getActiveSheet()->setCellValue('U' . $i, $state);
                                $this->excel->getActiveSheet()->setCellValue('V' . $i, $booking['fee']);
                                $this->excel->getActiveSheet()->setCellValue('W' . $i, $booking['fee_name']);
+
+                               //获取支付方式
+                               $paytype = $this->MallShop_model->ret_order_paydata($booking['order_UUID']);
+
+
+
+
+                               $this->excel->getActiveSheet()->setCellValue('X' . $i, $paytype['payType']);
 
                     }
 
@@ -1379,6 +1391,10 @@ class Finance extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('R' . $i, $points);
                         $this->excel->getActiveSheet()->setCellValue('S' . $i, $zong - $points);
                         $this->excel->getActiveSheet()->setCellValue('T' . $i, '');
+                        //获取支付方式
+                        $paytype = $this->MallShop_model->ret_order_paydata($book['order_UUID']);
+
+                        $this->excel->getActiveSheet()->setCellValue('U' . $i, $paytype['payType']);
 
                     }
 

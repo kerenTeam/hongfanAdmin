@@ -29,66 +29,39 @@ class Question extends Default_Controller
 	//问答列表
 	function question_list(){
 
-		$config['per_page'] = 10;
-        //获取页码
-        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
-        //配置
-        $config['base_url'] = site_url('/friends/Question/question_list');
-        //分页配置
-        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-
-        $config['full_tag_close'] = '</ul>';
-
-        $config['first_tag_open'] = '<li>';
-
-        $config['first_tag_close'] = '</li>';
-
-        $config['prev_tag_open'] = '<li>';
-
-        $config['prev_tag_close'] = '</li>';
-
-        $config['next_tag_open'] = '<li>';
-
-        $config['next_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] = '<li class="am-active"><a>';
-
-        $config['cur_tag_close'] = '</a></li>';
-
-        $config['last_tag_open'] = '<li>';
-
-        $config['last_tag_close'] = '</li>';
-
-        $config['num_tag_open'] = '<li>';
-
-        $config['num_tag_close'] = '</li>';
-        $config['first_link']= '首页';
-
-        $config['next_link']= '下一页';
-
-        $config['prev_link']= '上一页';
-
-        $config['last_link']= '末页';
-        $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
-
-        $config['total_rows'] = count($list);
-
-        // //分页数据
-        $listpage = $this->Public_model->select_question_list($config['per_page'],$current_page);
-          $this->load->library('pagination');//加载ci pagination类
-
-        $this->pagination->initialize($config);
-
         //返回所有问题分类
         $cates = $this->Public_model->select($this->cates,'');
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links(),'cates'=>$cates);
+        $data = array('cates'=>$cates);
 
         $data['page'] = $this->view_question_list;
         $data['menu'] = array('question','question_list');
         $this->load->view('template.html',$data);
 			
 	}
+    //返回问答
+    function retQuestionList(){
+        if($_POST){
+            $start = $this->input->post('start');
+            if($start != '0'){
+                $_SESSION['pageNum'] = $start;
+            }
+            // var_dump($_SESSION['pageNum']);
+            $size = $this->input->post('count');
+            $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
+
+            $listpage = $this->Public_model->select_question_list($size,$start);
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage,'pageNum'=>$_SESSION['pageNum']]);
+            }else{
+                echo "2";
+            }
+
+        }
+    }
+
+
 
 	//新增问题
 	function add_problem(){

@@ -1674,48 +1674,53 @@ class SystemSet extends Default_Controller {
             // $data['ios_path_url']= $this->input->post('ios_path_url');
 
             $data['create_time'] = date('Y-m-d H:i:s');
+            $bucketList =  $this->config->item('buckrtGlobal');
 
-            if(!empty($_FILES['file']['tmp_name'])){
+            $city = '1';
+            $bucket =$bucketList['cq']['other'];
+                    
 
-                $file_path = "Upload/xls/".$_FILES["file"]['name']; 
-
-                move_uploaded_file($_FILES["file"]["tmp_name"],  $file_path);
-
-             
-
-                if(!file_exists($file_path)){
-
-                    echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
-
-                    exit;
-
+            $header = array("token:".$_SESSION['token'],'city:'.$city);     
+            
+            if(!empty($_FILES['file']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['file']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'app/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['android_path_url'] =$img[0]['picImg'];
+                }else{
+                     echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
                  }
-                 $data['android_path_url']= $file_path;
-
-
-            } 
-            if(!empty($_FILES['ios']['tmp_name'])){
-
-              
-
-                $ios_path = "Upload/xls/".$_FILES["ios"]['name']; 
-
-                move_uploaded_file($_FILES["ios"]["tmp_name"],  $ios_path);
-
-                  if(!file_exists($ios_path)){
-
-                    echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";
-
-                    exit;
-
-                 }
-                 $data['ios_path_url']= $ios_path;
-
 
             }
+            if(!empty($_FILES['ios']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['ios']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'app/'.$bucket,
+                    'bucket'=>$bucket,
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+                // var_dump($a);
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['ios_path_url'] =$img[0]['picImg'];
+                }else{
+                    echo "<script>alert('安装包上传失败!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";exit;
+                 }
 
-
-
+            }
+           
             if($this->System_model->edit_app_version($id,$data)){
 
                 echo "<script>alert('操作成功!');window.location.href='".site_url('systemSet/SystemSet/app_version')."'</script>";

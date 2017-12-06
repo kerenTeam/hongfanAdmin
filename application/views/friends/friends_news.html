@@ -137,6 +137,49 @@ padding: 5px 6px!important;
 }
 
 </style>
+<style>  
+    *{  
+        padding: 0px;  
+        margin: 0px;  
+    }  
+    *{ margin:0; padding:0; list-style:none;}  
+    a{ text-decoration:none;}  
+    a:hover{ text-decoration:none;}  
+    .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;}  
+    .tcdPageCode a{display: inline-block;color: #428bca;display: inline-block;height: 25px;  
+    line-height: 25px;    padding: 0 10px;border: 1px solid #ddd;    margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+    .tcdPageCode a:hover{text-decoration: none;border: 1px solid #428bca;}  
+    .tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
+    margin: 0 2px;color: #fff;background-color: #428bca;    border: 1px solid #428bca;border-radius: 4px;vertical-align: middle;}  
+    .tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
+    margin: 0 2px;    color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}  
+    ul{  
+        list-style: none;  
+    }  
+    .wrap >ul > li{  
+        width: 250px;  
+        height: 350px;  
+        margin: 20px;  
+        /*border: 1px green solid;*/  
+        float: left;  
+        margin-bottom: 40px;  
+    }  
+    .wrap >ul > li>img{  
+        width: 100%;  
+        height: 100%;  
+    }  
+    .wrap >ul > li>p{  
+        text-align: center;  
+        line-height: 30px;  
+        height: 30px;  
+    }  
+    .wrap{  
+        margin: 100px auto;  
+        border: 1px solid red;  
+        height: 1800px;  
+        width: 1460px;  
+    }  
+</style>  
 
 
 
@@ -254,7 +297,6 @@ padding: 5px 6px!important;
                                     </div>
                                     
                                     <div class="am-form-group am-btn-group-xs">
-                                    <!-- <input type="hidden" name="spaceType" value="<?php echo $spaceType;?>"> -->
 
                                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 
@@ -303,44 +345,46 @@ padding: 5px 6px!important;
 
                             </thead>
 
-                            <tbody id="dataList">
+                            <tbody id="infolistDiv">
 
                                 <!-- more data -->
-                                <?php if(!empty($lists)):?>
-                                    <?php foreach($lists as $val):?>
-                                        <tr>
-                                            <td><?php echo $val['id'];?></td>
-                                            <!-- <td><?php echo $val['name'];?></td> -->
-                                            <td><?php echo $val['nickname'];?></td>
-                                          
-                                            <td><?php echo $val['content'];?></td>
-                                            <?php $logo = json_decode($val['pic'],true);?>
-                                            <?php if(!isset($logo[0]['picImg'])):?>
-                                                <td>无图</td>
-                                            <?php else:?>
-                                               <td><img src="<?php echo $logo[0]['picImg'];?>" style="width: 100px;height: 100px;"></td> 
-                                            <?php endif;?>
-                                            <td><?php echo $val['likes'];?></td>
-                                            <td><?php echo $val['read'];?></td>
-                                            <td><?php echo $val['create_time'];?></td>
-                                            <td>
-                                               <div class="tpl-table-black-operation">
-                                                    <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_info<?php echo $val['id']?>'}">
-                                                        <i class="am-icon-pencil"></i> 查看详情
-                                                    </a>
-                                                      
-                                                    <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['id']?>'}">
-                                                        <i class="am-icon-pencil"></i> 编辑
-                                                    </a>
-                                                    <a href="<?php echo site_url('/friends/Friends/del_friends_news/'.$val['id'].'/'.$val['spaceType']);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-trash"></i> 删除
+                           
+        
+                            </tbody>
 
-                                                    </a>
+                        </table>
+                         <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr>
+                                    <td><%= list[i].id%></td>
+                                    <td><%= list[i].nickname%></td>
+                                    <td><%= list[i].content%></td>
+                                    <%if(list[i].pic == ''){%>
+                                    <td>无图</td>
+                                    <%}else{%>
+                                    <td><img width="100px;" src="<%= list[i].pic%>" ></td>
+                                    <%}%>
+                                    <td><%= list[i].likes%></td>
+                                    <td><%= list[i].read%></td>
+                                    <td><%= list[i].create_time%></td>
+                                    <td> 
+                                        <div class="tpl-table-black-operation">
+                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_info<%= list[i].id%>'}">
+                                                <i class="am-icon-pencil"></i> 查看详情
+                                            </a>
+                                              
+                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<%= list[i].id%>'}">
+                                                <i class="am-icon-pencil"></i> 编辑
+                                            </a>
+                                            <a href="<?php echo site_url('/friends/Friends/del_friends_news/');?><%= list[i].id%>/<%= list[i].spaceType%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                <i class="am-icon-trash"></i> 删除
 
-                                                </div>  
-                                            </td>
-                                        </tr>
-                                        <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<?php echo $val['id']?>">
+                                            </a>
+
+                                        </div>  
+                                    </td>
+                                </tr>
+                                 <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<%= list[i].id%>">
 
                                     <div class="am-modal-dialog">
 
@@ -358,7 +402,7 @@ padding: 5px 6px!important;
 
                                         <div class="am-u-sm-8">
 
-                                            <textarea type="text" rows="4" name="content" class="js-pattern-mobile" placeholder="输入动态内容"  required><?php echo $val['content'];?></textarea> 
+                                            <textarea type="text" rows="4" name="content" class="js-pattern-mobile" placeholder="输入动态内容"  required><%= list[i].content%></textarea> 
 
                                         </div>
 
@@ -378,11 +422,11 @@ padding: 5px 6px!important;
                                              <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
 
                                               <!-- 图片实时预览 -->
-                                            <?php if(isset($logo[0]['picImg'])):?>
-                                              <div id="preview"> <img style="border-radius: 3px;" src="<?php echo $logo[0]['picImg'];?>" class="am-img-responsive cardView"> </div>
-                                          <?php else:?>
+                                            <%if(list[i].pic != ''){%>
+                                              <div id="preview"> <img style="border-radius: 3px;" src="<%= list[i].pic%>" class="am-img-responsive cardView"> </div>
+                                            <% }else{%>
                                               <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                          <?php endif;?>
+                                            <%}%>
 
                                               <span class="clickUp">缩略图</span>
 
@@ -397,7 +441,7 @@ padding: 5px 6px!important;
                                     </div>
                                     
                                     <div class="am-form-group am-btn-group-xs">
-                                         <input type="hidden" name="id" value="<?php echo $val['id'];?>">
+                                         <input type="hidden" name="id" value="<%= list[i].id%>">
                                          <!-- <input type="hidden" name="spaceType" value="<?php echo $val['spaceType'];?>"> -->
 
                                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
@@ -413,7 +457,7 @@ padding: 5px 6px!important;
                                     </div>
 
                                 </div>
-                                  <div class="am-modal am-modal-confirm" tabindex="-1" id="m_info<?php echo $val['id']?>">
+                                 <div class="am-modal am-modal-confirm" tabindex="-1" id="m_info<%= list[i].id%>">
 
                                     <div class="am-modal-dialog">
 
@@ -426,7 +470,7 @@ padding: 5px 6px!important;
 
                                         <div class="am-u-sm-8">
 
-                                            <?php echo $val['content'];?>
+                                            <%= list[i].content%>
 
                                         </div>
 
@@ -440,9 +484,9 @@ padding: 5px 6px!important;
                                         <label for="" class="am-u-sm-3 am-form-label">动态图片 </label>
 
                                          <div class="am-u-sm-8 am-u-end">
-                                            <?php foreach($logo as $v):?> 
-                                                <img src="<?php echo $v['picImg'];?>" style="width: 100%;height: 100%;">
-                                            <?php endforeach;?>
+                                            <%if(list[i].pic != ''){%>
+                                                <img src="<%= list[i].pic%>" style="width: 100%;height: 100%;">
+                                            <%}%>
                                                 
                                         </div>
 
@@ -454,26 +498,17 @@ padding: 5px 6px!important;
                                     </div>
 
                                 </div>
-                                    <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="9">暂无内容！</th>
-                                <?php endif;?>
-        
-                            </tbody>
-
-                        </table>
+                            <%}%>
+                        </script>
 
                     </div>
+          
 
                     <div class="am-u-lg-12 am-cf am-text-center pagebox">
 
-                        <div id="Pagination">
+                         <div class="tcdPageCode">  
+                        </div>  
 
-
-                               <?php echo $pages;?>
-
-
-                        </div>
 
                       
 
@@ -494,6 +529,105 @@ padding: 5px 6px!important;
 </div>
 
 </div>
+
+<script src="assets/js/jquery.page.js"></script>
+<script>  
+    $(function () {  
+       //初始化第一页数据；  
+        var urlApi = '<?php echo site_url("/friends/Friends/retFriendsNews");?>' ;
+
+        var page =  "<?php if(isset($_SESSION['friendsNews'])){echo $_SESSION['friendsNews'];}else{echo '0';}?>";
+        $.ajax({  
+            url:urlApi,  
+            type:'POST',  
+            // dataType:'jsonp',  
+            data:{  
+                //从第几条开始请求；  
+                "start" : page,  
+                //请求多少条数据  
+                "count" : 10  
+            },  
+            success:function(data){ 
+                if(data == 2){
+
+                }else{
+            //total总条数属性，计算总页数；  
+                    var res = JSON.parse(data)  
+                    var total = parseInt(res.total/10);  
+                    var result  = res.subjects;  
+                    var dataobj = {};
+                    result.forEach(function(ele,index){
+                        // console.log(result.pic);
+                        if (ele.pic.length > 5) {
+                            var pic = JSON.parse(ele.pic);
+                            // console.log(pic)
+                            ele.pic = pic[0].picImg;
+                        }else{
+                            ele.pic = '';
+                        }
+                    })
+                                      
+                    dataobj.list = result;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                    if(page == 0){
+                        num = 1;
+                    }else{
+                         num = (parseInt(page) + 10)/10;
+                    }
+                    // console.log(num);
+                    //分页插件，  
+                    $(".tcdPageCode").createPage({  
+                        //pageCount：总页数  
+                        pageCount:total,  
+                        //current：当前页  
+                        current:num,  
+                        backFn:function(pageIndex){  
+                        //单击回调方法，pageIndex是当前页码  
+                            $(".movieList").empty();  
+                          
+                            var start = 10*(pageIndex-1); 
+                            $.ajax({  
+                                url:urlApi,  
+                                type:'POST',  
+                                // dataType:'jsonp',  
+                                data:{  
+                                    "start" : start,  
+                                    "count" : 10,  
+                                },  
+                                success:function(data){  
+                                    if(data == 2){
+
+                                    }else{
+                                        var res = JSON.parse(data)  
+
+                                        var result  = res.subjects;  
+                                        // console.log(res);
+                                        var dataobj = {};
+                                          // 头像
+                                        result.forEach(function(ele,index){
+                                            // console.log();
+                                            if (ele.pic.length > 5) {
+                                                var pic = JSON.parse(ele.pic);
+                                                // console.log(pic)
+                                               ele.pic = pic[0].picImg;
+                                            }else{
+                                                ele.pic = '';
+                                            }
+                                        })
+                                        dataobj.list = result;
+                                        var html=template("infolist",dataobj);
+                                        document.getElementById("infolistDiv").innerHTML = html;
+                                    }  
+                                }  
+                            })  
+                        }  
+                    });  
+                }
+            }  
+        })  
+    })  
+</script> 
 
 </body>
 
