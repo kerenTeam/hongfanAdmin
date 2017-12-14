@@ -545,7 +545,6 @@ class Shop extends Default_Controller {
             $arr['username'] = trim($this->input->post('store_name'));
             $arr['nickname'] = trim($this->input->post('store_name'));
             $arr['phone'] = trim($this->input->post('username'));
-            $arr['gid'] = trim($this->input->post('gid'));
 
             $arr['password'] =trim($this->input->post('password'));
 
@@ -568,6 +567,13 @@ class Shop extends Default_Controller {
                 echo "<script>alert('手机账户已被注册！');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit;
 
             }
+                        //根据商家名获取商家信息
+            $store = $this->Shop_model->shopIdStore($data['store_name'],$data['store_id']);
+
+            if(!empty($store)){
+                echo "<script>alert('店铺名称已被占用');window.location.href='".site_url('/shop/Shop/edit_store/'.$data['store_id'])."'</script>";exit; 
+            }
+
 
             //修改登录账户
 
@@ -728,17 +734,21 @@ class Shop extends Default_Controller {
 
             $arr['phone'] = trim($this->input->post('username'));
 
-            $arr['gid'] = trim($this->input->post('gid'));
-
             $arr['password'] = md5(trim($this->input->post('password')));
 
             $username = $this->Shop_model->get_user_info($arr['phone']);
 
             if(!empty($username)){
-
-                    echo "<script>alert('手机账号已被注册！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
-
+                echo "<script>alert('手机账号已被注册！');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
             }
+            //根据店铺名称查询
+            $store = $this->Shop_model->shopStore($data['store_name']);
+            if(!empty($store)){
+                echo "<script>alert('店铺名称已被占用');window.location.href='".site_url('/shop/Shop/add_market_shop')."'</script>";exit; 
+            }
+
+
+
 
                 $bucketList =  $this->config->item('buckrtGlobal');
                 switch($_SESSION['city']){
@@ -924,6 +934,12 @@ class Shop extends Default_Controller {
 
             }
 
+            $store = $this->Shop_model->shopStore($data['store_name']);
+            if(!empty($store)){
+                echo "<script>alert('店铺名称已被占用');window.location.href='".site_url('/shop/Shop/addShop')."'</script>";exit; 
+            }
+
+
             //新增商家用户账号
 
            $userid = $this->Shop_model->add_store_member($arr);
@@ -1082,6 +1098,7 @@ class Shop extends Default_Controller {
 
             }
 
+
             unset($data['username'],$data['password'],$data['user_id']);
 
             if($this->Shop_model->get_member_info($arr['user_id'],$arr['username'])){
@@ -1089,6 +1106,16 @@ class Shop extends Default_Controller {
                 echo "<script>alert('账户已被注册！');window.location.href='".site_url('/shop/Shop/editShop/'.$data['store_id'])."'</script>";exit;
 
             }
+                 //根据商家名获取商家信息
+            $store = $this->Shop_model->shopIdStore($data['store_name'],$data['store_id']);
+
+            if(!empty($store)){
+                echo "<script>alert('店铺名称已被占用');window.location.href='".site_url('/shop/Shop/editShop/'.$data['store_id'])."'</script>";exit; 
+            }
+
+
+
+
 
                 //修改登录账户
 

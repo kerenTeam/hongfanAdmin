@@ -2053,9 +2053,9 @@ class SystemSet extends Default_Controller {
         $config['prev_link']= '上一页';
 
         $config['last_link']= '末页';
-        $list = $this->System_model->select_invitation();
+        $list = count($this->System_model->select_invitation());
 
-        $config['total_rows'] = count($list);
+        $config['total_rows'] = $list;
 
         // //分页数据
         $listpage = $this->System_model->select_invitation_page($config['per_page'],$current_page);
@@ -2063,136 +2063,415 @@ class SystemSet extends Default_Controller {
 
         $this->pagination->initialize($config);
 
-        $data = array('lists'=>$listpage,'pages' => $this->pagination->create_links());
+        $data = array('lists'=>$listpage,'count'=>$list,'pages' => $this->pagination->create_links());
 
         $data['page'] = $this->view_invitation;
         $data['menu'] = array('systemSet','invitation_code');
         $this->load->view('template.html',$data);
     }
 
-    //新增邀请码
-    function add_invitation_code(){
-        if($_POST){ 
-            $data = $this->input->post();
-            if($this->System_model->insert('hf_system_invitation',$data)){
-                $log = array(
+    //
+    function searchInvition(){
+        $config['per_page'] = 10;
+        //获取页码
+        $current_page=intval($this->input->get("size"));//index.php 后数第4个/
 
-                    'userid'=>$_SESSION['users']['user_id'],  
+        $UserPhone = trim($this->input->get('userPhone'));
+        $phone = $this->input->get('phone');
 
-                    "content" => $_SESSION['users']['username']."新增了一个邀请码,归属姓名是".$data['name'],
 
-                    "create_time" => date('Y-m-d H:i:s'),
+        //配置
+        //分页配置
+        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
 
-                    "userip" => get_client_ip(),
+        $config['full_tag_close'] = '</ul>';
 
-                );
+        $config['first_tag_open'] = '<li>';
 
-                $this->db->insert('hf_system_journal',$log);
-               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+        $config['first_tag_close'] = '</li>';
 
-            }
-        }else{
-            $this->load->view('404.html');
+        $config['prev_tag_open'] = '<li>';
+
+        $config['prev_tag_close'] = '</li>';
+
+        $config['next_tag_open'] = '<li>';
+
+        $config['next_tag_close'] = '</li>';
+
+        $config['cur_tag_open'] = '<li class="am-active"><a>';
+
+        $config['cur_tag_close'] = '</a></li>';
+
+        $config['last_tag_open'] = '<li>';
+
+        $config['last_tag_close'] = '</li>';
+
+        $config['num_tag_open'] = '<li>';
+
+        $config['num_tag_close'] = '</li>';
+        $config['first_link']= '首页';
+
+        $config['next_link']= '下一页';
+
+        $config['prev_link']= '上一页';
+
+        $config['last_link']= '末页';
+
+
+        $config['page_query_string'] = TRUE;//关键配置
+        // $config['reuse_query_string'] = FALSE;
+        $config['query_string_segment'] = 'size';
+        $config['base_url'] = site_url('/systemSet/SystemSet/searchInvition?').'phone='.$phone.'&userPhone='.$UserPhone;
+        if(!empty($UserPhone) && empty($phone)){
+            $query = $this->db->where('userPhone',$UserPhone)->get('hf_user_invite');
+            $res = $query->result_array();
+            $list = count($res);
+            $config['total_rows'] = $list;
+            // //分页数据
+            $this->db->select('a.*, b.username,b.nickname');
+            $this->db->from('hf_user_invite a');
+            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+            $query1 = $this->db->where('a.userPhone',$UserPhone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
+            $listpage = $query1->result_array();
+        }else if(empty($UserPhone) && !empty($phone)){
+            $query = $this->db->where('invitationCode',$phone)->get('hf_user_invite');
+            $res = $query->result_array();
+            $list = count($res);
+            $config['total_rows'] = $list;
+            // //分页数据
+            $this->db->select('a.*, b.username,b.nickname');
+            $this->db->from('hf_user_invite a');
+            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+            $query1 = $this->db->where('a.invitationCode',$phone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
+            $listpage = $query1->result_array();
+
+        }else if(!empty($UserPhone) && !empty($phone)){
+            $query = $this->db->where('invitationCode',$phone)->where('userPhone',$UserPhone)->get('hf_user_invite');
+            $res = $query->result_array();
+            $list = count($res);
+            $config['total_rows'] = $list;
+            // //分页数据
+            $this->db->select('a.*, b.username,b.nickname');
+            $this->db->from('hf_user_invite a');
+            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+            $query1 = $this->db->where('a.invitationCode',$phone)->where('userPhone',$UserPhone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
+            $listpage = $query1->result_array();
+        }else if(empty($UserPhone) && empty($phone)){
+            $list = count($this->System_model->select_invitation());
+
+            $config['total_rows'] = $list;
+            // //分页数据
+            $listpage = $this->System_model->select_invitation_page($config['per_page'],$current_page);
         }
-    }
-    //编辑邀请码
-     function edit_invitation_code(){
-        if($_POST){ 
-            $data = $this->input->post();
-            if($this->System_model->updata('hf_system_invitation','id',$data['id'],$data)){
-                $log = array(
 
-                    'userid'=>$_SESSION['users']['user_id'],  
+      
+        $this->load->library('pagination');//加载ci pagination类
 
-                    "content" => $_SESSION['users']['username']."编辑了一个邀请码,归属姓名是".$data['name'].',记录id是：'.$data['id'],
+        $this->pagination->initialize($config);
 
-                    "create_time" => date('Y-m-d H:i:s'),
+        $data = array('lists'=>$listpage,'count'=>$list,'pages' => $this->pagination->create_links());
 
-                    "userip" => get_client_ip(),
-
-                );
-
-                $this->db->insert('hf_system_journal',$log);
-               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-
-            }
-        }else{
-            $this->load->view('404.html');
-        }
+        $data['page'] = $this->view_invitation;
+        $data['menu'] = array('systemSet','invitation_code');
+        $this->load->view('template.html',$data);
     }
 
-    //状态
-    function edit_invitation_state(){
-        $id = intval($this->uri->segment('4'));
-        $state = intval($this->uri->segment('5'));
 
-        if($id == "0" || $state == "0"){
-            $this->load->view('404.html');
-        }else{
-            if($state == '1'){
-                $data['state'] = '1';
-            }else{
-                $data['state'] = '0';
-            }
 
-            if($this->System_model->updata('hf_system_invitation','id',$id,$data)){
-                $log = array(
+    // //新增邀请码
+    // function add_invitation_code(){
+    //     if($_POST){ 
+    //         $data = $this->input->post();
+    //         if($this->System_model->insert('hf_system_invitation',$data)){
+    //             $log = array(
 
-                    'userid'=>$_SESSION['users']['user_id'],  
+    //                 'userid'=>$_SESSION['users']['user_id'],  
 
-                    "content" => $_SESSION['users']['username']."编辑了一个邀请码,记录id是：".$id,
+    //                 "content" => $_SESSION['users']['username']."新增了一个邀请码,归属姓名是".$data['name'],
 
-                    "create_time" => date('Y-m-d H:i:s'),
+    //                 "create_time" => date('Y-m-d H:i:s'),
 
-                    "userip" => get_client_ip(),
+    //                 "userip" => get_client_ip(),
 
-                );
+    //             );
 
-                $this->db->insert('hf_system_journal',$log);
-               echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-            }
-        }
-    }
+    //             $this->db->insert('hf_system_journal',$log);
+    //            echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //         }else{
+    //             echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
 
-    //删除激励
-    function del_invitation(){
-        $id = intval($this->uri->segment(4));
+    //         }
+    //     }else{
+    //         $this->load->view('404.html');
+    //     }
+    // }
+    // //编辑邀请码
+    //  function edit_invitation_code(){
+    //     if($_POST){ 
+    //         $data = $this->input->post();
+    //         if($this->System_model->updata('hf_system_invitation','id',$data['id'],$data)){
+    //             $log = array(
 
-        if($id == '0'){
-            $this->load->view('404.html');
-        }else{
-            if($this->System_model->delete('hf_system_invitation','id',$id)){
-                 $log = array(
+    //                 'userid'=>$_SESSION['users']['user_id'],  
 
-                    'userid'=>$_SESSION['users']['user_id'],  
-                    "content" => $_SESSION['users']['username']."删除了一个邀请码,记录id是：".$id,
-                    "create_time" => date('Y-m-d H:i:s'),
-                    "userip" => get_client_ip(),
-                );
+    //                 "content" => $_SESSION['users']['username']."编辑了一个邀请码,归属姓名是".$data['name'].',记录id是：'.$data['id'],
 
-                $this->db->insert('hf_system_journal',$log);
-                echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
-            }else{
-                echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //                 "create_time" => date('Y-m-d H:i:s'),
 
-            }
-        }
-    }
+    //                 "userip" => get_client_ip(),
+
+    //             );
+
+    //             $this->db->insert('hf_system_journal',$log);
+    //            echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //         }else{
+    //             echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+
+    //         }
+    //     }else{
+    //         $this->load->view('404.html');
+    //     }
+    // }
+
+    // //状态
+    // function edit_invitation_state(){
+    //     $id = intval($this->uri->segment('4'));
+    //     $state = intval($this->uri->segment('5'));
+
+    //     if($id == "0" || $state == "0"){
+    //         $this->load->view('404.html');
+    //     }else{
+    //         if($state == '1'){
+    //             $data['state'] = '1';
+    //         }else{
+    //             $data['state'] = '0';
+    //         }
+
+    //         if($this->System_model->updata('hf_system_invitation','id',$id,$data)){
+    //             $log = array(
+
+    //                 'userid'=>$_SESSION['users']['user_id'],  
+
+    //                 "content" => $_SESSION['users']['username']."编辑了一个邀请码,记录id是：".$id,
+
+    //                 "create_time" => date('Y-m-d H:i:s'),
+
+    //                 "userip" => get_client_ip(),
+
+    //             );
+
+    //             $this->db->insert('hf_system_journal',$log);
+    //            echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //         }else{
+    //             echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //         }
+    //     }
+    // }
+
+    // //删除激励
+    // function del_invitation(){
+    //     $id = intval($this->uri->segment(4));
+
+    //     if($id == '0'){
+    //         $this->load->view('404.html');
+    //     }else{
+    //         if($this->System_model->delete('hf_system_invitation','id',$id)){
+    //              $log = array(
+
+    //                 'userid'=>$_SESSION['users']['user_id'],  
+    //                 "content" => $_SESSION['users']['username']."删除了一个邀请码,记录id是：".$id,
+    //                 "create_time" => date('Y-m-d H:i:s'),
+    //                 "userip" => get_client_ip(),
+    //             );
+
+    //             $this->db->insert('hf_system_journal',$log);
+    //             echo "<script>alert('操作成功！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+    //         }else{
+    //             echo "<script>alert('操作失败！');window.location.href='".site_url('/systemSet/SystemSet/invitation_code')."'</script>";exit;
+
+    //         }
+    //     }
+    // }
 
     //消息推送
     function newsPush(){
-        
-        
+
+  
+
         $data['page'] = '/systemSet/puth.html';
         $data['menu'] = array('systemSet', 'newsPush');
         $this->load->view('template.html', $data);
     }
+
+    //
+    function puthMessage(){
+        if($_POST){
+            $data = $this->input->post();
+            // var_dump($data);
+            
+            $this->load->library('puth');
+
+            $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+            switch ($data["laterOpt"]) {
+                // 打开应用
+                case '1':
+                   $template = $this->puth->IGtNotificationTemplateDemo($data['title'],$data['content']);
+                   break; 
+                // 打开链接
+                case '2':
+                    $template = $this->puth->IGtLinkTemplateDemo($data['title'],$data['content'],$data['link']);
+                    break; 
+                // 下载应用
+                case '3':
+
+                    $template = $this->puth->IGtNotyPopLoadTemplateDemo($data['title'],$data['content'],$data['appname'],$data['popTitle'],$data['popContent'],$data['appurl']);
+                    break;
+                //透传
+                case '4':
+                     $content = json_encode(array("title"=>$data['title'],'content'=>$data['content'],'payload'=>array('banner'=>$data['linkUrl'],"info"=>$data['linkTitle'])));
+                    $template = $this->puth->IGtTransmissionTemplateDemo($content);
+                    break;
+                // 打开应用
+                default:
+                    
+                   // $template = $this->puth->IGtTransmissionTemplateDemo($data['title'],$data['content']);
+                  
+                    break;
+            }
+
+            // $message = new IGtSingleMessage();
+
+            $message = new IGtAppMessage();
+            $message->set_isOffline(true);//是否离线
+            $message->set_offlineExpireTime(3600*12*1000);//离线时间
+            $message->set_data($template);//设置推送消息类型
+           
+            $appIdList=array(APPID);
+            $message->set_appIdList($appIdList);
+            //$message->set_conditions($cdt->getCondition());
+            $rep = $igt->pushMessageToApp($message,"任务组名");
+
+
+            //$message->set_PushNetWorkType(0);//设置是否根据WIFI推送消息，2为4G/3G/2G，1为wifi推送，0为不限制推送
+            //接收方
+
+
+            // $target = new IGtTarget();
+            // $target->set_appId(APPID);
+            
+
+            //  $target->set_clientId('8910f0745fdedbc582424b13fa91ddcd');
+            // //ios
+            // //    $target->set_alias(Alias);
+
+            // try {
+            //     $rep = $igt->pushMessageToSingle($message, $target);
+               
+
+            // }catch(RequestException $e){
+            //     $requstId =e.getRequestId();
+            //     //失败时重发
+            //     $rep = $igt->pushMessageToSingle($message, $target,$requstId);
+              
+            // }
+
+
+
+            unset($data['plateform']);
+            if($rep['result'] == 'ok'){
+                $data['status'] = '1';
+                $this->System_model->insertPush($data);
+                echo "<script>alert('推送成功！');window.location.href='".site_url('/systemSet/SystemSet/newsPush')."'</script>";exit;
+            }else{
+                $data['status'] = '0';
+                $this->System_model->insertPush($data);
+                echo "<script>alert('推送失败！');window.location.href='".site_url('/systemSet/SystemSet/newsPush')."'</script>";exit;
+            }
+           
+
+        }
+    }
+
+
+
+    //全推
+    function pushMessageToApp(){
+        $this->load->library('puth');
+
+        $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+        //定义透传模板，设置透传内容，和收到消息是否立即启动启用
+        // $template = $this->puth->IGtNotificationTemplate();
+        // $template = IGtLinkTemplateDemo();
+        // $template = IGtNotyPopLoadTemplateDemo();
+        // 定义"AppMessage"类型消息对象，设置消息内容模板、发送的目标App列表、是否支持离线发送、以及离线消息有效期(单位毫秒)
+        $message = new IGtAppMessage();
+        $message->set_isOffline(true);
+        $message->set_offlineExpireTime(10 * 60 * 1000);//离线时间单位为毫秒，例，两个小时离线为3600*1000*2
+        $message->set_data($template);
+
+        $appIdList=array(APPID);
+        // $phoneTypeList=array('ANDROID');
+        // $provinceList=array('浙江');
+        // $tagList=array('haha');
+        //用户属性
+        //$age = array("0000", "0010");
+
+
+        //$cdt = new AppConditions();
+       // $cdt->addCondition(AppConditions::PHONE_TYPE, $phoneTypeList);
+       // $cdt->addCondition(AppConditions::REGION, $provinceList);
+        //$cdt->addCondition(AppConditions::TAG, $tagList);
+        //$cdt->addCondition("age", $age);
+
+        $message->set_appIdList($appIdList);
+        //$message->set_conditions($cdt->getCondition());
+
+        $rep = $igt->pushMessageToApp($message,"任务组名");
+
+        var_dump($rep);
+        echo ("<br><br>");
+    }
+
+    //正对个人推送
+    function pushMessageToSingle(){
+        $this->load->library('puth');
+
+        $igt = new IGeTui(HOST,APPKEY,MASTERSECRET);
+
+        //消息模版：
+        // 4.NotyPopLoadTemplate：通知弹框下载功能模板
+        $content = '{title:"通知标题",content:"通知内容",payload:{banner:"market/BuyOffer.html&null",info:"推送跳转页面"}}';
+        $template = $this->puth->IGtTransmissionTemplateDemo($content);
+
+        //定义"SingleMessage"
+        $message = new IGtSingleMessage();
+
+        $message->set_isOffline(true);//是否离线
+        $message->set_offlineExpireTime(3600*12*1000);//离线时间
+        $message->set_data($template);//设置推送消息类型
+        //$message->set_PushNetWorkType(0);//设置是否根据WIFI推送消息，2为4G/3G/2G，1为wifi推送，0为不限制推送
+        //接收方
+        $target = new IGtTarget();
+        $target->set_appId(APPID);
+        $target->set_clientId('8910f0745fdedbc582424b13fa91ddcd');
+    //    $target->set_alias(Alias);
+
+        try {
+            $rep = $igt->pushMessageToSingle($message, $target);
+            var_dump($rep);
+            echo ("<br><br>");
+
+        }catch(RequestException $e){
+            $requstId =e.getRequestId();
+            //失败时重发
+            $rep = $igt->pushMessageToSingle($message, $target,$requstId);
+            var_dump($rep);
+            echo ("<br><br>");
+        }
+    }
+
+    
+
     
 
 

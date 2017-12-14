@@ -306,6 +306,18 @@ class Activity_model extends CI_Model
 
     }
 
+    //返回领取数
+    function selCouponReceive($page,$size){
+        $this->db->select('a.*,b.title,b.name,c.nickname');
+        $this->db->from('hf_shop_coupon as b');
+        $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+
+
+        $query = $this->db->order_by('a.user_coupon_id','desc')->limit($page,$size)->get();
+        return $query->result_array();
+    }
+
 
     //招商信息
     function select_attract($where){

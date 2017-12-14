@@ -888,4 +888,17 @@ class Game extends Default_Controller
         }
     }
 
+    //弹窗
+    function Popup(){
+
+
+        $data['page'] = 'game/popup.html';
+        $data['menu'] = array('game','popup');
+        $this->load->view('template.html',$data);
+
+    }
+
+
+
+
 }

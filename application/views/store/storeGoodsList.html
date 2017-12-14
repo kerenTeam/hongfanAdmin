@@ -732,6 +732,7 @@
 
             var dataId=$(this).attr('data-id');
             var state = $(this).val();
+            console.log(dataId,state);
 
             if($(this).find('option:selected').val() !="0"){
 
@@ -756,7 +757,7 @@
                 success: function(data){
 
                     if(data==1){
-                        
+                        alert('操作成功！');
                     }else{
 
                         alert("操作失败！");

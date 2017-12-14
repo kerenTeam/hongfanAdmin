@@ -83,7 +83,17 @@ class Shop_model extends CI_Model
 
     }
 
+    //根据店铺名称返回店铺
+    function shopStore($storeName){
+        $query = $this->db->where('store_name',$storeName)->get($this->shop_store);
+        return $query->row_array();
+    }
 
+    //
+    function shopIdStore($storeName,$storeId){
+        $query = $this->db->where('store_name',$storeName)->where('store_id !=',$storeId)->get($this->shop_store);
+        return $query->row_array();
+    }
 
     //新增店铺
 
@@ -358,8 +368,6 @@ class Shop_model extends CI_Model
         return $this->db->where($where)->update($this->store_goods,$data);
 
     }
-
-
 
 
 

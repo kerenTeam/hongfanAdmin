@@ -83,10 +83,11 @@ class Login extends CI_Controller {
                    $_SESSION['users']  = $user;
 
                    $url = APPLOGIN."/api/useraccount/login";
-                   $arr = array('phone'=>USERPHONE,"password"=>USERPASSWORD);
+                   $arr = array('phone'=>USERPHONE,"password"=>USERPASSWORD,'clientID'=>'15828272321');
                    $token = curl_post_token($url,$arr);
+
                    $_SESSION['token'] = trim($token);
-           
+                  
                  
                    switch ($user['gid']){
 

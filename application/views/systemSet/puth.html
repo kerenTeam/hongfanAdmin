@@ -7,6 +7,8 @@
         display: inline-block!important;
     }
     input,textarea{border-radius: 3px!important}
+    .secondBG{padding:10px;display:none;background:#eee;margin: 10px 0}
+    .touchuan span{display: inline-block;width: 90px;text-align: right;}
 </style>
 <!-- 内容区域 -->
 
@@ -51,7 +53,6 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
 
-                <form class="am-form" onsubmit="return check(this)" action="" method="post">
 
                     <div class="widget am-cf">
 
@@ -62,27 +63,28 @@
                         </div>
 
                         <div class="widget-body">
+                        <form class="am-form"  action="<?php echo site_url('systemSet/SystemSet/puthMessage');?>" method="post">
 
                         <fieldset>
                             <div class="am-form-group">
                                 <span>目标平台：</span>
                                 <label class="am-radio-inline">
-                                    <input type="radio" value="" name="plateform" checked> 安卓
+                                    <input type="radio" value="1" name="plateform" checked> 安卓
                                 </label>
                                 <label class="am-radio-inline">
-                                    <input type="radio" name="plateform"> ios
+                                    <input type="radio" value="2" name="plateform"> ios
                                 </label>
                                
                             </div>
                             <div class="am-form-group">
                                 <span>*通知标题：</span>
-                                <input type="text" class="" maxlength="20" required placeholder="通知标题">
+                                <input type="text" class="" name='title' maxlength="20" required placeholder="通知标题">
                                 <small>最多20个字</small>
                             </div>
                         
                             <div class="am-form-group">
                                 <span>*通知内容：</span>
-                                <textarea name="" id="" cols="30" rows="2" maxlength="50" required></textarea>
+                                <textarea name="content" id="" cols="30" rows="2" maxlength="50" placeholder="通知内容" required></textarea>
                                 <small>最多50个字</small>
                             </div>
                             <div class="am-form-group">
@@ -96,38 +98,58 @@
                                 <label class="am-radio-inline">
                                     <input type="radio" value="3" name="laterOpt"> 下载应用
                                 </label>
-                                <div style="padding:10px;display:none" class="openUrl">
+                                 <label class="am-radio-inline">
+                                    <input type="radio" value="4" name="laterOpt"> 透传
+                                </label>
+
+                                <!-- 打开链接 -->
+                                <div class="secondBG openUrl">
                                     *链接地址:
-                                    <input type="url" class="" required placeholder="" style="width:220px;height:30px;display:inline;">
+                                    <input type="url" name="link" class="required" placeholder="" style="width:220px;height:30px;display:inline;">
                                     <small> (有效可访问链接以http://或https://开头)</small><br>
                                     <label class="am-checkbox-inline">
-                                        <input type="checkbox" name=""> 打开网页前需要用户确认
+                                        <input type="checkbox" name="confirm" value="1"> 打开网页前需要用户确认
                                     </label>
                                 </div>
-                                <div style="padding:10px;display:none" class="download">
+                                <!-- 下载应用 -->
+                                <div class="secondBG download">
                                     <div class="am-form-group">
                                         <span>*应用名称：</span>
-                                        <input type="text" class="" maxlength="40" required placeholder="请输入应用名称">
+                                        <input type="text" class="required" name="appname" maxlength="40" placeholder="请输入应用名称">
                                         <small>最多40个字</small>
                                     </div>
                                     <div class="am-form-group">
                                         <span>*弹框标题：</span>
-                                        <input type="text" class="" maxlength="20" required placeholder="请输入弹框标题">
+                                        <input type="text" class="required" name="popTitle" maxlength="20" placeholder="请输入弹框标题">
                                         <small>最多20个字</small>
                                     </div>
                                     <div class="am-form-group">
                                         <span>*弹框内容：</span>
-                                        <textarea name="" id="" maxlength="600" cols="30" rows="2" required></textarea>
+                                        <textarea name="popContent" class="required" id="" maxlength="600" cols="30" rows="2"></textarea>
                                         <small>最多600个字</small>
                                     </div>
                                     <div class="am-form-group">
                                         <span>*下载地址：</span>
-                                        <input type="url" class="" required placeholder="下载地址">
+                                        <input type="url" class="required" name="appurl" placeholder="下载地址">
                                         <small>有效可访问链接以http://或https://开头</small>
                                     </div>
                                 </div>
+                                <!-- 透传 -->
+                                <div class="secondBG touchuan">
+                                 
+                                    <div class="am-form-group">
+                                        <span>*链接标题：</span>
+                                        <input type="text" name="linkTitle" class="required" maxlength="800" placeholder="请输入消息内容">
+                                        <small>最多20个字</small>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <span>*跳转链接：</span>
+                                        <input type="text" class="required" name="linkUrl" placeholder="跳转链接">
+                                        <!-- <small>有效可访问链接以http://或https://开头</small> -->
+                                    </div>
+                                </div>
                             </div>
-                            <div class="am-form-group pushWay">
+                           <!--  <div class="am-form-group pushWay">
                                 <span> &nbsp;&nbsp;推送方式：</span>
                                 <label class="am-radio-inline">
                                     <input type="radio" value="1" name="pushWay" checked> 即时
@@ -135,16 +157,16 @@
                                 <label class="am-radio-inline">
                                     <input type="radio" value="2" name="pushWay"> 定时
                                 </label>
-                                <div class="pushTime" style="display:none;padding:10px">
-                                    <span> 时间选择:</span>
+                                <div class="pushTime secondBG">
+                                    <span>时间选择:</span>
                                     <div class="iDate full" style="width:208px">
                                         <input type="text" style="width:inherit!important">
                                         <button type="button" class="addOn"></button>
                                     </div>
                                    
                                 </div>
-                            </div>
-                            <div class="am-form-group pushWay">
+                            </div> -->
+                           <!--  <div class="am-form-group pushWay">
                                 <span>&nbsp;&nbsp;定时展示：</span>
                                 <label class="am-radio-inline">
                                     <input type="radio" value="1" name="ontimeShow" checked> 即时
@@ -152,7 +174,7 @@
                                 <label class="am-radio-inline">
                                     <input type="radio" value="2" name="ontimeShow"> 定时
                                 </label>
-                                <div class="ontimeShow" style="display:none;padding:10px">
+                                <div class="ontimeShow secondBG">
                                     <span>日期选择:</span>
                                     <div class="iDate date" style="width:208px">
                                         <input type="text" id="dateshow" style="width:inherit!important">
@@ -163,8 +185,8 @@
                                     ～
                                     <input type="text" class="time-picker" style="width:80px!important" name="2" readonly>
                                 </div>
-                            </div>
-                            <div class="am-form-group">
+                            </div> -->
+                          <!--   <div class="am-form-group">
                                 <span>消息有效期：</span>
                                 <label class="am-radio-inline">
                                     <input type="radio" value="1" name="validTime" checked> 是
@@ -172,23 +194,23 @@
                                 <label class="am-radio-inline">
                                     <input type="radio" value="2" name="validTime"> 否
                                 </label>
-                                <div style="padding:10px" class="validTime">
+                                <div class="validTime secondBG">
                                     *有效时长：<input type="number" class="" min=0 max=72 required placeholder="" style="width:50px;height:30px;display:inline;">
                                     <small> (请输入0- 72 小时内的正整数，该时间段内cid在线过的用户均可收到通知)</small>
                                 </div>
                             
-                            </div>
+                            </div> -->
                             <p>
                                 <button type="submit" class="am-btn am-btn-default">发送</button>
                             </p>
                         </fieldset>
-
+                        </form>
                         </div>
  
 
                     </div>
 
-                </form>
+                
 
             </div>
 
@@ -259,26 +281,37 @@
             $('.validTime').hide()
         }
     })
-    // $("input[name='laterOpt']").change(function () {
-    //     var delivery = $("input[name='laterOpt']:checked").val();
+    $("input[name='laterOpt']").change(function () {
+        var delivery = $("input[name='laterOpt']:checked").val();
 
-    //     if (delivery == 1) { 
-    //         $('.download,.openUrl').hide()
-    //     } else if(delivery == 2){
-    //         $('.download').hide();
-    //         $('.openUrl').show()
-    //     }else{
-    //         $('.download').show();
-    //         $('.openUrl').hide()
-    //     }
-    // })
+        if (delivery == 1) { 
+            $('.download,.openUrl,.touchuan').hide()
+            $('.download,.openUrl,.touchuan').find('.required').removeAttr('required') 
+        } else if(delivery == 2){
+            $('.download,.touchuan').hide();
+            $('.openUrl').show();
+            $('.openUrl').find('.required').attr('required',true)
+            $('.download,.touchuan').find('.required').removeAttr('required') 
+        }else if(delivery == 3){
+            $('.download').show();
+            $('.openUrl,.touchuan').hide();
+            $('.download').find('.required').attr('required',true) 
+            $('.openUrl,.touchuan').find('.required').removeAttr('required') 
+        }else{
+            $('.touchuan').show()
+            $('.download,.openUrl').hide();
+            $('.touchuan').find('.required').attr('required',true) 
+            $('.openUrl,.download').find('.required').removeAttr('required') 
 
-    function check() {
-        alert(2)
-        if($("input[name='pushWay']:checked").val()==2){
-            alert(1)
         }
-    }
+    })
+
+    // function check() {
+    //     alert(2)
+    //     if($("input[name='pushWay']:checked").val()==2){
+    //         alert(1)
+    //     }
+    // }
 </script>
 
 </body>

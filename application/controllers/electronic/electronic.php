@@ -51,6 +51,7 @@ class Electronic extends Default_Controller {
         $this->load->model('Activity_model');
 
         $this->load->model('Shop_model');
+        $this->load->model('Public_model');
 
     }
 
@@ -1560,6 +1561,43 @@ class Electronic extends Default_Controller {
             $this->laod->view('404.html');
         }
     }
+
+    //领取总纪录
+    function couponRecord(){
+        //获取所有优惠劵
+        $data['coupon'] = $this->Activity_model->get_coupons();
+        // var_dump($coupon);
+
+        $data['page']= 'electronic/couponRecord.html';
+
+        $data['menu'] = array('moll','electronicList');
+
+        $this->load->view('template.html',$data);      
+    }
+
+    //返回优惠劵领取总纪录
+    function retCouponRecord(){
+        if($_POST){
+            $start = $this->input->post('start');
+            if($start != '0'){
+                $_SESSION['couRec'] = $start;
+            }
+            $size = $this->input->post('count');
+            $sql = "select user_coupon_id from hf_user_coupon";
+            $query = $this->db->query($sql);
+            $list = $query->result_array();
+
+            $listpage = $this->Activity_model->selCouponReceive($size,$start);
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+
+        }
+    }
+
 
 
 

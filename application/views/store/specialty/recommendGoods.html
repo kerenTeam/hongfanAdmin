@@ -543,7 +543,7 @@
 
         $('.sureSave').click(function(){
 
-            var dataId=$(this).attr('data-id'), sort = $('.sort'+ dataId).val();
+            var dataId=$(this).attr('data-id'), sort = $('.sort'+ dataId).val(),endtime = $('.endtime'+ dataId).val();
 
             $.ajax({
 
@@ -551,7 +551,7 @@
 
                 url:'<?php echo site_url('/store/Specialty/edit_goods_stor');?>',
 
-                data: 'goods_id='+ dataId+'&sort='+ sort,
+                data: 'goods_id='+ dataId+'&sort='+ sort + '&countDown='+endtime,
 
                 success: function(data){
 
@@ -873,12 +873,31 @@ $(document).ready(function(){
 
                         </div>
 
+
                         <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
 
                         <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
 
                     </div>
+                    <?php if($type == '1'):?>
+                        <div class="am-form-group am-cf">
 
+                            <label class="am-u-sm-3 am-form-label">结束时间 ：</label>
+
+                            <div class="am-u-sm-7">
+
+                                <input type="text" name="name" class="endtime<%= goods_id %>" required value="<%= countDown %>" />
+
+                            </div>
+
+
+                            <small class="am-u-sm-1 am-u-end red redtips1" style="display: none;"><i class="am-icon-close"></i></small>
+
+                            <small class="am-u-sm-1 am-u-end green blacktips1" style="display: none;"><i class="am-icon-check"></i></small>
+
+                        </div>
+                        
+                    <?php endif;?>
                 </form>      
 
             </div>

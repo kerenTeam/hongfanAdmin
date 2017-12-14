@@ -96,3 +96,17 @@ defined('QINIUUPLOAD')           OR define('QINIUUPLOAD', 'http://abcd.zlzmm.com
 defined('USERPHONE')           OR define('USERPHONE', '18180924082'); //七牛上次
 defined('USERPASSWORD')           OR define('USERPASSWORD', '12345a'); //七牛上次
 defined('BUCKET')           OR define('BUCKET', 'ebus'); //七牛上次
+
+
+
+//个推消息推送
+defined('APPID')           OR define('APPID', 'Npuq5Gtr4b7EFd4urKowg1'); //七牛上次
+defined('AppSecret')           OR define('AppSecret', 'pyhCCdAhji63WvrDZdqWz5'); //七牛上次
+defined('APPKEY')           OR define('APPKEY', 'O8dShsMUiK7MZTyfPXDUy2'); //七牛上次
+defined('MASTERSECRET')           OR define('MASTERSECRET', 'ekPvNh6zLk6sn7BoR7sEC8'); //七牛上次
+defined('HOST')           OR define('HOST', 'http://sdk.open.api.igexin.com/apiex.htm'); //七牛上次
+
+
+
+
+

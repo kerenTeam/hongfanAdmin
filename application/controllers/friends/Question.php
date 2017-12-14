@@ -53,7 +53,45 @@ class Question extends Default_Controller
             $listpage = $this->Public_model->select_question_list($size,$start);
 
             if(!empty($listpage)){
-                echo json_encode(['total'=>count($list),'subjects'=>$listpage,'pageNum'=>$_SESSION['pageNum']]);
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+
+        }
+    }
+
+    //根据搜索返回问题
+    function searchQuestion(){
+        if($_POST){
+            $faqsType = $this->input->post('faqsType');
+            $questionStates = $this->input->post('questionStates');
+            $sear = $this->input->post('sear');
+            $begin_time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+
+            if(!empty($begin_time)){
+                $t = $begin_time .' 00:00:00';
+                $e = $end_time.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+
+            $page = $this->input->post('start');
+            if($page != '0'){
+                $_SESSION['pageNum'] = $page;
+            }
+            // var_dump($_SESSION['pageNum']);
+            $size = $this->input->post('count');
+
+            $list = searchQuestion('2',$faqsType,$questionStates,$sear,$t,$e);
+            $listpage = searchQuestion_page('2',$faqsType,$questionStates,$sear,$t,$e,$page,$size);
+            // $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
+            // $listpage = $this->Public_model->select_question_list($size,$page);
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
             }else{
                 echo "2";
             }

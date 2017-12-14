@@ -382,11 +382,17 @@ class System_model extends CI_Model
 
     //邀请码
     function select_invitation(){
-        $query = $this->db->order_by('create_time','desc')->get('hf_system_invitation');
+
+        $query = $this->db->order_by('createTime','desc')->get('hf_user_invite');
         return $query->result_array();
     }
      function select_invitation_page($size,$page){
-        $query = $this->db->order_by('create_time','desc')->limit($size,$page)->get('hf_system_invitation');
+        $this->db->select('a.*, b.username,b.nickname');
+
+        $this->db->from('hf_user_invite a');
+
+        $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+        $query = $this->db->order_by('createTime','desc')->limit($size,$page)->get();
         return $query->result_array();
     }
 
@@ -399,6 +405,12 @@ class System_model extends CI_Model
     }
     function delete($table,$id,$where){
         return $this->db->where($id,$where)->delete($table);
+    }
+
+    
+    //新增推送
+    function insertPush($data){
+        return $this->db->insert('hf_system_push',$data);
     }
 
 

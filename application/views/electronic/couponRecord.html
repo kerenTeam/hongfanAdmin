@@ -1,0 +1,617 @@
+ 
+
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+td.am-text-middle img{
+
+    width:80px;
+
+}
+
+.am-u-sm6{
+
+    width:50px !important;
+
+    margin:0;
+
+}
+
+.am-form-group div{
+
+    line-height: 37px;
+
+}
+
+
+
+.stable{
+
+    display: inline-block !important;
+
+    width: 45% !important;
+
+}
+
+.linkWord{
+
+    width: 10% !important;
+
+}
+
+.detailId{
+
+    border: 1px solid #F37B1D !important;
+
+    color: #F37B1D !important;
+
+}
+
+.detailId:hover {
+
+    background: #F37B1D !important; 
+
+    color: #fff !important;
+
+}
+
+.imgBox {
+
+    width: 100px;
+
+}
+
+.signUpMess{
+
+    border: 1px solid #F37B1D !important;
+
+    color: #F37B1D !important;
+
+}
+
+.signUpMess:hover{
+
+    background: #F37B1D !important; 
+
+    color: #fff !important;
+
+}
+
+.tieziList {
+
+    border: 1px solid #e0690c !important;
+
+    padding: 5px 6px !important;
+
+    color: #e0690c !important;
+
+}
+
+
+
+.isRecommand {
+
+    width: 120px;
+
+    background: #15b5ac;
+
+    border-radius: 5px;
+
+    border: 1px solid #15b5ac;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.isRecommand option[selected="selected"] {
+
+    background: #15b5ac;
+
+    border:1px solid #15b5ac;
+
+}
+
+</style>
+
+
+<style>  
+    *{  
+        padding: 0px;  
+        margin: 0px;  
+    }  
+    *{ margin:0; padding:0; list-style:none;}  
+    a{ text-decoration:none;}  
+    a:hover{ text-decoration:none;}  
+    .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;}  
+    .tcdPageCode a{display: inline-block;color: #428bca;display: inline-block;height: 25px;  
+    line-height: 25px;    padding: 0 10px;border: 1px solid #ddd;    margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
+    .tcdPageCode a:hover{text-decoration: none;border: 1px solid #428bca;}  
+    .tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
+    margin: 0 2px;color: #fff;background-color: #428bca;    border: 1px solid #428bca;border-radius: 4px;vertical-align: middle;}  
+    .tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
+    margin: 0 2px;    color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}  
+    ul{  
+        list-style: none;  
+    }  
+    .wrap >ul > li{  
+        width: 250px;  
+        height: 350px;  
+        margin: 20px;  
+        /*border: 1px green solid;*/  
+        float: left;  
+        margin-bottom: 40px;  
+    }  
+    .wrap >ul > li>img{  
+        width: 100%;  
+        height: 100%;  
+    }  
+    .wrap >ul > li>p{  
+        text-align: center;  
+        line-height: 30px;  
+        height: 30px;  
+    }  
+    .wrap{  
+        margin: 100px auto;  
+        border: 1px solid red;  
+        height: 1800px;  
+        width: 1460px;  
+    }  
+</style>  
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 电子券管理 
+
+            <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
+
+            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">领取列表</a></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">领取信息查询</div>
+
+                </div>
+
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+
+                    
+                      <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                             <label for="source_state" class="am-u-sm-3 am-form-label">支付订单号：</label>
+
+                                <div class="am-u-sm-9">
+                                   <input type="text" name="orderUUID" >
+                                </div>
+
+                            </div>  
+
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
+
+                        <button type="button" id="searchOrder" class="am-btn am-btn-secondary am-btn-xs"><i class="am-icon-search"></i> 查询</button>
+
+                    </div>
+
+                </form>
+
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">电子券 领取列表</div>
+
+            
+                </div>
+                <div class="widget-body  am-fr">
+                    <div class="am-btn-toolbar">
+                        <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+
+                    </div>
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">导出领取记录</div>
+                            <div class="am-modal-bd">
+                                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/dow_receive_coupom');?>" method="post">
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">优惠劵：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="id" name="id" data-am-selected="{searchBox: 1}">
+                                                <?php foreach($coupon as $val):?>
+                                                    <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'.$val['name'];?></option>
+                                                <?php endforeach;?>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">状态：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="mollseller" name="state" >
+                                                <option value="">导出所有</option>
+                                               	<option value="1">未使用</option>
+                                                <option value="0">已使用</option>
+                                               	<option value="2">已作废</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
+                                </form>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget-body  am-fr">
+
+                    <div class="am-u-sm-12"> 
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号 </th>
+                                    <th>优惠劵名称 </th>
+                                    <th>领取用户 </th>
+                                    <th>领取时间 </th>
+                                    <th>购买订单号 </th>
+                                    <th>状态 </th>
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="infolistDiv">
+
+                              
+
+                            </tbody>
+                            
+
+                        </table>
+                         <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr>
+                                    <td><%= list[i].user_coupon_id%></td>
+                                    <td><%= list[i].title%>-<%= list[i].name%></td>
+                                    <td><%= list[i].nickname%></td>
+                                    <td><%= list[i].standardTime%></td>
+                                    <td><%= list[i].orderUUID%></td>
+                                    <td><% if(list[i].user_coupon_state == '1'){%>未使用<%}else if(list[i].user_coupon_state == '2'){%>已作废<%}else{%>已使用<%}%></td>
+                                    <td>
+                                        
+                                            <div class="tpl-table-black-operation">
+                                                <% if(list[i].user_coupon_state == '2'){%>
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="notused">
+                                                    <i class="am-icon-pencil"></i> 恢复成未使用
+                                                </a>  
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="used">
+                                                    <i class="am-icon-pencil"></i> 恢复成已使用
+                                                </a>
+                                                <%}else{%>
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="abolish">
+                                                    <i class="am-icon-pencil"></i> 作废
+                                                </a>
+                                                <%}%>
+
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="tpl-table-black-operation-del tpl-del">
+
+                                                    <i class="am-icon-trash"></i> 删除
+
+                                                </a>
+
+                                            </div>
+                                    </td>
+                                </tr>
+                                            
+                                <%}%> 
+                        </script>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div class="tcdPageCode">  
+                        </div> 
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<!--批量删除的弹窗-->
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="deleteAll">
+
+    <div class="am-modal-dialog">
+
+        <div class="am-modal-hd">删除提示</div>
+
+        <div class="am-modal-bd">
+
+            <p class="black">你，确定删除所有选中的记录吗？</p>
+
+        </div>
+
+        <div class="am-modal-footer">
+
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+            <span class="am-modal-btn deleteAll"  data-am-modal-confirm>确定</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+<script src="assets/js/artTemplate-native.js"></script>
+
+<script src="assets/laypage/laypage.js"></script>
+
+<script type="text/javascript">
+
+$(function() {
+
+
+//其他操作
+
+function otherFunction() {
+
+    for(var i=0; i<$('.tpl-del').length; i++) {
+
+        var dataId = $('.tpl-del').eq(i).attr('data-id');
+
+        $('.tpl-del').eq(i).attr("data-am-modal","{target: '#de"+ dataId +"'}");
+
+    }
+
+
+    $('.abolish').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='2';
+        console.log(dataId);
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });    
+    $('.used').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='3';
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });    
+    $('.notused').click(function(){//编辑商品信息
+
+        var dataId=$(this).attr('data-id');
+        var state='1';
+
+        $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
+
+    });
+
+
+    //删除图片
+
+    $(".deleteImg").click(function(){
+
+        $(this).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+        $(this).siblings('.wx_type_img').find('input').val("");
+
+        $(this).siblings('.wx_type_img').find('input').files="";
+
+    });
+
+    //删除核销
+
+    $('.sureDelete').click(function () {
+
+        var dataId = $(this).attr("data-id");
+
+        $.ajax({ 
+
+            type:'post',
+
+            url: "<?php echo site_url('/electronic/Electronic/del_afterSales');?>",
+
+            data: 'id='+ dataId,
+
+            success: function(result){    
+
+                console.log(result);     
+
+                // var res = eval(result);
+
+                if(result == 1){
+
+                    alert("删除成功！");
+
+                    $('#de'+dataId).fadeOut();
+
+                    $('.am-dimmer').removeClass('am-active');
+
+
+                }else{
+
+                   alert("网络状况不佳，请稍后重试！");
+
+                }
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("网络状况不佳，请稍后重试！");
+
+            }
+
+        });
+
+    });    
+
+}
+
+
+
+</script>
+
+
+<script src="assets/js/jquery.page.js"></script>
+<script>  
+    $(function () {  
+       //初始化第一页数据；  
+        var urlApi = '<?php echo site_url("/electronic/Electronic/retCouponRecord");?>' ;
+
+        var page =  "<?php if(isset($_SESSION['couRec'])){echo $_SESSION['couRec'];}else{echo '0';}?>";
+        // console.log(page);
+        $.ajax({  
+            url:urlApi,  
+            type:'POST',  
+            // dataType:'jsonp',  
+            data:{  
+                //从第几条开始请求；  
+                "start" : page,  
+                //请求多少条数据  
+                "count" : 10  
+            },  
+            success:function(data){ 
+                // console.log(data);
+            //total总条数属性，计算总页数；  
+                var res = JSON.parse(data)  
+                var total = parseInt(res.total/10);  
+                var result  = res.subjects;  
+                var dataobj = {};
+               
+                                  
+                dataobj.list = result;
+                var html=template("infolist",dataobj);
+                document.getElementById("infolistDiv").innerHTML = html;
+                if(page == 0){
+                    num = 1;
+                }else{
+                     num = (parseInt(page) + 10)/10;
+                }
+                // console.log(num);
+                //分页插件，  
+                $(".tcdPageCode").createPage({  
+                    //pageCount：总页数  
+                    pageCount:total,  
+                    //current：当前页  
+                    current:num,  
+                    backFn:function(pageIndex){  
+                    //单击回调方法，pageIndex是当前页码  
+                        $(".movieList").empty();  
+                      
+                        var start = 10*(pageIndex-1); 
+                        $.ajax({  
+                            url:urlApi,  
+                            type:'POST',  
+                            // dataType:'jsonp',  
+                            data:{  
+                                "start" : start,  
+                                "count" : 10,  
+                            },  
+                            success:function(data){  
+                                var res = JSON.parse(data)  
+
+                                var result  = res.subjects;  
+                                console.log(res);
+                                var dataobj = {};
+                                  // 头像
+                               
+                                dataobj.list = result;
+                                var html=template("infolist",dataobj);
+                                document.getElementById("infolistDiv").innerHTML = html;
+                                
+                            }  
+                        })  
+                    }  
+                }); 
+                otherFunction(); 
+            }  
+        })  
+    })  
+</script> 
+
+

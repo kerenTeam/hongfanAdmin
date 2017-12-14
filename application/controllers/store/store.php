@@ -1196,11 +1196,9 @@ class Store extends Default_Controller {
 
         if($_POST){
 
-            $type =  $this->input->post('default');
+            // $type =  $this->input->post('default');
 
             $order = $this->MallShop_model->get_order_list();
-
-          
 
             if(empty($order)){
 
@@ -2159,6 +2157,7 @@ class Store extends Default_Controller {
             $list = store_order_list($storeid,$start_time,$end_time,$type);
 
 
+
             $this->load->library('excel');
 
             //activate worksheet number 1
@@ -2340,11 +2339,31 @@ class Store extends Default_Controller {
                         $coupon = json_decode($book['PriceCalculation'],true);
 
                         $zong = round($goods['total_goods_prices'],2);
-                        if(isset($coupon['Params']['couponData']['coupon_amount'])){
-                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            if(isset($user['boxa'])){
+                                $lu = $user['boxa']['value'];
+                            }else{
+                                $lu = '1';
+                            }
+                         if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                           
+                            if($coupon['Params']['couponData']['typeid'] == '3'){
+                                $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
+               
+                                if(isset($p['1'])){
+                                    $coupon_amount = round($p['1'] * $lu,'2');
+                                } 
+                            }elseif($coupon['Params']['couponData']['typeid'] == '2'){
+                                if(isset($p['1'])){
+                                    $coupon_amount = $zong * $p['1'];
+                                }
+                            }elseif($coupon['Params']['couponData']['typeid'] == '1'){
+                                $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            }else{
+                                $coupon_amount = '0';
+                            }
                         }else{
                             $coupon_amount = '0';
-                        }   
+                        }    
                         if(isset($coupon['nowIntergal']['storenowIntergal'])){
 
                         $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
@@ -2377,7 +2396,7 @@ class Store extends Default_Controller {
                     }
 
             }
-
+            // exit;
 
 
             //日志

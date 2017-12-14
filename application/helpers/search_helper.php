@@ -34,6 +34,303 @@ function selectMember_page($gender,$t,$e,$sear,$page,$size){
 
 }
 
+//搜索问答问题
+function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
+        $CI = &get_instance();
+        $res= '';
+
+        if(!empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        //2
+        }else if(!empty($faqsType) && !empty($questionStates) && empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && !empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+
+        //3
+        }else if(!empty($faqsType) && !empty($questionStates) && !empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && !empty($questionStates) && empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && !empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        //4
+        }else if(!empty($faqsType) && !empty($questionStates) && !empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
+
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->order_by('a.create_time','desc')->get();
+            $res = $query->result_array();
+        }
+        return $res;
+}
+function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page,$size){
+        $CI = &get_instance();
+        $res= '';
+
+        if(!empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        //2
+        }else if(!empty($faqsType) && !empty($questionStates) && empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && !empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+
+        //3
+        }else if(!empty($faqsType) && !empty($questionStates) && !empty($sear) && empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && !empty($questionStates) && empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && !empty($questionStates) && !empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        //4
+        }else if(!empty($faqsType) && !empty($questionStates) && !empty($sear) && !empty($t)){
+            if($questionStates == '2'){
+                $questionStates = '0';
+            }
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->like('a.content',$sear,'borh')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }else if(empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
+
+            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->from('hf_faqs_group as c');
+            $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
+            $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
+            $query = $CI->db->where('typeId','2')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $res = $query->result_array();
+        }
+        return $res;
+}
 
 
 

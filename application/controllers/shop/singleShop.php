@@ -684,13 +684,12 @@ class SingleShop extends CI_Controller {
             }
 
  
-            $header = array("token:".$_SESSION['token'],'city:'.'1');     
+            $header = array("token:".$_SESSION['token'],'city:'.'1');   
+
             for ($i=1; $i < 4; $i++) {
 
                 if(!empty($_FILES['img'.$i]['name'])){
                     
-
-
                     $tmpfile = new CURLFile(realpath($_FILES['img'.$i]['tmp_name']));
                 
                     $pics = array(
@@ -709,6 +708,8 @@ class SingleShop extends CI_Controller {
                         }
                         $pic[]['bannerPic'] =$img[0]['picImg'];
                         // $data['logo'] = 
+                    }else{
+                        echo "<script>alert('图片上传失败！');window.location.href='".site_url('/shop/SingleShop/goodsDetail/'.$data['goods_id'])."'</script>";exit;
                     }
                 }else{
 
@@ -727,7 +728,6 @@ class SingleShop extends CI_Controller {
                 unset($data['img'.$i]);
 
              }
-
             if(empty(json_decode($data['reduction_rule']))){
 
                 $data['reduction_rule'] = NULL;

@@ -210,8 +210,20 @@
 
                         <div class="am-u-sm-8 am-u-end">
 
-                            <input type="radio"  name="gid"  value="2" <?php if($user['gid'] == '2'){echo "checked";}?>/>开启
-                            <input type="radio"  name="gid"  value="5" <?php if($user['gid'] == '5'){echo "checked";}?> />关闭
+                            <input type="radio"  name="canCheckUp"  value="1" <?php if($busin['canCheckUp'] == '1'){echo "checked";}?>/>开启
+                            <input type="radio"  name="canCheckUp"  value="0" <?php if($busin['canCheckUp'] == '0'){echo "checked";}?> />关闭
+
+                        </div>
+
+                    </div>    
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                    <!-- 是否可查看核销记录 1可以 0不可以 -->
+                        <label for="en_name" class="am-u-sm-3 am-form-label">查看核销纪录 ：</label>
+
+                        <div class="am-u-sm-8 am-u-end">
+
+                            <input type="radio"  name="canReviewCheckUp"  value="1" <?php if($busin['canReviewCheckUp'] == '1'){echo "checked";}?>/>开启
+                            <input type="radio"  name="canReviewCheckUp"  value="0" <?php if($busin['canReviewCheckUp'] == '0'){echo "checked";}?> />关闭
 
                         </div>
 

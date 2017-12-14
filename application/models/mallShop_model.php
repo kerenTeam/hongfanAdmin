@@ -324,10 +324,10 @@ class MallShop_model extends CI_Model
     //返回所有订单
     function get_order_list(){
         $this->db->select('a.*,b.store_name,c.nickname');
-        $this->db->from('hf_mall_order as a');
-        $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
+        $this->db->from('hf_shop_store as b');
+        $this->db->join('hf_mall_order as a','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('a.admin_delOrder','1')->where('a.order_type !=','0')->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('a.admin_delOrder','1')->where('a.order_type !=','0')->order_by('a.create_time','desc')->limit(100)->get();
         return $query->result_array();
     }
 
@@ -494,7 +494,7 @@ class MallShop_model extends CI_Model
         $this->db->join('hf_shop_store as b','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
         $this->db->join('hf_mall_order_repaydata as d','a.order_UUID = d.repay_UUID','left');
-        $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->get();
+        $query = $this->db->where('order_status !=','1')->order_by('a.create_time','desc')->limit('200','0')->get();
         return $query->result_array();
     }
 
