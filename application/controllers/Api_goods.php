@@ -41,7 +41,7 @@ class Api_goods extends CI_Controller
         $storeid = $this->input->post('storeid');
         $token = $_SESSION['token'];
       //  var_dump($token);
-        $header = array("token:".$token,'city:'.'1');     
+        $header = array("token:".$token,'city:'.'1','clientID:234232434');     
         
         $data = array(
             'goods_id'=>$goodsid,

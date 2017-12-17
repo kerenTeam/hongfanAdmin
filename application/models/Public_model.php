@@ -167,6 +167,20 @@ class Public_model extends CI_Model
 		return $query->row_array();
 	}
 
+	//帆就今日数据
+	function dayList($table,$time){
+		$sql = 'select id from '.$table.' where to_days('.$time.') = to_days(now())';
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	//返回昨日数据
+	function toDayList($table,$time){
+		$sql = 'SELECT id FROM '.$table.' WHERE TO_DAYS( NOW( ) ) - TO_DAYS('.$time.') <= 1';
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
 
 }
 

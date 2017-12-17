@@ -379,17 +379,20 @@ class Store extends Default_Controller {
 
             $diff = $_POST['diff'];
 
-
+            $start = $this->input->post('start');
+            $page = $this->input->post('count');
+            if($start != '0'){
+                $_SESSION['goodNum'] = $start;
+            }
 
             $list = search_goods($diff,$cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory);
+            $listpage = search_goods_page($diff,$cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory,$page,$start);
 
             if(empty($list)){
-
                 echo "2";
-
             }else{
 
-                echo json_encode($list);
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
 
             }
 

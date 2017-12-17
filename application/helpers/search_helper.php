@@ -40,7 +40,7 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
         $res= '';
 
         if(!empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -50,21 +50,22 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            echo "2";
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -75,21 +76,21 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -99,7 +100,7 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -109,14 +110,14 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -128,7 +129,7 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -138,14 +139,14 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -155,7 +156,7 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -166,7 +167,7 @@ function searchQuestion($typeId,$faqsType,$questionStates,$sear,$t,$e){
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -188,7 +189,8 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
         $res= '';
 
         if(!empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -198,21 +200,21 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -223,21 +225,21 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.faqsType',$faqsType)->where('a.questionStates',$questionStates)->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->like('a.content',$sear,'both')->where('a.faqsType',$faqsType)->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -247,7 +249,7 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -257,14 +259,14 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -276,7 +278,7 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -286,14 +288,14 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
             $query = $CI->db->where('typeId','2')->where('a.questionStates',$questionStates)->where('a.faqsType',$faqsType)->where('a.create_time >=',$t)->where('a.create_time <=',$e)->order_by('a.create_time','desc')->limit($page,$size)->get();
             $res = $query->result_array();
         }else if(!empty($faqsType) && empty($questionStates) && !empty($sear) && !empty($t)){
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -303,7 +305,7 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -314,7 +316,7 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             if($questionStates == '2'){
                 $questionStates = '0';
             }
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -322,7 +324,7 @@ function searchQuestion_page($typeId,$faqsType,$questionStates,$sear,$t,$e,$page
             $res = $query->result_array();
         }else if(empty($faqsType) && empty($questionStates) && empty($sear) && empty($t)){
 
-            $CI->db->select('a.*,b.nickname,c.name,c.id');
+            $CI->db->select('a.*,b.nickname,c.name');
             $CI->db->from('hf_faqs_group as c');
             $CI->db->join('hf_friends_news as a', 'a.faqsType = c.id','left');
             $CI->db->join('hf_user_member as b', 'b.user_id = a.userid','left');
@@ -1387,7 +1389,557 @@ function search_goods($diff,$cate,$state,$sear,$startPrice,$endPrice,$startReper
             return $res;
 
 }
+function search_goods_page($diff,$cate,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory,$page,$size){
 
+            $CI = &get_instance();
+
+            $res= '';
+
+            if(!empty($cate) && empty($startPrice) && empty($startRepertory) && $state == '' && empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && empty($startRepertory) && $state == '' && empty($sear)){
+
+                 $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(empty($cate) && empty($startPrice) && !empty($startRepertory) && $state == '' && empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && empty($startPrice) && empty($startRepertory) && $state != '' && empty($sear)){
+
+                if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where("goods_state",$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(empty($cate) && empty($startPrice) && empty($startRepertory) && $state == '' && !empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->like("title",$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && $state == '' && empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && empty($startPrice) && !empty($startRepertory) && $state == '' && empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('categoryid',$cate)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && empty($startPrice) && empty($startRepertory) && $state != '' && empty($sear)){
+
+                if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && empty($startPrice) && empty($startRepertory) && $state == '' && !empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state == '' && empty($sear)){
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && empty($startRepertory) && $state != '' && empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                } 
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && empty($startRepertory) && $state == '' && !empty($sear)){
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && empty($startPrice) && !empty($startRepertory) && $state != '' && empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && empty($startPrice) && !empty($startRepertory) && $state == '' && !empty($sear)){
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else
+
+            if(empty($cate) && empty($startPrice) && empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('goods_state',$state)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state == '' && empty($sear)){
+
+
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && $state != '' && empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && $state == '' && !empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state != '' && empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+                
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state == '' && !empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                  $query = $CI->db->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(empty($cate) && empty($startPrice) && !empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state != '' && empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state == '' && !empty($sear)){
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->where('goods_state',$state)->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else 
+
+            if(empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && empty($startPrice) && !empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('amount >=',$startRepertory)->where('amount <=',$endRepertory)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                $res = $query->result_array();
+
+            }else
+
+            if(!empty($cate) && !empty($startPrice) && empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                 $res = $query->result_array();
+
+               
+
+            }else if(!empty($cate) && !empty($startPrice) && !empty($startRepertory) && $state != '' && !empty($sear)){
+
+                 if($state == ''){
+
+                    $state = '0';
+
+                }
+
+                $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->where('categoryid',$cate)->where('goods_state',$state)->where('price >=',$startPrice)->where('price <=',$endPrice)->where('price >=',$startPrice)->where('price <=',$endPrice)->like('title',$sear,'both')->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                  $res = $query->result_array();
+
+            }else if(empty($cate) && empty($startPrice) && empty($startRepertory) && $state == '' && empty($sear)){
+
+
+
+                 $CI->db->select('a.*,b.store_name,c.catname');
+
+                $CI->db->from('hf_mall_goods as a');
+
+                $CI->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
+
+                $CI->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
+
+                 $query = $CI->db->order_by('create_time','desc')->order_by('create_time','desc')->limit($page,$size)->get();
+
+                  $res = $query->result_array();
+
+            }
+
+            return $res;
+
+}
 
 
 //管理员订单搜索

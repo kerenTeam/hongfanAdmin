@@ -32,34 +32,63 @@ class Question extends Default_Controller
         //返回所有问题分类
         $cates = $this->Public_model->select($this->cates,'');
 
-        $data = array('cates'=>$cates);
+        $time = date('Y-m-d H:i:s',time());
+        //获取今日问题
+        $dayQ = $this->Public_model->dayList($this->dynamic,'create_time');
+        $a = '0';
+
+        foreach ($dayQ as $key => $value) {
+            $query1 = $this->db->where('newsId',$value['id'])->get('hf_friends_news_commont');
+            // // $query = $this->db->query();
+            $res1 = $query1->result_array();
+            $a += count($res1);
+            // var_dump($a);
+        }
+        $data['dayQ'] = count($dayQ);
+        $data['dayC'] = $a;
+
+
+        //获取昨日问题
+        $todayQ = $this->Public_model->toDayList($this->dynamic,'create_time');
+
+        $b = '0';
+        foreach ($todayQ as $k => $v) {
+            $query2 = $this->db->where('newsId',$v['id'])->get('hf_friends_news_commont');
+            $res2 = $query2->result_array();
+            $b += count($res2);
+            // var_dump($a);
+        }
+        $data['todayQ'] = count($todayQ);
+        $data['todayC'] = $b;
+
+        $data['cates'] =$cates;
 
         $data['page'] = $this->view_question_list;
         $data['menu'] = array('question','question_list');
         $this->load->view('template.html',$data);
 			
 	}
-    //返回问答
-    function retQuestionList(){
-        if($_POST){
-            $start = $this->input->post('start');
-            if($start != '0'){
-                $_SESSION['pageNum'] = $start;
-            }
-            // var_dump($_SESSION['pageNum']);
-            $size = $this->input->post('count');
-            $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
+    // //返回问答
+    // function retQuestionList(){
+    //     if($_POST){
+    //         $start = $this->input->post('start');
+    //         if($start != '0'){
+    //             $_SESSION['pageNum'] = $start;
+    //         }
+    //         // var_dump($_SESSION['pageNum']);
+    //         $size = $this->input->post('count');
+    //         $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
 
-            $listpage = $this->Public_model->select_question_list($size,$start);
+    //         $listpage = $this->Public_model->select_question_list($size,$start);
 
-            if(!empty($listpage)){
-                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
-            }else{
-                echo "2";
-            }
+    //         if(!empty($listpage)){
+    //             echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+    //         }else{
+    //             echo "2";
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
     //根据搜索返回问题
     function searchQuestion(){
@@ -77,7 +106,7 @@ class Question extends Default_Controller
                 $t = '';
                 $e = '';
             }
-
+            
             $page = $this->input->post('start');
             if($page != '0'){
                 $_SESSION['pageNum'] = $page;
@@ -86,9 +115,7 @@ class Question extends Default_Controller
             $size = $this->input->post('count');
 
             $list = searchQuestion('2',$faqsType,$questionStates,$sear,$t,$e);
-            $listpage = searchQuestion_page('2',$faqsType,$questionStates,$sear,$t,$e,$page,$size);
-            // $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
-            // $listpage = $this->Public_model->select_question_list($size,$page);
+            $listpage = searchQuestion_page('2',$faqsType,$questionStates,$sear,$t,$e,$size,$page);
 
             if(!empty($listpage)){
                 echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
@@ -797,6 +824,144 @@ class Question extends Default_Controller
             }
 		}
 	}
+
+    //导出问答信息
+    function dowQuestion(){
+        if($_POST){
+            $faqsType = $this->input->post('faqsType');
+            $time = $this->input->post('begin_time');
+            $end = $this->input->post('end_time');
+
+            if(!empty($time)){
+                $t = $time . ' 00:00:00';
+                $e = $end . ' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+
+           $list = searchQuestion('2',$faqsType,'','',$t,$e);
+
+            if(!empty($list)){
+                $this->load->library('excel');
+
+                //activate worksheet number 1
+
+                $this->excel->setActiveSheetIndex(0);
+
+                //name the worksheet
+
+                $this->excel->getActiveSheet()->setTitle('question');
+
+                $arr_title = array(
+
+                    'A' => '编号',
+
+                    'B' => '问题类型',
+
+                    'C' => '提问用户',
+                    'D' => '提问内容',
+
+                    'E' => '回答指定',
+
+                    'F' => '问题悬赏',
+
+                    'G' => '提问时间',
+                
+                );
+
+                 //设置excel 表头
+
+                foreach ($arr_title as $key => $value) {
+
+                    $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                   $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                }
+
+                $i = 1;
+
+                //查询数据库得到要导出的内容
+
+               // $bookings = $this->Shop_model->shop_list($id);
+
+
+                foreach ($list as $booking) {
+
+
+                    $i++;
+                  
+
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['name']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['content']);
+                    if($booking['onlyExpert'] == '1'){
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, '专家回答');
+
+                    }else{
+                         $this->excel->getActiveSheet()->setCellValue('E' . $i, '大家回答');
+
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['price']);
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking ['create_time']);
+
+
+                }
+
+                
+
+
+
+                $filename = '问题列表.xls'; //save our workbook as this file name
+
+
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."导出了问题列表信息",
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+
+
+
+
+                $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                $objWriter->save('php://output');
+
+            }else{
+                echo "<script>alert('暂无信息！');window.history.go(-1);</script>";
+            }
+
+
+
+        }
+    }
 
 }
 

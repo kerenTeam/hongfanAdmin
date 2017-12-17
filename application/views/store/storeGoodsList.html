@@ -147,6 +147,17 @@
 </style>
 
 
+<!-- 新分页开始 -->
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 <!-- 内容区域 -->
 
@@ -362,61 +373,233 @@
 
                             </thead>
 
-                            <tbody id="dataList">
+                            <tbody id="infolistDiv">
 
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-
-                                <!-- more data -->
+                             
 
                             </tbody>
 
                         </table>
+                        <script type="text/html" id="infolist">
+                             <% for(var i=0; i<list.length; i++){ %>
+
+    <tr class="trClass" id="trClass<%= list[i].goods_id%>" data-id="<%= list[i].goods_id%>">
+
+        <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= list[i].goods_id%>" name="commentBox"></td>
+
+        <td class="am-text-middle"><%= list[i].goods_id%></td>
+
+        <td class="am-text-middle"><%= list[i].goods_code%></td>
+
+        <td class="am-text-middle"><%= list[i].catname%></td>
+
+        <td class="am-text-middle">
+
+        <%if(list[i].thumb) {%>
+
+            <img src="<%= list[i].thumb%>" class="am-img-responsive" alt=""/>
+
+        <%}else {%>
+
+            暂无图片
+
+        <%}%>
+
+        </td>
+
+        <td class="am-text-middle"><%= list[i].title%></td>
+
+        <td class="am-text-middle"><%= list[i].store_name%></td>
+
+        <td class="am-text-middle"><%= list[i].amount%></td>
+
+        <td class="am-text-middle"><%= list[i].price%></td>
+
+        <!-- <td class="am-text-middle">2016年上半季</td> -->
+
+        <td class="am-text-middle">
+
+        <%if(list[i].goods_state=="1"){%>
+
+            <select class="goodsState" name="goodsState" data-id="<%= list[i].goods_id%>">
+
+                <option value="">-=请选择一项=-</option>
+
+                <option value="1" selected="selected">上架</option>
+
+                <option value="0">下架</option>
+
+            </select>
+
+        <%}else{%>
+
+            <select class="goodsState" name="goodsState" data-id="<%= list[i].goods_id%>">
+
+                <option value="">-=请选择一项=-</option>
+
+                <option value="1">上架</option>
+
+                <option value="0" selected="selected">下架</option>
+
+            </select>
+
+        <%}%>
+
+        </td>
+
+        <td class="am-text-middle">
+
+
+            <select class="recommend" name="recommentType" data-id="<%= list[i].goods_id%>">
+
+                         <%if(list[i].recommentType == "0"){%>
+                            <option value="0" selected="selected">否</option>
+                            <option value="1">HI抢购</option>
+                            <option value="2">HI货榜</option>
+                            <option value="3">HI土货</option>
+                            <option value="4">HI洋货</option>
+                            <option value="5">HI特色</option>
+                            <option value="6">HI推荐</option>
+                            <option value="7">HI邀请有礼</option>
+                        <%}else{%>
+                            <option value="0">否</option>
+                            <option value="1" selected="<%if(list[i].recommentType == '1'){%>selected<%}%>">HI抢购</option>
+                            <option value="2" selected="<%if(list[i].recommentType == '2'){%>selected<%}%>">HI货榜</option>
+                            <option value="4" selected="<%if(list[i].recommentType == '4'){%>selected<%}%>">HI洋货</option>
+                            <option value="5" selected="<%if(list[i].recommentType == '5'){%>selected<%}%>">HI特色</option>
+                            <option value="6" selected="<%if(list[i].recommentType == '6'){%>selected<%}%>">HI推荐</option>
+                            <option value="7" selected="<%if(list[i].recommentType == '7'){%>selected<%}%>">HI邀请有礼</option>
+                        <%}%>
+
+                    </select>
+
+                </td>
+
+                <td class="am-text-middle">
+
+                <%if(list[i].specials_state =="1"){%>
+
+                    <select class="priceState" name="priceState" data-id="<%= list[i].goods_id%>">
+
+                        <option value="">-=请选择一项=-</option>
+
+                        <option value="1" selected="selected">是</option>
+
+                        <option value="0">否</option>
+
+                    </select>
+
+                <%}else{%>
+
+                    <select class="priceState" name="priceState" data-id="<%= list[i].goods_id%>">
+
+                        <option value="">-=请选择一项=-</option>
+
+                        <option value="1">是</option>
+
+                        <option value="0" selected="selected">否</option>
+
+                    </select>
+
+                <%}%>
+
+                </td>
+
+                <td class="am-text-middle">
+
+                <%if(list[i].update_time) {%>
+
+                    <span><%= list[i].update_time%></span>
+
+                <%}else {%>
+
+                    <span><%= list[i].create_time%></span>
+
+                <%}%>
+
+                </td>
+
+                <!--<td><%= list[i].sort %></td>-->
+
+                <td class="am-text-middle">
+
+                    <div class="tpl-table-black-operation">
+                        <a data-id="<%= list[i].goods_id%>" class="" data-storeId="<%= list[i].storeid%>" data-am-modal="{target: '#look<%=goods_id%>'}">
+                                    
+                            <i class="am-icon-search"></i> 查看二维码
+
+                        </a>
+
+                        <a data-id="<%= list[i].goods_id%>" class="editGoods">
+
+                            <i class="am-icon-pencil"></i> 编辑
+
+                        </a>
+
+                        <a data-id="<%= list[i].goods_id%>" class="tpl-table-black-operation-del tpl-del">
+
+                            <i class="am-icon-trash"></i> 删除
+
+                        </a>
 
                     </div>
 
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+                </td>   
 
-                        <div id="Pagination">
+            </tr>
 
-                            <div class="pagination">
+            <!-- 查看二维码弹框 -->
+            <div class="am-modal am-modal-alert" tabindex="-1" id='look<%=goods_id%>'>
+                <div class="am-modal-dialog">
+                    <div class="am-modal-hd">查看商品二维码</div>
+                    <div class="am-modal-bd">
+                        <!-- <input type="hidden" id="codename" value="<%= list[i].goodsid%><%= list[i].title%>"> -->
+                       <%if(list[i].QrCodeSync){%>
+                        <div class="nowcode code" style="display:block"></div>
+                       <button style="margin-bottom:50px" style="display:none;" data-id="<%= list[i].goods_id%><%= list[i].title%>" type="button" class="am-btn am-btn-primary dow_Qcode">下载</button> 
+                       
+                        <%}else{%>
+                        <div style="padding:10px;text-align:center;margin:50px" class="code">还未生成二维码</div>
+                        <button style="margin-bottom:50px" data-id="<%= list[i].goods_id%>" data-storeId="<%= list[i].storeid%>" type="button" class="am-btn am-btn-primary btn-loading-example">生成二维码</button> 
+                        <button style="margin-bottom:50px;display:none;margin:auto;text-algin:center" data-id="<%= list[i].goods_id%><%= list[i].title%>" type="button" class="am-btn am-btn-primary dow_Qcode" >下载</button> 
+                        <%}%>
+                    </div>
+                    <div class="am-modal-footer">
+                    <span class="am-modal-btn">确定</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 删除弹框 -->
+            <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= list[i].goods_id%>">
 
-                                <a class="prev"><i></i>上一页</a>
+                <div class="am-modal-dialog">
 
-                                <a class="current">1</a>
+                    <div class="am-modal-hd">删除提示</div>
 
-                                <a >2</a>
+                    <div class="am-modal-bd">
 
-                                <a>3</a>
-
-                                <a>4</a>
-
-                                <span class="pagination-break">...</span>
-
-                                <a class="ep">15</a>
-
-                                <a class="next">下一页 <i></i></a>
-
-                            </div>
-
-                        </div>
-
-                        <div class="searchPage">
-
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-
-                          <span class="page-go">跳转<input type="text">页</span>
-
-                          <a href="javascript:;" class="page-btn">确定</a>
-
-                        </div>
-
-                        <div claa="am-text-middle">
-
-                           <span>共<span class="allData">15</span>条数据</span> 
-
-                        </div>
+                        <p class="black">你，确定要删除这条记录吗？</p>
 
                     </div>
+
+                    <div class="am-modal-footer">
+
+                        <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+
+                        <span class="am-modal-btn sureDelete" data-id="<%= list[i].goods_id%>" data-am-modal-confirm>确定</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <%}%>
+        </script>
+
+                    </div>
+
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
 
                 </div>
 
@@ -442,9 +625,6 @@
 
 <script type="text/javascript">
 
-    var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
-
-    var $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList')) || 0, $isStoreGoodsList = parseInt(sessionStorage.getItem('isStoreGoodsList')) || 0;
 
     //删除图片
 
@@ -458,81 +638,14 @@
 
     }); 
 
-    //点击前往某一页的函数
-
-    function go_to_page(page_num){
-
-        $('.page_link').removeClass('active_page');
-
-        $('.page_link').eq(page_num).addClass('active_page');
-
-        $("#dataList").children('tr').css("display","none");
-
-        var start_page=parseInt(15)*parseInt(page_num);
-
-        var end_page=parseInt(15)*parseInt(page_num+1);
-
-        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-
-        current_page=page_num;
-
-        sessionStorage.setItem('storeGoodsList', current_page);
-
-        $storeGoodsList = parseInt(sessionStorage.getItem('storeGoodsList'));
-
-        
-
-    }
-
-
-
-    //点击上一页的函数
-
-    function previous(){
-
-        if($('.current').length>1) {
-
-            new_page = parseInt($('.current').eq(0).html()) - 2;
-
-        }else {
-
-            new_page = parseInt($('.current').html()) - 2;
-
-        }
-
-        if(new_page >= 0) {
-
-            go_to_page(new_page);
-
-        }
-
-    }
-
-
-
-    //点击下一页的函数
-
-    function next(argu){
-
-        if($('.current').length>1) {
-
-            new_page = parseInt($('.current').eq(1).html());
-
-        }else {
-
-            new_page = parseInt($('.current').html());
-
-        }
-
-        if(new_page < argu){
-
-            go_to_page(new_page);
-
-        }
-
-    }
+  
 
     //
+
+    //异步刷新的ajax请求   
+
+  $(document).ready(function(){
+
 
     $('#add_sales').click(function(){
 
@@ -905,95 +1018,70 @@
 
     }
 
-    //异步刷新的ajax请求   
 
-    function getList(dataurl,data){
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','','','','','','','',"<?php echo site_url('store/Store/goods_search');?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['goodNum'])){echo '0';}else{echo $_SESSION['goodNum'];}?>"/10 +1;
 
+
+    getListinfo(page,'','','','','','','','',"<?php echo site_url('store/Store/goods_search');?>");
+    
+    // 新分页方法
+    function getListinfo(num,cateid,state,sear,startPrice,endPrice,startRepertory,endRepertory,diff,url) {
+
+        var pagenum10 = (num-1) *10;
+       
         $.ajax({
-
-            type:'post',
-
-            url:dataurl,
-
-            data: data,
-
-            success: function(result){     
-
-                var res = eval(result);
-
-             //   console.log(res);
-
-                if(res != 2 && res != 3){
-
-                    var listData = ''; //每页出现的数量
-
-                    total_page = Math.ceil(res.length/15); //得到总页数
-
-                    for(var i = 0; i < res.length; i++){
-                     //   console.log('ressss ',res[i])
-                       
-                      
-                        listData+= template('dataModal',res[i]);
-                     
-                     }
-
-                    document.getElementById('dataList').innerHTML = listData;
-
-                    for(var i = 0; i < res.length; i++){ 
-                        if(res[i].QrCodeSync){
-                            console.log(res[i].QrCodeSync);
-                            // var objE = document.createElement("div");　　
-                            // $(objE).append(res[i].QrCodeSync);  
-                            $('.nowcode').eq(i).append(res[i].QrCodeSync)
-                            }
-                     }
-
-
-
-                    $('.allData').html(res.length);
-
-                    $('.pagebox').css('display', 'block');
-
-                    if(total_page <= 1) {
-
-                        $('#Pagination').css('display', 'none');
-
-                        $('.searchPage').css('display', 'none');
-
-                    } else {
-
-                        if(pageflag) { 
-
-                            var opts={};opts.current_page = $storeGoodsList;
-
-                            $("#Pagination").pagination(total_page, opts);
-
-                            go_to_page($storeGoodsList);
-
-                            pageflag = 0;
-
-                        } else {
-
-                            $("#Pagination").pagination(total_page);
-
-                            go_to_page(0);
-
-                            
-
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'cateid':cateid,
+                'state':state,
+                'sear':sear,
+                'startPrice':startPrice,
+                'endPrice':endPrice,
+                'startRepertory':startRepertory,
+                'endRepertory':endRepertory,
+                'diff':'4',
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = parseInt(res.total/10);  
+                    // console.log(allpage);
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,cateid,state,sear,startPrice,endPrice,startRepertory,endRepertory,diff,"<?php echo site_url('store/Store/goods_search');?>");
                         }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                  
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+                otherFunction();
 
-                        if(total_page < 5) {
-
-                            $('.searchPage').css('display', 'none');
-
-                        } 
-
-                    }
-
-                                                
-
-                    otherFunction();
-                   
                        //生成二维码
                         $('.btn-loading-example').click(function () { 
                             var $btn = $(this); 
@@ -1008,8 +1096,8 @@
 
                                 type:'post',
                                 
-                                url:'<?php echo site_url("/Api_goods/ret_Qrcode");?>',
-                                // headers:{'token':"<?php echo $_SESSION['token'];?>"},
+                                url:'http://abcd.zlzmm.com:6789/index.php/Api_goods/ret_Qrcode',
+                                // headers:{'token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mbyI6e30sImlhdCI6MTUxMzMxMDMxNywiZXhwIjoxNTEzMzE3NTE3fQ.cpcOuad_Xtk1VvrWq_aiFWkJbUl3257Lmu3S9SHlz8s"},
                                 data: {goods_id:goods_id,storeid:storeId},
 
                                 success: function(data){     
@@ -1038,205 +1126,17 @@
                         
                         });
 
-                        // $('.nowcode').each(function(){
-                            
-                        // var detailsdom = parseDom( $(this).html());
-                        // $(this).html(detailsdom)
-                        // }) 
-                        // function parseDom(arg) { //节点转换方法
-                        //     var objE = document.createElement("div");　　
-                        //     objE.innerHTML = arg;　　
-                        //     return objE;
-                        // };
-
-                }else{
-
-                    $('#dataList').find('tr').remove();
-
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商品信息！</p></td></tr>').appendTo('#dataList');
-
-                    $('.pagebox').css('display', 'none');
-
-                }
-
-
-
-                
 
             },
-
-            error:function(xhr,type,errorThrown){
-
-                alert("网络状况不佳，请稍后重试！");
-
-                $('#dataList').find('tr').remove();
-
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无商品信息！</p></td></tr>').appendTo('#dataList');
-
-                $('.pagebox').css('display', 'none');
-
+            error:function(data){
+                console.log(data);
             }
+        })
 
-        });
 
+     
     }
-
-
-
-
-    //商品数据的排序函数
-
-    function storeEditGoods(arg1) {
-
-        if(arg1 == 1) {
-
-            if(storageFlag) {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=3');
-
-                storageFlag=0;
-
-            } else {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=4');
-
-                storageFlag=1;
-
-            }
-
-            
-
-        } else if(arg1 == 3) {
-
-            if(priceFlag) {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=5');
-
-                priceFlag=0;
-
-            } else {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=6');
-
-                priceFlag=1;
-
-            }
-
-        } else {
-
-            if(timeFlag) {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=1');
-
-                timeFlag=0;
-
-            } else {
-
-                getList('<?php echo site_url('store/Store/get_sort_goods');?>', 'sort=2');
-
-                timeFlag=1;
-
-            }
-
-        }
-
-    }
-
-$(document).ready(function(){
-
-    //加载列表数数据 
-
-    if($isStoreGoodsList == 2) {
-
-        var dataId=$('.goodsSelect').attr('data-id'), defaultSign = 0;
-
-        if($('.goodsSelect').find('option:selected').val()=="1"){
-
-            defaultSign = 2;
-
-            $('.goodsSelect').css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
-
-        }else if($('.goodsSelect').find('option:selected').val()=="0") {
-
-            defaultSign = 3;
-
-            $('.goodsSelect').css({'background':' #e0690c','border':'1px solid #e0690c'}); 
-
-        } else {
-
-            defaultSign = 1;
-
-        }
-
-        getList('<?php echo site_url('store/Store/storeGoods_page');?>', 'default='+ defaultSign);
-
-        sessionStorage.setItem('isStoreGoodsList', 2);    
-
-    } else if ($isStoreGoodsList == 1) {
-
-        var goodsType=$('#goodsType option:selected').val(),goodsState=$('#goodsState option:selected').val(),keywords=$('#searchKey').val();
-
-        var startPrice=$('#startPrice').val(),endPrice=$('#endPrice').val(),startRepertory=$('#startRepertory').val(),endRepertory=$('#endRepertory').val();
-
-        if((startPrice=="" && endPrice!="") || (startPrice!="" && endPrice=="")){
-
-            alert("交易总额必须是一个范围！");
-
-            return false;
-
-        }else if((startRepertory=="" && endRepertory!="") || (startRepertory!="" && endRepertory=="")){
-
-            alert("库存必须是一个范围！");
-
-            return false;
-
-        }else{
-
-            // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-
-             getList('<?php echo site_url('store/Store/goods_search');?>','diff=4'+'&cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-
-        }
-
-        sessionStorage.setItem('isStoreGoodsList', 1);
-
-    } else {
-
-        getList('<?php echo site_url('store/Store/storeGoods_page');?>', 'default=1'); 
-
-    }
-
-        
-
-    //商品筛选
-
-    $('.goodsSelect').change(function(){
-
-        var dataId=$(this).attr('data-id'), defaultSign = 0;
-
-        if($(this).find('option:selected').val()=="1") {
-
-            defaultSign = 2;
-
-            $(this).css({'background':' #15b5ac','border':'1px solid #15b5ac'}); 
-
-        }else if($(this).find('option:selected').val()=="0") {
-
-            defaultSign = 3;
-
-            $(this).css({'background':' #e0690c','border':'1px solid #e0690c'}); 
-
-        } else {
-
-            defaultSign = 1;
-
-        }
-
-        getList('<?php echo site_url('store/Store/storeGoods_page');?>', 'default='+ defaultSign);
-
-        sessionStorage.setItem('isStoreGoodsList', 2);     
-
-    });
+    
 
     //点击搜索
 
@@ -1262,19 +1162,14 @@ $(document).ready(function(){
 
             // console.log('cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
 
-             getList('<?php echo site_url('store/store/goods_search');?>','diff=4'+'&cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
-
+             // getList('<?php echo site_url('store/store/goods_search');?>','diff=4'+'&cateid='+ goodsType +'&startPrice='+ startPrice +'&endPrice='+ endPrice +'&startRepertory='+ startRepertory +'&endRepertory='+ endRepertory +'&state='+ goodsState +'&sear='+keywords);
+             getListinfo(1,goodsType,goodsState,keywords,startPrice,endPrice,startRepertory,endRepertory,'4',"<?php echo site_url('store/Store/goods_search');?>");
         }
 
-        sessionStorage.setItem('isStoreGoodsList', 1);
 
         
 
     });
-
-    
-
-
 
 
 
@@ -1286,223 +1181,10 @@ $(document).ready(function(){
 
 
 
+
 </script>
 
-<script type="text/html" id="dataModal">
 
-    <tr class="trClass" id="trClass<%= goods_id%>" data-id="<%= goods_id%>">
-
-        <td class="am-text-middle" ><input type="checkbox" class="commentBox" data-id="<%= goods_id%>" name="commentBox"></td>
-
-        <td class="am-text-middle"><%= goods_id%></td>
-
-        <td class="am-text-middle"><%= goods_code%></td>
-
-        <td class="am-text-middle"><%= catname%></td>
-
-        <td class="am-text-middle">
-
-        <%if(thumb) {%>
-
-            <img src="<%= thumb%>" class="am-img-responsive" alt=""/>
-
-        <%}else {%>
-
-            暂无图片
-
-        <%}%>
-
-        </td>
-
-        <td class="am-text-middle"><%= title%></td>
-
-        <td class="am-text-middle"><%= store_name%></td>
-
-        <td class="am-text-middle"><%= amount%></td>
-
-        <td class="am-text-middle"><%= price%></td>
-
-        <!-- <td class="am-text-middle">2016年上半季</td> -->
-
-        <td class="am-text-middle">
-
-        <%if(goods_state=="1"){%>
-
-            <select class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1" selected="selected">上架</option>
-
-                <option value="0">下架</option>
-
-            </select>
-
-        <%}else{%>
-
-            <select class="goodsState" name="goodsState" data-id="<%= goods_id%>">
-
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1">上架</option>
-
-                <option value="0" selected="selected">下架</option>
-
-            </select>
-
-        <%}%>
-
-        </td>
-
-        <td class="am-text-middle">
-
-
-            <select class="recommend" name="recommentType" data-id="<%= goods_id%>">
-
-                 <%if(recommentType == "0"){%>
-                    <option value="0" selected="selected">否</option>
-                    <option value="1">HI抢购</option>
-                    <option value="2">HI货榜</option>
-                    <option value="3">HI土货</option>
-                    <option value="4">HI洋货</option>
-                    <option value="5">HI特色</option>
-                    <option value="6">HI推荐</option>
-                    <option value="7">HI邀请有礼</option>
-                <%}else{%>
-                    <option value="0">否</option>
-                    <option value="1" selected="<%if(recommentType == '1'){%>selected<%}%>">HI抢购</option>
-                    <option value="2" selected="<%if(recommentType == '2'){%>selected<%}%>">HI货榜</option>
-                    <option value="3" selected="<%if(recommentType == '3'){%>selected<%}%>">HI土货</option>
-                    <option value="4" selected="<%if(recommentType == '4'){%>selected<%}%>">HI洋货</option>
-                    <option value="5" selected="<%if(recommentType == '5'){%>selected<%}%>">HI特色</option>
-                    <option value="6" selected="<%if(recommentType == '6'){%>selected<%}%>">HI推荐</option>
-                    <option value="7" selected="<%if(recommentType == '7'){%>selected<%}%>">HI邀请有礼</option>
-                <%}%>
-
-            </select>
-
-        </td>
-
-        <td class="am-text-middle">
-
-        <%if(specials_state =="1"){%>
-
-            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
-
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1" selected="selected">是</option>
-
-                <option value="0">否</option>
-
-            </select>
-
-        <%}else{%>
-
-            <select class="priceState" name="priceState" data-id="<%= goods_id%>">
-
-                <option value="">-=请选择一项=-</option>
-
-                <option value="1">是</option>
-
-                <option value="0" selected="selected">否</option>
-
-            </select>
-
-        <%}%>
-
-        </td>
-
-        <td class="am-text-middle">
-
-        <%if(update_time) {%>
-
-            <span><%= update_time%></span>
-
-        <%}else {%>
-
-            <span><%= create_time%></span>
-
-        <%}%>
-
-        </td>
-
-        <!--<td><%= sort %></td>-->
-
-        <td class="am-text-middle">
-
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= goods_id%>" class="" data-storeId="<%= storeid%>" data-am-modal="{target: '#look<%=goods_id%>'}">
-                            
-                    <i class="am-icon-search"></i> 查看二维码
-
-                </a>
-
-                <a data-id="<%= goods_id%>" class="editGoods">
-
-                    <i class="am-icon-pencil"></i> 编辑
-
-                </a>
-
-                <a data-id="<%= goods_id%>" class="tpl-table-black-operation-del tpl-del">
-
-                    <i class="am-icon-trash"></i> 删除
-
-                </a>
-
-            </div>
-
-        </td>   
-
-    </tr>
-
-    <!-- 查看二维码弹框 -->
-    <div class="am-modal am-modal-alert" tabindex="-1" id='look<%=goods_id%>'>
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">查看商品二维码</div>
-            <div class="am-modal-bd">
-                <!-- <input type="hidden" id="codename" value="<%= goodsid%><%= title%>"> -->
-               <%if(QrCodeSync){%>
-                <div class="nowcode code" style="display:block"></div>
-               <button style="margin-bottom:50px" style="display:none;" data-id="<%= goods_id%><%= title%>" type="button" class="am-btn am-btn-primary dow_Qcode">下载</button> 
-               
-                <%}else{%>
-                <div style="padding:10px;text-align:center;margin:50px" class="code">还未生成二维码</div>
-                <button style="margin-bottom:50px" data-id="<%= goods_id%>" data-storeId="<%= storeid%>" type="button" class="am-btn am-btn-primary btn-loading-example">生成二维码</button> 
-                <button style="margin-bottom:50px;display:none;margin:auto;text-algin:center" data-id="<%= goods_id%><%= title%>" type="button" class="am-btn am-btn-primary dow_Qcode" >下载</button> 
-                <%}%>
-            </div>
-            <div class="am-modal-footer">
-            <span class="am-modal-btn">确定</span>
-            </div>
-        </div>
-    </div>
-    <!-- 删除弹框 -->
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="<%= goods_id%>">
-
-        <div class="am-modal-dialog">
-
-            <div class="am-modal-hd">删除提示</div>
-
-            <div class="am-modal-bd">
-
-                <p class="black">你，确定要删除这条记录吗？</p>
-
-            </div>
-
-            <div class="am-modal-footer">
-
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-
-                <span class="am-modal-btn sureDelete" data-id="<%= goods_id%>" data-am-modal-confirm>确定</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</script>
 
 <script>
  

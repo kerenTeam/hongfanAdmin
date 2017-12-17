@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -699,7 +700,7 @@ class SingleShop extends CI_Controller {
                     );
                 
                     $a = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
-                
+                   
                     if($a['errno'] == '0'){
                         unset($data['img'.$i]);
                         $img = json_decode($a['data']['img'],true);
@@ -2988,6 +2989,10 @@ class SingleShop extends CI_Controller {
 
                         $exporess  = "天天";
 
+                    }else if($data['shipper_code'] == "GTO"){
+
+                        $exporess  = "国通";
+
                     }
 
                     $post_url = APPLOGIN."/api/index/sendsms";
@@ -3157,8 +3162,13 @@ class SingleShop extends CI_Controller {
             $data = $this->input->post();
 
             $order = $this->MallShop_model->get_order_info($data['order_id']);
+            if(isset($data['fee'])){
+                $fee = $data['fee'];
+            }else{
+                $fee = '0';
+            }
 
-            if($order['amount'] + $data['fee'] < 0.01){
+            if($order['amount'] +  $fee < 0.01){
 
                 echo "<script>alert('改价后价格不能少于0.01元！');window.location.href='".site_url('/shop/SingleShop/shopEditOrder/'.$data['order_id'])."';</script>";exit;
 

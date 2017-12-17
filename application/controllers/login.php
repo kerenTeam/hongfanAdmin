@@ -88,7 +88,7 @@ class Login extends CI_Controller {
 
                    $_SESSION['token'] = trim($token);
                   
-                 
+
                    switch ($user['gid']){
 
                         case 2:

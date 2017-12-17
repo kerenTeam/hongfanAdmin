@@ -139,50 +139,17 @@ padding: 5px 6px!important;
 
 
 </style>
-<style>  
-    *{  
-        padding: 0px;  
-        margin: 0px;  
-    }  
-    *{ margin:0; padding:0; list-style:none;}  
-    a{ text-decoration:none;}  
-    a:hover{ text-decoration:none;}  
-    .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;}  
-    .tcdPageCode a{display: inline-block;color: #428bca;display: inline-block;height: 25px;  
-    line-height: 25px;    padding: 0 10px;border: 1px solid #ddd;    margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
-    .tcdPageCode a:hover{text-decoration: none;border: 1px solid #428bca;}  
-    .tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
-    margin: 0 2px;color: #fff;background-color: #428bca;    border: 1px solid #428bca;border-radius: 4px;vertical-align: middle;}  
-    .tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
-    margin: 0 2px;    color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}  
-    ul{  
-        list-style: none;  
-    }  
-    .wrap >ul > li{  
-        width: 250px;  
-        height: 350px;  
-        margin: 20px;  
-        /*border: 1px green solid;*/  
-        float: left;  
-        margin-bottom: 40px;  
-    }  
-    .wrap >ul > li>img{  
-        width: 100%;  
-        height: 100%;  
-    }  
-    .wrap >ul > li>p{  
-        text-align: center;  
-        line-height: 30px;  
-        height: 30px;  
-    }  
-    .wrap{  
-        margin: 100px auto;  
-        border: 1px solid red;  
-        height: 1800px;  
-        width: 1460px;  
-    }  
-</style>  
-
+<!-- 新分页开始 -->
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 <!-- 内容区域 -->
 
@@ -234,8 +201,9 @@ padding: 5px 6px!important;
                         <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">是否回答:</label>
                         <div class="am-u-sm-9 am-u-end">
                             <select id="questionStates" name="questionStates" >
+                                <option value="0">请选择一项</option>
                                 <option value="1">已回答</option>
-                                <option value="0">未回答</option>
+                                <option value="2">未回答</option>
                                
                             </select>
                         </div>
@@ -273,12 +241,16 @@ padding: 5px 6px!important;
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
 
+                    <div class="widget-title  am-cf">今日提问数:<?php echo $dayQ;?></div>
+                    <div class="widget-title  am-cf">今日回答数：<?php echo $dayC;?></div>
+                    <div class="widget-title  am-cf">昨日提问数：<?php echo $todayQ;?></div>
+                    <div class="widget-title  am-cf">昨日回答数：<?php echo $todayC;?></div>
                     <div class="widget-title  am-cf">动态列表</div>
 
                 </div>
 
                 <div class="widget-body  am-fr">
-
+                   
                     <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <div class="am-form-group">
@@ -288,6 +260,7 @@ padding: 5px 6px!important;
                                 <div class="am-btn-group am-btn-group-xs">
 
                                     <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
+                                     <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
 
                                 </div>
 
@@ -295,6 +268,49 @@ padding: 5px 6px!important;
 
                         </div>
 
+                    </div>
+                     <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">导出提问列表</div>
+                            <div class="am-modal-bd">
+                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/friends/Question/dowQuestion');?>" method="post">
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-2 am-form-label">问题类别：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="faqsType" name="faqsType">
+                                                <option value="">-=请选择一项=-</option>
+                                                <?php foreach($cates as $v):?>
+                                                <option value="<?php echo $v['id'];?>"><?php echo $v['name'];?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="am-form-group am-cf">
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                              <p>开始日期应小于结束日期！</p>
+                                            </div>
+                                            <div class="am-g">
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                              </div>
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                              </div>
+                                              <small class="red redtips">请先选择结束日期</small>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs sureExport" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
                  <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
@@ -387,7 +403,6 @@ padding: 5px 6px!important;
                                     </div>
                                     
                                     <div class="am-form-group am-btn-group-xs">
-                                    <!-- <input type="hidden" name="spaceType" value="<?php echo $spaceType;?>"> -->
 
                                         <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 
@@ -402,6 +417,7 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
+
 
 
 
@@ -595,12 +611,8 @@ padding: 5px 6px!important;
                         </script>
 
                     </div>
-
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-
-                        <div class="tcdPageCode">  
-                        </div> 
-                    </div>
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
 
                 </div>
 
@@ -618,7 +630,6 @@ padding: 5px 6px!important;
 
 </div>
 
-<script src="assets/js/jquery.page.js"></script>
 <script>  
     $(function () {  
         var startDate = new Date(2014, 11, 20);
@@ -649,98 +660,135 @@ padding: 5px 6px!important;
             }
             $(this).datepicker('close');
           });
-
-
-
-       //初始化第一页数据；  
-        var urlApi = '<?php echo site_url("/friends/Question/retQuestionList");?>' ;
-
-        var page =  "<?php if(isset($_SESSION['pageNum'])){echo $_SESSION['pageNum'];}else{echo '0';}?>";
-        // console.log(page);
-        $.ajax({  
-            url:urlApi,  
-            type:'POST',  
-            // dataType:'jsonp',  
-            data:{  
-                //从第几条开始请求；  
-                "start" : page,  
-                //请求多少条数据  
-                "count" : 10  
-            },  
-            success:function(data){ 
-
-            //total总条数属性，计算总页数；  
-                var res = JSON.parse(data)  
-                var total = parseInt(res.total/10);  
-                var result  = res.subjects;  
-                var dataobj = {};
-                result.forEach(function(ele,index){
-                    // console.log(result.pic);
-                    if (ele.pic.length > 5) {
-                        var pic = JSON.parse(ele.pic);
-                        // console.log(pic)
-                        ele.pic = pic.picImg;
-                    }else{
-                        ele.pic = '';
-                    }
-                })
-                                  
-                dataobj.list = result;
-                var html=template("infolist",dataobj);
-                document.getElementById("infolistDiv").innerHTML = html;
-                if(page == 0){
-                    num = 1;
-                }else{
-                     num = (parseInt(page) + 10)/10;
+          $('#my-start1').datepicker().
+              on('changeDate.datepicker.amui', function(event) {
+                if (event.date.valueOf() > endDate.valueOf()) {
+                  $alert.find('p').text('开始日期应小于结束日期！').end().show();
+                } else {
+                  $alert.hide();
+                  startDate = new Date(event.date);
+                  $('#my-startDate1').text($('#my-start1').data('date'));
+                  $('#begin_date1').val($('#my-start1').data('date'));
                 }
-                // console.log(num);
-                //分页插件，  
-                $(".tcdPageCode").createPage({  
-                    //pageCount：总页数  
-                    pageCount:total,  
-                    //current：当前页  
-                    current:num,  
-                    backFn:function(pageIndex){  
-                    //单击回调方法，pageIndex是当前页码  
-                        $(".movieList").empty();  
-                      
-                        var start = 10*(pageIndex-1); 
-                        $.ajax({  
-                            url:urlApi,  
-                            type:'POST',  
-                            // dataType:'jsonp',  
-                            data:{  
-                                "start" : start,  
-                                "count" : 10,  
-                            },  
-                            success:function(data){  
-                                var res = JSON.parse(data)  
+                $(this).datepicker('close');
+              });
 
-                                var result  = res.subjects;  
-                                console.log(res);
-                                var dataobj = {};
-                                  // 头像
-                                result.forEach(function(ele,index){
-                                    // console.log();
-                                    if (ele.pic.length > 5) {
-                                        var pic = JSON.parse(ele.pic);
-                                        // console.log(pic)
-                                       ele.pic = pic[0].picImg;
-                                    }else{
-                                        ele.pic = '';
-                                    }
-                                })
-                                dataobj.list = result;
-                                var html=template("infolist",dataobj);
-                                document.getElementById("infolistDiv").innerHTML = html;
-                                
-                            }  
-                        })  
-                    }  
-                });  
-            }  
-        })  
-    })  
+            $('#my-end1').datepicker().
+              on('changeDate.datepicker.amui', function(event) {
+                if (event.date.valueOf() < startDate.valueOf()) {
+                  $alert.find('p').text('结束日期应大于开始日期！').end().show();
+                } else {
+                  $alert.hide();
+                  endDate = new Date(event.date);
+                  $('#my-endDate1').text($('#my-end1').data('date'));
+                  $('#end_date1').val($('#my-end1').data('date'));
+                }
+                $(this).datepicker('close');
+              }); 
+
+
+
+       
+    }) ;
+    //导出订单
+    $('.sureExport').click(function () {
+        $('#exportFile').modal('close');
+    });
+
+
+
+$(document).ready(function(){
+
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','','','','',"<?php echo site_url("/friends/Question/searchQuestion");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['pageNum'])){echo '0';}else{echo $_SESSION['pageNum'];}?>"/10 +1;
+
+
+    getListinfo(page,'','','','','',"<?php echo site_url("/friends/Question/searchQuestion");?>");
+    
+    // 新分页方法
+    function getListinfo(num,faqsType,questionStates,end_date,begin_date,keywords,url) {
+
+        var pagenum10 = (num-1) *10;
+       
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'faqsType':faqsType,
+                'questionStates':questionStates,
+                'begin_time':begin_date,
+                'end_time':end_date,
+                'sear':keywords
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = parseInt(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,faqsType,questionStates,end_date,begin_date,keywords,"<?php echo site_url('/friends/Question/searchQuestion');?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    lists.forEach(function(ele,index){
+                       if (ele.pic.length > 5) {
+                            var pic = JSON.parse(ele.pic);
+                            // console.log(pic)
+                           ele.pic = pic[0].picImg;
+                        }else{
+                            ele.pic = '';
+                        }
+                    })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var faqsType=$('#faqsType option:selected').val(),questionStates = $('#questionStates option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), keywords = $('#sear').val();
+
+        console.log('faqsType='+ faqsType +'&questionStates='+ questionStates  +'&end_time='+ end_date + '&begin_time='+ begin_date  +'&sear='+ keywords);
+        getListinfo(1,faqsType,questionStates,end_date,begin_date,keywords,"<?php echo site_url('/friends/Question/searchQuestion');?>");
+
+    });
+
+
+
+})
+
 </script> 
 
 

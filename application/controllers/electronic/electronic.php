@@ -690,7 +690,7 @@ class Electronic extends Default_Controller {
             }
          
             if(!empty($list)){
-                 $this->load->library('excel');
+            $this->load->library('excel');
 
             //activate worksheet number 1
 

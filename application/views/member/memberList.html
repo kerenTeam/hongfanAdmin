@@ -469,19 +469,19 @@ $(document).ready(function(){
         totalPage: 10,
         totalSize: 100,
         callback: function(num) {
-            getListinfo(num);
+            getListinfo(num,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
         }
     })
     // 初始化,加载第一页
-    getListinfo(1,'','','','');
+    getListinfo(1,'','','','',"<?php echo site_url('/member/Member/ret_member_list');?>");
 
     // 新分页方法
-    function getListinfo(num,gender,begin_date,end_date,keywords) {
+    function getListinfo(num,gender,begin_date,end_date,keywords,url) {
         var pagenum10 = (num-1) *10;
         var sizeAll = "<?php echo $userNum;?>"; //总页数
         // console.log('12='+gender,begin_date,end_date,keywords);
         $.ajax({
-            url: "<?php echo site_url('/member/Member/ret_member_list');?>",
+            url: url,
             type: "post",
             data: {
                 'page':pagenum10,
@@ -501,7 +501,7 @@ $(document).ready(function(){
                     totalPage: allpage,
                     totalSize: sizeAll,
                     callback: function(num) { //点击页码的 回调 方法
-                        getListinfo(num,gender,begin_date,end_date,keywords);
+                        getListinfo(num,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
                     }
                 })
                 // 铺数据
@@ -535,7 +535,7 @@ $(document).ready(function(){
         var gender=$('#source_state option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), keywords = $('#searchKey').val();
 
         console.log('gender='+ gender +'&start_time='+ begin_date  +'&end_time='+ end_date  +'&sear='+ keywords);
-        getListinfo(1,gender,begin_date,end_date,keywords);
+        getListinfo(1,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
 
     });
 
