@@ -1,0 +1,383 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 系统设置
+
+            <small> 弹窗管理</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+
+                    <div class="widget-title  am-cf">弹窗列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr"> 
+
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>编号</th> 
+                                    <th>弹窗名称</th>
+                                    <th>弹窗图片内容</th>
+                                    <th>弹窗链接</th>
+                                    <th>创建时间</th> 
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="doc-modal-list">
+ 
+                                        <tr>
+                                            <td>1</td>
+                                            <td>首页</td>
+                                            
+                                            <td><img src="http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658" class="popimg am-img-responsive" style="width: 200px;"></td>
+                                            <td class="popurl" style="max-width: 200px;word-wrap: break-word;">http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658</td>
+                                            <td>2017-12-18</td>
+                                            <td>
+                                               <div class="tpl-table-black-operation">
+   
+                                                    <a href="javascript:;" class="tpl-table-black-operation-set update">
+
+                                                        <i class="am-icon-pencil"></i> 编辑
+
+                                                    </a>
+
+                                                    <a href="" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+
+                                                </div>  
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>hi友圈主页</td>
+                                            
+                                            <td><img src="http://img.hb.aicdn.com/38ca5e9748326fe96d99ebaa89009bc43158bacee553-SajcBz_fw658" class="popimg am-img-responsive"  style="width: 200px;"></td>
+                                            <td class="popurl" style="max-width: 200px;word-wrap: break-word;">http://img.hb.aicdn.com/38ca5e9748326fe96d99ebaa89009bc43158bacee553-SajcBz_fw658</td>
+                                            <td>2017-12-18</td>
+                                            <td>
+                                               <div class="tpl-table-black-operation">
+   
+                                                    <a href="javascript:;" class="tpl-table-black-operation-set update">
+
+                                                        <i class="am-icon-pencil"></i> 编辑
+
+                                                    </a>
+
+                                                    <a href="" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+
+                                                </div>  
+                                            </td>
+                                        </tr>
+                                      
+                                        
+<!-- 编辑弹框 -->
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-update-confirm">
+    <div class="am-modal-dialog">
+
+      <div class="am-modal-hd">编辑</div>
+
+      <div class="am-modal-bd">
+
+          <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="" method='post' enctype='multipart/form-data'>
+
+   
+    <div class="am-form-group am-cf">
+
+      <label for="" class="am-u-sm-3 am-form-label">弹窗内容图片 <span class="red">*</span></label>
+
+       <div class="am-u-sm-8 am-u-end">
+
+          <div class="wx_type_img">
+
+           <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
+          
+          <div id="preview"> <img style="border-radius: 3px;" src="http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658" class="am-img-responsive cardView"> </div>
+      
+            <span class="clickUp"></span>
+
+          </div>
+
+          <span onclick="deleteImg(this)" class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
+
+         
+
+      </div>
+
+  </div>
+   <div class="am-form-group am-cf">
+
+      <label class="am-u-sm-2 am-form-label">链接 </label>
+
+      <div class="am-u-sm-10">
+
+          <input type="url" id="popurl" name="description"  class="js-pattern-mobile" placeholder="输入链接" required="">
+
+      </div>
+
+  
+  </div>  
+  <div class="am-form-group am-btn-group-xs">
+      <input type="hidden" name="id" value="">
+      <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+      <button type="submit" class="am-btn am-btn-danger">提交</button>
+
+  </div>
+
+</form>
+
+      </div>
+
+  </div>
+</div>
+<!-- 删除弹框 -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+ 
+
+                        </div>
+
+                      
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+<script type="text/javascript">
+   function deleteImg(obj){
+
+        $(obj).siblings('.wx_type_img').find('img').attr('src','assets/img/nullImg.jpg');
+
+        $(obj).siblings('.wx_type_img').find('input').val("");
+
+        $(obj).siblings('.wx_type_img').find('input').files = "";
+
+  }
+
+         // 编辑模态框操作 
+        $('#doc-modal-list').find('.update').add('#doc-confirm-toggle').
+            on('click', function () { 
+                $('#preview img').attr('src',$(this).parentsUntil('tbody').find('.popimg').attr('src'))
+                $('#popurl').val($(this).parentsUntil('tbody').find('.popurl').html());  
+                $('#my-update-confirm').modal({
+                    relatedTarget: this,
+                    onConfirm: function (options) {  
+
+                    },
+
+                    closeOnConfirm: false,
+                    onCancel: function () { 
+                    }
+                });
+            });  
+</script>
+
+</body>
+
+</html>
+
+
+
