@@ -311,7 +311,7 @@ padding: 5px 6px!important;
                                                      APP首页推荐
                                                 </a>
                                             <%}%>
-                                            <a href="javascript:;" class="tpl-table-black-operation-set update">
+                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_sort<%=list[i].user_id%>'}">
                                                 <i class="am-icon-pencil"></i> 修改排序
                                             </a>
                                                      
@@ -330,13 +330,13 @@ padding: 5px 6px!important;
                                  <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<%=list[i].user_id%>">
                                     <div class="am-modal-dialog">
                                         <div class="am-modal-hd">编辑</div>
-                                        <form class="am-form tpl-form-line-form" action="<?php echo site_url('friends/Friends/edit_member_info')?>" method='post' enctype='multipart/form-data'>
+                                        <!-- <form class="am-form tpl-form-line-form" action="<?php echo site_url('friends/Friends/edit_member_info')?>" method='post' enctype='multipart/form-data'> -->
                                             <div class="am-form-group am-cf">
 
                                                 <label class="am-u-sm-3 am-form-label">昵称 <span class="red">*</span></label>
 
                                                 <div class="am-u-sm-8">
-                                                    <input type="text" name="nickname" value="<%=list[i].nickname%>" class="js-pattern-mobile" placeholder="输入昵称" >
+                                                    <input type="text" id="nicheng" name="nickname" value="<%=list[i].nickname%>" class="js-pattern-mobile" placeholder="输入昵称" >
 
                                                 </div>
 
@@ -351,7 +351,7 @@ padding: 5px 6px!important;
 
                                                 <div class="am-u-sm-8">
 
-                                                    <input type="text" name="phone" value="<%=list[i].phone%>" class="js-pattern-mobile" placeholder="输入昵称" >
+                                                    <input type="text" id="dianhuaY0" name="phone" value="<%=list[i].phone%>" class="js-pattern-mobile" placeholder="输入昵称" >
                                                 </div>
 
                                                 <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
@@ -365,7 +365,7 @@ padding: 5px 6px!important;
 
                                                 <div class="am-u-sm-8">
 
-                                                   <select name="gender">
+                                                   <select name="gender" id="xingbeiY0">
                                                        <option value="1" <% if(list[i].gender == '1'){%>selected<%}%>>男</option>
                                                        <option value="2" <% if(list[i].gender == '2'){%>selected<%}%>>女</option>
                                                    </select>
@@ -383,7 +383,7 @@ padding: 5px 6px!important;
 
                                                 <div class="am-u-sm-8">
 
-                                                    <input type="text" name="age" value="<%=list[i].age%>" class="js-pattern-mobile" placeholder="输入昵称" >
+                                                    <input type="text" id="nianlinY"  name="age" value="<%=list[i].age%>" class="js-pattern-mobile" placeholder="输入年龄" >
 
                                                 </div>
 
@@ -398,7 +398,7 @@ padding: 5px 6px!important;
 
                                                 <div class="am-u-sm-8">
 
-                                                    <input type="text" name="horoscope" value="<%=list[i].horoscope%>" class="js-pattern-mobile" placeholder="输入昵称" >
+                                                    <input type="text" id="xingzuoY" name="horoscope" value="<%=list[i].horoscope%>" class="js-pattern-mobile" placeholder="输入星座" >
 
                                                 </div>
 
@@ -433,15 +433,55 @@ padding: 5px 6px!important;
 
                                             </div>
                                             <div class="am-form-group am-btn-group-xs">
-                                                <input type="hidden" name="user_id" value="<%=list[i].user_id;%>">
+                                                <input type="hidden" id="user_id" name="user_id" value="<%=list[i].user_id;%>">
                                                 <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 
-                                                <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                                <button  type="submit" onclick="submitfun0(this)" class="am-btn am-btn-danger">提交</button>
 
                                             </div>
-                                        </form>
+                                        <!-- </form> -->
                                     </div>
                                 </div>
+                                  <div class="am-modal am-modal-confirm" tabindex="-1" id="m_sort<%=list[i].user_id;%>">
+
+                                            <div class="am-modal-dialog">
+
+                                                <div class="am-modal-hd">修改排序</div>
+
+                                                <div class="am-modal-bd">
+                                                    <!-- <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Friends/edit_member_sort')?>" method='post' enctype='multipart/form-data'> -->
+
+                                                    <div class="am-form-group am-cf">
+
+                                                        <label class="am-u-sm-3 am-form-label">排序 <span class="red">*</span></label>
+
+                                                        <div class="am-u-sm-8">
+
+                                                            <input type="number" id="resommendOnHomeIndex" name="resommendOnHomeIndex" value="<%=list[i].resommendOnHomeIndex;%>" class="js-pattern-mobile" placeholder="排序"  required> 
+
+                                                        </div>
+
+                                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
+
+                                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
+
+                                                    </div>
+                                                     <div class="am-form-group am-btn-group-xs">
+                                                        <input type="hidden" id="user_id" name="user_id" value="<%=list[i].user_id;%>">
+
+                                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
+
+                                                        <button type="submit" onclick="submitfun1(this)" class="am-btn am-btn-danger">提交</button>
+
+                                                    </div>
+
+                                                <!-- </form> -->
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
                               
 
 
@@ -474,25 +514,65 @@ padding: 5px 6px!important;
 
 </div>
 <script type="text/javascript">
+    function submitfun0(that){
+        var nickname = $(that).parentsUntil('.am-modal-confirm').find('#nicheng').val();//昵称
+        var phone = $(that).parentsUntil('.am-modal-confirm').find('#dianhuaY0').val();
+        var gender = $(that).parentsUntil('.am-modal-confirm').find('#xingbeiY0').val();
+        var age = $(that).parentsUntil('.am-modal-confirm').find('#nianlinY').val();
+        var horoscope = $(that).parentsUntil('.am-modal-confirm').find('#xingzuoY').val();
+        var user_id = $(that).parentsUntil('.am-modal-confirm').find('#user_id').val();
+        var img = $(that).parentsUntil('.am-modal-confirm').find('#imgUpload').prop('files')[0] || '';
+        // var dataObj = {
+        //     nickname:nickname,
+        //     phone:phone,
+        //     gender:gender,
+        //     age:age,
+        //     horoscope:horoscope,
+        //     img:img,
+        //     user_id:user_id
+        // }
+        var dataForm = new FormData();
+            dataForm.append('nickname', nickname);
+            dataForm.append('phone', phone);
+            dataForm.append('gender', gender);
+            dataForm.append('horoscope', horoscope);
+            dataForm.append('age', age);
+            img && dataForm.append('img', img);//判断存在img ，再添加 数据
+            dataForm.append('user_id', user_id);
 
-// 编辑模态框操作 
-$('#doc-modal-list').find('.update').add('#doc-confirm-toggle').
-    on('click', function () { 
-    alert('456789');
-    $("#resommendOnHomeIndex").val($(this).parentsUntil('tbody').find('.sort').html());
-    $("#userId").val($(this).parentsUntil('tbody').find('.user_id').html());
+        var request = new XMLHttpRequest();
+        request.open("POST", "<?php echo site_url('friends/Friends/edit_member_info')?>");
+        request.onload = function(data) {
+            if (request.status == 200) {//响应成功
+                console.log(data.currentTarget.responseText);
 
-    $('#my-update-confirm').modal({
-        relatedTarget: this,
-        onConfirm: function (options) {  
+            } else {
+                alert('失败');
+            }
+        };
+        request.send(dataForm);
+        
+    }
+    function submitfun1(that){
+        var resommendOnHomeIndex = $(that).parentsUntil('.am-modal-confirm').find('#resommendOnHomeIndex').val();
+        var user_id = $(that).parentsUntil('.am-modal-confirm').find('#user_id').val();
+        var dataForm = new FormData();
+            dataForm.append('resommendOnHomeIndex', resommendOnHomeIndex);
+            dataForm.append('user_id', user_id);
+            var request = new XMLHttpRequest();
+            request.open("POST", "<?php echo site_url('friends/Friends/edit_member_sort')?>");
+            request.onload = function(data) {
+                if (request.status == 200) {//响应成功
+                    console.log(data.currentTarget.responseText);
 
-        },
+                } else {
+                    alert('失败');
+                }
+            };
+            request.send(dataForm);
+    }
 
-        closeOnConfirm: false,
-        onCancel: function () { 
-        }
-    });
-});  
+ 
     $(function() {
 
     var startDate = new Date(2017, 04, 01);
