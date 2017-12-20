@@ -1583,11 +1583,25 @@ class Electronic extends Default_Controller {
                 $_SESSION['couRec'] = $start;
             }
             $size = $this->input->post('count');
-            $sql = "select user_coupon_id from hf_user_coupon";
-            $query = $this->db->query($sql);
-            $list = $query->result_array();
+            $uuid = $this->input->post('uuid');
 
-            $listpage = $this->Activity_model->selCouponReceive($size,$start);
+            if(!empty($uuid)){
+                $this->db->select('a.*,b.title,b.name,c.nickname,d.payType');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+                $this->db->join('hf_mall_order_repaydata as d','a.orderUUID = d.repay_UUID','left');
+
+                $query = $this->db->like('a.orderUUID',$uuid,'both')->order_by('a.user_coupon_id','desc')->get();
+                $listpage = $query->result_array();
+                $list = $listpage;
+            }else{
+                $sql = "select user_coupon_id from hf_user_coupon";
+                $query = $this->db->query($sql);
+                $list = $query->result_array();
+                $listpage = $this->Activity_model->selCouponReceive($size,$start);
+            }
+          
 
             if(!empty($listpage)){
                 echo json_encode(['total'=>count($list),'subjects'=>$listpage]);

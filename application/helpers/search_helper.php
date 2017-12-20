@@ -3227,9 +3227,11 @@ function friends_member_search($age,$gender,$startTime,$endTime,$sear){
 
     }else if(empty($age) && empty($startTime) && empty($sear)){
         if($gender == ''){
-            $query = $CI->db->where('gid','5')->get('hf_user_member');
-                $res = $query->result_array();
+            $CI->db->select('user_id');
+            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->order_by('user_id','desc')->get('hf_user_member');
+            $res = $query->result_array();
         }else{
+            $CI->db->select('user_id');
             $query = $CI->db->where('gid','5')->where('gender',$gender)->get('hf_user_member');
             $res = $query->result_array();
         }
@@ -3439,10 +3441,10 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
 
     }else if(empty($age) && empty($startTime) && empty($sear)){
         if($gender == ''){
-            $query = $CI->db->where('gid','5')->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->order_by('user_id','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
         }else{
-            $query = $CI->db->where('gid','5')->where('gender',$gender)->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->where('gender',$gender)->order_by('user_id','desc')->limit($size,$page)->get('hf_user_member');
             $res = $query->result_array();
         }
     }

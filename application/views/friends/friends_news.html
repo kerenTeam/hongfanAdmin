@@ -338,6 +338,11 @@ padding: 5px 6px!important;
                                     <td><%= list[i].create_time%></td>
                                     <td> 
                                         <div class="tpl-table-black-operation">
+                                            <%if(list[i].award == '1'){%>
+                                            <a href="<?php echo site_url('/friends/Friends/grantHidou/');?><%= list[i].id%>" class="tpl-table-black-operation-set" >
+                                                <i class="am-icon-pencil"></i> 发放HI豆
+                                            </a>
+                                            <%}%>
                                             <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_info<%= list[i].id%>'}">
                                                 <i class="am-icon-pencil"></i> 查看详情
                                             </a>

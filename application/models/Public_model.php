@@ -42,6 +42,11 @@ class Public_model extends CI_Model
 		$query = $this->db->where($where,$data)->order_by($sort,'desc')->get($table);
         return $query->result_array();
 	}
+	//条件返回一条数据
+	function select_where_info($table,$where,$id){
+		$query = $this->db->where($where,$id)->get($table);
+		return $query->row_array();
+	}
 
 	//分页查询
 	function select_page($table,$size,$page,$sort){
@@ -56,7 +61,7 @@ class Public_model extends CI_Model
 	}
 
 	function select_where_member_page($table,$where,$id,$size,$page,$sort){
-		$query = $this->db->where($where,$id)->where('gid','5')->order_by($sort,"asc")->order_by('create_time','desc')->limit($size,$page)->get($table);
+		$query = $this->db->where($where,$id)->where('gid','5')->order_by($sort,"asc")->order_by($sort,'desc')->limit($size,$page)->get($table);
         return $query->result_array();
 	}
 
@@ -181,6 +186,12 @@ class Public_model extends CI_Model
 		return $query->result_array();
 	}
 
+	// 获取今日以奖励的
+	function selectToday($table,$type,$userid,$id,$time){
+		$sql = 'select id from '.$table.' where '.$userid.'='.$id.' and typeId='.$type.' and award=2 and create_time >= "'.$time.' 00:00:00" and create_time <="'.$time.' 23:59:59"';
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 
 }
 

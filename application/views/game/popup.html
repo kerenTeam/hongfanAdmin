@@ -192,6 +192,7 @@ padding: 5px 6px!important;
                                     <th>弹窗名称</th>
                                     <th>弹窗图片内容</th>
                                     <th>弹窗链接</th>
+                                    <th>弹窗状态</th>
                                     <th>创建时间</th> 
                                     <th>操作</th>
 
@@ -200,14 +201,16 @@ padding: 5px 6px!important;
                             </thead>
 
                             <tbody id="doc-modal-list">
- 
+                                <?php foreach($model as $k=>$val):?>
                                         <tr>
-                                            <td>1</td>
-                                            <td>首页</td>
+                                            <td><?php echo $k+1;?></td>
+                                            <input type="hidden" value="<?php echo $val['id'];?>" class="modelId">
+                                            <td><?php echo $val['pageName'];?></td>
                                             
-                                            <td><img src="http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658" class="popimg am-img-responsive" style="width: 200px;"></td>
-                                            <td class="popurl" style="max-width: 200px;word-wrap: break-word;">http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658</td>
-                                            <td>2017-12-18</td>
+                                            <td><img src="<?php echo $val['modelContent'];?>" class="popimg" style="width: 200px;"></td>
+                                            <td class="popurl" style="max-width: 200px;word-wrap: break-word;"><?php echo $val['modelUrl'];?></td>
+                                            <td><?php if($val['modelState'] == '1'){echo "APP展示";}else{echo "关闭";}?><input type="hidden" value="<?php echo $val['modelState'];?>" id="state"></td>
+                                            <td><?php echo $val['createTime'];?></td>
                                             <td>
                                                <div class="tpl-table-black-operation">
    
@@ -225,30 +228,8 @@ padding: 5px 6px!important;
                                                 </div>  
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>hi友圈主页</td>
-                                            
-                                            <td><img src="http://img.hb.aicdn.com/38ca5e9748326fe96d99ebaa89009bc43158bacee553-SajcBz_fw658" class="popimg am-img-responsive"  style="width: 200px;"></td>
-                                            <td class="popurl" style="max-width: 200px;word-wrap: break-word;">http://img.hb.aicdn.com/38ca5e9748326fe96d99ebaa89009bc43158bacee553-SajcBz_fw658</td>
-                                            <td>2017-12-18</td>
-                                            <td>
-                                               <div class="tpl-table-black-operation">
-   
-                                                    <a href="javascript:;" class="tpl-table-black-operation-set update">
-
-                                                        <i class="am-icon-pencil"></i> 编辑
-
-                                                    </a>
-
-                                                    <a href="" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-trash"></i> 删除
-
-                                                    </a>
-
-                                                </div>  
-                                            </td>
-                                        </tr>
+                                <?php endforeach;?>
+                    
                                       
                                         
 <!-- 编辑弹框 -->
@@ -259,7 +240,7 @@ padding: 5px 6px!important;
 
       <div class="am-modal-bd">
 
-          <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="" method='post' enctype='multipart/form-data'>
+    <form class="am-form tpl-form-line-form"  data-am-validator action="<?php echo site_url('/game/Game/editModel');?>" method='post' enctype='multipart/form-data'>
 
    
     <div class="am-form-group am-cf">
@@ -272,7 +253,7 @@ padding: 5px 6px!important;
 
            <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  required>
           
-          <div id="preview"> <img style="border-radius: 3px;" src="http://img.hb.aicdn.com/98655e2d05fdf641ae001703e67a23e60634d9d93e09e-YM4JZ7_fw658" class="am-img-responsive cardView"> </div>
+          <div id="preview"> <img style="border-radius: 3px;" src="" class="am-img-responsive cardView"> </div>
       
             <span class="clickUp"></span>
 
@@ -287,18 +268,33 @@ padding: 5px 6px!important;
   </div>
    <div class="am-form-group am-cf">
 
-      <label class="am-u-sm-2 am-form-label">链接 </label>
+      <label class="am-u-sm-2 am-form-label">链接： </label>
 
       <div class="am-u-sm-10">
 
-          <input type="url" id="popurl" name="description"  class="js-pattern-mobile" placeholder="输入链接" required="">
+          <input type="url" id="popurl" name="modelUrl"  class="js-pattern-mobile" placeholder="输入链接" required="">
 
       </div>
 
+
   
   </div>  
+  <div class="am-form-group am-cf">
+
+      <label class="am-u-sm-2 am-form-label">状态： </label>
+
+      <div class="am-u-sm-10">
+            <select name="modelState" id="modelState">
+                <option value="1">APP展示</option>
+                <option value="0">关闭</option>
+            </select>
+      </div>
+
+
+  
+  </div> 
   <div class="am-form-group am-btn-group-xs">
-      <input type="hidden" name="id" value="">
+      <input type="hidden" name="id" id="modelId" value="">
       <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 
       <button type="submit" class="am-btn am-btn-danger">提交</button>
@@ -362,6 +358,9 @@ padding: 5px 6px!important;
             on('click', function () { 
                 $('#preview img').attr('src',$(this).parentsUntil('tbody').find('.popimg').attr('src'))
                 $('#popurl').val($(this).parentsUntil('tbody').find('.popurl').html());  
+                $('#modelId').val($(this).parentsUntil('tbody').find('.modelId').val());  
+                $("#modelState").val($(this).parentsUntil('tbody').find('#state').val());
+
                 $('#my-update-confirm').modal({
                     relatedTarget: this,
                     onConfirm: function (options) {  

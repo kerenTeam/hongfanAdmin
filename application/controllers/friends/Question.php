@@ -11,7 +11,8 @@ class Question extends Default_Controller
 	public $dynamic = "hf_friends_news";//动态
 	public $cates = "hf_faqs_group";//动态
 	public $comment = "hf_friends_news_commont";//评论或回答
-	public $expert = "hf_faqs_expert";//专家
+    public $expert = "hf_faqs_expert";//专家
+	public $member = "hf_user_member";//专家
 
 
 	//23
@@ -68,27 +69,7 @@ class Question extends Default_Controller
         $this->load->view('template.html',$data);
 			
 	}
-    // //返回问答
-    // function retQuestionList(){
-    //     if($_POST){
-    //         $start = $this->input->post('start');
-    //         if($start != '0'){
-    //             $_SESSION['pageNum'] = $start;
-    //         }
-    //         // var_dump($_SESSION['pageNum']);
-    //         $size = $this->input->post('count');
-    //         $list = $this->Public_model->select_where($this->dynamic,'typeId','2','');
 
-    //         $listpage = $this->Public_model->select_question_list($size,$start);
-
-    //         if(!empty($listpage)){
-    //             echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
-    //         }else{
-    //             echo "2";
-    //         }
-
-    //     }
-    // }
 
     //根据搜索返回问题
     function searchQuestion(){
@@ -123,6 +104,40 @@ class Question extends Default_Controller
                 echo "2";
             }
 
+        }
+    }
+    //发放HI豆奖励
+    function awardQuestion(){
+        $id = intval($this->uri->segment('4'));
+        if($id == '0'){
+            echo "<script>alert('请求错误！');window.history.go(-1);</script>";
+            exit;
+        }else{
+            $news = $this->Public_model->select_where_info($this->dynamic,'id',$id);
+
+            //获取用户今天以奖励的纪录
+            $time =date('Y-m-d',strtotime($news['create_time']));
+            $today = $this->Public_model->selectToday($this->dynamic,'2','userid',$news['userid'],$time);
+
+            if(count($today) >= get_option('questionNum')){
+                echo "<script>alert('该用户今天发放的HI豆已达上限！');window.history.go(-1);</script>";
+                exit;
+            }else{
+                //获取用户hidou
+                $user = $this->Public_model->select_where_info($this->member,'user_id',$news['userid']);
+                $data['intergral'] = $user['intergral']+get_option('questionPrice');
+                if($this->Public_model->updata($this->member,'user_id',$news['userid'],$data)){
+                    $arr['award'] = '2'; 
+                    $this->Public_model->updata($this->dynamic,'id',$id,$arr);
+
+                    echo "<script>alert('发放成功！');window.history.go(-1);</script>";
+                    exit;
+
+                }else{
+                    echo "<script>alert('发放失败！');window.history.go(-1);</script>";
+                    exit;
+                }
+            }
         }
     }
 

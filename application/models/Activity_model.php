@@ -313,7 +313,6 @@ class Activity_model extends CI_Model
         $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
 
-
         $query = $this->db->order_by('a.user_coupon_id','desc')->limit($page,$size)->get();
         return $query->result_array();
     }

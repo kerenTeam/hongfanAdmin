@@ -152,50 +152,16 @@ td.am-text-middle img{
 
 </style>
 
-
-<style>  
-    *{  
-        padding: 0px;  
-        margin: 0px;  
-    }  
-    *{ margin:0; padding:0; list-style:none;}  
-    a{ text-decoration:none;}  
-    a:hover{ text-decoration:none;}  
-    .tcdPageCode{padding: 15px 20px;text-align: left;color: #ccc;}  
-    .tcdPageCode a{display: inline-block;color: #428bca;display: inline-block;height: 25px;  
-    line-height: 25px;    padding: 0 10px;border: 1px solid #ddd;    margin: 0 2px;border-radius: 4px;vertical-align: middle;}  
-    .tcdPageCode a:hover{text-decoration: none;border: 1px solid #428bca;}  
-    .tcdPageCode span.current{display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
-    margin: 0 2px;color: #fff;background-color: #428bca;    border: 1px solid #428bca;border-radius: 4px;vertical-align: middle;}  
-    .tcdPageCode span.disabled{    display: inline-block;height: 25px;line-height: 25px;padding: 0 10px;  
-    margin: 0 2px;    color: #bfbfbf;background: #f2f2f2;border: 1px solid #bfbfbf;border-radius: 4px;vertical-align: middle;}  
-    ul{  
-        list-style: none;  
-    }  
-    .wrap >ul > li{  
-        width: 250px;  
-        height: 350px;  
-        margin: 20px;  
-        /*border: 1px green solid;*/  
-        float: left;  
-        margin-bottom: 40px;  
-    }  
-    .wrap >ul > li>img{  
-        width: 100%;  
-        height: 100%;  
-    }  
-    .wrap >ul > li>p{  
-        text-align: center;  
-        line-height: 30px;  
-        height: 30px;  
-    }  
-    .wrap{  
-        margin: 100px auto;  
-        border: 1px solid red;  
-        height: 1800px;  
-        width: 1460px;  
-    }  
-</style>  
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 <!-- 内容区域 -->
 
@@ -240,10 +206,10 @@ td.am-text-middle img{
                              <label for="source_state" class="am-u-sm-3 am-form-label">支付订单号：</label>
 
                                 <div class="am-u-sm-9">
-                                   <input type="text" name="orderUUID" >
+                                   <input type="text" name="orderUUID" id="orderuuid" >
                                 </div>
 
-                            </div>  
+                      </div>  
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
 
@@ -373,12 +339,8 @@ td.am-text-middle img{
 
                     </div>
 
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-
-                        <div class="tcdPageCode">  
-                        </div> 
-
-                    </div>
+                     <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
 
                 </div>
 
@@ -537,81 +499,95 @@ function otherFunction() {
 </script>
 
 
-<script src="assets/js/jquery.page.js"></script>
 <script>  
-    $(function () {  
-       //初始化第一页数据；  
-        var urlApi = '<?php echo site_url("/electronic/Electronic/retCouponRecord");?>' ;
+   
 
-        var page =  "<?php if(isset($_SESSION['couRec'])){echo $_SESSION['couRec'];}else{echo '0';}?>";
-        // console.log(page);
-        $.ajax({  
-            url:urlApi,  
-            type:'POST',  
-            // dataType:'jsonp',  
-            data:{  
-                //从第几条开始请求；  
-                "start" : page,  
-                //请求多少条数据  
-                "count" : 10  
-            },  
-            success:function(data){ 
+$(document).ready(function(){
+
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'',"<?php echo site_url("/electronic/Electronic/retCouponRecord");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['couRec'])){echo '0';}else{echo $_SESSION['couRec'];}?>"/10 +1;
+
+
+    getListinfo(page,'',"<?php echo site_url("/electronic/Electronic/retCouponRecord");?>");
+    
+    // 新分页方法
+    function getListinfo(num,uuid,url) {
+
+        var pagenum10 = (num-1) *10;
+        
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'uuid':uuid
+            },
+            // dataType: "json",
+            success: function(data) {
                 // console.log(data);
-            //total总条数属性，计算总页数；  
-                var res = JSON.parse(data)  
-                var total = parseInt(res.total/10);  
-                var result  = res.subjects;  
-                var dataobj = {};
-               
-                                  
-                dataobj.list = result;
-                var html=template("infolist",dataobj);
-                document.getElementById("infolistDiv").innerHTML = html;
-                if(page == 0){
-                    num = 1;
-                }else{
-                     num = (parseInt(page) + 10)/10;
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = parseInt(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,uuid,"<?php echo site_url("/electronic/Electronic/retCouponRecord");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    // lists.forEach(function(ele,index){
+                    //    if (ele.pic.length > 5) {
+                    //         var pic = JSON.parse(ele.pic);
+                    //         // console.log(pic)
+                    //        ele.pic = pic[0].picImg;
+                    //     }else{
+                    //         ele.pic = '';
+                    //     }
+                    // })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
                 }
-                // console.log(num);
-                //分页插件，  
-                $(".tcdPageCode").createPage({  
-                    //pageCount：总页数  
-                    pageCount:total,  
-                    //current：当前页  
-                    current:num,  
-                    backFn:function(pageIndex){  
-                    //单击回调方法，pageIndex是当前页码  
-                        $(".movieList").empty();  
-                      
-                        var start = 10*(pageIndex-1); 
-                        $.ajax({  
-                            url:urlApi,  
-                            type:'POST',  
-                            // dataType:'jsonp',  
-                            data:{  
-                                "start" : start,  
-                                "count" : 10,  
-                            },  
-                            success:function(data){  
-                                var res = JSON.parse(data)  
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
 
-                                var result  = res.subjects;  
-                                console.log(res);
-                                var dataobj = {};
-                                  // 头像
-                               
-                                dataobj.list = result;
-                                var html=template("infolist",dataobj);
-                                document.getElementById("infolistDiv").innerHTML = html;
-                                
-                            }  
-                        })  
-                    }  
-                }); 
-                otherFunction(); 
-            }  
-        })  
-    })  
+    //点击搜索
+
+    $('#searchOrder').click(function(){
+
+        var  uuid = $('#orderuuid').val();
+        console.log(uuid);
+        getListinfo(1,uuid,"<?php echo site_url("/electronic/Electronic/retCouponRecord");?>");
+
+    });
+
+
+
+}) 
 </script> 
 
 

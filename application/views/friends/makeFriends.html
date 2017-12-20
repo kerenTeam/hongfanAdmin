@@ -191,7 +191,6 @@ padding: 5px 6px!important;
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" enctype="multipart/form-data"  data-am-validator>
 
                     
-                    
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
 
                         <label for="gender" class="am-u-sm-2 am-form-label">年龄阶段</label>
@@ -201,7 +200,6 @@ padding: 5px 6px!important;
                             <select id="source_state" name="ages">
 
                                 <option value>请选择</option>
-                                <!-- <option value="1">18-25</option> -->
                                 <option value="1">18-25</option>
                                 <option value="2">26-35</option>
                                 <option value="3">36-45</option>
@@ -212,23 +210,7 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-
-                        <label for="gender" class="am-u-sm-2 am-form-label">性别</label>
-
-                        <div class="am-u-sm-10">
-
-                            <select id="gender" name="gender">
-
-                                <option value>请选择</option>
-                                <!-- <option value="1">18-25</option> -->
-                                <option value="1">男</option>
-                                <option value="2">女</option>
-                            </select>
-
-                        </div>
-
-                    </div>
+                   <!--  -->
 
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
 
@@ -275,7 +257,6 @@ padding: 5px 6px!important;
                     </div>
 
                     <div class="am-form-group am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <!-- <input type="hidden" name="gender" value="0"> -->
                         <button type="button" class="am-btn am-btn-secondary searchGoods"><i class="am-icon-search"></i> 查询</button>
 
                     </div>
@@ -646,7 +627,7 @@ $(document).ready(function(){
         totalPage: 10,
         totalSize: 100,
         callback: function(num) {
-            getListinfo(num,'','','','','',"<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
+            getListinfo(num,'','','','',"<?php echo $gender;?>","<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
         }
     })
     
@@ -654,7 +635,7 @@ $(document).ready(function(){
     var page = "<?php if(!isset($_SESSION['fmNum'])){echo '0';}else{echo $_SESSION['fmNum'];}?>"/10 +1;
 
 
-    getListinfo(page,'','','','','',"<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
+    getListinfo(page,'','','','','<?php echo $gender;?>',"<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
     
     // 新分页方法
     function getListinfo(num,ages,begin_time,end_time,sear,gender,url) {
@@ -718,10 +699,9 @@ $(document).ready(function(){
 
     $('.searchGoods').click(function(){
 
-        var ages=$('#source_state option:selected').val(),gender = $('#gender option:selected').val(),begin_time = $('#begin_date').val(), end_time = $('#end_date').val(), sear = $('#searchKey').val();
-
-        // console.log('faqsType='+ faqsType +'&questionStates='+ questionStates  +'&end_time='+ end_date + '&begin_time='+ begin_date  +'&sear='+ keywords);
-        getListinfo(1,ages,begin_time,end_time,sear,gender,"<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
+        var ages=$('#source_state option:selected').val(),begin_time = $('#begin_date').val(), end_time = $('#end_date').val(), sear = $('#searchKey').val();
+        // console.log(ages,begin_time,end_time,sear);
+        getListinfo(1,ages,begin_time,end_time,sear,'<?php echo $gender;?>',"<?php echo site_url("/friends/Friends/searchFriendsMember");?>");
 
     });
   

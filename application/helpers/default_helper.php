@@ -11,6 +11,19 @@ function get_invitation($id){
     $name = $query->result_array();
     return count($name);
 }
+//获取配置
+//获取配置
+function get_option($name = '') {
+    $CI = &get_instance();
+    $sql = "select value from hf_friends_system where name='$name'";
+    $query = $CI->db->query($sql);
+    $value = $query->row_array();
+
+    if ($value) {
+        return $value['value'];
+    }
+    return NULL;
+}
 
 
 //保留两位小数   不四舍五入

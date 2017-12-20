@@ -16,7 +16,8 @@ class Game extends Default_Controller
 	function __construct()
 	{
 		parent::__construct();	
-		$this->load->model('Game_model');
+        $this->load->model('Game_model');
+		$this->load->model('Public_model');
 
 	}
 
@@ -890,12 +891,61 @@ class Game extends Default_Controller
 
     //弹窗
     function Popup(){
-
+        //所有弹框$图片
+        $data['model'] = $this->Public_model->select('hf_system_model','id');
 
         $data['page'] = 'game/popup.html';
         $data['menu'] = array('game','popup');
         $this->load->view('template.html',$data);
 
+    }
+    //编辑弹窗
+    function editModel(){
+        if($_POST){
+            $data= $this->input->post();
+            $header = array("token:".$_SESSION['token'],'city:'.'1');    
+            if(!empty($_FILES['img']['name'])){
+                $tmpfile = new CURLFile(realpath($_FILES['img']['tmp_name']));
+            
+                $pics = array(
+                    'pics' =>$tmpfile,
+                    'porfix'=>'game/Popup',
+                    'bucket'=>'cqcother',
+                );
+            
+                $qiuniu = json_decode(curl_post_express($header,QINIUUPLOAD,$pics),true);
+
+                if($qiuniu['errno'] == '0'){
+                    $img = json_decode($qiuniu['data']['img'],true);
+                    $data['modelContent'] =$img[0]['picImg'];
+                   
+                }else{
+                  echo "<script>alert('图片上传失败！');window.location.href='".site_url('/game/Game/Popup')."'</script>";exit;
+                }
+            }
+            var_dump($data);
+
+            if($this->Public_model->updata('hf_system_model','id',$data['id'],$data)){
+                $log = array(
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."修改了APP弹框，弹框编号是".$data['id'],
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+                $this->db->insert('hf_system_journal',$log);
+
+                echo "<script>alert('操作成功！');window.location.href='".site_url('/game/Game/Popup')."'</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.location.href='".site_url('/game/Game/Popup')."'</script>";exit;
+ 
+            }
+
+
+
+        }
     }
 
 

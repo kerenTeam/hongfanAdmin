@@ -24,6 +24,25 @@ class Payment extends Default_Controller
         $data['menu'] = array('payment','recharge');
         $this->load->view('template.html',$data);
     }
+    //获取手机验证码
+    function codeNum(){
+        // if($_POST){
+            $code = rand(1000,9999);
+        
+            $arr = array(
+                'phone'=>'15828277232',
+                'cxt'=>"用户".$_SESSION['users']['username']."在修改话费充值价格，验证码是".$code."。5分钟内有效！"
+            );
+            $url = "http://192.168.0.5:7200/api/index/sms";
+            $qiuniu = json_decode(curl_post($url,$arr),true);
+            
+
+
+
+
+        // }
+    }
+
     //新增手机设置
     function add_recharge(){
         $q= $this->uri->uri_string();
@@ -42,12 +61,6 @@ class Payment extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             $data['createUserid'] = $_SESSION['users']['user_id'];
-
-            // $rule = round($data['originalPrice'] - $data['advicePrice'],2);
-          
-            // $pay = array("Condition"=>$data['originalPrice'],'rule'=>'-'.$rule);
-            // $data['discountsRule'] = json_encode($pay);
-
 
             if($this->Payment_model->add_recharge($data)){
                  //日志    

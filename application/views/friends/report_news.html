@@ -137,7 +137,16 @@ padding: 5px 6px!important;
 }
 
 </style>
-
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 
 <!-- 内容区域 -->
@@ -171,8 +180,23 @@ padding: 5px 6px!important;
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
 
             <div class="widget am-cf">
-
                 <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">举报帖子搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                   
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">关键字:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <input type="text" id="sear" name="sear" />
+                        </div>
+                    </div>
+                   
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
 
                     <div class="widget-title  am-cf">动态列表</div>
 
@@ -231,63 +255,47 @@ padding: 5px 6px!important;
 
                             </thead>
 
-                            <tbody id="dataList">
+                            <tbody id="infolistDiv">
 
                                 <!-- more data -->
-                                <?php if(!empty($lists)):?>
-                                    <?php foreach($lists as $val):?>
-                                        <tr>
-                                            <td><?php echo $val['id'];?></td>
-                                            <td><?php echo $val['nickname'];?></td>
-                                          
-                                            <td><?php echo $val['content'];?></td>
-                                            <?php $logo = json_decode($val['pic'],true);?>
-                                            <?php if(!isset($logo[0]['picImg'])):?>
-                                                <td>无图</td>
-                                            <?php else:?>
-                                               <td><img src="<?php echo $logo[0]['picImg'];?>" style="width: 100px;height: 100px;"></td> 
-                                            <?php endif;?>
-                                            <td><?php echo $val['likes'];?></td>
-                                            <td><?php echo $val['read'];?></td>
-                                            <td><?php echo $val['create_time'];?></td>
-                                            <td>
-                                               <div class="tpl-table-black-operation">
-                                                 <!--    <a href="<?php echo site_url('/friends/Friends/edit_news_state/'.$val['id'].'/4');?>"  class="am-btn am-btn-warning">恢复正常显示</a> -->
-                                                      
-                                                    <a href="<?php echo site_url('/friends/Friends/edit_news_state/'.$val['id'].'/4');?>"  class="tpl-table-black-operation-green">恢复正常显示</a>
-                                                    <a href="<?php echo site_url('/friends/Friends/del_friends_news/'.$val['id'].'/'.$val['spaceType']);?>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-trash"></i> 删除
-
-                                                    </a>
-
-                                                </div>  
-                                            </td>
-                                        </tr>
-                                  
-                                    <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="9">暂无内容！</th>
-                                <?php endif;?>
+                               
         
                             </tbody>
 
                         </table>
+                         <script type="text/html" id="infolist">
+                               <% for(var i=0; i<list.length; i++){ %>
+                                    <tr>
+                                        <td><%= list[i].id%></td>
+                                        <td><%= list[i].nickname%></td>
+                                        <td><%= list[i].content%></td>
+                                        <%if(list[i].pic){%>
+                                            <td><img src="<%=list[i].pic%>" style="width: 100px;height: 100px;"></td> 
+
+                                        <%}else{%>
+                                          <td>无图</td>
+                                        <%}%>
+                                        <td><%=list[i].likes%></td>
+                                        <td><%=list[i].read%></td>
+                                        <td><%=list[i].create_time%></td>
+                                        <td>
+                                            <div class="tpl-table-black-operation">
+                                               
+                                                      
+                                                    <a href="<?php echo site_url('/friends/Friends/edit_news_state/');?><%= list[i].id%>/4"  class="tpl-table-black-operation-green">恢复正常显示</a>
+                                                    <a href="<?php echo site_url('/friends/Friends/del_friends_news/');?><%= list[i].id%>/<%= list[i].spaceType%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+                                            </div> 
+                                        </td>
+                                    </tr>
+                               <%}%>
+                        </script>
 
                     </div>
-
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-
-                        <div id="Pagination">
-
-
-                               <?php echo $pages;?>
-
-
-                        </div>
-
-                      
-
-                    </div>
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
 
                 </div>
 
@@ -298,7 +306,96 @@ padding: 5px 6px!important;
     </div>
 
 
+<script type="text/javascript">
+    
+$(document).ready(function(){
 
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'',"<?php echo site_url("/friends/Friends/retReport");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['reportNews'])){echo '0';}else{echo $_SESSION['reportNews']/10 +1;}?>";
+
+
+    getListinfo(page,'',"<?php echo site_url("/friends/Friends/retReport");?>");
+    
+    // 新分页方法
+    function getListinfo(num,sear,url) {
+
+        var pagenum10 = (num-1) *10;
+       
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'sear':sear
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = parseInt(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,sear,"<?php echo site_url("/friends/Friends/retReport");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    lists.forEach(function(ele,index){
+                       if (ele.pic.length > 5) {
+                            var pic = JSON.parse(ele.pic);
+                            // console.log(pic)
+                           ele.pic = pic[0].picImg;
+                        }else{
+                            ele.pic = '';
+                        }
+                    })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var keywords = $('#sear').val();
+
+       
+        getListinfo(1,keywords,"<?php echo site_url("/friends/Friends/retReport");?>");
+
+    });
+
+
+
+})
+</script>
 
 
 </div>
