@@ -1028,7 +1028,7 @@ class Friends extends Default_Controller
     }
 
     //APP首页推荐
-    function appHomeFriends{
+    function appHomeFriends(){
 
         $list = $this->Public_model->select_where_member($this->member,'recommend','1','');
         $data = array('userNum'=>count($list),'recomd'=>
