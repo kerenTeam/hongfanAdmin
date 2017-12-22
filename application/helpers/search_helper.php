@@ -1,5 +1,45 @@
 <?php 
 //搜索用户返回数据
+function selectMember($gender,$t,$e,$sear){
+        $CI = &get_instance();
+
+        $res= '';
+        if(!empty($gender) && empty($t) && empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && !empty($t) && empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && empty($t) && !empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && !empty($t) && empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->where('gender',$gender)->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && empty($t) && !empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(empty($gender) && !empty($t) && !empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('create_time >=',$t)->where('create_time <=',$e)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }elseif(!empty($gender) && !empty($t) && !empty($sear)){
+             $CI->db->select('user_id');
+            $query = $CI->db->like('nickname',$sear)->or_like('phone',$sear)->where('create_time >=',$t)->where('create_time <=',$e)->where('gender',$gender)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+
+        }elseif(empty($gender) && empty($t) && empty($sear)){
+            $CI->db->select('user_id');
+            $query = $CI->db->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            $res = $query->result_array();
+        }
+        return $res;
+}
 function selectMember_page($gender,$t,$e,$sear,$page,$size){
         $CI = &get_instance();
 
@@ -31,7 +71,6 @@ function selectMember_page($gender,$t,$e,$sear,$page,$size){
             $res = $query->result_array();
         }
         return $res;
-
 }
 
 //搜索问答问题
@@ -3228,7 +3267,7 @@ function friends_member_search($age,$gender,$startTime,$endTime,$sear){
     }else if(empty($age) && empty($startTime) && empty($sear)){
         if($gender == ''){
             $CI->db->select('user_id');
-            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->order_by('user_id','desc')->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->get('hf_user_member');
             $res = $query->result_array();
         }else{
             $CI->db->select('user_id');
@@ -3247,30 +3286,30 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
     if(!empty($age) && empty($startTime) && empty($sear)){
         if($gender == ''){
             if($age == '1'){
-                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '2'){
-                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '3'){
-                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '4'){
-                $query = $CI->db->where('gid','5')->where('age >=','46')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','46')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }
         }else{
             if($age == '1'){
-                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '2'){
-                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '3'){
-                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '4'){
-                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }
 
@@ -3278,11 +3317,11 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
 
     }else if(empty($age) && !empty($startTime) && empty($sear)){
         if($gender == ''){
-            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
             $query = $CI->db->query($sql);
             $res = $query->result_array();
         }else{
-            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender = '$gender' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender = '$gender' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
             $query = $CI->db->query($sql);
             $res = $query->result_array();
 
@@ -3290,53 +3329,53 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
 
     }else if(empty($age) && empty($startTime) && !empty($sear)){
         if($gender == ''){
-            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
         }else{
-            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->where("gender",$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
             $res = $query->result_array();
         }
     //2
     }else if(!empty($age) && !empty($startTime) && empty($sear)){
         if($gender == ''){
             if($age == '1'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '2'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);                
                 $res = $query->result_array();
             }else if($age == '3'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);  
                 $res = $query->result_array();
             }else if($age == '4'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and age >= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);  
                 $res = $query->result_array();
             }
         }else{
             if($age == '1'){
-                 $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                 $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '2'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '3'){
-               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '4'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '46' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and age >= '46' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
@@ -3347,30 +3386,30 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
     }else if(!empty($age) && empty($startTime) && !empty($sear)){
         if($gender == ''){
             if($age == '1'){
-                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '2'){
-                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '3'){
-                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '4'){
-                $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','46')->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }
         }else{
             if($age == '1'){
-                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','18')->where('age <=','25')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '2'){
-                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','26')->where('age <=','35')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '3'){
-                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','36')->where('age <=','45')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }else if($age == '4'){
-                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->limit($size,$page)->get('hf_user_member');
+                $query = $CI->db->where('gid','5')->where('age >=','46')->where("gender",$gender)->like('nickname',$sear,'both')->or_like('phone',$sear,'both')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
             }
 
@@ -3378,13 +3417,13 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
 
     }else if(empty($age) && !empty($startTime) && !empty($sear)){
         if($gender == ''){
-             $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+             $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                 $query = $CI->db->query($sql);
                 $res = $query->result_array();
           
         }else{
-            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+            $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
             $query = $CI->db->query($sql);
             $res = $query->result_array();
@@ -3394,44 +3433,44 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
     }else if(!empty($age) && !empty($startTime) && !empty($sear)){
         if($gender == ''){
             if($age == '1'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '2'){
-               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '3'){
-              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '4'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }
         }else{
             if($age == '1'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '18' and age <= '25' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '2'){
-              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+              $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '26' and age <= '35' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '3'){
-               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+               $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '36' and age <= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
             }else if($age == '4'){
-                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime' limit $page,$size";
+                $sql = "SELECT * FROM `hf_user_member` WHERE `gid` = '5' and gender='$gender' and nickname like '%$sear%' or phone like '%$sear%' and age >= '45' AND `create_time` between '$startTime' and '$endTime'order by savePhotoTime desc limit $page,$size";
 
                $query = $CI->db->query($sql);
                 $res = $query->result_array();
@@ -3441,10 +3480,10 @@ function friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size
 
     }else if(empty($age) && empty($startTime) && empty($sear)){
         if($gender == ''){
-            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->order_by('user_id','desc')->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->where('gender','1')->or_where('gender','2')->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
                 $res = $query->result_array();
         }else{
-            $query = $CI->db->where('gid','5')->where('gender',$gender)->order_by('user_id','desc')->limit($size,$page)->get('hf_user_member');
+            $query = $CI->db->where('gid','5')->where('gender',$gender)->order_by('savePhotoTime','desc')->limit($size,$page)->get('hf_user_member');
             $res = $query->result_array();
         }
     }

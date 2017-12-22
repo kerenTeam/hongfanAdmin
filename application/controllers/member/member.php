@@ -39,6 +39,9 @@ class Member extends Default_Controller {
         //获取昨天
         $d = date("Y-m-d",strtotime("-1 day"));
         $data['yesterday'] = $this->user_model->new_member_num($d);
+        if(!isset($_SESSION['userPage'])){
+            $_SESSION['userPage'] = '0';
+        }
         
         $data['page'] = $this->view_memberList;
         $data['menu'] = array('member','memberList');
@@ -63,11 +66,15 @@ class Member extends Default_Controller {
                 $t = '';
                 $e = '';
             }
+            $_SESSION['userPage'] = $page;
 
-            $num = selectMember_page($gender,$t,$e,$sear,$size,$page);
 
-            if(!empty($num)){
-                echo json_encode($num);
+            $list = selectMember($gender,$t,$e,$sear);
+            $listpage = selectMember_page($gender,$t,$e,$sear,$size,$page);
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+
             }else{
                 echo "2";
             }
@@ -519,6 +526,46 @@ class Member extends Default_Controller {
     	}else{
     		$this->load->view('404.html');
     	}
+    }
+
+
+    //积分纪录
+    function integralList(){
+
+
+        $data['page'] = 'member/integralList.html';
+        $data['menu'] = array('member','integralRec');
+        if(isset($_SESSION['intNum'])){
+            $_SESSION['intNum'] = '0';
+        }
+        $this->load->view('template.html',$data);
+    }
+
+    //
+    function retIntegralRecomd(){
+        if($_POST){
+            // HI豆的独立统计分析（可做到会员中心里），每个用户每一次的HI豆获取和使用记录统计，时间、数量、渠道，收支合计，分类筛选。 全员的合计（周期筛选，历史累计（后面2个求和），当前余额，累计使用）
+            $typs = $this->input->post('type');
+            $phone = $this->input->post('phone');
+            $begin_time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+
+            if(!empty($begin_time)){
+                $t = $begin_time .' 00:00:00';
+                $e = $end_time.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+            
+            $page = $this->input->post('start');
+            $_SESSION['intNum'] = $page;
+            $size = $this->input->post('count');
+
+            
+
+          
+        }
     }
 
   

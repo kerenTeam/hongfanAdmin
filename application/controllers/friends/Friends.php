@@ -308,7 +308,7 @@ class Friends extends Default_Controller
 
 	//交友dongtai 
 	function dynamic(){
-	
+	    $_SESSION['friendsNews'] = '0';
         $data['page'] = $this->view_friends_news;
         $data['menu'] = array('friends','dynamic');
         $this->load->view('template.html',$data);
@@ -377,7 +377,7 @@ class Friends extends Default_Controller
 
 	//举报帖子
 	function report(){
-		
+		$_SESSION['reportNews'] = '0';
         $data['page'] = $this->view_report_news;
         $data['menu'] = array('friends','report');
         $this->load->view('template.html',$data);
@@ -925,12 +925,12 @@ class Friends extends Default_Controller
 
             $page = $this->input->post('start');
             // if($page != '0'){
-                $_SESSION['fmNum'] = $page;
+            $_SESSION['fmNum'] = $page;
             // }
             $size = $this->input->post('count');
             $list = friends_member_search($age,$gender,$startTime,$endTime,$sear);
             $listpage = friends_member_search_page($age,$gender,$startTime,$endTime,$sear,$size,$page);
-
+            // var_dump($listpage);
             if(!empty($listpage)){
                 echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
             }else{
@@ -966,6 +966,7 @@ class Friends extends Default_Controller
     function recomment(){
 
         $list = $this->Public_model->select_where_member($this->member,'recommend','1','');
+        $_SESSION['fmrecom'] = '0';
 
        
         $data = array('userNum'=>count($list),'recomd'=>
@@ -1030,13 +1031,41 @@ class Friends extends Default_Controller
     //APP首页推荐
     function appHomeFriends(){
 
-        $list = $this->Public_model->select_where_member($this->member,'recommend','1','');
-        $data = array('userNum'=>count($list),'recomd'=>
-            '1');
-        $data['page'] = 'friends/friends_recommend.html';
-        $data['menu'] = array('friends','recomment');
+        $_SESSION['friendsHome'] = '0';
+
+        $data['page'] = 'friends/friends_home.html';
+        $data['menu'] = array('friends','appHomeFriends');
         $this->load->view('template.html',$data);
 
+    }
+
+    function appHomeMember(){
+        if($_POST){
+            $sear = $this->input->post('sear');
+            $page = $this->input->post('start');
+           
+            $_SESSION['friendsHome'] = $page;
+            $size = $this->input->post('count');
+
+            if(!empty($sear)){
+                $query = $this->db->like('phone',$sear,'both')->or_like('nickname',$sear,'both')->where('resommendOnHome','1')->where('gid','5')->get($this->member);
+                $list =  $query->result_array();
+                $query1 = $this->db->like('phone',$sear,'both')->or_like('nickname',$sear,'both')->where('resommendOnHome','1')->where('gid','5')->limit($size,$page)->order_by('resommendOnHomeIndex','desc')->get($this->member);
+                $listpage =  $query1->result_array();
+
+            }else{
+                $list = $this->Public_model->select_where_member($this->member,'resommendOnHome','1','');
+                $listpage = $this->Public_model->select_where_member_page($this->member,'resommendOnHome','1',$size,$page,'resommendOnHomeIndex');
+            }
+
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+
+
+        }
     }
 
 
@@ -1359,7 +1388,7 @@ class Friends extends Default_Controller
                         $icon[]['picImg'] =$img[0]['picImg'];
                         $data['avatar'] = json_encode($icon);
                     }else{
-                      echo "<script>alert('图片上传失败！');window.history.go(-1);</script>";exit;
+                      echo "3";exit;
                     }
             }
             if($this->Public_model->updata($this->member,"user_id",$data['user_id'],$data)){
@@ -1374,9 +1403,9 @@ class Friends extends Default_Controller
                 );
                 $this->db->insert('hf_system_journal',$log);
 
-                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+                echo "1";exit;
             }else{
-                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+                echo "2";exit;
 
             }
         }else{
@@ -1399,13 +1428,13 @@ class Friends extends Default_Controller
                 );
                 $this->db->insert('hf_system_journal',$log);
 
-                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+                echo "1";exit;
             }else{
-                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+                echo "2";exit;
 
             }
         }else{
-            $this->load->view('404.html');
+            echo "2";
         }
     }
 
@@ -1527,7 +1556,6 @@ class Friends extends Default_Controller
 
     //奖励设置
     function reward(){
-
 
         $data['page'] = "friends/reward.html";
         $data['menu'] = array('friends','reward');

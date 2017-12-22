@@ -359,7 +359,7 @@ padding: 5px 6px!important;
                                                             已审核
                                                         </a>
                                                     <%}%>
-                                                    <a href="<?php echo site_url('/friends/Question/del_problem/');?><%= list[i].id%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                    <a href="<?php echo site_url('/activity/Activity/del_NewYearList/');?><%= list[i].id%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
                                                         <i class="am-icon-trash"></i> 删除
 
                                                     </a>
@@ -492,10 +492,10 @@ $(document).ready(function(){
             },
             // dataType: "json",
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if(data != 2){
                     var res = JSON.parse(data);
-                    var allpage = parseInt(res.total/10);  
+                    var allpage = Math.ceil(res.total/10);  
                     //分页
                     $("#page").paging({
                         pageNo: num,

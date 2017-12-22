@@ -469,16 +469,18 @@ $(document).ready(function(){
         totalPage: 10,
         totalSize: 100,
         callback: function(num) {
-            getListinfo(num,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
+            getListinfo(num,'','','','',"<?php echo site_url('/member/Member/ret_member_list');?>");
         }
     })
     // 初始化,加载第一页
-    getListinfo(1,'','','','',"<?php echo site_url('/member/Member/ret_member_list');?>");
+    var page = "<?php if(!isset($_SESSION['userPage'])){echo '0';}else{echo $_SESSION['userPage'];}?>"/10 +1;
+    getListinfo(page,'','','','',"<?php echo site_url('/member/Member/ret_member_list');?>");
 
     // 新分页方法
     function getListinfo(num,gender,begin_date,end_date,keywords,url) {
+        // console.log(num);
         var pagenum10 = (num-1) *10;
-        var sizeAll = "<?php echo $userNum;?>"; //总页数
+        // var sizeAll = "<?php echo $userNum;?>"; //总页数？
         // console.log('12='+gender,begin_date,end_date,keywords);
         $.ajax({
             url: url,
@@ -491,32 +493,36 @@ $(document).ready(function(){
                 'end_date':end_date,
                 'sear':keywords
             },
-            dataType: "json",
+            // dataType: "json",
             success: function(data) {
-                console.log(data);
-                var allpage = Math.ceil(sizeAll/10);
-                //分页
-                $("#page").paging({
-                    pageNo: num,
-                    totalPage: allpage,
-                    totalSize: sizeAll,
-                    callback: function(num) { //点击页码的 回调 方法
-                        getListinfo(num,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
-                    }
-                })
-                // 铺数据
-                var dataobj = {};
-                // 头像
-                data.forEach(function(ele,index){
-                    if (ele.avatar && ele.avatar.length) {
-                       ele.avatar = JSON.parse(ele.avatar)[0].picImg;
-                    }else{
-                        ele.avatar = 'http://is4.mzstatic.com/image/thumb/Purple118/v4/54/0b/63/540b6318-adbb-fdc3-985d-11bad0dbcdb2/source/175x175bb.jpg';
-                    }
-                })
-                dataobj.list = data;
-                var html=template("infolist",dataobj);
-                document.getElementById("infolistDiv").innerHTML = html;
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            getListinfo(num,gender,begin_date,end_date,keywords,"<?php echo site_url('/member/Member/ret_member_list');?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+
+                    // 头像
+                    lists.forEach(function(ele,index){
+                        if (ele.avatar && ele.avatar.length) {
+                           ele.avatar = JSON.parse(ele.avatar)[0].picImg;
+                        }else{
+                            ele.avatar = 'http://is4.mzstatic.com/image/thumb/Purple118/v4/54/0b/63/540b6318-adbb-fdc3-985d-11bad0dbcdb2/source/175x175bb.jpg';
+                        }
+                    })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
             },
             error:function(data){
                 console.log(data);

@@ -281,10 +281,10 @@ padding: 5px 6px!important;
 
                             </thead>
 
-                             <tbody id="doc-modal-list">
+                            <tbody id="dataList">
                                 <?php foreach($lists as $val):?>
                                 <tr>
-                                    <td class="RechangId"><?php echo $val['id']?></td>
+                                    <td><?php echo $val['id']?></td>
                                     <td><?php if($val['typeId'] == '1'){echo "话费";}else{echo "流量";}?></td>
                                     <td><?php echo $val['name']?></td>
                                     <td><?php echo $val['originalPrice']?></td>
@@ -294,9 +294,9 @@ padding: 5px 6px!important;
                                     <td>
                                         <div class="tpl-table-black-operation">
 
-                                            <a href="javascript:;" class="tpl-table-black-operation-set update">
+                                            <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<?php echo $val['id']?>'}">
 
-                                                        <i class="am-icon-pencil"></i> 编辑
+                                                <i class="am-icon-pencil"></i> 编辑
 
                                             </a>
 
@@ -309,9 +309,7 @@ padding: 5px 6px!important;
                                         </div>
                                     </td>
                                 </tr>
-                              
-                                <?php endforeach;?>
-                                  <div class="am-modal am-modal-confirm" tabindex="-1" id="my-update-confirm">
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<?php echo $val['id']?>">
 
                                     <div class="am-modal-dialog">
 
@@ -370,16 +368,17 @@ padding: 5px 6px!important;
                                     </div>
                                     <div class="am-form-group am-cf">
 
-                                        <label class="am-u-sm-3 am-form-label">验证码： <span class="red">*</span></label>
+                                        <label class="am-u-sm-3 am-form-label">验证码 <span class="red">*</span></label>
 
                                         <div class="am-u-sm-6">
 
-                                            <input type="text"  required>
-
+                                            <input type="number" name='code'  required>
+                                            
                                         </div>
                                         <div class="am-u-sm-3">
 
-                                            <a id="codeNum" class="am-btn am-btn-default">获取验证码</a>
+                                            <button type="button" class="am-btn am-btn-default">获取验证码</button>
+
                                         </div>
 
                                     </div>
@@ -388,7 +387,7 @@ padding: 5px 6px!important;
 
                                             <button type="reset" class="am-btn am-btn-default" data-am-modal-close>取消</button>
 
-                                            <input type="hidden" name="id" id="rechang" />
+                                            <input type="hidden" name="id" value="<?php echo $val['id'];?>" />
 
                                             <button type="submit" class="am-btn am-btn-danger">提交</button>
 
@@ -401,6 +400,7 @@ padding: 5px 6px!important;
                                     </div>
 
                                 </div>
+                                <?php endforeach;?>
 
                                 <!-- more data -->
 
@@ -424,34 +424,8 @@ padding: 5px 6px!important;
 
 </div>
 
-
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 
 <script src="assets/laypage/laypage.js"></script>
-<script type="text/javascript">
-    $('#codeNum'){
-        alert('234');
-    }
-
-      // 编辑模态框操作 
-    $('#doc-modal-list').find('.update').add('#doc-confirm-toggle').
-        on('click', function () { 
-            $('#rechang').val($(this).parentsUntil('tbody').find('.RechangId').html())
-           
-            $('#my-update-confirm').modal({
-                relatedTarget: this,
-                onConfirm: function (options) {  
-
-                },
-
-                closeOnConfirm: false,
-                onCancel: function () { 
-                }
-            });
-        });  
-
-
-
-</script>
 
 

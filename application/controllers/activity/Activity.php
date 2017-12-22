@@ -265,12 +265,24 @@ class Activity extends Default_Controller {
             }else{
                 echo "<script>alert('暂无活动参加信息！');window.history.go(-1);</script>";
             }
-
-
-
 		}
 
 	}
+
+    //删除活动记录
+    function del_NewYearList(){
+        $id = intval($this->uri->segment('4'));
+        if($id == '0'){
+            echo "<script>alert('请求失败！');window.history.go(-1);</script>";exit;
+        }else{
+            if($this->Public_model->delete($this->christmas,'id',$id)){
+                
+                echo "<script>alert('操作成功！');window.history.go(-1);</script>";exit;
+            }else{
+                echo "<script>alert('操作失败！');window.history.go(-1);</script>";exit;
+            }
+        }
+    }
 
 
 
