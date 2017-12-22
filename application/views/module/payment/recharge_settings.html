@@ -371,12 +371,12 @@ padding: 5px 6px!important;
 
                                         <div class="am-u-sm-6">
 
-                                            <input type="number" name='code'  required>
+                                            <input type="number" id="code0" name='code'  required>
                                             
                                         </div>
                                         <div class="am-u-sm-3">
 
-                                            <button type="button" class="am-btn am-btn-default">获取验证码</button>
+                                            <button onclick="getCode(this)" type="button" class="am-btn am-btn-default">获取验证码</button>
 
                                         </div>
 
@@ -388,7 +388,7 @@ padding: 5px 6px!important;
 
                                             <input type="hidden" name="id" value="<?php echo $val['id'];?>" />
 
-                                            <button type="submit" class="am-btn am-btn-danger">提交</button>
+                                            <button onclick="submitFun0(this)" type="button" class="am-btn am-btn-danger">提交</button>
 
                                         </div>
 
@@ -426,5 +426,23 @@ padding: 5px 6px!important;
 <div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
 
 <script src="assets/laypage/laypage.js"></script>
+<script type="text/javascript">
+    var nowCode = null;
+    function getCode(that) {
+        nowCode = 1234;
+        alert(nowCode);
+    }
+    function submitFun0(that){
+        var codeInput = $(that).parentsUntil('am-modal-confirm').find('#code0').val();
+        if (nowCode != codeInput) {
+
+            alert('请输入正确的验证码');
+        }else{
+            alert('正确的验证码');
+        }
+    }
+
+
+</script>
 
 
