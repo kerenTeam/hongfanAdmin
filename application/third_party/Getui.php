@@ -93,6 +93,34 @@ class Getui {
         //这是老方法，新方法参见iOS模板说明(PHP)*/
         //$template->set_pushInfo("actionLocKey","badge","message",
         //"sound","payload","locKey","locArgs","launchImage");
+        //          APN高级推送
+        return $template;
+    }
+
+
+    function IosIGtTransmissionTemplateDemo($content){
+        $template =  new IGtTransmissionTemplate();
+        $template->set_appId(APPID);//应用appid
+        $template->set_appkey(APPKEY);//应用appkey
+        $template->set_transmissionType(1);//透传消息类型
+        $template->set_transmissionContent($content);//透传内容
+        //    APN高级推送
+        $apn = new IGtAPNPayload();
+        $alertmsg=new DictionaryAlertMsg();
+        $cont = json_decode($content,true);
+        $alertmsg->body=$cont['title'];
+        //   iOS8.2 支持
+        $alertmsg->title=$cont['title'];
+       
+
+        $apn->alertMsg=$alertmsg;
+        $apn->badge=1;
+        $apn->sound="";
+        $apn->add_customMsg("payload",$content);
+        // $apn->contentAvailable=1;
+        $apn->category="ACTIONABLE";
+        $template->set_apnInfo($apn);
+
         return $template;
     }
 

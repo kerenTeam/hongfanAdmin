@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+    <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+
+
+
+    <title>HI集 下载</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        body{
+            position: absolute;
+            width: 100%;height: 100%;
+            /*background: url('11.png') 0 0 no-repeat;*/
+            background: url('44.png') 0 0 no-repeat; 
+            background-size: 100%;
+            background-color: #faf3d8;
+            overflow: hidden;
+        } 
+        img.img{ 
+            width: 40%;
+            margin-left: -1%;
+            position: absolute; 
+            /*bottom: 12%;*/
+            bottom: 100px;
+            left: 5%;
+            display: none;
+        }
+        img.img1{
+            left: auto;
+            right: 5%;
+            /*bottom: 11.7%;*/ 
+            bottom: 98px; 
+            display: none;
+        }
+        div.div0{
+           position: absolute;
+           bottom: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           z-index: 50;
+        }
+        div.div0 img{
+            width: 100%;
+            height: 100%;
+        }
+        .div1, .div2{
+            position: fixed;
+            width: 50%;
+            height: 50%;
+            bottom: 0px;
+
+        }
+        .div1{
+            left: 0px; 
+        }
+        .div2{
+            right: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="div0" style="display: none;"><img src="weixing.png"></div>
+    <div class="div1" ></div><!-- 安卓 --> 
+    <div class="div2" ></div><!-- 苹果 -->
+    <!-- <img src="22.png" class="img" onclick="document.location.href='https://www.baidu.com/'"> -->
+    <!-- <img class="img1 img" src="33.png" onclick="document.location.href='https://www.baidu.com/'">   -->
+    <script type="text/javascript">
+        
+        // 配合 mate禁用 缓存标签，实现禁用浏览器缓存（实现原理，自动刷新）
+        // <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+        // <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate"> 
+        // <meta HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT"> 
+        // <meta HTTP-EQUIV="expires" CONTENT="0">
+        if(!window.name){
+            var str = Math.random().toString(36).substr(2);//随机字符串
+            window.location.href += '?S='+ str;//兼容微信浏览器刷新
+            window.name = 'isreload';
+        }
+        
+
+        // 判断微信浏览器
+        var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+            document.getElementsByClassName('div0')[0].style.display = 'block';    
+            document.body.style.backgroundColor = '#000';
+        }
+
+        document.getElementsByClassName('div1')[0].onclick = function(){//安卓
+            Ajaxfun({ 
+                type:'post',
+                url:"http://abcd.zlzmm.com:6789/index.php/Api_goods/inset_app",
+                data:{"id":1},
+                success:function(result){
+                    var result = eval("("+result+")");
+                    console.log(result);
+                },
+                error:function(result){
+                    console.log("发生错误 "+ result);
+                } 
+            });
+
+            document.location.href='http://cqcother.zlzmm.com/HIJI234.apk'
+
+        }
+        document.getElementsByClassName('div2')[0].onclick = function(){//苹果
+            Ajaxfun({
+                type:'post',
+                url:"http://abcd.zlzmm.com:6789/index.php/Api_goods/inset_app",
+                data:{"id":2},
+                success:function(result){
+                    var result = eval("("+result+")");
+                    console.log(result);
+                },
+                error:function(result){
+                    console.log("发生错误 "+ result);
+                }
+            });
+
+       
+             document.location.href='https://itunes.apple.com/us/app/hi-%E9%9B%86/id1197101256?ls=1&mt=8'
+        }
+
+
+
+
+/* 参数说明
+ * type: 请求类型,
+ * url:请求地址,
+ * data:所需参数,
+ * dataType:返回数据类型(如果是json数据类型则需设置),[弃用]
+ * timeout:超时(默认7s),
+ * success:成功回调,
+ * error:失败回调函数
+*/
+function Ajaxfun(obj){
+    // 实例化Ajax请求对象(不对老浏览器做兼容) 
+    var request = new XMLHttpRequest();
+    // post所需数据默认为空,格式必须为字符串形式
+    var data = params(obj.data) || '';
+    if (obj.type == 'get') {
+        // 配置信息
+        request.open("GET", obj.url);
+    }
+    if (obj.type == 'post') {
+        request.open("POST", obj.url);
+        // 设置请求头信息,和数据格式
+        request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    }
+    // 发送信息
+    request.send(data);
+
+    // 设置超时时间,默认7秒
+    var timeout = obj.timeout || 7000;
+    var isTimeout = false;
+    var timeFlag = setTimeout(function(){
+        if(request.readyState !== 4) {
+            isTimeout = true;//超时成立
+            request.abort();//中断请求
+            obj.error('请求超时! ');
+            clearTimeout(timeFlag);
+         }    
+    }, timeout);
+
+    //当状态改变时触发
+    request.onreadystatechange = function() {
+        //超时之前正常执行,超时之后isTimeout==true停止返回数据
+        if (!isTimeout && request.readyState===4) {
+            if (request.status===200) {
+                clearTimeout(timeFlag);
+                var result = '';//服务器返回数据
+                // console.log(request);
+                //火狐浏览器返回xml解析(存在未知问题!!!!)
+                if (request.responseXML != null) {
+                    result = request.responseXML.documentElement.innerHTML;
+                }else{
+                    result = eval("("+ request.responseText +")");
+                }
+                obj.success(result);
+            } else {
+                clearTimeout(timeFlag);
+                obj.error(request.status + request.statusText);
+            }
+        } 
+    }
+
+}
+//名值对转换为字符串方法
+function params(data) {
+    var arr = [];
+    for (var i in data) {
+        arr.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+    }
+    return arr.join('&');
+}
+// 还有缓存 12345
+
+    </script>
+</body>
+
+</html>

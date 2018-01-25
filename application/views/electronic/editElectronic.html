@@ -143,7 +143,7 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <input type="text" name="name" id="salesName" value="<?php echo $coupon['name'];?>" maxlength="50" class="am-form-field tpl-form-no-bg" placeholder="建议不超过25个字符"  required>
+                            <input type="text" name="name" id="salesName" value="<?php echo $coupon['name'];?>" maxlength="100" class="am-form-field tpl-form-no-bg" placeholder="建议不超过50个字符"  required>
 
                         </div>
 
@@ -166,7 +166,7 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <input type="text" name="title" id="salesName" value="<?php echo $coupon['title'];?>" maxlength="50" class="am-form-field tpl-form-no-bg" placeholder="建议不超过25个字符"  required>
+                            <input type="text" name="title" id="salesName" value="<?php echo $coupon['title'];?>" maxlength="100" class="am-form-field tpl-form-no-bg" placeholder="建议不超过50个字符"  required>
 
                         </div>
 
@@ -252,18 +252,36 @@ padding: 5px 6px!important;
                   <?php endif;?>
                    
                      <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取时间限制<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">领取时间间隔<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="frequency" id="frequency" required class="am-form-field tpl-form-no-bg" >
                                 <option value="">输入查找/选择</option>
-                                <option value="0" <?php if($coupon['frequency'] == "0"){echo "selected";}?>>仅一次</option>
-                                <option value="1" <?php if($coupon['frequency'] == "1"){echo "selected";}?>>一天一次</option>
-                                <option value="2" <?php if($coupon['frequency'] == "2"){echo "selected";}?>>二天一次</option>
-                                <option value="7" <?php if($coupon['frequency'] == "7"){echo "selected";}?>>一周一次</option>
-                                <option value="30" <?php if($coupon['frequency'] == "30"){echo "selected";}?>>一月一次</option>
+                                <option value="0" <?php if($coupon['frequency'] == "0"){echo "selected";}?>>只能领取一次</option>
+                                <option value="1" <?php if($coupon['frequency'] == "1"){echo "selected";}?>>一天</option>
+                                <option value="2" <?php if($coupon['frequency'] == "2"){echo "selected";}?>>二天</option>
+                                <option value="7" <?php if($coupon['frequency'] == "7"){echo "selected";}?>>一周</option>
+                                <option value="30" <?php if($coupon['frequency'] == "30"){echo "selected";}?>>一月</option>
                             </select>
                         </div>
                     </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">领取时间内可领取次数<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                            <select name="receiveNum" id="receiveNum" required class="am-form-field tpl-form-no-bg" >
+                                <option value="">输入查找/选择</option>
+                                <option value="0" <?php if($coupon['receiveNum'] == '0'){echo "selected";}?>>无限制</option>
+                                <option value="1" <?php if($coupon['receiveNum'] == '1'){echo "selected";}?>>领取一次</option>
+                              
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">每人可领取数量<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                           <input type="number" name="receive_limit" value="<?php echo $coupon['receive_limit'];?>" required>
+                        </div>
+                    </div>
+                   
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
@@ -348,18 +366,23 @@ padding: 5px 6px!important;
                         </div>
 
                     </div>
+                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
-                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取频率<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">卡卷状态:</label>
+
                         <div class="am-u-sm-9">
-                            <select name="receiveNum" id="receiveNum" required class="am-form-field tpl-form-no-bg" >
-                                <option value="">输入查找/选择</option>
-                                <option value="0" <?php if($coupon['receiveNum'] == '0'){echo "selected";}?>>无限制</option>
-                                <option value="1" <?php if($coupon['receiveNum'] == '1'){echo "selected";}?>>只能领取一次</option>
-                              
+
+                            <select name="state" >
+                                <option value="0" <?php if($coupon['state'] == '0'){echo "selected";}?>>已下架</option>
+                                <option value="1" <?php if($coupon['state'] == '1'){echo "selected";}?>>正常</option>
                             </select>
+
                         </div>
+
                     </div>
+
+                  
+
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="" class="am-u-sm-3 am-form-label">商家<span class="red">*</span>:</label>

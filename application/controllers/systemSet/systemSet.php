@@ -2013,167 +2013,233 @@ class SystemSet extends Default_Controller {
     //邀请码
     function invitation_code(){
 
-        $config['per_page'] = 10;
-        //获取页码
-        $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
-        //配置
-        $config['base_url'] = site_url('/systemSet/SystemSet/invitation_code');
-        //分页配置
-        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-
-        $config['full_tag_close'] = '</ul>';
-
-        $config['first_tag_open'] = '<li>';
-
-        $config['first_tag_close'] = '</li>';
-
-        $config['prev_tag_open'] = '<li>';
-
-        $config['prev_tag_close'] = '</li>';
-
-        $config['next_tag_open'] = '<li>';
-
-        $config['next_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] = '<li class="am-active"><a>';
-
-        $config['cur_tag_close'] = '</a></li>';
-
-        $config['last_tag_open'] = '<li>';
-
-        $config['last_tag_close'] = '</li>';
-
-        $config['num_tag_open'] = '<li>';
-
-        $config['num_tag_close'] = '</li>';
-        $config['first_link']= '首页';
-
-        $config['next_link']= '下一页';
-
-        $config['prev_link']= '上一页';
-
-        $config['last_link']= '末页';
         $list = count($this->System_model->select_invitation());
 
-        $config['total_rows'] = $list;
-
-        // //分页数据
-        $listpage = $this->System_model->select_invitation_page($config['per_page'],$current_page);
-        $this->load->library('pagination');//加载ci pagination类
-
-        $this->pagination->initialize($config);
-
-        $data = array('lists'=>$listpage,'count'=>$list,'pages' => $this->pagination->create_links());
-
+        $data = array('count'=>$list);
+        if(!isset($_SESSION['invition'])){
+            $_SESSION['invition'] = '0';
+        }
         $data['page'] = $this->view_invitation;
         $data['menu'] = array('systemSet','invitation_code');
         $this->load->view('template.html',$data);
     }
 
-    //
-    function searchInvition(){
-        $config['per_page'] = 10;
-        //获取页码
-        $current_page=intval($this->input->get("size"));//index.php 后数第4个/
+    //返回邀请纪录
+    function retInvition(){
+        if($_POST){
+            $UserPhone = trim($this->input->post('userPhone'));
+            $phone = $this->input->post('phone');
 
-        $UserPhone = trim($this->input->get('userPhone'));
-        $phone = $this->input->get('phone');
+            $page = $this->input->post('page');
+            if($page != '0'){
+                $_SESSION['invition'] = $page;
+            }
+            $size = $this->input->post('size');
 
+            if(!empty($UserPhone) && empty($phone)){
+                $query = $this->db->where('userPhone',$UserPhone)->get('hf_user_invite');
+                $res = $query->result_array();
+                $list = count($res);
+                                // //分页数据
+                $this->db->select('a.*, b.username,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.userPhone',$UserPhone)->order_by('createTime','desc')->limit($size,$page)->get();
+                $listpage = $query1->result_array();
+            }else if(empty($UserPhone) && !empty($phone)){
+                $query = $this->db->where('invitationCode',$phone)->get('hf_user_invite');
+                $res = $query->result_array();
+                $list = count($res);
+                                // //分页数据
+                $this->db->select('a.*, b.username,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.invitationCode',$phone)->order_by('createTime','desc')->limit($size,$page)->get();
+                $listpage = $query1->result_array();
 
-        //配置
-        //分页配置
-        $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
+            }else if(!empty($UserPhone) && !empty($phone)){
+                $query = $this->db->where('invitationCode',$phone)->where('userPhone',$UserPhone)->get('hf_user_invite');
+                $res = $query->result_array();
+                $list = count($res);
+                                // //分页数据
+                $this->db->select('a.*, b.username,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.invitationCode',$phone)->where('userPhone',$UserPhone)->order_by('createTime','desc')->limit($size,$page)->get();
+                $listpage = $query1->result_array();
+            }else if(empty($UserPhone) && empty($phone)){
 
-        $config['full_tag_close'] = '</ul>';
+                $list = count($this->System_model->select_invitation());
+                // //分页数据
+                $listpage = $this->System_model->select_invitation_page($size,$page);
+            }
 
-        $config['first_tag_open'] = '<li>';
+            if(!empty($listpage)){
+                echo json_encode(['total'=>$list,'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
 
-        $config['first_tag_close'] = '</li>';
-
-        $config['prev_tag_open'] = '<li>';
-
-        $config['prev_tag_close'] = '</li>';
-
-        $config['next_tag_open'] = '<li>';
-
-        $config['next_tag_close'] = '</li>';
-
-        $config['cur_tag_open'] = '<li class="am-active"><a>';
-
-        $config['cur_tag_close'] = '</a></li>';
-
-        $config['last_tag_open'] = '<li>';
-
-        $config['last_tag_close'] = '</li>';
-
-        $config['num_tag_open'] = '<li>';
-
-        $config['num_tag_close'] = '</li>';
-        $config['first_link']= '首页';
-
-        $config['next_link']= '下一页';
-
-        $config['prev_link']= '上一页';
-
-        $config['last_link']= '末页';
-
-
-        $config['page_query_string'] = TRUE;//关键配置
-        // $config['reuse_query_string'] = FALSE;
-        $config['query_string_segment'] = 'size';
-        $config['base_url'] = site_url('/systemSet/SystemSet/searchInvition?').'phone='.$phone.'&userPhone='.$UserPhone;
-        if(!empty($UserPhone) && empty($phone)){
-            $query = $this->db->where('userPhone',$UserPhone)->get('hf_user_invite');
-            $res = $query->result_array();
-            $list = count($res);
-            $config['total_rows'] = $list;
-            // //分页数据
-            $this->db->select('a.*, b.username,b.nickname');
-            $this->db->from('hf_user_invite a');
-            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
-            $query1 = $this->db->where('a.userPhone',$UserPhone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
-            $listpage = $query1->result_array();
-        }else if(empty($UserPhone) && !empty($phone)){
-            $query = $this->db->where('invitationCode',$phone)->get('hf_user_invite');
-            $res = $query->result_array();
-            $list = count($res);
-            $config['total_rows'] = $list;
-            // //分页数据
-            $this->db->select('a.*, b.username,b.nickname');
-            $this->db->from('hf_user_invite a');
-            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
-            $query1 = $this->db->where('a.invitationCode',$phone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
-            $listpage = $query1->result_array();
-
-        }else if(!empty($UserPhone) && !empty($phone)){
-            $query = $this->db->where('invitationCode',$phone)->where('userPhone',$UserPhone)->get('hf_user_invite');
-            $res = $query->result_array();
-            $list = count($res);
-            $config['total_rows'] = $list;
-            // //分页数据
-            $this->db->select('a.*, b.username,b.nickname');
-            $this->db->from('hf_user_invite a');
-            $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
-            $query1 = $this->db->where('a.invitationCode',$phone)->where('userPhone',$UserPhone)->order_by('createTime','desc')->limit($config['per_page'],$current_page)->get();
-            $listpage = $query1->result_array();
-        }else if(empty($UserPhone) && empty($phone)){
-            $list = count($this->System_model->select_invitation());
-
-            $config['total_rows'] = $list;
-            // //分页数据
-            $listpage = $this->System_model->select_invitation_page($config['per_page'],$current_page);
         }
+    }
+    //导出邀请列表
+    function DowIntivition(){
+        if($_POST){
+            $phone = $this->input->post('phone');
+            $time = $this->input->post('begin_time');
+            $endtime = $this->input->post('end_time');
 
-      
-        $this->load->library('pagination');//加载ci pagination类
+            if(!empty($time)){
+                $t = $time.' 00:00:00';
+                $e = $endtime.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
 
-        $this->pagination->initialize($config);
+            if(!empty($t) && empty($phone)){
+   
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.createTime >=',$t)->where('a.createTime <=',$e)->order_by('createTime','desc')->get();
+                $listpage = $query1->result_array();
+                                // //分页数据
+               
+            }else if(empty($t) && !empty($phone)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.invitationCode',$phone)->get();
+                $listpage = $query1->result_array();
 
-        $data = array('lists'=>$listpage,'count'=>$list,'pages' => $this->pagination->create_links());
+                                // //分页数据
+              
 
-        $data['page'] = $this->view_invitation;
-        $data['menu'] = array('systemSet','invitation_code');
-        $this->load->view('template.html',$data);
+            }else if(!empty($t) && !empty($phone)){
+                 $this->db->select('a.*, b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->where('a.createTime >=',$t)->where('a.createTime <=',$e)->where('a.invitationCode',$phone)->get();
+                $listpage = $query1->result_array();
+
+                                // //分页数据
+             
+            }else if(empty($t) && empty($phone)){
+                $this->db->select('a.*,b.nickname');
+                $this->db->from('hf_user_invite a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
+                $query1 = $this->db->get('hf_user_invite');
+                $listpage = $query1->result_array();
+                // //分页数据
+            }
+          
+            
+            if(!empty($listpage)){
+                $this->load->library('excel');
+
+                //activate worksheet number 1
+
+                $this->excel->setActiveSheetIndex(0);
+
+                //name the worksheet
+
+                $this->excel->getActiveSheet()->setTitle('Stores');
+
+                $arr_title = array(
+
+                    'A' => '编号',
+
+                    'B' => '被邀请用户手机号',
+
+                    'C' => '被邀请者用户名称',
+                    'D' => '邀请者电话号',
+
+                    'E' => '来源',
+
+                    'F' => '邀请时间'
+                );
+
+                 //设置excel 表头
+
+                foreach ($arr_title as $key => $value) {
+
+                    $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                   $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                }
+
+                $i = 1;
+
+                //查询数据库得到要导出的内容
+
+               // $bookings = $this->Shop_model->shop_list($id);
+
+
+                foreach ($listpage as $booking) {
+                    $i++;
+                   
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['userPhone']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['invitationCode']);
+                    if($booking['fromType'] == '1'){
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i,'APP');
+                    }else{
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i,'WEB');
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['createTime']);
+                }
+
+                
+
+
+
+                $filename = '邀请纪录.xls'; //save our workbook as this file name
+
+
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $log = array(
+
+                    'userid'=>$_SESSION['users']['user_id'],  
+
+                    "content" => $_SESSION['users']['username']."导出了邀请纪录",
+
+                    "create_time" => date('Y-m-d H:i:s'),
+
+                    "userip" => get_client_ip(),
+
+                );
+
+                $this->db->insert('hf_system_journal',$log);
+
+                $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                $objWriter->save('php://output');
+
+
+            }else{
+                echo "<script>alert('暂无邀请纪录！');window.history.go(-1);</script>";
+
+            }
+
+            
+        }
     }
 
 
@@ -2307,7 +2373,6 @@ class SystemSet extends Default_Controller {
     function puthMessage(){
         if($_POST){
             $data = $this->input->post();
-            // var_dump($data);
             
             $this->load->library('puth');
 
@@ -2328,9 +2393,14 @@ class SystemSet extends Default_Controller {
                     break;
                 //透传
                 case '4':
-                     $content = json_encode(array("title"=>$data['title'],'content'=>$data['content'],'payload'=>array('banner'=>$data['linkUrl'],"info"=>$data['linkTitle'])));
-                    $template = $this->puth->IGtTransmissionTemplateDemo($content);
+                    $content = json_encode(array("title"=>$data['title'],'content'=>$data['content'],'payload'=>array('banner'=>$data['linkUrl'],"info"=>$data['linkTitle'])));
+                    if($data['plateform'] == '1'){
+                        $template = $this->puth->IGtTransmissionTemplateDemo($content);
+                    }else{
+                        $template = $this->puth->IosIGtTransmissionTemplateDemo($content);
+                    }
                     break;
+                
                 // 打开应用
                 default:
                     
@@ -2350,32 +2420,6 @@ class SystemSet extends Default_Controller {
             $message->set_appIdList($appIdList);
             //$message->set_conditions($cdt->getCondition());
             $rep = $igt->pushMessageToApp($message,"任务组名");
-
-
-            //$message->set_PushNetWorkType(0);//设置是否根据WIFI推送消息，2为4G/3G/2G，1为wifi推送，0为不限制推送
-            //接收方
-
-
-            // $target = new IGtTarget();
-            // $target->set_appId(APPID);
-            
-
-            //  $target->set_clientId('8910f0745fdedbc582424b13fa91ddcd');
-            // //ios
-            // //    $target->set_alias(Alias);
-
-            // try {
-            //     $rep = $igt->pushMessageToSingle($message, $target);
-               
-
-            // }catch(RequestException $e){
-            //     $requstId =e.getRequestId();
-            //     //失败时重发
-            //     $rep = $igt->pushMessageToSingle($message, $target,$requstId);
-              
-            // }
-
-
 
             unset($data['plateform']);
             if($rep['result'] == 'ok'){
@@ -2440,8 +2484,15 @@ class SystemSet extends Default_Controller {
 
         //消息模版：
         // 4.NotyPopLoadTemplate：通知弹框下载功能模板
-        $content = '{title:"通知标题",content:"通知内容",payload:{banner:"market/BuyOffer.html&null",info:"推送跳转页面"}}';
-        $template = $this->puth->IGtTransmissionTemplateDemo($content);
+        $content = '{
+    "title": "买券优惠了",
+    "content": "买券优惠了",
+    "payload": {
+        "banner": "market/BuyOffer.html&null",
+        "info": "推送跳转页面"
+    }
+}';
+        $template = $this->puth->IosIGtTransmissionTemplateDemo($content);
 
         //定义"SingleMessage"
         $message = new IGtSingleMessage();
@@ -2453,7 +2504,7 @@ class SystemSet extends Default_Controller {
         //接收方
         $target = new IGtTarget();
         $target->set_appId(APPID);
-        $target->set_clientId('8910f0745fdedbc582424b13fa91ddcd');
+        $target->set_clientId('cf066c9d0c146870e695e2e8dbeb8340');
     //    $target->set_alias(Alias);
 
         try {

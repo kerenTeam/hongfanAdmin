@@ -149,6 +149,7 @@
 
             </div>
             <div class="am-modal-footer">
+              <input type="hidden" name="gameId" value="<?php echo $id;?>">
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span> 
                 <button type="submit" style="padding:0;border:none;background:none;width: 100%;height: 100%;outline: none;">提交</button>
                 
@@ -210,6 +211,8 @@
             </div>
            
             <div class="am-modal-footer">
+              <input type="hidden" name="gameId" value="<?php echo $id;?>">
+
                 <span class="am-modal-btn" data-am-modal-cancel>取消</span> 
                 <button type="submit" style="padding:0;border:none;background:none;width: 100%;height: 100%;outline: none;">提交</button>
                 
@@ -276,7 +279,7 @@
                         success: function(data){ 
 
                             var jsonData=eval(data);
-                            // console.log('优惠券'+ JSON.stringify(jsonData));
+                            console.log(jsonData);
 
                             // $("#couponType").html('<option value="">-=请选择一项=-</option>');
 
@@ -284,13 +287,13 @@
 
                                     for(var i=0;i<jsonData.length;i++){
 
-                                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+                                        str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title +'-'+ jsonData[i].name + '</option>';
 
                                         sttr=sttr+str;
 
                                     }
 
-                                    console.log(sttr);
+                                    // console.log(sttr);
 
                                     $("#upcouponType").html(sttr);
           
@@ -373,7 +376,7 @@
 
                             for(var i=0;i<jsonData.length;i++){
 
-                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title + '</option>';
+                                str='<option value="'+ jsonData[i].id +'">' + jsonData[i].title +'-'+jsonData[i].name+ '</option>';
 
                                 sttr=sttr+str;
 

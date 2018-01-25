@@ -1,4 +1,13 @@
-
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
  <div class="tpl-content-wrapper" style="margin-top: 20px">
 
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -7,11 +16,11 @@
            		<div class="widget-head am-cf">
                     <div class="widget-title am-cf">记录搜索</div>
                 </div>
-                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('/game/Game/search_history');?>" method="get">
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
                         <label for="" class="am-form-label am-u-sm-3">奖品类型:</label>
                         <div class="am-u-sm-9">
-                            <select name="prize">
+                            <select name="prize" id="price">
                                 <option value="">-=请选择一项=-</option>
                                 <?php foreach($prize as $val):?>
                                 	<option value="<?php echo $val['id'];?>"><?php echo $val['title'];?></option>
@@ -44,7 +53,7 @@
                     </div>
                    
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
 	            <div class="widget-head am-cf">
@@ -119,6 +128,7 @@
                                     <div class="am-modal-footer">
 
                                       <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                      <input type="hidden" name="gameId" value="<?php echo $id;?>">
 
                                       <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
 
@@ -143,45 +153,36 @@
 	                                <th>操作</th>
 	                            </tr>
 	                        </thead>
-	                        <tbody id="doc-modal-list">
-	                        	<?php foreach($lists as $val):?>
-	                            <tr class="gradeX">
-	                                <td class="awName"><?php echo $val['id'];?></td> 
-	                                <td><?php echo $val['nickname'];?></td> 
-	                                <td><?php echo $val['title'];?></td> 
-	                                <td><?php echo  date('Y-m-d H:i:s', $val['createTime'] / 1000);?></td> 
-	                                <td>
-	                                    <div class="tpl-table-black-operation"> 
+	                        <tbody id="infolistDiv">
 
-	                                    	<!-- 红包才提现 -->
-	                               
-	                                    <!--     <a href="javascript:;" id="1" class="tpl-table-black-operation tixian">
-	                                            提现
-	                                        </a>
-	                                        <a href="javascript:;" class="tpl-table-black-operation">
-	                                            已提现
-	                                        </a> -->
-	                                        <a href="javascript:;" id="1" class="tpl-table-black-operation-del">
-	                                            <i class="am-icon-trash"></i> 删除
-	                                        </a>
-	                                    </div>
-	                                </td>
-	                            </tr>
-	                        <?php endforeach;?>
-	                          
-
-	                            <!-- more data -->
-	                        </tbody>
+                             
+        
+                          </tbody>
 	                    </table>
+                        <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr class="gradeX">
+                                    <td class="awName"><%=list[i].id%></td> 
+                                    <td><%=list[i].nickname%></td> 
+                                    <td><%=list[i].title%></td> 
+                                    <td><%=list[i].createTime%></td> 
+                                    <td>
+                                        <div class="tpl-table-black-operation"> 
+
+                                  
+                                            <a href="javascript:;" id="<%=list[i].id%>" class="tpl-table-black-operation-del">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <%}%>
+                          </script>
 	                </div>
 
 	             
-	                <div class="am-u-lg-12 am-cf">
-
-	                    <div class="am-fr">
-	                       <?php echo $pages;?>
-	                    </div>
-	                </div>
+	                <div value="1 0"></div>
+                  <div id="page" class="page_div"></div>
 	            </div>
         </div>
     
@@ -339,4 +340,97 @@
           });
         });
     });
+
+
+$(document).ready(function(){
+
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','','',"<?php echo site_url("/game/Game/retHistory");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['pageNum'])){echo '0';}else{echo $_SESSION['pageNum'];}?>"/10 +1;
+
+
+    getListinfo(page,'','','',"<?php echo site_url("/game/Game/retHistory");?>");
+    
+    // 新分页方法
+    function getListinfo(num,end_date,begin_date,prize,url) {
+
+        var pagenum10 = (num-1) *10;
+       
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'begin_time':begin_date,
+                'end_time':end_date,
+                'prize':prize,
+                'gameId':'<?php echo $id?>'
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(page,end_date,begin_date,prize,"<?php echo site_url("/game/Game/retHistory");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    lists.forEach(function(ele,index){
+                        if(ele.createTime){
+                          ele.createTime = new Date(parseInt(ele.createTime)).toLocaleString();
+                        }
+                    })
+                    // console.log(lists);
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var prize=$('#prize option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), gameId = '<?php echo $id?>';
+
+       
+        getListinfo(1,end_date,begin_date,prize,"<?php echo site_url("/game/Game/retHistory");?>");
+
+    });
+
+
+
+})
+
+
+
+
 </script>

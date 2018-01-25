@@ -315,7 +315,7 @@ padding: 5px 6px!important;
                                         <div class="am-modal-hd">编辑</div>
 
                                         <div class="am-modal-bd">
-                                            <form class="am-form tpl-form-line-form" action='<?php echo site_url('payment/Payment/edit_recharge')?>' method='post' enctype='multipart/form-data'>
+                                            <form class="am-form tpl-form-line-form" action='<?php echo site_url('payment/Payment/edit_recharge')?>' method='post' enctype='multipart/form-data' id="fromPay">
                                                  <div class="am-form-group am-cf">
 
                                         <label class="am-u-sm-3 am-form-label">类型 <span class="red">*</span></label>
@@ -371,7 +371,7 @@ padding: 5px 6px!important;
 
                                         <div class="am-u-sm-6">
 
-                                            <input type="number" id="code0" name='code'  required>
+                                            <input type="number" id="code0" required>
                                             
                                         </div>
                                         <div class="am-u-sm-3">
@@ -429,16 +429,35 @@ padding: 5px 6px!important;
 <script type="text/javascript">
     var nowCode = null;
     function getCode(that) {
-        nowCode = 1234;
-        alert(nowCode);
+        $.ajax({
+            type:'post',
+            url:'<?php echo site_url('/payment/Payment/codeNum');?>',
+            data: 'defin=2',
+            success: function(data){
+                var res = JSON.parse(data);
+                if(res.error == 0){
+                    nowCode = res.data;
+                    // console.log(nowCode);
+                    alert('发送成功！');
+                }else{
+                    alert('发送失败');
+                }
+            },
+            error:function(xhr,type,errorThrown){
+                alert("操作失败，请检查网络设置！");
+                return false;
+            }
+        });
     }
     function submitFun0(that){
-        var codeInput = $(that).parentsUntil('am-modal-confirm').find('#code0').val();
-        if (nowCode != codeInput) {
+        var codeInput = $(that).parentsUntil('.am-modal-confirm').find('#code0').val();
+        console.log(codeInput);
 
+        if (nowCode != codeInput) {
             alert('请输入正确的验证码');
         }else{
-            alert('正确的验证码');
+            $(that).parentsUntil('.am-modal-confirm').find("#fromPay").submit();  
+
         }
     }
 

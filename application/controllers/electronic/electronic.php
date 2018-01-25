@@ -402,7 +402,316 @@ class Electronic extends Default_Controller {
     }
 
 
-    //
+    //电商优惠劵使用纪录
+    function mallSales(){
+        // $id = intval($this->uri->segment('4'));
+        // if($id == '0'){
+        //     $this->load->view('404.html');
+        // }else{
+        //      $data['id'] = $id;
+            
+             // //获取卡卷信息
+             // $data['coupon'] = $this->Activity_model->get_electr_info($id);
+             // //获取所有优惠劵
+
+             $data['coupons'] = $this->Activity_model->get_coupons();
+
+        
+             $data['page']= 'electronic/mallShopSales.html';
+
+             $data['menu'] = array('moll','electronicList');
+
+             $this->load->view('template.html',$data);
+        // }
+
+    }
+    //返回电商使用纪录
+    function retMallSales(){
+        if($_POST){
+            $time = $this->input->post('begin_time');
+            $end = $this->input->post('end_time');
+            $start = $this->input->post('start');
+            $couponId = $this->input->post('couponId');
+            $size = $this->input->post('count');
+            // if($start != '0'){
+                $_SESSION['mallSales'] = $start;
+            // }
+            if(!empty($time)){
+                $t = $time . ' 00:00:00';
+                $e = $end . ' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+            //列表
+            if(!empty($t) && empty($couponId)){
+                $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->where('a.user_coupon_state','0')->get();
+
+                $list = $query->result_array();
+$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query1 =  $this->db->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+                $listpage = $query1->result_array();
+
+            }else if(empty($t) && !empty($couponId)){$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.store_coupon_id',$couponId)->where('a.user_coupon_state','0')->get();
+
+                $list = $query->result_array();
+$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query1 =  $this->db->where('a.store_coupon_id',$couponId)->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+                $listpage = $query1->result_array();
+
+            }else if(!empty($t) && !empty($couponId)){$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->where('a.store_coupon_id',$couponId)->where('a.user_coupon_state','0')->get();
+
+                $list = $query->result_array();
+$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query1 =  $this->db->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->where('a.store_coupon_id',$couponId)->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+                $listpage = $query1->result_array();
+
+            }else if(empty($t) && empty($couponId)){$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.user_coupon_state','0')->get();
+
+                $list = $query->result_array();
+$this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query1 =  $this->db->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+                $listpage = $query1->result_array();
+            }
+           
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+
+
+        }else{
+            echo "1";
+        }
+    }
+
+    //导出使用纪录
+    function dowMallSales(){
+       if($_POST){
+            $couponId = $this->input->post('couponId');
+            if(empty($couponId)){
+                $this->db->select('a.*,b.title,b.name,b.id,c.nickname,c.phone,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->get();
+
+                $list = $query->result_array();
+            }else{
+                $this->db->select('a.*,b.title,b.name,b.id,c.nickname,c.phone,e.order_id,e.seller,f.store_name');
+                $this->db->from('hf_shop_coupon as b');
+                $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','INNER');
+                $this->db->join('hf_user_member as c','a.userid = c.user_id','INNER');
+                $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','INNER');
+                $this->db->join('hf_shop_store as f','e.seller = f.store_id','INNER');
+                $query = $this->db->where('a.store_coupon_id',$couponId)->where('a.user_coupon_state','0')->order_by('a.user_coupon_id','desc')->get();
+
+                $list = $query->result_array();
+            }
+
+            if(!empty($list)){
+                    $this->load->library('excel');
+
+                    $this->excel->setActiveSheetIndex(0);
+
+                    //name the worksheet
+
+                    $this->excel->getActiveSheet()->setTitle('Stores');
+
+                    $arr_title = array(
+
+                        'A' => '编号',
+
+                        'B' => '领取用户',
+                        'C' => '用户电话',
+                        'D' => '用户购买单号',
+                        'E' => '优惠卷名称',
+                        'F' => '优惠卷编号',
+                        'G' => '电商订单号',
+                        'H' => '电商商家名称',
+                    );
+
+                     //设置excel 表头
+
+                    foreach ($arr_title as $key => $value) {
+
+                        $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                       $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                    }
+
+                    $i = 1;
+
+
+                    foreach ($list as $booking) {
+                        $i++;
+                       
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_coupon_id']);
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['orderUUID']);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['title'].'-'.$booking['name']);
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['id']);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['order_id']);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['store_name']);
+
+
+                    }
+
+                
+
+                    $filename = '优惠劵电商使用纪录.xls'; //save our workbook as this file name
+
+
+
+                    header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                    header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                    header('Cache-Control: max-age=0'); //no cache
+
+
+
+                     $log = array(
+
+                        'userid'=>$_SESSION['users']['user_id'],  
+
+                        "content" => $_SESSION['users']['username']."导出了优惠劵电商使用纪录",
+
+                        "create_time" => date('Y-m-d H:i:s'),
+
+                        "userip" => get_client_ip(),
+
+                    );
+
+                    $this->db->insert('hf_system_journal',$log);
+
+
+
+
+
+                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                    $objWriter->save('php://output');
+
+            }else{
+                echo "<script>alert('暂无信息！');window.history.go(-1);</script>";
+            }
+       }
+    }
+
+
+    // function retCouponRecord(){
+    //     if($_POST){
+    //         $start = $this->input->post('start');
+    //         if($start != '0'){
+    //             $_SESSION['couRec'] = $start;
+    //         }
+    //         $size = $this->input->post('count');
+    //         $uuid = $this->input->post('uuid');
+    //         $couponId = $this->input->post('couponId');
+
+    //         if(!empty($uuid) && empty($couponId)){
+    //             $this->db->select('a.*,b.title,b.name,b.id,c.nickname,d.payType,e.order_id');
+    //             $this->db->from('hf_shop_coupon as b');
+    //             $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
+    //             $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+    //             $this->db->join('hf_mall_order_repaydata as d','a.orderUUID = d.repay_UUID','left');
+    //             $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','left');
+
+    //             $query = $this->db->like('a.orderUUID',$uuid,'both')->order_by('a.user_coupon_id','desc')->get();
+    //             $listpage = $query->result_array();
+    //             $list = $listpage;
+    //         }elseif(empty($uuid) && !empty($couponId)){
+    //             $this->db->select('a.*,b.title,b.name,b.id,c.nickname,d.payType,e.order_id');
+    //             $this->db->from('hf_shop_coupon as b');
+    //             $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
+    //             $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+    //             $this->db->join('hf_mall_order_repaydata as d','a.orderUUID = d.repay_UUID','left');
+    //             $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','left');
+
+    //             $query = $this->db->where('a.store_coupon_id',$couponId)->order_by('a.user_coupon_id','desc')->get();
+    //             $query1 = $this->db->where('a.store_coupon_id',$couponId)->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+    //             $list = $query->result_array();
+    //             $listpage = $query1->result_array();
+
+
+    //         }else{
+    //             $this->db->select('a.*,b.title,b.name,b.id,c.nickname,d.payType,e.order_id');
+    //             $this->db->from('hf_shop_coupon as b');
+    //             $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
+    //             $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+    //             $this->db->join('hf_mall_order_repaydata as d','a.orderUUID = d.repay_UUID','left');
+    //             // $this->db->join('hf_mall_order as e','a.user_coupon_id = e.userCouponId','left');
+    //             $query = $this->db->order_by('a.user_coupon_id','desc')->get();
+    //             $query1 = $this->db->order_by('a.user_coupon_id','desc')->limit($size,$start)->get();
+    //             $list = $query->result_array();
+    //             $listpage = $query1->result_array();
+    //         }
+          
+    //         // var_dump(count($list));
+    //         if(!empty($listpage)){
+    //             echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+    //         }else{
+    //             echo "2";
+    //         }
+
+    //     }
+    // }
 
 
 
@@ -549,6 +858,7 @@ class Electronic extends Default_Controller {
          $data['lin'] = $this->Activity_model->get_ReceiveNum($id);
          //获取卡卷信息
          $data['coupon'] = $this->Activity_model->get_electr_info($id);
+      
 
          //返回所有商家
          $data['store']= $this->Shop_model->shop_list('1');
@@ -1241,6 +1551,8 @@ class Electronic extends Default_Controller {
             $data['lin'] = $this->Activity_model->receive_coupon($id);
             //获取已使用
             $data['receive'] =  $this->Activity_model->search_receive($id,'0');
+            //获取卷信息
+            $data['couponInfo'] = $this->Public_model->select_where_info('hf_shop_coupon','id',$id);
 
 
             $data['page']= $this->view_coupon_electronic;
@@ -1346,6 +1658,7 @@ class Electronic extends Default_Controller {
                 $list = $this->Activity_model->receive_coupon($id);
             }
 
+        
             if(!empty($list)){
                     $this->load->library('excel');
 
@@ -1365,8 +1678,10 @@ class Electronic extends Default_Controller {
 
                         'D' => '领取时间',
                         'E' => '购买单号',
+                        'F' => '支付金额',
+                        'G' => '支付方式',
 
-                        'F' => '使用状态'
+                        'H' => '使用状态'
                     );
 
                      //设置excel 表头
@@ -1401,10 +1716,21 @@ class Electronic extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
                         $this->excel->getActiveSheet()->setCellValue('D' . $i, date('Y-m-d H:i:s',$booking['createTime']/1000));
                         $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['orderUUID']);
-                        if($booking['user_coupon_state'] == '1'){
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '未使用');
+                          //获取支付方式
+                        $query = $this->db->where("repay_UUID",$booking['orderUUID'])->get('hf_mall_order_repaydata');
+                        $res = $query->row_array();
+                        if(!empty($res)){
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['price']);
+                            $this->excel->getActiveSheet()->setCellValue('G' . $i, $res['payType']);
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '已使用');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
+                            $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
+
+                        }
+                        if($booking['user_coupon_state'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('H' . $i, '未使用');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('H' . $i, '已使用');
                         }
                     }
 
@@ -1447,7 +1773,7 @@ class Electronic extends Default_Controller {
 
                     $objWriter->save('php://output');
             }else{
-                echo "<script>alert('暂无核销信息！');window.history.go(-1);</script>";
+                echo "<script>alert('暂无领取信息！');window.history.go(-1);</script>";
             }
 
 
@@ -1473,6 +1799,7 @@ class Electronic extends Default_Controller {
             }
 
             $list = AllReceive($id,$state,$t,$e);
+
             if(!empty($list)){
                     $this->load->library('excel');
 
@@ -1491,9 +1818,12 @@ class Electronic extends Default_Controller {
 
                         'D' => '领取时间',
                         'E' => '购买单号',
+                        'F' => '支付金额',
+                        'G' => '支付方式',
 
-                        'F' => '使用状态',
-                        'G' => '优惠卷名称'
+                        'H' => '使用状态',
+                        'I' => '优惠卷名称',
+                        'J' => '优惠劵编号'
                     );
                      //设置excel 表头
                     foreach ($arr_title as $key => $value) {
@@ -1513,18 +1843,35 @@ class Electronic extends Default_Controller {
 
                     //查询数据库得到要导出的内容
                     foreach ($list as $booking) {
+                        //  echo "<pre>";
+                        // var_dump($list);
+                        // exit;
                         $i++;
                         $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_coupon_id']);
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['nickname']);
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['phone']);
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, date('Y-m-d H:i:s', $booking['createTime'] / 1000));
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['standardTime']);
                         $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['orderUUID']);
-                        if($booking['user_coupon_state'] == '1'){
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '未使用');
+                        //获取支付方式
+                        $query = $this->db->where("repay_UUID",$booking['orderUUID'])->get('hf_mall_order_repaydata');
+                        $res = $query->row_array();
+                        if(!empty($res)){
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['price']);
+                            $this->excel->getActiveSheet()->setCellValue('G' . $i, $res['payType']);
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '已使用');
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
+                            $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
+
                         }
-                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['name'].'-'.$booking['title']);
+                        
+
+                        if($booking['user_coupon_state'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('H' . $i, '未使用');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('H' . $i, '已使用');
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $booking['name'].'-'.$booking['title']);
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $booking['id']);
 
                     }
 
@@ -1558,7 +1905,7 @@ class Electronic extends Default_Controller {
 
 
         }else{
-            $this->laod->view('404.html');
+            $this->load->view('404.html');
         }
     }
 
@@ -1586,7 +1933,7 @@ class Electronic extends Default_Controller {
             $uuid = $this->input->post('uuid');
 
             if(!empty($uuid)){
-                $this->db->select('a.*,b.title,b.name,c.nickname,d.payType');
+                $this->db->select('a.*,b.title,b.name,b.id,c.nickname,d.payType');
                 $this->db->from('hf_shop_coupon as b');
                 $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
                 $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
@@ -1609,6 +1956,212 @@ class Electronic extends Default_Controller {
                 echo "2";
             }
 
+        }
+    }
+
+    //导出优惠劵信息
+    function dowElectronic(){
+        if($_POST){
+            $coupon = $this->input->post('couponid');
+            $state = $this->input->post('state');
+
+            if(!empty($coupon) && empty($state)){
+                //获取卡卷信息
+                $query = $this->db->where('id',$coupon)->get('hf_shop_coupon');
+                $res = $query->result_array();
+            }else if(empty($coupon) && !empty($state)){
+                if($state == '2'){
+                    $state = '0';
+                }
+                $query = $this->db->where('state',$state)->order_by('id','desc')->get('hf_shop_coupon');
+                $res = $query->result_array();
+            }else if(!empty($coupon) && !empty($state)){
+                if($state == '2'){
+                    $state = '0';
+                }
+                $query = $this->db->where('state',$state)->where('id',$coupon)->get('hf_shop_coupon');
+                $res = $query->result_array();
+            }else if(empty($coupon) && empty($state)){
+
+                $query = $this->db->order_by('id','desc')->get('hf_shop_coupon');
+                $res = $query->result_array();
+            }
+            if(!empty($res)){
+                    $this->load->library('excel');
+
+                    $this->excel->setActiveSheetIndex(0);
+
+                    //name the worksheet
+                    $this->excel->getActiveSheet()->setTitle('coupon');
+
+                    $arr_title = array(
+
+                        'A' => '编号',
+                        'B' => '所属城市',
+                        'C' => '名称',
+                        'D' => '标题',
+                        'E' => '所属商家',
+                        'F' => '类型',
+                        'G' => '使用类型',
+                        'H' => '使用期限',
+                        'I' => '次数限制',
+                        'J' => '购买价格',
+                        'K' => '优惠券面额',
+                        'L' => '领取数',
+                        'M' => '核销数',
+                        'N' => '使用数',
+                        'O' => '未使用数',
+                    );
+                     //设置excel 表头
+                    foreach ($arr_title as $key => $value) {
+
+                        $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                       $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                        $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                    }
+
+                    $i = 1;
+
+                    //查询数据库得到要导出的内容
+                    foreach ($res as $booking) {
+                        $i++;
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['id']);
+                        // 所属城市 1重庆 2南江 3宣汉
+                        switch ($booking['city']) {
+                            case '1':
+                               $this->excel->getActiveSheet()->setCellValue('B' . $i, '重庆');
+                                break; 
+                            case '2':
+                               $this->excel->getActiveSheet()->setCellValue('B' . $i, '南江');
+                                break; 
+                            case '3':
+                               $this->excel->getActiveSheet()->setCellValue('B' . $i, '宣汉');
+                                break;
+                            case '4':
+                               $this->excel->getActiveSheet()->setCellValue('B' . $i, '邻水');
+                                break;
+                            default:
+                               $this->excel->getActiveSheet()->setCellValue('B' . $i, '');
+                                break;
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['name']);
+                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['title']);
+                        //
+                        $storeid = json_decode($booking['storeid'],true);
+                        if($storeid == '0'){
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '所有商家');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, get_store_name($storeid['0']));
+
+                        }
+                        //类型
+                        switch ($booking['typeid']) {
+                            case '1':
+                                $this->excel->getActiveSheet()->setCellValue('F' . $i, '电商抵用券');
+                                break; 
+                            case '2':
+                                $this->excel->getActiveSheet()->setCellValue('F' . $i, '电商折扣券');
+                                break; 
+                            case '3':
+                                $this->excel->getActiveSheet()->setCellValue('F' . $i, '电商满减卷');
+                                break; 
+                            case '5':
+                                $this->excel->getActiveSheet()->setCellValue('F' . $i, '线下团购劵');
+                                break;
+                            
+                        }
+                        //使用类型 使用类型 1爱购商品 2HI货榜 3HI土货 4HI洋货 5HI特色 6HI推荐 7HI邀请有礼
+                        switch ($booking['applicableType']) {
+                            case '1':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, '爱购商品');
+                                break;
+                            case '2':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI货榜');
+                                break;
+                            case '3':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI土货');
+                                break;
+                            case '4':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI洋货');
+                                break;
+                            case '5':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI特色');
+                                break;  
+                            case '6':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI推荐');
+                                break;  
+                            case '7':
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, 'HI邀请有礼');
+                                break;
+                            
+                            default:
+                               $this->excel->getActiveSheet()->setCellValue('G' . $i, '通用');
+                                break;
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['begin_date'].'至'.$booking['end_date']);
+                        // 领取限制。1只能领取1次。0无限制
+                        if($booking['receiveNum'] == '0'){
+                            $this->excel->getActiveSheet()->setCellValue('I' . $i, '不限制');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('I' . $i, $booking['receiveNum'].'天一次');
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $booking['price']);
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $booking['denomination']);
+                       
+                        //领取
+                        $ling = count($this->Activity_model->receive_coupon($booking['id']));
+                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $ling);
+
+                        //获取已使用
+                        $receive =  count($this->Activity_model->search_receive($booking['id'],'0'));
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $receive);
+                        //核销
+                        $he = count($this->Activity_model->ret_after_list($booking['id']));
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $he);
+
+                        //为使用
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, $ling-$receive);
+
+                    
+                    }
+                    // exit;
+
+                    $filename = '优惠劵报表.xls'; //save our workbook as this file name
+
+                    header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                    header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+                    header('Cache-Control: max-age=0'); //no cache
+
+                     $log = array(
+
+                        'userid'=>$_SESSION['users']['user_id'],  
+
+                        "content" => $_SESSION['users']['username']."导出了优惠劵报表",
+
+                        "create_time" => date('Y-m-d H:i:s'),
+
+                        "userip" => get_client_ip(),
+
+                    );
+
+                    $this->db->insert('hf_system_journal',$log);
+
+                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                    $objWriter->save('php://output');
+            }else{
+                echo "<script>alert('没有适合条件的优惠劵！');window.history.go(-1);</script>";
+
+            }
+
+          
         }
     }
 

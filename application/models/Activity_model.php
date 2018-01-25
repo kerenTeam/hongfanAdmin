@@ -308,7 +308,7 @@ class Activity_model extends CI_Model
 
     //返回领取数
     function selCouponReceive($page,$size){
-        $this->db->select('a.*,b.title,b.name,c.nickname');
+        $this->db->select('a.*,b.title,b.name,b.id,c.nickname');
         $this->db->from('hf_shop_coupon as b');
         $this->db->join('hf_user_coupon as a','a.store_coupon_id = b.id','left');
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
@@ -379,23 +379,21 @@ class Activity_model extends CI_Model
 
     //返回领取记录
     function receive_coupon($id){
-        $this->db->select('a.*,c.nickname,c.phone');
-
+        $this->db->select('a.*,c.nickname,c.phone,b.name,b.title,b.price');
         $this->db->from('hf_user_coupon as a');
-
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $this->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+
 
         $query = $this->db->where('a.store_coupon_id',$id)->order_by('a.user_coupon_id','desc')->get();
         return $query->result_array();
     }
     //搜索领取记录
     function search_receive($id,$state){
-        $this->db->select('a.*,c.nickname,c.phone');
-
+        $this->db->select('a.*,c.nickname,c.phone,b.name,b.title,b.price');
         $this->db->from('hf_user_coupon as a');
-
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
-
+        $this->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
         $query = $this->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
         return $query->result_array();
     }

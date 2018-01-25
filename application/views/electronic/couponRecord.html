@@ -280,6 +280,7 @@ td.am-text-middle img{
                                 <tr>
 
                                     <th>编号 </th>
+                                    <th>优惠劵编号 </th>
                                     <th>优惠劵名称 </th>
                                     <th>领取用户 </th>
                                     <th>领取时间 </th>
@@ -303,6 +304,7 @@ td.am-text-middle img{
                             <% for(var i=0; i<list.length; i++){ %>
                                 <tr>
                                     <td><%= list[i].user_coupon_id%></td>
+                                    <td><%= list[i].id%></td>
                                     <td><%= list[i].title%>-<%= list[i].name%></td>
                                     <td><%= list[i].nickname%></td>
                                     <td><%= list[i].standardTime%></td>
@@ -539,7 +541,7 @@ $(document).ready(function(){
                 // console.log(data);
                 if(data != 2){
                     var res = JSON.parse(data);
-                    var allpage = parseInt(res.total/10);  
+                    var allpage = Math.ceil(res.total/10);  
                     //分页
                     $("#page").paging({
                         pageNo: num,

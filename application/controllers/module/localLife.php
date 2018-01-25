@@ -1986,6 +1986,41 @@ class LocalLife extends Default_Controller {
 
 	}
 
+	//奖励设置
+	function reward(){
+
+
+		$data['page'] = 'module/localLife/reward.html';
+		$data['menu'] = array('localLife','reward');
+		$this->load->view('template.html',$data);
+	}
+	//编辑奖励设置
+	function editReward(){
+		// 推荐类型 
+		if($_POST){
+			$data = $this->input->post();
+            foreach ($data as $k => $v) {
+                $arr['value'] = $v;
+                $this->db->where('name',$k)->update('hf_friends_system',$arr);
+            }
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+
+                "content" => $_SESSION['users']['username']."修改里了跳蚤市场奖励配置",
+                "create_time" => date('Y-m-d H:i:s'),
+
+                "userip" => get_client_ip(),
+
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+            echo "<script>alert('操作成功！');window.location.href='".site_url('/module/localLife/reward')."'</script>";exit;
+
+		}else{
+			$this->load->view('404.html');
+		}
+	}
+
 
 
 }

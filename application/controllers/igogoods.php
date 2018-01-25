@@ -27,12 +27,12 @@ class Igogoods extends CI_Controller
         //获取本地的列表
          $num = '100';
          $goods_list = array();
-         for ($i=1; $i < 5; $i++) { 
+         for ($i=1; $i < 3; $i++) { 
            $post_data = array(  
             'appkey' => IGOAPPKEY,  
             'appsecret' => IGOAPPSECRET,
             'page_no' => $i,
-            'page_size' => $num,
+            'page_size' => '100',
             'isdown' => '1',
             'shop_status' => '1',
            );
@@ -41,6 +41,8 @@ class Igogoods extends CI_Controller
          
            $goods = json_decode($post,true);
            $goods_list =  array_values($goods['data']['lists']);
+
+          
            $a =  insert_db($goods_list);
            // echo "<pre>";
            // var_dump($a);
@@ -96,7 +98,7 @@ class Igogoods extends CI_Controller
           // $a[] =$i;
            
         }
-        var_dump($a);
+        // var_dump($a);
     }
 
 

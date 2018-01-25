@@ -137,6 +137,16 @@ padding: 5px 6px!important;
 }
 
 </style>
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 
 
@@ -177,23 +187,23 @@ padding: 5px 6px!important;
                     <div class="widget-title  am-cf">邀请列表</div>
 
                 </div> 
-                  <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('systemSet/SystemSet/searchInvition');?>" method="get">
+                  <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="" method="get">
    
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-3">邀请人电话:</label>
                         <div class="am-u-sm-9 am-u-end">
-                            <input type="text" name="phone" />
+                            <input type="text" id="phone" name="phone" />
                         </div>
                     </div>
                   
                      <div class="am-form-group am-u-sm-5 am-u-md-5 am-u-lg-5 am-fl" >
                         <label for="goodsPrice" class="am-form-label am-u-sm-4">被邀请人电话:</label>
                         <div class="am-u-sm-8 am-u-end">
-                            <input type="text"  name="userPhone" />
+                            <input type="text" id="userphone"  name="userPhone" />
                         </div>
                     </div>
                     <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                        <button type="submit" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
                     </div>
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
@@ -201,6 +211,62 @@ padding: 5px 6px!important;
                     <div class="widget-title  am-cf">邀请数：<?php echo $count;?></div>
 
                 </div>
+                 <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                
+                                     <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">导出邀请列表</div>
+                            <div class="am-modal-bd">
+                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/systemSet/SystemSet/DowIntivition');?>" method="post">
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-4 am-form-label">邀请人电话号：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                           <input type='text' name="phone" >
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="am-form-group am-cf">
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                              <p>开始日期应小于结束日期！</p>
+                                            </div>
+                                            <div class="am-g">
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                              </div>
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                              </div>
+                                              <small class="red redtips">请先选择结束日期</small>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs sureExport" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
 
                 <div class="widget-body  am-fr">
@@ -233,53 +299,38 @@ padding: 5px 6px!important;
 
                             </thead>
 
-                            <tbody id="dataList">
+                            <tbody id="infolistDiv">
 
-                                <!-- more data -->
-                                <?php if(!empty($lists)):?>
-                                    <?php foreach($lists as $val):?>
-                                        <tr>
-                                            <td><?php echo $val['id'];?></td>
-                                            <td><?php echo $val['nickname'];?></td>
-                                          
-                                            <td><?php echo $val['userPhone'];?></td>
-                                          
-                                            <td><?php echo $val['invitationCode'];?></td>
-                                            <?php if($val['fromType'] == 1):?>
-                                            <td>APP</td>
-                                                <?php else:?>
-                                            <td>WEB</td>
-                                                <?php endif;?>
-                                            <td><?php echo $val['createTime'];?></td>
-
-                                          
-                                        </tr>
-                                     
-                                    <?php endforeach;?>
-                                <?php else:?>
-                                    <th colspan="9">暂无内容！</th>
-                                <?php endif;?>
+                              
         
                             </tbody>
 
                         </table>
+                        <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr>
+                                    <td><%=list[i].id%></td>
+                                    <td><%=list[i].nickname%></td>
+                                  
+                                    <td><%=list[i].userPhone%></td>
+                                  
+                                    <td><%=list[i].invitationCode%></td>
+                                    <% if(list[i].fromType == 1){%>
+                                    <td>APP</td>
+                                        <% }else{%>
+                                    <td>WEB</td>
+                                        <% }%>
+                                    <td><%=list[i].createTime%></td>
+
+                                  
+                                </tr>
+                            <%}%> 
+                        </script>
 
                     </div>
 
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-
-                        <div id="Pagination">
-
-
-                               <?php echo $pages;?>
-
-
-                        </div>
-
-                      
-
-                    </div>
-
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
                 </div>
 
             </div>
@@ -289,6 +340,132 @@ padding: 5px 6px!important;
     </div>
 
 
+<script type="text/javascript">
+ $(function () {  
+        var startDate = new Date(2014, 11, 20);
+        var endDate = new Date(2014, 11, 25);
+        var $alert = $('#my-alert');
+        
+      $('#my-start1').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+              $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+              $alert.hide();
+              startDate = new Date(event.date);
+              $('#my-startDate1').text($('#my-start1').data('date'));
+              $('#begin_date1').val($('#my-start1').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+
+        $('#my-end1').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+              $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+              $alert.hide();
+              endDate = new Date(event.date);
+              $('#my-endDate1').text($('#my-end1').data('date'));
+              $('#end_date1').val($('#my-end1').data('date'));
+            }
+            $(this).datepicker('close');
+          }); 
+
+
+
+       
+    }) ;
+
+$(document).ready(function(){
+
+    //加载列表数数据
+    
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','',"<?php echo site_url('/systemSet/SystemSet/retInvition');?>");
+        }
+    })
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['invition'])){echo '0';}else{echo $_SESSION['invition'] ;}?>"/10 +1;
+    getListinfo(page,'','',"<?php echo site_url('/systemSet/SystemSet/retInvition');?>");
+
+    // 新分页方法
+    function getListinfo(num,phone,userphone,url) {
+        var pagenum10 = (num-1) *10;
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'page':pagenum10,
+                'size':10,
+                'phone':phone,
+                'userPhone':userphone
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            getListinfo(num,phone,userphone,"<?php echo site_url('/systemSet/SystemSet/retInvition');?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+
+                    // 头像
+                    // lists.forEach(function(ele,index){
+                    //     if (ele.avatar && ele.avatar.length) {
+                    //        ele.avatar = JSON.parse(ele.avatar)[0].picImg;
+                    //     }else{
+                    //         ele.avatar = 'http://is4.mzstatic.com/image/thumb/Purple118/v4/54/0b/63/540b6318-adbb-fdc3-985d-11bad0dbcdb2/source/175x175bb.jpg';
+                    //     }
+                    // })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+    
+    
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var phone = $('#phone').val(), userphone = $('#userphone').val();
+        console.log('phone:'+phone,'userphone:'+userphone);
+        // console.log('gender='+ gender +'&start_time='+ begin_date  +'&end_time='+ end_date  +'&sear='+ keywords);
+        getListinfo(1,phone,userphone,"<?php echo site_url('/systemSet/SystemSet/retInvition');?>");
+
+    });
+
+
+
+})
+
+
+
+</script>
 
 
 

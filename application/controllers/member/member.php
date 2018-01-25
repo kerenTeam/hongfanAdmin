@@ -532,7 +532,6 @@ class Member extends Default_Controller {
     //积分纪录
     function integralList(){
 
-
         $data['page'] = 'member/integralList.html';
         $data['menu'] = array('member','integralRec');
         if(isset($_SESSION['intNum'])){
@@ -545,7 +544,7 @@ class Member extends Default_Controller {
     function retIntegralRecomd(){
         if($_POST){
             // HI豆的独立统计分析（可做到会员中心里），每个用户每一次的HI豆获取和使用记录统计，时间、数量、渠道，收支合计，分类筛选。 全员的合计（周期筛选，历史累计（后面2个求和），当前余额，累计使用）
-            $typs = $this->input->post('type');
+            $type = $this->input->post('type');
             $phone = $this->input->post('phone');
             $begin_time = $this->input->post('begin_time');
             $end_time = $this->input->post('end_time');
@@ -562,9 +561,151 @@ class Member extends Default_Controller {
             $_SESSION['intNum'] = $page;
             $size = $this->input->post('count');
 
+            //
+            $list = searchIntegral($type,$phone,$t,$e);
+            $listpage = searchIntegral_page($type,$phone,$t,$e,$size,$page);
+            // var_dump(count($list));
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
             
+        }
+    }
 
-          
+    //导出会员内容
+    function dowUserMember(){
+        if($_POST){
+            $time = $this->input->post('begin_time');
+            $endtime = $this->input->post('end_time');
+
+            if(!empty($time)){
+                $t = $time.' 00:00:00';
+                $e = $endtime.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
+
+
+            $sql1 = "select user_id,phone,username,nickname,city,create_time,gender,intergral from hf_user_member where create_time >='".$t."' and create_time <='".$e."' and gid ='5' order by create_time desc";
+            $query1 = $this->db->query($sql1);
+            $res1 = $query1->result_array();
+
+            
+            if(!empty($res1)){
+                $this->load->library('excel');
+
+                //activate worksheet number 1
+
+                $this->excel->setActiveSheetIndex(0);
+
+                //name the worksheet
+
+                $this->excel->getActiveSheet()->setTitle('Stores');
+
+                $arr_title = array(
+
+                    'A' => '用户编号',
+                    'B' => '所属城市',
+                    'C' => '姓名',
+                    'D' => '用户昵称',
+                    'E' => '电话',
+                    'F' => '性别',
+                    'G' => '会员积分',
+                    'H' => '注册时间',
+                );
+
+                 //设置excel 表头
+
+                foreach ($arr_title as $key => $value) {
+
+                    $this->excel->getActiveSheet()->setCellValue($key . '1', $value);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setSize(13);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getFont()->setBold(true);
+
+                   $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                    $this->excel->getActiveSheet()->getStyle($key . '1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                }
+
+                $i = 1;
+
+                //查询数据库得到要导出的内容
+
+               // $bookings = $this->Shop_model->shop_list($id);
+
+
+                foreach ($res1 as $booking) {
+                    $i++;
+                   
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_id']);
+                    switch ($booking['city']) {
+                        case '1':
+                             $this->excel->getActiveSheet()->setCellValue('B' . $i, '重庆');
+
+                            break;    
+                        case '2':
+                            $this->excel->getActiveSheet()->setCellValue('B' . $i, '南江');
+
+                            break;    
+                        case '3':
+                             $this->excel->getActiveSheet()->setCellValue('B' . $i, '宣汉');
+
+                            break; 
+                        case '4':
+                             $this->excel->getActiveSheet()->setCellValue('B' . $i, '邻水');
+
+                            break;
+                        
+                        default:
+                            $this->excel->getActiveSheet()->setCellValue('B' . $i, '');
+                            break;
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['username']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['nickname']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['phone']);
+                    //性别 1男2女3商家4保密
+                    switch ($booking['gender']) {
+                        case '1':
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '男');
+                            break; 
+                        case '2':
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '女');
+                            break; 
+                        default:
+                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '保密');
+                            break;
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['intergral']);
+                
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, $booking['create_time']);
+                  
+                }
+
+                
+                $filename = '注册用户.xls'; //save our workbook as this file name
+
+
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                $objWriter->save('php://output');
+
+
+            }
         }
     }
 

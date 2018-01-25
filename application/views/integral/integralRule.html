@@ -1,416 +1,532 @@
- 
-<style type="text/css">
-  #preview{
-        width:150px !important;
-    }
-    #preview #imghead,#preview img{
-     width:140px !important;
-    }
-    .widget{
-        font-color:#000 !;
-    } 
-
-    .postageNumber{
-        display: none;
-    }
-   
-    .addStyle{
-        display: inline-block;
-        padding: 3px 5px;
-        border: 1px solid #1fb5ac;
-        color: #1fb5ac;
-        margin-left: 10px;
-    }
-    .addStyle:hover{
-        cursor: pointer;
-    }
-    table tbody tr td,table thead tr th{
-        font-weight: normal;
-    }
-    .addPropertyContent{
-        margin-left: 80px;
-    }
-    table tbody tr{
-        margin: 20px 0 !important;
-    }
-    .signIn{
-        width:100px !important;
-        display: inline-block !important;
-    }
-    label{
-        padding-top:0 !important;
-        font-weight: normal;
-        line-height: 28px;
-    }
-    .am-u-sm-2,.am-u-sm-5{
-        line-height: 28px;
-    }
-
-</style>
-
-<!-- 内容区域 -->
-<div class="tpl-content-wrapper">
-<div class="container-fluid am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>积分商城
-            <a href="<?php echo site_url().'/integral/Integral/integralRule';?>" style="font-size: 18px;">积分规则管理</a>  
-            <small></small></div>
-        </div>
-    </div>
-</div>
-<div class="row-content am-cf">
-    <div class="row">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-           
-                <div class="widget am-cf">
-                    <div class="widget-head am-cf">
-                        <div class="widget-title  am-cf">积分规则管理</div>
-                    </div>
-                    <div class="widget-body  am-fr">
-                        <div class="memberInfo am-u-xs-12 am-u-sm-12 am-u-md-8 am-u-lg-8 padding-horizontal-lg">   
-                        <?php foreach($inter as $val):?>
-                            <!-- 签到送积分 -->
-                            <?php if($val['id'] == 1):?>
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right">签到送积分：</label>
-                                <div class="am-u-sm-5 changeSign" >
-                                    签到一次送  <span style="font-weight: bold;font-size: 20px;" ><?php echo $val['integral'];?>  </span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSign">
-                                    <button type="button" class="am-btn-warning" id="changeSign">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSign" style="display: none;">
-                                    签到一次送
-                                    <input type="number" name="integral" class="signIn" id="intergral" min="1" value="<?php echo $val['integral'];?>" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSign" style="display: none;">
-                                    <input type="hidden" name="id" value="<?php echo $val['id'];?>">
-                                    <button type="button" class="am-btn-secondary" id="saveSign">保存</button>
-                                </div>
-                                
-                            </div>
-                        <?php elseif($val['id'] == 4):?>
-                            <!-- 消费送积分 -->
-                              <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right">消费送积分：</label>
-                                <div class="am-u-sm-5 changeBuy">
-                                    消费每满十元送  <span style="font-weight: bold;font-size: 20px;"><?php echo $val['integral'];?></span>  积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeBuy">
-                                    <button type="button" class="am-btn-warning" id="changeBuy">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveBuy" style="display: none;">
-                                    消费每满十元送
-                                    <input type="number" name="integral" value="<?php echo $val['integral'];?>" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                <div class="am-u-sm-2  am-fl saveBuy" style="display: none;">
-                                <input type="hidden" name="id" value="<?php echo $val['id'];?>">
-                                    <button type="button" class="am-btn-secondary" id="saveBuy">保存</button>
-                                </div>
-                                
-                            </div> 
-                        <?php elseif($val['id'] == 2):?>
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right">参加活动送积分：</label>
-                                <div class="am-u-sm-5 changeActivity">
-                                    每参加一次活动送  <span style="font-weight: bold;font-size: 20px;"><?php echo $val['integral'];?></span>  积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeActivity">
-                                    <button type="button" name="integral" value="<?php echo $val['integral'];?>" class="am-btn-warning" id="changeActivity">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveActivity" style="display: none;">
-                                    每参加一次活动送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                <div class="am-u-sm-2  am-fl saveActivity" style="display: none;">
-                                     <input type="hidden" name="id" value="<?php echo $val['id'];?>">
-                                    <button type="button" class="am-btn-secondary" id="saveActivity">保存</button>
-                                </div>
-                                
-                            </div> 
-                        <?php endif;?>
-                        <?php endforeach;?>
-                         <!--    <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right">连续签到送积分：</label>
-                                <div class="am-u-sm-5 changeSignThree" >
-                                    连续签到三次送<span>60</span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSignThree">
-                                    <button type="button" class="am-btn-warning" id="changeSignThree">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSignThree" style="display: none;">
-                                    连续签到三次送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSignThree" style="display: none;">
-                                    <button type="button" class="am-btn-secondary" id="saveSignThree">保存</button>
-                                </div>
-                                
-                            </div>
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right"></label>
-                                <div class="am-u-sm-5 changeSignFour" >
-                                    连续签到四次送<span>70</span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSignFour">
-                                    <button type="button" class="am-btn-warning" id="changeSignFour">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSignFour" style="display: none;">
-                                    连续签到四次送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSignFour" style="display: none;">
-                                    <button type="button" class="am-btn-secondary" id="saveSignFour">保存</button>
-                                </div>
-                                
-                            </div>  
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right"></label>
-                                <div class="am-u-sm-5 changeSignFive" >
-                                    连续签到五次送<span>80</span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSignFive">
-                                    <button type="button" class="am-btn-warning" id="changeSignFive">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSignFive" style="display: none;">
-                                    连续签到五次送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSignFive" style="display: none;">
-                                    <button type="button" class="am-btn-secondary" id="saveSignFive">保存</button>
-                                </div>
-                                
-                            </div>  
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right"></label>
-                                <div class="am-u-sm-5 changeSignSix" >
-                                    连续签到六次送<span>90</span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSignSix">
-                                    <button type="button" class="am-btn-warning" id="changeSignSix">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSignSix" style="display: none;">
-                                    连续签到六次送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSignSix" style="display: none;">
-                                    <button type="button" class="am-btn-secondary" id="saveSignSix">保存</button>
-                                </div>
-                                
-                            </div>  
-                            <div class="am-form-group  am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12">
-                                <label class="am-u-sm-5 am-text-right"></label>
-                                <div class="am-u-sm-5 changeSignWeek" >
-                                    连续签到一周送<span>120</span>积分
-                                </div>
-                                <div class="am-u-sm-2 am-text-left changeSignWeek">
-                                    <button type="button" class="am-btn-warning" id="changeSignWeek">修改</button>
-                                </div>
-                                <div class="am-u-sm-5 saveSignWeek" style="display: none;">
-                                    连续签到一周送
-                                    <input type="number" class="signIn" id="intergral" min="1" required="required" />积分
-                                </div>
-                                
-                                <div class="am-u-sm-2 am-fl saveSignWeek" style="display: none;">
-                                    <button type="button" class="am-btn-secondary" id="saveSignWeek">保存</button>
-                                </div>
-                                
-                            </div>     -->
-                          
-                            <!-- <div class="am-form-group am-u-xs-12 am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
-                                <button class="am-btn am-btn-xs am-btn-secondary" type="submit" id='addProperty'>提交</button>
-                                <button class="am-btn am-btn-xs am-btn-default" type="reset" id="cancle">取消</button> 
-                            </div> -->
-                        </div>
-                    </div>       
-
-                </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
-
-</body>
-<script type="text/javascript">
-//签到送积分
-$('#changeSign').click(function(){
-    for(var i=0;i<$('.changeSign').length;i++){
-        $('.changeSign').eq(i).css('display','none');
-        $('.saveSign').eq(i).css('display','block');
-    }
-
-});
-$('#saveSign').click(function(){
-    for(var i=0;i<$('.saveSign').length;i++){
-        $('.saveSign').eq(i).css('display','none');
-        $('.changeSign').eq(i).css('display','block');       
-    }
-    var integral=$('.saveSign').eq('0').find('input').val();
-    var id=$('.saveSign').eq('1').find('input').val();
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
-        data: 'id='+ id +'&integral='+ integral,
-        success: function(data){
-            if(data==1){
-               $('.changeSign').eq('0').find('span').html(integral); 
-            }else{
-                alert("操作失败！");
-            }
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-});
-
-//连续签到送积分
-$('#changeSignThree').click(function(){//三次
-    for(var i=0;i<$('.changeSignThree').length;i++){
-        $('.changeSignThree').eq(i).css('display','none');
-        $('.saveSignThree').eq(i).css('display','block');
-    }
-});
-$('#saveSignThree').click(function(){
-    for(var i=0;i<$('.saveSignThree').length;i++){
-        $('.saveSignThree').eq(i).css('display','none');
-        $('.changeSignThree').eq(i).css('display','block');       
-    }
-    var integral=$('.saveSignThree').eq('0').find('input').val();
-    var id=$('.saveSignThree').eq('1').find('input').val();
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
-        data: 'id='+ id +'&integral='+ integral,
-        success: function(data){
-            if(data==1){
-               $('.changeSignThree').eq('0').find('span').html(integral); 
-            }else{
-                alert("操作失败！");
-            }
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-});
-$('#changeSignFour').click(function(){//四次
-    for(var i=0;i<$('.changeSignFour').length;i++){
-        $('.changeSignFour').eq(i).css('display','none');
-        $('.saveSignFour').eq(i).css('display','block');
-    }
-});
-$('#saveSignFour').click(function(){
-    for(var i=0;i<$('.saveSignFour').length;i++){
-        $('.saveSignFour').eq(i).css('display','none');
-        $('.changeSignFour').eq(i).css('display','block');       
-    }
-});
-
-$('#changeSignFive').click(function(){//五次
-    for(var i=0;i<$('.changeSignFive').length;i++){
-        $('.changeSignFive').eq(i).css('display','none');
-        $('.saveSignFive').eq(i).css('display','block');
-    }
-});
-$('#saveSignFive').click(function(){
-    for(var i=0;i<$('.saveSignFive').length;i++){
-        $('.saveSignFive').eq(i).css('display','none');
-        $('.changeSignFive').eq(i).css('display','block');       
-    }
-});
-
-$('#changeSignSix').click(function(){//六次
-    for(var i=0;i<$('.changeSignSix').length;i++){
-        $('.changeSignSix').eq(i).css('display','none');
-        $('.saveSignSix').eq(i).css('display','block');
-    }
-});
-$('#saveSignSix').click(function(){
-    for(var i=0;i<$('.saveSignSix').length;i++){
-        $('.saveSignSix').eq(i).css('display','none');
-        $('.changeSignSix').eq(i).css('display','block');       
-    }
-});
-
-$('#changeSignWeek').click(function(){//一周
-    for(var i=0;i<$('.changeSignWeek').length;i++){
-        $('.changeSignWeek').eq(i).css('display','none');
-        $('.saveSignWeek').eq(i).css('display','block');
-    }
-});
-$('#saveSignWeek').click(function(){
-    for(var i=0;i<$('.saveSignWeek').length;i++){
-        $('.saveSignWeek').eq(i).css('display','none');
-        $('.changeSignWeek').eq(i).css('display','block');       
-    }
-});
-
-//购买送积分
-$('#changeBuy').click(function(){
-    for(var i=0;i<$('.changeBuy').length;i++){
-        $('.changeBuy').eq(i).css('display','none');
-        $('.saveBuy').eq(i).css('display','block');
-    }
-});
-$('#saveBuy').click(function(){
-    for(var i=0;i<$('.saveBuy').length;i++){
-        $('.saveBuy').eq(i).css('display','none');
-        $('.changeBuy').eq(i).css('display','block');
-    }
-    var integral=$('.saveBuy').eq('0').find('input').val();
-    var id=$('.saveBuy').eq('1').find('input').val();
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
-        data: 'id='+ id +'&integral='+ integral,
-        success: function(data){
-            if(data==1){
-               $('.changeBuy').eq('0').find('span').html(integral); 
-            }else{
-                alert("操作失败！");
-            }
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-});
-$('#changeActivity').click(function(){
-    for(var i=0;i<$('.changeActivity').length;i++){
-        $('.changeActivity').eq(i).css('display','none');
-        $('.saveActivity').eq(i).css('display','block');
-    }
-});
-$('#saveActivity').click(function(){
-    for(var i=0;i<$('.saveActivity').length;i++){
-        $('.saveActivity').eq(i).css('display','none');
-        $('.changeActivity').eq(i).css('display','block');
-    }
-    var integral=$('.saveActivity').eq('0').find('input').val();
-    var id=$('.saveActivity').eq('1').find('input').val();
-    $.ajax({
-        type:'post',
-        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
-        data: 'id='+ id +'&integral='+ integral,
-        success: function(data){
-            if(data==1){
-               $('.changeActivity').eq('0').find('span').html(integral); 
-            }else{
-                alert("操作失败！");
-            }
-        },
-        error:function(xhr,type,errorThrown){
-            alert("操作失败，请检查网络设置！");
-        }
-    });
-});
-</script>
+ 
+
+<style type="text/css">
+
+  #preview{
+
+        width:150px !important;
+
+    }
+
+    #preview #imghead,#preview img{
+
+     width:140px !important;
+
+    }
+
+    .widget{
+
+        font-color:#000 !;
+
+    } 
+
+
+
+    .postageNumber{
+
+        display: none;
+
+    }
+
+   
+
+    .addStyle{
+
+        display: inline-block;
+
+        padding: 3px 5px;
+
+        border: 1px solid #1fb5ac;
+
+        color: #1fb5ac;
+
+        margin-left: 10px;
+
+    }
+
+    .addStyle:hover{
+
+        cursor: pointer;
+
+    }
+
+    table tbody tr td,table thead tr th{
+
+        font-weight: normal;
+
+    }
+
+    .addPropertyContent{
+
+        margin-left: 80px;
+
+    }
+
+    table tbody tr{
+
+        margin: 20px 0 !important;
+
+    }
+
+    .signIn{
+
+        width:100px !important;
+
+        display: inline-block !important;
+
+    }
+
+    label{
+
+        padding-top:0 !important;
+
+        font-weight: normal;
+
+        line-height: 28px;
+
+    }
+
+    .am-u-sm-2,.am-u-sm-5{
+
+        line-height: 28px;
+
+    }
+
+
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>会员管理
+
+            <a href="<?php echo site_url().'/integral/Integral/integralRule';?>" style="font-size: 18px;">新人注册奖励设置</a>  
+
+            <small></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+ <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">奖励设置</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" action="<?php echo site_url('/integral/Integral/editNewUser');?>" method="post">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">新人注册送HI豆</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" class="tpl-form-input" id="ptPrice" name="newUserAwardHI" value="<?php echo get_option('newUserAwardHI');?>" placeholder="请输入大于0的整数" ><small>HI豆</small>
+                                        </div>
+                                    </div>
+    
+
+                                    <div class="am-form-group">
+                                        <label class="am-u-sm-3 am-form-label">新人注册送卡卷</label>
+                                        <div class="am-u-sm-9">
+                                           <select name="newUserAwardCoupon">
+                                               <?php $cid = get_option('newUserAwardCoupon');?>
+                                               <option value="0" <?php if($cid== '0'){echo "selected";}?>>不赠送</option>
+                                               <?php foreach($coupon as $val):?>
+                                               <option value="<?php echo $val['id'];?>" <?php if($cid== $val['id']){echo "selected";}?> ><?php echo $val['name'].'-'.$val['title']?></option>
+                                                <?php endforeach;?>
+                                           </select>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <button type="reset" class="am-btn">取消</button>
+                                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+ 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+<div class="goTop"><a href="javascript:scroll(0,0)" type="button"><img src="assets/img/top.png" alt="点我回到顶部"></a></div>
+
+
+
+</body>
+
+<script type="text/javascript">
+
+//签到送积分
+
+$('#changeSign').click(function(){
+
+    for(var i=0;i<$('.changeSign').length;i++){
+
+        $('.changeSign').eq(i).css('display','none');
+
+        $('.saveSign').eq(i).css('display','block');
+
+    }
+
+
+
+});
+
+$('#saveSign').click(function(){
+
+    for(var i=0;i<$('.saveSign').length;i++){
+
+        $('.saveSign').eq(i).css('display','none');
+
+        $('.changeSign').eq(i).css('display','block');       
+
+    }
+
+    var integral=$('.saveSign').eq('0').find('input').val();
+
+    var id=$('.saveSign').eq('1').find('input').val();
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+
+        data: 'id='+ id +'&integral='+ integral,
+
+        success: function(data){
+
+            if(data==1){
+
+               $('.changeSign').eq('0').find('span').html(integral); 
+
+            }else{
+
+                alert("操作失败！");
+
+            }
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+});
+
+
+
+//连续签到送积分
+
+$('#changeSignThree').click(function(){//三次
+
+    for(var i=0;i<$('.changeSignThree').length;i++){
+
+        $('.changeSignThree').eq(i).css('display','none');
+
+        $('.saveSignThree').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveSignThree').click(function(){
+
+    for(var i=0;i<$('.saveSignThree').length;i++){
+
+        $('.saveSignThree').eq(i).css('display','none');
+
+        $('.changeSignThree').eq(i).css('display','block');       
+
+    }
+
+    var integral=$('.saveSignThree').eq('0').find('input').val();
+
+    var id=$('.saveSignThree').eq('1').find('input').val();
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+
+        data: 'id='+ id +'&integral='+ integral,
+
+        success: function(data){
+
+            if(data==1){
+
+               $('.changeSignThree').eq('0').find('span').html(integral); 
+
+            }else{
+
+                alert("操作失败！");
+
+            }
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+});
+
+$('#changeSignFour').click(function(){//四次
+
+    for(var i=0;i<$('.changeSignFour').length;i++){
+
+        $('.changeSignFour').eq(i).css('display','none');
+
+        $('.saveSignFour').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveSignFour').click(function(){
+
+    for(var i=0;i<$('.saveSignFour').length;i++){
+
+        $('.saveSignFour').eq(i).css('display','none');
+
+        $('.changeSignFour').eq(i).css('display','block');       
+
+    }
+
+});
+
+
+
+$('#changeSignFive').click(function(){//五次
+
+    for(var i=0;i<$('.changeSignFive').length;i++){
+
+        $('.changeSignFive').eq(i).css('display','none');
+
+        $('.saveSignFive').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveSignFive').click(function(){
+
+    for(var i=0;i<$('.saveSignFive').length;i++){
+
+        $('.saveSignFive').eq(i).css('display','none');
+
+        $('.changeSignFive').eq(i).css('display','block');       
+
+    }
+
+});
+
+
+
+$('#changeSignSix').click(function(){//六次
+
+    for(var i=0;i<$('.changeSignSix').length;i++){
+
+        $('.changeSignSix').eq(i).css('display','none');
+
+        $('.saveSignSix').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveSignSix').click(function(){
+
+    for(var i=0;i<$('.saveSignSix').length;i++){
+
+        $('.saveSignSix').eq(i).css('display','none');
+
+        $('.changeSignSix').eq(i).css('display','block');       
+
+    }
+
+});
+
+
+
+$('#changeSignWeek').click(function(){//一周
+
+    for(var i=0;i<$('.changeSignWeek').length;i++){
+
+        $('.changeSignWeek').eq(i).css('display','none');
+
+        $('.saveSignWeek').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveSignWeek').click(function(){
+
+    for(var i=0;i<$('.saveSignWeek').length;i++){
+
+        $('.saveSignWeek').eq(i).css('display','none');
+
+        $('.changeSignWeek').eq(i).css('display','block');       
+
+    }
+
+});
+
+
+
+//购买送积分
+
+$('#changeBuy').click(function(){
+
+    for(var i=0;i<$('.changeBuy').length;i++){
+
+        $('.changeBuy').eq(i).css('display','none');
+
+        $('.saveBuy').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveBuy').click(function(){
+
+    for(var i=0;i<$('.saveBuy').length;i++){
+
+        $('.saveBuy').eq(i).css('display','none');
+
+        $('.changeBuy').eq(i).css('display','block');
+
+    }
+
+    var integral=$('.saveBuy').eq('0').find('input').val();
+
+    var id=$('.saveBuy').eq('1').find('input').val();
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+
+        data: 'id='+ id +'&integral='+ integral,
+
+        success: function(data){
+
+            if(data==1){
+
+               $('.changeBuy').eq('0').find('span').html(integral); 
+
+            }else{
+
+                alert("操作失败！");
+
+            }
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+});
+
+$('#changeActivity').click(function(){
+
+    for(var i=0;i<$('.changeActivity').length;i++){
+
+        $('.changeActivity').eq(i).css('display','none');
+
+        $('.saveActivity').eq(i).css('display','block');
+
+    }
+
+});
+
+$('#saveActivity').click(function(){
+
+    for(var i=0;i<$('.saveActivity').length;i++){
+
+        $('.saveActivity').eq(i).css('display','none');
+
+        $('.changeActivity').eq(i).css('display','block');
+
+    }
+
+    var integral=$('.saveActivity').eq('0').find('input').val();
+
+    var id=$('.saveActivity').eq('1').find('input').val();
+
+    $.ajax({
+
+        type:'post',
+
+        url:'<?php echo site_url('/integral/Integral/edit_integralrule');?>',
+
+        data: 'id='+ id +'&integral='+ integral,
+
+        success: function(data){
+
+            if(data==1){
+
+               $('.changeActivity').eq('0').find('span').html(integral); 
+
+            }else{
+
+                alert("操作失败！");
+
+            }
+
+        },
+
+        error:function(xhr,type,errorThrown){
+
+            alert("操作失败，请检查网络设置！");
+
+        }
+
+    });
+
+});
+
+</script>
+

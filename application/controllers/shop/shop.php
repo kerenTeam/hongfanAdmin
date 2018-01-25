@@ -735,6 +735,7 @@ class Shop extends Default_Controller {
             $arr['phone'] = trim($this->input->post('username'));
 
             $arr['password'] = md5(trim($this->input->post('password')));
+            $arr['gid']='2';
 
             $username = $this->Shop_model->get_user_info($arr['phone']);
 

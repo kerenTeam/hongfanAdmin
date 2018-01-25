@@ -811,7 +811,7 @@ $(document).ready(function(){
 
                 <a data-id="<%= goods_id%>" class="editGoods">
 
-                    <i class="am-icon-pencil"></i> 排序
+                    <i class="am-icon-pencil"></i> 排序<%if(recommentType=='1'){%>-抢购时间<%}%>
 
                 </a>
 
@@ -886,7 +886,7 @@ $(document).ready(function(){
 
                             <div class="am-u-sm-7">
 
-                                <input type="text" name="name" class="endtime<%= goods_id %>" required value="<%= countDown %>" />
+                                <input type="text" name="name" class="endtime<%= goods_id %>" required value="<%= countDown %>"  placeholder="2018-01-01 23:59:59"/>
 
                             </div>
 

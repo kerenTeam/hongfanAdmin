@@ -392,7 +392,7 @@ class System_model extends CI_Model
         $this->db->from('hf_user_invite a');
 
         $this->db->join('hf_user_member b', 'b.user_id = a.userid','left');
-        $query = $this->db->order_by('createTime','desc')->limit($size,$page)->get();
+        $query = $this->db->order_by('a.createTime','desc')->limit($size,$page)->get();
         return $query->result_array();
     }
 

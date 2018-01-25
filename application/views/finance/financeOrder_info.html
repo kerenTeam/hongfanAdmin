@@ -295,34 +295,43 @@ label.am-u-sm-8, label.am-u-sm-4{
                                             $lu = '1';
                                         }
                                         if($inter['Params']['couponData']['typeid'] == '3'){
+                                            $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                             $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
                                          
                                             if(isset($p['1'])){
                                                 $coupon_amount = round($p['1'] * $lu,'2');
                                             }
                                         }elseif($inter['Params']['couponData']['typeid'] == '2'){
+                                            $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                             $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
 
                                             if(isset($p['1'])){
                                                 $coupon_amount = round($zong * $p['1'],'2');
                                             }
                                         }elseif($inter['Params']['couponData']['typeid'] == '1'){
+                                            $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                             $coupon_amount = $inter['Params']['couponData']['coupon_amount'];
 
                                         }else{
+
+                                            $coupon_name = '';
                                             $coupon_amount = '0';
                                         }
 
 
                                     ?>
-                                优惠卷抵扣金额：<?php  $coupon= $coupon_amount; echo $coupon_amount;?>
+                                优惠劵抵扣金额：<?php  $coupon= $coupon_amount; echo $coupon_amount;?><br>
+                                优惠劵名称：<?php echo $coupon_name;?>
                                 <?php else:?>
                                 <?php $coupon = '0';?>
-                                优惠卷抵扣金额：0
+                                优惠劵抵扣金额：0
                             <?php endif;?>
 
                             </div> 
-                              <div class="am-u-sm-4">
+                            <div class="am-u-sm-4">
 
                                 支付金额：￥<?php echo $goods['total_goods_prices'] + $order['fee'] - round($inter['nowIntergal']['storenowIntergal'],2) - $coupon;?>
 
@@ -456,9 +465,65 @@ label.am-u-sm-8, label.am-u-sm-4{
 
                         <div class="am-form-group am-u-sm-12 am-u-md-10 am-u-lg-10 am-text-center am-u-end">
 
+                            
                             <div class="am-u-sm-4">
 
                             下单时间：<?php echo $order['create_time'];?>
+
+                            </div> 
+                            <div class="am-u-sm-4">
+
+                            支付时间：
+                            <?php if(!empty($order['pay_time'])):?>
+                                <?php echo date('Y-m-d H:i:s', $order['pay_time']/1000);?>
+                            <?php else:?>
+                                0
+                            <?php endif;?>
+
+                            </div>
+                             <div class="am-u-sm-4">
+
+                            发货时间：<?php echo $order['updatetime'];?>
+
+                            </div>
+                            <div class="am-u-sm-4">
+
+                            收货时间：
+                             <?php if(!empty($order['deliveryTime'])):?>
+                                <?php echo date('Y-m-d H:i:s', $order['deliveryTime']/1000);?>
+                            <?php else:?>
+                                0
+                            <?php endif;?>
+
+                            </div>
+                            <div class="am-u-sm-4">
+
+                            退货时间：
+                             <?php if(!empty($order['returnTime'])):?>
+                                <?php echo date('Y-m-d H:i:s', $order['returnTime']/1000);?>
+                            <?php else:?>
+                                0
+                            <?php endif;?>
+
+                            </div>
+                            <div class="am-u-sm-4">
+
+                            退款时间：
+                             <?php if(!empty($order['returnPriceTime'])):?>
+                                <?php echo date('Y-m-d H:i:s', $order['returnPriceTime']/1000);?>
+                            <?php else:?>
+                                0
+                            <?php endif;?>
+
+                            </div> 
+                            <div class="am-u-sm-4">
+
+                            取消订单时间：
+                             <?php if(!empty($order['CancellationOfOrder'])):?>
+                                <?php echo date('Y-m-d H:i:s', $order['CancellationOfOrder']/1000);?>
+                            <?php else:?>
+                                0
+                            <?php endif;?>
 
                             </div>
 

@@ -26,21 +26,24 @@ class Payment extends Default_Controller
     }
     //获取手机验证码
     function codeNum(){
-        // if($_POST){
+        if($_POST){
             $code = rand(1000,9999);
         
             $arr = array(
-                'phone'=>'15828277232',
+                'phone'=>'15023316590',
                 'cxt'=>"用户".$_SESSION['users']['username']."在修改话费充值价格，验证码是".$code."。5分钟内有效！"
             );
-            $url = "http://192.168.0.5:7200/api/index/sms";
-            $qiuniu = json_decode(curl_post($url,$arr),true);
-            
+            $url = APPLOGIN."/api/index/sms";
+            $ok = json_decode(curl_post($url,$arr),true);
 
-
-
-
-        // }
+            if($ok['data']['statusCode']=='200'){
+                            
+                echo json_encode(['error'=>'0','data'=>$code]);
+            }else{
+                echo json_encode(['error'=>'1','data'=>'']);
+            }
+           
+        }
     }
 
     //新增手机设置
@@ -101,11 +104,7 @@ class Payment extends Default_Controller
         if($_POST){
             $data = $this->input->post();
             $data['createUserid'] = $_SESSION['users']['user_id'];
-           // $rule = round($data['originalPrice'] - $data['advicePrice'],2);
-          
-            // $pay = array("Condition"=>$data['originalPrice'],'rule'=>'-'.$rule);
-            // $data['discountsRule'] = json_encode($pay);
-          
+
             if($this->Payment_model->edit_recharge($data['id'],$data)){
                  //日志    
                  $log = array(

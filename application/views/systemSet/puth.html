@@ -89,16 +89,16 @@
                             </div>
                             <div class="am-form-group">
                                 <span>*后续动作：</span>
-                                <label class="am-radio-inline">
+                                <label class="am-radio-inline iosno iosyes1">
                                     <input type="radio" value="1" name="laterOpt" checked> 启动应用
                                 </label>
-                                <label class="am-radio-inline">
+                                <label class="am-radio-inline iosno">
                                     <input type="radio" value="2" name="laterOpt"> 打开链接
                                 </label>
-                                <label class="am-radio-inline">
+                                <label class="am-radio-inline iosno">
                                     <input type="radio" value="3" name="laterOpt"> 下载应用
                                 </label>
-                                 <label class="am-radio-inline">
+                                 <label class="am-radio-inline iosyes">
                                     <input type="radio" value="4" name="laterOpt"> 透传
                                 </label>
 
@@ -254,6 +254,19 @@
         $(".time-picker").hunterTimePicker();
 
     })
+    $("input[name='plateform']").change(function () {
+        var delivery = $("input[name='plateform']:checked").val();
+        
+        if(delivery == 2) { 
+            $('.iosno').hide();
+            $('.iosyes input').attr('checked',true)
+        } else {
+            $('.iosno').show();
+            $('.iosyes input').attr('checked',false)
+            $('.iosyes1 input').prop('checked',true)
+
+        }
+    })
     $("input[name='pushWay']").change(function () {
         var delivery = $("input[name='pushWay']:checked").val();
         
@@ -267,7 +280,7 @@
         var delivery = $("input[name='ontimeShow']:checked").val();
 
         if (delivery == 2) {
-            $('.ontimeShow').show()
+            $('.ontimeShow').show(); 
         } else {
             $('.ontimeShow').hide()
         }

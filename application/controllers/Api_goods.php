@@ -25,6 +25,20 @@ class Api_goods extends CI_Controller
 
 	}
 
+    //二维码点击量
+    function inset_app(){
+        if($_POST){
+            $arr['type'] = $this->input->post('id');
+            $arr['create_time'] = date('Y-m-d H:i:s',time());
+           
+            $this->db->insert('hf_system_version_clicks',$arr);
+            echo "1";
+        }else{
+            echo "2";
+        }
+    }
+
+
     function index(){
 
             $order_uuid = 'hfczSZ5sJ6_5qd5_L1DatwBJr9pLftTy';
@@ -66,7 +80,7 @@ class Api_goods extends CI_Controller
 
             
 
-			$goodsid = $_POST['goods_id'];
+			  $goodsid = $_POST['goods_id'];
 
 			  $parent = $this->MallShop_model->get_goods_parent($goodsid);
 
@@ -243,6 +257,7 @@ class Api_goods extends CI_Controller
                     // //更改订单号
 
                     $order['order_status'] = '2';
+                    $order['pay_time'] = time()*1000;
 
                     $this->db->where('order_UUID',$order_uuid)->update('hf_mall_order',$order);
 

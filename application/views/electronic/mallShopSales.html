@@ -152,7 +152,16 @@ td.am-text-middle img{
 
 </style>
 
-
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 <!-- 内容区域 -->
 
@@ -168,7 +177,7 @@ td.am-text-middle img{
 
             <a href="<?php echo site_url().'/electronic/electronic';?>" style="font-size:18px;">电子券列表</a>
 
-            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">领取列表</a></small></div>
+            <small><a href="<?php echo site_url().'/electronic/Electronic/afterSales';?>">使用列表</a></small></div>
 
         </div>
 
@@ -186,13 +195,13 @@ td.am-text-middle img{
 
                 <div class="widget-head am-cf">
 
-                    <div class="widget-title  am-cf">领取信息查询</div>
+                    <div class="widget-title  am-cf">使用信息查询</div>
 
                 </div>
 
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
 
-              <!--       <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                   <!--  <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
 
                         <label for="businessTime" class="am-u-sm-3 am-text-right">时间：</label>
 
@@ -224,23 +233,22 @@ td.am-text-middle img{
 
                         </div>
                                    
-                    </div> -->
+                    </div>-->
                       <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
-                             <label for="source_state" class="am-u-sm-3 am-form-label">状态：</label>
+                            <label for="source_state" class="am-u-sm-3 am-form-label">优惠劵：</label>
 
-                                <div class="am-u-sm-9">
+                            <div class="am-u-sm-9">
+                                <select id="couponId" name="couponId"  data-am-selected="{searchBox: 1,maxHeight: 300}">
 
-                                    <select id="state" name="state"  data-am-selected="{searchBox: 1,maxHeight: 100}">
-
-                                        <option value="">请选择</option>
-                                       	<option value="0">已使用</option>
-                                        <option value="1">未使用</option>
-                                       	<option value="2">已作废</option>
+                                        <option value="0">请选择</option>
+                                        <?php foreach($coupons as $val):?>
+                                            <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'.$val['name'];?></option>
+                                        <?php endforeach;?>
+                                       
                                     </select>
+                            </div>
 
-                                </div>
-
-                            </div>  
+                      </div>  
 
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6 am-text-left">
 
@@ -252,11 +260,7 @@ td.am-text-middle img{
 
                 <div class="widget-head am-cf" style="clear:both;">
 
-                    <div class="widget-title  am-cf">电子券 领取列表</div>
-                    <div  class="widget-title">优惠劵名称： <?php echo $couponInfo['title'].'-'.$couponInfo['name'];?></div>
-                    <div  class="widget-title">领取数：<?php echo count($lin);?></div>
-
-                    <div  class="widget-title">使用数：<?php echo count($receive);?></div>
+                    <div class="widget-title  am-cf">电子券 使用列表</div>
 
             
                 </div>
@@ -267,24 +271,35 @@ td.am-text-middle img{
                     </div>
                     <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
                         <div class="am-modal-dialog">
-                            <div class="am-modal-hd">导出领取记录</div>
+                            <div class="am-modal-hd">导出使用记录</div>
                             <div class="am-modal-bd">
-                                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/dow_receive_coupom');?>" method="post">
-                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                    <form class="am-form tpl-form-line-form" action="<?php echo site_url('/electronic/Electronic/dowMallSales');?>" method="post">
+                                    <div class="am-form-group am-cf" style="min-height: 200px;">
+                                        <label class="am-u-sm-2 am-form-label">优惠劵：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <select id="couponId" name="couponId" data-am-selected="{searchBox: 1,maxHeight: 300}">
+                                                <option value="0">全部使用纪录</option>
+                                                <?php foreach($coupons as $val):?>
+                                                    <option value="<?php echo $val['id'];?>"><?php echo $val['title'].'-'.$val['name'];?></option>
+                                                <?php endforeach;?>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                  <!--   <div class="am-form-group am-cf" style="min-height: 100px;">
                                         <label class="am-u-sm-2 am-form-label">状态：</label>
                                         <div class="am-u-sm-9 am-u-end">
                                             <select id="mollseller" name="state" >
                                                 <option value="">导出所有</option>
-                                               	<option value="1">未使用</option>
+                                                <option value="1">未使用</option>
                                                 <option value="0">已使用</option>
-                                               	<option value="2">已作废</option>
+                                                <option value="2">已作废</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     
                                     <div class="am-form-group am-cf">
                                         <button class="am-btn am-btn-default am-btn-xs" type="button" data-am-modal-cancel>取消</button>
-                                        <input type="hidden" name="id" value="<?php echo $id;?>">
                                         <button class="am-btn am-btn-xs am-btn-secondary" type="submit" data-am-modal-confirm>确定</button>
                                     </div>
                                 </form>
@@ -305,69 +320,73 @@ td.am-text-middle img{
                                 <tr>
 
                                     <th>编号 </th>
-
+                                    <th>优惠劵编号 </th>
+                                    <th>优惠劵名称 </th>
                                     <th>领取用户 </th>
-
                                     <th>领取时间 </th>
                                     <th>购买订单号 </th>
-
+                                    <th>电商订单号 </th>
+                                    <th>商家名称 </th>
                                     <th>状态 </th>
-
                                     <th>操作</th>
 
                                 </tr>
 
                             </thead>
 
-                            <tbody id="dataList">
+                            <tbody id="infolistDiv">
 
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-
-                                <!-- more data -->
+                              
 
                             </tbody>
+                            
 
                         </table>
+                         <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr>
+                                    <td><%= list[i].user_coupon_id%></td>
+                                    <td><%= list[i].id%></td>
+                                    <td><%= list[i].title%>-<%= list[i].name%></td>
+                                    <td><%= list[i].nickname%></td>
+                                    <td><%= list[i].standardTime%></td>
+                                    <td><%= list[i].orderUUID%></td>
+                                    <td><%= list[i].order_id%></td>
+                                    <td><%= list[i].store_name%></td>
+                                    <td><% if(list[i].user_coupon_state == '1'){%>未使用<%}else if(list[i].user_coupon_state == '2'){%>已作废<%}else{%>已使用<%}%></td>
+                                    <td>
+                                        
+                                            <div class="tpl-table-black-operation">
+                                                <% if(list[i].user_coupon_state == '2'){%>
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="notused">
+                                                    <i class="am-icon-pencil"></i> 恢复成未使用
+                                                </a>  
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="used">
+                                                    <i class="am-icon-pencil"></i> 恢复成已使用
+                                                </a>
+                                                <%}else{%>
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="abolish">
+                                                    <i class="am-icon-pencil"></i> 作废
+                                                </a>
+                                                <%}%>
+
+                                                <a data-id="<%= list[i].user_coupon_id %>" class="tpl-table-black-operation-del tpl-del">
+
+                                                    <i class="am-icon-trash"></i> 删除
+
+                                                </a>
+
+                                            </div>
+                                    </td>
+                                </tr>
+                                            
+                                <%}%> 
+                        </script>
 
                     </div>
 
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-
-                        <div id="Pagination">
-
-                            <div class="pagination">
-
-                                <a class="prev"><i></i>上一页</a>
-
-                                <a class="current">1</a>
-
-                                <a >2</a>
-
-                                <a>3</a>
-
-                                <a>4</a>
-
-                                <span class="pagination-break">...</span>
-
-                                <a class="ep">15</a>
-
-                                <a class="next">下一页 <i></i></a>
-
-                            </div>
-
-                        </div>
-
-                        <div class="searchPage">
-
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-
-                          <span class="page-go">跳转<input type="text">页</span>
-
-                          <a href="javascript:;" class="page-btn">确定</a>
-
-                        </div>
-
-                    </div>
+                     <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
 
                 </div>
 
@@ -416,8 +435,7 @@ td.am-text-middle img{
 <script type="text/javascript">
 
 $(function() {
-
-    var startDate = new Date(2014, 01, 01);
+ var startDate = new Date(2014, 01, 01);
 
     var endDate = new Date(2014, 01, 30);
 
@@ -471,96 +489,6 @@ $(function() {
 
   });
 
-
-
-
-
-
-
-
-
-var total_page = 0,pageflag = 1,current_page=0,$afterSales = parseInt(sessionStorage.getItem('afterSales')) || 0;
-
-//点击前往某一页的函数
-
-function go_to_page(page_num){
-
-    $('.page_link').removeClass('active_page');
-
-    $('.page_link').eq(page_num).addClass('active_page');
-
-    $("#dataList").children('tr').css("display","none");
-
-    var start_page=parseInt(15)*parseInt(page_num);
-
-    var end_page=parseInt(15)*parseInt(page_num+1);
-
-    $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-
-    current_page=page_num;
-
-    sessionStorage.setItem('afterSales', current_page);
-
-    $afterSales = parseInt(sessionStorage.getItem('afterSales'));
-
-    
-
-}
-
-
-
-//点击上一页的函数
-
-function previous(){
-
-    if($('.current').length>1) {
-
-        new_page = parseInt($('.current').eq(0).html()) - 2;
-
-    }else {
-
-        new_page = parseInt($('.current').html()) - 2;
-
-    }
-
-    if(new_page >= 0) {
-
-        go_to_page(new_page);
-
-    }
-
-}
-
-
-
-//点击下一页的函数
-
-function next(argu){
-
-    if($('.current').length>1) {
-
-        new_page = parseInt($('.current').eq(1).html());
-
-    }else {
-
-        new_page = parseInt($('.current').html());
-
-    }
-
-    
-
-    
-
-    if(new_page < argu){   
-
-        console.log(new_page + ' ' + argu);
-
-        go_to_page(new_page);
-
-    }
-
-}
-
 //其他操作
 
 function otherFunction() {
@@ -578,6 +506,7 @@ function otherFunction() {
 
         var dataId=$(this).attr('data-id');
         var state='2';
+        console.log(dataId);
 
         $(this).attr("href","<?php echo site_url('/electronic/Electronic/editCouponState/" + dataId +"/" +state+ "');?>");
 
@@ -640,7 +569,6 @@ function otherFunction() {
 
                     $('.am-dimmer').removeClass('am-active');
 
-                    getList('<?php echo site_url('/electronic/Electronic/receive_coupon');?>','id='+<?php echo $id;?>);
 
                 }else{
 
@@ -664,188 +592,94 @@ function otherFunction() {
 
 }
 
-//异步刷新的ajax请求   
 
-function getList(dataurl,data){
 
-    $.ajax({
+</script>
 
-        type:'post',
 
-        url:dataurl,
-
-        data: data,
-
-        success: function(result){         
-
-            var res = eval(result);
-
-            console.log(res);
-
-            if(res != 2 && res != 3){
-
-                var listData = ''; //每页出现的数量
-
-                total_page = Math.ceil(res.length/15); //得到总页数
-                for(var i = 0; i < res.length; i++){
-
-                  //  res[i].qrcode = JSON.parse(res[i].qrcode);
-                    res[i].createTime = new Date(parseInt(res[i]['createTime'])).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
-
-                    listData += template('dataModal',res[i]);
-
-                }
-
-                document.getElementById('dataList').innerHTML = listData;
-
-                $('.pagebox').css('display', 'block');
-
-                if(pageflag) {
-
-                    var opts={};
-
-                    opts.current_page = $afterSales;
-
-                    $("#Pagination").pagination(total_page, opts);
-
-                    go_to_page($afterSales);
-
-                    pageflag = 0;
-
-                } else {
-
-                    $("#Pagination").pagination(total_page);
-
-                    go_to_page(0);
-
-                    
-
-                }
-
-                if(total_page < 5) {
-
-                    $('.searchPage').css('display', 'none');
-
-                }
-
-                otherFunction();
-
-            }else{
-
-                $('#dataList').find('tr').remove();
-
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
-
-                $('.pagebox').css('display', 'none');
-
-            }         
-
-        },
-
-        error:function(xhr,type,errorThrown){
-
-            alert("网络状况不佳，请稍后重试！");
-
-            $('#dataList').find('tr').remove();
-
-            $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无核销信息！</p></td></tr>').appendTo('#dataList');
-
-            $('.pagebox').css('display', 'none');
-
-        }
-
-    });
-
-}
+<script>  
+   
 
 $(document).ready(function(){
 
 
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'',"<?php echo site_url("/electronic/Electronic/retMallSales");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['mallSales'])){echo '0';}else{echo $_SESSION['mallSales'];}?>"/10 +1;
 
-    //加载列表数数据
 
+    getListinfo(page,'',"<?php echo site_url("/electronic/Electronic/retMallSales");?>");
+    
+    // 新分页方法
+    function getListinfo(num,couponId,url) {
 
+        var pagenum10 = (num-1) *10;
+        
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'couponId':couponId
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,couponId,"<?php echo site_url("/electronic/Electronic/retMallSales");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                   
+                    // console.log(lists);
 
-    getList('<?php echo site_url('/electronic/Electronic/receive_coupon');?>','id='+<?php echo $id;?>);
-     //点击搜索
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
 
     $('#searchOrder').click(function(){
-       var  state=$('#state option:selected').val();
-       getList('<?php echo site_url('/electronic/Electronic/search_receive');?>', 'state='+state + '&id=<?php echo $id;?>' );
+
+        var  uuid = $('#couponId option:selected').val();
+        // console.log(uuid);
+        getListinfo(1,uuid,"<?php echo site_url("/electronic/Electronic/retMallSales");?>");
+
     });
-})
 
-</script>
 
-<script type="text/html" id="dataModal">
-    <tr class="trClass" id="trClass<%= user_coupon_id %>" data-id="<%= user_coupon_id %>">
 
-        <td class="am-text-middle"><%= user_coupon_id %></td>
+}) 
+</script> 
 
-        <td class="am-text-middle"><%= nickname %></td>
-
-        <td class="am-text-middle"><%= standardTime %></td>
-        <td class="am-text-middle"><%= orderUUID %></td>
-
-		<%if(user_coupon_state == '1'){%>
-        	<td class="am-text-middle">未使用</td>
-        <%}else if(user_coupon_state == '0'){%>
-            <td class="am-text-middle">已使用</td>
-        <%}else if(user_coupon_state == '2'){%>
-		    <td class="am-text-middle">已作废</td>
-        <%}%>
-
-        <td class="am-text-middle">
-
-            <div class="tpl-table-black-operation">
-                <% if(user_coupon_state == '2'){%>
-                <a data-id="<%= user_coupon_id %>" class="notused">
-                    <i class="am-icon-pencil"></i> 恢复成未使用
-                </a>  
-                <a data-id="<%= user_coupon_id %>" class="used">
-                    <i class="am-icon-pencil"></i> 恢复成已使用
-                </a>
-                <%}else{%>
-                <a data-id="<%= user_coupon_id %>" class="abolish">
-                    <i class="am-icon-pencil"></i> 作废
-                </a>
-                <%}%>
-
-                <a data-id="<%= user_coupon_id %>" class="tpl-table-black-operation-del tpl-del">
-
-                    <i class="am-icon-trash"></i> 删除
-
-                </a>
-
-            </div>
-
-        </td>
-
-    </tr>
-
-     <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= user_coupon_id %>">
-
-        <div class="am-modal-dialog">
-
-            <div class="am-modal-hd">删除提示</div>
-
-            <div class="am-modal-bd">
-
-                <p class="black">你，确定要删除这条记录吗？</p>
-
-            </div>
-
-            <div class="am-modal-footer">
-
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-
-                <span class="am-modal-btn sureDelete" data-id="<%= user_coupon_id %>" data-am-modal-confirm>确定</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</script>
 

@@ -735,7 +735,7 @@ td div.am-u-sm-12 {
             var refund_reason_return = '';
 
             console.log('order_id='+dataId+'&isAgree='+ isAgreeReturn +'&refund_reason='+ refund_reason_return);
-
+// 
             $.ajax({
 
                 type:'post',
@@ -1079,21 +1079,11 @@ $(document).ready(function(){
 
     //加载列表数数据
 
-    if($isShopOrder) {
 
-        var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
 
-           // console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+    getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>); 
 
-        getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
 
-        sessionStorage.setItem('isShopOrder', 1);
-
-    } else {
-
-        getList('<?php echo site_url('/shop/singleShop/store_order');?>','storeid='+<?php echo $storeid;?>); 
-
-    }
 
     //点击搜索
 
@@ -1101,7 +1091,7 @@ $(document).ready(function(){
 
         var orderState=$('#orderState option:selected').val(),buyer=$('#buyer').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
 
-           // console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
+           console.log('storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
 
         getList('<?php echo site_url('/shop/singleShop/order_search');?>','storeid='+<?php echo $storeid;?>+'&state='+ orderState +'&start_time='+ begin_date +'&end_time='+ end_date + '&username='+ buyer);
 

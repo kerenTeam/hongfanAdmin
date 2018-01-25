@@ -1,5 +1,4 @@
 <?php
-
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -2780,6 +2779,7 @@ class SingleShop extends CI_Controller {
             if($data['isAgree'] == 1){
 
                 $arr['admin_orderState'] = '1';
+                $arr['order_status'] = '10';
 
             }else{
 
@@ -3126,10 +3126,16 @@ class SingleShop extends CI_Controller {
                 
 
             }
+            // var_Dump($w);
+            // exit;
 
-            
+            if($w['errno'] != ''){
 
-            $data['express_w'] = $w['data'];
+            }else{
+                $data['express_w'] = $w['data'];
+
+            }
+
 
             $data['refund_express'] = $refund['data'];
 
@@ -3272,9 +3278,16 @@ class SingleShop extends CI_Controller {
 
            
 
-            $time = $_POST['start_time'] . ' 00:00:00';
+            $t = $_POST['start_time'];
 
-            $endtime = $_POST['end_time'] .' 23:59:59';
+            $e = $_POST['end_time'];
+            if(!empty($t)){
+                $time = $t . ' 00:00:00';
+                $endtime =  $e. ' 23:59:59';
+            }else{
+                $time = '';
+                $endtime = '';
+            }
 
             $username = trim($_POST['username']);
 
@@ -3301,6 +3314,7 @@ class SingleShop extends CI_Controller {
             
 
             if(!empty($state) && empty($time) && empty($buyer)){
+            
 
                 $this->db->select('a.*,c.nickname');
 
@@ -3308,7 +3322,7 @@ class SingleShop extends CI_Controller {
 
                 $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-                $query = $this->db->where('seller',$storeid)->where('order_status',$state)->order_by('a.create_time','desc')->get();
+                $query = $this->db->where('a.seller',$storeid)->where('a.order_status',$state)->order_by('a.create_time','desc')->get();
 
                 $result = $query->result_array();
 

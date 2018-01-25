@@ -278,7 +278,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_mall_goods as a');
         $this->db->join('hf_shop_store as b','a.storeid = b.store_id','left');
         $this->db->join('hf_mall_category as c','a.categoryid = c.catid','left');
-        $query = $this->db->where('goods_state !=','2')->order_by("a.create_time",'desc')->get();
+        $query = $this->db->where('goods_state !=','2')->order_by("a.goods_id",'desc')->get();
         return $query->result_array();
     }
     //返回特价商品列表
@@ -327,7 +327,7 @@ class MallShop_model extends CI_Model
         $this->db->from('hf_shop_store as b');
         $this->db->join('hf_mall_order as a','a.seller = b.store_id','left');
         $this->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-        $query = $this->db->where('a.admin_delOrder','1')->where('a.order_type !=','0')->order_by('a.create_time','desc')->limit(100)->get();
+        $query = $this->db->where('a.admin_delOrder','1')->where('a.order_type !=','0')->order_by('a.pay_time DESC,a.create_time DESC')->limit(100)->get();
         return $query->result_array();
     }
 
@@ -427,7 +427,7 @@ class MallShop_model extends CI_Model
     //获取商品属性
     function get_goods_parent($id){
         $where['g_id'] = $id;
-        $query = $this->db->where($where)->get('hf_mall_goods_property');
+        $query = $this->db->where($where)->order_by('id','asc')->get('hf_mall_goods_property');
         return $query->result_array();
     }
 
@@ -504,6 +504,12 @@ class MallShop_model extends CI_Model
         $where['state'] = '1';
         //$where['store_type'] = $type;
         $query = $this->db->where($where)->order_by('store_id','desc')->get($this->shop_store);
+        return $query->result_array();
+    }
+
+    //更具uuid返回订单
+    function retUuidOrder($uuid,$id){
+        $query = $this->db->where('order_UUID',$uuid)->where('order_id !=',$id)->get($this->shop_order);
         return $query->result_array();
     }
 

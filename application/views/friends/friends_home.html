@@ -597,7 +597,7 @@ $(document).ready(function(){
                 // console.log(data);
                 if(data != 2){
                     var res = JSON.parse(data);
-                    var allpage = parseInt(res.total/10);  
+                    var allpage = Math.ceil(res.total/10);  
                     //分页
                     $("#page").paging({
                         pageNo: num,

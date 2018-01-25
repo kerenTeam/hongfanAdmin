@@ -110,8 +110,9 @@ class Store extends Default_Controller {
             $data['saleid'] = $id;
 
         }
+        $data['store'] = $this->MallShop_model->ret_store_type('2','2');
 
-        $data['cates'] = $this->MallShop_model->get_goods_cates('0','2');
+        $data['cates'] = $this->MallShop_model->get_mall_cates();
 
         $data['page'] = $this->view_storeGoodsList;
 
@@ -430,9 +431,14 @@ class Store extends Default_Controller {
             if($recommend == "6"){
 
                 $data['recommend'] = '1';
+            }else{
+                $data['recommend'] = '0';
             }
 
             $data['recommentType'] = $recommend;
+            if($recommend !='1'){
+                $data['countDown'] = '';
+            }
             
 
             if($recommend == '0'){
@@ -1180,7 +1186,9 @@ class Store extends Default_Controller {
     function storeOrderList(){
 
         //获取所有商家
-
+        if(!isset($_SESSION['orderNum'])){
+            $_SESSION['orderNum']= '0';
+        }
         $data['store'] = $this->MallShop_model->ret_store_type('2','2');
 
         $data['page'] = $this->view_storeOrderList;
@@ -1310,9 +1318,6 @@ class Store extends Default_Controller {
             if(!empty($order['shipper_code'])){
 
                 //获取物流新词
-
-              
-
                 //发货物流
 
                 $ret = "orderCode=".$order['logistic_code'].'&shipperCode='.$order["shipper_code"].'&logisticCode='.$order['logistic_code'];
@@ -1502,9 +1507,20 @@ class Store extends Default_Controller {
             $orderid = $this->input->post('order_id');
 
             $arr['order_status'] = '8'; 
+            $arr['returnPriceTime'] = time()*1000; 
+            //获取dingdan详情
+            $orderInfo = $this->MallShop_model->get_order_info($orderid);
+            $uuorder = $this->MallShop_model->retUuidOrder($orderInfo['order_UUID'],$orderid);
 
             if($this->MallShop_model->edit_order_state($orderid,$arr)){
+                $coupon = json_decode($orderInfo['PriceCalculation'],true);
+                if(empty($uuorder)){
+                    $data['state']='1';
+                    $this->db->where('user_coupon_id',$coupon['coupon'])->update('hf_user_coupon',$data);
+                }
+                //修改卷的状态
 
+                //修改卷的
                 $log = array(
 
                     'userid'=>$_SESSION['users']['user_id'],  
@@ -1735,9 +1751,12 @@ class Store extends Default_Controller {
                 $buyer = '';
 
             }
+            $page = $this->input->post('start');
+            $_SESSION['orderNum'] = $page;
+            $size = $this->input->post('count');
 
-
-            $list = order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid);
+            $list = order_search($state,$buyer,$seller,$time,$endtime,'4',$orderid);
+            $listpage = order_search_page($state,$buyer,$seller,$time,$endtime,'4',$orderid,$size,$page);
 
             if(empty($list)){
 
@@ -1745,7 +1764,7 @@ class Store extends Default_Controller {
 
             }else{
 
-                echo json_encode($list);
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
 
             }
 
@@ -1996,21 +2015,30 @@ class Store extends Default_Controller {
 
             $this->excel->getActiveSheet()->setTitle('ImportOrder');
 
+
+            $storeid = $this->input->post('storeid');
+            $cateid = $this->input->post('cate');
+
             $arr_title = array(
 
                 'A' => '商品编号',
 
                 'B' => '商品名称',
 
-                'C' => '商家名称',
+                'C' => '规格',
 
                 'D' => '所属分类',
 
-                'E' => '售价',
+                'E' => '品牌名称',
 
-                'F' => '库存',
+                'F' => '单价',
                 
-                'G' => '销量',
+                'G' => '库存',
+                'H' => '原价',
+                'I' => '成本价',
+                'J' => '毛利',
+                'K' => '毛利率',
+                'L' => '商家名称',
             );
 
              //设置excel 表头
@@ -2032,11 +2060,16 @@ class Store extends Default_Controller {
             $i = 1;
 
             //查询数据库得到要导出的内容
+            if(!empty($storeid) && empty($cateid)){
+                $bookings = $this->MallShop_model->get_goods_list($storeid);
+            }else if(empty($storeid) && !empty($cateid)){
 
+            }else if(!empty($storeid) && !empty($cateid)){
 
-            $bookings = $this->MallShop_model->get_goodslist('4');
+            }else if(empty($storeid) && empty($cateid)){
+                $bookings = $this->MallShop_model->get_goodslist('4');
+            }
 
-          
 
             if(!empty($bookings)){
 
@@ -2053,37 +2086,68 @@ class Store extends Default_Controller {
                     $parent=  $this->MallShop_model->get_goods_parent($booking['goods_id']);
 
                     if(!empty($parent)){
+                        $a= $i;
+                        foreach ($parent as $key => $val) {
 
-                        $a = '0';
+                            if(!empty($val['stend1'])){
+                                $value1 = $val['stend1'].':'.$val['value1'];
+                            }else{
+                                $value1='';
+                            }
+                            if(!empty($val['stend2'])){
+                                $value2 = $val['stend2'].':'.$val['value2'];
+                            }else{
+                                 $value2='';
+                            }
+                            if(!empty($val['stend3'])){
+                                $value3 = $val['stend3'].':'.$val['value3'];
+                            }else{
+                                 $value3='';
+                            }
+                            if(!empty($val['stend4'])){
+                                 $value4 = $val['stend4'].':'.$val['value4'];
+                            }else{
+                                 $value4='';
+                            }
+                            $this->excel->getActiveSheet()->setCellValue('A' .$a, $booking['goods_id']);
+                            $this->excel->getActiveSheet()->setCellValue('B' .$a, $booking['title']);
+                            $this->excel->getActiveSheet()->setCellValue('C' .$a, $value1.$value2.$value3.$value4);
+                        
+                            $this->excel->getActiveSheet()->setCellValue('D' .$a, $booking['catname']);
+                            $this->excel->getActiveSheet()->setCellValue('E' .$a, $booking['brand']);
 
-                        foreach($parent as $key=>$val){
+                            $this->excel->getActiveSheet()->setCellValue('F' .$a, $booking['price']+$val['Floating_price']);
 
-                            $a += $val['stock'];
+                            $this->excel->getActiveSheet()->setCellValue('G' .$a, $val['stock']);
 
+                            $this->excel->getActiveSheet()->setCellValue('H' .$a, $booking['originalprice']);
+                            $this->excel->getActiveSheet()->setCellValue('I' .$a, $booking['costPrice']);
+                            $li = ($booking['price']+$val['Floating_price'])-$booking['costPrice'];
+                            $this->excel->getActiveSheet()->setCellValue('J' .$a, $li);
+                            $this->excel->getActiveSheet()->setCellValue('K' .$a, $li/$booking['price']);
+                            $this->excel->getActiveSheet()->setCellValue('L' .$a, get_store_name($booking['storeid']));
+                            $a++;
+                            // $booking['amount'] = $a;
                         }
-
-                        $booking['amount'] = $a;
-
                     }else{
+                         $this->excel->getActiveSheet()->setCellValue('A' .$i, $booking['goods_id']);
+                        $this->excel->getActiveSheet()->setCellValue('B' .$i, $booking['title']);
+                        $this->excel->getActiveSheet()->setCellValue('C' .$i, '');
+                    
+                        $this->excel->getActiveSheet()->setCellValue('D' .$i, $booking['catname']);
+                        $this->excel->getActiveSheet()->setCellValue('E' .$i, $booking['brand']);
 
-                        $booking['amount'] = '0';
+                        $this->excel->getActiveSheet()->setCellValue('F' .$i, $booking['price']);
 
+                        $this->excel->getActiveSheet()->setCellValue('G' .$i, '');
+
+                        $this->excel->getActiveSheet()->setCellValue('H' .$i, $booking['originalprice']);
+                        $this->excel->getActiveSheet()->setCellValue('I' .$i, $booking['costPrice']);
+                        $li = $booking['price']-$booking['costPrice'];
+                        $this->excel->getActiveSheet()->setCellValue('J' .$i, $li);
+                        $this->excel->getActiveSheet()->setCellValue('K' .$i, $li/$booking['price']);
+                        $this->excel->getActiveSheet()->setCellValue('L' .$i, get_store_name($booking['storeid']));
                     }
-
-                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['goods_id']);
-
-                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['title']);
-
-                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['store_name']);
-
-                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['catname']);
-
-                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $booking['price']);
-
-                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['amount']);
-
-                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $booking['sales']);
-
                 }
 
             }
@@ -2092,25 +2156,25 @@ class Store extends Default_Controller {
 
             //日志
 
-            $log = array(
+            // $log = array(
 
-                'userid'=>$_SESSION['users']['user_id'],  
+            //     'userid'=>$_SESSION['users']['user_id'],  
 
-                "content" => $_SESSION['users']['username']."导出了特色馆商品信息",
+            //     "content" => $_SESSION['users']['username']."导出了特色馆商品信息",
 
-                "create_time" => date('Y-m-d H:i:s'),
+            //     "create_time" => date('Y-m-d H:i:s'),
 
-                "userip" => get_client_ip(),
+            //     "userip" => get_client_ip(),
 
-            );
+            // );
 
-            $this->db->insert('hf_system_journal',$log);
-
-
+            // $this->db->insert('hf_system_journal',$log);
 
 
 
-            $filename = 'ImportOrder.xls'; //save our workbook as this file name
+
+
+            $filename = 'Mallgoods.xls'; //save our workbook as this file name
 
            /// var_dump($filename);
 
@@ -2172,7 +2236,7 @@ class Store extends Default_Controller {
             $this->excel->getActiveSheet()->setTitle('ImportOrder');
 
 
-            $this->excel->getActiveSheet()->mergeCells('A1:N1');  
+            $this->excel->getActiveSheet()->mergeCells('A1:AF1');  
 
             $this->excel->getActiveSheet()->setCellValue('A1','销售明细'); 
 
@@ -2193,35 +2257,38 @@ class Store extends Default_Controller {
            
 
                 $arr_title = array(
-
                     'A' => '序列编号',
-
                     'B' => '订单编号',
                     'C' => '关联订单号',
-                    'D' => '订单状态',
-
-                    'E' => '销售时间',
-
-                    'F' => '所属大类',
-
-                    'G' => '商家编号',
-
-                    'H' => '商家名称',
-
-                    'I' => '单品名称(多个、隔开)',
-
-                    'J' => '销售单品数量(多个、隔开)',
-
-                    'K' => '单品各销售金额(多个、隔开)',
-
-                    'L' => '销售金额',
-                    'M' => '支付金额',
-                    'N' => '积分抵用金额',
-                    'O' => '优惠卷抵用金额',
-                    'P' => '商家修改价格',
-                    'Q' => '商家修改价格原因',
-                    'R' => '收货地址',
-
+                    'D' => '订单类型',
+                    'E' => '用户账户',
+                    'F' => '订单状态',
+                    'G' => '商家id',
+                    'H' => '商家名',
+                    'I' => '商品id',
+                    'J' => '商品规格',
+                    'K' => '商品名称',
+                    'L' => '商品数量',
+                    'M' => '商品单价',
+                    'N' => '销售金额',
+                    'O' => '付款金额',
+                    'P' => '积分抵扣金额',
+                    'Q' => '优惠券抵扣金额',
+                    'R' => '折扣率',
+                    'S' => '使用优惠券id',
+                    'T' => '使用优惠券名称',
+                    'U' => '支付方式',
+                    'V' => '支付时间',
+                    'W' => '佣金比率',
+                    'X' => '邮费',
+                    'Y' => '收货人地址',
+                    'Z' => '收货人手机号',
+                    'AA' => '收货人姓名',
+                    'AB' => '发货时间',
+                    'AC' => '收货时间',
+                    'AD' => '退款时间',
+                    'AE' => '退款金额',
+                    'AF' => '订单取消时间',
                 );
             //设置excel 表头
 
@@ -2242,51 +2309,68 @@ class Store extends Default_Controller {
            // var_dump($start_time,$end_time);
 
             //获取要导出的订单
-
+           //  echo "<pre>";
+           //  var_dump($list);
 
            // exit;
 
-            if(!empty($list)){
+           //
+           if(!empty($list)){
+                $i ='2';
+                foreach($list as $k=>$book){
+                    $i++;
+                    $goods = json_decode($book['goods_data'],true);
+                    // $this->excel->getActiveSheet()->mergeCells('A3:A17');
 
-              if(count($list) > 0)
 
-              {
+                    // echo "<pre>";
+                    // var_dump($goods);
+                    // exit;
+                    // var_dump(count($goods['goods_Data']));
+                    if(count($goods['goods_Data']) >'1'){
+                        $a = $i+1;
+                        $this->excel->getActiveSheet()->mergeCells('A'.$i.':A'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('B'.$i.':B'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('C'.$i.':C'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('E'.$i.':E'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('F'.$i.':F'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('G'.$i.':G'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('H'.$i.':H'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('N'.$i.':N'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('O'.$i.':O'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('P'.$i.':P'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('Q'.$i.':Q'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('R'.$i.':R'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('S'.$i.':S'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('T'.$i.':T'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('U'.$i.':U'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('v'.$i.':V'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('W'.$i.':W'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('X'.$i.':X'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('Y'.$i.':Y'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('Z'.$i.':Z'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AA'.$i.':AA'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AB'.$i.':AB'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AC'.$i.':AC'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AD'.$i.':AD'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AE'.$i.':AE'.$a);      //合并
+                        $this->excel->getActiveSheet()->mergeCells('AF'.$i.':AF'.$a);      //合并
 
-                  $i ='2';
-                    foreach($list as $book){
 
-                        $i++;
-                        $goods = json_decode($book['goods_data'],true);
-
-                        
-
-                        foreach ($goods['goods_Data'] as $key => $value) {
-
-                            $k[$i][$key]= $value['goods_id'];
-
-                            $c[$i][$key]= $value['title'];
-
-                            $n[$i][$key]= $value['nums'];
-
-                            $p[$i][$key]= $value['price'];
-
-                        }
-
-                        $good = implode('、',$k[$i]);
-
-                        $name = implode('、',$c[$i]);
-
-                        $num = implode('、',$n[$i]);
-
-                        $price = implode('、',$p[$i]);
-
-            
-
-                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $i-2);
-
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $k+1);
                         $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
                         $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['order_UUID']);
-                         switch ($book['order_status']) {
+
+                        if($book['order_type'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('D' . $i, '超市优选');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('D' . $i, '特色馆');
+                        }
+
+                        //获取用户信息
+                        $user = userInfo($book['buyer']);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $user['phone']);
+                        switch ($book['order_status']) {
                                    case '1':
                                         $state = '未支付';
                                        break;
@@ -2318,37 +2402,21 @@ class Store extends Default_Controller {
                                         $state = '等待退款';
                                        break;
                         }
-                        $this->excel->getActiveSheet()->setCellValue('D' . $i, $state);
-
-
-                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $book['create_time']);
-
-
-                        if($book['order_type'] == '1'){
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '超市优选');
-                        }else{
-                            $this->excel->getActiveSheet()->setCellValue('F' . $i, '特色馆');
-                        }
-
-                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $book['seller']);
-
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $state);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $goods['store_id']);
                         $this->excel->getActiveSheet()->setCellValue('H' . $i, $goods['stores']['store_name']);
-
-                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $name);
-
-                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $num);
-                        $this->excel->getActiveSheet()->setCellValue('K' . $i,$price);
-
                         $coupon = json_decode($book['PriceCalculation'],true);
-
+                       
+                     
                         $zong = round($goods['total_goods_prices'],2);
-                            if(isset($user['boxa'])){
-                                $lu = $user['boxa']['value'];
-                            }else{
-                                $lu = '1';
-                            }
-                         if(isset($coupon['Params']['couponData']['coupon_amount'])){
-                           
+                        if(isset($goods['boxa'])){
+                            $lu = $goods['boxa']['value'];
+                        }else{
+                            $lu = '1';
+                        }
+                        if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                            $coupon_id = retCouponId($coupon['coupon']);
+                            $coupon_name = ret_coupon_name($coupon_id);
                             if($coupon['Params']['couponData']['typeid'] == '3'){
                                 $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
                
@@ -2365,91 +2433,281 @@ class Store extends Default_Controller {
                                 $coupon_amount = '0';
                             }
                         }else{
+                             $coupon_id='';
+                             $coupon_name='';
                             $coupon_amount = '0';
                         }    
                         if(isset($coupon['nowIntergal']['storenowIntergal'])){
+                            $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+                        }else{
+                            $nowIntergal = '0';
+                        }
+                        $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $zong);
 
-                        $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+
+                        if($book['order_status'] == '8'){
+                            $this->excel->getActiveSheet()->setCellValue('AE' . $i, '-'.$zong);
+                        }
+
+                        if($zhi <'0'){
+                            $this->excel->getActiveSheet()->setCellValue('O' . $i, '0.01');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('O' . $i, $zhi);
+
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('P' . $i, $nowIntergal);
+                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, $coupon_amount);
+                        $ze = ($zong - $zhi)/$zong;
+                        $this->excel->getActiveSheet()->setCellValue('R' . $i, $ze);
+                        $this->excel->getActiveSheet()->setCellValue('S' . $i, $coupon_id);
+                        $this->excel->getActiveSheet()->setCellValue('T' . $i, $coupon_name);
+
+                        $payData = $this->MallShop_model->ret_order_paydata($book['order_UUID']);
+
+                        $this->excel->getActiveSheet()->setCellValue('U' . $i, $payData['payType']);
+
+                        $this->excel->getActiveSheet()->setCellValue('V' . $i, $book['pay_time']);
+                        $this->excel->getActiveSheet()->setCellValue('W' . $i, $goods['stores']['points']);
+                        $this->excel->getActiveSheet()->setCellValue('X' . $i, $goods['postAge']['postage']);
+                        $address= json_decode($book['buyer_address'],true);
+                        $this->excel->getActiveSheet()->setCellValue('Y' . $i,  $address['province'].$address['city'].$address['area'].$address['address']);
+                        $this->excel->getActiveSheet()->setCellValue('Z' . $i, $address['phone']);
+                        $this->excel->getActiveSheet()->setCellValue('AA' . $i, $address['person']);
+                        $this->excel->getActiveSheet()->setCellValue('AB' . $i, $book['updatetime']);
+                        $this->excel->getActiveSheet()->setCellValue('AC' . $i, $book['deliveryTime']);
+                        $this->excel->getActiveSheet()->setCellValue('AD' . $i, $book['returnPriceTime']);
+                        $this->excel->getActiveSheet()->setCellValue('AF' . $i, $book['CancellationOfOrder']);
+
+                        
+                        $a = $i;
+                        foreach ($goods['goods_Data'] as $val) {
+                           
+                            if($book['order_type'] == '1'){
+                                $this->excel->getActiveSheet()->setCellValue('D' . $a, '超市优选');
+                            }else{
+                                $this->excel->getActiveSheet()->setCellValue('D' . $a, '特色馆');
+                            }
+                            if(!empty($val['stend1'])){
+                                $value1 = $val['stend1'].':'.$val['value1'];
+                            }else{
+                                $value1='';
+                            }
+                            if(!empty($val['stend2'])){
+                                $value2 = $val['stend2'].':'.$val['value2'];
+                            }else{
+                                 $value2='';
+                            }
+                            if(!empty($val['stend3'])){
+                                $value3 = $val['stend3'].':'.$val['value3'];
+                            }else{
+                                 $value3='';
+                            }
+                            if(!empty($val['stend4'])){
+                                 $value4 = $val['stend4'].':'.$val['value4'];
+                            }else{
+                                 $value4='';
+                            }
+                           
+
+                             $this->excel->getActiveSheet()->setCellValue('I' . $a, $val['goods_id']);
+
+                             $this->excel->getActiveSheet()->setCellValue('J' . $a, $value1.$value2.$value3.$value4);
+                             $this->excel->getActiveSheet()->setCellValue('K' . $a, $val['title']);
+                             $this->excel->getActiveSheet()->setCellValue('L' . $a, $val['nums']);
+                             $this->excel->getActiveSheet()->setCellValue('M' . $a, $val['price'] + $val['Floating_price']);
+                           
+                             $a++;
+                        }
+
+                        // $this->excel->getActiveSheet()->setCellValue('P' . $i, $book['fee']);
+                        // $this->excel->getActiveSheet()->setCellValue('Q' . $i, $book['fee_name']);
+
+
+                        $i = $a-1;
+                    }else{
+                        $this->excel->getActiveSheet()->setCellValue('A' . $i, $k+1);
+                        $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_id']);
+                        $this->excel->getActiveSheet()->setCellValue('C' . $i, $book['order_UUID']);
+                        if($book['order_type'] == '1'){
+                            $this->excel->getActiveSheet()->setCellValue('D' . $i, '超市优选');
+                        }else{
+                            $this->excel->getActiveSheet()->setCellValue('D' . $i, '特色馆');
+                        }
+                        $user = userInfo($book['buyer']);
+                        $this->excel->getActiveSheet()->setCellValue('E' . $i, $user['phone']);
+                        switch ($book['order_status']) {
+                                   case '1':
+                                        $state = '未支付';
+                                       break;
+                                   case '2':
+                                        $state = '已支付';
+                                       break;
+                                       case '3':
+                                        $state = '已发货';
+                                       break;
+                                       case '4':
+                                        $state = '已收货';
+                                       break;
+                                       case '5':
+                                        $state = '已评价';
+                                       break;
+                                       case '6':
+                                        $state = '求退货';
+                                       break;
+                                       case '7':
+                                        $state = '退货中';
+                                       break;
+                                       case '8':
+                                        $state = '退款成功';
+                                       break;
+                                       case '9':
+                                        $state = '其他';
+                                       break;  
+                                    case '10':
+                                        $state = '等待退款';
+                                       break;
+                        }
+                        $this->excel->getActiveSheet()->setCellValue('F' . $i, $state);
+                        $this->excel->getActiveSheet()->setCellValue('G' . $i, $goods['store_id']);
+                        $this->excel->getActiveSheet()->setCellValue('H' . $i, $goods['stores']['store_name']);
+                        $this->excel->getActiveSheet()->setCellValue('I' . $i, $goods['goods_Data']['0']['goods_id']);
+                        if(!empty($goods['goods_Data']['0']['stend1'])){
+                            $value1 = $goods['goods_Data']['0']['stend1'].':'.$goods['goods_Data']['0']['value1'];
+                        }else{
+                            $value1='';
+                        }
+                        if(!empty($goods['goods_Data']['0']['stend2'])){
+                            $value2 = $goods['goods_Data']['0']['stend2'].':'.$goods['goods_Data']['0']['value2'];
+                        }else{
+                             $value2='';
+                        }
+                        if(!empty($goods['goods_Data']['0']['stend3'])){
+                            $value3 = $goods['goods_Data']['0']['stend3'].':'.$goods['goods_Data']['0']['value3'];
+                        }else{
+                             $value3='';
+                        }
+                        if(!empty($goods['goods_Data']['0']['stend4'])){
+                             $value4 = $goods['goods_Data']['0']['stend4'].':'.$goods['goods_Data']['0']['value4'];
+                        }else{
+                             $value4='';
+                        }
+                           
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $value1.$value2.$value3.$value4);
+
+
+
+                        $this->excel->getActiveSheet()->setCellValue('K' . $i, $goods['goods_Data']['0']['title']);
+                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $goods['goods_Data']['0']['nums']);
+                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $goods['goods_Data']['0']['price']);
+                        $coupon = json_decode($book['PriceCalculation'],true);
+                     
+                        $zong = round($goods['total_goods_prices'],2);
+                        if(isset($goods['boxa'])){
+                            $lu = $goods['boxa']['value'];
+                        }else{
+                            $lu = '1';
+                        }
+
+                        if(isset($coupon['Params']['couponData']['coupon_amount'])){
+
+                            $coupon_id = retCouponId($coupon['coupon']);
+                            $coupon_name = ret_coupon_name($coupon_id);
+                            if($coupon['Params']['couponData']['typeid'] == '3'){
+                                $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
+               
+                                if(isset($p['1'])){
+                                    $coupon_amount = round($p['1'] * $lu,'2');
+                                } 
+                            }elseif($coupon['Params']['couponData']['typeid'] == '2'){
+                                if(isset($p['1'])){
+                                    $coupon_amount = $zong * $p['1'];
+                                }
+                            }elseif($coupon['Params']['couponData']['typeid'] == '1'){
+                                $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                            }else{
+                                $coupon_amount = '0';
+                            }
+                        }else{  
+                            $coupon_id = '';
+                            $coupon_name ='';
+                            $coupon_amount = '0';
+                        }    
+                        if(isset($coupon['nowIntergal']['storenowIntergal'])){
+                            $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
                         }else{
                             $nowIntergal = '0';
                         }
                         $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
 
+                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $zong);
 
 
                         if($book['order_status'] == '8'){
-                            $this->excel->getActiveSheet()->setCellValue('L' . $i, '-'.$zong);
+                            $this->excel->getActiveSheet()->setCellValue('AE' . $i, '-'.$zong);
+                        }
+                        if($zhi <'0'){
+                            $this->excel->getActiveSheet()->setCellValue('O' . $i, '0.01');
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $zong);
+                            $this->excel->getActiveSheet()->setCellValue('O' . $i, $zhi);
+
                         }
 
-
-                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $zhi);
-                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $nowIntergal);
-                        $this->excel->getActiveSheet()->setCellValue('O' . $i, $coupon_amount);
-                        $this->excel->getActiveSheet()->setCellValue('P' . $i, $book['fee']);
-                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, $book['fee_name']);
+                        $payData = $this->MallShop_model->ret_order_paydata($book['order_UUID']);
 
 
-                        $address = json_decode($book['buyer_address'],true);
 
-                        $this->excel->getActiveSheet()->setCellValue('R' . $i,$address['province'].'-'.$address['city'].'-'.$address['city'].'-'.$address['area'].'-'.$address['address']);
-
+                        $this->excel->getActiveSheet()->setCellValue('P' . $i, $nowIntergal);
+                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, $coupon_amount);
+                        $ze = ($zong - $zhi)/$zong;
+                        $this->excel->getActiveSheet()->setCellValue('R' . $i, $ze);
+                        $this->excel->getActiveSheet()->setCellValue('S' . $i, $coupon_id);
+                        $this->excel->getActiveSheet()->setCellValue('T' . $i, $coupon_name);
+                        $this->excel->getActiveSheet()->setCellValue('U' . $i, $payData['payType']);
+                        $this->excel->getActiveSheet()->setCellValue('V' . $i, $book['pay_time']);
+                        $this->excel->getActiveSheet()->setCellValue('W' . $i, $goods['stores']['points']);
+                        $this->excel->getActiveSheet()->setCellValue('X' . $i, $goods['postAge']['postage']);
+                        $address= json_decode($book['buyer_address'],true);
+                        $this->excel->getActiveSheet()->setCellValue('Y' . $i,  $address['province'].$address['city'].$address['area'].$address['address']);
+                        $this->excel->getActiveSheet()->setCellValue('Z' . $i, $address['phone']);
+                        $this->excel->getActiveSheet()->setCellValue('AA' . $i, $address['person']);
+                        $this->excel->getActiveSheet()->setCellValue('AB' . $i, $book['updatetime']);
+                        $this->excel->getActiveSheet()->setCellValue('AC' . $i, $book['deliveryTime']);
+                        $this->excel->getActiveSheet()->setCellValue('AD' . $i, $book['returnPriceTime']);
+                        $this->excel->getActiveSheet()->setCellValue('AF' . $i, $book['CancellationOfOrder']);
 
                     }
+                  
 
-            }
-            // exit;
+                }
+                // exit;
+                $filename = 'ImportOrder.xls'; //save our workbook as this file name
 
+               /// var_dump($filename);
 
-            //日志
+                header('Content-Type: application/vnd.ms-excel'); //mime type
 
-            $log = array(
+                header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
 
-                'userid'=>$_SESSION['users']['user_id'],  
-
-                "content" => $_SESSION['users']['username']."导出了订单信息",
-
-                "create_time" => date('Y-m-d H:i:s'),
-
-                "userip" => get_client_ip(),
-
-            );
-
-            $this->db->insert('hf_system_journal',$log);
+                header('Cache-Control: max-age=0'); //no cache
 
 
 
-            $filename = 'ImportOrder.xls'; //save our workbook as this file name
+                $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
 
-           /// var_dump($filename);
-
-            header('Content-Type: application/vnd.ms-excel'); //mime type
-
-            header('Content-Disposition: attachment;filename="' . $filename . '"'); //tell browser what's the file name
-
-            header('Cache-Control: max-age=0'); //no cache
+                $objWriter->save('php://output');
 
 
-
-             $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-
-             $objWriter->save('php://output');
-
-             echo "<script>alert('导出成功！');window.location.href='".site_url('store/Store/storeOrderList')."'</script>";
-
-             exit;
-
-            }else{
-
+           }else{
                 echo "<script>alert('暂无订单记录！');window.location.href='".site_url('store/Store/storeOrderList')."'</script>";
-
-            }
+           }
 
 
 
         }
     }
+
+
 
 
 

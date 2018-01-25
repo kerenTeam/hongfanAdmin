@@ -1,0 +1,218 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 本地生活
+
+            <small> > 奖励设置</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+ <div class="row">
+                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">奖励设置</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" action="<?php echo site_url('module/localLife/editReward');?>" method="post">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">跳蚤市场发布条数</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" class="tpl-form-input" id="ptPrice" name="Secondhand-market-nums" value="<?php echo get_option('Secondhand-market-nums');?>" placeholder="请输入大于0的整数" ><small>条/天</small>
+                                        </div>
+                                    </div>
+    
+
+                                    <div class="am-form-group">
+                                        <label class="am-u-sm-3 am-form-label">跳蚤市场发布奖励</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" placeholder="请输入大于0的整数" name="Secondhand-market-price" value="<?php echo get_option('Secondhand-market-price');?>" >
+                                            <small>HI豆/条</small>
+                                        </div>
+                                    </div>
+   
+                                   
+                                   
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <button type="reset" class="am-btn">取消</button>
+                                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+ 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+
+
+

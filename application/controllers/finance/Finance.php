@@ -1007,6 +1007,8 @@ class Finance extends Default_Controller {
                     'V' => '改价金额',
                     'W' => '改价原因',
                     'X' => '支付方式',
+                    'Y' => '优惠劵id',
+                    'Z' => '优惠劵名称',
 
                 );
 
@@ -1046,7 +1048,9 @@ class Finance extends Default_Controller {
                     'R' => '佣金总额',
                     'S' => '结算金额',
                     'T' => '备注',
-                    'U' => '支付方式'
+                    'U' => '支付方式',
+                    'V' => '优惠劵id',
+                    'W' => '优惠劵名称',
 
                 );
 
@@ -1165,6 +1169,8 @@ class Finance extends Default_Controller {
 
                             // var_dump($booking['order_id']);
                             if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                                 $coupon_id = retCouponId($coupon['coupon']);
+                                $coupon_name = ret_coupon_name($coupon_id);
                                 if($coupon['Params']['couponData']['typeid'] == '3'){
                                     $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
                                    // var_dump($p);
@@ -1182,6 +1188,8 @@ class Finance extends Default_Controller {
                                     $coupon_amount = '0';
                                 }
                             }else{
+                                 $coupon_id ='';
+                            $coupon_name = '';
                                 $coupon_amount = '0';
                             }   
                             // var_dump($coupon_amount);
@@ -1251,6 +1259,9 @@ class Finance extends Default_Controller {
 
 
                                $this->excel->getActiveSheet()->setCellValue('X' . $i, $paytype['payType']);
+                               $this->excel->getActiveSheet()->setCellValue('Y' . $i, $coupon_id);
+                               $this->excel->getActiveSheet()->setCellValue('Z' . $i, $coupon_name);
+
 
                     }
 
@@ -1263,7 +1274,7 @@ class Finance extends Default_Controller {
                         $i++;
                         $goods = json_decode($book['goods_data'],true);
 
-                        
+                         // $user = json_decode($booking['goods_data'],true);
 
                         foreach ($goods['goods_Data'] as $key => $value) {
 
@@ -1336,14 +1347,16 @@ class Finance extends Default_Controller {
 
                         $zong = round($goods['total_goods_prices'],2);
 
-                        if(isset($user['boxa'])){
-                            $lu = $user['boxa']['value'];
+                        if(isset($goods['boxa'])){
+                            $lu = $goods['boxa']['value'];
                         }else{
                             $lu = '1';
                         }
 
                        
                         if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                            $coupon_id = retCouponId($coupon['coupon']);
+                            $coupon_name = ret_coupon_name($coupon_id);
                            
                             if($coupon['Params']['couponData']['typeid'] == '3'){
                                 $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
@@ -1361,6 +1374,8 @@ class Finance extends Default_Controller {
                                 $coupon_amount = '0';
                             }
                         }else{
+                            $coupon_id = '';
+                            $coupon_name = '';
                             $coupon_amount = '0';
                         }   
 
@@ -1395,6 +1410,8 @@ class Finance extends Default_Controller {
                         $paytype = $this->MallShop_model->ret_order_paydata($book['order_UUID']);
 
                         $this->excel->getActiveSheet()->setCellValue('U' . $i, $paytype['payType']);
+                        $this->excel->getActiveSheet()->setCellValue('V' . $i, $coupon_id);
+                        $this->excel->getActiveSheet()->setCellValue('W' . $i, $coupon_name);
 
                     }
 
@@ -1453,6 +1470,317 @@ class Finance extends Default_Controller {
 
      }
 
+
+     //对账管理
+     function contrast(){
+
+        $data['page'] = 'finance/contrast.html';
+        $data['menu'] = array('finance','contrast');
+        $this->load->view('template.html',$data);
+     }
+
+     //导入支付平台订单
+     function importPayOrder(){
+        if($_POST){
+            $paytype = $this->input->post('paytype');
+            $begin_time = $this->input->post('begin_time');
+            $end_time = $this->input->post('end_time');
+            if(empty($begin_time)){
+                echo "<script>alert('请选择时间段!');window.location.href='".site_url('/finance/finance/contrast')."'</script>";
+                exit;
+            }else{
+                $t = strtotime($begin_time .' 00:00:00')*1000;
+                $e = strtotime($end_time .' 23:59:59')*1000;
+            }
+
+            $name = date('Y-m-d');
+
+            $inputFileName = "Upload/xls/" .$name .'.xls';
+
+            move_uploaded_file($_FILES["file"]["tmp_name"],$inputFileName);
+
+            $this->load->library('excel');
+
+            if(!file_exists($inputFileName)){
+
+                    echo "<script>alert('文件导入失败!');window.location.href='".site_url('/finance/finance/contrast')."'</script>";
+
+                    exit;
+
+            }
+            $PHPReader = new PHPExcel_Reader_Excel2007();
+            if(!$PHPReader->canRead($inputFileName)){
+              $PHPReader = new PHPExcel_Reader_Excel5();
+              if(!$PHPReader->canRead($inputFileName)){
+                echo "<script>alert('文件格式错误，需要xls或xlsx文件后缀!');window.location.href='".site_url('/finance/finance/contrast')."'</script>";
+                return;
+              }
+            }
+            $PHPExcel = $PHPReader->load($inputFileName);
+            $currentSheet = $PHPExcel->getSheet(0);  //读取excel文件中的第一个工作表
+            $allColumn = $currentSheet->getHighestColumn(); //取得最大的列号
+            $allRow = $currentSheet->getHighestRow(); //取得一共有多少行
+            $erp_orders_id = array();  //声明数组
+            //判断支付方式
+            if($paytype == 'alipay'){
+                $sql = "truncate table hf_mall_payOrder";
+                $res = $this->db->query($sql);
+                for($currentRow = 5;$currentRow <= $allRow;$currentRow++){
+
+                    $data['orderUUID'] = $PHPExcel->getActiveSheet()->getCell("D".$currentRow)->getValue();//获取c列的值
+                    $data['createTime'] = $PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue();//获取c列的值
+                    $data['payId'] = $PHPExcel->getActiveSheet()->getCell("E".$currentRow)->getValue();//获取c列的值
+                    $data['orderPrice'] = $PHPExcel->getActiveSheet()->getCell("H".$currentRow)->getValue();//获取c列的值
+
+                    if($data['orderUUID'] == NULL){
+                        unlink($inputFileName);
+                         //删除临时文件
+                        break;
+                    }
+                    $this->db->insert("hf_mall_payOrder",$data);
+
+                 }
+            //微信
+            }else{
+                $sql = "truncate table hf_mall_payOrder";
+                $res = $this->db->query($sql);
+                for($currentRow = 7;$currentRow <= $allRow;$currentRow++){
+
+                    $data['orderUUID'] = substr($PHPExcel->getActiveSheet()->getCell("C".$currentRow)->getValue(),'1');//获取c列的值
+                    $data['createTime'] = $PHPExcel->getActiveSheet()->getCell("A".$currentRow)->getValue();//获取c列的值
+                    $data['payId'] = substr($PHPExcel->getActiveSheet()->getCell("B".$currentRow)->getValue(),'1');//获取c列的值
+                    $data['orderPrice'] = $PHPExcel->getActiveSheet()->getCell("F".$currentRow)->getValue();//获取c列的值
+
+                    if($data['orderUUID'] == NULL){
+                        unlink($inputFileName);
+                         //删除临时文件
+                        break;
+                    }
+                    $this->db->insert("hf_mall_payOrder",$data);
+
+                 }
+            }
+
+
+            //导出对比报表
+            $this->excel->setActiveSheetIndex(0);
+
+
+            $this->excel->getActiveSheet()->setTitle('contrastOrder');
+
+            $this->excel->getActiveSheet()->mergeCells('A1:Q1');  
+            $this->excel->getActiveSheet()->mergeCells('A2:Q2');  
+
+            $this->excel->getActiveSheet()->setCellValue('A1','对账信息'); 
+            $this->excel->getActiveSheet()->setCellValue('A2','红色代表没有支付平台没有。绿色代表金额有差异'); 
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(13);
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);      
+
+            $this->excel->getActiveSheet()->getDefaultColumnDimension('A1')->setWidth(20);
+
+
+
+            $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);  
+
+            $arr_title = array(
+                    'A' => '订单编号',
+                    'B' => '支付订单号',
+                    'C' => '支付平台单号',
+                    'D' => '成交时间',
+                    'E' => '商品编码',
+                    'F' => '商品名称',
+                    'G' => '单价',
+                    'H' => '数量',
+                    'I' => '总价',
+                  
+                    'J' => '邮资',
+                    'K' => '积分抵用金额',
+                    'L' => '优惠卷抵用金额',
+                    'M' => '商家修改价格',
+                    'N' => '商家修改价格原因',
+                    'O' => '支付金额',
+                    'P' => '收款金额',
+                    'Q' => '支付方式',
+            );
+            //12
+            foreach ($arr_title as $key => $value) {
+
+                $this->excel->getActiveSheet()->setCellValue($key . '3', $value);
+
+                $this->excel->getActiveSheet()->getStyle($key . '3')->getFont()->setSize(13);
+
+                $this->excel->getActiveSheet()->getStyle($key . '3')->getFont()->setBold(true);
+
+                $this->excel->getActiveSheet()->getDefaultColumnDimension('A')->setWidth(20);
+
+                $this->excel->getActiveSheet()->getStyle($key . '3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+            }
+           
+
+            $this->db->select('a.*,b.store_name,c.nickname,e.payType');
+            $this->db->from('hf_shop_store as b');
+            $this->db->join('hf_mall_order as a','a.seller = b.store_id','inner');
+            $this->db->join('hf_user_member as c','a.buyer = c.user_id','inner');
+            $this->db->join('hf_mall_order_repaydata as e','a.order_UUID = e.repay_UUID','inner');
+            $query = $this->db->where('a.pay_time >=',$t)->where('a.pay_time <=',$e)->where('order_status !=','1')->where('e.payType',$paytype)->order_by('a.pay_time','desc')->get();
+            $lists = $query->result_array();
+
+            $i='3';
+            if(!empty($lists)){
+                foreach($lists as $book){
+                     $i++;
+                    $goods = json_decode($book['goods_data'],true);
+                    foreach ($goods['goods_Data'] as $key => $value) {
+                        $k[$i][$key]= $value['goods_id'];
+                        $c[$i][$key]= $value['title'];
+                        $n[$i][$key]= $value['nums'];
+                        $p[$i][$key]= $value['price'];
+                    }
+                    $good = implode('|',$k[$i]);
+
+                    $name = implode('|',$c[$i]);
+
+                    $num = implode('|',$n[$i]);
+
+                    $price = implode('|',$p[$i]);
+                    //支付平台数据
+                    $query2 = $this->db->where('orderUUID',$book['order_UUID'])->get('hf_mall_payOrder');
+                    $or= $query2->row_array();
+                  
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $book['order_id']);
+                    $this->excel->getActiveSheet()->setCellValue('B' . $i, $book['order_UUID']);
+                    $this->excel->getActiveSheet()->setCellValue('C' . $i, $or['payId']);
+
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $or['createTime']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $good);
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $name);
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $price);
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, $num);
+
+                    $coupon = json_decode($book['PriceCalculation'],true);
+
+                    $zong = round($goods['total_goods_prices'],2);
+
+                    if(isset($goods['boxa'])){
+                        $lu = $goods['boxa']['value'];
+                    }else{
+                        $lu = '1';
+                    }
+
+                       
+                    if(isset($coupon['Params']['couponData']['coupon_amount'])){
+                        $coupon_id = retCouponId($coupon['coupon']);
+                        $coupon_name = ret_coupon_name($coupon_id);
+                       
+                        if($coupon['Params']['couponData']['typeid'] == '3'){
+                            $p = explode(',',$coupon['Params']['couponData']['coupon_amount']);
+           
+                            if(isset($p['1'])){
+                                $coupon_amount = round($p['1'] * $lu,'2');
+                            } 
+                        }elseif($coupon['Params']['couponData']['typeid'] == '2'){
+                            if(isset($p['1'])){
+                                $coupon_amount = $zong * $p['1'];
+                            }
+                        }elseif($coupon['Params']['couponData']['typeid'] == '1'){
+                            $coupon_amount = $coupon['Params']['couponData']['coupon_amount'];
+                        }else{
+                            $coupon_amount = '0';
+                        }
+                    }else{
+                        $coupon_id = '';
+                        $coupon_name = '';
+                        $coupon_amount = '0';
+                    }   
+
+                    if(isset($coupon['nowIntergal']['storenowIntergal'])){
+
+                    $nowIntergal = round($coupon['nowIntergal']['storenowIntergal'],2);
+                    }else{
+                        $nowIntergal = '0';
+                    }
+                    $zhi = $zong - $coupon_amount - $nowIntergal + $book['fee'];
+                    $this->excel->getActiveSheet()->setCellValue('I' . $i, $zong);
+                    if(isset($goods['postAge']['postage'])){
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, $goods['postAge']['postage']);
+                    }else{
+                        $this->excel->getActiveSheet()->setCellValue('J' . $i, '0');
+
+                    }
+                    $this->excel->getActiveSheet()->setCellValue('K' . $i, $nowIntergal);
+                    $this->excel->getActiveSheet()->setCellValue('L' . $i, $coupon_amount);
+                    $this->excel->getActiveSheet()->setCellValue('M' . $i, $book['fee']);
+                    $this->excel->getActiveSheet()->setCellValue('N' . $i, $book['fee_name']);
+                    if($zhi < '0'){
+                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '0.01');
+
+                    }else{
+                         $this->excel->getActiveSheet()->setCellValue('O' . $i, round($zhi,2));
+
+                    }
+                    
+                    $this->excel->getActiveSheet()->setCellValue('P' . $i, $or['orderPrice']);
+                    $this->excel->getActiveSheet()->setCellValue('Q' . $i, $book['payType']);
+                  
+                    if(!empty($or)){
+                        if($zhi < '0'){
+                            $a = '0.01';
+                        }else{
+                            $a = round($zhi,2);
+                        }
+
+                        if($or['orderPrice'] != (string)$a){
+                           
+
+                            // $this->excel->getActiveSheet()->getStyle( 'A3:R3')->getFill()->getStartColor()->setARGB('FF8C69');
+                            $this->excel->getActiveSheet()->getStyle('A'.$i.':R'.$i)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('98FB98');
+                        }
+                    }else{
+                        // $this->excel->getActiveSheet()->getStyle( 'A5:R5')->getFill()->getStartColor()->setARGB('FF3030');
+                         $this->excel->getActiveSheet()->getStyle('A'.$i.':R'.$i)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('FF3030');
+                    }
+                   
+
+                }
+                // exit;
+
+                $fileName = $paytype.$begin_time.'至'.$end_time.'对账信息.xls'; //save our workbook as this file name
+
+               /// var_dump($filename);
+
+                header('Content-Type: application/vnd.ms-excel'); //mime type
+
+                header('Content-Disposition: attachment;filename="' . $fileName . '"'); //tell browser what's the file name
+
+                header('Cache-Control: max-age=0'); //no cache
+
+
+
+                 $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+
+                 $objWriter->save('php://output');
+
+                 // echo "<script>alert('导出成功！');window.location.href='".site_url('/finance/Finance/contrast')."'</script>";
+
+                 exit;
+            }else{
+                echo "<script>alert('没有订单数据！');window.location.href='".site_url('/finance/Finance/contrast')."'</script>";
+                exit;
+
+            }
+
+
+
+        }
+     }
+
+
+     
 
 
 

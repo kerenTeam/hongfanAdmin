@@ -308,7 +308,9 @@ class Friends extends Default_Controller
 
 	//交友dongtai 
 	function dynamic(){
-	    $_SESSION['friendsNews'] = '0';
+        if(!isset($_SESSION['friendsNews'])){
+	       $_SESSION['friendsNews'] = '0';
+        }
         $data['page'] = $this->view_friends_news;
         $data['menu'] = array('friends','dynamic');
         $this->load->view('template.html',$data);

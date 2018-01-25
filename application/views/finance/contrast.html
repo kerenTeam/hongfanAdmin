@@ -1,0 +1,305 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+</style>
+
+
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span>财务管理
+
+            <small> > 对账中心</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">导入文件</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" action="<?php echo site_url('/finance/Finance/importPayOrder');?>" method="post" enctype="multipart/form-data">
+                    <div class="am-form-group am-u-sm-5 am-u-md-5 am-u-lg-5">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">时间段统计：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value=""/><span id="my-startDate">2017-01-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-12-25</span>
+
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="am-form-group am-u-sm-3 am-u-md-3 am-u-lg-3">
+                        <label for="businessTime" class="am-u-sm-4 am-text-right">支付方式：</label>
+                        <div class="am-u-sm-6  am-u-end">
+                            <select name="paytype" required>
+                                <option value="alipay">支付宝</option>
+                                <option value="wxpay">微信</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">excel文件：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                           <input type="file" name="file" required>
+                        </div>
+                    </div>
+                    
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="submit" class="am-btn am-btn-secondary "><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+                    <p style="color:red;">说明：文件必须是xls或xlsx后缀，否则会上传失败，支付平台导出的是csv 格式，请重新另存为exlcel的xls或xlsx文件。时间段是你导出支付平台的纪录时间段，开始时间0点到结束时间24点。</p>
+                </div>
+                <div class="widget-body  am-fr">
+                    
+                </div>
+
+        </div>
+
+    </div>
+
+
+
+<script type="text/javascript">
+    $(function() {
+
+    var startDate = new Date(2017, 04, 01);
+
+    var endDate = new Date(2017, 04, 30);
+
+    var $alert = $('#my-alert');
+
+    $('#my-start').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() > endDate.valueOf()) {
+
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          startDate = new Date(event.date);
+
+          $('#my-startDate').text($('#my-start').data('date'));
+
+          $('#begin_date').val($('#my-start').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+
+
+    $('#my-end').datepicker().
+
+      on('changeDate.datepicker.amui', function(event) {
+
+        if (event.date.valueOf() < startDate.valueOf()) {
+
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+
+        } else {
+
+          $alert.hide();
+
+          endDate = new Date(event.date);
+
+          $('#my-endDate').text($('#my-end').data('date'));
+
+          $('#end_date').val($('#my-end').data('date'));
+
+        }
+
+        $(this).datepicker('close');
+
+      });
+
+});
+
+</script>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>
+
+
+

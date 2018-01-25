@@ -3,6 +3,23 @@
 /**
 *    公用函数
 */
+
+function get_mobile_area($mobile)
+{
+    $sms = array('province' => '', 'supplier' => '');    //初始化变量
+    //根据淘宝的数据库调用返回值
+    $url = "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" . $mobile . "&t=" . time();
+
+    $res = file_get_contents($url);
+    $res = trim(explode('=', $res)[1]);
+    $res = iconv('gbk', 'utf-8', $res);
+    $res = str_replace("'", '"', $res);
+    $res = preg_replace('/(\w+):/is', '"$1":', $res);
+
+    return json_decode($res, true);
+}
+
+
 //f返回
 function get_invitation($id){
     $CI = &get_instance();
@@ -48,6 +65,14 @@ function user_name($user_id){
     $query = $CI->db->query($sql);
     $name = $query->row_array();
     return $name['username'];
+}
+//获取用户名
+function userInfo($user_id){
+    $CI = &get_instance();
+    $sql = "SELECT user_id,username,phone,create_time FROM hf_user_member where user_id = '$user_id'";
+    $query = $CI->db->query($sql);
+    $name = $query->row_array();
+    return $name;
 }
 
 //获取用户别名
@@ -130,28 +155,24 @@ function generate_promotion_code($code){
         return $filename;
 }
 
-    function insert_db($goods_list=[]){
+    function insert_db($goods_list=''){
         $CI = &get_instance();
         if(!empty($goods_list)){
             foreach($goods_list as $k=>$val){
                 if($val['isdown'] =='1'){
                     $pic = explode(',',$val['pic_url']['pic_url']);
-                    //  echo "<pre>";
-                    // var_dump($val['price']);
-                   // $money = $val['price']*0.1;
+                   
                     $val['thumb'] = str_replace('./','/',$pic[0]);
                     $val['differentiate'] = '3';
                     $val['categoryid'] = $val['category_id'];
-                    $val['originalprice'] = $val['original_price']+$val['price']*0.1;
-                    $val['price'] = $val['price']+$val['price']*0.1;
+                    $val['originalprice'] = $val['original_price']+$val['sellprice']*0.1;
+                    $val['price'] = $val['sellprice']+$val['sellprice']*0.1;
                     $val['content'] = $val['remark'];
                     $val['tax_rate'] = $val['tax_rate']/100;
-                    unset($val['remark'],$val['pic_url'],$val['category_id'],$val['original_price'],$val['isdown'],$val['shop_status']);
-                   // echo "<pre>";
-                   //  var_dump($val['price']);
-                   //  exit;
+                    unset($val['remark'],$val['pic_url'],$val['sellprice'],$val['category_id'],$val['original_price'],$val['isdown'],$val['shop_status']);
+                 
                    $CI->db->insert('hf_mall_goods_igo',$val);
-                    sleep(2);
+                   sleep(2);
                 }
             }
             echo "1";  
@@ -408,9 +429,9 @@ return $val;
 
 
 //修改游戏奖品几率
-function edit_game_prize(){
+function edit_game_prize($gameid){
         $CI = &get_instance();
-        $query = $CI->db->where('gameId','2')->order_by('stock','asc')->get('hf_game_prize');
+        $query = $CI->db->where('gameId',$gameid)->order_by('stock','asc')->get('hf_game_prize');
         $list = $query->result_array();
         $stock = 0;
         //总库存
@@ -447,8 +468,16 @@ function ret_coupon_name($id){
         $CI = &get_instance();
         $query = $CI->db->where('id',$id)->get('hf_shop_coupon');
         $res = $query->row_array();
-        return $res['title'];
+        return $res['title'].'-'.$res['name'];
 }
+//返回couponid
+function retCouponId($userCouponid){
+    $CI = &get_instance();
+    $query = $CI->db->where('user_coupon_id',$userCouponid)->get('hf_user_coupon');
+    $res = $query->row_array();
+    return $res['store_coupon_id'];
+}
+
 //返回奖品抽中数
 function select_prizeNum($id){
     $CI = &get_instance();

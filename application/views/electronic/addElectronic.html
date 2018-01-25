@@ -152,7 +152,7 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <input type="text" name="name" maxlength="50" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" id="salesName" required>
+                            <input type="text" name="name" maxlength="100" class="am-form-field tpl-form-no-bg" placeholder="建议不超过50个字符" id="salesName" required>
 
                         </div>
 
@@ -175,7 +175,7 @@ padding: 5px 6px!important;
 
                         <div class="am-u-sm-9">
 
-                            <input type="text" name="title" maxlength="50" class="am-form-field tpl-form-no-bg" placeholder="建议不超过14个字符" id="salesName" required>
+                            <input type="text" name="title" maxlength="100" class="am-form-field tpl-form-no-bg" placeholder="建议不超过50个字符" id="salesName" required>
 
                         </div>
 
@@ -262,20 +262,20 @@ padding: 5px 6px!important;
 
                    
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取次数限制<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">领取时间间隔<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="frequency" id="frequency" required class="am-form-field tpl-form-no-bg" >
                                 <option value="">输入查找/选择</option>
-                                <option value="0">仅一次</option>
-                                <option value="1">一天一次</option>
-                                <option value="2">二天一次</option>
-                                <option value="7">一周一次</option>
-                                <option value="30">一月一次</option>
+                                <option value="0">只能领取一次</option>
+                                <option value="1">一天</option>
+                                <option value="2">二天</option>
+                                <option value="7">一周</option>
+                                <option value="30">一月</option>
                             </select>
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
-                        <label for="" class="am-u-sm-3 am-form-label">领取频率<span class="red">*</span>:</label>
+                        <label for="" class="am-u-sm-3 am-form-label">领取时间内可领取次数<span class="red">*</span>:</label>
                         <div class="am-u-sm-9">
                             <select name="receiveNum" id="receiveNum" required class="am-form-field tpl-form-no-bg" >
                                 <option value="">输入查找/选择</option>
@@ -283,6 +283,12 @@ padding: 5px 6px!important;
                                 <option value="1">只能领取一次</option>
                               
                             </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+                        <label for="" class="am-u-sm-3 am-form-label">每人可领取数量<span class="red">*</span>:</label>
+                        <div class="am-u-sm-9">
+                           <input type="number" name="receive_limit" value="1" required>
                         </div>
                     </div>
                    
@@ -365,6 +371,20 @@ padding: 5px 6px!important;
                                 <option value="2" >分享劵 </option>
                                 <option value="3" >海购劵</option>
                                 <option value="4" >邀请有礼劵</option>
+                            </select>
+
+                        </div>
+
+                    </div>
+                    <div class="am-form-group am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <label for="" class="am-u-sm-3 am-form-label">卡卷状态:</label>
+
+                        <div class="am-u-sm-9">
+
+                            <select name="state" >
+                                <option value="0" >已下架</option>
+                                <option value="1" >正常</option>
                             </select>
 
                         </div>

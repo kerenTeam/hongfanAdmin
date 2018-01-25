@@ -746,29 +746,25 @@ class LoveToGo extends Default_Controller
 
                 'C' => '收件人身份证号',
 
-                'D' => '收件人地址',
+                'D' => '省份',
 
-                'E' => '手机号码',
+                'E' => '市',
 
-                'F' => '固话',
+                'F' => '区',
 
-                'G' => 'Email',
+                'G' => '收货人地址',
 
-                'H' => '邮编',
+                'H' => '手机号',
 
-                'I' => '省份',
+                'I' => '邮编',
 
-                'J' => '市',
+                'J' => '产品信息(产品id_产品属性ID|数量,产品id|数量)，产品属性ID在前台商家中心-商品列表中点击商品编号查看属性ID',
 
-                'K' => '区',
+                'K' => '支付方式',
 
-                'L' => '买家留言',
+                'L' => '运输方式',
 
-                'M' => '产品信息(产品id_产品属性ID|数量,产品id|数量)，产品属性ID在前台商家中心-商品列表中点击商品编号查看属性ID',
-
-                'N' => '支付方式',
-
-                'O' => '运输方式'
+                'M' => '保证金支付',
 
             );
 
@@ -839,35 +835,31 @@ class LoveToGo extends Default_Controller
 
                  //   $this->excel->getActiveSheet()->setCellValue('A' . $i,  $i - 1);
 
-                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_UUID']);
+                    $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['order_id']);
 
                     $this->excel->getActiveSheet()->setCellValue('B' . $i, $address['person']);
 
                     $this->excel->getActiveSheet()->setCellValue('C' . $i, ' '.$id_card);
 
-                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['province'].$address['city'].$address['area'].$address['address']);
+                    $this->excel->getActiveSheet()->setCellValue('D' . $i, $address['province']);
 
-                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['phone']);
+                    $this->excel->getActiveSheet()->setCellValue('E' . $i, $address['city']);
 
-                    $this->excel->getActiveSheet()->setCellValue('F' . $i, '');
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $address['area']);
 
-                    $this->excel->getActiveSheet()->setCellValue('G' . $i, '');
+                    $this->excel->getActiveSheet()->setCellValue('G' . $i, $address['province'].$address['city'].$address['area'].$address['address']);
 
-                    $this->excel->getActiveSheet()->setCellValue('H' . $i, '400000');
+                    $this->excel->getActiveSheet()->setCellValue('H' . $i, $address['phone']);
 
-                    $this->excel->getActiveSheet()->setCellValue('I' . $i, $address['province']);
+                    $this->excel->getActiveSheet()->setCellValue('I' . $i, '400000');
 
-                    $this->excel->getActiveSheet()->setCellValue('J' . $i, $address['city']);
 
-                    $this->excel->getActiveSheet()->setCellValue('K' . $i, $address['area']);
+                    $this->excel->getActiveSheet()->setCellValue('J' . $i, $good);
 
-                    $this->excel->getActiveSheet()->setCellValue('L' . $i, $notice['notice']);
+                    $this->excel->getActiveSheet()->setCellValue('K' . $i, 'allinpay');
 
-                    $this->excel->getActiveSheet()->setCellValue('M' . $i, $good);
-
-                    $this->excel->getActiveSheet()->setCellValue('N' . $i, 'allinpay');
-
-                    $this->excel->getActiveSheet()->setCellValue('O' . $i, 'EMS');
+                    $this->excel->getActiveSheet()->setCellValue('L' . $i, 'EMS');
+                    $this->excel->getActiveSheet()->setCellValue('M' . $i, '0');
 
                    
 
@@ -949,7 +941,7 @@ class LoveToGo extends Default_Controller
 
 
 
-             if(!empty($username)){
+            if(!empty($username)){
 
                 //获取买家id
 
@@ -1107,7 +1099,7 @@ class LoveToGo extends Default_Controller
 
             }else{
 
-                echo "3";
+                echo "2";
 
             }
 

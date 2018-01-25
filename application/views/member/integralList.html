@@ -183,35 +183,35 @@ padding: 5px 6px!important;
 
             <div class="widget am-cf">
                 <div class="widget-head am-cf">
-                    <div class="widget-title am-cf">问题搜索</div>
+                    <div class="widget-title am-cf">纪录搜索</div>
                 </div>
                 <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
                     <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4">
-                        <label for="goodsBatch" class="am-form-label am-u-sm-3">问题类别:</label>
+                        <label for="goodsBatch" class="am-form-label am-u-sm-3">纪录类别:</label>
                         <div class="am-u-sm-9">
-                            <select id="faqsType" name="faqsType">
+                            <select id="type" name="type">
                                 <option value="">-=请选择一项=-</option>
-                                <?php foreach($cates as $v):?>
-                                <option value="<?php echo $v['id'];?>"><?php echo $v['name'];?></option>
-                                <?php endforeach;?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">是否回答:</label>
-                        <div class="am-u-sm-9 am-u-end">
-                            <select id="questionStates" name="questionStates" >
-                                <option value="0">请选择一项</option>
-                                <option value="1">已回答</option>
-                                <option value="2">未回答</option>
+                                <option value="1">电商使用</option>
+                                <option value="2">购买礼物</option>
+                                <option value="3">悬赏</option>
+                                <option value="4">完成活动</option>
+                                <option value="5">签到积分</option>
+                                <option value="6">获得采纳</option>
+                                <option value="7">礼物兑换</option>
+                                <option value="8">购买积分</option>
+                                <option value="9">系统赠送</option>
+                                <option value="10">新人积分</option>
+                                <option value="11">加入圈子</option>
+                                <option value="12">完善个人资料</option>
                                
                             </select>
                         </div>
                     </div>
+                  
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-fl" >
-                        <label for="goodsPrice" class="am-form-label am-u-sm-3">关键字:</label>
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3">用户手机号:</label>
                         <div class="am-u-sm-9 am-u-end">
-                            <input type="text" id="sear" name="sear" />
+                            <input type="text" id="phone" name="phone" />
                         </div>
                     </div>
                     <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
@@ -241,11 +241,8 @@ padding: 5px 6px!important;
                 </form>
                 <div class="widget-head am-cf" style="clear:both;">
 
-                    <div class="widget-title  am-cf">今日提问数:<?php echo $dayQ;?></div>
-                    <div class="widget-title  am-cf">今日回答数：<?php echo $dayC;?></div>
-                    <div class="widget-title  am-cf">昨日提问数：<?php echo $todayQ;?></div>
-                    <div class="widget-title  am-cf">昨日回答数：<?php echo $todayC;?></div>
-                    <div class="widget-title  am-cf">动态列表</div>
+                   
+                    <div class="widget-title  am-cf">积分纪录</div>
 
                 </div>
 
@@ -259,9 +256,9 @@ padding: 5px 6px!important;
 
                                 <div class="am-btn-group am-btn-group-xs">
 
-                                    <button type="button" class="am-btn am-btn-default am-btn-success" data-am-modal="{target: '#add'}"><span class="am-icon-plus"></span> 新增</button>
-                                     <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
-
+                                
+<!--                                      <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+ -->
                                 </div>
 
                             </div>
@@ -313,113 +310,6 @@ padding: 5px 6px!important;
                         </div>
                     </div>
 
-                 <div class="am-modal am-modal-confirm" tabindex="-1" id="add">
-
-                        <div class="am-modal-dialog">
-
-                            <div class="am-modal-hd">新增</div>
-
-                            <div class="am-modal-bd"> 
-
-                                <!-- 本地生活 信息展示类 -->
-
-                                <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Question/add_problem')?>" method='post' enctype='multipart/form-data'>
-
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                           <select name="faqsType" required>
-                                               <option value="">请选择一项</option>
-                                               <?php foreach($cates as $v):?>
-                                               <option value="<?php echo $v['id'];?>"><?php echo $v['name'];?></option>
-                                                <?php endforeach;?>
-                                           </select>
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">提问内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <textarea type="text" rows="4" name="content" class="js-pattern-mobile" placeholder="输入提问内容"  required></textarea> 
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-
-                                    <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">悬赏HI豆 </label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <input type="number" name="price" class="js-pattern-mobile" placeholder="输入悬赏HI豆"  > 
-
-                                        </div>
-                                         <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                                 
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label for="" class="am-u-sm-3 am-form-label">动态图片</label>
-
-                                         <div class="am-u-sm-8 am-u-end">
-
-                                            <div class="wx_type_img">
-
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field" >
-
-                                              <!-- 图片实时预览 -->
-
-                                              <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-
-                                              <span class="clickUp">缩略图</span>
-
-                                            </div>
-
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-
-                                            <small class="tpl-form-line-small-title red">提示：图片格式支持：png、jpg、jpeg、gif，图片大小不超过800kb;</small>
-
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div class="am-form-group am-btn-group-xs">
-
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-
-                                    </div>
-
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
 
                     <div class="am-u-sm-12 am-u-xs-12">
 
@@ -430,24 +320,15 @@ padding: 5px 6px!important;
 
                                     <th>编号</th>
 
-                                    <th>问题类型</th>
+                                    <th>用户名称</th>
+                                    <th>类型</th>
 
-                                    <th>提问人</th>
+                                    <th>积分</th>
 
-                                    <th>提问内容</th>
+                                    <th>获取详情</th>
 
-                                    <th>图片</th>
-
-                                    <th>是否回答</th>
-
-                                    <th>回答指定</th>
-
-                                    <th>回答数</th>
-                                    <th>问题悬赏</th>
-                                    <th>提问时间</th>
-                                
-
-                                    <th>操作</th>
+                                    <th>获取时间</th>
+                                    <!-- <th>操作</th> -->
 
                                 </tr>
 
@@ -461,158 +342,43 @@ padding: 5px 6px!important;
 
                         </table>
                         <script type="text/html" id="infolist">
+                            <!-- 1电商使用 2购买礼物 3悬赏 4完成活动 5签到积分 6获得采纳 7礼物兑换 8购买积分 9系统赠送 10新人积分 11加入圈子 12完善个人资料 -->
+
                             <% for(var i=0; i<list.length; i++){ %>
                                 <tr>
                                            <td><%= list[i].id%></td>
-                                           <td><%= list[i].name%></td>
                                            <td><%= list[i].nickname%></td>
-                                           <td><%= list[i].content%></td>
-                                           <% if(list[i].pic == ''){%>
-                                                <td>无图</td>
-                                            <% }else{%>
-                                               <td><img src="<%= list[i].pic%>" style="width: 100px;height: 100px;"></td> 
-                                            <%}%>
-                                            <%if(list[i].questionStates == '1'){%>
-                                            <td>已回答</td>
-                                           <%}else{%>
-                                           <td>未回答</td>
+                                           <%if(list[i].Type == '1'){%>
+                                           <td>电商使用</td>
+                                           <%}else if(list[i].Type == '2'){%>
+                                           <td>购买礼物</td>
+                                           <%}else if(list[i].Type == '3'){%>
+                                           <td>悬赏</td>
+                                           <%}else if(list[i].Type == '4'){%>
+                                           <td>完成活动</td>
+                                           <%}else if(list[i].Type == '5'){%>
+                                           <td>签到积分</td>
+                                           <%}else if(list[i].Type == '6'){%>
+                                           <td>获得采纳</td>
+                                           <%}else if(list[i].Type == '7'){%>
+                                           <td>礼物兑换</td>
+                                           <%}else if(list[i].Type == '8'){%>
+                                           <td>购买积分</td>
+                                           <%}else if(list[i].Type == '9'){%>
+                                           <td>系统赠送</td>
+                                           <%}else if(list[i].Type == '10'){%>
+                                           <td>新人积分</td>
+                                           <%}else if(list[i].Type == '11'){%>
+                                           <td>加入圈子</td>
+                                           <%}else if(list[i].Type == '12'){%>
+                                           <td>完善个人资料</td>
                                            <%}%>
-                                           <%if(list[i].onlyExpert == '1'){%>
-                                            <td>仅专家</td>
-                                           <%}else{%>
-                                           <td>所有人</td>
-                                           <%}%>
-                                           <td><%= list[i].answerNums%></td>
-                                           <td><%= list[i].price%></td>
-                                           <td><%= list[i].create_time%></td>
-                                           <td>
-                                               <div class="tpl-table-black-operation">
-                                                    <%if(list[i].award == '1'){%>
-                                                        <a href="<?php echo site_url('/friends/Question/awardQuestion/');?><%= list[i].id%>"  class="tpl-table-black-operation-info">
-                                                            发放HI豆
-                                                        </a>
-                                                    <%}%>
-
-                                                    <a href="<?php echo site_url('/friends/Question/see_problem/');?><%= list[i].id%>"  class="tpl-table-black-operation-info">
-                                                    查看回答
-
-                                                    </a>
-
-                                                    <a href="javascript:;" class="tpl-table-black-operation-set" data-am-modal="{target: '#m_edite<%= list[i].id%>'}">
-                                                        <i class="am-icon-pencil"></i> 编辑
-                                                    </a>
-                                                    <a href="<?php echo site_url('/friends/Question/del_problem/');?><%= list[i].id%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
-                                                        <i class="am-icon-trash"></i> 删除
-
-                                                    </a>
-
-                                                </div>  
-                                            </td>
-                                        </tr>
-                                         <div class="am-modal am-modal-confirm" tabindex="-1" id="m_edite<%= list[i].id%>">
-
-                                    <div class="am-modal-dialog">
-
-                                        <div class="am-modal-hd">编辑</div>
-
-                                        <div class="am-modal-bd">
-
-                                        <form class="am-form tpl-form-line-form" enctype="multipart/form-data" data-am-validator action="<?php echo site_url('friends/Question/edit_problem')?>" method='post' enctype='multipart/form-data'>
-
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                           <select name="faqsType" required>
-                                               <option value="">请选择一项</option>
-                                               <?php foreach($cates as $v):?>
-                                               <option value="<?php echo $v['id'];?>" ><?php echo $v['name'];?></option>
-                                                <?php endforeach;?>
-                                           </select>
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">提问内容 <span class="red">*</span></label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <textarea type="text" rows="4" name="content" class="js-pattern-mobile" placeholder="输入提问内容"  required><%= list[i].content%></textarea> 
-
-                                        </div>
-
-                                        <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-
-                                    </div>
-
-                                    <div class="am-form-group am-cf">
-
-                                        <label class="am-u-sm-3 am-form-label">悬赏HI豆 </label>
-
-                                        <div class="am-u-sm-8">
-
-                                            <input type="number" name="price" value="<%= list[i].price%>" class="js-pattern-mobile" placeholder="输入悬赏HI豆"  > 
-
-                                        </div>
-                                         <small class="am-u-sm-1 red redtips5" style="display: none;"><i class="am-icon-close"></i></small>
-
-                                        <small class="am-u-sm-1 green blacktips5" style="display: none;"><i class="am-icon-check"></i></small>
-                                 
-
-                                    </div>
-                                      <div class="am-form-group am-cf">
-
-                                        <label for="" class="am-u-sm-3 am-form-label">动态图片 </label>
-
-                                         <div class="am-u-sm-8 am-u-end">
-
-                                            <div class="wx_type_img">
-
-                                             <input type="file" id="imgUpload" name="img" onchange="previewImage(this)" class="upload-add am-form-field"  >
-
-                                              <!-- 图片实时预览 -->
-                                             <%if(list[i].pic == ''){%>
-                                                <div id="preview"> <img style="border-radius: 3px;" src="assets/img/nullImg.jpg" class="am-img-responsive cardView"> </div>
-                                            <%}else{%>
-                                                <div id="preview"> <img style="border-radius: 3px;" src="<%= list[i].pic%>" class="am-img-responsive cardView"> </div>
-                                            <%}%>
-
-                                              <span class="clickUp">缩略图</span>
-
-                                            </div>
-
-                                            <span class="deleteImg"><i class="am-icon-trash"></i> 删除</span> 
-
-
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div class="am-form-group am-btn-group-xs">
-                                    <input type="hidden" name="id" value="<%= list[i].id%>">
-    
-                                        <button type="button" class="am-btn am-btn-default" data-am-modal-close>取消</button>
-
-                                        <button type="submit" class="am-btn am-btn-danger">提交</button>
-
-                                    </div>
-
-                                </form>
-                                        </div>
-
-                                    </div>
-
-                                </div>
+                                         
+                                           <td><%= list[i].intergral_float%></td>
+                                           <td><%= list[i].notice%></td>
+                                           <td><%= list[i].nowTime%></td>
+                                </tr>
+                                     
                             <%}%> 
                         </script>
 
@@ -712,7 +478,7 @@ $(document).ready(function(){
         totalPage: 10,
         totalSize: 100,
         callback: function(num) {
-            getListinfo(num,'','','','','',"<?php echo site_url("/friends/Question/searchQuestion");?>");
+            getListinfo(num,'','','','',"<?php echo site_url("/member/Member/retIntegralRecomd");?>");
         }
     })
     
@@ -720,10 +486,10 @@ $(document).ready(function(){
     var page = "<?php if(!isset($_SESSION['pageNum'])){echo '0';}else{echo $_SESSION['pageNum'];}?>"/10 +1;
 
 
-    getListinfo(page,'','','','','',"<?php echo site_url("/friends/Question/searchQuestion");?>");
+    getListinfo(page,'','','','',"<?php echo site_url("/member/Member/retIntegralRecomd");?>");
     
     // 新分页方法
-    function getListinfo(num,faqsType,questionStates,end_date,begin_date,keywords,url) {
+    function getListinfo(num,type,phone,end_date,begin_date,url) {
 
         var pagenum10 = (num-1) *10;
        
@@ -733,11 +499,10 @@ $(document).ready(function(){
             data: {
                 'start':pagenum10,
                 'count':10,
-                'faqsType':faqsType,
-                'questionStates':questionStates,
+                'type':type,
+                'phone':phone,
                 'begin_time':begin_date,
                 'end_time':end_date,
-                'sear':keywords
             },
             // dataType: "json",
             success: function(data) {
@@ -752,22 +517,22 @@ $(document).ready(function(){
                         totalSize: res.total,
                         callback: function(num) { //点击页码的 回调 方法
                             // console.log(num);
-                            getListinfo(num,faqsType,questionStates,end_date,begin_date,keywords,"<?php echo site_url('/friends/Question/searchQuestion');?>");
+                            getListinfo(num,type,phone,end_date,begin_date,"<?php echo site_url("/member/Member/retIntegralRecomd");?>");
                         }
                     })
                     // 铺数据
                     var dataobj = {};
                     var lists = res.subjects;
                     // 头像
-                    lists.forEach(function(ele,index){
-                       if (ele.pic.length > 5) {
-                            var pic = JSON.parse(ele.pic);
-                            // console.log(pic)
-                           ele.pic = pic[0].picImg;
-                        }else{
-                            ele.pic = '';
-                        }
-                    })
+                    // lists.forEach(function(ele,index){
+                    //    if (ele.pic.length > 5) {
+                    //         var pic = JSON.parse(ele.pic);
+                    //         // console.log(pic)
+                    //        ele.pic = pic[0].picImg;
+                    //     }else{
+                    //         ele.pic = '';
+                    //     }
+                    // })
                     dataobj.list = lists;
                     var html=template("infolist",dataobj);
                     document.getElementById("infolistDiv").innerHTML = html;
@@ -784,10 +549,10 @@ $(document).ready(function(){
 
     $('.searchOrder').click(function(){
 
-        var faqsType=$('#faqsType option:selected').val(),questionStates = $('#questionStates option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), keywords = $('#sear').val();
+        var type=$('#type option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val(), phone = $('#phone').val();
 
-        console.log('faqsType='+ faqsType +'&questionStates='+ questionStates  +'&end_time='+ end_date + '&begin_time='+ begin_date  +'&sear='+ keywords);
-        getListinfo(1,faqsType,questionStates,end_date,begin_date,keywords,"<?php echo site_url('/friends/Question/searchQuestion');?>");
+        // console.log('faqsType='+ faqsType +'&questionStates='+ questionStates  +'&end_time='+ end_date + '&begin_time='+ begin_date  +'&sear='+ keywords);
+        getListinfo(1,type,phone,end_date,begin_date,"<?php echo site_url("/member/Member/retIntegralRecomd");?>");
 
     });
 

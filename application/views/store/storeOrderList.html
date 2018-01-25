@@ -65,6 +65,17 @@ td div.am-u-sm-12 {
     color: #e0690c;
 }
 </style>
+<!-- 新分页开始 -->
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
 
 <!-- 内容区域 -->
 <div class="tpl-content-wrapper">
@@ -222,34 +233,154 @@ td div.am-u-sm-12 {
                                     <th>操作</th>
                                 </tr>
                             </thead>
-                            <tbody id="dataList">
-                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
-                                <!-- more data -->
+                           
+                            <tbody id="infolistDiv">
+
+                             
+        
                             </tbody>
                         </table>
+                         <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                 <tr class="trClass" id="trClass<%= list[i].order_id %>" data-id="<%= list[i].order_id%>">
+                                    <td class="am-text-middle"><%= list[i].order_id %></td>
+                                    <td class="am-text-middle"><%= list[i].order_UUID %></td>
+                                    <td class="am-text-middle">
+                                    <% for(var j = 0; j < list[i].goods_data.goods_Data.length; j++) {%>    
+                                        <div class="am-u-sm-12">
+                                            <div class="am-u-sm-2">
+                                            <% if(list[i].goods_data.goods_Data[j].thumb) {%>
+                                                <img src="<%= list[i].goods_data.goods_Data[j].thumb %>" class="goodsImg">
+                                            <% } else { %>
+                                                <img src="assets/img/nullImg.jpg" class="goodsImg">
+                                            <% } %>
+                                            </div>
+                                            <div class="am-u-sm-8 smallSize">
+                                                <p class="goodsTitle"><%= list[i].goods_data.goods_Data[j].title %></p>
+                                                <p class="gray">
+                                                    <% if(list[i].goods_data.goods_Data[j].stend1) { %>
+                                                    <span><%= list[i].goods_data.goods_Data[j].stend1 %>:
+                                                     <%= list[i].goods_data.goods_Data[j].value1 %></span>
+                                                    <% } %>
+                                                    <% if(list[i].goods_data.goods_Data[j].stend2) { %>
+                                                    <span><%= list[i].goods_data.goods_Data[j].stend2 %>:
+                                                        <%= list[i].goods_data.goods_Data[j].value2 %></span>
+                                                    <% } %>
+                                                    <% if(list[i].goods_data.goods_Data[j].stend3) { %>
+                                                    <span><%= list[i].goods_data.goods_Data[j].stend3 %>:
+                                                        <%= list[i].goods_data.goods_Data[j].value3 %></span>
+                                                    <% } %>
+                                                    <% if(list[i].goods_data.goods_Data[j].stend4) { %>
+                                                    <span><%= list[i].goods_data.goods_Data[j].stend4 %>:
+                                                     <%= list[i].goods_data.goods_Data[j].value4 %></span>
+                                                    <% } %>
+                                                    <span class="am-fr"><%= list[i].goods_data.stores.store_name %> </span>
+                                                </p>
+                                                <% if(list[i].goods_data.goods_Data[j].good_tags) { %>
+                                                    <p><% for(var k = 0;k < list[i].goods_data.goods_Data[j].good_tags.length; k++) { %>    
+                                                        <span class="goods_tags"><%= list[i].goods_data.goods_Data[j].good_tags[k] %></span>
+                                                            
+                                                    <% } %>
+
+                                                    </p>
+                                                <% } %>
+                                            </div>
+                                            <div class="am-u-sm-2 am-text-right">
+                                                <p class="goods_price">￥<%= list[i].goods_data.goods_Data[j].product_total %></p>
+                                                <p class="gray">x<%= list[i].goods_data.goods_Data[j].nums %></p>
+                                            </div>
+                                        </div>
+                                    <% } %>
+                                    </td>
+                                    <% if(list[i].amount < 0){%>
+                                    <td class="am-text-middle">0.01</td>
+                                    <%}else{%>
+                                    <td class="am-text-middle"><%= list[i].amount %></td>
+                                    <%}%>
+                                    <td class="am-text-middle">
+                             
+                                    <%= list[i].nickname%>
+                              
+                                    </td>
+                                    <td class="am-text-middle"><%= list[i].create_time%></td>
+                                     <%if(list[i].order_status==1 && list[i].trash == 1) {%>
+                                        <td class="am-text-middle red">
+                                            未支付
+                                        </td>
+                                    <%}else if(list[i].order_status==1 && list[i].trash == 0){%>
+                                       <td class="am-text-middle red">
+                                            订单已取消
+                                        </td>
+                                    <%}else if(list[i].order_status==2){%>
+                                        <td class="am-text-middle">
+                                            已支付
+                                        </td>
+                                    <%}else if(list[i].order_status==3){%>
+                                        <td class="am-text-middle warning">
+                                            已发货
+                                        </td>
+                                    <%}else if(list[i].order_status==4){%>
+                                        <td class="am-text-middle">
+                                            已收货
+                                        </td>
+                                    <%}else if(list[i].order_status==5){%>
+                                        <td class="am-text-middle success">
+                                            已评价
+                                        </td>
+                                    <%}else if(list[i].order_status==6){%>
+                                        <td class="am-text-middle">
+                                            等待商家同意退货
+                                        </td>
+                                    <%}else if(list[i].order_status==7){%>
+                                        <td class="am-text-middle">
+                                            等待退货物流
+                                        </td>
+                                    <%}else if(list[i].order_status==8){%>
+                                        <td class="am-text-middle">
+                                            退款成功
+                                        </td>
+                                    <%}else if(list[i].order_status==9){%>
+                                        <td class="am-text-middle">
+                                            其他
+                                        </td>
+                                    <%}else if(list[i].order_status==10 && list[i].admin_orderState == 1){%>
+                                        <td class="am-text-middle">
+                                            <p>商家已确认，等待退款</p>
+                                            <a data-id="<%= list[i].order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
+                                        </td>
+                                    <%}else if(list[i].order_status==10 && list[i].admin_orderState == 0){%>
+                                        <td class="am-text-middle">
+                                            等待商家确认退款
+                                        </td>
+                                    <%}%>
+                                    <td class="am-text-middle">
+                                        <div class="tpl-table-black-operation">
+                                            <a data-id="<%= list[i].order_id%>" class="editOrder">
+                                                <i class="am-icon-eye"></i> 详情
+                                            </a>
+                                            <a data-id="<%= list[i].order_id%>" class="tpl-table-black-operation-del tpl-del">
+                                                <i class="am-icon-trash"></i> 删除
+                                            </a>
+                                        </div>
+                                    </td>     
+                                </tr>
+                                <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= list[i].order_id%>">
+                                    <div class="am-modal-dialog">
+                                        <div class="am-modal-hd">删除提示</div>
+                                        <div class="am-modal-bd">
+                                            <p class="black">你，确定要删除这条记录吗？</p>
+                                        </div>
+                                        <div class="am-modal-footer">
+                                            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+                                            <span class="am-modal-btn sureDelete" data-id="<%= list[i].order_id%>" data-am-modal-confirm>确定</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <%}%>
+                        </script>
                     </div>
-                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
-                        <div id="Pagination">
-                            <div class="pagination">
-                                <a class="prev"><i></i>上一页</a>
-                                <a class="current">1</a>
-                                <a>2</a>
-                                <a>3</a>
-                                <a>4</a>
-                                <span class="pagination-break">...</span>
-                                <a class="ep">15</a>
-                                <a class="next">下一页 <i></i></a>
-                            </div>
-                        </div>
-                        <div class="searchPage">
-                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
-                          <span class="page-go">跳转<input type="text">页</span>
-                          <a href="javascript:;" class="page-btn">确定</a>
-                        </div>
-                        <div claa="am-text-middle">
-                           <span>共<span class="allData">15</span>条数据</span> 
-                        </div>
-                    </div>
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
                 </div>
             </div>
         </div>
@@ -314,39 +445,8 @@ td div.am-u-sm-12 {
         $(this).datepicker('close');
       }); 
   });
-    //点击前往某一页的函数
-    function go_to_page(page_num){
-        $('.page_link').removeClass('active_page');
-        $('.page_link').eq(page_num).addClass('active_page');
-        $("#dataList").children('tr').css("display","none");
-        var start_page=parseInt(15)*parseInt(page_num);
-        var end_page=parseInt(15)*parseInt(page_num+1);
-        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
-        current_page=page_num;
-        sessionStorage.setItem('storeOrderList', current_page);
-        $storeOrderList =  sessionStorage.setItem('storeOrderList', current_page);
-    }
-
-    //点击上一页的函数
-    function previous(){
-        if($('.current').length>1) {
-            new_page = parseInt($('.current').eq(0).html()) - 2;
-        }else {
-            new_page = parseInt($('.current').html()) - 2;
-        }
-        if(new_page >= 0) {
-            go_to_page(new_page);
-        }
-    }
- 
-    //点击下一页的函数
-    function next(){
-        new_page = current_page+1;
-        if($('.active_page').next('.page_link').length==true){
-            go_to_page(new_page);
-        }
-    }
-    function otherFunction() {
+   
+function otherFunction() {
         $('.editOrder').click(function(){//查看订单信息
             var dataId=$(this).attr('data-id');
             $(this).attr("href","<?php echo site_url('store/store/storeOrderDetail/" + dataId + "');?>");
@@ -366,8 +466,7 @@ td div.am-u-sm-12 {
                     // console.log(data);
                     if(data==1){ 
                         alert("操作成功！");
-                        getList('<?php echo site_url('store/store/Order_page');?>','default=4');
-
+                        window.location.reload(); 
                     }else{
                         alert("操作失败！");
                     }
@@ -380,8 +479,9 @@ td div.am-u-sm-12 {
         });
 
         $('.confirmGot').click(function(){
+            // alert("123");
             var dataId = $(this).attr('data-id');
-            console.log(dataId);
+            // console.log(dataId);
 
             $.ajax({
                 type:'post',
@@ -389,8 +489,8 @@ td div.am-u-sm-12 {
                 data: 'order_id='+dataId,
                 success: function(data){
                   if(data == 1) {
-                      alert('操作成功！');
-                       getList('<?php echo site_url('store/store/Order_page');?>','default=4'); 
+                    alert('操作成功！');
+                    window.location.reload(); 
                   }
                 },
                 error:function(xhr,type,errorThrown){
@@ -402,235 +502,114 @@ td div.am-u-sm-12 {
         });
     }
     //异步刷新的ajax请求   
-    function getList(dataurl,data,changeIndex){
-        $.ajax({
-            type:'post',
-            url:dataurl,
-            data: data,
-            success: function(result){   
-                var res = eval(result);
-                if(res != 2 && res != 3){
-                    var listData = ''; //每页出现的数量
-                    var total_page = Math.ceil(res.length/15); //得到总页数
-                    for(var i = 0; i < res.length; i++){
-                        res[i].goods_data = JSON.parse(res[i].goods_data);
-                        res[i].PriceCalculation = JSON.parse(res[i].PriceCalculation);
-                       // res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+$(document).ready(function(){
 
-                        if(res[i].PriceCalculation.nowIntergal){
-                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee) - res[i].PriceCalculation.nowIntergal.intergral;
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','4','','','','','',"<?php echo site_url('/store/store/order_search');?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['orderNum'])){echo '0';}else{echo $_SESSION['orderNum'];}?>"/10 +1;
+
+
+    getListinfo(page,'','4','','','','','',"<?php echo site_url('/store/store/order_search');?>");
+    
+    // 新分页方法
+    function getListinfo(num,orderid,type,end_time,start_time,seller,buyer,order_status,url) {
+
+        var pagenum10 = (num-1) *10;
+       console.log(pagenum10);
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'orderid':orderid,
+                'type':type,
+                'end_time':end_time,
+                'start_time':start_time,
+                'seller':seller,
+                'buyer':buyer,
+                'order_status':order_status
+            },
+            // dataType: "json",
+            success: function(data) {
+               // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10); 
+
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,orderid,type,end_time,start_time,seller,buyer,order_status,"<?php echo site_url('/store/store/order_search');?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    lists.forEach(function(ele,index){
+                        ele.goods_data = JSON.parse(ele.goods_data);
+                        ele.PriceCalculation = JSON.parse(ele.PriceCalculation);
+                       // ele.amount = parseFloat(ele.amount) + parseFloat(ele.fee);
+
+                        if(ele.PriceCalculation.nowIntergal){
+                            ele.amount = parseFloat(ele.amount) + parseFloat(ele.fee) - ele.PriceCalculation.nowIntergal.intergral;
 
                         }else{
-                            res[i].amount = parseFloat(res[i].amount) + parseFloat(res[i].fee);
+                            ele.amount = parseFloat(ele.amount) + parseFloat(ele.fee);
 
                         }
 
-                        for(var j = 0;j < res[i].goods_data.goods_Data.length; j++){
-                            res[i].goods_data.goods_Data[j].good_pic = eval(res[i].goods_data.goods_Data[j].good_pic);
-                            if(res[i].goods_data.goods_Data[j].good_tags) {
-                                res[i].goods_data.goods_Data[j].good_tags = res[i].goods_data.goods_Data[j].good_tags.split(',');
+                        for(var j = 0;j < ele.goods_data.goods_Data.length; j++){
+                            ele.goods_data.goods_Data[j].good_pic = eval(ele.goods_data.goods_Data[j].good_pic);
+                            if(ele.goods_data.goods_Data[j].good_tags) {
+                                ele.goods_data.goods_Data[j].good_tags = ele.goods_data.goods_Data[j].good_tags.split(',');
                             }
                         }
-                        listData+= template('dataModal',res[i]);
-                    } 
-                   // console.log(res);
-                    document.getElementById('dataList').innerHTML = listData;
-                    $('.allData').html(res.length);
-                    if(total_page <= 1) {
-                       $('#Pagination').css('display', 'none');
-                        $('.searchPage').css('display', 'none');
-                    } else {
-                        $('.allData').html(res.length);
-                        $('.pagebox').css('display', 'block');
-                        if(pageflag) {  
-                            var opts={};opts.current_page = $storeOrderList;
-                            $("#Pagination").pagination(total_page, opts);
-                            go_to_page($storeOrderList);
-                            pageflag = 0;
-                        } else {
-                            $("#Pagination").pagination(total_page);
-                            go_to_page(0);
-                            
-                        }
-                        if(total_page < 5) {
-                            $('.searchPage').css('display', 'none');
-                        }
-                    }
+                    })
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
                     otherFunction();
-                         
-                }else{
-                    $('#dataList').find('tr').remove();
-                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
-                    $('.pagebox').css('display', 'none');
                 }
-
-                
             },
-            error:function(xhr,type,errorThrown){
-                alert("网络状况不佳，请稍后重试！");
-                $('#dataList').find('tr').remove();
-                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无订单信息！</p></td></tr>').appendTo('#dataList');
-                $('.pagebox').css('display', 'none');
+            error:function(data){
+                console.log(data);
             }
-        });
+        })
     }
-$(document).ready(function(){
-    //加载列表数数据
-    // if($isStoreOrderList) {
-    //     var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(),orderid=$('#orderid').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-    //     getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4' +'&orderid='+orderid);
-    //     sessionStorage.setItem('isStoreOrderList', 1);
-    // } else {
-       getList('<?php echo site_url('store/Store/Order_page');?>','default=4'); 
-    // }
+    
+
     //点击搜索
     $('.searchOrder').click(function(){
         var order_status = $('#orderState option:selected').val(), buyer=$('#buyer').val(), orderid=$('#orderid').val(),seller=$('#seller').val(), begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
-        console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + "&end_time=" + end_date + "&type=4"+'&orderid='+orderid);
-        getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4' + '&orderid='+orderid);
-        sessionStorage.setItem('isStoreOrderList', 1);
-        
+        // console.log('order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + "&end_time=" + end_date + "&type=4"+'&orderid='+orderid);
+        // getList('<?php echo site_url('/store/store/order_search');?>','order_status='+ order_status +'&buyer='+ buyer +"&seller="+ seller +"&start_time="+ begin_date + '&end_time=' + end_date + '&type=4' + '&orderid='+orderid);
+        getListinfo(1,orderid,'4',end_date,begin_date,seller,buyer,order_status,"<?php echo site_url('/store/store/order_search');?>");
     });
     //导出订单
     $('.sureExport').click(function () {
         $('#exportFile').modal('close');
     });
-})
-</script>
-<script type="text/html" id="dataModal">   
-    <tr class="trClass" id="trClass<%= order_id %>" data-id="<%= order_id%>">
-        <td class="am-text-middle"><%= order_id %></td>
-        <td class="am-text-middle"><%= order_UUID %></td>
-        <td class="am-text-middle">
-        <% for(var j = 0; j < goods_data.goods_Data.length; j++) {%>    
-            <div class="am-u-sm-12">
-                <div class="am-u-sm-2">
-                <% if(goods_data.goods_Data[j].thumb) {%>
-                    <img src="<%= goods_data.goods_Data[j].thumb %>" class="goodsImg">
-                <% } else { %>
-                    <img src="assets/img/nullImg.jpg" class="goodsImg">
-                <% } %>
-                </div>
-                <div class="am-u-sm-8 smallSize">
-                    <p class="goodsTitle"><%= goods_data.goods_Data[j].title %></p>
-                    <p class="gray">
-                        <% if(goods_data.goods_Data[j].stend1) { %>
-                        <span><%= goods_data.goods_Data[j].stend1 %>:
-<%= goods_data.goods_Data[j].value1 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend2) { %>
-                        <span><%= goods_data.goods_Data[j].stend2 %>:
-<%= goods_data.goods_Data[j].value2 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend3) { %>
-                        <span><%= goods_data.goods_Data[j].stend3 %>:
-<%= goods_data.goods_Data[j].value3 %></span>
-                        <% } %>
-                        <% if(goods_data.goods_Data[j].stend4) { %>
-                        <span><%= goods_data.goods_Data[j].stend4 %>:
-<%= goods_data.goods_Data[j].value4 %></span>
-                        <% } %>
-                        <span class="am-fr"><%= goods_data.stores.store_name %> </span>
-                    </p>
-                    <% if(goods_data.goods_Data[j].good_tags) { %>
-                        <p><% for(var k = 0;k < goods_data.goods_Data[j].good_tags.length; k++) { %>    
-                            <span class="goods_tags"><%= goods_data.goods_Data[j].good_tags[k] %></span>
-                                
-                        <% } %>
 
-                        </p>
-                    <% } %>
-                </div>
-                <div class="am-u-sm-2 am-text-right">
-                    <p class="goods_price">￥<%= goods_data.goods_Data[j].product_total %></p>
-                    <p class="gray">x<%= goods_data.goods_Data[j].nums %></p>
-                </div>
-            </div>
-        <% } %>
-        </td>
-        <% if(amount < 0){%>
-        <td class="am-text-middle">0.01</td>
-        <%}else{%>
-        <td class="am-text-middle"><%= amount %></td>
-        <%}%>
-        <td class="am-text-middle">
- 
-        <%= nickname%>
-  
-        </td>
-        <td class="am-text-middle"><%= create_time%></td>
-         <%if(order_status==1 && trash == 1) {%>
-            <td class="am-text-middle red">
-                未支付
-            </td>
-        <%}else if(order_status==1 && trash == 0){%>
-           <td class="am-text-middle red">
-                订单已取消
-            </td>
-        <%}else if(order_status==2){%>
-            <td class="am-text-middle">
-                已支付
-            </td>
-        <%}else if(order_status==3){%>
-            <td class="am-text-middle warning">
-                已发货
-            </td>
-        <%}else if(order_status==4){%>
-            <td class="am-text-middle">
-                已收货
-            </td>
-        <%}else if(order_status==5){%>
-            <td class="am-text-middle success">
-                已评价
-            </td>
-        <%}else if(order_status==6){%>
-            <td class="am-text-middle">
-                等待商家同意退货
-            </td>
-        <%}else if(order_status==7){%>
-            <td class="am-text-middle">
-                等待退货物流
-            </td>
-        <%}else if(order_status==8){%>
-            <td class="am-text-middle">
-                退款成功
-            </td>
-        <%}else if(order_status==9){%>
-            <td class="am-text-middle">
-                其他
-            </td>
-        <%}else if(order_status==10 && admin_orderState == 1){%>
-            <td class="am-text-middle">
-                <p>商家已确认，等待退款</p>
-                <a data-id="<%= order_id%>" class="confirmGot"><i class="am-icon-check"></i>已退款</a>
-            </td>
-        <%}else if(order_status==10 && admin_orderState == 0){%>
-            <td class="am-text-middle">
-                等待商家确认退款
-            </td>
-        <%}%>
-        <td class="am-text-middle">
-            <div class="tpl-table-black-operation">
-                <a data-id="<%= order_id%>" class="editOrder">
-                    <i class="am-icon-eye"></i> 详情
-                </a>
-                <a data-id="<%= order_id%>" class="tpl-table-black-operation-del tpl-del">
-                    <i class="am-icon-trash"></i> 删除
-                </a>
-            </div>
-        </td>
-    </tr>
-    <div class="am-modal am-modal-confirm" tabindex="-1" id="de<%= order_id%>">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">删除提示</div>
-            <div class="am-modal-bd">
-                <p class="black">你，确定要删除这条记录吗？</p>
-            </div>
-            <div class="am-modal-footer">
-                <span class="am-modal-btn" data-am-modal-cancel>取消</span>
-                <span class="am-modal-btn sureDelete" data-id="<%= order_id%>" data-am-modal-confirm>确定</span>
-            </div>
-        </div>
-    </div>
+
+
+})
+
 </script>
+
 

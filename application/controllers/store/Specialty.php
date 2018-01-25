@@ -542,6 +542,7 @@ class Specialty extends Default_Controller {
             $id = $this->input->post('goodsid');
             $data['recommentType'] = '0';
             $data['recommend'] = '0';
+            $data['countDown'] = '';
 
             if($this->MallShop_model->edit_goods($id,$data)){
                 $log = array(
