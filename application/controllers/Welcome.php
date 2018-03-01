@@ -6,6 +6,7 @@ class Welcome extends CI_Controller {
     function __construct()
     {
         parent::__construct();
+        $this->load->helper('default_helper');
     }
 
 
@@ -31,7 +32,31 @@ class Welcome extends CI_Controller {
         $this->load->view('welcome_message.html');
     }
 
-    
+    function DateList(){
+        if($_POST){
+            $t = $this->input->post('time');
+            $e = $this->input->post('endtime');
+
+            $da = prDates($t,$e);
+            foreach ($da as $key => $value) {
+                //用户
+                $etime = date("Y-m-d",strtotime("+1 day",strtotime($value['Ymdate'])));
+              
+                $da[$key]['userNum']  = retDateList('gid','=','5','hf_user_member','create_time',$value['Ymdate'],$etime);
+                $da[$key]['friendsNum'] = retDateList('typeId','=','1','hf_friends_news','create_time',$value['Ymdate'],$etime);
+                $da[$key]['wenDaNum'] = retDateList('typeId','=','2','hf_friends_news','create_time',$value['Ymdate'],$etime);
+                $da[$key]['orderNum'] = retDateList('order_status','!=','1','hf_mall_order','create_time',$value['Ymdate'],$etime);
+                
+            }
+            array_multisort(array_column($da,'Ymdate'),SORT_DESC,$da);
+            var_dump($da);
+
+
+        }
+    }
+
+
+
     function inset_app(){
     	if($_POST){
     		$type = $this->input->post('id');
@@ -180,9 +205,9 @@ class Welcome extends CI_Controller {
     }
     function DowUserMember(){
             set_time_limit(0);
-            $time = '2017-12-29 00:00:00';
-            $end = '2017-12-31 23:59:59';
-            $query = $this->db->where('create_time >=',$time)->where('create_time <=',$end)->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
+            // $time = '2017-12-29 00:00:00';
+            // $end = '2017-12-31 23:59:59';
+            $query = $this->db->where('gid','5')->order_by('create_time','desc')->get('hf_user_member');
             // $query = $this->db->query();
             $res1 = $query->result_array();
             // $res1 = $query1->result_array();
@@ -205,7 +230,7 @@ class Welcome extends CI_Controller {
                     'B' => '用户手机号',
                     'C' => '用户昵称',
                     'D' => '注册时间',
-                    // 'E' => '城市',
+                    'E' => '城市',
                     
                 );
 
@@ -238,28 +263,28 @@ class Welcome extends CI_Controller {
                     $this->excel->getActiveSheet()->setCellValue('A' . $i, $booking['user_id']);
                     $this->excel->getActiveSheet()->setCellValue('B' . $i, $booking['phone']);
                     $this->excel->getActiveSheet()->setCellValue('C' . $i, $booking['nickname']);
-                    // switch ($booking['city']) {
-                    //     case '1':
-                    //          $this->excel->getActiveSheet()->setCellValue('D' . $i, '重庆');
+                    switch ($booking['city']) {
+                        case '1':
+                             $this->excel->getActiveSheet()->setCellValue('E' . $i, '重庆');
 
-                    //         break;    
-                    //     case '2':
-                    //         $this->excel->getActiveSheet()->setCellValue('D' . $i, '南江');
+                            break;    
+                        case '2':
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '南江');
 
-                    //         break;    
-                    //     case '3':
-                    //          $this->excel->getActiveSheet()->setCellValue('D' . $i, '宣汉');
+                            break;    
+                        case '3':
+                             $this->excel->getActiveSheet()->setCellValue('E' . $i, '宣汉');
 
-                    //         break; 
-                    //     case '4':
-                    //          $this->excel->getActiveSheet()->setCellValue('D' . $i, '邻水');
+                            break; 
+                        case '4':
+                             $this->excel->getActiveSheet()->setCellValue('E' . $i, '邻水');
 
-                    //         break;
+                            break;
                         
-                    //     default:
-                    //         $this->excel->getActiveSheet()->setCellValue('D' . $i, '');
-                    //         break;
-                    // }
+                        default:
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, '');
+                            break;
+                    }
                     $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['create_time']);
                   
                 }
@@ -347,4 +372,82 @@ class Welcome extends CI_Controller {
              }
     }
 
+
+    function retMasterList(){
+        if($_POST){
+            $startTime = $this->input->post('begin_time');
+            $endTime = $this->input->post('end_time');
+            $state = $this->input->post('state');
+            if(!empty($startTime)){
+                $t = $startTime.' 00:00:00';
+                $e = $endTime.' 23:59:59';
+            }else{
+                $t= '';
+                $e= '';
+            }
+            $page = $this->input->post('start');
+
+            $_SESSION['masterNum'] = $page;
+            $size = $this->input->post('count');
+
+            if(!empty($state) && empty($t)){
+                if($state =='2'){
+                    $state = '0';
+                }
+
+                $query = $this->db->where('gameId','5')->where('examine',$state)->get('hf_game_wining_history');
+                $list = $query->result_array();
+
+                $this->db->select('a.*,b.content,b.pic,b.create_time,c.phone,c.nickname,d.commont,d.newsId');
+                $this->db->from('hf_game_wining_history as a');
+                $this->db->join('hf_user_member as c', 'c.user_id = a.userId','inner');
+                $this->db->join('hf_friends_news as b', 'b.id = a.myNewsId','inner');
+                $this->db->join('hf_friends_news_commont as d', 'd.id = a.aboutNewsId','inner');
+                $query1 = $this->db->where('a.gameId','5')->where('a.examine',$state)->order_by('a.createTime','desc')->limit($size,$page)->get();
+                $listpage = $query1->result_array();
+
+
+            }else if(empty($state) && !empty($t)){
+                $query1 = $this->db->where('gameId','5')->where('mysqlTime >=',$t)->where('mysqlTime <=',$e)->get('hf_game_wining_history');
+                $list = $query1->result_array();
+
+                 $this->db->select('a.*,b.content,b.pic,b.create_time,c.phone,c.nickname,d.commont,d.newsId');
+                $this->db->from('hf_game_wining_history as a');
+                $this->db->join('hf_user_member as c', 'c.user_id = a.userId','inner');
+                $this->db->join('hf_friends_news as b', 'b.id = a.myNewsId','inner');
+                $this->db->join('hf_friends_news_commont as d', 'd.id = a.aboutNewsId','inner');
+                $query = $this->db->where('a.mysqlTime >=',$t)->where('a.mysqlTime <=',$e)->where('gameId','5')->order_by('a.createTime','desc')->limit($size,$page)->get();
+                $listpage = $query->result_array();
+
+            }else if(!empty($state) && !empty($t)){
+                $query1 = $this->db->where('mysqlTime >=',$t)->where('mysqlTime <=',$e)->where('examine',$state)->where('gameId','5')->get('hf_game_wining_history');
+                $list = $query1->result_array();
+
+                $this->db->select('a.*,b.content,b.pic,b.create_time,c.phone,c.nickname,d.commont,d.newsId');
+                $this->db->from('hf_game_wining_history as a');
+                $this->db->join('hf_user_member as c', 'c.user_id = a.userId','inner');
+                $this->db->join('hf_friends_news as b', 'b.id = a.myNewsId','inner');
+                $this->db->join('hf_friends_news_commont as d', 'd.id = a.aboutNewsId','inner');
+                $query = $this->db->where('a.mysqlTime >=',$t)->where('a.mysqlTime <=',$e)->where('a.examine',$state)->where('gameId','5')->order_by('a.createTime','desc')->limit($size,$page)->get();
+                $listpage = $query->result_array();
+            }else if(empty($state) && empty($t)){
+                $query = $this->db->where('gameId','5')->get('hf_game_wining_history');
+                $list = $query->result_array();
+
+                $this->db->select('a.*,b.content,b.pic,b.create_time,c.phone,c.nickname,d.commont,d.newsId');
+                $this->db->from('hf_game_wining_history as a');
+                $this->db->join('hf_user_member as c', 'c.user_id = a.userId','inner');
+                $this->db->join('hf_friends_news as b', 'b.id = a.myNewsId','inner');
+                $this->db->join('hf_friends_news_commont as d', 'd.id = a.aboutNewsId','inner');
+                $query1 = $this->db->where('a.gameId','5')->order_by('a.createTime','desc')->limit($size,$page)->get();
+                $listpage = $query1->result_array();
+            }
+ 
+            if(!empty($listpage)){
+                echo json_encode(['total'=>count($list),'subjects'=>$listpage]);
+            }else{
+                echo "2";
+            }
+        }
+    }
 }

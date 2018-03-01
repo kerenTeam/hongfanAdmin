@@ -304,17 +304,23 @@ label.am-u-sm-8, label.am-u-sm-4{
                                         }
                                         if($inter['Params']['couponData']['typeid'] == '3'){
                                             $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
+                                              $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                          
                                             if(isset($p['1'])){
                                                 $coupon_amount = round($p['1'] * $lu,'2');
                                             }
                                         }elseif($inter['Params']['couponData']['typeid'] == '2'){
+                                         $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                             $p = explode(',',$inter['Params']['couponData']['coupon_amount']);
 
                                             if(isset($p['1'])){
                                                 $coupon_amount = round($zong * $p['1'],'2');
                                             }
                                         }elseif($inter['Params']['couponData']['typeid'] == '1'){
+                                         $coupon_id = retCouponId($inter['coupon']);
+                                            $coupon_name = ret_coupon_name($coupon_id);
                                             $coupon_amount = $inter['Params']['couponData']['coupon_amount'];
 
                                         }else{
@@ -323,7 +329,9 @@ label.am-u-sm-8, label.am-u-sm-4{
 
 
                                     ?>
-                                优惠卷抵扣金额：<?php  $coupon= $coupon_amount; echo $coupon_amount;?>
+                                优惠卷抵扣金额：<?php  $coupon= $coupon_amount; echo $coupon_amount;?><br/>
+                                优惠劵名称：<?php echo $coupon_name;?>
+
                                 <?php else:?>
                                 <?php $coupon = '0';?>
                                 优惠卷抵扣金额：0
@@ -598,7 +606,57 @@ label.am-u-sm-8, label.am-u-sm-4{
 
                             <label for="user-email" class="am-u-sm-4 am-form-label">快递公司：</label>
 
-                            <label class="am-u-sm-8 success am-text-middle"><?php echo $order['shipper_code'];?></label>
+                            <label class="am-u-sm-8 success am-text-middle">
+                                <?php    switch ($order['shipper_code']) {
+                                                case 'EMS':
+                                                    echo "EMS";
+                                                    break; 
+                                                case 'FAST':
+                                                    echo "快捷快递";
+                                                    break; 
+                                                case 'UC':
+                                                    echo "优速快递";
+                                                    break; 
+                                                case 'SF':
+                                                    echo "顺风";
+                                                    break; 
+                                                case 'STO':
+                                                    echo "申通";
+                                                    break; 
+                                                case 'YTO':
+                                                    echo "圆通";
+                                                    break; 
+                                                case 'ZTO':
+                                                    echo "中通";
+                                                    break;
+                                                case 'YD':
+                                                    echo "韵达";
+                                                    break;
+                                                case 'HTKY':
+                                                    echo "百世汇通";
+                                                    break;
+                                                case 'PJ':
+                                                    echo "品骏快递";
+                                                    break;
+                                                case 'UAPEX':
+                                                    echo "全一快递";
+                                                    break;
+                                                case 'HHTT':
+                                                    echo "天天快递";
+                                                    break;
+                                                case 'GTO':
+                                                    echo "国通快递";
+                                                    break;
+                                                case 'JD':
+                                                    echo "京东物流";
+                                                    break;
+                                                case 'ZT':
+                                                    echo "自提";
+                                                    break;
+                                            
+                                            }?>
+                
+                            </label>
 
                         </div>  
 

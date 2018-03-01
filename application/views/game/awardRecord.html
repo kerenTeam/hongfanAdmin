@@ -363,7 +363,7 @@ $(document).ready(function(){
     
     // 新分页方法
     function getListinfo(num,end_date,begin_date,prize,url) {
-
+      
         var pagenum10 = (num-1) *10;
        
         $.ajax({
@@ -379,7 +379,7 @@ $(document).ready(function(){
             },
             // dataType: "json",
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 if(data != 2){
                     var res = JSON.parse(data);
                     var allpage = Math.ceil(res.total/10);  

@@ -142,11 +142,11 @@
                                     <div class="am-form-group">
                                         <label class="am-u-sm-3 am-form-label">新人注册送卡卷</label>
                                         <div class="am-u-sm-9">
-                                           <select name="newUserAwardCoupon">
+                                           <select name="newUserAwardCoupon" data-am-selected="{searchBox: 1,maxHeight: 300}">
                                                <?php $cid = get_option('newUserAwardCoupon');?>
                                                <option value="0" <?php if($cid== '0'){echo "selected";}?>>不赠送</option>
                                                <?php foreach($coupon as $val):?>
-                                               <option value="<?php echo $val['id'];?>" <?php if($cid== $val['id']){echo "selected";}?> ><?php echo $val['name'].'-'.$val['title']?></option>
+                                               <option value="<?php echo $val['id'];?>" <?php if($cid== $val['id']){echo "selected";}?> ><?php echo $val['id'];?> | <?php echo $val['name'].'-'.$val['title']?></option>
                                                 <?php endforeach;?>
                                            </select>
                                         </div>

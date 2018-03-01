@@ -3,7 +3,28 @@
 /**
 *    公用函数
 */
+//两个时间之间的日期
+function prDates($start,$end){ // 两个日期之间的所有日期  
+    $dt_start = strtotime($start);  
+    $dt_end = strtotime($end);  
+  
+    while ($dt_start<=$dt_end){  
+        $date[]['Ymdate'] = date('Y-m-d',$dt_start)."\n";  
+        $dt_start = strtotime('+1 day',$dt_start);  
+    } 
+    return $date; 
+}  
+//返回时间段内数据
+function retDateList($where,$de,$id,$table,$create,$time,$endtime){
+    $CI = &get_instance();
+    $sql = "select count(*) from " . $table." WHERE ".$where.$de.$id.' and '.$create." BETWEEN '".$time."' AND '".$endtime."'";
+    $query = $CI->db->query($sql);
+    $res = $query->row_array();
+    return $res['count(*)'];
 
+}
+
+//
 function get_mobile_area($mobile)
 {
     $sms = array('province' => '', 'supplier' => '');    //初始化变量
@@ -19,7 +40,60 @@ function get_mobile_area($mobile)
     return json_decode($res, true);
 }
 
+//返回用户分析数据
+// function ToDayselectList($table,$time){
+//     $CI = &get_instance();
+//     $sql = "SELECT count(*) FROM ".$table." WHERE  TO_DAYS( NOW( ) ) - TO_DAYS( ".$time.") <= 1";
+//     $query = $CI->db->query($sql);
+//     $res = $query->row_array();
+//     return $res['count(*)'];
+// }
+// function ZhouselectList($table,$time){
+//     $CI = &get_instance();
+//     $sql = "SELECT count(*) FROM ".$table." WHERE YEARWEEK(date_format(".$time.",'%Y-%m-%d')) = YEARWEEK(now())";
+//     $query = $CI->db->query($sql);
+//     $res = $query->row_array();
+//     return $res['count(*)'];
+// }
+// function YueselectList($table,$time){
+//     $CI = &get_instance();
+//     $sql = "SELECT count(*) FROM ".$table." where DATE_FORMAT( ".$time.", '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )";
+//     $query = $CI->db->query($sql);
+//     $res = $query->row_array();
+//     return $res['count(*)'];
+// }
 
+//返回帖子问答
+function DayNewselectList($where,$de,$type,$table,$time){
+    $CI = &get_instance();
+    $sql = "SELECT count(*) FROM ".$table." WHERE ".$where .$de.$type." and to_days(".$time.") = to_days(now());";
+    $query = $CI->db->query($sql);
+    $res = $query->row_array();
+    return $res['count(*)'];
+}
+function ToDayNewselectList($where,$de,$type,$table,$time){
+    $CI = &get_instance();
+    $sql = "SELECT count(*) FROM ".$table." WHERE ".$where .$de.$type." and TO_DAYS( NOW( ) ) - TO_DAYS( ".$time.") = 1";
+    $query = $CI->db->query($sql);
+    $res = $query->row_array();
+    return $res['count(*)'];
+}
+function ZhouNewselectList($where,$de,$type,$table,$time){
+    $CI = &get_instance();
+    $sql = "SELECT count(*) FROM ".$table." WHERE ".$where .$de.$type." and create_time >= DATE_SUB(CURDATE(),INTERVAL WEEKDAY(CURDATE()) DAY)";
+    // SELECT create_time from hf_user_member where gid='5' and create_time >= DATE_SUB(CURDATE(),INTERVAL WEEKDAY(CURDATE()) DAY);  
+
+    $query = $CI->db->query($sql);
+    $res = $query->row_array();
+    return $res['count(*)'];
+}
+function YuesNewelectList($where,$de,$type,$table,$time){
+    $CI = &get_instance();
+    $sql = "SELECT count(*) FROM ".$table." where ".$where .$de.$type." and DATE_FORMAT( ".$time.", '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )";
+    $query = $CI->db->query($sql);
+    $res = $query->row_array();
+    return $res['count(*)'];
+}
 //f返回
 function get_invitation($id){
     $CI = &get_instance();
@@ -38,6 +112,18 @@ function get_option($name = '') {
 
     if ($value) {
         return $value['value'];
+    }
+    return NULL;
+}
+//获取配置
+function get_optionName($name = '') {
+    $CI = &get_instance();
+    $sql = "select remarks from hf_friends_system where name='$name'";
+    $query = $CI->db->query($sql);
+    $value = $query->row_array();
+
+    if ($value) {
+        return $value['remarks'];
     }
     return NULL;
 }

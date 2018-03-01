@@ -400,7 +400,7 @@
 
                                     <th>商品状态</th>
 
-                                    <th>首页展示</th>
+                                    <th>推荐类型</th>
 
                                     <th>是否特价</th>
 
@@ -500,6 +500,8 @@
                             <option value="5">HI特色</option>
                             <option value="6">HI推荐</option>
                             <option value="7">HI邀请有礼</option>
+                            <option value="8">超市优选推荐</option>
+                            <option value="9">特色馆推荐</option>
                         <%}else{%>
                             <option value="0">否</option>
                             <option value="1" <%if(list[i].recommentType == '1'){%>selected="selected"<%}%>>HI抢购</option>
@@ -509,6 +511,8 @@
                             <option value="5" <%if(list[i].recommentType == '5'){%>selected="selected"<%}%>>HI特色</option>
                             <option value="6" <%if(list[i].recommentType == '6'){%>selected="selected"<%}%>>HI推荐</option>
                             <option value="7" <%if(list[i].recommentType == '7'){%>selected="selected"<%}%>>HI邀请有礼</option>
+                            <option value="8" <%if(list[i].recommentType == '8'){%>selected="selected"<%}%>>超市优选推荐</option>
+                            <option value="9" <%if(list[i].recommentType == '9'){%>selected="selected"<%}%>>特色馆推荐</option>
                         <%}%>
 
                     </select>

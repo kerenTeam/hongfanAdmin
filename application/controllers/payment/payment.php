@@ -346,9 +346,9 @@ class Payment extends Default_Controller
                     $this->excel->getActiveSheet()->setCellValue('D' . $i, $data['mobileNo']);
 
                     $this->excel->getActiveSheet()->setCellValue('E' . $i, $data['rechargeAmount']);
-                    $paydata = json_decode($booking['payment_data'],true);
+                    // $paydata = json_decode($booking['payment_data'],true);
 
-                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $paydata['advicePrice']);
+                    $this->excel->getActiveSheet()->setCellValue('F' . $i, $booking['advicePrice']);
 
                     $this->excel->getActiveSheet()->setCellValue('G' . $i, $data['payType']);
                     if($booking['state'] == '1'){

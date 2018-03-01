@@ -60,6 +60,9 @@ h4.am-panel-title{
                                         ?>
                                         
                                         <?php switch ($val['type']) {
+                                                case '0':
+                                                   echo '首页公用banner';
+                                                    break; 
                                                 case '1':
                                                    echo '首页的banner';
                                                     break;
@@ -104,6 +107,7 @@ h4.am-panel-title{
                                                     <!-- <th class="am-text-middle">名称 </th> -->
                                                     <th class="am-text-middle">图片 </th>
                                                     <th class="am-text-middle">跳转地址 </th>
+                                                    <th class="am-text-middle">排序 </th>
                                                     <th class="am-text-middle">操作</th>
                                                 </tr>
                                             </thead>
@@ -115,6 +119,7 @@ h4.am-panel-title{
                                                     <td class="am-text-middle"><?php $num = $k+1; echo $num;?></td>
                                                     <td class="am-text-middle"><img class="imgbox" src="<?php echo $value['bannerPic'];?>"></td>
                                                     <td class="am-text-middle"><a href="javascript:;"><?php echo $value['url'];?></a></td>
+                                                    <td class="am-text-middle"><a href="javascript:;"><?php echo $value['sort'];?></a></td>
                                                     <td class="am-text-middle">
                                                         <div class="tpl-table-black-operation">
                                                              <a href="<?php echo site_url('/systemSet/systemSet/editBanner/'.$val['id'].'/'.$num);?>">

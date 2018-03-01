@@ -1,0 +1,561 @@
+<style>
+    .avatar{width: 50px;height: 50px;border-radius: 50%;}
+</style>
+
+<!-- 新分页开始 -->
+<style>
+    /**/
+    .info_box {
+        margin-bottom: 20px;
+    }
+    .info_box .inner {
+        border: 1px solid #e7e7eb;
+    }
+    .info_box .info_hd h4 {
+        font-weight: 400;
+        font-size: 14px;
+    }
+    .info_hd.append_ask {
+        position: relative;
+        z-index: 10;
+    }
+    .ui_trendgrid td {
+        height: 130px;
+        border-right: 1px solid #e7e7eb;
+    }
+    .info_box .info_hd {
+        line-height: 38px;
+        height: 38px;
+        padding: 0 20px;
+        background-color: #f4f5f9;
+        border-bottom: 1px solid #e7e7eb;
+    }
+    .ui_trendgrid_item {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    }
+    .ui_trendgrid_chart {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 1px;
+    }
+    .ui_trendgrid dl {
+    display: inline-block;
+    margin-top: 0;
+    padding: 0;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+}
+.ui_trendgrid dt {
+    padding-bottom: 12px;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+}
+.ui_trendgrid_item b {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+}
+.ui_trendgrid dd.ui_trendgrid_number {
+    text-align: center;
+    color: #676767;
+    font-size: 30px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+}
+.ui_trendgrid dd {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 18px;
+    white-space: nowrap;
+}
+.ui_trendgrid dd.ui_trendgrid_number strong {
+    font-weight: 400;
+    font-style: normal;
+}
+.ui_trendgrid_unit {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 400;
+    font-style: normal;
+}
+</style>
+<!-- 新分页结束 -->
+
+
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 会员管理 <small>
+
+             <a href="<?php site_url('/member/Member/useranalysis');?>">用户分析</a></small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+                <div class="widget-body  am-fr">
+                    <div class="info_box" id="">  
+                    <div class="inner">                
+                        <div class="info_hd append_ask">                    
+                            <h4>今日关键数据</h4>                    
+                         </div>                
+                         <div class="info_bd">                    
+                            <div class="content" id="js_keydata">
+                                <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                                    <tbody>
+                                        <tr>
+                                            <td class="first">
+                                                <div class="ui_trendgrid_item">
+                                                    <div class="ui_trendgrid_chart"></div>
+                                                    <dl>
+                                                        <dt><b>新注册用户</b></dt>
+                                                        <dd class="ui_trendgrid_number"><strong><?php echo DayNewselectList('gid','=','5','hf_user_member','create_time');?></strong><em class="ui_trendgrid_unit"></em></dd>
+                                                        <dd>昨 &nbsp;&nbsp;&nbsp;<?php echo ToDayNewselectList('gid','=','5','hf_user_member','create_time');?></dd>
+                                                        <dd>周 &nbsp;&nbsp;&nbsp;<?php echo ZhouNewselectList('gid','=','5','hf_user_member','create_time');?> </dd>
+                                                        <dd>月 &nbsp;&nbsp;&nbsp;<?php echo YuesNewelectList('gid','=','5','hf_user_member','create_time');?> </dd>
+                                                    </dl>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ui_trendgrid_item">
+                                                    <div class="ui_trendgrid_chart"></div>
+                                                    <dl>
+                                                        <dt><b>发帖量</b></dt>
+                                                        <dd class="ui_trendgrid_number"><strong><?php echo DayNewselectList('typeId','=','1','hf_friends_news','create_time');?></strong><em class="ui_trendgrid_unit"></em></dd>
+                                                        <dd>昨 &nbsp;&nbsp;&nbsp;<?php echo ToDayNewselectList('typeId','=','1','hf_friends_news','create_time');?></dd>
+                                                        <dd>周 &nbsp;&nbsp;&nbsp;<?php echo ZhouNewselectList('typeId','=','1','hf_friends_news','create_time');?> </dd>
+                                                        <dd>月 &nbsp;&nbsp;&nbsp;<?php echo YuesNewelectList('typeId','=','1','hf_friends_news','create_time');?> </dd>
+                                                    </dl>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="ui_trendgrid_item">
+                                                    <div class="ui_trendgrid_chart"></div>
+                                                    <dl>
+                                                        <dt><b>提问量</b></dt>
+                                                          <dd class="ui_trendgrid_number"><strong><?php echo DayNewselectList('typeId','=','2','hf_friends_news','create_time');?></strong><em class="ui_trendgrid_unit"></em></dd>
+                                                        <dd>昨 &nbsp;&nbsp;&nbsp;<?php echo ToDayNewselectList('typeId','=','2','hf_friends_news','create_time');?></dd>
+                                                        <dd>周 &nbsp;&nbsp;&nbsp;<?php echo ZhouNewselectList('typeId','=','2','hf_friends_news','create_time');?> </dd>
+                                                        <dd>月 &nbsp;&nbsp;&nbsp;<?php echo YuesNewelectList('typeId','=','2','hf_friends_news','create_time');?> </dd>
+                                                    </dl>
+                                                </div>
+                                            </td>
+                                            <td class="last">
+                                                <div class="ui_trendgrid_item">
+                                                    <div class="ui_trendgrid_chart"></div>
+                                                    <dl>
+                                                        <dt><b>订单量</b></dt>
+                                                        <dd class="ui_trendgrid_number"><strong><?php echo DayNewselectList('order_status','!=','1','hf_mall_order','create_time');?></strong><em class="ui_trendgrid_unit"></em></dd>
+                                                        <dd>昨 <?php echo ToDayNewselectList('order_status','!=','1','hf_mall_order','create_time');?></dd>
+                                                        <dd>周 <?php echo ZhouNewselectList('order_status','!=','1','hf_mall_order','create_time');?> </dd>
+                                                        <dd>月 <?php echo YuesNewelectList('order_status','!=','1','hf_mall_order','create_time');?></dd>
+                                                    </dl>
+                                                </div>
+                                            </td>
+                                          
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>                
+                        </div>            
+                    </div>
+                    </div>
+
+                    <div class="widget-head am-cf">
+                        <div class="widget-title  am-cf">分析查询</div>
+                    </div>
+                    <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                        <div class="am-form-group am-u-sm-6 am-u-md-6 am-u-lg-6">
+                            <div class="am-u-sm-9  am-u-end">
+                                <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                                  <p>开始日期应小于结束日期！</p>
+                                </div>
+                                <div class="am-g">
+                                  <div class="am-u-sm-6">
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2018-01-01</span>
+                                  </div>
+                                  <div class="am-u-sm-6">
+                                    <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2018-12-31</span>
+                                  </div>
+                                  <small class="red redtips">请先选择结束日期</small>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="am-form-group am-inline am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end">
+                            <button type="button" class="am-btn am-btn-secondary am-btn-xs searchOrder"><i class="am-icon-search"></i> 查询</button>
+                        </div>
+                    </form>
+
+
+
+                    <div class="am-u-sm-12">
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>注册用户</th>
+                                    <th>发帖量</th>
+                                    <th>提问量</th>
+                                    <th>订单量</th>
+                                </tr>
+                            </thead>
+                            <!-- 会员内容 -->
+
+                             <tbody id="dataList">
+                                <tr class="trClass"><td colspan="12" class="am-text-center"><img class="imgBox" src="assets/img/huanchong.gif"></td><td></td></tr>
+                                <!-- more data -->
+                            </tbody>
+                            <tbody id="">
+                                 <tr class="" >
+                                   <td>合计：</td>
+                                   <td class="userListNum"></td>
+                                   <td class="friendsListNum">45</td>
+                                   <td class="wendaListNum">79</td>
+                                   <td class="orderListNum">8</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf am-text-center pagebox">
+
+                        <div id="Pagination">
+
+                            <div class="pagination">
+
+                                <a class="prev"><i></i>上一页</a>
+
+                                <a class="current">1</a>
+
+                                <a >2</a>
+
+                                <a>3</a>
+
+                                <a>4</a>
+
+                                <span class="pagination-break">...</span>
+
+                                <a class="ep">15</a>
+
+                                <a class="next">下一页 <i></i></a>
+
+                            </div>
+
+                        </div>
+
+                        <div class="searchPage">
+
+                          <span class="page-sum">共<strong class="allPage">15</strong>页</span>
+
+                          <span class="page-go">跳转<input type="text">页</span>
+
+                          <a href="javascript:;" class="page-btn">确定</a>
+
+                        </div>
+
+                        <div claa="am-text-middle">
+
+                           <span>共<span class="allData">15</span>条数据</span> 
+
+                        </div>
+
+                    </div>
+        
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<script src="assets/laypage/laypage.js"></script>
+
+<script type="text/javascript">
+
+
+  $(function() {
+    var startDate = new Date(2014, 11, 20);
+    var endDate = new Date(2014, 11, 25);
+    var $alert = $('#my-alert');
+    $('#my-start').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() > endDate.valueOf()) {
+          $alert.find('p').text('开始日期应小于结束日期！').end().show();
+        } else {
+          $alert.hide();
+          startDate = new Date(event.date);
+          $('#my-startDate').text($('#my-start').data('date'));
+          $('#begin_date').val($('#my-start').data('date'));
+        }
+        $(this).datepicker('close');
+      });
+
+    $('#my-end').datepicker().
+      on('changeDate.datepicker.amui', function(event) {
+        if (event.date.valueOf() < startDate.valueOf()) {
+          $alert.find('p').text('结束日期应大于开始日期！').end().show();
+        } else {
+          $alert.hide();
+          endDate = new Date(event.date);
+          $('#my-endDate').text($('#my-end').data('date'));
+          $('#end_date').val($('#my-end').data('date'));
+        }
+        $(this).datepicker('close');
+      }); 
+  });
+
+
+
+   var flag=0,current_page=0,total_page=0,pageflag = 1,storageFlag=1,priceFlag=1,timeFlag=1;
+
+    var $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge')) || 0, $isEnergyCharge = parseInt(sessionStorage.getItem('isEnergyCharge')) || 0, totalNum = 0;
+
+    //点击前往某一页的函数
+
+    function go_to_page(page_num){
+
+        $('.page_link').removeClass('active_page');
+
+        $('.page_link').eq(page_num).addClass('active_page');
+
+        $("#dataList").children('tr').css("display","none");
+
+        var start_page=parseInt(15)*parseInt(page_num);
+
+        var end_page=parseInt(15)*parseInt(page_num+1);
+
+        $('#dataList').children('tr').slice(start_page,end_page).css('display','');
+
+        current_page = page_num;
+
+        sessionStorage.setItem('EnergyCharge', current_page);
+
+        $EnergyCharge = parseInt(sessionStorage.getItem('EnergyCharge'));
+
+        
+
+    }
+
+
+
+    //点击上一页的函数
+
+    function previous(){
+
+        if($('.current').length>1) {
+
+            new_page = parseInt($('.current').eq(0).html()) - 2;
+
+        }else {
+
+            new_page = parseInt($('.current').html()) - 2;
+
+        }
+
+        if(new_page >= 0) {
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+
+
+    //点击下一页的函数
+
+    function next(argu){
+
+        if($('.current').length>1) {
+
+            new_page = parseInt($('.current').eq(1).html());
+
+        }else {
+
+            new_page = parseInt($('.current').html());
+
+        }
+
+        if(new_page < argu){
+
+            go_to_page(new_page);
+
+        }
+
+    }
+
+    //异步刷新的ajax请求   
+ 
+    function getList(dataurl,data){
+
+        $.ajax({
+
+            type:'post',
+
+            url:dataurl,
+
+            data: data,
+
+            success: function(result){ 
+               
+                var data = JSON.parse(result);
+                var res = data.list;
+
+                if(res != 2 && res != 3){
+                    $(".userListNum").text(data.userListNum);
+                    $(".friendsListNum").text(data.friendsNum);
+                    $(".wendaListNum").text(data.wendaNum);
+                    $(".orderListNum").text(data.orderNum);
+
+
+                    var listData = ''; //每页出现的数量
+
+                    totalNum = res.length;
+
+                    for(var i = 0; i < res.length; i++){
+
+        
+                            listData+= template('dataModal',res[i]);    
+
+                       
+                    }
+
+                    total_page = Math.ceil(totalNum/15); //得到总页数
+
+                    document.getElementById('dataList').innerHTML = listData;
+
+                    $('.allData').html(totalNum);
+
+                    $('.pagebox').css('display', 'block');
+
+                    if(total_page <= 1) {
+
+                        $('#Pagination').css('display', 'none');
+
+                        $('.searchPage').css('display', 'none');
+
+                    } else {
+                        $('#Pagination').css('display', 'block');
+                        $('.searchPage').css('display', 'block');
+
+                        if(pageflag) {
+
+                            var opts={};opts.current_page = $EnergyCharge;
+
+                            $("#Pagination").pagination(total_page, opts);go_to_page($EnergyCharge);
+
+                            pageflag = 0;
+
+                        } else {
+
+                            $("#Pagination").pagination(total_page);
+
+                            go_to_page(0);
+
+                            
+
+                        }
+
+                        if(total_page < 5) {
+
+                            $('.searchPage').css('display', 'none');
+
+                        }    
+
+                    }          
+
+                }else{
+
+                    $('#dataList').find('tr').remove();
+
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无信息！</p></td></tr>').appendTo('#dataList');
+
+                    $('.pagebox').css('display', 'none');
+
+                }
+
+
+
+                
+
+            },
+
+            error:function(xhr,type,errorThrown){
+
+                alert("网络状况不佳，请稍后重试！");
+
+                $('#dataList').find('tr').remove();
+
+                $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无信息！</p></td></tr>').appendTo('#dataList');
+
+                $('.pagebox').css('display', 'none');
+
+            }
+
+        });
+
+    }
+//获取日期
+function GetDateStr(AddDayCount) {
+    var dd = new Date();
+    dd.setDate(dd.getDate()+AddDayCount);//获取AddDayCount天后的日期
+    var y = dd.getFullYear();
+    var m = dd.getMonth()+1;//获取当前月份的日期
+    var d = dd.getDate();
+    return y+"-"+m+"-"+d;
+}
+$(document).ready(function(){
+        var endtime = GetDateStr(-1);time=GetDateStr(-7);
+
+        // console.log(time,endtime);
+        getList('<?php echo site_url('/member/Member/DateList');?>','time='+time+'&endtime='+endtime); 
+        $('.searchOrder').click(function(){
+            var  begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+            getList('<?php echo site_url('/member/Member/DateList');?>','time='+begin_date+'&endtime='+end_date); 
+        
+        });
+})
+</script>
+
+<script type="text/html" id="dataModal">   
+    <tr class="trClass" >
+       <td><%= Ymdate;%></td>
+       <td><%= userNum;%></td>
+       <td><%= friendsNum;%></td>
+       <td><%= wenDaNum;%></td>
+       <td><%= orderNum;%></td>
+    </tr>
+   
+</script>
+
+
+
+
+
+

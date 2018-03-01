@@ -249,9 +249,9 @@
 
        // console.log(fileObj.name.split('.')[1]);
 
-        var FileController="<?php echo site_url('/shop/Shop/impolt_store');?>";//上传文件的后台地址
+        var FileController="<?php echo site_url('/game/Game/Import_withdrawal');?>";//上传文件的后台地址
 
-        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx'){
+        if(fileObj.name.split('.')[1]=='xml' || fileObj.name.split('.')[1]=='xlsx' || fileObj.name.split('.')[1]=='xls'){
 
            var form=new FormData();
 
@@ -267,7 +267,7 @@
 
                 alert("导入成功！");
 
-                location.reload();
+                window.location.reload();
             };
 
             xhr.send(form); 

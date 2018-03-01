@@ -171,15 +171,13 @@ padding: 5px 6px!important;
                             </div>
                             <div class="widget-body  am-fr">
                                 <form class="am-form tpl-form-border-form tpl-form-border-br" action="<?php echo site_url('/friends/Friends/editReward');?>" method="post">
-                                    <div class="am-form-group">
+                                    <div class="am-form-group am-u-sm-5">
                                         <label for="user-name" class="am-u-sm-3 am-form-label">HI友圈发帖</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" class="tpl-form-input" id="ptPrice" name="dynamicNum" value="<?php echo get_option('dynamicNum');?>" placeholder="请输入大于0的整数" ><small>条/天</small>
                                         </div>
                                     </div>
-    
-
-                                    <div class="am-form-group">
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">HI友圈帖子奖励</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="dynamicPrice" value="<?php echo get_option('dynamicPrice');?>" >
@@ -187,7 +185,7 @@ padding: 5px 6px!important;
                                         </div>
                                     </div>
    
-                                    <div class="am-form-group">
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">HI友圈回复</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="dynamicCom" value="<?php echo get_option('dynamicCom');?>" >
@@ -195,7 +193,7 @@ padding: 5px 6px!important;
                                         </div>
                                     </div>
 
-                                    <div class="am-form-group">
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">HI友圈回复奖励</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="dynamicComNum" value="<?php echo get_option('dynamicComNum');?>" >
@@ -203,31 +201,35 @@ padding: 5px 6px!important;
                                         </div>
                                     </div> 
 
-                                    <div class="am-form-group">
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">问答提问</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="questionNum" value="<?php echo get_option('questionNum');?>" >
                                             <small>条/天</small>
                                         </div>
-                                    </div>   <div class="am-form-group">
+                                    </div>   
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">问答题问奖励</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="questionPrice" value="<?php echo get_option('questionPrice');?>" >
                                             <small>HI豆/条</small>
                                         </div>
-                                    </div>   <div class="am-form-group">
+                                    </div>   
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">问答提问回答</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="questionComNum" value="<?php echo get_option('questionComNum');?>" >
                                             <small>条/天</small>
                                         </div>
-                                    </div>   <div class="am-form-group">
+                                    </div>   
+                                    <div class="am-form-group am-u-sm-5">
                                         <label class="am-u-sm-3 am-form-label">问答提问回答奖励</label>
                                         <div class="am-u-sm-9">
                                             <input type="number" placeholder="请输入大于0的整数" name="questionCom" value="<?php echo get_option('questionCom');?>" >
                                             <small>HI豆/条</small>
                                         </div>
                                     </div> 
+                                    
                                    
                                     <div class="am-form-group">
                                         <div class="am-u-sm-9 am-u-sm-push-3">
@@ -236,7 +238,91 @@ padding: 5px 6px!important;
                                         </div>
                                     </div>
                                 </form>
- 
+                            </div>
+                            <div class="widget-head am-cf">
+                                <div class="widget-title  am-cf">完成资料奖励设置</div>
+                            </div>
+                            <div class="widget-body  am-fr">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" action="<?php echo site_url('/friends/Friends/editDataReward');?>" method="post">
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">完成昵称</label>
+                                        <div class="am-u-sm-9">
+                                            <input type="number" placeholder="请输入大于0的整数" name="HI-nickName[]" value="<?php echo get_option('HI-nickName');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-nickName[]" value="<?php echo get_optionName('HI-nickName');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">个性签名</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-explain[]" value="<?php echo get_option('HI-explain');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-explain[]" value="<?php echo get_optionName('HI-explain');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div> 
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">性别</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-gender[]" value="<?php echo get_option('HI-gender');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-gender[]" value="<?php echo get_optionName('HI-gender');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div> 
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">星座</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-startMap[]" value="<?php echo get_option('HI-startMap');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-startMap[]" value="<?php echo get_optionName('HI-startMap');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div> 
+                                     <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">年龄</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-age[]" value="<?php echo get_option('HI-age');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-age[]" value="<?php echo get_optionName('HI-age');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div>  
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">头像</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-avatar[]" value="<?php echo get_option('HI-avatar');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-avatar[]" value="<?php echo get_optionName('HI-avatar');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div> 
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">背景</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="number" placeholder="请输入大于0的整数" name="HI-bgi[]" value="<?php echo get_option('HI-bgi');?>" >
+                                            <small>奖励HI豆</small>
+                                             <input type="text" placeholder="请输入提示消息" name="HI-bgi[]" value="<?php echo get_optionName('HI-bgi');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div>  
+                                    <div class="am-form-group am-u-sm-5">
+                                        <label class="am-u-sm-3 am-form-label">所有任务</label>
+                                        <div class="am-u-sm-9">
+                                              <input type="hidden" placeholder="请输入大于0的整数" name="HI-All[]" value="0" >
+                                            <!-- <small>奖励HI豆</small> -->
+                                             <input type="text" placeholder="请输入提示消息" name="HI-All[]" value="<?php echo get_optionName('HI-All');?>" >
+                                            <small>提示信息</small>
+                                        </div>
+                                    </div> 
+                                     <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            <button type="reset" class="am-btn">取消</button>
+                                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

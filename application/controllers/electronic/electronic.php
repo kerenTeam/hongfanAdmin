@@ -788,7 +788,12 @@ $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.stor
             $city = $_POST['city'];
 
             if(!empty($store_id) && empty($city)){
-                $list = $this->Activity_model->select_where('hf_shop_coupon','storeid',$store_id);
+
+                // $list = $this->Activity_model->select_where('hf_shop_coupon','storeid',$store_id);
+
+                $query = $this->db->like('storeid',$store_id,'both')->order_by('id','desc')->get('hf_shop_coupon');
+                $list = $query->result_array();
+
             }else if(empty($store_id) && !empty($city)){
                 if($city == '5'){
                     $city ='0';
@@ -1964,6 +1969,16 @@ $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.stor
         if($_POST){
             $coupon = $this->input->post('couponid');
             $state = $this->input->post('state');
+            $time = $this->input->post('begin_time');
+            $endtime = $this->input->post('end_time');
+
+            if(!empty($time)){
+                $t = $time.' 00:00:00';
+                $e = $endtime.' 23:59:59';
+            }else{
+                $t = '';
+                $e = '';
+            }
 
             if(!empty($coupon) && empty($state)){
                 //获取卡卷信息
@@ -1986,6 +2001,7 @@ $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.stor
                 $query = $this->db->order_by('id','desc')->get('hf_shop_coupon');
                 $res = $query->result_array();
             }
+
             if(!empty($res)){
                     $this->load->library('excel');
 
@@ -2054,12 +2070,24 @@ $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.stor
                         $this->excel->getActiveSheet()->setCellValue('D' . $i, $booking['title']);
                         //
                         $storeid = json_decode($booking['storeid'],true);
-                        if($storeid == '0'){
+                        if($storeid[0] == '0'){
                             $this->excel->getActiveSheet()->setCellValue('E' . $i, '所有商家');
                         }else{
-                            $this->excel->getActiveSheet()->setCellValue('E' . $i, get_store_name($storeid['0']));
+        
+                            if(count($storeid) > '1'){
+                                foreach ($storeid as $key => $v) {
+                                    // var_dump($v);echo '<br>';
+                                    $storename[$key] = get_store_name($v);
+                                }
+                                $name = implode(',',$storename);
 
+                            }else{
+                                $name = get_store_name($storeid[0]);
+                            }
+                          
+                            $this->excel->getActiveSheet()->setCellValue('E' . $i, $name);
                         }
+                       
                         //类型
                         switch ($booking['typeid']) {
                             case '1':
@@ -2113,22 +2141,35 @@ $this->db->select('a.*,b.title,b.name,b.id,c.nickname,e.order_id,e.seller,f.stor
                         }
                         $this->excel->getActiveSheet()->setCellValue('J' . $i, $booking['price']);
                         $this->excel->getActiveSheet()->setCellValue('K' . $i, $booking['denomination']);
+
+                        //时间返回
+                        if(!empty($t)){
+                               //领取
+                            $ling = count($this->Activity_model->receiveDatecoupon($booking['id'],$t,$e));
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $ling);
+
+                            //获取已使用
+                            $receive =  count($this->Activity_model->receiveDate($booking['id'],'0',$t,$e));
+                            $this->excel->getActiveSheet()->setCellValue('N' . $i, $receive);
+                            //核销
+                            $he = count($this->Activity_model->get_search_after($booking['id'],$t,$e));
+                            $this->excel->getActiveSheet()->setCellValue('M' . $i, $he);
+
+                        }else{
+                            //领取
+                            $ling = count($this->Activity_model->receive_coupon($booking['id']));
+                            $this->excel->getActiveSheet()->setCellValue('L' . $i, $ling);
+
+                            //获取已使用
+                            $receive =  count($this->Activity_model->search_receive($booking['id'],'0'));
+                            $this->excel->getActiveSheet()->setCellValue('N' . $i, $receive);
+                            //核销
+                            $he = count($this->Activity_model->ret_after_list($booking['id']));
+                            $this->excel->getActiveSheet()->setCellValue('M' . $i, $he);
+                        }
                        
-                        //领取
-                        $ling = count($this->Activity_model->receive_coupon($booking['id']));
-                        $this->excel->getActiveSheet()->setCellValue('L' . $i, $ling);
-
-                        //获取已使用
-                        $receive =  count($this->Activity_model->search_receive($booking['id'],'0'));
-                        $this->excel->getActiveSheet()->setCellValue('M' . $i, $receive);
-                        //核销
-                        $he = count($this->Activity_model->ret_after_list($booking['id']));
-                        $this->excel->getActiveSheet()->setCellValue('N' . $i, $he);
-
-                        //为使用
+                        // 为使用
                         $this->excel->getActiveSheet()->setCellValue('O' . $i, $ling-$receive);
-
-                    
                     }
                     // exit;
 

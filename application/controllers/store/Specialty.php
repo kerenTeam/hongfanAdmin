@@ -437,6 +437,24 @@ class Specialty extends Default_Controller {
 
         $this->load->view('template.html',$data);
     }
+    //超市优选推荐
+    function Supermarket(){
+        $data['type'] = '8';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','Supermarket');
+
+        $this->load->view('template.html',$data);
+    }
+    //特色馆选推荐
+    function characteristic(){
+        $data['type'] = '9';
+        $data['page'] = $this->view_recommendGoods;
+
+        $data['menu'] = array('store','characteristic');
+
+        $this->load->view('template.html',$data);
+    }
 
     //修改商品排序
 
@@ -567,6 +585,8 @@ class Specialty extends Default_Controller {
             echo "2";
         }
     }
+
+
 
 
 

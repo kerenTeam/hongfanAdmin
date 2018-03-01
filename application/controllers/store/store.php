@@ -110,6 +110,10 @@ class Store extends Default_Controller {
             $data['saleid'] = $id;
 
         }
+        if(!isset($_SESSION['goodNum'])){
+            $_SESSION['goodNum'] = '0';
+        }
+
         $data['store'] = $this->MallShop_model->ret_store_type('2','2');
 
         $data['cates'] = $this->MallShop_model->get_mall_cates();
@@ -382,9 +386,9 @@ class Store extends Default_Controller {
 
             $start = $this->input->post('start');
             $page = $this->input->post('count');
-            if($start != '0'){
+            // if($start != '0'){
                 $_SESSION['goodNum'] = $start;
-            }
+            // }
 
             $list = search_goods($diff,$cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory);
             $listpage = search_goods_page($diff,$cateid,$state,$sear,$startPrice,$endPrice,$startRepertory,$endRepertory,$page,$start);
@@ -1511,11 +1515,12 @@ class Store extends Default_Controller {
             //获取dingdan详情
             $orderInfo = $this->MallShop_model->get_order_info($orderid);
             $uuorder = $this->MallShop_model->retUuidOrder($orderInfo['order_UUID'],$orderid);
+        
 
             if($this->MallShop_model->edit_order_state($orderid,$arr)){
                 $coupon = json_decode($orderInfo['PriceCalculation'],true);
                 if(empty($uuorder)){
-                    $data['state']='1';
+                    $data['user_coupon_state']='1';
                     $this->db->where('user_coupon_id',$coupon['coupon'])->update('hf_user_coupon',$data);
                 }
                 //修改卷的状态
@@ -2320,15 +2325,12 @@ class Store extends Default_Controller {
                 foreach($list as $k=>$book){
                     $i++;
                     $goods = json_decode($book['goods_data'],true);
-                    // $this->excel->getActiveSheet()->mergeCells('A3:A17');
-
-
-                    // echo "<pre>";
-                    // var_dump($goods);
-                    // exit;
                     // var_dump(count($goods['goods_Data']));
+                    // var_dump($book['order_id']);
+                    // echo "<hr>";
+                  
                     if(count($goods['goods_Data']) >'1'){
-                        $a = $i+1;
+                        $a = $i+count($goods['goods_Data'])-1;
                         $this->excel->getActiveSheet()->mergeCells('A'.$i.':A'.$a);      //合并
                         $this->excel->getActiveSheet()->mergeCells('B'.$i.':B'.$a);      //合并
                         $this->excel->getActiveSheet()->mergeCells('C'.$i.':C'.$a);      //合并
@@ -2466,8 +2468,10 @@ class Store extends Default_Controller {
                         $payData = $this->MallShop_model->ret_order_paydata($book['order_UUID']);
 
                         $this->excel->getActiveSheet()->setCellValue('U' . $i, $payData['payType']);
+                        if(!empty($book['pay_time'])){
+                           $this->excel->getActiveSheet()->setCellValue('V' . $i, date('Y-m-d H:i:s', $book['pay_time']/1000));
+                        } 
 
-                        $this->excel->getActiveSheet()->setCellValue('V' . $i, $book['pay_time']);
                         $this->excel->getActiveSheet()->setCellValue('W' . $i, $goods['stores']['points']);
                         $this->excel->getActiveSheet()->setCellValue('X' . $i, $goods['postAge']['postage']);
                         $address= json_decode($book['buyer_address'],true);
@@ -2475,9 +2479,16 @@ class Store extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('Z' . $i, $address['phone']);
                         $this->excel->getActiveSheet()->setCellValue('AA' . $i, $address['person']);
                         $this->excel->getActiveSheet()->setCellValue('AB' . $i, $book['updatetime']);
-                        $this->excel->getActiveSheet()->setCellValue('AC' . $i, $book['deliveryTime']);
-                        $this->excel->getActiveSheet()->setCellValue('AD' . $i, $book['returnPriceTime']);
-                        $this->excel->getActiveSheet()->setCellValue('AF' . $i, $book['CancellationOfOrder']);
+
+                        if(!empty($book['deliveryTime'])){
+                            $this->excel->getActiveSheet()->setCellValue('AC' . $i, date('Y-m-d H:i:s', $book['deliveryTime']/1000));
+                        } 
+                        if(!empty($book['returnPriceTime'])){
+                            $this->excel->getActiveSheet()->setCellValue('AD' . $i, date('Y-m-d H:i:s', $book['returnPriceTime']/1000));
+                        } 
+                        if(!empty($book['CancellationOfOrder'])){
+                            $this->excel->getActiveSheet()->setCellValue('AF' . $i, date('Y-m-d H:i:s', $book['CancellationOfOrder']/1000));
+                        }
 
                         
                         $a = $i;
@@ -2664,18 +2675,25 @@ class Store extends Default_Controller {
                         $this->excel->getActiveSheet()->setCellValue('S' . $i, $coupon_id);
                         $this->excel->getActiveSheet()->setCellValue('T' . $i, $coupon_name);
                         $this->excel->getActiveSheet()->setCellValue('U' . $i, $payData['payType']);
-                        $this->excel->getActiveSheet()->setCellValue('V' . $i, $book['pay_time']);
-                        $this->excel->getActiveSheet()->setCellValue('W' . $i, $goods['stores']['points']);
+                        if(!empty($book['pay_time'])){
+                           $this->excel->getActiveSheet()->setCellValue('V' . $i, date('Y-m-d H:i:s', $book['pay_time']/1000));
+                        }                         $this->excel->getActiveSheet()->setCellValue('W' . $i, $goods['stores']['points']);
                         $this->excel->getActiveSheet()->setCellValue('X' . $i, $goods['postAge']['postage']);
                         $address= json_decode($book['buyer_address'],true);
                         $this->excel->getActiveSheet()->setCellValue('Y' . $i,  $address['province'].$address['city'].$address['area'].$address['address']);
                         $this->excel->getActiveSheet()->setCellValue('Z' . $i, $address['phone']);
                         $this->excel->getActiveSheet()->setCellValue('AA' . $i, $address['person']);
                         $this->excel->getActiveSheet()->setCellValue('AB' . $i, $book['updatetime']);
-                        $this->excel->getActiveSheet()->setCellValue('AC' . $i, $book['deliveryTime']);
-                        $this->excel->getActiveSheet()->setCellValue('AD' . $i, $book['returnPriceTime']);
-                        $this->excel->getActiveSheet()->setCellValue('AF' . $i, $book['CancellationOfOrder']);
-
+                        if(!empty($book['deliveryTime'])){
+                            $this->excel->getActiveSheet()->setCellValue('AC' . $i, date('Y-m-d H:i:s', $book['deliveryTime']/1000));
+                        } 
+                        if(!empty($book['returnPriceTime'])){
+                            $this->excel->getActiveSheet()->setCellValue('AD' . $i, date('Y-m-d H:i:s', $book['returnPriceTime']/1000));
+                        } 
+                        if(!empty($book['CancellationOfOrder'])){
+                            $this->excel->getActiveSheet()->setCellValue('AF' . $i, date('Y-m-d H:i:s', $book['CancellationOfOrder']/1000));
+                        }
+                        
                     }
                   
 

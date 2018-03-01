@@ -2110,7 +2110,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2126,7 +2126,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2142,7 +2142,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2159,7 +2159,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.order_type',$type)->where('a.order_id',$orderid)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.order_type',$type)->like('a.order_id',$orderid,'both')->or_like('a.order_UUID',$orderid,'both')->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
       }else
@@ -2174,7 +2174,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2194,7 +2194,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2210,7 +2210,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2226,7 +2226,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2244,7 +2244,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2260,7 +2260,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2276,7 +2276,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2296,7 +2296,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2312,7 +2312,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2328,7 +2328,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2344,7 +2344,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2362,7 +2362,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->get();
 
             $res = $query->result_array();
 
@@ -2378,7 +2378,7 @@ function order_search($state,$buyer,$seller,$time,$endtime,$type,$orderid){
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->order_by('a.create_time','desc')->where('order_type !=','0')->limit('500')->get();
+            $query = $CI->db->order_by('a.pay_time desc,a.create_time desc')->where('order_type !=','0')->limit('500')->get();
 
             $res = $query->result_array();
 
@@ -2403,7 +2403,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2419,7 +2419,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('a.buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2435,7 +2435,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2452,7 +2452,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.order_type',$type)->where('a.order_id',$orderid)->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('a.order_type',$type)->like('a.order_id',$orderid,'both')->or_like('a.order_UUID',$orderid,'both')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
       }else
@@ -2467,7 +2467,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2487,7 +2487,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2503,7 +2503,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2519,7 +2519,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where("order_status",$state)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2537,7 +2537,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2553,7 +2553,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2569,7 +2569,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2589,7 +2589,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('buyer',$buyer)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2605,7 +2605,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2621,7 +2621,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2637,7 +2637,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2655,7 +2655,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
 
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
 
-            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.create_time','desc')->limit($page,$size)->get();
+            $query = $CI->db->where('order_status',$state)->where('seller',$seller)->where('buyer',$buyer)->where('a.create_time >',$time)->where('a.create_time <',$endtime)->where('order_type !=','0')->order_by('a.pay_time desc,a.create_time desc')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -2667,7 +2667,7 @@ function order_search_page($state,$buyer,$seller,$time,$endtime,$type,$orderid,$
             $CI->db->from('hf_mall_order as a');
             $CI->db->join('hf_shop_store as b','a.seller = b.store_id','left');
             $CI->db->join('hf_user_member as c','a.buyer = c.user_id','left');
-            $query = $CI->db->order_by('a.create_time','desc')->where('order_type !=','0')->limit($page,$size)->get();
+            $query = $CI->db->order_by('a.pay_time desc,a.create_time desc')->where('order_type !=','0')->limit($page,$size)->get();
 
             $res = $query->result_array();
 
@@ -3374,7 +3374,7 @@ function store_order_list($storeid,$time,$endtime,$type){
 
       if(empty($time) && empty($type)){
 
-            if($storeid == '0'){
+            if($storeid == ''){
 
                 $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_type` != '0'  ORDER BY `create_time` DESC";
 
@@ -3392,8 +3392,10 @@ function store_order_list($storeid,$time,$endtime,$type){
             }
 
       }else if(!empty($time) && empty($type)){
+           
 
-            if($storeid == '0'){
+            if($storeid == ''){
+                // echo "2";
 
                 $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_type` != '0' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
 
@@ -3415,7 +3417,7 @@ function store_order_list($storeid,$time,$endtime,$type){
 
       }else if(empty($time) && !empty($type)){
 
-            if($storeid == '0'){
+            if($storeid == ''){
 
                 $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_type` != '0' AND `a`.`order_type` = '$type' ORDER BY `create_time` DESC";
 
@@ -3434,7 +3436,7 @@ function store_order_list($storeid,$time,$endtime,$type){
             }
       }else if(!empty($time) && !empty($type)){
 
-            if($storeid == '0'){
+            if($storeid == ''){
 
                 $sql = "SELECT `a`.*, `b`.`store_name` FROM `hf_mall_order` as `a` LEFT JOIN `hf_shop_store` as `b` ON `a`.`seller` = `b`.`store_id` WHERE `order_type` != '0' AND `a`.`order_type` = '$type' AND `a`.`create_time` >= '$time' AND `a`.`create_time` <= '$endtime' ORDER BY `create_time` DESC";
 

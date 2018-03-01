@@ -172,11 +172,10 @@ td div.am-u-sm-12 {
                             <div class="am-modal-bd">
                                 <form class="am-form tpl-form-line-form" action="<?php echo site_url('/store/Store/Import_mollOrder');?>" method="post">
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
-                                        <label class="am-u-sm-2 am-form-label">商家<span class="red">*</span>：</label>
+                                        <label class="am-u-sm-2 am-form-label">商家：</label>
                                         <div class="am-u-sm-9 am-u-end">
                                             <select id="mollseller" name="mollseller" data-am-selected="{searchBox: 1}">
                                                 <option value="">请选择/搜索</option>
-                                                <option value="0">全部订单</option>
                                                 <?php foreach($store as $val): ?>
                                                 <option value="<?php echo $val['store_id']?>"><?php echo $val['store_name']?></option>
                                                 <?php endforeach;?>
@@ -184,7 +183,7 @@ td div.am-u-sm-12 {
                                         </div>
                                     </div>
                                     <div class="am-form-group am-cf" style="min-height: 100px;">
-                                        <label class="am-u-sm-2 am-form-label">商品类别<span class="red">*</span>：</label>
+                                        <label class="am-u-sm-2 am-form-label">商品类别：</label>
                                         <div class="am-u-sm-9 am-u-end">
                                             <select id="mollseller" name="order_type">
                                                 <option value="0">全部类别</option>
@@ -488,6 +487,7 @@ function otherFunction() {
                 url:'<?php echo site_url('/store/Store/refund_price');?>',
                 data: 'order_id='+dataId,
                 success: function(data){
+                    // console.log(data);
                   if(data == 1) {
                     alert('操作成功！');
                     window.location.reload(); 

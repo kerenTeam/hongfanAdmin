@@ -1284,9 +1284,13 @@ class Finance extends Default_Controller {
 
                             $n[$i][$key]= $value['nums'];
 
-                            $p[$i][$key]= $value['price'];
+                            $p[$i][$key]= $value['price']+$value['Floating_price'];
+                            // $f[$i][$key]= ;
+                          
 
                         }
+
+
 
                         $good = implode('|',$k[$i]);
 
@@ -1295,6 +1299,10 @@ class Finance extends Default_Controller {
                         $num = implode('|',$n[$i]);
 
                         $price = implode('|',$p[$i]);
+                        // var_dump($book['order_id']);
+                        // var_dump($p[$i]);
+                        // var_dump($price);
+                        // echo "<hr>";
 
                         //佣金
 
@@ -1596,15 +1604,16 @@ class Finance extends Default_Controller {
                     'G' => '单价',
                     'H' => '数量',
                     'I' => '总价',
-                  
                     'J' => '邮资',
                     'K' => '积分抵用金额',
                     'L' => '优惠卷抵用金额',
-                    'M' => '商家修改价格',
-                    'N' => '商家修改价格原因',
-                    'O' => '支付金额',
-                    'P' => '收款金额',
-                    'Q' => '支付方式',
+                    'M' => '商家ID',
+                    'N' => '商家名称',
+                    'O' => '商家修改价格',
+                    'P' => '商家修改价格原因',
+                    'Q' => '支付金额',
+                    'R' => '收款金额',
+                    'S' => '支付方式',
             );
             //12
             foreach ($arr_title as $key => $value) {
@@ -1714,18 +1723,20 @@ class Finance extends Default_Controller {
                     }
                     $this->excel->getActiveSheet()->setCellValue('K' . $i, $nowIntergal);
                     $this->excel->getActiveSheet()->setCellValue('L' . $i, $coupon_amount);
-                    $this->excel->getActiveSheet()->setCellValue('M' . $i, $book['fee']);
-                    $this->excel->getActiveSheet()->setCellValue('N' . $i, $book['fee_name']);
+                    $this->excel->getActiveSheet()->setCellValue('M' . $i, $goods['stores']['store_id']);
+                    $this->excel->getActiveSheet()->setCellValue('N' . $i, $goods['stores']['store_name']);
+                    $this->excel->getActiveSheet()->setCellValue('O' . $i, $book['fee']);
+                    $this->excel->getActiveSheet()->setCellValue('P' . $i, $book['fee_name']);
                     if($zhi < '0'){
-                        $this->excel->getActiveSheet()->setCellValue('O' . $i, '0.01');
+                        $this->excel->getActiveSheet()->setCellValue('Q' . $i, '0.01');
 
                     }else{
-                         $this->excel->getActiveSheet()->setCellValue('O' . $i, round($zhi,2));
+                         $this->excel->getActiveSheet()->setCellValue('Q' . $i, round($zhi,2));
 
                     }
                     
-                    $this->excel->getActiveSheet()->setCellValue('P' . $i, $or['orderPrice']);
-                    $this->excel->getActiveSheet()->setCellValue('Q' . $i, $book['payType']);
+                    $this->excel->getActiveSheet()->setCellValue('R' . $i, $or['orderPrice']);
+                    $this->excel->getActiveSheet()->setCellValue('S' . $i, $book['payType']);
                   
                     if(!empty($or)){
                         if($zhi < '0'){

@@ -1350,6 +1350,8 @@ class SystemSet extends Default_Controller {
 
             }
 
+
+
             unset($data['id']);
 
              $a[] = $data;
@@ -1359,11 +1361,14 @@ class SystemSet extends Default_Controller {
 
             $banner = $this->System_model->get_banner($id);
 
+
             if(!empty($banner['banner'])){
 
                 $bannerPic = json_decode($banner['banner'],true);
 
-                 $shu = array_merge($bannerPic,$a);
+                $shu = array_merge($bannerPic,$a);
+                array_multisort(array_column($shu,'sort'),SORT_ASC,$shu);
+
 
                  $json = json_encode($shu);
 
@@ -1445,9 +1450,9 @@ class SystemSet extends Default_Controller {
 
         if($_POST){
 
-             $id = $this->input->post('id');
+            $id = $this->input->post('id');
 
-             $num = $this->input->post('num');
+            $num = $this->input->post('num');
 
             $data = $this->input->post();
 
@@ -1510,13 +1515,9 @@ class SystemSet extends Default_Controller {
                 $bannerPic = json_decode($banner['banner'],true);
 
                 $bannerPic[$num-1] = $data;
-
-               // var_dump($bannerPic);
-
-                  $json = json_encode($bannerPic);
-
-                  $arr = array('banner'=>$json);
-
+                $a = array_multisort(array_column($bannerPic,'sort'),SORT_ASC,$bannerPic);
+                $json = json_encode($bannerPic);
+                $arr = array('banner'=>$json);
                 if($this->System_model->edit_banner($id,$arr)){
 
                     $log = array(

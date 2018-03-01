@@ -383,9 +383,17 @@ class Activity_model extends CI_Model
         $this->db->from('hf_user_coupon as a');
         $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
         $this->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
-
-
         $query = $this->db->where('a.store_coupon_id',$id)->order_by('a.user_coupon_id','desc')->get();
+        return $query->result_array();
+    }
+
+    //返回时间领取记录
+    function receiveDatecoupon($id,$t,$e){
+        $this->db->select('a.*,c.nickname,c.phone,b.name,b.title,b.price');
+        $this->db->from('hf_user_coupon as a');
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $this->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $this->db->where('a.store_coupon_id',$id)->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->order_by('a.user_coupon_id','desc')->get();
         return $query->result_array();
     }
     //搜索领取记录
@@ -397,6 +405,17 @@ class Activity_model extends CI_Model
         $query = $this->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->order_by('a.user_coupon_id','desc')->get();
         return $query->result_array();
     }
+    //根据时间返回领取纪录
+    function receiveDate($id,$state,$t,$e){
+        $this->db->select('a.*,c.nickname,c.phone,b.name,b.title,b.price');
+        $this->db->from('hf_user_coupon as a');
+        $this->db->join('hf_user_member as c','a.userid = c.user_id','left');
+        $this->db->join('hf_shop_coupon as b','a.store_coupon_id = b.id','left');
+        $query = $this->db->where('a.store_coupon_id',$id)->where('a.user_coupon_state',$state)->where('a.standardTime >=',$t)->where('a.standardTime <=',$e)->order_by('a.user_coupon_id','desc')->get();
+        return $query->result_array();
+    }
+
+
     //修改领取状态
     function updataCoupon($id,$data){
         return $this->db->where('user_coupon_id',$id)->update('hf_user_coupon',$data);

@@ -149,6 +149,18 @@ class Member extends Default_Controller {
 
     //编辑处理
     function edit_userinfo(){
+        $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
         if($_POST){
             $data = $this->input->post();
             if(!empty(trim($data['password']))){
@@ -179,7 +191,18 @@ class Member extends Default_Controller {
     }
     //删除会员
     function delMember(){
-	
+	    $q= $this->uri->uri_string();
+        $url = preg_replace('|[0-9]+|','',$q);
+        if(substr($url,-1) == '/'){
+            $url = substr($url,0,-1);
+        }
+            // var_dump($url);
+        $user_power = json_decode($_SESSION['user_power'],TRUE);
+
+        if(!deep_in_array($url,$user_power)){
+            echo "<script>alert('您暂无权限执行此操作！请联系系统管理员。');window.history.go(-1);</script>";
+                    exit;
+        }   
         $id = intval($this->uri->segment(4));
         if($id == 0){
             $this->load->view('404.html');
@@ -706,6 +729,61 @@ class Member extends Default_Controller {
 
 
             }
+        }
+    }
+
+    //用户分析
+    function useranalysis(){
+
+        //获取注册用户
+        // $list = YueselectList("hf_user_member",'create_time');
+        // $list = ToDayselectList("hf_user_member",'create_time');
+        // var_dump($list);
+        // exit;
+        $startTime = date("Y-m-d",strtotime("-1 day"));
+        $endTime = date("Y-m-d",strtotime("-1 day"));
+        // var_dump($startTime);
+        // exit;
+
+        $data['page'] = 'member/useranalysis.html';
+        $data['menu'] = array('member','useranalysis');
+        
+       // var_dump($_SESSION['userAnaly']);
+        $this->load->view('template.html',$data);
+
+    }
+    //返回时间段纪录
+    function DateList(){
+        if($_POST){
+            $t = $this->input->post('time');
+            $e = $this->input->post('endtime');
+
+
+            $da = prDates($t,$e);
+
+            foreach ($da as $key => $value) {
+                //用户
+                $etime = date("Y-m-d",strtotime("+1 day",strtotime($value['Ymdate'])));
+               
+                $da[$key]['userNum'] = retDateList('gid','=','5','hf_user_member','create_time',$value['Ymdate'],$etime);
+                $da[$key]['friendsNum'] = retDateList('typeId','=','1','hf_friends_news','create_time',$value['Ymdate'],$etime);
+                $da[$key]['wenDaNum'] = retDateList('typeId','=','2','hf_friends_news','create_time',$value['Ymdate'],$etime);
+                $da[$key]['orderNum'] = retDateList('order_status','!=','1','hf_mall_order','create_time',$value['Ymdate'],$etime);
+            }
+            array_multisort(array_column($da,'Ymdate'),SORT_DESC,$da);
+            $userNum = retDateList('gid','=','5','hf_user_member','create_time',$t,$e);
+            $friendsNum = retDateList('typeId','=','1','hf_friends_news','create_time',$t,$e);
+            $wenDaNum = retDateList('typeId','=','2','hf_friends_news','create_time',$t,$e);
+            $orderNum = retDateList('order_status','!=','1','hf_mall_order','create_time',$t,$e);
+
+
+
+            if(!empty($da)){
+                echo json_encode(["list"=>$da,"userListNum"=>$userNum,"friendsNum"=>$friendsNum,"wendaNum"=>$wenDaNum,"orderNum"=>$orderNum]);
+            }else{
+                echo "2";
+            }
+            
         }
     }
 

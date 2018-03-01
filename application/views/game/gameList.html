@@ -32,7 +32,7 @@
 	                            <tr class="gradeX">
 	                                <td class="awId"><?php echo $val['id'];?></td> 
 	                                <td class="awName"><?php echo $val['title'];?></td> 
-	                                <?php if(!empty($val['hiValue'])):?>
+	                            <?php if(!empty($val['hiValue'])):?>
 	                                <td class="awType">HI豆值(个)</td> 
 	                                <td class="awValue"><?php echo $val['hiValue'];?></td> 
 
@@ -46,7 +46,8 @@
 
 	                            <?php else:?>
 	                            	<td class="awType">其他</td> 
-	                            	 <td class="awValue">谢谢参与</td> 
+
+	                            	<td class="awValue"></td> 
 
 	                            <?php endif;?>
                                   <td class="awIndex"><?php echo $val['orderIndex'];?></td> 

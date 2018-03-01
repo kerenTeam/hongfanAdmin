@@ -1,0 +1,554 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+
+
+</style>
+<!-- 新分页开始 -->
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 活动管理
+
+            <small> > 年货节达人榜活动</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">活动搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                  
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">审核状态:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <select id="questionStates" name="questionStates" >
+                                <option value="0">请选择一项</option>
+                                <option value="1">已审核</option>
+                                <option value="2">未审核</option>
+                               
+                            </select>
+                        </div>
+                    </div>
+                
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4">
+                        <label for="businessTime" class="am-u-sm-3 am-text-right">参加时间：</label>
+                        <div class="am-u-sm-9  am-u-end">
+                            <div class="am-alert am-alert-danger" id="lineTime" style="display: none">
+                              <p>开始日期应小于结束日期！</p>
+                            </div>
+                            <div class="am-g">
+                              <div class="am-u-sm-6">
+
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start">开始日期</button><input type="hidden" id="begin_date" name="begin_time" value="" /><span id="my-startDate">2017-01-20</span>
+                              </div>
+                              <div class="am-u-sm-6">
+                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end">结束日期</button><input type="hidden" id="end_date" name="end_time" value="" /><span id="my-endDate">2017-12-25</span>
+
+                              </div>
+                              <small class="red redtips">请先选择结束日期</small>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">参加列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+                   
+                    <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+
+                        <div class="am-form-group">
+
+                            <div class="am-btn-toolbar">
+
+                                <div class="am-btn-group am-btn-group-xs">
+
+                                  
+                                     <a type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" data-am-modal="{target: '#exportFile'}"><span class="am-icon-arrow-up" ></span> 导出</a>  
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                     <div class="am-modal am-modal-confirm" tabindex="-1" id="exportFile">
+                        <div class="am-modal-dialog">
+                            <div class="am-modal-hd">导出活动参加列表</div>
+                            <div class="am-modal-bd">
+                                <form class="am-form tpl-form-line-form" action="<?php echo site_url('/activity/Activity/dowHistory');?>" method="post">
+                                    <div class="am-form-group am-cf" style="min-height: 100px;">
+                                        <label class="am-u-sm-4 am-form-label">审核状态：</label>
+                                        <div class="am-u-sm-6 am-u-end">
+                                            <select id="faqsType" name="faqsType">
+                                                <option value="">-=请选择一项=-</option>
+                                                <option value="1">已审核</option>
+                                                <option value="2">未审核</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="am-form-group am-cf">
+                                        <label for="businessTime" class="am-u-sm-2 am-form-label">时间：</label>
+                                        <div class="am-u-sm-9 am-u-end">
+                                            <div class="am-alert am-alert-danger" id="lineTime1" style="display: none">
+                                              <p>开始日期应小于结束日期！</p>
+                                            </div>
+                                            <div class="am-g">
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-start1">开始日期</button><input type="hidden" id="begin_date1" name="begin_time" value="" /><span id="my-startDate1">2017-01-01</span>
+                                              </div>
+                                              <div class="am-u-sm-6">
+                                                <button type="button" class="am-btn am-btn-default am-btn-secondary am-btn-xs" id="my-end1">结束日期</button><input type="hidden" id="end_date1" name="end_time" value="" /><span id="my-endDate1">2017-12-31</span>
+                                              </div>
+                                              <small class="red redtips">请先选择结束日期</small>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="am-form-group am-cf">
+                                        <button class="am-btn am-btn-default am-btn-xs sureExport" type="button" data-am-modal-cancel>取消</button>
+                                        <button class="am-btn am-btn-xs am-btn-secondary sureExport" type="submit" data-am-modal-confirm>确定</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+        
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+                                <tr>
+
+                                    <th>编号</th>
+                                    <th>所中奖项</th>
+                                    <th>用户手机</th>
+                                    <th>用户昵称</th>
+                                    <th>提问内容</th>
+                                    <th>图片</th>
+                                    <th>回答内容</th>
+                                    <th>回答问题id</th>
+                                    <th>收货人</th>
+                                    <th>收货电话</th>
+                                    <th>收货地址</th>
+                                    <th>参加时间</th>
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="infolistDiv">
+
+                             
+        
+                            </tbody>
+
+                        </table>
+                        <script type="text/html" id="infolist">
+                            <% for(var i=0; i<list.length; i++){ %>
+                                <tr>
+                                        <td><%=list[i].id%></td>
+                                        <td><%=list[i].title%></td>
+                                        <td><%=list[i].phone%></td>
+                                        <td><%=list[i].nickname%></td>
+                                        <td><%=list[i].content%></td>
+                                        <td><img src="<%=list[i].pic%>" style="width: 100px;"></td>
+                                        <td style="color: red;"><%=list[i].commont%></td>
+                                        <td style="color: red;"><%=list[i].newsId%></td>
+                                        <td><%=list[i].addresseeName%></td>
+                                        <td><%=list[i].phoneNumber%></td>
+                                        <td><%=list[i].address%></td>
+                                        <td><%=list[i].mysqlTime%></td>
+                                         <td>
+                                               <div class="tpl-table-black-operation">
+                                                    <%if(list[i].examine != '1'){%>
+                                                        <a href="<?php echo site_url('/activity/Activity/edithistory/');?><%= list[i].id%>"  class="tpl-table-black-operation-info">
+                                                            审核通过
+                                                        </a>
+                                                    <%}else{%>
+                                                        <a href="javascript:;"  class="tpl-table-black-operation-info">
+                                                            已审核
+                                                        </a>
+                                                    <%}%>
+                                                    <a href="<?php echo site_url('/activity/Activity/delhistory/');?><%= list[i].id%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+                                                </div>  
+                                            </td>
+                                </tr>
+                                        
+                            <%}%> 
+                        </script>
+
+                    </div>
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+
+<script>  
+    $(function () {  
+        var startDate = new Date(2014, 11, 20);
+        var endDate = new Date(2014, 11, 25);
+        var $alert = $('#my-alert');
+        $('#my-start').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+              $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+              $alert.hide();
+              startDate = new Date(event.date);
+              $('#my-startDate').text($('#my-start').data('date'));
+              $('#begin_date').val($('#my-start').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+
+        $('#my-end').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+              $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+              $alert.hide();
+              endDate = new Date(event.date);
+              $('#my-endDate').text($('#my-end').data('date'));
+              $('#end_date').val($('#my-end').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+        $('#my-start1').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() > endDate.valueOf()) {
+              $alert.find('p').text('开始日期应小于结束日期！').end().show();
+            } else {
+              $alert.hide();
+              startDate = new Date(event.date);
+              $('#my-startDate1').text($('#my-start1').data('date'));
+              $('#begin_date1').val($('#my-start1').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+
+        $('#my-end1').datepicker().
+          on('changeDate.datepicker.amui', function(event) {
+            if (event.date.valueOf() < startDate.valueOf()) {
+              $alert.find('p').text('结束日期应大于开始日期！').end().show();
+            } else {
+              $alert.hide();
+              endDate = new Date(event.date);
+              $('#my-endDate1').text($('#my-end1').data('date'));
+              $('#end_date1').val($('#my-end1').data('date'));
+            }
+            $(this).datepicker('close');
+          });
+    
+       
+    }) ;
+    //导出订单
+    $('.sureExport').click(function () {
+        $('#exportFile').modal('close');
+    });
+
+
+
+$(document).ready(function(){
+
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','','',"<?php echo site_url("/activity/Activity/retMasterList");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['masterNum'])){echo '0';}else{echo $_SESSION['masterNum']/10 +1;}?>";
+
+
+    getListinfo(page,'','','',"<?php echo site_url("/activity/Activity/retMasterList");?>");
+    
+    // 新分页方法
+    function getListinfo(num,state,end_date,begin_date,url) {
+
+        var pagenum10 = (num-1) *10;
+       
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'state':state,
+                'begin_time':begin_date,
+                'end_time':end_date,
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,state,end_date,begin_date,"<?php echo site_url("/activity/Activity/retMasterList");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+ 					lists.forEach(function(ele,index){
+ 						// console.log(ele.pic.length)
+                        if(ele.pic && ele.pic.length > 5){
+                          ele.pic = JSON.parse(ele.pic)[0].picImg;
+                        }else{
+                        	ele.pic='';
+                        }
+                    })
+                    
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }else{
+                	$('#infolistDiv').find('tr').remove();
+                
+                	$('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关信息！</p></td></tr>').appendTo('#infolistDiv');
+
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var state = $('#questionStates option:selected').val(),begin_date = $('#begin_date').val(), end_date = $('#end_date').val();
+
+        getListinfo(1,state,end_date,begin_date,"<?php echo site_url("/activity/Activity/retMasterList");?>");
+
+    });
+
+
+
+})
+
+</script> 
+
+
+
+</body>
+
+</html>
+
+
+

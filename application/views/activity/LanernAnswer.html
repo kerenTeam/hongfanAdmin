@@ -1,0 +1,404 @@
+<style type="text/css" media="screen">
+
+.am-selected{
+
+width: 100%!important;
+
+}
+
+.table-check{
+
+width: 30px;
+
+}
+
+.hf-dropdown{
+
+font-size: 12px!important;
+
+padding: 5px 6px!important;
+
+}
+
+.am-imgContainer{
+
+    width:50%;
+
+    }
+
+.deleteImg{
+
+        display:inline-block;
+
+        width:60px;
+
+        height:25px;
+
+        line-height: 25px;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 1.2rem;
+
+        border:  1px solid #ddd;
+
+    }
+
+     .clickUp{
+
+        display: inline-block;
+
+        float: left;
+
+        margin-left: 100px;
+
+    }
+
+
+
+ .preview{
+
+        height:170px !important;
+
+    }
+
+    .preview #imghead,#preview img{
+
+        
+
+        height:160px;
+
+    }
+
+    .am-modal-bd input[type='radio'] {
+
+        width: 50%;
+
+        border: none;
+
+    }
+
+    .tpl-del {
+
+        border: 1px solid #ff0000 !important;
+
+        color: #ff0000 !important;
+
+    }
+
+    select.am-form-field {
+
+        border: 1px solid #c2cad8 !important;
+
+        border-radius: 5px !important;
+
+    }
+
+.isRecommand {
+
+    width: 85px;
+
+    background: #4db14d;
+
+    border-radius: 5px;
+
+    border: 1px solid #4db14d;
+
+    padding:5px 5px;
+
+    color: #fff;
+
+    text-align: center;
+
+}
+
+.isRecommand option {
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    border: 1px solid #aaa;
+
+    padding:2px 5px;
+
+    color: #000;
+
+    text-align: center;
+
+} 
+
+.otherMessage {
+
+    display: none;
+
+}
+
+
+
+</style>
+<!-- 新分页开始 -->
+<style>
+    .page_div {margin-top: 20px;margin-bottom: 20px;font-size: 15px;font-family: "microsoft yahei";color: #666666;margin-right: 10px;padding-left: 20px;box-sizing: border-box;text-align: center;-moz-user-select:none;-webkit-user-select:none;}
+    .page_div a {min-width: 32px;height: 40px;border: 1px solid #dce0e0!important;text-align: center;margin: 0 4px;cursor: pointer;line-height: 40px;color: #666666;font-size: 13px;display: inline-block;}
+    #firstPage,#lastPage {width: 50px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    #prePage, #nextPage {width: 70px;color: #1fb5ac;border: 1px solid #1fb5ac!important;}
+    .page_div .current {background-color: #1fb5ac;border-color: #1fb5ac;color: #FFFFFF;}
+    .totalPages {margin: 0 10px;}
+    .totalPages span, .totalSize span {color: #1fb5ac;margin: 0 5px;}
+</style>
+<script src="assets/js/pagingY.js"></script> 
+
+<!-- 内容区域 -->
+
+<div class="tpl-content-wrapper">
+
+<div class="container-fluid am-cf">
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+
+            <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 活动管理
+
+            <small> > 元宵猜灯谜纪录</small></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row-content am-cf">
+
+
+    <!-- 招聘信息 -->
+
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+
+            <div class="widget am-cf">
+                 <div class="widget-head am-cf">
+                    <div class="widget-title am-cf">纪录搜索</div>
+                </div>
+                <form class="am-form am-form-horizontal am-padding-sm am-text-sm" >
+                  
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">回答对错:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <select id="questionStates" name="questionStates" >
+                                <option value="0">请选择一项</option>
+                                <option value="1">正确</option>
+                                <option value="2">错误</option>
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group am-u-sm-4 am-u-md-4 am-u-lg-4 am-u-end" >
+                        <label for="goodsPrice" class="am-form-label am-u-sm-3 am-u-end">用户手机号:</label>
+                        <div class="am-u-sm-9 am-u-end">
+                            <input type="text" id="search" name="sear">
+                        </div>
+                    </div>
+                    <div class="am-form-group am-inline am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-center">
+                        <button type="button" class="am-btn am-btn-secondary searchOrder"><i class="am-icon-search"></i> 查询</button>
+                    </div>
+                </form>
+                <div class="widget-head am-cf" style="clear:both;">
+
+                    <div class="widget-title  am-cf">灯谜纪录列表</div>
+
+                </div>
+
+                <div class="widget-body  am-fr">
+                   
+                
+                    <div class="am-u-sm-12 am-u-xs-12">
+
+                        <table width="100%" class="am-table am-table-compact am-text-nowrap tpl-table-black ">
+
+                            <thead>
+                                <tr>
+
+                                    <th>编号</th>
+                                    <th>灯谜标题</th>
+
+                                    <th>回答用户</th>
+                                    <th>回答答案</th>
+                                    <th>回答时间</th>
+                                    <th>回答状态</th>
+                                    <th>操作</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="infolistDiv">
+                              
+        
+                            </tbody>
+                            <script type="text/html" id="infolist">
+                                <% for(var i=0; i<list.length; i++){ %>
+                                    <tr>
+                                            <td><%=list[i].id%></td>
+                                            <td><%=list[i].title%></td>
+                                            <td><%=list[i].nickname%></td>
+                                            <td><%=list[i].answer%></td>
+                                            <td><%=list[i].mysqlTime%></td>                                           
+                                            <!-- ✔️ 是否已经回答对 0没有回答对 1回答对 -->
+                                            <%if(list[i].IsRight == '1'){%>
+                                            <td>正确</td>
+                                            <%}else{%>
+                                            <td>错误</td>
+                                            <%}%>
+                                            <td>
+                                               <div class="tpl-table-black-operation">
+                                                   
+                                
+                                                    <a href="<?php echo site_url('/activity/Activity/delLanern/');?><%= list[i].id%>" onclick="return confirm('确定删除?');" class="tpl-table-black-operation-del">
+                                                        <i class="am-icon-trash"></i> 删除
+
+                                                    </a>
+
+                                                </div>  
+                                            </td>
+                                            
+                                    </tr>
+
+                                            
+                                <%}%> 
+                        </script>
+
+                        </table>
+                       
+
+                    </div>
+                    <div value="1 0"></div>
+                    <div id="page" class="page_div"></div>
+                   
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+</div>
+<script type="text/javascript">
+    
+
+$(document).ready(function(){
+
+
+
+    // 初始化节点，无数据关联
+    $("#page").paging({
+        pageNo: 1,
+        totalPage: 10,
+        totalSize: 100,
+        callback: function(num) {
+            getListinfo(num,'','',"<?php echo site_url("/activity/Activity/retLanternAnswer");?>");
+        }
+    })
+    
+    // 初始化,加载第一页
+    var page = "<?php if(!isset($_SESSION['lanternNum'])){echo '0';}else{echo $_SESSION['lanternNum']/10 +1;}?>";
+
+
+    getListinfo(page,'','',"<?php echo site_url("/activity/Activity/retLanternAnswer");?>");
+    
+    // 新分页方法
+    function getListinfo(num,state,sear,url) {
+
+        var pagenum10 = (num-1) *10;
+       
+        $.ajax({
+            url: url,
+            type: "post",
+            data: {
+                'start':pagenum10,
+                'count':10,
+                'state':state,
+                'sear':sear,
+            },
+            // dataType: "json",
+            success: function(data) {
+                // console.log(data);
+                if(data != 2){
+                    var res = JSON.parse(data);
+                    var allpage = Math.ceil(res.total/10);  
+                    //分页
+                    $("#page").paging({
+                        pageNo: num,
+                        totalPage: allpage,
+                        totalSize: res.total,
+                        callback: function(num) { //点击页码的 回调 方法
+                            // console.log(num);
+                            getListinfo(num,state,sear,"<?php echo site_url("/activity/Activity/retLanternAnswer");?>");
+                        }
+                    })
+                    // 铺数据
+                    var dataobj = {};
+                    var lists = res.subjects;
+                    // 头像
+                    lists.forEach(function(ele,index){
+                        // console.log(ele.pic.length)
+                        if(ele.pic && ele.pic.length > 5){
+                          ele.pic = JSON.parse(ele.pic)[0].picImg;
+                        }else{
+                            ele.pic='';
+                        }
+                    })
+                    
+                    dataobj.list = lists;
+                    var html=template("infolist",dataobj);
+                    document.getElementById("infolistDiv").innerHTML = html;
+                }else{
+                    $('#infolistDiv').find('tr').remove();
+                
+                    $('<tr class="trClass"><td colspan="12" class="am-text-center"><p id="nullMessage">暂无相关信息！</p></td></tr>').appendTo('#infolistDiv');
+
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+        })
+    }
+    
+
+    //点击搜索
+
+    $('.searchOrder').click(function(){
+
+        var state = $('#questionStates option:selected').val(), sear = $('#search').val();
+        console.log(state,sear)
+
+        getListinfo(1,state,sear,"<?php echo site_url("/activity/Activity/retLanternAnswer");?>");
+
+    });
+
+
+
+})
+</script>
+
+
+
+</body>
+
+</html>
+
+
+

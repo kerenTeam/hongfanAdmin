@@ -544,6 +544,7 @@
         $('.sureSave').click(function(){
 
             var dataId=$(this).attr('data-id'), sort = $('.sort'+ dataId).val(),endtime = $('.endtime'+ dataId).val();
+            // console.log(endtime);
 
             $.ajax({
 
@@ -868,6 +869,9 @@ $(document).ready(function(){
                         <div class="am-u-sm-7">
 
                             <input type="number" name="name" class="sort<%= goods_id %>" min="1" required minlength="1" maxlength="2" onblur="validate(this,1,10,1)" value="<%= sort %>" />
+                             <?php if($type != '1'):?>
+                                <input type="hidden" name="name" class="endtime<%= goods_id %>" placeholder="2018-01-01 23:59:59"/>
+                             <?php endif;?>
 
                             
 

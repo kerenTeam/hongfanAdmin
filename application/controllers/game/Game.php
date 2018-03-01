@@ -281,61 +281,15 @@ class Game extends Default_Controller
         if($id == '0'){
             $this->load->view('404.html');
         }else{
-             //返回所有中奖纪录
-            $config['per_page'] = 10;
-            //获取页码
-            $current_page=intval($this->uri->segment(4));//index.php 后数第4个/
-            //配置
-            $config['base_url'] = site_url('/game/Game/awardRecord');
-            //分页配置
-            $config['full_tag_open'] = '<ul class="am-pagination tpl-pagination">';
-
-            $config['full_tag_close'] = '</ul>';
-
-            $config['first_tag_open'] = '<li>';
-
-            $config['first_tag_close'] = '</li>';
-
-            $config['prev_tag_open'] = '<li>';
-
-            $config['prev_tag_close'] = '</li>';
-
-            $config['next_tag_open'] = '<li>';
-
-            $config['next_tag_close'] = '</li>';
-
-            $config['cur_tag_open'] = '<li class="am-active"><a>';
-
-            $config['cur_tag_close'] = '</a></li>';
-
-            $config['last_tag_open'] = '<li>';
-
-            $config['last_tag_close'] = '</li>';
-
-            $config['num_tag_open'] = '<li>';
-
-            $config['num_tag_close'] = '</li>';
-            $config['first_link']= '首页';
-
-            $config['next_link']= '下一页';
-
-            $config['prev_link']= '上一页';
-
-            $config['last_link']= '末页';
+           
             $list = $this->Game_model->select_history($id);
 
-            $config['total_rows'] = count($list);
-
-            // //分页数据
-            $listpage = $this->Game_model->select_history_page($id,$config['per_page'],$current_page);
-              $this->load->library('pagination');//加载ci pagination类
-
-                $this->pagination->initialize($config);
-
+          
+            $_SESSION['pageNum'] = '0';
             //获取所有奖品
             $prize = $this->Game_model->select_prize($id);
 
-            $data = array('lists'=>$listpage,'count'=>count($list),'pages' => $this->pagination->create_links(),'prize'=>$prize,'id'=>$id);
+            $data = array('count'=>count($list),'prize'=>$prize,'id'=>$id);
 
 
             $data['page'] = $this->view_awardRecord;
@@ -357,6 +311,7 @@ class Game extends Default_Controller
 
             $page = $this->input->post('start');
             $size = $this->input->post('count');
+            $_SESSION['pageNum'] = $page;
 
             if(!empty($startTime)){
                 $time = strtotime($startTime.' 00:00:00')*1000;
@@ -505,7 +460,6 @@ class Game extends Default_Controller
         $config['prev_link']= '上一页';
 
         $config['num_links'] = 3;
-        $config['use_page_numbers'] = TRUE;
 
         $config['last_link']= '末页';
         $list = $this->Game_model->retWithdrawals();
@@ -748,11 +702,11 @@ class Game extends Default_Controller
         $config['page_query_string'] = TRUE;//关键配置
         // $config['reuse_query_string'] = FALSE;
         $config['num_links'] = 3;
-        $config['use_page_numbers'] = TRUE;
+
 
 
         $config['query_string_segment'] = 'size';
-        $config['base_url'] = site_url('/game/Game/search_withsrawls?').'prizeId='.$prizeId.'&withsrawls='.$withdrawals;
+        $config['base_url'] = site_url('/game/Game/search_withsrawls?').'prizeId='.$prizeId.'&withsrawls='.$withdrawals.'&phone='.$phone;
 
         if(!empty($prizeId) && empty($withdrawals) && empty($phone)){
                 $list = $this->Game_model->search_where_withsrawls('prizeId',$prizeId);
@@ -855,6 +809,7 @@ class Game extends Default_Controller
     //导出红包纪录
     function Import_withdrawals(){
         if($_POST){
+           
             $prizeId = $this->input->post('prizeid'); 
             $withdrawals = $this->input->post('state'); 
             $starttime = $this->input->post('begin_time');
@@ -883,7 +838,7 @@ class Game extends Default_Controller
                 'A' => '编号',
 
                 'B' => '奖品名称',
-                'C' => '奖品名称',
+                'C' => '奖品金额',
 
                 'D' => '用户名称',
 
@@ -926,43 +881,87 @@ class Game extends Default_Controller
                 $this->db->from('hf_game_wining_history a');
                 $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
                 $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
-                $list = $this->Game_model->search_where_withsrawls('prizeId',$prizeId);
+
+                $query = $this->db->where('a.prizeId',$prizeId)->order_by('a.id','desc')->get();
+                $list = $query->result_array();
+                // $query = $this->Game_model->search_where_withsrawls('prizeId',$prizeId);
               
             }else  if(empty($prizeId) && !empty($withdrawals) && empty($time)){
-                 if($withdrawals == '3'){
+                if($withdrawals == '3'){
                     $withdrawals = '0';
-                    }
-                $list = $this->Game_model->search_where_withsrawls('withsrawls',$withdrawals);
+                }
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+                $query = $this->db->where('a.withsrawls',$withdrawals)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
+                // $query = $this->Game_model->search_where_withsrawls('withsrawls',$withdrawals);
 
             }else if(empty($prizeId) && empty($withdrawals) && !empty($time)){
 
-                $list = $this->Game_model->select_where_with_time($time,$endtime);
+                // $query = $this->Game_model->select_where_with_time($time,$endtime);
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+
+                $query = $this->db->where('a.gameId','3')->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
 
             }else if(!empty($prizeId) && !empty($withdrawals) && empty($time)){
                 if($withdrawals == '3'){
                     $withdrawals = '0';
                 }
-                $list = $this->Game_model->search_withsrawls($prizeId,$withdrawals);
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+                $query = $this->db->where('a.withsrawls',$withdrawals)->where('a.prizeId',$prizeId)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
+
+                // $query = $this->Game_model->search_withsrawls($prizeId,$withdrawals);
 
             }else  if(!empty($prizeId) && empty($withdrawals) && !empty($time)){
-                $list = $this->Game_model->select_where_prizeid_time($prizeId,$time,$endtime);   
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+                $query = $this->db->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->where('a.prizeId',$prizeId)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
             }else  if(empty($prizeId) && !empty($withdrawals) && !empty($time)){
                  if($withdrawals == '3'){
                     $withdrawals = '0';
                     }
-                $list = $this->Game_model->select_where_wi_time('withsrawls',$withdrawals,$time,$endtime);   
-
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+                $query = $this->db->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->where('a.withsrawls',$withdrawals)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
             }else  if(!empty($prizeId) && !empty($withdrawals) && !empty($time)){
                 
                  if($withdrawals == '3'){
                     $withdrawals = '0';
                     }
-                $list = $this->Game_model->select_where_wi_time($prizeId,'withsrawls',$withdrawals,$time,$endtime);   
-
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+                $query = $this->db->where('a.createTime >=',$time)->where('a.createTime <=',$endtime)->where('a.prizeId',$prizeId)->where('a.withsrawls',$withdrawals)->order_by('a.id','desc')->get();
+                   $list = $query->result_array();
             }else if(empty($prizeId) && empty($withdrawals) && empty($time)){
-                $list = $this->Game_model->select_withdrawals();
+                $this->db->select('a.*,b.nickname,c.title,c.redPocket');
+                $this->db->from('hf_game_wining_history a');
+                $this->db->join('hf_user_member b', 'b.user_id = a.userId','left');
+                $this->db->join('hf_game_prize c', 'c.id = a.prizeId','left');
+                $query = $this->db->where('a.gameId','3')->order_by('a.id','desc')->get();
+                $list = $query->result_array();
+
             }
-           
+            // var_dump($list);
+            // exit;
 
           
 
@@ -1008,7 +1007,7 @@ class Game extends Default_Controller
 
                 $this->db->insert('hf_system_journal',$log);
 
-                $filename = 'ImportOrder.xls'; //save our workbook as this file name
+                $filename = '红包纪录.xls'; //save our workbook as this file name
 
                /// var_dump($filename);
 
@@ -1048,11 +1047,8 @@ class Game extends Default_Controller
             $this->load->library('excel');
 
             if(!file_exists($inputFileName)){
-
                     echo "<script>alert('文件导入失败!');window.location.href='".site_url('/game/Game/withdrawals')."'</script>";
-
                     exit;
-
             }
             $PHPReader = new PHPExcel_Reader_Excel2007();
             if(!$PHPReader->canRead($inputFileName)){
@@ -1075,7 +1071,7 @@ class Game extends Default_Controller
                 $state = $PHPExcel->getActiveSheet()->getCell("J".$currentRow)->getValue();//获取c列的值
                 if($state == '1'){
                     $arr['withsrawls'] = '2';
-                    $this->db->where('id',$id)->updata("hf_game_wining_history",$arr);
+                    $this->db->where('id',$id)->update("hf_game_wining_history",$arr);
                 }
                 if($id == NULL){
                     unlink($inputFileName);
@@ -1084,7 +1080,7 @@ class Game extends Default_Controller
                 }
 
             }
-            echo "<script>alert('导入成功!');window.location.href='".site_url('/game/Game/withdrawals')."'</script>";
+            echo "1";
             exit;
 
     }

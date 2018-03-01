@@ -1589,6 +1589,37 @@ class Friends extends Default_Controller
 
         }
     }
+    function editDataReward(){
+        if($_POST){
+            $data = $this->input->post();
+            foreach ($data as $k => $v) {
+                $arr = array(
+                    'value'=>$v[0],
+                    'remarks'=>$v[1],
+                );
+                $this->Public_model->updata('hf_friends_system','name',$k,$arr);
+            }
+            $log = array(
+                'userid'=>$_SESSION['users']['user_id'],  
+
+                "content" => $_SESSION['users']['username']."修改里了完成隔热资料配置",
+                "create_time" => date('Y-m-d H:i:s'),
+
+                "userip" => get_client_ip(),
+
+            );
+            $this->db->insert('hf_system_journal',$log);
+
+            echo "<script>alert('操作成功！');window.location.href='".site_url('/friends/Friends/reward')."'</script>";exit;
+
+        }
+    }
+
+    function message(){
+        
+    }
+
+    
 
 	
 }

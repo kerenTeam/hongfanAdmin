@@ -1312,6 +1312,7 @@ $(document).ready(function(){
 
                                         <option value="HHTT">天天快递</option>
                                         <option value="GTO">国通快递</option>
+                                        <option value="JD">京东物流</option>
 
                                         <option value="ZT">自提</option>
 
@@ -1413,7 +1414,7 @@ $(document).ready(function(){
 
                                     <div class="am-u-sm-9 am-text-left">
 
-                                        <% if(buyer_reason.length) { %>
+                                        <% if(buyer_reason) { %>
 
                                             <%= buyer_reason %> 
 
@@ -1433,7 +1434,7 @@ $(document).ready(function(){
 
                                     <div class="am-u-sm-9 am-text-left">
 
-                                        <% if(refund_reason.length) { %>
+                                        <% if(refund_reason) { %>
 
                                             <%= refund_reason %>
 
@@ -1460,8 +1461,6 @@ $(document).ready(function(){
                                             <option value="1">同意</option>
 
                                             <option value="0">拒绝</option>
-
-                                            
 
                                         </select>
 
@@ -1581,7 +1580,7 @@ $(document).ready(function(){
 
                                     <div class="am-u-sm-9 am-text-left">
 
-                                        <% if(buyer_reason.length) { %>
+                                        <% if(buyer_reason) { %>
 
                                             <%= buyer_reason %>
 
